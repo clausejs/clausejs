@@ -1,0 +1,24 @@
+{
+  "name": "specky",
+  "version": "0.0.1",
+  "description": "Spec support for plain JavaScript.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/settinghead/specky.git"
+  },
+  "keywords": [
+    "testing",
+    "spec",
+    "javascript"
+  ],
+  "author": "Xiyang Chen <settinghead@gmail.com>",
+  "license": "EPL-1.0",
+  "bugs": {
+    "url": "https://github.com/settinghead/specky/issues"
+  },
+  "homepage": "https://github.com/settinghead/specky#readme"
+}
