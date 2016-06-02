@@ -4,7 +4,7 @@
   "description": "Spec support for plain JavaScript.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "karma start"
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,10 @@
   "homepage": "https://github.com/settinghead/specky#readme",
   "devDependencies": {
     "karma": "^0.13.22",
-    "mocha": "^2.5.3"
+    "karma-mocha": "^1.0.1",
+    "karma-phantomjs-launcher": "^1.0.0",
+    "mocha": "^2.5.3",
+    "phantomjs": "^2.1.7",
+    "phantomjs-prebuilt": "^2.1.7"
   }
 }

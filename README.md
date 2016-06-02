@@ -1,1 +1,1 @@
-# spector.js
+# Specky
