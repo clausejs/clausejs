@@ -20,5 +20,9 @@
   "bugs": {
     "url": "https://github.com/settinghead/specky/issues"
   },
-  "homepage": "https://github.com/settinghead/specky#readme"
+  "homepage": "https://github.com/settinghead/specky#readme",
+  "devDependencies": {
+    "karma": "^0.13.22",
+    "mocha": "^2.5.3"
+  }
 }
