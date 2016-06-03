@@ -2,7 +2,7 @@
   "name": "specky",
   "version": "0.0.1",
   "description": "Spec support for plain JavaScript.",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "karma start"
   },
@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/settinghead/specky#readme",
   "devDependencies": {
+    "chai": "^3.5.0",
     "karma": "^0.13.22",
     "karma-mocha": "^1.0.1",
     "karma-phantomjs-launcher": "^1.0.0",
