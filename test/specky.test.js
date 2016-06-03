@@ -3,11 +3,11 @@ var expect = require('chai').expect;
 
 describe('specky', function() {
   describe('module integrity', function() {
-    var fnList = ['keys'];
+    var fnList = ['keys', 'isValid'];
 
     it('should contain all the core functions', function() {
-      var specSpec = s.keys({req: fnList});
-      expect(s.isValid(specSpec, s)).to.be.true;
+      var SpecObj = s.keys({req: fnList});
+      expect(s.isValid(SpecObj, s)).to.be.true;
     });
   });
 });
