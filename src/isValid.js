@@ -1,15 +1,14 @@
 'use strict';
-var CONST = { INVALID: '___SPECKY_INVALID' };
 
-var isValid = function(spec, x) {
-  return dt(spec, x) !== CONST.INVALID;
+var Problem = require('./_Problem');
+
+var isValid = function(specObj, x) {
+  return !(dt(specObj, x) instanceof Problem);
 };
 
 function dt (pred, x) {
-  if(pred) {
-    if(pred(x)) {
-      return pred(x);
-    } else { return CONST.INVALID; }
+  if(pred && pred.validator) {
+      return pred.validator(x);
   } else {
     return x;
   }
