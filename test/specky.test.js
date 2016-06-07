@@ -1,9 +1,11 @@
+'use strict';
+
 var s = require('../src');
 var expect = require('chai').expect;
 
 describe('specky', function() {
   describe('module integrity', function() {
-    var fnList = ['keys', 'isValid', 'conform'];
+    var fnList = ['keys', 'isValid', 'conform', 'fspec', 'isObj', 'isFn'];
 
     it('should contain all the core functions', function() {
       var SpecObj = s.keys({req: fnList});

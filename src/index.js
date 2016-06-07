@@ -1,5 +1,11 @@
 module.exports = {
-  keys: require('./keys'),
+  cat: require('./cat'),
+  conform: require('./conform'),
+  fspec: require('./fspec'),
   isValid: require('./isValid'),
-  conform: require('./conform')
+  keys: require('./keys'),
+  isFn: require('./isFn'),
+  isFunction: require('./isFn'),
+  isObj: require('./isObj'),
+  isObject: require('./isObj')
 };

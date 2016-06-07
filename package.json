@@ -24,6 +24,7 @@
   "homepage": "https://github.com/settinghead/specky#readme",
   "devDependencies": {
     "chai": "^3.5.0",
+    "eslint": "^2.11.1",
     "mocha": "^2.5.3"
   }
 }
