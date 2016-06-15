@@ -1,7 +1,7 @@
 'use strict';
 
-var Spec = function(validator) {
-  this.validator = validator;
+var Spec = function(conformer) {
+  this.conformer = conformer;
 };
 
 module.exports = Spec;

@@ -5,10 +5,10 @@ var Problem = require('./_Problem');
 
 var keys = function(params) {
   var reqSpecs = params.req;
-  return new Spec(genKeyValidator(reqSpecs));
+  return new Spec(genKeyConformer(reqSpecs));
 };
 
-function genKeyValidator(reqSpecs) {
+function genKeyConformer(reqSpecs) {
   return function(x) {
     var reqProblems = reqSpecs.filter(function(r) { return x[r] === undefined; });
     if(reqProblems.length > 0) {

@@ -2,20 +2,20 @@
 
 var Spec = require('./_Spec');
 var Problem = require('./_Problem');
-var validate = require('./validate');
+var conform = require('./conform');
 
 var cat = function() {
    var specs = arguments;
 
-   return new Spec(genCatValidator(specs));
+   return new Spec(genCatConformer(specs));
 };
 
-function genCatValidator(specs) {
+function genCatConformer(specs) {
   return function(vals) {
     if(!vals || !specs || vals.length !== specs.length) {
       return new Problem(vals, specs);
     }
-     var r = vals.map(function(x, i) { return validate(specs[i], x); });
+     var r = vals.map(function(x, i) { return conform(specs[i], x); });
      var problems = r.filter(function(x) {
        return x instanceof Problem;
      });
