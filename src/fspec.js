@@ -8,15 +8,16 @@ var fspec = function(fnSpec) {
 
   return function(fn) {
     return function() {
+      var args = Array.from(arguments);
       if(argsSpec) {
-        if(!isValid(argsSpec, arguments)) {
-          throw new Problem('TODO', argsSpec);
+        if(!isValid(argsSpec, args)) {
+          throw new Problem(argsSpec, argsSpec);
         }
       }
       var retVal = fn.apply(null, arguments);
       if(retSpec) {
         if(!isValid(retSpec, retVal)) {
-          throw new Problem('TODO', retSpec);
+          throw new Problem(retSpec, retSpec);
         }
       }
       return retVal;

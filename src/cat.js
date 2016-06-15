@@ -12,6 +12,9 @@ var cat = function() {
 
 function genCatValidator(specs) {
   return function(vals) {
+    if(!vals || !specs || vals.length !== specs.length) {
+      return new Problem(vals, specs);
+    }
      var r = vals.map(function(x, i) { return validate(specs[i], x); });
      var problems = r.filter(function(x) {
        return x instanceof Problem;
