@@ -7,10 +7,9 @@ var Problem = require('../src/_Problem');
 describe('specky', function() {
   describe('fspec', function() {
     xit('should return a function that checks the spec of a given function as its input', function() {
-      var FspecSpec = s.fspec({args: [s.isObj], ret: [s.isFn]});
-      //sooo meta!
+      var FspecSpec = s.fspec({args: [s.cat(s.isObj)], ret: [s.isFn]});
       var specedFspec = FspecSpec(s.fspec);
-      expect(function() { specedFspec('hello'); }).to.throw(Error);
+      expect(function() { specedFspec('should not be a string'); }).to.throw(Problem);
     });
   });
 });

@@ -1,17 +1,20 @@
 'use strict';
 
 var Problem = require('./_Problem');
+var isFn = require('./isFn');
 
-var isValid = function(specObj, x) {
-  return !(dt(specObj, x) instanceof Problem);
-};
-
-function dt (pred, x) {
-  if(pred && pred.validator) {
-      return pred.validator(x);
-  } else {
-    return x;
+var isValid = function(pred, x) {
+  if(!pred) {
+    throw new Error('Spec is required');
   }
-}
+  else if(pred.validator) {
+      return !(pred.validator(x) instanceof Problem);
+  } else if (isFn(pred)) {
+    return pred(x);
+  }
+  else {
+    return true;
+  }
+};
 
 module.exports = isValid;

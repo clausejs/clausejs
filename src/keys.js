@@ -1,4 +1,5 @@
 'use strict';
+
 var Spec = require('./_Spec');
 var Problem = require('./_Problem');
 
@@ -12,8 +13,7 @@ function genKeyValidator(reqSpecs) {
     var reqProblems = reqSpecs.filter(function(r) { return x[r] === undefined; });
     if(reqProblems.length > 0) {
       return new Problem(x, reqProblems);
-    }
-    else {
+    } else {
       return x;
     }
   }
