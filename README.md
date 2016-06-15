@@ -1,6 +1,10 @@
 # Specky [![Circle CI](https://circleci.com/gh/settinghead/specky.svg?style=svg)](https://circleci.com/gh/settinghead/specky)
 
-Highly flexible spec checking utilities for JavaScript functions and data structures.
+A higher order JavaScript schema framework that enables:
+
+- Highly flexible data schema validation
+- Function argument and return value validation
+- Data parsing & Schema conformation
 
 ### Run tests
 

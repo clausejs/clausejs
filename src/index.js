@@ -4,8 +4,11 @@ module.exports = {
   fspec: require('./fspec'),
   isValid: require('./isValid'),
   keys: require('./keys'),
+  identity: require('./identity'),
   isFn: require('./isFn'),
   isFunction: require('./isFn'),
   isObj: require('./isObj'),
-  isObject: require('./isObj')
+  isObject: require('./isObj'),
+  isStr: require('./isStr'),
+  isString: require('./isStr')
 };
