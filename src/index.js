@@ -7,8 +7,11 @@ module.exports = {
   identity: require('./identity'),
   isFn: require('./isFn'),
   isFunction: require('./isFn'),
+  isNum: require('./isNum'),
   isObj: require('./isObj'),
   isObject: require('./isObj'),
+  isProblem: require('./isProblem'),
   isStr: require('./isStr'),
-  isString: require('./isStr')
+  isString: require('./isStr'),
+  or: require('./or')
 };

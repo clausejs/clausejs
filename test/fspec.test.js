@@ -26,7 +26,7 @@ describe('specky', function() {
 
     it('test on sheep counting fn', function() {
       var sheepCounterSpec = s.fspec({
-        args: s.cat(isNum),
+        args: s.cat(s.isNum),
         ret: s.isStr
       });
 
@@ -42,8 +42,4 @@ describe('specky', function() {
 
 function isSpec(x) {
   return x instanceof Spec;
-}
-
-function isNum(x) {
-  return typeof x === 'number';
 }

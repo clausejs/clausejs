@@ -11,13 +11,13 @@ var fspec = function(fnSpec) {
       var args = Array.from(arguments);
       if(argsSpec) {
         if(!isValid(argsSpec, args)) {
-          throw new Problem(argsSpec, argsSpec);
+          throw new Problem(argsSpec, argsSpec, 'Arguments did not pass spec');
         }
       }
       var retVal = fn.apply(null, arguments);
       if(retSpec) {
         if(!isValid(retSpec, retVal)) {
-          throw new Problem(retSpec, retSpec);
+          throw new Problem(retSpec, retSpec, 'Return value did not pass spec');
         }
       }
       return retVal;
