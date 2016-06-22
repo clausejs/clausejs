@@ -4,7 +4,7 @@
   "description": "Spec support for plain JavaScript.",
   "main": "src/index.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha",
+    "test": "./node_modules/.bin/eslint *.js ./; ./node_modules/.bin/mocha",
     "test:watch": "./node_modules/mocha/bin/mocha --watch"
   },
   "repository": {
@@ -24,7 +24,6 @@
   "homepage": "https://github.com/settinghead/specky#readme",
   "devDependencies": {
     "chai": "^3.5.0",
-    "eslint": "^2.11.1",
     "mocha": "^2.5.3"
   }
 }
