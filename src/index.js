@@ -13,5 +13,6 @@ module.exports = {
   isProblem: require('./isProblem'),
   isStr: require('./isStr'),
   isString: require('./isStr'),
-  or: require('./or')
+  or: require('./or'),
+  Problem: require('./_Problem')
 };

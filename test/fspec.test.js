@@ -1,8 +1,8 @@
 'use strict';
 
-var s = require('../src');
 var expect = require('chai').expect;
-var Problem = require('../src/_Problem');
+var s = require('../src');
+var Problem = s.Problem;
 var Spec = require('../src/_Spec');
 var identity = require('../src/identity');
 
