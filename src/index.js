@@ -1,3 +1,5 @@
+global.SPECKY_DEV = true;
+
 module.exports = {
   cat: require('./cat'),
   conform: require('./conform'),
@@ -14,5 +16,6 @@ module.exports = {
   isStr: require('./isStr'),
   isString: require('./isStr'),
   or: require('./or'),
-  Problem: require('./_Problem')
+  Problem: require('./_Problem'),
+  zeroOrMore: require('./zeroOrMore')
 };

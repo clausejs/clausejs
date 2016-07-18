@@ -8,6 +8,10 @@ var isProblem = require('./isProblem');
 var cat = function() {
    var specs = Array.from(arguments);
 
+   if(!specs) {
+     throw new Error('No spec(s) provided for cat');
+   }
+
    return new Spec(genCatConformer(specs));
 };
 
@@ -15,8 +19,6 @@ function genCatConformer(specs) {
   return function(vals) {
     if(!vals) {
       return new Problem(vals, specs, 'No value(s) provided for cat');
-    } else if (!specs) {
-      return new Problem(vals, specs, 'No spec(s) provided for cat');
     } else if (vals.length !== specs.length) {
       return new Problem(vals, specs, specs.length + ' specs provided in cat, but there are only ' + vals.length + 'values. ' );
     } else {
