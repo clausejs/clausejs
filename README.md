@@ -3,12 +3,16 @@
 ### Project status
 - Pre-alpha. Under active development and tinkering.
 
+### What
+
 A higher order JavaScript schema framework that enables:
 
 - Highly flexible data schema validation
 - Function argument and return value validation
 - Data parsing & Schema conformation
 - Property-based (generative) testing
+
+### Why
 
 It facilitates
 
