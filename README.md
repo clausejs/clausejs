@@ -14,6 +14,13 @@ It facilitates
 
 ### Run tests
 
-```js
-mocha --watch
+#### Dev mode
+
+```bash
+npm run dev
+```
+
+#### CI mode
+```bash
+npm run test
 ```
