@@ -1,5 +1,8 @@
 # Specky [![Circle CI](https://circleci.com/gh/settinghead/specky.svg?style=svg)](https://circleci.com/gh/settinghead/specky)
 
+### Project status
+- Pre-alpha. Under active development and tinkering.
+
 A higher order JavaScript schema framework that enables:
 
 - Highly flexible data schema validation
