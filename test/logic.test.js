@@ -7,7 +7,7 @@ var check = require('mocha-testcheck').check;
 var s = require('../src');
 
 describe('specky', function() {
-  this.slow(500); //generative tests take more time
+  this.slow(3000); //generative tests take more time
 
   describe('zeroOrMore', function() {
     check.it('accepts zero or more int\'s',
@@ -15,6 +15,14 @@ describe('specky', function() {
         var ZeroOrMoreIntegers = s.zeroOrMore(Number.isInteger);
         expect(s.isValid(ZeroOrMoreIntegers, ints)).to.be.true;
         expect(s.isValid(ZeroOrMoreIntegers, [])).to.be.true;
+    });
+
+    check.it('rejects mixtures',
+      [gen.array(gen.int), gen.notEmpty(gen.array(gen.string))],
+      function (ints, strs) {
+        var ZeroOrMoreIntegers = s.zeroOrMore(Number.isInteger);
+        expect(s.isValid(ZeroOrMoreIntegers, ints.concat(strs))).to.be.false;
+        expect(s.isValid(ZeroOrMoreIntegers, strs)).to.be.false;
     });
   });
 

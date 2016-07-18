@@ -23,9 +23,11 @@ function genZeroOrMoreConformer(spec) {
       //the zero case; comformed
       return vals;
     } else {
-      var problems = vals.filter(spec);
+      var problems = vals.map(function(v) {
+        return conform(spec, v);
+      }).filter(isProblem);
       if(problems.length > 0) {
-        return problems;
+        return new Problem(vals, problems, 'Some predicates failed zeroOrMore');
       } else {
         return vals;
       }

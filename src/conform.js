@@ -19,7 +19,7 @@ function makeConformerFromPred(pred) {
     if(pred(x)) {
       return x;
     } else {
-      return new Problem(x, pred, 'Given redicate returns false');
+      return new Problem(x, pred, 'Given predicate returns false');
     }
   }
 }
