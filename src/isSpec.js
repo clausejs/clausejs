@@ -3,7 +3,7 @@
 var Spec = require('./_Spec');
 
 function isSpec(x) {
-  return x instanceof Spec;
+  return x.___isSpec === true;
 }
 
 module.exports = isSpec;
