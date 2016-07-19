@@ -2,10 +2,11 @@
 
 var Problem = require('./_Problem');
 var isFn = require('./isFn');
+var isSpec = require('./isSpec');
 
 var conform = function(predOrSpec, x) {
-  if(predOrSpec && predOrSpec.conformer) {
-      return predOrSpec.conformer(x);
+  if(predOrSpec && isSpec(predOrSpec)) {
+      return predOrSpec(x);
   } else if (predOrSpec && isFn(predOrSpec)) {
     var conformer = makeConformerFromPred(predOrSpec);
     return conformer(x);
