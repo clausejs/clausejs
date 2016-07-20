@@ -8,17 +8,18 @@
 A higher order JavaScript schema framework that lets you:
 
 - Build your data validation rules (specs) with composable, regex-like expressions built from primitives predicates such as `and`, `or`, `any`, `oneOrMore`, `zeroOrMore`, etc
-- Validate and make assertions about data with these predicate functions
-- Assert & validate the shape and properties of a function's arguments and its return value
+- Validate and make assertions about your data with these predicate functions
+- Assert & validate the shape and properties of your function's arguments and its return value
 - Conform your data with a range of available shapes of specs
 
 ### Why
 
 It facilitates
 
-- Creating better tests
-- Data-driven programming
-- Property-based (generative) testing
+- A better debugging experience
+- [Data-driven programming](http://stackoverflow.com/a/1065657/707362)
+- Auto generation of property-based/generative tests, and hence
+- More comprehensive test case coverage
 
 ### Run tests
 
