@@ -1,6 +1,6 @@
 'use strict';
 
-var Problem = require('./_Problem');
+var Problem = require('./Problem');
 var isProblem = require('./isProblem');
 var isFn = require('./isFn');
 var isSpec = require('./isSpec');

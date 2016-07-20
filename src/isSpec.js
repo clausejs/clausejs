@@ -1,6 +1,6 @@
 'use strict';
 
-var Spec = require('./_Spec');
+var Spec = require('./Spec');
 
 function isSpec(x) {
   return x.___isSpec === true;

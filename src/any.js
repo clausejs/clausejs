@@ -1,6 +1,6 @@
 'use strict';
 
-var Spec = require('./_Spec');
+var Spec = require('./Spec');
 var identity = require('./identity');
 
 var any = function() {

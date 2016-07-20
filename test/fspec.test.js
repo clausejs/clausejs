@@ -3,7 +3,7 @@
 var expect = require('chai').expect;
 var s = require('../src');
 var Problem = s.Problem;
-var Spec = require('../src/_Spec');
+var Spec = require('../src/Spec');
 var identity = require('../src/identity');
 
 describe('specky', function() {

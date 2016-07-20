@@ -2,8 +2,8 @@
 
 var s = require('../src');
 var expect = require('chai').expect;
-var Problem = require('../src/_Problem');
-var Spec = require('../src/_Spec');
+var Problem = require('../src/Problem');
+var Spec = require('../src/Spec');
 var identity = require('../src/identity');
 
 describe('specky', function() {

@@ -1,8 +1,8 @@
 'use strict';
 
-var Spec = require('./_Spec');
+var Spec = require('./Spec');
 var isProblem = require('./isProblem');
-var Problem = require('./_Problem');
+var Problem = require('./Problem');
 var conform = require('./conform');
 var fspec = require('./fspec');
 

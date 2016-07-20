@@ -2,7 +2,7 @@
 
 var s = require('../src');
 var expect = require('chai').expect;
-var Problem = require('../src/_Problem');
+var Problem = require('../src/Problem');
 
 describe('specky', function() {
   describe('cat', function() {
