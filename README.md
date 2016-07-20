@@ -5,12 +5,12 @@
 
 ### What
 
-A higher order JavaScript schema framework that enables:
+A higher order JavaScript schema framework that lets you:
 
-- Highly flexible data schema validation
-- Function argument and return value validation
-- Data parsing & Schema conformation
-- Property-based (generative) testing
+- Build your data validation rules (specs) with composable, regex-like expressions built from primitives predicates such as `and`, `or`, `any`, `oneOrMore`, `zeroOrMore`, etc
+- Validate and make assertions about data with these predicate functions
+- Assert & validate the shape and properties of a function's arguments and its return value
+- Conform your data with a range of available shapes of specs
 
 ### Why
 
@@ -18,6 +18,7 @@ It facilitates
 
 - Creating better tests
 - Data-driven programming
+- Property-based (generative) testing
 
 ### Run tests
 
