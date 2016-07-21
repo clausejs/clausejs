@@ -1,6 +1,6 @@
 'use strict';
 
-var isFunction = function(x) {
+function isFunction(x) {
   var getType = {};
   return x && getType.toString.call(x) === '[object Function]';
 };

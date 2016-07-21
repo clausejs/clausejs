@@ -1,11 +1,12 @@
 'use strict';
 
-var Problem = function(val, failsPredicate, msg) {
+function Problem(val, failsPredicate, msg) {
   this.val = val;
   this.name = 'Problem';
   this.falsePredicate = val;
-  this.message = msg;
+  this.problemMessage = msg;
   this.stack = (new Error()).stack;
+  this.message = msg + '; val: ' + val;
 };
 
 Problem.prototype = new Error;

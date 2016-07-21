@@ -3,7 +3,7 @@
 var Spec = require('./_Spec');
 var identity = require('./identity');
 
-var any = function() {
+function any() {
   return new Spec(identity);
 };
 

@@ -5,7 +5,7 @@ var Problem = require('./_Problem');
 var conform = require('./conform');
 var isProblem = require('./isProblem');
 
-var zeroOrMore = function() {
+function zeroOrMore() {
   var spec = arguments[0];
 
   if(!spec) {
@@ -18,12 +18,12 @@ var zeroOrMore = function() {
 };
 
 function genZeroOrMoreConformer(spec) {
-  return function(vals) {
+  return function tryConformZeroOrMore(vals) {
     if(vals.length === 0) {
       //the zero case; comformed
       return vals;
     } else {
-      var problems = vals.map(function(v) {
+      var problems = vals.map(function valToConformed(v) {
         return conform(spec, v);
       }).filter(isProblem);
       if(problems.length > 0) {

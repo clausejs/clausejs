@@ -1,6 +1,6 @@
 'use strict';
 
-var identity = function(x) {
+function identity(x) {
   return x;
 }
 

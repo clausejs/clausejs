@@ -2,7 +2,7 @@
 
 var Problem = require('./_Problem');
 
-var isProblem = function(x) {
+function isProblem(x) {
   return x instanceof Problem;
 };
 

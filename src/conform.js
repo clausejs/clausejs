@@ -4,7 +4,7 @@ var Problem = require('./_Problem');
 var isFn = require('./isFn');
 var isSpec = require('./isSpec');
 
-var conform = function(predOrSpec, x) {
+function conform(predOrSpec, x) {
   if(predOrSpec && isSpec(predOrSpec)) {
       return predOrSpec(x);
   } else if (predOrSpec && isFn(predOrSpec)) {
@@ -16,7 +16,7 @@ var conform = function(predOrSpec, x) {
 };
 
 function makeConformerFromPred(pred) {
-  return function(x) {
+  return function tryConformWithPred(x) {
     if(pred(x)) {
       return x;
     } else {

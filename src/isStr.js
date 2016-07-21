@@ -1,6 +1,6 @@
 'use strict';
 
-var isStr = function (x) {
+function isStr(x) {
   return x !== null && x !== undefined && x.constructor === String
 };
 

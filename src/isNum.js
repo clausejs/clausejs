@@ -1,6 +1,6 @@
 'use strict';
 
-var isNum = function(x) {
+function isNum(x) {
   return typeof x === 'number';
 };
 

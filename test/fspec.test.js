@@ -1,7 +1,7 @@
 'use strict';
 
 var expect = require('chai').expect;
-var s = require('../src/index.specked');
+var s = require('../src/');
 var Problem = s.Problem;
 var Spec = require('../src/_Spec');
 var identity = s.identity;

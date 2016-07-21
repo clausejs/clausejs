@@ -1,7 +1,7 @@
 'use strict';
 
-var Spec = function(conformer) {
-  var v = function(x, _this) {
+function Spec(conformer) {
+  var v = function tryConform(x, _this) {
     return conformer.call(_this, x);
   };
   v.___isSpec = true;

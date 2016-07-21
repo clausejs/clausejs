@@ -1,6 +1,6 @@
 'use strict';
 
-var isObject = function(x) {
+function isObject(x) {
   return typeof x === "object" && x !== null;
 };
 

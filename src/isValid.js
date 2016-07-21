@@ -5,7 +5,7 @@ var isProblem = require('./isProblem');
 var isFn = require('./isFn');
 var isSpec = require('./isSpec');
 
-var isValid = function(pred, x) {
+function isValid(pred, x) {
   if(!pred) {
     throw new Error('Spec is required');
   }
