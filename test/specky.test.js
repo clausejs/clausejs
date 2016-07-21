@@ -1,6 +1,6 @@
 'use strict';
 
-var s = require('../src');
+var s = require('../src/index.specked');
 var expect = require('chai').expect;
 
 describe('specky', function() {

@@ -1,5 +1,3 @@
-global.SPECKY_DEV = true;
-
 module.exports = {
   cat: require('./cat'),
   conform: require('./conform'),
