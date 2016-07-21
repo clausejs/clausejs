@@ -1,5 +1,5 @@
 'use strict';
-var Problem = require('./Problem');
+var Problem = require('./_Problem');
 var isValid = require('./isValid');
 
 var fspec = function(fnSpec) {

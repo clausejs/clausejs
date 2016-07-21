@@ -1,6 +1,6 @@
 'use strict';
 
-var Problem = require('./Problem');
+var Problem = require('./_Problem');
 
 var isProblem = function(x) {
   return x instanceof Problem;

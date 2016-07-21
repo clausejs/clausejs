@@ -14,6 +14,6 @@ module.exports = {
   isStr: require('./isStr'),
   isString: require('./isStr'),
   or: require('./or'),
-  Problem: require('./Problem'),
+  Problem: require('./_Problem'),
   zeroOrMore: require('./zeroOrMore')
 };

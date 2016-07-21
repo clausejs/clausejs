@@ -1,7 +1,7 @@
 'use strict';
 
 var isFn = require('./isFn');
-var Spec = require('./Spec');
+var Spec = require('./_Spec');
 var or = require('./or');
 
 function isPred(x) {

@@ -1,10 +1,10 @@
 'use strict';
 
-var s = require('../src');
+var s = require('../src/index.specked');
 var expect = require('chai').expect;
-var Problem = require('../src/Problem');
-var Spec = require('../src/Spec');
-var identity = require('../src/identity');
+var Problem = s.Problem;
+var Spec = require('../src/_Spec');
+var identity = s.identity;
 
 describe('specky', function() {
   describe('or', function() {

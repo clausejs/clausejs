@@ -1,7 +1,7 @@
 'use strict';
 
-var Spec = require('./Spec');
-var Problem = require('./Problem');
+var Spec = require('./_Spec');
+var Problem = require('./_Problem');
 
 var keys = function(params) {
   var reqSpecs = params.req;

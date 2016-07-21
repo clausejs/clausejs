@@ -4,7 +4,7 @@ var expect = require('chai').expect;
 var gen = require('mocha-testcheck').gen;
 var check = require('mocha-testcheck').check;
 
-var s = require('../src');
+var s = require('../src/index.specked');
 
 describe('specky', function() {
   this.slow(10000); //generative tests take more time
