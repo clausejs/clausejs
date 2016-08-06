@@ -25,9 +25,19 @@ describe('specky', function() {
         expect(s.isValid(ZeroOrMoreIntegers, ints.concat(strs))).to.be.false;
         expect(s.isValid(ZeroOrMoreIntegers, strs)).to.be.false;
     });
+
+    check.it.skip('use in conjunction with cat', [], function() {
+      var ZeroOrMoreStrings = s.zeroOrMore(s.isStr);
+      var ZeroOrMoreIntegers = s.zeroOrMore(Number.isInteger);
+
+      var validData = ['a', 'b', 1, 2, 3, true];
+      var invalidData = [2, 3, 4, 5];
+      expect(s.isValid(s.cat(ZeroOrMoreStrings, ZeroOrMoreIntegers, ZeroOrMoreStrings, s.isBool), validData)).to.be.true;
+      expect(s.isValid(s.cat(ZeroOrMoreStrings, ZeroOrMoreIntegers, ZeroOrMoreStrings, s.isBool), validData)).to.be.false;
+    });
   });
 
-  xdescribe('regex-like tests', function() {
+  describe.skip('regex-like tests', function() {
     //TODO
     check.it('accepts an int', [gen.int], function(x) {
       expect(typeof x).to.equal('number');
