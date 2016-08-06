@@ -6,7 +6,7 @@ var Problem = s.Problem;
 
 describe('specky', function() {
   describe('cat', function() {
-    it('should cat specs together', function() {
+    it.only('should cat specs together', function() {
       var comformist = [ function() {}, {}, function() {}, {} ];
       var nonfomformist = [ {}, function() {}, {}, function() {}];
       var cattedSpec = s.cat(s.isFn, s.isObj, s.isFn, s.isObj);

@@ -10,7 +10,7 @@ function isValid(pred, x) {
     throw new Error('Spec is required');
   }
   else if (isSpec(pred)) {
-    return !(isProblem(pred(x)));
+    return !(isProblem(pred.conform(x)));
   } else if (isFn(pred)) {
     return pred(x);
   }

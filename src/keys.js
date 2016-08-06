@@ -2,10 +2,11 @@
 
 var Spec = require('./_Spec');
 var Problem = require('./_Problem');
+var SPEC_TYPE_KEYS = 'KEYS';
 
 function keys(params) {
   var reqSpecs = params.req;
-  return new Spec(_genKeyConformer(reqSpecs));
+  return new Spec(SPEC_TYPE_KEYS, null, _genKeyConformer(reqSpecs), null);
 };
 
 function _genKeyConformer(reqSpecs) {

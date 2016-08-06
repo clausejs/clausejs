@@ -1,11 +1,24 @@
 'use strict';
 
-function Spec(conformer) {
-  var v = function tryConform(x, _this) {
-    return conformer.call(_this, x);
+function _Spec(specType, args, conformFn, generateFn) {
+
+  if(arguments.length !== 4) {
+    throw new Error('Wrong number of arguments passed to new _Spec()');
+  }
+
+  this.type = specType;
+  this.args = args;
+
+  this.conform = function tryConform(x, _this) {
+    return conformFn.call(_this, x);
   };
-  v.___isSpec = true;
-  return v;
+
+  if(generateFn) {
+    this.generate = function generate(_this) {
+      return generateFn.call(_this, x);
+    }
+  }
+  this.___isSpec = true;
 };
 
-module.exports = Spec;
+module.exports = _Spec;

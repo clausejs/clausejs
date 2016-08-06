@@ -2,9 +2,10 @@
 
 var Spec = require('./_Spec');
 var identity = require('./identity');
+var SPEC_TYPE_ANY = 'ANY';
 
 function any() {
-  return new Spec(identity);
+  return new Spec(SPEC_TYPE_ANY, null, identity, null);
 };
 
 module.exports = any;

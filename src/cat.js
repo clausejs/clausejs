@@ -5,6 +5,8 @@ var Problem = require('./_Problem');
 var conform = require('./conform');
 var isProblem = require('./isProblem');
 
+var SPEC_TYPE_CAT = 'CAT';
+
 function cat() {
    var specs = Array.from(arguments);
 
@@ -12,7 +14,7 @@ function cat() {
      throw new Error('No spec(s) provided for cat');
    }
 
-   return new Spec(genCatConformer(specs));
+   return new Spec(SPEC_TYPE_CAT, null, genCatConformer(specs), null);
 };
 
 function genCatConformer(specs) {
