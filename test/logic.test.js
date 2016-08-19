@@ -6,7 +6,7 @@ var check = require('mocha-testcheck').check;
 
 var s = require('../src/');
 
-describe('specky', function() {
+describe.skip('logic', function() {
   this.slow(10000); //generative tests take more time
   this.timeout(10000); //generative tests take more time
 
@@ -37,7 +37,7 @@ describe('specky', function() {
     });
   });
 
-  describe.skip('regex-like tests', function() {
+  describe('regex-like tests', function() {
     //TODO
     check.it('accepts an int', [gen.int], function(x) {
       expect(typeof x).to.equal('number');
