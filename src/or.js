@@ -9,7 +9,7 @@ var fspec = require('./fspec');
 function or() {
   var orSpecs = Array.from(arguments);
 
-  return new Spec(genOrConformer(orSpecs));
+  return new Spec('or', null, genOrConformer(orSpecs), null);
 };
 
 function genOrConformer(orSpecs) {

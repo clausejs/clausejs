@@ -6,7 +6,7 @@ var check = require('mocha-testcheck').check;
 
 var s = require('../src/');
 
-describe.skip('logic', function() {
+describe('logic', function() {
   this.slow(10000); //generative tests take more time
   this.timeout(10000); //generative tests take more time
 
@@ -34,13 +34,6 @@ describe.skip('logic', function() {
       var invalidData = [2, 3, 4, 5];
       expect(s.isValid(s.cat(ZeroOrMoreStrings, ZeroOrMoreIntegers, ZeroOrMoreStrings, s.isBool), validData)).to.be.true;
       expect(s.isValid(s.cat(ZeroOrMoreStrings, ZeroOrMoreIntegers, ZeroOrMoreStrings, s.isBool), validData)).to.be.false;
-    });
-  });
-
-  describe('regex-like tests', function() {
-    //TODO
-    check.it('accepts an int', [gen.int], function(x) {
-      expect(typeof x).to.equal('number');
     });
   });
 });

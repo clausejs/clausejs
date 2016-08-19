@@ -6,7 +6,7 @@ var Problem = s.Problem;
 var Spec = require('../src/_Spec');
 var identity = s.identity;
 
-describe.skip('or', function() {
+describe('or', function() {
   it('should accept one or more conditions', function() {
     var NumOrStr = s.or(s.isNum, s.isStr);
     expect(s.isValid(NumOrStr, 'hello')).to.be.true;
