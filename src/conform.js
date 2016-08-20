@@ -1,7 +1,7 @@
 'use strict';
 
 var Problem = require('./_Problem');
-var isFn = require('./isFn');
+var isFn = require('./preds/isFn');
 var isSpec = require('./isSpec');
 
 function conform(predOrSpec, x) {

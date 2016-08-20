@@ -1,6 +1,6 @@
 'use strict';
 
-var isFn = require('./isFn');
+var isFn = require('./preds/isFn');
 var Spec = require('./_Spec');
 var or = require('./or');
 

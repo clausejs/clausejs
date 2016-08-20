@@ -2,7 +2,7 @@
 
 var Problem = require('./_Problem');
 var isProblem = require('./isProblem');
-var isFn = require('./isFn');
+var isFn = require('./preds/isFn');
 var isSpec = require('./isSpec');
 
 function isValid(pred, x) {
