@@ -1,13 +1,13 @@
 'use strict';
 
 var Problem = require('./_Problem');
-var isFn = require('./preds/isFn');
+var isPred = require('./utils/isPred');
 var isSpec = require('./utils/isSpec');
 
 function conform(predOrSpec, x) {
   if(predOrSpec && isSpec(predOrSpec)) {
-      return predOrSpec(x);
-  } else if (predOrSpec && isFn(predOrSpec)) {
+      return predOrSpec.conform(x);
+  } else if (predOrSpec && isPred(predOrSpec)) {
     var conformer = makeConformerFromPred(predOrSpec);
     return conformer(x);
   } else {

@@ -4,9 +4,9 @@ var isPred = require('./utils/isPred');
 var fspec = specky.fspec, cat = specky.cat, keys = specky.keys, zeroOrMore = specky.zeroOrMore;
 
 var specked = specky;
-// var specked = specThemAll(specky);
+var specked = specThemAll(specky);
 
-function speckThemAll (s) {
+function specThemAll (s) {
   var specked = {};
 
   var fnSpecs = {
