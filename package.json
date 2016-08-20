@@ -31,6 +31,7 @@
     "mocha-testcheck": "^0.1.2"
   },
   "dependencies": {
-    "es6-symbol": "^3.1.0"
+    "es6-symbol": "^3.1.0",
+    "isarray": "^1.0.0"
   }
 }

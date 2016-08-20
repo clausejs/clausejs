@@ -4,7 +4,7 @@ var expect = require('chai').expect;
 var s = require('../src/');
 var Problem = s.Problem;
 var Spec = require('../src/_Spec');
-var isSpec = require('../src/isSpec');
+var isSpec = require('../src/utils/isSpec');
 var identity = s.identity;
 
 describe('fspec', function() {
@@ -20,7 +20,7 @@ describe('fspec', function() {
     expect(function() { specedFspec('spec should not be a string'); }).to.throw(Problem);
     expect(function() { specedFspec({spec: 'should not be simple obj either'}) }).to.throw();
 
-    expect(function() { specedFspec(new Spec('cat', null, identity, null), {extra: 'param'}); }).to.throw(Problem);
+    expect(function() { specedFspec(new Spec('cat', s.isBool, identity, null), {extra: 'param'}); }).to.throw(Problem);
     expect(function() { specedFspec(); }).to.throw(Problem);
   });
 

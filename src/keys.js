@@ -6,7 +6,7 @@ var SPEC_TYPE_KEYS = 'KEYS';
 
 function keys(params) {
   var reqSpecs = params.req;
-  return new Spec(SPEC_TYPE_KEYS, null, _genKeyConformer(reqSpecs), null);
+  return new Spec(SPEC_TYPE_KEYS, params, _genKeyConformer(reqSpecs), null);
 };
 
 function _genKeyConformer(reqSpecs) {

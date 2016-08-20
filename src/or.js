@@ -8,8 +8,14 @@ var fspec = require('./fspec');
 
 function or() {
   var orSpecs = Array.from(arguments);
+  var nulls = orSpecs.filter(function(s) {
+    return s === null || s === undefined;
+  });
+  if(nulls.length > 0) {
+    throw 'Or: one of the specs is null or undefined';
+  }
 
-  return new Spec('or', null, genOrConformer(orSpecs), null);
+  return new Spec('OR', orSpecs, genOrConformer(orSpecs), null);
 };
 
 function genOrConformer(orSpecs) {

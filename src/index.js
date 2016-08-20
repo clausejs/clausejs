@@ -1,6 +1,6 @@
 var specky = require('./index.unspecked');
-var isSpec = require('./isSpec');
-var isPred = require('./isPred');
+var isSpec = require('./utils/isSpec');
+var isPred = require('./utils/isPred');
 var fspec = specky.fspec, cat = specky.cat, keys = specky.keys, zeroOrMore = specky.zeroOrMore;
 
 var specked = specky;
@@ -12,8 +12,8 @@ function speckThemAll (s) {
   var fnSpecs = {
     isFn: fspec({args: s.any, ret: s.isBool}),
     keys: fspec({args: cat(keys({req: ['req']})), ret: isSpec}),
-    or: fspec({args: zeroOrMore(isPred)}),
-    zeroOrMore: fspec({args: cat(isPred)})
+    or: fspec({args: zeroOrMore(s.or(isPred, isSpec))}),
+    zeroOrMore: fspec({args: cat(s.or(isPred, isSpec))})
   };
 
   //apply fn specs if it exists

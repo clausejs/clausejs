@@ -1,6 +1,7 @@
 'use strict';
 var Problem = require('./_Problem');
 var isValid = require('./isValid');
+var functionName = require('./utils/fnName');
 
 function fspec(fnSpec) {
   var argsSpec = fnSpec.args;
@@ -35,12 +36,5 @@ function fspec(fnSpec) {
     return namedSpeckedFn;
   }
 };
-
-function functionName(fun) {
-  var ret = fun.toString();
-  ret = ret.substr('function '.length);
-  ret = ret.substr(0, ret.indexOf('('));
-  return ret;
-}
 
 module.exports = fspec;

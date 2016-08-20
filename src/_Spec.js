@@ -5,6 +5,9 @@ function _Spec(specType, args, conformFn, generateFn) {
   if(arguments.length !== 4) {
     throw new Error('Wrong number of arguments passed to new _Spec()');
   }
+  if(args === null || args === undefined) {
+    throw new Error('No argument list passed to new _Spec()');
+  }
 
   this.type = specType;
   this.args = args;

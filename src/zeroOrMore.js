@@ -14,7 +14,7 @@ function zeroOrMore() {
     throw new Error('Exactly one spec required for zeroOrMore');
   }
 
-  return new Spec('zeroOrMore', null, genZeroOrMoreConformer(spec), null);
+  return new Spec('ZERO_OR_MORE', spec, genZeroOrMoreConformer(spec), null);
 };
 
 function genZeroOrMoreConformer(spec) {

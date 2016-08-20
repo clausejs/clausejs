@@ -3,7 +3,7 @@
 var or = require('./or');
 var cat = require('./cat');
 var fspec = require('./fspec');
-var isSpec = require('./isSpec');
+var isSpec = require('./utils/isSpec');
 
 var UnnamedArgSpec;
 

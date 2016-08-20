@@ -1,7 +1,7 @@
-# Specky [![Circle CI](https://circleci.com/gh/settinghead/specky.svg?style=svg)](https://circleci.com/gh/settinghead/specky)
+# Specky 👓 [![Circle CI](https://circleci.com/gh/settinghead/specky.svg?style=svg)](https://circleci.com/gh/settinghead/specky)
 
 ### Project status
-- Pre-alpha. Under active development..
+- Pre-alpha. Under active development.
 
 ### What
 

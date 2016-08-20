@@ -14,7 +14,7 @@ function cat() {
      throw new Error('No spec(s) provided for cat');
    }
 
-   return new Spec(SPEC_TYPE_CAT, null, genCatConformer(specs), null);
+   return new Spec(SPEC_TYPE_CAT, specs, genCatConformer(specs), null);
 };
 
 function genCatConformer(specs) {

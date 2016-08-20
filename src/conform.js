@@ -2,7 +2,7 @@
 
 var Problem = require('./_Problem');
 var isFn = require('./preds/isFn');
-var isSpec = require('./isSpec');
+var isSpec = require('./utils/isSpec');
 
 function conform(predOrSpec, x) {
   if(predOrSpec && isSpec(predOrSpec)) {
