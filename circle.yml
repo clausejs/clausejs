@@ -4,3 +4,6 @@ machine:
 test:
   post:
     - npm run build
+general:
+  artifacts:
+    - "dist"
