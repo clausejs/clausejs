@@ -38,3 +38,7 @@ npm run dev
 ```bash
 npm run test
 ```
+
+### Credit
+- Both origin of the idea and API are heavily inspired by Rich Hickey's [clojure.spec](http://clojure.org/about/spec)
+- NFA spec matching inspired by implementation of Thompson NFA regex matching algorithm, specifically, [afader's implementation](https://github.com/afader/thompson-regex-js)
