@@ -2,16 +2,16 @@
 
 var Problem = require('./_Problem');
 var isProblem = require('./isProblem');
-var isFn = require('./preds/isFn');
-var isSpec = require('./utils/isSpec');
+var isPred = require('./utils/isPred');
+var isComp = require('./utils/isComp');
 
 function isValid(pred, x) {
   if(!pred) {
     throw new Error('Spec is required');
   }
-  else if (isSpec(pred)) {
+  else if (isComp(pred)) {
     return !(isProblem(pred.conform(x)));
-  } else if (isFn(pred)) {
+  } else if (isPred(pred)) {
     return pred(x);
   }
   else {

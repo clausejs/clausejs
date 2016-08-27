@@ -4,13 +4,13 @@ var expect = require('chai').expect;
 var s = require('../src/');
 var Problem = s.Problem;
 var Spec = require('../src/_Spec');
-var isSpec = require('../src/utils/isSpec');
+var isComp = require('../src/utils/isComp');
 var identity = s.identity;
 
 describe('fspec', function() {
   it('should return a function that checks the spec of a given function as its input', function() {
     var FspecSpec = s.fspec({
-      args: s.cat(isSpec),
+      args: s.cat(isComp),
       ret: s.isFn
     });
 

@@ -21,7 +21,7 @@ function _Spec(specType, args, conformFn, generateFn) {
       return generateFn.call(_this, x);
     }
   }
-  this.___isSpec = true;
+  this.___isComp = true;
 };
 
 module.exports = _Spec;

@@ -1,5 +1,5 @@
 var specky = require('./index.unspecked');
-var isSpec = require('./utils/isSpec');
+var isComp = require('./utils/isComp');
 var isPred = require('./utils/isPred');
 var fspec = specky.fspec, cat = specky.cat, keys = specky.keys, zeroOrMore = specky.zeroOrMore;
 
@@ -11,9 +11,9 @@ function specThemAll (s) {
 
   var fnSpecs = {
     isFn: fspec({args: s.any, ret: s.isBool}),
-    keys: fspec({args: cat(keys({req: ['req']})), ret: isSpec}),
-    or: fspec({args: zeroOrMore(s.or(isPred, isSpec))}),
-    zeroOrMore: fspec({args: cat(s.or(isPred, isSpec))})
+    keys: fspec({args: cat(keys({req: ['req']})), ret: isComp}),
+    or: fspec({args: zeroOrMore(s.or(isPred, isComp))}),
+    zeroOrMore: fspec({args: cat(s.or(isPred, isComp))})
   };
 
   //apply fn specs if it exists

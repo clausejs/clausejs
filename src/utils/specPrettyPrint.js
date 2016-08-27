@@ -1,4 +1,4 @@
-var isSpec = require('./isSpec');
+var isComp = require('./isComp');
 var isPred = require('./isPred');
 var isArray = require('isarray');
 var fnName = require('./fnName');
@@ -10,7 +10,7 @@ function specPrettyPrint(spec) {
 function _pp(spec, level) {
   if (isPred(spec)) {
     return _indent(level) + 'Pred: ' + fnName(spec) + '\n';
-  } else if (isSpec(spec)) {
+  } else if (isComp(spec)) {
     var accu = _indent(level) + 'Spec: ' + spec.type + '\n';
 
     if(isArray(spec.args)) {
