@@ -8,7 +8,7 @@ var indexedFragmentStates = function(fragment) {
   var states = [];
   while (frontier.length > 0) {
     var state = frontier.pop();
-    if (state.index == null) {
+    if (state.index === null) {
       state.index = nextIndex;
       nextIndex++;
       state.transitions.forEach(function(transition) {
@@ -21,8 +21,9 @@ var indexedFragmentStates = function(fragment) {
 };
 
 var evalFunctions = {};
+
 var evalSpec = function(expr) {
-  if (expr.type == null) {
+  if (expr.type === null) {
     var exprString = util.inspect(expr);
     throw "Expression has no type: " + exprString;
   } else if (!(expr.type in evalFunctions)) {
@@ -47,26 +48,27 @@ var evalChildrenThen = function(wrapper) {
   };
 };
 
-evalFunctions.root = evalChildThen(fragment.root);
-evalFunctions.concatenation = evalChildrenThen(fragment.concatenation);
-evalFunctions.alternation = evalChildrenThen(fragment.alternation);
-evalFunctions.zeroOrMore = evalChildThen(fragment.zeroOrMore);
-evalFunctions.oneOrMore = evalChildThen(fragment.oneOrMore);
-evalFunctions.zeroOrOne = evalChildThen(fragment.zeroOrOne);
+['root',
+ 'concatenation',
+ 'alternation',
+ 'ZERO_OR_MORE',
+ 'ONE_OR_MORE'].forEach(function (fragName) {
+   evalFunctions[fragName] = evalChildThen(fragment[fragName]);
+ });
+
 evalFunctions.predicate = function(expr) {
   var name = expr.data.name;
   return fragment.predicate(name);
 };
 
-var compile = function(specOrPred) {
-  var fragment = evalSpec(specOrPred);
-  var util=require('util');
+var compile = function(expr) {
+  var fragment = evalSpec(expr);
   var states = indexedFragmentStates(fragment);
   var numStates = states.length;
   var nfaTransitions = {};
   var finalState;
   states.forEach(function(state) {
-    if (state.transitions.length == 0) {
+    if (state.transitions.length === 0) {
       finalState = state.index;
     };
     var outTrans = {};
@@ -80,7 +82,7 @@ var compile = function(specOrPred) {
     numStates: numStates,
     finalState: finalState,
     transitions: nfaTransitions,
-    spec: specOrPred
+    expression: expr
   };
 };
 

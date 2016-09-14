@@ -4,7 +4,7 @@ module.exports = {
   },
   equals: function(x) {
     return function(y) {
-      return x == y;
+      return x === y;
     }
   }
 };

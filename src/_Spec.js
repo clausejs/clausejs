@@ -1,6 +1,6 @@
 'use strict';
 
-function _Spec(specType, args, conformFn, generateFn) {
+function _Spec(type, args, conformFn, generateFn) {
 
   if(arguments.length !== 4) {
     throw new Error('Wrong number of arguments passed to new _Spec()');
@@ -9,7 +9,7 @@ function _Spec(specType, args, conformFn, generateFn) {
     throw new Error('No argument list passed to new _Spec()');
   }
 
-  this.type = specType;
+  this.type = type;
   this.args = args;
 
   this.conform = function tryConform(x, _this) {
@@ -21,7 +21,7 @@ function _Spec(specType, args, conformFn, generateFn) {
       return generateFn.call(_this, x);
     }
   }
-  this.___isComp = true;
+  this.___isSpec = true;
 };
 
 module.exports = _Spec;

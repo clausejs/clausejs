@@ -6,7 +6,7 @@ var check = require('mocha-testcheck').check;
 
 var s = require('../src/');
 
-describe('logic', function() {
+describe.only('logic', function() {
   this.slow(90000); //generative tests take more time
   this.timeout(10000); //generative tests take more time
 

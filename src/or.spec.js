@@ -3,13 +3,13 @@
 var or = require('./or');
 var cat = require('./cat');
 var fspec = require('./fspec');
-var isComp = require('./utils/isComp');
+var isSpec = require('./utils/isSpec');
 
 var UnnamedArgSpec;
 
 var OrSpec = fspec({
   args: cat(),
-  ret: isComp
+  ret: isSpec
 });
 
 module.exports = OrSpec(or);

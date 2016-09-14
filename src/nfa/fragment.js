@@ -1,5 +1,5 @@
 var predicates = require('./predicates.js');
-var epsilon = "\u03B5";
+var EPSILON = "\u03B5";
 
 var fragmentState = function(transitions, index) {
   return {
@@ -49,8 +49,8 @@ build.concatenation = function(frags) {
 
 build.alternation = function(frags) {
   var binaryAlt = function(frag1, frag2) {
-    var trans1 = fragmentTransition(epsilon, frag1.head);
-    var trans2 = fragmentTransition(epsilon, frag2.head);
+    var trans1 = fragmentTransition(EPSILON, frag1.head);
+    var trans2 = fragmentTransition(EPSILON, frag2.head);
     var head = fragmentState([trans1, trans2]);
     var tails = frag1.tails.concat(frag2.tails);
     return fragment(head, tails);
@@ -58,25 +58,25 @@ build.alternation = function(frags) {
   return frags.reduce(binaryAlt);
 };
 
-build.zeroOrMore = function(frag) {
-  var loopTrans = fragmentTransition(epsilon, frag.head);
-  var breakTrans = fragmentTransition(epsilon, null);
+build['ZERO_OR_MORE'] = function(frag) {
+  var loopTrans = fragmentTransition(EPSILON, frag.head);
+  var breakTrans = fragmentTransition(EPSILON, null);
   var head = fragmentState([loopTrans, breakTrans]);
   patch(frag.tails, head);
   return fragment(head, [breakTrans]);
 };
 
-build.oneOrMore = function(frag) {
-  var loopTrans = fragmentTransition(epsilon, frag.head);
-  var breakTrans = fragmentTransition(epsilon, null);
+build['ONE_OR_MORE'] = function(frag) {
+  var loopTrans = fragmentTransition(EPSILON, frag.head);
+  var breakTrans = fragmentTransition(EPSILON, null);
   var state = fragmentState([loopTrans, breakTrans]);
   patch(frag.tails, state);
   return fragment(frag.head, [breakTrans]);
 };
 
 build.zeroOrOne = function(frag) {
-  var matchTrans = fragmentTransition(epsilon, frag.head);
-  var skipTrans = fragmentTransition(epsilon, null);
+  var matchTrans = fragmentTransition(EPSILON, frag.head);
+  var skipTrans = fragmentTransition(EPSILON, null);
   var head = fragmentState([matchTrans, skipTrans]);
   var tails = frag.tails.concat([skipTrans]);
   return fragment(head, tails);

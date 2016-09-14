@@ -4,17 +4,21 @@ var Spec = require('./_Spec');
 var Problem = require('./_Problem');
 var conform = require('./conform');
 var isProblem = require('./isProblem');
+var wrapSpec = require('./utils/wrapSpec');
+var _type = 'ZERO_OR_MORE';
 
 function zeroOrMore() {
-  var spec = arguments[0];
+  var rawExpr = arguments[0];
 
-  if(!spec) {
-    throw new Error('No spec(s) provided for zeroOrMore');
+  if(!rawExpr) {
+    throw new Error('No expression provided for zeroOrMore');
   } else if (Array.from(arguments).length !== 1) {
-    throw new Error('Exactly one spec required for zeroOrMore');
+    throw new Error('Exactly one expression is required for zeroOrMore');
   }
 
-  return new Spec('ZERO_OR_MORE', spec, genZeroOrMoreConformer(spec), null);
+  var spec = wrapSpec(rawExpr);
+
+  return new Spec(_type, spec, genZeroOrMoreConformer(spec), null);
 };
 
 function genZeroOrMoreConformer(spec) {

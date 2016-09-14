@@ -3,13 +3,13 @@
 var Problem = require('./_Problem');
 var isProblem = require('./isProblem');
 var isPred = require('./utils/isPred');
-var isComp = require('./utils/isComp');
+var isSpec = require('./utils/isSpec');
 
 function isValid(pred, x) {
   if(!pred) {
     throw new Error('Spec is required');
   }
-  else if (isComp(pred)) {
+  else if (isSpec(pred)) {
     return !(isProblem(pred.conform(x)));
   } else if (isPred(pred)) {
     return pred(x);

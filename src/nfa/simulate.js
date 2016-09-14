@@ -3,7 +3,7 @@ var simulate = function(nfa, input) {
   var frontier = [initial];
   while (frontier.length > 0) {
     var current = frontier.shift();
-    if (current.state == nfa.finalState && current.offset == input.length) {
+    if (current.state === nfa.finalState && current.offset === input.length) {
       return true;
     }
     for (nextState in nfa.transitions[current.state]) {
