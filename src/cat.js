@@ -4,15 +4,18 @@ var Spec = require('./_Spec');
 var Problem = require('./_Problem');
 var conform = require('./conform');
 var isProblem = require('./isProblem');
+var coerceIntoSpec = require('./utils/coerceIntoSpec');
 
 var SPEC_TYPE_CAT = 'CAT';
 
 function cat() {
-   var specs = Array.from(arguments);
+   var rawExprs = Array.from(arguments);
 
-   if(!specs) {
-     throw new Error('No spec(s) provided for cat');
+   if(!rawExprs) {
+     throw new Error('No expression(s) provided for cat');
    }
+
+   var specs = rawExprs.map(coerceIntoSpec);
 
    return new Spec(SPEC_TYPE_CAT, specs, genCatConformer(specs), null);
 };

@@ -8,6 +8,9 @@ var simulate = require('./nfa/simulate');
 
 
 function conform(spec, x) {
+  // console.log('------');
+  // console.log(spec.toString());
+
   if(spec && isSpec(spec)) {
     var compiled = compile(spec);
     var matchedX = nfa.simulate(compiled, x);

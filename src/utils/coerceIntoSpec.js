@@ -4,7 +4,7 @@ var Spec = require('../_Spec');
 
 var SPEC_TYPE_PRED = 'PRED';
 
-function wrapSpec(expr) {
+function coerceIntoSpec(expr) {
   if(isSpec(expr)) {
     return expr;
   } else if (isPred(expr)) {
@@ -18,4 +18,4 @@ function _wrap(pred) {
   return new Spec(SPEC_TYPE_PRED, pred, pred, null);
 }
 
-module.exports = wrapSpec;
+module.exports = coerceIntoSpec;

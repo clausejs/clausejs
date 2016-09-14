@@ -30,14 +30,14 @@ var patch = function(tails, state) {
 
 var build = {};
 
-build.predicate = function(name) {
+build['PRED'] = function(name) {
   var trans = fragmentTransition(name, null);
   var head = fragmentState([trans]);
   var tails = [trans];
   return fragment(head, tails);
 };
 
-build.concatenation = function(frags) {
+build['CAT'] = function(frags) {
   var binaryConcat = function(frag1, frag2) {
     patch(frag1.tails, frag2.head);
     var head = frag1.head;
@@ -47,7 +47,7 @@ build.concatenation = function(frags) {
   return frags.reduce(binaryConcat);
 };
 
-build.alternation = function(frags) {
+build['OR'] = function(frags) {
   var binaryAlt = function(frag1, frag2) {
     var trans1 = fragmentTransition(EPSILON, frag1.head);
     var trans2 = fragmentTransition(EPSILON, frag2.head);
@@ -74,7 +74,7 @@ build['ONE_OR_MORE'] = function(frag) {
   return fragment(frag.head, [breakTrans]);
 };
 
-build.zeroOrOne = function(frag) {
+build['ZERO_OR_ONE'] = function(frag) {
   var matchTrans = fragmentTransition(EPSILON, frag.head);
   var skipTrans = fragmentTransition(EPSILON, null);
   var head = fragmentState([matchTrans, skipTrans]);

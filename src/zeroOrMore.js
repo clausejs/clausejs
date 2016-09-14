@@ -4,7 +4,7 @@ var Spec = require('./_Spec');
 var Problem = require('./_Problem');
 var conform = require('./conform');
 var isProblem = require('./isProblem');
-var wrapSpec = require('./utils/wrapSpec');
+var coerceIntoSpec = require('./utils/coerceIntoSpec');
 var _type = 'ZERO_OR_MORE';
 
 function zeroOrMore() {
@@ -16,7 +16,7 @@ function zeroOrMore() {
     throw new Error('Exactly one expression is required for zeroOrMore');
   }
 
-  var spec = wrapSpec(rawExpr);
+  var spec = coerceIntoSpec(rawExpr);
 
   return new Spec(_type, spec, genZeroOrMoreConformer(spec), null);
 };

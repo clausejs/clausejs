@@ -35,7 +35,7 @@ var evalSpec = function(expr) {
 
 var evalChildThen = function(wrapper) {
   return function(expr) {
-    var childFrag = evalSpec(expr.children[0]);
+    var childFrag = evalSpec(expr.args[0]);
     return wrapper(childFrag);
   };
 };
@@ -43,22 +43,22 @@ var evalChildThen = function(wrapper) {
 var evalChildrenThen = function(wrapper) {
   return function(expr) {
     var evalChild = function(child) { return evalSpec(child); };
-    var childFrags = expr.children.map(evalChild);
+    var childFrags = expr.args.map(evalChild);
     return wrapper(childFrags);
   };
 };
 
 ['root',
- 'concatenation',
- 'alternation',
+ 'CAT',
+ 'OR',
  'ZERO_OR_MORE',
  'ONE_OR_MORE'].forEach(function (fragName) {
    evalFunctions[fragName] = evalChildThen(fragment[fragName]);
  });
 
-evalFunctions.predicate = function(expr) {
-  var name = expr.data.name;
-  return fragment.predicate(name);
+evalFunctions['PRED'] = function(x) {
+  var name = x.args[0];
+  return fragment['PRED'](name);
 };
 
 var compile = function(expr) {

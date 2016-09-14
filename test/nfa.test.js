@@ -6,12 +6,12 @@ var check = require('mocha-testcheck').check;
 
 var s = require('../src/');
 
-describe.only('logic', function() {
+describe('logic', function() {
   this.slow(90000); //generative tests take more time
   this.timeout(10000); //generative tests take more time
 
   describe('zeroOrMore', function() {
-    check.it('accepts zero or more int\'s',
+    check.it.only('accepts zero or more int\'s',
       [gen.array(gen.int)], function(ints) {
         var ZeroOrMoreIntegers = s.zeroOrMore(Number.isInteger);
         expect(s.isValid(ZeroOrMoreIntegers, ints)).to.be.true;
