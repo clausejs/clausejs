@@ -8,7 +8,7 @@ var identity = s.identity;
 
 describe('or', function() {
   it('should accept one or more conditions', function() {
-    var NumOrStr = s.or(s.isNum, s.isStr);
+    var NumOrStr = s.or(s.isNum, s.isStr, s.isBool);
     expect(s.isValid(NumOrStr, 'hello')).to.be.true;
     expect(s.isValid(NumOrStr, 33)).to.be.true;
     expect(s.isValid(NumOrStr, new Object())).to.be.false;

@@ -9,6 +9,7 @@ module.exports = {
   or: require('./or'),
   Problem: require('./_Problem'),
   zeroOrMore: require('./zeroOrMore'),
+  oneOrMore: require('./oneOrMore'),
 
   /* Predicates */
   isBool: require('./preds/isBool'),

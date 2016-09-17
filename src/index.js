@@ -28,4 +28,5 @@ function specThemAll (s) {
 }
 
 
-module.exports = specked;
+// module.exports = specked;
+module.exports = specky;

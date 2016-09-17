@@ -22,7 +22,7 @@ var indexedFragmentStates = function(fragment) {
 
 var evalFunctions = {};
 
-var evalSpec = function(expr) {
+function evalSpec(expr) {
   if (expr.type === null) {
     var exprString = util.inspect(expr);
     throw "Expression has no type: " + exprString;
@@ -49,14 +49,17 @@ var evalChildrenThen = function(wrapper) {
 };
 
 ['root',
- 'CAT',
- 'OR',
  'ZERO_OR_MORE',
  'ONE_OR_MORE'].forEach(function (fragName) {
    evalFunctions[fragName] = evalChildThen(fragment[fragName]);
  });
 
-evalFunctions['PRED'] = function(x) {
+['OR',
+ 'CAT'].forEach(function (fragName) {
+   evalFunctions[fragName] = evalChildrenThen(fragment[fragName]);
+ });
+
+evalFunctions.PRED = function(x) {
   var name = x.args[0];
   return fragment['PRED'](name);
 };
