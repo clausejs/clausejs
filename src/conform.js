@@ -8,12 +8,14 @@ var simulate = require('./nfa/simulate');
 
 
 function conform(spec, x) {
-
   if(spec && isSpec(spec)) {
     var compiled = compile(spec);
-    console.log(compiled);
-    var matchedX = nfa.simulate(compiled, x);
-    return matchedX;
+    var matchedX = simulate(compiled, x);
+    if(matchedX === false) {
+      return new Problem(x, spec, 'Expression did not match');
+    } else {
+      return matchedX;
+    }
     // return spec.conform(x);
   } else if (spec && isPred(spec)) {
     return spec(x);

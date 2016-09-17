@@ -1,4 +1,6 @@
-var simulate = function(nfa, input) {
+var Problem = require('../_Problem');
+
+var simulate = function(nfa, expr, input) {
   var initial = { state: 0, offset: 0 };
   var frontier = [initial];
   while (frontier.length > 0) {
@@ -16,6 +18,7 @@ var simulate = function(nfa, input) {
       }
     }
   }
+
   return false;
 };
 

@@ -36,8 +36,7 @@ describe('logic', function() {
 
         var expr = cat(s.isNum, oneOrMore(cat(s.isStr, s.isStr)), s.isNum);
         var val = [a].concat(repeat(n * 2, b)).concat([a]);
-
-        expect(s.isValid(expr, val));
+        expect(s.isValid(expr, val)).to.be.true;
 
       });
 

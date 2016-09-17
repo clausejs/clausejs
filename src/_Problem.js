@@ -1,5 +1,3 @@
-
-
 function Problem(val, failsPredicate, msg) {
   this.val = val;
   this.name = 'Problem';
