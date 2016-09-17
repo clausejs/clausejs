@@ -1,5 +1,4 @@
 
-var util = require('util');
 var fragment = require('./fragment.js');
 
 var indexedFragmentStates = function(fragment) {
@@ -24,8 +23,7 @@ var evalFunctions = {};
 
 function evalSpec(expr) {
   if (expr.type === null) {
-    var exprString = util.inspect(expr);
-    throw "Expression has no type: " + exprString;
+    throw "Expression has no type: " + expr;
   } else if (!(expr.type in evalFunctions)) {
     throw "No evaluation function for expression type '" + expr.type + "'";
   } else {
