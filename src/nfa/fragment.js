@@ -2,8 +2,8 @@ var EPSILON = "\u03B5";
 
 var fragmentState = function(transitions, index) {
   return {
-    transitions: transitions ? transitions : [],
-    index: index
+    transitions: transitions === null ? [] : transitions,
+    index: index || null
   };
 };
 
@@ -81,7 +81,7 @@ build.ZERO_OR_ONE = function(frag) {
   return fragment(head, tails);
 };
 
-build.root = function(frag) {
+build.ROOT = function(frag) {
   var finalState = fragmentState(null, null);
   patch(frag.tails, finalState);
   return fragment(frag.head, []);

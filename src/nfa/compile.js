@@ -48,7 +48,7 @@ var evalChildrenThen = function(wrapper) {
   };
 };
 
-['root',
+['ROOT',
  'ZERO_OR_MORE',
  'ONE_OR_MORE'].forEach(function (fragName) {
    evalFunctions[fragName] = evalChildThen(fragment[fragName]);
@@ -65,7 +65,7 @@ evalFunctions.PRED = function(x) {
 };
 
 function wrapRoot(expr) {
-  return new Spec('root', expr, null, null);
+  return new Spec('ROOT', expr, null, null);
 }
 
 var compile = function(expr) {
@@ -84,7 +84,7 @@ var compile = function(expr) {
     state.transitions.map(function(fragTrans) {
       outTrans[fragTrans.target.index] = fragTrans.name;
     });
-    nfaTransitions[state.index] = outTrans;
+    nfaTransitions[state.index.toString()] = outTrans;
   });
   return {
     initialState: 0,
