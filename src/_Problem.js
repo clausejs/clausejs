@@ -1,4 +1,4 @@
-'use strict';
+
 
 function Problem(val, failsPredicate, msg) {
   this.val = val;

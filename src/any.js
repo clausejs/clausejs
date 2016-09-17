@@ -1,4 +1,4 @@
-'use strict';
+
 
 var Spec = require('./_Spec');
 var identity = require('./identity');

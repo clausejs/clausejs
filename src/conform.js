@@ -1,4 +1,4 @@
-'use strict';
+
 
 var Problem = require('./_Problem');
 var isPred = require('./utils/isPred');

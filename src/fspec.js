@@ -1,4 +1,4 @@
-'use strict';
+
 var Problem = require('./_Problem');
 var isValid = require('./isValid');
 var functionName = require('./utils/fnName');

@@ -1,4 +1,4 @@
-'use strict';
+
 
 var or = require('./or');
 var cat = require('./cat');

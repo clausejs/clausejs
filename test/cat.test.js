@@ -1,4 +1,4 @@
-'use strict';
+
 
 var s = require('../src/');
 var expect = require('chai').expect;

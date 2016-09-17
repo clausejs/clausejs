@@ -1,4 +1,4 @@
-'use strict';
+
 
 var isFn = require('../preds/isFn');
 var Spec = require('../_Spec');
