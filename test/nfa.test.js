@@ -9,7 +9,7 @@ var cat = s.cat;
 var oneOrMore = s.oneOrMore;
 var repeat = require('../src/utils/repeat');
 
-describe('logic', function() {
+describe.only('logic', function() {
   this.slow(90000); //generative tests take more time
   this.timeout(10000); //generative tests take more time
 
@@ -29,7 +29,7 @@ describe('logic', function() {
         expect(s.isValid(ZeroOrMoreIntegers, strs)).to.be.false;
     });
 
-    check.it.only('more complex expressions',
+    check.it('more complex expressions',
       [gen.int, gen.string, gen.strictPosInt],
       function(a, b, n) {
         //imitates regex a(bb+)a

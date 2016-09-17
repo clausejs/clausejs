@@ -28,6 +28,10 @@ function evalSpec(expr) {
   } else if (!(expr.type in evalFunctions)) {
     throw "No evaluation function for expression type '" + expr.type + "'";
   } else {
+    var fn = evalFunctions[expr.type];
+    if(fn === undefined) {
+      fn = evalFunctions.PRED;
+    }
     var r = evalFunctions[expr.type](expr);
     return r;
   }
