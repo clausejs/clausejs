@@ -9,8 +9,8 @@ var simulate = require('./nfa/simulate');
 
 function conform(spec, x) {
   if(spec && isSpec(spec)) {
-    var compiled = compile(spec);
-    var matchedX = simulate(compiled, x);
+    var nfa = compile(spec);
+    var matchedX = simulate(nfa, x);
     if(matchedX === false) {
       return new Problem(x, spec, 'Expression did not match');
     } else {

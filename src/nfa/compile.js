@@ -1,5 +1,6 @@
 
 var fragment = require('./fragment.js');
+var Spec = require('../_Spec');
 
 var indexedFragmentStates = function(fragment) {
   var nextIndex = 0;
@@ -11,7 +12,7 @@ var indexedFragmentStates = function(fragment) {
       state.index = nextIndex;
       nextIndex++;
       state.transitions.forEach(function(transition) {
-	frontier.push(transition.target);
+      	frontier.push(transition.target);
       });
       states.push(state);
     };
@@ -27,7 +28,8 @@ function evalSpec(expr) {
   } else if (!(expr.type in evalFunctions)) {
     throw "No evaluation function for expression type '" + expr.type + "'";
   } else {
-    return evalFunctions[expr.type](expr);
+    var r = evalFunctions[expr.type](expr);
+    return r;
   }
 };
 
@@ -62,9 +64,15 @@ evalFunctions.PRED = function(x) {
   return fragment['PRED'](name);
 };
 
+function wrapRoot(expr) {
+  return new Spec('root', expr, null, null);
+}
+
 var compile = function(expr) {
-  var fragment = evalSpec(expr);
+  var rootedExpr = wrapRoot(expr);
+  var fragment = evalSpec(rootedExpr);
   var states = indexedFragmentStates(fragment);
+
   var numStates = states.length;
   var nfaTransitions = {};
   var finalState;

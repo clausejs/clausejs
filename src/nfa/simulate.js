@@ -1,6 +1,6 @@
 var Problem = require('../_Problem');
 
-var simulate = function(nfa, expr, input) {
+var simulate = function(nfa, input) {
   var initial = { state: 0, offset: 0 };
   var frontier = [initial];
   while (frontier.length > 0) {
@@ -12,7 +12,7 @@ var simulate = function(nfa, expr, input) {
       var observed = input[current.offset];
       var transition = nfa.transitions[current.state][nextState];
       var nextOffset = current.offset + transition.increment;
-      if (transition.predicate(observed) && nextOffset <= input.length) {
+      if (transition(observed) && nextOffset <= input.length) {
       	var next = { state: nextState, offset: nextOffset };
       	frontier.push(next);
       }

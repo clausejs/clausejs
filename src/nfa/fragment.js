@@ -1,4 +1,3 @@
-var predicates = require('./predicates.js');
 var EPSILON = "\u03B5";
 
 var fragmentState = function(transitions, index) {
@@ -32,7 +31,7 @@ var build = {};
 
 build.PRED = function(name) {
   var trans = fragmentTransition(name, null);
-  var head = fragmentState([trans]);
+  var head = fragmentState([trans], null);
   var tails = [trans];
   return fragment(head, tails);
 };
