@@ -5,9 +5,9 @@
   "main": "src/index.js",
   "scripts": {
     "dev": "npm run test:watch",
-    "test": "./node_modules/.bin/eslint *.js ./; ./node_modules/.bin/mocha",
-    "test:watch": "./node_modules/.bin/mocha --watch",
-    "build": "./node_modules/.bin/webpack"
+    "test": "eslint src/**/*.js test/**/*.js && mocha",
+    "test:watch": "mocha --watch",
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
