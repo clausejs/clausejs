@@ -1,6 +1,6 @@
 
 
-var Problem = require('./_Problem');
+var Problem = require('../_Problem');
 
 function isProblem(x) {
   return x instanceof Problem;

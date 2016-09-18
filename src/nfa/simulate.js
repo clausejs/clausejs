@@ -1,11 +1,24 @@
 var Problem = require('../_Problem');
-var coerceIntoArray = require('../utils/coerceIntoArray');
+var isProblem = require('../utils/isProblem');
+var isArray = require('isarray');
 
 var EPSILON = "\u03B5";
 
+function matches(nfa, rawInput) {
+  var input, isCocerced;
+  if(!isArray(rawInput)) {
+    isCoerced = true;
+    input = [rawInput];
+  } else {
+    isCoerced = false;
+    input = rawInput;
+  }
 
-var simulate = function(nfa, rawInput) {
-  var input = coerceIntoArray(rawInput);
+  var r = {
+    matched: false,
+    result: null
+  };
+
   var initial = { state: 0, offset: 0 };
   var frontier = [initial];
   // console.log('nfa: ', nfa);
@@ -15,7 +28,8 @@ var simulate = function(nfa, rawInput) {
     var current = frontier.shift();
     // console.log('current: ', current);
     if (current.state === nfa.finalState && current.offset === input.length) {
-      return true;
+      r.matched = true;
+      r.result = rawInput;
     }
     for (nextStateStr in nfa.transitions[current.state]) {
       var nextState = parseInt(nextStateStr);
@@ -28,14 +42,18 @@ var simulate = function(nfa, rawInput) {
       } else {
         nextOffset = current.offset;
       }
-      if ((transition === EPSILON || transition(observed)) && nextOffset <= input.length) {
+      if ((transition === EPSILON ||
+           !isProblem(transition.conform(observed))) &&
+          nextOffset <= input.length) {
       	var next = { state: nextState, offset: nextOffset };
       	frontier.push(next);
       }
     }
   }
 
-  return false;
+  return r;
 };
 
-module.exports = simulate;
+
+
+module.exports = matches;

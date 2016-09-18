@@ -1,7 +1,7 @@
 
 
 var Problem = require('./_Problem');
-var isProblem = require('./isProblem');
+var isProblem = require('./utils/isProblem');
 var isPred = require('./utils/isPred');
 var isSpec = require('./utils/isSpec');
 var conform = require('./conform');

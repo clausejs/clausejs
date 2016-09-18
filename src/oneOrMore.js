@@ -1,28 +1,24 @@
-
-
 var Spec = require('./_Spec');
 var Problem = require('./_Problem');
-var conform = require('./conform');
-var isProblem = require('./isProblem');
+var isProblem = require('./utils/isProblem');
 var coerceIntoSpec = require('./utils/coerceIntoSpec');
-var _type = 'ONE_OR_MORE';
+var nfaConformer = require('./nfa/conformer');
+var SPEC_TYPE = 'ONE_OR_MORE';
 
 function oneOrMore() {
-  var rawExpr = arguments[0];
+  var rawSpec = arguments[0];
 
-  if(!rawExpr) {
+  if(!rawSpec) {
     throw new Error('No expression provided for oneOrMore');
   } else if (Array.from(arguments).length !== 1) {
     throw new Error('Exactly one expression is required for oneOrMore');
   }
 
-  var spec = coerceIntoSpec(rawExpr);
+  var spec = coerceIntoSpec(rawSpec);
 
-  return new Spec(_type, spec, genOneOrMoreConformer(spec), null);
+  var expr = new Spec(SPEC_TYPE, spec, null, null);
+  expr.conform = nfaConformer(expr);
+  return expr;
 };
-
-function genOneOrMoreConformer(spec) {
-  //TODO: DELETE ME; use nfa
-}
 
 module.exports = oneOrMore;

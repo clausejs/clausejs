@@ -63,8 +63,7 @@ var evalChildrenThen = function(wrapper) {
  });
 
 evalFunctions.PRED = function(x) {
-  var name = x.args[0];
-  return fragment['PRED'](name);
+  return fragment['PRED'](x);
 };
 
 function wrapRoot(expr) {

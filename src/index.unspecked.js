@@ -5,7 +5,7 @@ module.exports = {
   isValid: require('./isValid'),
   keys: require('./keys'),
   identity: require('./identity'),
-  isProblem: require('./isProblem'),
+  isProblem: require('./utils/isProblem'),
   or: require('./or'),
   Problem: require('./_Problem'),
   zeroOrMore: require('./zeroOrMore'),

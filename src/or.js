@@ -1,39 +1,28 @@
-
-
 var Spec = require('./_Spec');
-var isProblem = require('./isProblem');
+var isProblem = require('./utils/isProblem');
 var Problem = require('./_Problem');
 var conform = require('./conform');
 var fspec = require('./fspec');
 var coerceIntoSpec = require('./utils/coerceIntoSpec');
+var nfaConformer = require('./nfa/conformer');
+
+var SPEC_TYPE = 'OR';
 
 function or() {
-  var rawExprs = Array.from(arguments);
-  var nulls = rawExprs.filter(function(s) {
+  var rawSpecs = Array.from(arguments);
+  var nulls = rawSpecs.filter(function(s) {
     return s === null || s === undefined;
   });
   if(nulls.length > 0) {
     throw 'Or: one of the specs is null or undefined';
   }
-  var specs = rawExprs.map(coerceIntoSpec);
 
-  return new Spec('OR', specs, genOrConformer(specs), null);
+  var specs = rawSpecs.map(coerceIntoSpec);
+
+  var expr = new Spec(SPEC_TYPE, specs, null, null);
+  expr.conform = nfaConformer(expr);
+  return expr;
 };
 
-function genOrConformer(specs) {
-  return function tryConformOr(x) {
-    if(specs.length === 0) { //special case
-      return x;
-    }
-    var evalResults = specs.map(function specToConformed(s) { return conform(s, x); });
-    var problems = evalResults.filter(isProblem);
-    if(evalResults.length > 0 && evalResults.length === problems.length) {
-      //all paths should lead to problem
-      return new Problem(x, null, 'or: none of the specs is a match for value ' + x);
-    } else {
-      return x;
-    }
-  }
-}
 
 module.exports = or;

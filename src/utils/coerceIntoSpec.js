@@ -1,6 +1,7 @@
 var isPred = require('./isPred');
 var isSpec = require('./isSpec');
 var Spec = require('../_Spec');
+var Problem = require('../_Problem');
 
 var SPEC_TYPE_PRED = 'PRED';
 
@@ -15,7 +16,17 @@ function coerceIntoSpec(expr) {
 }
 
 function _wrap(pred) {
-  return new Spec(SPEC_TYPE_PRED, pred, pred, null);
+  return new Spec(SPEC_TYPE_PRED, pred, predConformer(pred), null);
+}
+
+function predConformer(pred) {
+  return function conformPred(x) {
+    if(pred(x)) {
+      return x;
+    } else {
+      return new Problem(x, pred, 'Predicate returns false');
+    }
+  }
 }
 
 module.exports = coerceIntoSpec;

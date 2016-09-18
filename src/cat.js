@@ -2,40 +2,24 @@
 
 var Spec = require('./_Spec');
 var Problem = require('./_Problem');
-var conform = require('./conform');
-var isProblem = require('./isProblem');
+var isProblem = require('./utils/isProblem');
 var coerceIntoSpec = require('./utils/coerceIntoSpec');
+var nfaConformer = require('./nfa/conformer');
 
 var SPEC_TYPE = 'CAT';
 
 function cat() {
-   var rawExprs = Array.from(arguments);
+   var rawSpecs = Array.from(arguments);
 
-   if(!rawExprs) {
+   if(!rawSpecs) {
      throw new Error('No expression(s) provided for cat');
    }
 
-   var specs = rawExprs.map(coerceIntoSpec);
+   var specs = rawSpecs.map(coerceIntoSpec);
 
-   return new Spec(SPEC_TYPE, specs, genCatConformer(specs), null);
-};
-
-function genCatConformer(specs) {
-  return function conformCatVals(vals) {
-    if(!vals) {
-      return new Problem(vals, specs, 'No value(s) provided for cat');
-    } else if (vals.length !== specs.length) {
-      return new Problem(vals, specs, specs.length + ' specs provided in cat, but there are only ' + vals.length + 'values. ' );
-    } else {
-      var r = vals.map(function valToConformed(x, i) { return conform(specs[i], x); });
-      var problems = r.filter(isProblem);
-      if(problems.length > 0) {
-        return new Problem(vals, problems, 'One of the spec in cat did not pass');
-      } else {
-        return vals;
-      }
-    }
-  }
+   var expr = new Spec(SPEC_TYPE, specs, null, null);
+   expr.conform = nfaConformer(expr);
+   return expr;
 }
 
 module.exports = cat;

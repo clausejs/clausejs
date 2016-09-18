@@ -3,7 +3,7 @@
 var s = require('../src/');
 var expect = require('chai').expect;
 
-describe.skip('module integrity', function() {
+describe('module integrity', function() {
   var fnList = ['keys', 'isValid', 'conform', 'fspec', 'isObj', 'isFn'];
 
   it('should contain all the core functions', function() {

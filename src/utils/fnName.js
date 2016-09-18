@@ -1,3 +1,5 @@
+//speculatively finds the name of function
+
 function functionName(fun) {
   var ret = fun.toString();
   ret = ret.substr('function '.length);
