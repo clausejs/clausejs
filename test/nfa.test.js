@@ -9,7 +9,7 @@ var cat = s.cat;
 var oneOrMore = s.oneOrMore;
 var repeat = require('../src/utils/repeat');
 
-describe.only('logic', function() {
+describe('nfa regex', function() {
   this.slow(90000); //generative tests take more time
   this.timeout(10000); //generative tests take more time
 

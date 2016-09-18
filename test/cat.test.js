@@ -13,6 +13,10 @@ describe('cat', function() {
     expect(s.isValid(cattedSpec, nonfomformist)).to.be.false;
     //invalid case: more elems than specs
     expect(s.isValid(cattedSpec, comformist.concat([{extra: 'elements'}, 2]))).to.be.false;
+
+    //empty case
+    expect(s.isValid(cattedSpec, [])).to.be.false;
+
     //invalid case: less elem than spec
     expect(s.isValid(cattedSpec, comformist.slice(0, -1))).to.be.false;
   });

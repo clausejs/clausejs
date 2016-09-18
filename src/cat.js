@@ -6,7 +6,7 @@ var conform = require('./conform');
 var isProblem = require('./isProblem');
 var coerceIntoSpec = require('./utils/coerceIntoSpec');
 
-var SPEC_TYPE_CAT = 'CAT';
+var SPEC_TYPE = 'CAT';
 
 function cat() {
    var rawExprs = Array.from(arguments);
@@ -17,7 +17,7 @@ function cat() {
 
    var specs = rawExprs.map(coerceIntoSpec);
 
-   return new Spec(SPEC_TYPE_CAT, specs, genCatConformer(specs), null);
+   return new Spec(SPEC_TYPE, specs, genCatConformer(specs), null);
 };
 
 function genCatConformer(specs) {

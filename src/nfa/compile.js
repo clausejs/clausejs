@@ -23,18 +23,17 @@ var indexedFragmentStates = function(fragment) {
 var evalFunctions = {};
 
 function evalSpec(expr) {
+  var evalFn;
+
   if (expr.type === null) {
     throw "Expression has no type: " + expr;
   } else if (!(expr.type in evalFunctions)) {
-    throw "No evaluation function for expression type '" + expr.type + "'";
+    evalFn = evalFunctions.PRED;
   } else {
-    var fn = evalFunctions[expr.type];
-    if(fn === undefined) {
-      fn = evalFunctions.PRED;
-    }
-    var r = evalFunctions[expr.type](expr);
-    return r;
+    evalFn = evalFunctions[expr.type];
   }
+  var r = evalFn(expr);
+  return r;
 };
 
 var evalChildThen = function(wrapper) {

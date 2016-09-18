@@ -10,6 +10,6 @@ describe('pretty print', function() {
       s.cat(s.isNum, s.isNum, s.isStr, s.zeroOrMore(s.isObj)),
       s.or(s.isNum, s.cat(s.isNum, s.isBool)));
       var out = specPrettyPrint(complexSpec);
-      expect(out.match(/\n/g).length).to.equal(16);
+      expect(out.match(/\n/g).length).to.equal(25);
   });
 });

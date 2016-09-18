@@ -12,6 +12,7 @@ function fspec(fnSpec) {
 
     function speckedFn() {
       var args = Array.from(arguments);
+
       if(argsSpec) {
         if(!isValid(argsSpec, args)) {
           throw new Problem(fnName, argsSpec, 'Arguments did not pass spec');
