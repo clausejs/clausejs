@@ -2,7 +2,8 @@
 
 function isFunction(x) {
   var getType = {};
-  return x && getType.toString.call(x) === '[object Function]';
+  // (x || false) guarantees returning of boolean type
+  return (x || false) && getType.toString.call(x) === '[object Function]';
 };
 
 module.exports = isFunction;

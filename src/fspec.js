@@ -15,13 +15,13 @@ function fspec(fnSpec) {
 
       if(argsSpec) {
         if(!isValid(argsSpec, args)) {
-          throw new Problem(fnName, argsSpec, 'Arguments did not pass spec');
+          throw new Problem(fnName, argsSpec, 'Arguments ' + args + ' did not pass spec for function ' + fnName);
         }
       }
-      var retVal = fn.apply(null, arguments);
+      var retVal = fn.apply(null, args);
       if(retSpec) {
         if(!isValid(retSpec, retVal)) {
-          throw new Problem(retSpec, retSpec, 'Return value did not pass spec');
+          throw new Problem(retSpec, retSpec, 'Return value ' + retVal + ' did not pass function spec for ' + fnName);
         }
       }
       return retVal;

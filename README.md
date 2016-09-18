@@ -25,6 +25,7 @@ It facilitates
 - [Data-driven programming](http://stackoverflow.com/a/1065657/707362)
 - Auto generation of property-based/generative tests, and hence
 - More comprehensive test case coverage
+- Creation of constrained environment that is more powerful than typed languages such as TypeScript
 
 ### Run tests
 
