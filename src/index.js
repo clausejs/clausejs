@@ -13,7 +13,8 @@ function specThemAll (s) {
     isFn: fspec({args: s.any, ret: s.isBool}),
     keys: fspec({args: cat(keys({req: ['req']})), ret: isSpec}),
     or: fspec({args: zeroOrMore(s.or(isPred, isSpec))}),
-    zeroOrMore: fspec({args: cat(s.or(isPred, isSpec))})
+    zeroOrMore: fspec({args: cat(s.or(isPred, isSpec))}),
+    oneOrMore: fspec({args: cat(s.or(isPred, isSpec))}),
   };
 
   //apply fn specs if it exists
