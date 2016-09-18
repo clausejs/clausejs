@@ -1,6 +1,6 @@
 {
   "name": "specky",
-  "version": "0.0.1",
+  "version": "0.0.0-BROKEN",
   "description": "Spec support for plain JavaScript.",
   "main": "src/index.js",
   "scripts": {
@@ -29,7 +29,6 @@
     "babel-loader": "^6.2.5",
     "chai": "^3.5.0",
     "eslint": "^3.1.1",
-    "lodash": "^4.15.0",
     "mocha": "^3.0.2",
     "mocha-testcheck": "^0.1.2",
     "webpack": "^1.13.2"
