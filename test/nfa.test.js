@@ -40,14 +40,14 @@ describe.only('logic', function() {
 
       });
 
-    check.it.skip('use in conjunction with cat', [], function() {
+    check.it('use in conjunction with cat', [], function() {
       var ZeroOrMoreStrings = s.zeroOrMore(s.isStr);
       var ZeroOrMoreIntegers = s.zeroOrMore(Number.isInteger);
-
+      var expr = s.cat(ZeroOrMoreStrings, ZeroOrMoreIntegers, ZeroOrMoreStrings, s.isBool);
       var validData = ['a', 'b', 1, 2, 3, true];
       var invalidData = [2, 3, 4, 5];
-      expect(s.isValid(s.cat(ZeroOrMoreStrings, ZeroOrMoreIntegers, ZeroOrMoreStrings, s.isBool), validData)).to.be.true;
-      expect(s.isValid(s.cat(ZeroOrMoreStrings, ZeroOrMoreIntegers, ZeroOrMoreStrings, s.isBool), validData)).to.be.false;
+      expect(s.isValid(expr, validData)).to.be.true;
+      expect(s.isValid(expr, invalidData)).to.be.false;
     });
   });
 });

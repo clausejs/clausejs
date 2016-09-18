@@ -5,7 +5,9 @@ var simulate = function(nfa, input) {
   var initial = { state: 0, offset: 0 };
   var frontier = [initial];
   while (frontier.length > 0) {
+    // console.log(frontier);
     var current = frontier.shift();
+    // console.log('current: ', current);
     if (current.state === nfa.finalState && current.offset === input.length) {
       return true;
     }
