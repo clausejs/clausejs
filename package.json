@@ -1,5 +1,5 @@
 {
-  "name": "specky",
+  "name": "speco",
   "version": "0.0.0-BROKEN",
   "description": "Spec support for plain JavaScript.",
   "main": "src/index.js",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/settinghead/specky.git"
+    "url": "git+https://github.com/settinghead/speco.git"
   },
   "keywords": [
     "testing",
@@ -21,9 +21,9 @@
   "author": "Xiyang Chen <settinghead@gmail.com>",
   "license": "EPL-1.0",
   "bugs": {
-    "url": "https://github.com/settinghead/specky/issues"
+    "url": "https://github.com/settinghead/speco/issues"
   },
-  "homepage": "https://github.com/settinghead/specky#readme",
+  "homepage": "https://github.com/settinghead/speco#readme",
   "devDependencies": {
     "babel-core": "^6.13.2",
     "babel-loader": "^6.2.5",

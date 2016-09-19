@@ -1,10 +1,10 @@
-var specky = require('./index.unspecked');
+var speco = require('./index.unspecked');
 var isSpec = require('./utils/isSpec');
 var isPred = require('./utils/isPred');
-var fspec = specky.fspec, cat = specky.cat, keys = specky.keys, zeroOrMore = specky.zeroOrMore;
+var fspec = speco.fspec, cat = speco.cat, keys = speco.keys, zeroOrMore = speco.zeroOrMore;
 
-var specked = specky;
-var specked = specThemAll(specky);
+var specked = speco;
+var specked = specThemAll(speco);
 
 function specThemAll (s) {
   var specked = {};
@@ -18,11 +18,11 @@ function specThemAll (s) {
   };
 
   //apply fn specs if it exists
-  for (var fnName in specky) {
+  for (var fnName in speco) {
     if(fnSpecs.hasOwnProperty(fnName)) {
-      specked[fnName] = fnSpecs[fnName](specky[fnName]);
+      specked[fnName] = fnSpecs[fnName](speco[fnName]);
     } else {
-      specked[fnName] = specky[fnName];
+      specked[fnName] = speco[fnName];
     }
   }
   return specked;
@@ -30,4 +30,4 @@ function specThemAll (s) {
 
 
 module.exports = specked;
-// module.exports = specky;
+// module.exports = speco;
