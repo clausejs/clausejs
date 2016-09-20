@@ -1,12 +1,10 @@
-
-require('mocha-testcheck').install();
 var expect = require('chai').expect;
 var gen = require('mocha-testcheck').gen;
 var check = require('mocha-testcheck').check;
 
-var s = require('../src/');
-var cat = s.cat;
-var oneOrMore = s.oneOrMore;
+var S = require('../src/');
+var cat = S.cat;
+var oneOrMore = S.oneOrMore;
 var repeat = require('../src/utils/repeat');
 
 describe('nfa regex', function() {
@@ -16,17 +14,17 @@ describe('nfa regex', function() {
   describe('zeroOrMore', function() {
     check.it('accepts zero or more int\'s',
       [gen.array(gen.int)], function(ints) {
-        var ZeroOrMoreIntegers = s.zeroOrMore(Number.isInteger);
-        expect(s.isValid(ZeroOrMoreIntegers, ints)).to.be.true;
-        expect(s.isValid(ZeroOrMoreIntegers, [])).to.be.true;
+        var ZeroOrMoreIntegers = S.zeroOrMore(Number.isInteger);
+        expect(S.isValid(ZeroOrMoreIntegers, ints)).to.be.true;
+        expect(S.isValid(ZeroOrMoreIntegers, [])).to.be.true;
     });
 
     check.it('rejects mixtures',
       [gen.array(gen.int), gen.notEmpty(gen.array(gen.string))],
       function(ints, strs) {
-        var ZeroOrMoreIntegers = s.zeroOrMore(Number.isInteger);
-        expect(s.isValid(ZeroOrMoreIntegers, ints.concat(strs))).to.be.false;
-        expect(s.isValid(ZeroOrMoreIntegers, strs)).to.be.false;
+        var ZeroOrMoreIntegers = S.zeroOrMore(Number.isInteger);
+        expect(S.isValid(ZeroOrMoreIntegers, intS.concat(strs))).to.be.false;
+        expect(S.isValid(ZeroOrMoreIntegers, strs)).to.be.false;
     });
 
     check.it('more complex expressions',
@@ -34,20 +32,20 @@ describe('nfa regex', function() {
       function(a, b, n) {
         //imitates regex a(bb+)a
 
-        var expr = cat(s.isNum, oneOrMore(cat(s.isStr, s.isStr)), s.isNum);
+        var expr = cat(S.isNum, oneOrMore(cat(S.isStr, S.isStr)), S.isNum);
         var val = [a].concat(repeat(n * 2, b)).concat([a]);
-        expect(s.isValid(expr, val)).to.be.true;
+        expect(S.isValid(expr, val)).to.be.true;
 
       });
 
     check.it('use in conjunction with cat', [], function() {
-      var ZeroOrMoreStrings = s.zeroOrMore(s.isStr);
-      var ZeroOrMoreIntegers = s.zeroOrMore(Number.isInteger);
-      var expr = s.cat(ZeroOrMoreStrings, ZeroOrMoreIntegers, ZeroOrMoreStrings, s.isBool);
+      var ZeroOrMoreStrings = S.zeroOrMore(S.isStr);
+      var ZeroOrMoreIntegers = S.zeroOrMore(Number.isInteger);
+      var expr = S.cat(ZeroOrMoreStrings, ZeroOrMoreIntegers, ZeroOrMoreStrings, S.isBool);
       var validData = ['a', 'b', 1, 2, 3, true];
       var invalidData = [2, 3, 4, 5];
-      expect(s.isValid(expr, validData)).to.be.true;
-      expect(s.isValid(expr, invalidData)).to.be.false;
+      expect(S.isValid(expr, validData)).to.be.true;
+      expect(S.isValid(expr, invalidData)).to.be.false;
     });
   });
 });

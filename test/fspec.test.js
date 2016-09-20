@@ -1,33 +1,31 @@
-
-
 var expect = require('chai').expect;
-var s = require('../src/');
-var Problem = s.Problem;
+var S = require('../src/');
+var Problem = S.Problem;
 var Spec = require('../src/_Spec');
 var isSpec = require('../src/utils/isSpec');
-var identity = s.identity;
+var identity = S.identity;
 
 describe('fspec', function() {
   it('should return a function that checks the spec of a given function as its input', function() {
-    var FspecSpec = s.fspec({
-      args: s.cat(isSpec),
-      ret: s.isFn
+    var FspecSpec = S.fspec({
+      args: S.cat(isSpec),
+      ret: S.isFn
     });
 
-    var specedFspec = FspecSpec(s.fspec); //meta-ly apply checking to self
-    expect(s.isFn(specedFspec)).to.be.true;
+    var specedFspec = FspecSpec(S.fspec); //meta-ly apply checking to self
+    expect(S.isFn(specedFspec)).to.be.true;
 
     expect(function() { specedFspec('spec should not be a string'); }).to.throw(Problem);
     expect(function() { specedFspec({spec: 'should not be simple obj either'}) }).to.throw();
 
-    expect(function() { specedFspec(new Spec('cat', s.isBool, identity, null), {extra: 'param'}); }).to.throw(Problem);
+    expect(function() { specedFspec(new Spec('cat', S.isBool, identity, null), {extra: 'param'}); }).to.throw(Problem);
     expect(function() { specedFspec(); }).to.throw(Problem);
   });
 
   it('test on sheep counting fn', function() {
-    var sheepCounterSpec = s.fspec({
-      args: s.cat(s.isNum),
-      ret: s.isStr
+    var sheepCounterSpec = S.fspec({
+      args: S.cat(S.isNum),
+      ret: S.isStr
     });
 
     var sheepCounter = sheepCounterSpec(function(c) {
