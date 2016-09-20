@@ -1,5 +1,3 @@
-
-
 var Spec = require('./_Spec');
 var Problem = require('./_Problem');
 var isProblem = require('./utils/isProblem');
