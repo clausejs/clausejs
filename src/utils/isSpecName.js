@@ -1,5 +1,5 @@
 var isStr = require('../preds/isStr');
 
-module.exports = isSpecName(x) {
+module.exports = function isSpecName(x) {
   return isStr(x);
 }
