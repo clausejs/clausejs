@@ -1,28 +1,67 @@
-var or = require('../or');
-var cat = require('../cat');
-var fspec = require('../fspec');
-var any = require('../any');
-var keys = require('../keys');
 var zeroOrMore = require('../zeroOrMore');
-var isSpecName = require('../utils/isSpecName');
+var or = require('../or');
+var fspec = require('../fspec');
 var isExpr = require('../utils/isExpr');
 var isSpec = require('../utils/isSpec');
-var isBool = require('../preds/isBool');
+var isSpecName = require('../utils/isSpecName');
 
-var CatSpec = fspec({
-  args: or(
-    zeroOrMore(isSpecName),
-    zeroOrMore(isExpr),
-    zeroOrMore(cat(isSpecName, isExpr))
-  ),
-  ret: isSpec,
-});
+var exprSpec = isExpr;
+var specSpec = isSpec;
+var nameSpec = isSpecName;
+var fullNameSpec = isSpecName;
+
+var c = require('../ops/constants');
+
+var fullNameOrExprSpec = {
+  op: c.OR,
+  exprs: [
+    { name: 'fullName', spec: fullNameSpec },
+    { name: 'spec', spec: exprSpec },
+  ],
+};
+
+var multipleArgOpSpec = {
+  args: {
+    op: c.OR,
+    specs: [
+      {
+        name: 'unnamed',
+        spec: {
+          op: c.ZERO_OR_MORE,
+          spec: fullNameOrExprSpec,
+        },
+      },
+      {
+        name: 'named',
+        spec: {
+          op: c.ZERO_OR_MORE,
+          spec: {
+            op: c.CAT,
+            specs: [
+              { name: 'name', spec: nameSpec },
+              { name: 'spec', spec: fullNameOrExprSpec },
+            ],
+          },
+        },
+      },
+    ],
+  },
+  ret: specSpec,
+};
+
+var singleArgOpSpec = {
+  args: {
+    op: c.CAT,
+    exprs: [
+      { name: 'expr', expr: exprSpec },
+    ],
+  },
+  ret: specSpec,
+};
 
 module.exports = {
-  cat: CatSpec,
-  isFn: fspec({args: any, ret: isBool}),
-  keys: fspec({args: cat(keys({req: ['req']})), ret: isSpec}),
-  or: fspec({args: zeroOrMore(isExpr)}),
-  zeroOrMore: fspec({args: cat(isExpr)}),
-  oneOrMore: fspec({args: cat(isExpr)}),
+  cat: multipleArgOpSpec,
+  or: multipleArgOpSpec,
+  zeroOrMore: singleArgOpSpec,
+  oneOrMore: singleArgOpSpec,
 };
