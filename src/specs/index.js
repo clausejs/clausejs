@@ -4,18 +4,19 @@ var fspec = require('../fspec');
 var isExpr = require('../utils/isExpr');
 var isSpec = require('../utils/isSpec');
 var isSpecName = require('../utils/isSpecName');
+var isRefName = require('../utils/isRefName');
 
 var exprSpec = isExpr;
 var specSpec = isSpec;
 var nameSpec = isSpecName;
-var fullNameSpec = isSpecName;
+var refNameSpec = isSpecName;
 
 var c = require('../ops/constants');
 
-var fullNameOrExprSpec = {
+var refNameOrExprSpec = {
   op: c.OR,
   exprs: [
-    { name: 'fullName', spec: fullNameSpec },
+    { name: 'ref', spec: refNameSpec },
     { name: 'spec', spec: exprSpec },
   ],
 };
@@ -28,7 +29,7 @@ var multipleArgOpSpec = {
         name: 'unnamed',
         spec: {
           op: c.ZERO_OR_MORE,
-          spec: fullNameOrExprSpec,
+          spec: refNameOrExprSpec,
         },
       },
       {
@@ -39,7 +40,7 @@ var multipleArgOpSpec = {
             op: c.CAT,
             specs: [
               { name: 'name', spec: nameSpec },
-              { name: 'spec', spec: fullNameOrExprSpec },
+              { name: 'spec', spec: refNameOrExprSpec },
             ],
           },
         },

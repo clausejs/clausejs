@@ -3,21 +3,21 @@ var EPSILON = "\u03B5";
 var fragmentState = function(transitions, index) {
   return {
     transitions: transitions === null ? [] : transitions,
-    index: index || null
+    index: index || null,
   };
 };
 
 var fragmentTransition = function(name, target) {
   return {
     name: name,
-    target: target
+    target: target,
   };
 };
 
 var fragment = function(head, tails) {
   return {
     head: head,
-    tails: tails
+    tails: tails,
   }
 };
 

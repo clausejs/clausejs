@@ -93,7 +93,7 @@ var compile = function(expr) {
     numStates: numStates,
     finalState: finalState,
     transitions: nfaTransitions,
-    expression: expr
+    expression: expr,
   };
 };
 

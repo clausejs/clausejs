@@ -16,7 +16,7 @@ function matches(nfa, rawInput) {
 
   var r = {
     matched: false,
-    result: null
+    result: null,
   };
 
   var initial = { state: 0, offset: 0 };
