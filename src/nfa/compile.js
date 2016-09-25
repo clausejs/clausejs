@@ -36,21 +36,6 @@ function evalSpec(spec) {
   return r;
 };
 
-function evalNameSpec(name, spec) {
-  var evalFn;
-
-  if (spec.type === null) {
-    throw "Spec has no type: " + spec;
-  } else if (!(spec.type in evalFunctions)) {
-    evalFn = evalFunctions.PRED;
-  } else {
-    evalFn = evalFunctions[spec.type];
-  }
-  var r = evalFn(spec);
-  r.name = name;
-  // console.log(r);
-  return r;
-};
 
 var evalChildThen = function(wrapper) {
   return function(spec) {
@@ -62,7 +47,9 @@ var evalChildThen = function(wrapper) {
 var evalChildrenThen = function(wrapper) {
   return function(spec) {
     var childFrags = spec.exprs.map(function(child) {
-      return evalNameSpec(child.name, child.expr);
+      var s = evalSpec(child.expr);
+      s.name = child.name;
+      return s;
     });
     return wrapper(childFrags);
   };

@@ -19,6 +19,14 @@ var fragment = function(head, tails) {
   }
 };
 
+var namedFragment = function(name, head, tails) {
+  return {
+    name: name,
+    head: head,
+    tails: tails,
+  }
+};
+
 function patch (tails, state) {
   tails.forEach(function(tail) {
     tail.target = state;
@@ -38,19 +46,22 @@ build.PRED = function(spec) {
   var trans = fragmentTransition(spec, null);
   var head = fragmentState([trans], null);
   var tails = [trans];
-  // console.log('zzz', head);
-  return fragment(head, tails);
+  var f = fragment(head, tails);
+  return f;
 };
 
 build.CAT = function(frags) {
-  var binaryConcat = function(frag1, frag2) {
-
-    patch(frag1.tails, frag2.head);
+  var binaryConcat = function(frag1, currFrag) {
+    patch(frag1.tails, currFrag.head);
     var head = frag1.head;
-    var tails = frag2.tails;
-    return fragment(head, tails);
+    var tails = currFrag.tails;
+    return namedFragment(currFrag.name, head, tails);
   };
-  return frags.reduce(binaryConcat);
+  var r = frags.reduce(binaryConcat);
+  // var util = require('util');
+  // console.log(util.inspect(r, false, null));
+  // console.log(r);
+  return r;
 };
 
 build.OR = function(frags) {
@@ -60,7 +71,7 @@ build.OR = function(frags) {
     var trans2 = fragmentTransition(epsilonState(), frag2.head);
     var head = fragmentState([trans1, trans2]);
     var tails = frag1.tails.concat(frag2.tails);
-    return fragment(head, tails);
+    return namedFragment(frag2.name, head, tails);
   };
   return frags.reduce(binaryAlt);
 };
