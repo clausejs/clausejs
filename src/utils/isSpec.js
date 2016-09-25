@@ -4,7 +4,7 @@ function isSpec(x) {
   if(!x) {
     return false;
   } else {
-    return x.___isSpec === true;
+    return x instanceof Spec;
   }
 }
 

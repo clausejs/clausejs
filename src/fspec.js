@@ -1,7 +1,9 @@
-
 var Problem = require('./_Problem');
 var isValid = require('./isValid');
 var functionName = require('./utils/fnName');
+var namedFn = require('./utils/namedFn');
+var conform = require('./conform');
+
 
 function fspec(fnSpec) {
   var argsSpec = fnSpec.args;
@@ -10,14 +12,14 @@ function fspec(fnSpec) {
   var wrapSpecChecker = function (fn) {
     var speckedFn = getSpeckedFn(fn);
     var fnName = functionName(fn);
-    var namedSpecedFn = getNamedFn(fnName, speckedFn);
+    var namedSpecedFn = namedFn(fnName, speckedFn, '__specked');
     return namedSpeckedFn;
   }
 
   var wrapConformedArgs = function (fn) {
     var argConformedFn = getArgConformedFn(fn);
     var fnName = functionName(fn);
-    var namedArgConformedFn = getNamedFn(fnName, argConformedFn);
+    var namedArgConformedFn = namedFn(fnName, argConformedFn, '__conformed');
     return namedArgConformedFn;
   }
 
@@ -34,7 +36,7 @@ function fspec(fnSpec) {
   function getArgConformedFn(fn) {
     return function () {
       var args = Array.from(arguments);
-      var conformedArgs = conform(argSpec, args);
+      var conformedArgs = conform(argsSpec, args);
       var retVal = fn.call(null, conformedArgs);
       checkRet(retVal);
       return retVal;
@@ -57,15 +59,7 @@ function fspec(fnSpec) {
     }
   }
 
-  function getNamedFn (fnName, fn) {
-    if(fnName) {
-      return new Function('action', 'return function ' + fnName + '__specked' + '(){ return action.apply(this, arguments); };')(speckedFn);
-    } else {
-      return fn;
-    }
-  }
-
-  wrapSpecChecker.wrapConformedArgs = getNamedArgConformedFn;
+  wrapSpecChecker.wrapConformedArgs = wrapConformedArgs;
 
   return wrapSpecChecker;
 };

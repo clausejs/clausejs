@@ -1,3 +1,4 @@
+var ops = require('./ops');
 module.exports = {
   cat: require('./cat'),
   conform: require('./conform'),

@@ -1,7 +1,6 @@
 var speco = require('./index.unspecked');
 var isSpec = require('./utils/isSpec');
 var isPred = require('./utils/isPred');
-var specs = require('./specs');
 var fspec = speco.fspec, cat = speco.cat, keys = speco.keys, zeroOrMore = speco.zeroOrMore;
 
 var specked = speco;

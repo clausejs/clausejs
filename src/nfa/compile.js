@@ -22,31 +22,32 @@ var indexedFragmentStates = function(fragment) {
 
 var evalFunctions = {};
 
-function evalSpec(expr) {
+function evalSpec(spec) {
   var evalFn;
 
-  if (expr.type === null) {
-    throw "Expression has no type: " + expr;
-  } else if (!(expr.type in evalFunctions)) {
+  if (spec.type === null) {
+    throw "Spec has no type: " + spec;
+  } else if (!(spec.type in evalFunctions)) {
     evalFn = evalFunctions.PRED;
   } else {
-    evalFn = evalFunctions[expr.type];
+    evalFn = evalFunctions[spec.type];
   }
-  var r = evalFn(expr);
+  var r = evalFn(spec);
   return r;
 };
 
 var evalChildThen = function(wrapper) {
-  return function(expr) {
-    var childFrag = evalSpec(expr.args[0]);
+  return function(spec) {
+    var childFrag = evalSpec(spec.expr);
     return wrapper(childFrag);
   };
 };
 
 var evalChildrenThen = function(wrapper) {
-  return function(expr) {
-    var evalChild = function(child) { return evalSpec(child); };
-    var childFrags = expr.args.map(evalChild);
+  return function(spec) {
+    var childFrags = spec.exprs.map(function(child) {
+      return evalSpec(child.expr);
+    });
     return wrapper(childFrags);
   };
 };
@@ -73,6 +74,9 @@ function wrapRoot(expr) {
 var compile = function(expr) {
   var rootedExpr = wrapRoot(expr);
   var fragment = evalSpec(rootedExpr);
+  var util = require('util');
+
+  console.log(util.inspect(fragment.head, false, null));
   var states = indexedFragmentStates(fragment);
 
   var numStates = states.length;
