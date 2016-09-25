@@ -4,7 +4,7 @@ var isArray = require('isarray');
 
 var EPSILON = "\u03B5";
 
-function matches(nfa, rawInput) {
+function simulate(nfa, rawInput) {
   var input, isCocerced;
   if(!isArray(rawInput)) {
     isCoerced = true;
@@ -26,7 +26,6 @@ function matches(nfa, rawInput) {
   while (frontier.length > 0) {
     // console.log(frontier);
     var current = frontier.shift();
-    // console.log('current: ', current);
     if (current.state === nfa.finalState && current.offset === input.length) {
       r.matched = true;
       r.result = rawInput;
@@ -45,7 +44,11 @@ function matches(nfa, rawInput) {
       if ((transition === EPSILON ||
            !isProblem(transition.conform(observed))) &&
           nextOffset <= input.length) {
-      	var next = { state: nextState, offset: nextOffset };
+      	var next = {
+          state: nextState,
+          offset: nextOffset,
+          prev: current,
+        };
       	frontier.push(next);
       }
     }
@@ -56,4 +59,4 @@ function matches(nfa, rawInput) {
 
 
 
-module.exports = matches;
+module.exports = simulate;

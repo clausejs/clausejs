@@ -7,9 +7,9 @@ var fragmentState = function(transitions, index) {
   };
 };
 
-var fragmentTransition = function(name, target) {
+var fragmentTransition = function(spec, target) {
   return {
-    name: name,
+    spec: spec,
     target: target,
   };
 };
@@ -29,8 +29,8 @@ function patch (tails, state) {
 
 var build = {};
 
-build.PRED = function(name) {
-  var trans = fragmentTransition(name, null);
+build.PRED = function(spec) {
+  var trans = fragmentTransition(spec, null);
   var head = fragmentState([trans], null);
   var tails = [trans];
   // console.log('zzz', head);

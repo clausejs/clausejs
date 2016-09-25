@@ -68,7 +68,7 @@ evalFunctions.PRED = function(x) {
 };
 
 function wrapRoot(expr) {
-  return new Spec('ROOT', { expr: expr }, null, null);
+  return new Spec('ROOT', { expr }, null, null);
 }
 
 var compile = function(expr) {
@@ -87,7 +87,7 @@ var compile = function(expr) {
     };
     var outTrans = {};
     state.transitions.map(function(fragTrans) {
-      outTrans[fragTrans.target.index] = fragTrans.name;
+      outTrans[fragTrans.target.index] = fragTrans.spec;
     });
     nfaTransitions[state.index.toString()] = outTrans;
   });
