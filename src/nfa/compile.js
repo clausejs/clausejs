@@ -48,7 +48,8 @@ var evalChildrenThen = function(wrapper) {
   return function(spec) {
     var childFrags = spec.exprs.map(function(child) {
       var s = evalSpec(child.expr);
-      s.name = child.name;
+      s.head.name = child.name;
+      // s.name = child.name;
       return s;
     });
     return wrapper(childFrags);
@@ -77,8 +78,10 @@ function wrapRoot(expr) {
 var compile = function(expr) {
   var rootedExpr = wrapRoot(expr);
   var fragment = evalSpec(rootedExpr);
+
   // var util = require('util');
   // console.log(util.inspect(fragment, false, null));
+
   var states = indexedFragmentStates(fragment);
   var numStates = states.length;
   var nfaTransitions = {};

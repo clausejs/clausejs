@@ -67,8 +67,16 @@ var singleArgOpSpec = {
 //              { expr: coerceIntoSpec(isSpecName) }] },
 //   null, null
 // );
-// s.conform = nfaConformer(s);
-//
+
+var s = catOp({ named: [
+  { name: 'first', expr: nameSpec },
+  { name: 'second', expr: refNameSpec },
+  { name: 'third', expr: exprSpec },
+] })
+
+// { first: '2', second: 's' }
+var r = s.conform(['2', 's', new Spec('DUMMY', {}, null, null)]);
+// console.log(r);
 // console.log(s.conform(['2', 's']));
 
 module.exports = {

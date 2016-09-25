@@ -33,9 +33,8 @@ function patch (tails, state) {
   });
 };
 
-function epsilonState (name) {
+function epsilonState () {
   return {
-    name: name,
     isEpsilon: true,
   };
 }
@@ -55,7 +54,7 @@ build.CAT = function(frags) {
     patch(frag1.tails, currFrag.head);
     var head = frag1.head;
     var tails = currFrag.tails;
-    return namedFragment(currFrag.name, head, tails);
+    return fragment(head, tails);
   };
   var r = frags.reduce(binaryConcat);
   // var util = require('util');
@@ -71,7 +70,7 @@ build.OR = function(frags) {
     var trans2 = fragmentTransition(epsilonState(), frag2.head);
     var head = fragmentState([trans1, trans2]);
     var tails = frag1.tails.concat(frag2.tails);
-    return namedFragment(frag2.name, head, tails);
+    return fragment(head, tails);
   };
   return frags.reduce(binaryAlt);
 };
