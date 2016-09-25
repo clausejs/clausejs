@@ -21,8 +21,8 @@ function simulate(nfa, rawInput) {
 
   var initial = { state: 0, offset: 0 };
   var frontier = [initial];
-  // console.log('nfa: ', nfa);
   // console.log('input: ', input);
+  // console.log('nfa: ', nfa.transitions);
   while (frontier.length > 0) {
     // console.log(frontier);
     var current = frontier.shift();

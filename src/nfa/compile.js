@@ -36,6 +36,22 @@ function evalSpec(spec) {
   return r;
 };
 
+function evalNameSpec(name, spec) {
+  var evalFn;
+
+  if (spec.type === null) {
+    throw "Spec has no type: " + spec;
+  } else if (!(spec.type in evalFunctions)) {
+    evalFn = evalFunctions.PRED;
+  } else {
+    evalFn = evalFunctions[spec.type];
+  }
+  var r = evalFn(spec);
+  r.name = name;
+  // console.log(r);
+  return r;
+};
+
 var evalChildThen = function(wrapper) {
   return function(spec) {
     var childFrag = evalSpec(spec.expr);
@@ -46,7 +62,7 @@ var evalChildThen = function(wrapper) {
 var evalChildrenThen = function(wrapper) {
   return function(spec) {
     var childFrags = spec.exprs.map(function(child) {
-      return evalSpec(child.expr);
+      return evalNameSpec(child.name, child.expr);
     });
     return wrapper(childFrags);
   };
@@ -68,7 +84,7 @@ evalFunctions.PRED = function(x) {
 };
 
 function wrapRoot(expr) {
-  return new Spec('ROOT', { expr }, null, null);
+  return new Spec('ROOT', { expr: expr }, null, null);
 }
 
 var compile = function(expr) {
@@ -77,7 +93,6 @@ var compile = function(expr) {
   // var util = require('util');
   // console.log(util.inspect(fragment, false, null));
   var states = indexedFragmentStates(fragment);
-
   var numStates = states.length;
   var nfaTransitions = {};
   var finalState;
