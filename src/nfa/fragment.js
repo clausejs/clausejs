@@ -1,5 +1,3 @@
-var EPSILON = "\u03B5";
-
 var fragmentState = function(transitions, index) {
   return {
     transitions: transitions === null ? [] : transitions,
@@ -27,6 +25,13 @@ function patch (tails, state) {
   });
 };
 
+function epsilonState (name) {
+  return {
+    name: name,
+    isEpsilon: true,
+  };
+}
+
 var build = {};
 
 build.PRED = function(spec) {
@@ -51,8 +56,8 @@ build.CAT = function(frags) {
 build.OR = function(frags) {
   var binaryAlt = function(frag1, frag2) {
     // console.log(frag1.head, frag2.head);
-    var trans1 = fragmentTransition(EPSILON, frag1.head);
-    var trans2 = fragmentTransition(EPSILON, frag2.head);
+    var trans1 = fragmentTransition(epsilonState(), frag1.head);
+    var trans2 = fragmentTransition(epsilonState(), frag2.head);
     var head = fragmentState([trans1, trans2]);
     var tails = frag1.tails.concat(frag2.tails);
     return fragment(head, tails);
@@ -61,24 +66,24 @@ build.OR = function(frags) {
 };
 
 build.ZERO_OR_MORE = function(frag) {
-  var loopTrans = fragmentTransition(EPSILON, frag.head);
-  var breakTrans = fragmentTransition(EPSILON, null);
+  var loopTrans = fragmentTransition(epsilonState(), frag.head);
+  var breakTrans = fragmentTransition(epsilonState(), null);
   var head = fragmentState([loopTrans, breakTrans]);
   patch(frag.tails, head);
   return fragment(head, [breakTrans]);
 };
 
 build.ONE_OR_MORE = function(frag) {
-  var loopTrans = fragmentTransition(EPSILON, frag.head);
-  var breakTrans = fragmentTransition(EPSILON, null);
+  var loopTrans = fragmentTransition(epsilonState(), frag.head);
+  var breakTrans = fragmentTransition(epsilonState(), null);
   var state = fragmentState([loopTrans, breakTrans]);
   patch(frag.tails, state);
   return fragment(frag.head, [breakTrans]);
 };
 
 build.ZERO_OR_ONE = function(frag) {
-  var matchTrans = fragmentTransition(EPSILON, frag.head);
-  var skipTrans = fragmentTransition(EPSILON, null);
+  var matchTrans = fragmentTransition(epsilonState(), frag.head);
+  var skipTrans = fragmentTransition(epsilonState(), null);
   var head = fragmentState([matchTrans, skipTrans]);
   var tails = frag.tails.concat([skipTrans]);
   return fragment(head, tails);

@@ -2,8 +2,6 @@ var Problem = require('../_Problem');
 var isProblem = require('../utils/isProblem');
 var isArray = require('isarray');
 
-var EPSILON = "\u03B5";
-
 function simulate(nfa, rawInput) {
   var input, isCocerced;
   if(!isArray(rawInput)) {
@@ -36,12 +34,12 @@ function simulate(nfa, rawInput) {
       var transition = nfa.transitions[current.state][nextState];
       var nextOffset;
       // console.log(transition);
-      if(transition !== EPSILON) {
+      if(!transition.isEpsilon) {
         nextOffset = current.offset + 1;
       } else {
         nextOffset = current.offset;
       }
-      if ((transition === EPSILON ||
+      if ((transition.isEpsilon ||
            !isProblem(transition.conform(observed))) &&
           nextOffset <= input.length) {
       	var next = {
