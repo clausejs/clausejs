@@ -68,15 +68,14 @@ evalFunctions.PRED = function(x) {
 };
 
 function wrapRoot(expr) {
-  return new Spec('ROOT', expr, null, null);
+  return new Spec('ROOT', { expr: expr }, null, null);
 }
 
 var compile = function(expr) {
   var rootedExpr = wrapRoot(expr);
   var fragment = evalSpec(rootedExpr);
-  var util = require('util');
-
-  console.log(util.inspect(fragment.head, false, null));
+  // var util = require('util');
+  // console.log(util.inspect(fragment, false, null));
   var states = indexedFragmentStates(fragment);
 
   var numStates = states.length;

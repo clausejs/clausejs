@@ -33,11 +33,13 @@ build.PRED = function(name) {
   var trans = fragmentTransition(name, null);
   var head = fragmentState([trans], null);
   var tails = [trans];
+  // console.log('zzz', head);
   return fragment(head, tails);
 };
 
 build.CAT = function(frags) {
   var binaryConcat = function(frag1, frag2) {
+
     patch(frag1.tails, frag2.head);
     var head = frag1.head;
     var tails = frag2.tails;
@@ -48,6 +50,7 @@ build.CAT = function(frags) {
 
 build.OR = function(frags) {
   var binaryAlt = function(frag1, frag2) {
+    // console.log(frag1.head, frag2.head);
     var trans1 = fragmentTransition(EPSILON, frag1.head);
     var trans2 = fragmentTransition(EPSILON, frag2.head);
     var head = fragmentState([trans1, trans2]);

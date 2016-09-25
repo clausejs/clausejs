@@ -61,6 +61,16 @@ var singleArgOpSpec = {
 // var util = require('util');
 // console.log(util.inspect(multipleArgOpSpec, false, null));
 
+// var s = new Spec(
+//   'CAT',
+//   { exprs: [ { expr: coerceIntoSpec(isSpecName) },
+//              { expr: coerceIntoSpec(isSpecName) }] },
+//   null, null
+// );
+// s.conform = nfaConformer(s);
+//
+// console.log(s.conform(['2', 's']));
+
 module.exports = {
   cat: fspec(multipleArgOpSpec).wrapConformedArgs(catOp),
   or: fspec(multipleArgOpSpec).wrapConformedArgs(orOp),
