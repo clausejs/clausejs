@@ -1,6 +1,6 @@
 var isStr = require('../preds/isStr');
 
 //TODO
-module.exports = function isSpecName(x) {
+module.exports = function isRefName(x) {
   return isStr(x);
 }

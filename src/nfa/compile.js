@@ -12,6 +12,7 @@ var indexedFragmentStates = function(fragment) {
       state.index = nextIndex;
       nextIndex++;
       state.transitions.forEach(function(transition) {
+        // console.log(transition);
       	frontier.push(transition.target);
       });
       states.push(state);
@@ -48,8 +49,7 @@ var evalChildrenThen = function(wrapper) {
   return function(spec) {
     var childFrags = spec.exprs.map(function(child) {
       var s = evalSpec(child.expr);
-      s.head.name = child.name;
-      // s.name = child.name;
+      s.name = child.name;
       return s;
     });
     return wrapper(childFrags);

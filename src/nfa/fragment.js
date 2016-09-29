@@ -12,6 +12,13 @@ var fragmentTransition = function(spec, target) {
   };
 };
 
+var namedFragmentTransition = function(name, spec, target) {
+  var t = fragmentTransition(spec, target);
+  t.name = name;
+  return t;
+};
+
+
 var fragment = function(head, tails) {
   return {
     head: head,
@@ -20,12 +27,10 @@ var fragment = function(head, tails) {
 };
 
 var namedFragment = function(name, head, tails) {
-  return {
-    name: name,
-    head: head,
-    tails: tails,
-  }
-};
+  var f = fragment(head, tails);
+  f.name = name;
+  return f;
+}
 
 function patch (tails, state) {
   tails.forEach(function(tail) {
@@ -50,16 +55,47 @@ build.PRED = function(spec) {
 };
 
 build.CAT = function(frags) {
+  // var i;
+  // for (i = 0; i < frags.length; i++) {
+  //   var curr = frags[i];
+  //   var next = frags[i + 1];
+  //   var trans = fragmentTransition(epsilonState(), f.head);
+  //   trans.outName = curr.name;
+  //
+  // }
   var binaryConcat = function(frag1, currFrag) {
+
+    // var util = require('util');
+    // console.log('--------------------------------');
+    // console.log(util.inspect(frag1.tails, false, null));
+    // console.log('--------------------------------');
     patch(frag1.tails, currFrag.head);
     var head = frag1.head;
     var tails = currFrag.tails;
-    return fragment(head, tails);
+    var newF = fragment(head, tails);
+    return newF;
   };
+
+  frags = frags.map(function addEpsilonState (f) {
+    var trans = namedFragmentTransition(f.name, epsilonState(), f.head.transitions[0].target);
+    var nameOutState = fragmentState([trans]);
+    patch(f.head.transitions, nameOutState);
+    var newF = namedFragment(f.name, f.head, [trans]);
+
+    // var util = require('util');
+    // console.log('--------------------------------');
+    // console.log(util.inspect(newF, false, null));
+    // console.log('--------------------------------');
+    return newF;
+    // return f;
+  });
   var r = frags.reduce(binaryConcat);
-  // var util = require('util');
-  // console.log(util.inspect(r, false, null));
   // console.log(r);
+  // var util = require('util');
+  // console.log('--------------------------------');
+  // console.log(util.inspect(r, false, null));
+  // console.log('--------------------------------');
+
   return r;
 };
 
