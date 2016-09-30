@@ -91,15 +91,29 @@ build.CAT = function(frags) {
   });
   var r = frags.reduce(binaryConcat);
   // console.log(r);
-  var util = require('util');
-  console.log('--------------------------------');
-  console.log(util.inspect(r, false, null));
-  console.log('--------------------------------');
+  // var util = require('util');
+  // console.log('--------------------------------');
+  // console.log(util.inspect(r, false, null));
+  // console.log('--------------------------------');
 
   return r;
 };
 
 build.OR = function(frags) {
+  frags = frags.map(function(f) {
+    var originalTails = f.tails;
+    var trans = namedFragmentTransition(f.name, epsilonState(), null);
+    var nameOutState = fragmentState([trans]);
+    patch(f.tails, nameOutState);
+    var newF = namedFragment(f.name, f.head, [trans]);
+    return newF;
+
+    // var util = require('util');
+    // console.log('--------------------------------');
+    // console.log(util.inspect(f, false, null));
+    // console.log('--------------------------------');
+    return f;
+  });
   var binaryAlt = function(frag1, frag2) {
     // console.log(frag1.head, frag2.head);
     var trans1 = fragmentTransition(epsilonState(), frag1.head);
@@ -108,7 +122,13 @@ build.OR = function(frags) {
     var tails = frag1.tails.concat(frag2.tails);
     return fragment(head, tails);
   };
-  return frags.reduce(binaryAlt);
+  var r = frags.reduce(binaryAlt);
+  console.log(r);
+  var util = require('util');
+  console.log('--------------------------------');
+  console.log(util.inspect(r, false, null));
+  console.log('--------------------------------');
+  return r;
 };
 
 build.ZERO_OR_MORE = function(frag) {
