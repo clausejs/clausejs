@@ -18,7 +18,6 @@ var namedFragmentTransition = function(name, spec, target) {
   return t;
 };
 
-
 var fragment = function(head, tails) {
   return {
     head: head,
@@ -77,24 +76,25 @@ build.CAT = function(frags) {
   };
 
   frags = frags.map(function addEpsilonState (f) {
-    var trans = namedFragmentTransition(f.name, epsilonState(), f.head.transitions[0].target);
+    var originalTails = f.tails;
+    var trans = namedFragmentTransition(f.name, epsilonState(), null);
     var nameOutState = fragmentState([trans]);
-    patch(f.head.transitions, nameOutState);
+    patch(f.tails, nameOutState);
     var newF = namedFragment(f.name, f.head, [trans]);
 
     // var util = require('util');
     // console.log('--------------------------------');
-    // console.log(util.inspect(newF, false, null));
+    // console.log(util.inspect(f, false, null));
     // console.log('--------------------------------');
     return newF;
     // return f;
   });
   var r = frags.reduce(binaryConcat);
   // console.log(r);
-  // var util = require('util');
-  // console.log('--------------------------------');
-  // console.log(util.inspect(r, false, null));
-  // console.log('--------------------------------');
+  var util = require('util');
+  console.log('--------------------------------');
+  console.log(util.inspect(r, false, null));
+  console.log('--------------------------------');
 
   return r;
 };
