@@ -91,7 +91,7 @@ var compile = function(expr) {
       finalState = state.index;
     };
     var outTrans = {};
-    state.transitions.map(function(fragTrans) {
+    state.transitions.forEach(function(fragTrans) {
       outTrans[fragTrans.target.index] = fragTrans.spec;
     });
     nfaTransitions[state.index.toString()] = outTrans;

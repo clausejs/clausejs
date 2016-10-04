@@ -27,7 +27,8 @@ function simulate(nfa, rawInput) {
     var current = frontier.shift();
     if (current.state === nfa.finalState && current.offset === input.length) {
       r.matched = true;
-      r.result = rawInput;
+      r.result = _getMatch(nfa, rawInput, current);
+      return r;
     }
     for (nextStateStr in nfa.transitions[current.state]) {
       var nextState = parseInt(nextStateStr);
@@ -53,11 +54,13 @@ function simulate(nfa, rawInput) {
             throw new Error('this shouldn\'t be happening');
           }
         }
-
       	var next = {
           state: nextState,
           offset: nextOffset,
           names: newNames,
+          prev: current,
+          observed: observed,
+          isEpsilon: transition.isEpsilon,
         };
       	frontier.push(next);
       }
@@ -67,6 +70,28 @@ function simulate(nfa, rawInput) {
   return r;
 };
 
+function _getMatch(nfa, input, finalState) {
+  var chain = _stateChain(nfa, finalState);
+  // var util = require('util');
+  // console.log(util.inspect(chain, false, null));
+  return input;
+}
+
+function _stateChain(nfa, finalState) {
+  var chain = [];
+  var curr = finalState;
+  while(curr) {
+    if(!curr.isEpsilon) {
+      chain.push({
+        offset: curr.offset,
+        names: curr.names,
+        observed: curr.observed,
+      });
+    }
+    curr = curr.prev;
+  }
+  return chain.reverse();
+}
 
 
 module.exports = simulate;
