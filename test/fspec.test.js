@@ -9,7 +9,7 @@ describe('fspec', function() {
   it('should return a function that checks the spec of a given function as its input', function() {
     var FspecSpec = S.fspec({
       args: S.cat(isSpec),
-      ret: S.isFn
+      ret: S.isFn,
     });
 
     var specedFspec = FspecSpec(S.fspec); //meta-ly apply checking to self
@@ -25,7 +25,7 @@ describe('fspec', function() {
   it('test on sheep counting fn', function() {
     var sheepCounterSpec = S.fspec({
       args: S.cat(S.isNum),
-      ret: S.isStr
+      ret: S.isStr,
     });
 
     var sheepCounter = sheepCounterSpec(function(c) {

@@ -12,7 +12,7 @@ describe.only('named specs', function() {
         'title': S.isStr,
         'content': S.and(S.isStr, S.notEmpty),
         'date': S.isDate,
-        'isDone': S.isBool
+        'isDone': S.isBool,
       }],
       'list': S.collOf('item'),
     });
