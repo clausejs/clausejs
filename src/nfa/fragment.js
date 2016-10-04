@@ -119,7 +119,15 @@ build.OR = function(frags) {
     var trans = nameOutFragmentTransition(f.name, epsilonState(), null);
     var nameOutState = fragmentState([trans]);
     patch(f.tails, nameOutState);
-    var newF = namedFragment(f.name, f.head, [trans]);
+
+    var nameInTranstions = f.head.transitions.map(function (t) {
+      var s = fragmentState([t]);
+      var namedInTrans = nameInFragmentTransition(f.name, epsilonState(), s);
+      return namedInTrans;
+    });
+    var newHead = fragmentState(nameInTranstions);
+
+    var newF = namedFragment(f.name, newHead, [trans]);
     return newF;
 
     // var util = require('util');
