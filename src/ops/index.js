@@ -68,22 +68,22 @@ var singleArgOpSpec = {
 //   null, null
 // );
 
-var s = catOp({ named: [
-  { name: 'first', expr: orOp({
-    named: [
-      {name: 'biff', expr: nameSpec },
-      {name: 'boff', expr: refNameSpec },
-    ],
-  }) },
+var s = orOp({ named: [
+  // { name: 'first', expr: catOp({
+  //   named: [
+  //     {name: 'biff', expr: nameSpec },
+  //     {name: 'boff', expr: refNameSpec },
+  //   ],
+  // }) },
   { name: 'second', expr: refNameSpec },
   { name: 'third', expr: exprSpec },
 ] })
 
 // { first: '2', second: 's' }
 var r = s.conform([
-  '2',
+  // '2',
   // 's',
-  'w',
+  // 'w',
   new Spec('DUMMY_SPEC', {}, null, null),
 ]);
 // console.log(r);

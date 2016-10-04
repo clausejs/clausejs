@@ -12,18 +12,6 @@ var fragmentTransition = function(spec, target) {
   };
 };
 
-var nameInFragmentTransition = function(name, spec, target) {
-  var t = fragmentTransition(spec, target);
-  t.nameIn = name;
-  return t;
-};
-
-var nameOutFragmentTransition = function(name, spec, target) {
-  var t = fragmentTransition(spec, target);
-  t.nameOut = name;
-  return t;
-};
-
 var fragment = function(head, tails) {
   return {
     head: head,
@@ -47,6 +35,18 @@ function epsilonState () {
   return {
     isEpsilon: true,
   };
+}
+
+function nameInEpsilonState (name) {
+  var s = epsilonState();
+  s.nameIn = name;
+  return s;
+}
+
+function nameOutEpsilonState (name) {
+  var s = epsilonState();
+  s.nameOut = name;
+  return s;
 }
 
 var build = {};
@@ -83,13 +83,13 @@ build.CAT = function(frags) {
 
   frags = frags.map(function addEpsilonState (f) {
     var originalTails = f.tails;
-    var trans = nameOutFragmentTransition(f.name, epsilonState(), null);
+    var trans = fragmentTransition(nameOutEpsilonState(f.name), null);
     var nameOutState = fragmentState([trans]);
     patch(f.tails, nameOutState);
 
     var nameInTranstions = f.head.transitions.map(function (t) {
       var s = fragmentState([t]);
-      var namedInTrans = nameInFragmentTransition(f.name, epsilonState(), s);
+      var namedInTrans = fragmentTransition(nameInEpsilonState(f.name), s);
       return namedInTrans;
     });
     var newHead = fragmentState(nameInTranstions);
@@ -116,30 +116,30 @@ build.CAT = function(frags) {
 build.OR = function(frags) {
   frags = frags.map(function(f) {
     var originalTails = f.tails;
-    var trans = nameOutFragmentTransition(f.name, epsilonState(), null);
+    var trans = fragmentTransition(nameOutEpsilonState(f.name), null);
     var nameOutState = fragmentState([trans]);
     patch(f.tails, nameOutState);
 
-    var nameInTranstions = f.head.transitions.map(function (t) {
-      var s = fragmentState([t]);
-      var namedInTrans = nameInFragmentTransition(f.name, epsilonState(), s);
-      return namedInTrans;
-    });
-    var newHead = fragmentState(nameInTranstions);
+    // var nameInTranstions = f.head.transitions.map(function (t) {
+    //   var s = fragmentState([t]);
+    //   var namedInTrans = fragmentTransition(nameInEpsilonState(f.name), s);
+    //   return namedInTrans;
+    // });
+    // var newHead = fragmentState(nameInTranstions);
 
-    var newF = namedFragment(f.name, newHead, [trans]);
+    var newF = namedFragment(f.name, f.head, [trans]);
     return newF;
 
     // var util = require('util');
     // console.log('--------------------------------');
     // console.log(util.inspect(f, false, null));
     // console.log('--------------------------------');
-    return f;
+    // return f;
   });
   var binaryAlt = function(frag1, frag2) {
     // console.log(frag1.head, frag2.head);
-    var trans1 = fragmentTransition(epsilonState(), frag1.head);
-    var trans2 = fragmentTransition(epsilonState(), frag2.head);
+    var trans1 = fragmentTransition(nameInEpsilonState(frag1.name), frag1.head);
+    var trans2 = fragmentTransition(nameInEpsilonState(frag2.name), frag2.head);
     var head = fragmentState([trans1, trans2]);
     var tails = frag1.tails.concat(frag2.tails);
     return fragment(head, tails);

@@ -17,7 +17,8 @@ function simulate(nfa, rawInput) {
     result: null,
   };
 
-  var initial = { state: 0, offset: 0 };
+  var initial = { state: 0, offset: 0, names: [] };
+  // var names = [];
   var frontier = [initial];
   // console.log('input: ', input);
   // console.log('nfa: ', nfa.transitions);
@@ -33,7 +34,6 @@ function simulate(nfa, rawInput) {
       var observed = input[current.offset];
       var transition = nfa.transitions[current.state][nextState];
       var nextOffset;
-      // console.log(nfa.transitions[current.state]);
       if(!transition.isEpsilon) {
         nextOffset = current.offset + 1;
       } else {
@@ -42,10 +42,22 @@ function simulate(nfa, rawInput) {
       if ((transition.isEpsilon ||
            !isProblem(transition.conform(observed))) &&
           nextOffset <= input.length) {
+
+        var newNames = current.names.concat([]);
+        if(transition.nameIn) {
+          newNames.push(transition.nameIn);
+        } else if (transition.nameOut) {
+          var n = newNames.pop();
+          if(n !== transition.nameOut) {
+            console.log(current.state, n, transition.nameOut);
+            throw new Error('this shouldn\'t be happening');
+          }
+        }
+
       	var next = {
           state: nextState,
           offset: nextOffset,
-          prev: current,
+          names: newNames,
         };
       	frontier.push(next);
       }
