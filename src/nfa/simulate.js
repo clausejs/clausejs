@@ -74,7 +74,26 @@ function _getMatch(nfa, input, finalState) {
   var chain = _stateChain(nfa, finalState);
   // var util = require('util');
   // console.log(util.inspect(chain, false, null));
-  return input;
+  var r = {};
+  chain.forEach(function (curr) {
+    _setToValue(r, curr.names, curr.observed);
+  })
+  return r;
+}
+
+function _setToValue(object, path, value) {
+  var a = path;
+  var o = object;
+  for (var i = 0; i < a.length - 1; i++) {
+    var n = a[i];
+    if (n in o) {
+      o = o[n];
+    } else {
+      o[n] = {};
+      o = o[n];
+    }
+  }
+  o[a[a.length - 1]] = value;
 }
 
 function _stateChain(nfa, finalState) {
@@ -82,7 +101,7 @@ function _stateChain(nfa, finalState) {
   var curr = finalState;
   while(curr) {
     if(!curr.isEpsilon) {
-      chain.push({
+      chain.unshift({
         offset: curr.offset,
         names: curr.names,
         observed: curr.observed,
@@ -90,7 +109,8 @@ function _stateChain(nfa, finalState) {
     }
     curr = curr.prev;
   }
-  return chain.reverse();
+  chain.shift();
+  return chain;
 }
 
 
