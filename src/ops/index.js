@@ -69,25 +69,25 @@ var singleArgOpSpec = {
 // );
 
 var s = catOp({ named: [
-  { name: 'first', expr: orOp({
-    named: [
-      {name: 'biff', expr: nameSpec },
-      {name: 'boff', expr: refNameSpec },
-    ],
-  }) },
+  // { name: 'first', expr: orOp({
+  //   named: [
+  //     {name: 'biff', expr: nameSpec },
+  //     {name: 'boff', expr: refNameSpec },
+  //   ],
+  // }) },
   { name: 'second', expr: refNameSpec },
   { name: 'third', expr: exprSpec },
 ] })
 
 // { first: '2', second: 's' }
 var r = s.conform([
-  '2',
+  // '2',
   // 's',
   'w',
   new Spec('DUMMY_SPEC', {}, null, null),
 ]);
-console.log(r);
-// console.log(s.conform(['2', 's']));
+// console.log(r);
+console.log(s.conform(r));
 
 module.exports = {
   cat: fspec(multipleArgOpSpec).wrapConformedArgs(catOp),

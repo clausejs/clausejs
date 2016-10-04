@@ -12,9 +12,15 @@ var fragmentTransition = function(spec, target) {
   };
 };
 
-var namedFragmentTransition = function(name, spec, target) {
+var nameInFragmentTransition = function(name, spec, target) {
   var t = fragmentTransition(spec, target);
-  t.name = name;
+  t.nameIn = name;
+  return t;
+};
+
+var nameOutFragmentTransition = function(name, spec, target) {
+  var t = fragmentTransition(spec, target);
+  t.nameOut = name;
   return t;
 };
 
@@ -77,14 +83,22 @@ build.CAT = function(frags) {
 
   frags = frags.map(function addEpsilonState (f) {
     var originalTails = f.tails;
-    var trans = namedFragmentTransition(f.name, epsilonState(), null);
+    var trans = nameOutFragmentTransition(f.name, epsilonState(), null);
     var nameOutState = fragmentState([trans]);
     patch(f.tails, nameOutState);
-    var newF = namedFragment(f.name, f.head, [trans]);
+
+    var nameInTranstions = f.head.transitions.map(function (t) {
+      var s = fragmentState([t]);
+      var namedInTrans = nameInFragmentTransition(f.name, epsilonState(), s);
+      return namedInTrans;
+    });
+    var newHead = fragmentState(nameInTranstions);
+
+    var newF = namedFragment(f.name, newHead, [trans]);
 
     // var util = require('util');
     // console.log('--------------------------------');
-    // console.log(util.inspect(f, false, null));
+    // console.log(util.inspect(newHead, false, null));
     // console.log('--------------------------------');
     return newF;
     // return f;
@@ -102,7 +116,7 @@ build.CAT = function(frags) {
 build.OR = function(frags) {
   frags = frags.map(function(f) {
     var originalTails = f.tails;
-    var trans = namedFragmentTransition(f.name, epsilonState(), null);
+    var trans = nameOutFragmentTransition(f.name, epsilonState(), null);
     var nameOutState = fragmentState([trans]);
     patch(f.tails, nameOutState);
     var newF = namedFragment(f.name, f.head, [trans]);
@@ -123,11 +137,11 @@ build.OR = function(frags) {
     return fragment(head, tails);
   };
   var r = frags.reduce(binaryAlt);
-  console.log(r);
-  var util = require('util');
-  console.log('--------------------------------');
-  console.log(util.inspect(r, false, null));
-  console.log('--------------------------------');
+  // console.log(r);
+  // var util = require('util');
+  // console.log('--------------------------------');
+  // console.log(util.inspect(r, false, null));
+  // console.log('--------------------------------');
   return r;
 };
 

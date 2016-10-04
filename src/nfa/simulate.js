@@ -33,7 +33,7 @@ function simulate(nfa, rawInput) {
       var observed = input[current.offset];
       var transition = nfa.transitions[current.state][nextState];
       var nextOffset;
-      // console.log(transition);
+      // console.log(nfa.transitions[current.state]);
       if(!transition.isEpsilon) {
         nextOffset = current.offset + 1;
       } else {
