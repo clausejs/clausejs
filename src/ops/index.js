@@ -89,6 +89,28 @@ function genSingleArgOp(type) {
   };
 }
 
+var isBool = require('../preds/isBool');
+var isStr = require('../preds/isStr');
+
+var boolOrStr = orOp({
+  named: [
+    { name: 'var1', expr: coerceIntoSpec(isBool) },
+    { name: 'var2', expr: coerceIntoSpec(isStr) },
+  ],
+});
+
+var bb= zeroOrMoreOp(coerceIntoSpec(isBool));
+
+var s = orOp({
+  named: [
+    { name: 'group1', expr: bb},
+    { name: 'group2', expr: coerceIntoSpec(isStr) },
+  ],
+});
+
+console.log(s.conform([true, true, false, '']));
+
+
 module.exports = {
   cat: fspec(multipleArgOpSpec).wrapConformedArgs(catOp),
   or: fspec(multipleArgOpSpec).wrapConformedArgs(orOp),

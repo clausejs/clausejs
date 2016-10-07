@@ -4,6 +4,7 @@ var isArray = require('isarray');
 
 function simulate(nfa, rawInput) {
   var input, isCocerced;
+
   if(!isArray(rawInput)) {
     isCoerced = true;
     input = [rawInput];
@@ -21,7 +22,8 @@ function simulate(nfa, rawInput) {
   // var names = [];
   var frontier = [initial];
   // console.log('input: ', input);
-  // console.log('nfa: ', nfa.transitions);
+  // var util = require('util');
+  // console.log('nfa', util.inspect(nfa, false, null));
   while (frontier.length > 0) {
     // console.log(frontier);
     var current = frontier.shift();
@@ -46,16 +48,20 @@ function simulate(nfa, rawInput) {
 
         var newNames = current.names.concat([]);
         var move;
-        if(transition.nameIn) {
-          newNames.push(transition.nameIn);
-          move = {in: transition.nameIn, op: transition.op};
-        } else if (transition.nameOut) {
-          var n = newNames.pop();
-          if(n !== transition.nameOut) {
-            console.log(current.state, n, transition.nameOut);
-            throw new Error('this shouldn\'t be happening');
+        if(transition.nameIn !== undefined) {
+          if(transition.nameIn !== null) {
+            newNames.push(transition.nameIn);
           }
-          move = {out: transition.nameOut, op: transition.op};
+          move = {dir: 'in', name: transition.nameIn, op: transition.op, group: transition.group};
+        } else if (transition.nameOut !== undefined) {
+          if(transition.nameOut !== null) {
+            var n = newNames.pop();
+            if(n !== transition.nameOut) {
+              // console.error(current.state, n, transition.nameOut);
+              throw new Error('this shouldn\'t be happening');
+            }
+          }
+          move = {dir: 'out', name: transition.nameOut, op: transition.op, group: transition.group};
         }
       	var next = {
           state: nextState,
@@ -76,36 +82,27 @@ function simulate(nfa, rawInput) {
 
 function _getMatch(nfa, input, finalState) {
   var chain = _stateChain(nfa, finalState);
-  chain.forEach(function (c) {
-    console.log('c', c);
-  })
+  // chain.forEach(function (c) {
+  //   console.log('c', c);
+  // })
   // var util = require('util');
   // console.log(util.inspect(chain, false, null));
   var r = {};
-  pathRegister = {};
   chain.forEach(function (curr) {
     var nnames = ['ROOT'].concat(curr.names);
-    var c = _getValue(pathRegister, nnames);
-    if (c === 2) {
-      var arr = _getValue(r, nnames);
-      arr.push(curr.observed);
-    } else if (c === 1) {
-      _setToValue(r, nnames, [_getValue(r, names)].concat(curr.observed));
-      _setToValue(pathRegister, nnames, 2);
-    } else {
-      _setToValue(r, nnames, curr.observed);
-      _setToValue(pathRegister, nnames, 1);
+    if(curr.move.dir === 'in' &&
+      (nnames[nnames.length -1] === curr.move.name || curr.move.group)) {
+
+      _setToValue(r, nnames, curr.observed, curr.move.group);
     }
   });
-  console.log('rrr', r);
   return r['ROOT'];
 }
 
-function _setToValue(object, path, value) {
-  var a = path;
+function _setToValue(object, path, value, group) {
   var o = object;
-  for (var i = 0; i < a.length - 1; i++) {
-    var n = a[i];
+  for (var i = 0; i < path.length - 1; i++) {
+    var n = path[i];
     if (n in o) {
       o = o[n];
     } else {
@@ -113,12 +110,23 @@ function _setToValue(object, path, value) {
       o = o[n];
     }
   }
-  o[a[a.length - 1]] = value;
+  if(!group) {
+    o[path[path.length - 1]] = value;
+  } else {
+    if(o[path[path.length - 1]] === undefined) {
+      o[path[path.length - 1]] = [value];
+    } else if (!isArray(o[path[path.length - 1]])) {
+      o[path[path.length - 1]] = [o[path[path.length - 1]]];
+    } else {
+      o[path[path.length - 1]] = o[path[path.length - 1]].concat([value]);
+    }
+  }
+
 }
 
 function _getValue(object, path) {
       var o = object;
-      var a = path;
+      var a = [].concat(path);
       while (a.length) {
           var n = a.shift();
           if (n in o) {

@@ -35,10 +35,10 @@ function fspec(fnSpec) {
   function getArgConformedFn(fn) {
     return function () {
       var args = Array.from(arguments);
-      console.log('args', args);
-      console.log('argsSpec', argsSpec);
+      // console.log('args', args);
+      // console.log('argsSpec', argsSpec);
       var conformedArgs = conform(argsSpec, args);
-      console.log('conformedArgs', conformedArgs);
+      // console.log('conformedArgs', conformedArgs);
       var retVal = fn.call(null, conformedArgs);
       checkRet(retVal);
       return retVal;
