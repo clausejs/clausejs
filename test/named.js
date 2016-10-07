@@ -1,6 +1,6 @@
 var S = require('../src');
 
-describe.only('named specs', function() {
+describe('named specs', function() {
   afterEach(function () {
     //TODO: clear registry
   });

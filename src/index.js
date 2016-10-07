@@ -1,7 +1,7 @@
 var speco = require('./index.unspecked');
-var isSpec = require('./utils/isSpec');
-var isPred = require('./utils/isPred');
-var fspec = speco.fspec, cat = speco.cat, keys = speco.keys, zeroOrMore = speco.zeroOrMore;
+// var isSpec = require('./utils/isSpec');
+// var isPred = require('./utils/isPred');
+// var fspec = speco.fspec, cat = speco.cat, keys = speco.keys, zeroOrMore = speco.zeroOrMore;
 
 var specked = speco;
 // var specked = specThemAll(speco);

@@ -21,8 +21,8 @@ var oneOrMoreOp = genSingleArgOp(c.ONE_OR_MORE);
 
 var refNameOrExprSpec = orOp({
   named: [
-      { name: 'ref', expr: refNameSpec },
-      { name: 'expr', expr: exprSpec },
+      { name: 'refName', expr: refNameSpec },
+      { name: 'expression', expr: exprSpec },
     ],
 });
 
@@ -58,43 +58,6 @@ var singleArgOpSpec = {
   ret: specSpec,
 };
 
-// var util = require('util');
-// console.log(util.inspect(multipleArgOpSpec, false, null));
-
-// var s = new Spec(
-//   'CAT',
-//   { exprs: [ { expr: coerceIntoSpec(isSpecName) },
-//              { expr: coerceIntoSpec(isSpecName) }] },
-//   null, null
-// );
-
-var s = catOp({ named: [
-  { name: 'first', expr: orOp({
-    named: [
-      {name: 'biff', expr: nameSpec },
-      {name: 'boff', expr: refNameSpec },
-    ],
-  }) },
-  { name: 'second', expr: refNameSpec },
-  { name: 'third', expr: exprSpec },
-] })
-
-// { first: '2', second: 's' }
-var r = s.conform([
-  // '2',
-  's',
-  'w',
-  new Spec('DUMMY_SPEC', {}, null, null),
-]);
-console.log(r);
-
-module.exports = {
-  cat: fspec(multipleArgOpSpec).wrapConformedArgs(catOp),
-  or: fspec(multipleArgOpSpec).wrapConformedArgs(orOp),
-  zeroOrMore: fspec(singleArgOpSpec).wrapConformedArgs(zeroOrMoreOp),
-  oneOrMore: fspec(singleArgOpSpec).wrapConformedArgs(oneOrMoreOp),
-};
-
 function genMultiArgOp(type) {
   return function (conformedArgs) {
     var exprs = conformedArgs.named || conformedArgs.unnamed;
@@ -125,3 +88,10 @@ function genSingleArgOp(type) {
     return s;
   };
 }
+
+module.exports = {
+  cat: fspec(multipleArgOpSpec).wrapConformedArgs(catOp),
+  or: fspec(multipleArgOpSpec).wrapConformedArgs(orOp),
+  zeroOrMore: fspec(singleArgOpSpec).wrapConformedArgs(zeroOrMoreOp),
+  oneOrMore: fspec(singleArgOpSpec).wrapConformedArgs(oneOrMoreOp),
+};

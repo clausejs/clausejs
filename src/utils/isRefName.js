@@ -1,6 +1,6 @@
-var isStr = require('../preds/isStr');
+var RefName = require('../_RefName');
 
 //TODO
 module.exports = function isRefName(x) {
-  return isStr(x);
+  return x instanceof RefName;
 }

@@ -4,7 +4,6 @@ var functionName = require('./utils/fnName');
 var namedFn = require('./utils/namedFn');
 var conform = require('./conform');
 
-
 function fspec(fnSpec) {
   var argsSpec = fnSpec.args;
   var retSpec = fnSpec.ret;
@@ -36,7 +35,10 @@ function fspec(fnSpec) {
   function getArgConformedFn(fn) {
     return function () {
       var args = Array.from(arguments);
+      console.log('args', args);
+      console.log('argsSpec', argsSpec);
       var conformedArgs = conform(argsSpec, args);
+      console.log('conformedArgs', conformedArgs);
       var retVal = fn.call(null, conformedArgs);
       checkRet(retVal);
       return retVal;

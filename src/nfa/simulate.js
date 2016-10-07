@@ -45,18 +45,22 @@ function simulate(nfa, rawInput) {
           nextOffset <= input.length) {
 
         var newNames = current.names.concat([]);
+        var move;
         if(transition.nameIn) {
           newNames.push(transition.nameIn);
+          move = {in: transition.nameIn, op: transition.op};
         } else if (transition.nameOut) {
           var n = newNames.pop();
           if(n !== transition.nameOut) {
             console.log(current.state, n, transition.nameOut);
             throw new Error('this shouldn\'t be happening');
           }
+          move = {out: transition.nameOut, op: transition.op};
         }
       	var next = {
           state: nextState,
           offset: nextOffset,
+          move: move,
           names: newNames,
           prev: current,
           observed: observed,
@@ -72,13 +76,29 @@ function simulate(nfa, rawInput) {
 
 function _getMatch(nfa, input, finalState) {
   var chain = _stateChain(nfa, finalState);
+  chain.forEach(function (c) {
+    console.log('c', c);
+  })
   // var util = require('util');
   // console.log(util.inspect(chain, false, null));
   var r = {};
+  pathRegister = {};
   chain.forEach(function (curr) {
-    _setToValue(r, curr.names, curr.observed);
-  })
-  return r;
+    var nnames = ['ROOT'].concat(curr.names);
+    var c = _getValue(pathRegister, nnames);
+    if (c === 2) {
+      var arr = _getValue(r, nnames);
+      arr.push(curr.observed);
+    } else if (c === 1) {
+      _setToValue(r, nnames, [_getValue(r, names)].concat(curr.observed));
+      _setToValue(pathRegister, nnames, 2);
+    } else {
+      _setToValue(r, nnames, curr.observed);
+      _setToValue(pathRegister, nnames, 1);
+    }
+  });
+  console.log('rrr', r);
+  return r['ROOT'];
 }
 
 function _setToValue(object, path, value) {
@@ -96,17 +116,32 @@ function _setToValue(object, path, value) {
   o[a[a.length - 1]] = value;
 }
 
+function _getValue(object, path) {
+      var o = object;
+      var a = path;
+      while (a.length) {
+          var n = a.shift();
+          if (n in o) {
+              o = o[n];
+          } else {
+              return;
+          }
+      }
+      return o;
+  }
+
 function _stateChain(nfa, finalState) {
   var chain = [];
   var curr = finalState;
   while(curr) {
-    if(!curr.isEpsilon) {
+    // if(!curr.isEpsilon) {
       chain.unshift({
         offset: curr.offset,
         names: curr.names,
+        move: curr.move,
         observed: curr.observed,
       });
-    }
+    // }
     curr = curr.prev;
   }
   chain.shift();

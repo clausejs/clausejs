@@ -1,5 +1,8 @@
-var cat = require('./ops').cat;
-var isStr = require('./preds/isStr');
+var ops = require('./ops');
+var cat = ops.cat;
 var isBool = require('./preds/isBool');
+var isStr = require('./preds/isStr');
 
-// console.log(cat('first', isStr, 'second', isBool));
+var s = cat('var1', isBool, 'var2', isStr);
+
+console.log(s.conform([true, '']));

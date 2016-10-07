@@ -37,15 +37,17 @@ function epsilonState () {
   };
 }
 
-function nameInEpsilonState (name) {
+function nameInEpsilonState (name, op) {
   var s = epsilonState();
   s.nameIn = name;
+  s.op = op;
   return s;
 }
 
-function nameOutEpsilonState (name) {
+function nameOutEpsilonState (name, op) {
   var s = epsilonState();
   s.nameOut = name;
+  s.op = op;
   return s;
 }
 
@@ -83,13 +85,13 @@ build.CAT = function(frags) {
 
   frags = frags.map(function addEpsilonState (f) {
     var originalTails = f.tails;
-    var trans = fragmentTransition(nameOutEpsilonState(f.name), null);
+    var trans = fragmentTransition(nameOutEpsilonState(f.name, 'CAT'), null);
     var nameOutState = fragmentState([trans]);
     patch(f.tails, nameOutState);
 
     var nameInTranstions = f.head.transitions.map(function (t) {
       var s = fragmentState([t]);
-      var namedInTrans = fragmentTransition(nameInEpsilonState(f.name), s);
+      var namedInTrans = fragmentTransition(nameInEpsilonState(f.name, 'CAT'), s);
       return namedInTrans;
     });
     var newHead = fragmentState(nameInTranstions);
@@ -116,7 +118,7 @@ build.CAT = function(frags) {
 build.OR = function(frags) {
   frags = frags.map(function(f) {
     var originalTails = f.tails;
-    var trans = fragmentTransition(nameOutEpsilonState(f.name), null);
+    var trans = fragmentTransition(nameOutEpsilonState(f.name, 'OR'), null);
     var nameOutState = fragmentState([trans]);
     patch(f.tails, nameOutState);
 
@@ -138,11 +140,11 @@ build.OR = function(frags) {
   });
   var binaryAlt = function(frag1, frag2) {
     // console.log(frag1.head, frag2.head);
-    var trans1 = fragmentTransition(nameInEpsilonState(frag1.name), frag1.head);
-    var trans2 = fragmentTransition(nameInEpsilonState(frag2.name), frag2.head);
+    var trans1 = fragmentTransition(nameInEpsilonState(frag1.name, 'OR'), frag1.head);
+    var trans2 = fragmentTransition(nameInEpsilonState(frag2.name, 'OR'), frag2.head);
     var head = fragmentState([trans1, trans2]);
     var tails = frag1.tails.concat(frag2.tails);
-    return fragment(head, tails);
+    return namedFragment(frag1.name, head, tails);
   };
   var r = frags.reduce(binaryAlt);
   // console.log(r);
