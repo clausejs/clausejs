@@ -101,14 +101,17 @@ var isStr = require('../preds/isStr');
 
 var bb = zeroOrMoreOp(coerceIntoSpec(isBool));
 
-var s = orOp({
+var s = catOp({
   named: [
     { name: 'group1', expr: bb},
-    // { name: 'group2', expr: coerceIntoSpec(isStr) },
+    { name: 'group2', expr: coerceIntoSpec(isStr) },
   ],
 });
 
-var r = s.conform([true, true, false, '']);
+var r = s.conform([
+  true, true, false,
+  'z',
+]);
 console.log(r);
 ///////////////////////////////////////////////////////////
 

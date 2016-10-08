@@ -46,6 +46,9 @@ function namedEpsilonState (dir, name, op, group) {
   return s;
 }
 
+function frontWithState(state, fragment) {
+
+}
 
 var build = {};
 
@@ -81,13 +84,13 @@ build.CAT = function(frags) {
 
   frags = frags.map(function addEpsilonState (f) {
     var originalTails = f.tails;
-    var trans = fragmentTransition(namedEpsilonState('out', f.name, 'CAT'), null);
+    var trans = fragmentTransition(namedEpsilonState('out', f.name, 'CAT', true), null);
     var nameOutState = fragmentState([trans]);
     patch(f.tails, nameOutState);
 
     var nameInTranstions = f.head.transitions.map(function (t) {
       var s = fragmentState([t]);
-      var namedInTrans = fragmentTransition(namedEpsilonState('in', f.name, 'CAT', false), s);
+      var namedInTrans = fragmentTransition(namedEpsilonState('in', f.name, 'CAT', true), s);
       return namedInTrans;
     });
     var newHead = fragmentState(nameInTranstions);
@@ -114,7 +117,7 @@ build.CAT = function(frags) {
 build.OR = function(frags) {
   frags = frags.map(function(f) {
     var originalTails = f.tails;
-    var trans = fragmentTransition(namedEpsilonState('out', f.name, 'OR'), null);
+    var trans = fragmentTransition(namedEpsilonState('out', f.name, 'OR', true), null);
     var nameOutState = fragmentState([trans]);
     patch(f.tails, nameOutState);
 
@@ -161,15 +164,15 @@ build.ZERO_OR_MORE = function(frag) {
   // console.log(util.inspect(newHead, false, null));
   // console.log('--------------------------------');
 
-  var loopTrans = fragmentTransition(namedEpsilonState('loop', null, 'ZERO_OR_MORE', true), frag.head);
-  var breakTrans = fragmentTransition(namedEpsilonState('out', null, 'ZERO_OR_MORE', true), null);
+  var loopTrans = fragmentTransition(namedEpsilonState('loop', null, 'ZERO_OR_MORE'), frag.head);
+  var breakTrans = fragmentTransition(namedEpsilonState('out', null, 'ZERO_OR_MORE'), null);
   var head = fragmentState([loopTrans, breakTrans]);
   patch(frag.tails, head);
   var newF = fragment(head, [breakTrans]);
 
   var nameInTranstions = newF.head.transitions.map(function (t) {
     var s = fragmentState([t]);
-    var namedInTrans = fragmentTransition(namedEpsilonState('in', null, 'ZERO_OR_MORE', true), s);
+    var namedInTrans = fragmentTransition(namedEpsilonState('in', null, 'ZERO_OR_MORE', false), s);
     return namedInTrans;
   });
   var newHead = fragmentState(nameInTranstions);

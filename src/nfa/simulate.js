@@ -37,16 +37,17 @@ function simulate(nfa, rawInput) {
       var observed = input[current.offset];
       var transition = nfa.transitions[current.state][nextState];
       var nextOffset;
+      var move;
       if(!transition.isEpsilon) {
         nextOffset = current.offset + 1;
       } else {
         nextOffset = current.offset;
       }
+
       if ((transition.isEpsilon ||
            !isProblem(transition.conform(observed))) &&
           nextOffset <= input.length) {
         var newNames = current.names.concat([]);
-        var move;
         if(transition.isEpsilon) {
           if(transition.dir === 'in' && transition.name !== undefined) {
             if(transition.name !== null) {
@@ -70,7 +71,7 @@ function simulate(nfa, rawInput) {
           names: newNames,
           prev: current,
           observed: observed,
-          isEpsilon: transition.isEpsilon,
+          isEpsilon: transition.isEpsilon || false,
         };
       	frontier.push(next);
       }
@@ -85,21 +86,44 @@ function _getMatch(nfa, input, finalState) {
   // chain.forEach(function (c) {
   //   console.log('c', c);
   // })
-  var util = require('util');
-  console.log(util.inspect(chain, false, null));
+  // var util = require('util');
+  // console.log(util.inspect(chain, false, null));
+  var valStack = [];
   var r = {};
   chain.forEach(function (curr) {
+    // console.log(curr);
     var nnames = ['ROOT'].concat(curr.names);
-    if(curr.move.dir === 'in' &&
-      (nnames[nnames.length -1] === curr.move.name || curr.move.group)) {
-
-      _setToValue(r, nnames, curr.observed, curr.move.group);
+    if(curr.isEpsilon) {
+      if (curr.move.dir === 'in' && curr.move.group === true) {
+        valStack.push(null);
+      } else if(curr.move.dir === 'out'  && curr.move.group === true) {
+        var finalVal = valStack.pop();
+        var path = curr.move.name ? nnames.concat([curr.move.name]) : nnames;
+        // console.log(path, finalVal);
+        _setToValue(r, path, finalVal);
+      }
+    } else {
+      var currVal = valStack[valStack.length - 1];
+      valStack[valStack.length - 1] = _mergeIn(currVal, curr.observed);
     }
+
   });
   return r['ROOT'];
 }
 
-function _setToValue(object, path, value, group) {
+function _mergeIn(acc, val) {
+  var r;
+  if(acc === null) {
+    r = val;
+  } else if (!isArray(acc)) {
+    r = [acc, val];
+  } else {
+    r = acc.concat([val]);
+  }
+  return r;
+}
+
+function _setToValue(object, path, value) {
   var o = object;
   for (var i = 0; i < path.length - 1; i++) {
     var n = path[i];
@@ -110,18 +134,7 @@ function _setToValue(object, path, value, group) {
       o = o[n];
     }
   }
-  if(!group) {
-    o[path[path.length - 1]] = value;
-  } else {
-    if(o[path[path.length - 1]] === undefined) {
-      o[path[path.length - 1]] = [value];
-    } else if (!isArray(o[path[path.length - 1]])) {
-      o[path[path.length - 1]] = [o[path[path.length - 1]]];
-    } else {
-      o[path[path.length - 1]] = o[path[path.length - 1]].concat([value]);
-    }
-  }
-
+  o[path[path.length - 1]] = value;
 }
 
 function _getValue(object, path) {
@@ -148,6 +161,7 @@ function _stateChain(nfa, finalState) {
         names: curr.names,
         move: curr.move,
         observed: curr.observed,
+        isEpsilon: curr.isEpsilon,
       });
     // }
     curr = curr.prev;
