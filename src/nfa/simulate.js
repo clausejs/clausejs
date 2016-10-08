@@ -45,23 +45,23 @@ function simulate(nfa, rawInput) {
       if ((transition.isEpsilon ||
            !isProblem(transition.conform(observed))) &&
           nextOffset <= input.length) {
-
         var newNames = current.names.concat([]);
         var move;
-        if(transition.nameIn !== undefined) {
-          if(transition.nameIn !== null) {
-            newNames.push(transition.nameIn);
-          }
-          move = {dir: 'in', name: transition.nameIn, op: transition.op, group: transition.group};
-        } else if (transition.nameOut !== undefined) {
-          if(transition.nameOut !== null) {
-            var n = newNames.pop();
-            if(n !== transition.nameOut) {
-              // console.error(current.state, n, transition.nameOut);
-              throw new Error('this shouldn\'t be happening');
+        if(transition.isEpsilon) {
+          if(transition.dir === 'in' && transition.name !== undefined) {
+            if(transition.name !== null) {
+              newNames.push(transition.name);
+            }
+          } else if (transition.dir === 'out' && transition.name !== undefined) {
+            if(transition.name !== null) {
+              var n = newNames.pop();
+              if(n !== transition.name) {
+                // console.error(current.state, n, transition.name);
+                throw new Error('this shouldn\'t be happening');
+              }
             }
           }
-          move = {dir: 'out', name: transition.nameOut, op: transition.op, group: transition.group};
+          move = {dir: transition.dir, name: transition.name, op: transition.op, group: transition.group};
         }
       	var next = {
           state: nextState,
@@ -85,8 +85,8 @@ function _getMatch(nfa, input, finalState) {
   // chain.forEach(function (c) {
   //   console.log('c', c);
   // })
-  // var util = require('util');
-  // console.log(util.inspect(chain, false, null));
+  var util = require('util');
+  console.log(util.inspect(chain, false, null));
   var r = {};
   chain.forEach(function (curr) {
     var nnames = ['ROOT'].concat(curr.names);
