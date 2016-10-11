@@ -60,6 +60,7 @@ var singleArgOpSpec = {
 
 function genMultiArgOp(type) {
   return function (conformedArgs) {
+    // console.log(conformedArgs);
     var exprs = conformedArgs.named || conformedArgs.unnamed;
     var coercedExprs = exprs.map(function(p) {
       var s = coerceIntoSpec(p.expr);
@@ -99,20 +100,34 @@ var isStr = require('../preds/isStr');
 //   ],
 // });
 
-var bb = zeroOrMoreOp(coerceIntoSpec(isBool));
+var bb = zeroOrMoreOp(
+  catOp({
+    named: [
+      {name: 'verifi', expr: coerceIntoSpec(isBool)},
+      {name: 'commenti', expr: coerceIntoSpec(isStr)},
+    ],
+  })
+);
 
 var s = catOp({
   named: [
-    { name: 'group1', expr: bb},
+    // { name: 'group1', expr: bb},
     { name: 'group2', expr: coerceIntoSpec(isStr) },
   ],
 });
 
 var r = s.conform([
-  true, true, false,
+  // true, 'z',
+  // true, 'c',
+  // false, 'e',
   'z',
 ]);
-console.log(r);
+// var r = s.conform([
+//   true, 'z',
+//   false, 'w',
+//   'z',
+// ]);
+// console.log(r);
 ///////////////////////////////////////////////////////////
 
 module.exports = {

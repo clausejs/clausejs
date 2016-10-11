@@ -46,8 +46,20 @@ function namedEpsilonState (dir, name, op, group) {
   return s;
 }
 
-function frontWithState(state, fragment) {
+function frontWithState(state, f) {
+  var transIn = fragmentTransition(
+    state, f.head);
+  var newHead = fragmentState([transIn]);
+  var newF = namedFragment(f.name, newHead, f.tails);
+  return newF;
+}
 
+function rearWithState(state, f) {
+  var newTrans = fragmentTransition(state, null);
+  var newS = fragmentState([newTrans], null)
+  patch(f.tails, newS);
+  var r = namedFragment(f.name, f.head, [newTrans]);
+  return r;
 }
 
 var build = {};
@@ -84,13 +96,15 @@ build.CAT = function(frags) {
 
   frags = frags.map(function addEpsilonState (f) {
     var originalTails = f.tails;
-    var trans = fragmentTransition(namedEpsilonState('out', f.name, 'CAT', true), null);
+    var trans = fragmentTransition(
+      namedEpsilonState('out', f.name, 'CAT', true), null);
     var nameOutState = fragmentState([trans]);
     patch(f.tails, nameOutState);
 
     var nameInTranstions = f.head.transitions.map(function (t) {
       var s = fragmentState([t]);
-      var namedInTrans = fragmentTransition(namedEpsilonState('in', f.name, 'CAT', true), s);
+      var namedInTrans = fragmentTransition(
+        namedEpsilonState('in', f.name, 'CAT', true), s);
       return namedInTrans;
     });
     var newHead = fragmentState(nameInTranstions);
@@ -102,14 +116,21 @@ build.CAT = function(frags) {
     // console.log(util.inspect(newHead, false, null));
     // console.log('--------------------------------');
     return newF;
-    // return f;
   });
   var r = frags.reduce(binaryConcat);
-  // console.log(r);
-  // var util = require('util');
-  // console.log('--------------------------------');
-  // console.log(util.inspect(r, false, null));
-  // console.log('--------------------------------');
+  r = frontWithState(
+    namedEpsilonState('enter', null, 'CAT'),
+    r
+  );
+
+  r = rearWithState(
+    namedEpsilonState('exit', null, 'CAT'), r);
+
+
+  var util = require('util');
+  console.log('--------------------------------');
+  console.log(util.inspect(r, false, null));
+  console.log('--------------------------------');
 
   return r;
 };
@@ -117,7 +138,8 @@ build.CAT = function(frags) {
 build.OR = function(frags) {
   frags = frags.map(function(f) {
     var originalTails = f.tails;
-    var trans = fragmentTransition(namedEpsilonState('out', f.name, 'OR', true), null);
+    var trans = fragmentTransition(
+      namedEpsilonState('out', f.name, 'OR', true), null);
     var nameOutState = fragmentState([trans]);
     patch(f.tails, nameOutState);
 
@@ -128,12 +150,15 @@ build.OR = function(frags) {
     // });
     // var newHead = fragmentState(nameInTranstions);
 
-    var transIn = fragmentTransition(namedEpsilonState('in', f.name, 'OR', false), f.head);
+    var transIn = fragmentTransition(
+      namedEpsilonState('in', f.name, 'OR', true), f.head);
     var newHead = fragmentState([transIn]);
 
     var newF = namedFragment(f.name, newHead, [trans]);
-
-    return newF;
+    var frontedF = frontWithState(
+      namedEpsilonState('enter', null, 'OR'),
+      newF)
+    return frontedF;
 
     // var util = require('util');
     // console.log('--------------------------------');
@@ -149,12 +174,19 @@ build.OR = function(frags) {
     return namedFragment(frag1.name, head, tails);
   };
 
-  var r = frags.reduce(binaryAlt);
+  var newF = frags.reduce(binaryAlt);
+  newF = frontWithState(
+    namedEpsilonState('enter', null, 'OR'),
+    newF);
+  newF = rearWithState(
+    namedEpsilonState('exit', null, 'OR'), newF);
+
   // var util = require('util');
   // console.log('--------------------------------');
-  // console.log(util.inspect(r, false, null));
+  // console.log(util.inspect(newF, false, null));
   // console.log('--------------------------------');
-  return r;
+
+  return newF;
 };
 
 build.ZERO_OR_MORE = function(frag) {
@@ -164,15 +196,17 @@ build.ZERO_OR_MORE = function(frag) {
   // console.log(util.inspect(newHead, false, null));
   // console.log('--------------------------------');
 
-  var loopTrans = fragmentTransition(namedEpsilonState('loop', null, 'ZERO_OR_MORE'), frag.head);
-  var breakTrans = fragmentTransition(namedEpsilonState('out', null, 'ZERO_OR_MORE'), null);
+  var loopTrans = fragmentTransition(namedEpsilonState('loop', null, 'ZERO_OR_MORE', null), frag.head);
+  var breakTrans = fragmentTransition(
+    namedEpsilonState('out', null, 'ZERO_OR_MORE', false), null);
   var head = fragmentState([loopTrans, breakTrans]);
   patch(frag.tails, head);
   var newF = fragment(head, [breakTrans]);
 
   var nameInTranstions = newF.head.transitions.map(function (t) {
     var s = fragmentState([t]);
-    var namedInTrans = fragmentTransition(namedEpsilonState('in', null, 'ZERO_OR_MORE', false), s);
+    var namedInTrans = fragmentTransition(
+      namedEpsilonState('in', null, 'ZERO_OR_MORE', false), s);
     return namedInTrans;
   });
   var newHead = fragmentState(nameInTranstions);

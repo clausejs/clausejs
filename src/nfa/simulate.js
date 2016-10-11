@@ -1,6 +1,9 @@
 var Problem = require('../_Problem');
 var isProblem = require('../utils/isProblem');
 var isArray = require('isarray');
+function Fold() {}
+
+var FOLD = new Fold();
 
 function simulate(nfa, rawInput) {
   var input, isCocerced;
@@ -94,24 +97,43 @@ function _getMatch(nfa, input, finalState) {
     // console.log(curr);
     var nnames = ['ROOT'].concat(curr.names);
     if(curr.isEpsilon) {
-      if (curr.move.dir === 'in' && curr.move.group === true) {
+      if (curr.move.dir === 'in') {
         valStack.push(null);
-      } else if(curr.move.dir === 'out'  && curr.move.group === true) {
-        var finalVal = valStack.pop();
-        var path = curr.move.name ? nnames.concat([curr.move.name]) : nnames;
-        // console.log(path, finalVal);
-        _setToValue(r, path, finalVal);
+      } else if (curr.move.dir === 'enter') {
+        valStack.push(null);
       }
-    } else {
-      var currVal = valStack[valStack.length - 1];
-      valStack[valStack.length - 1] = _mergeIn(currVal, curr.observed);
+      else if (curr.move.dir === 'loop') {
+        var currVal = valStack.pop();
+        var combined = valStack.pop();
+        var folded = _foldIn(combined, currVal);
+        valStack.push(folded);
+      } else if(curr.move.dir === 'out') {
+      var val = valStack.pop();
+      var parent = valStack.pop();
+      var newParent = _mergeIn(parent, curr.move.name, val);
+      valStack.push(newParent);
+      } else {
+        var currVal = valStack.pop();
+        var merged = _foldIn(currVal, curr.observed);
+        valStack.push(merged);
+      }
+      // console.log(curr, valStack);
     }
-
   });
-  return r['ROOT'];
+  return valStack.pop();
 }
 
-function _mergeIn(acc, val) {
+function _mergeIn(acc, name, val) {
+  var r;
+  if(acc === null) {
+    r = { name: val };
+  } else {
+    r = Object.assign({ name: val }, acc);
+  }
+  return r;
+}
+
+function _foldIn(acc, val) {
   var r;
   if(acc === null) {
     r = val;
