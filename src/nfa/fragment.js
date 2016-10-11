@@ -50,7 +50,7 @@ function frontWithState(state, f) {
   var transIn = fragmentTransition(
     state, f.head);
   var newHead = fragmentState([transIn]);
-  var newF = namedFragment(f.name, newHead, f.tails);
+  var newF = fragment(newHead, f.tails);
   return newF;
 }
 
@@ -58,7 +58,7 @@ function rearWithState(state, f) {
   var newTrans = fragmentTransition(state, null);
   var newS = fragmentState([newTrans], null)
   patch(f.tails, newS);
-  var r = namedFragment(f.name, f.head, [newTrans]);
+  var r = fragment(f.head, [newTrans]);
   return r;
 }
 
@@ -126,11 +126,10 @@ build.CAT = function(frags) {
   r = rearWithState(
     namedEpsilonState('exit', null, 'CAT'), r);
 
-
-  var util = require('util');
-  console.log('--------------------------------');
-  console.log(util.inspect(r, false, null));
-  console.log('--------------------------------');
+  // var util = require('util');
+  // console.log('--------------------------------');
+  // console.log(util.inspect(r, false, null));
+  // console.log('--------------------------------');
 
   return r;
 };
@@ -211,6 +210,13 @@ build.ZERO_OR_MORE = function(frag) {
   });
   var newHead = fragmentState(nameInTranstions);
   newF = fragment(newHead, newF.tails);
+
+  newF = frontWithState(
+    namedEpsilonState('maybe_enter', null, 'ZERO_OR_MORE'),
+    newF);
+  newF = rearWithState(
+    namedEpsilonState('maybe_exit', null, 'ZERO_OR_MORE'), newF);
+
   // var util = require('util');
   // console.log('--------------------------------');
   // console.log(util.inspect(newF, false, null));
