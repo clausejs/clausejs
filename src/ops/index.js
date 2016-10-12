@@ -109,17 +109,17 @@ var bb = zeroOrMoreOp(
   })
 );
 
-var b = catOp({
+var b = orOp({
   named: [
-    // { name: 'group1', expr: bb},
+    { name: 'group1', expr: bb},
     { name: 'group2', expr: coerceIntoSpec(isStr) },
   ],
 });
 
 var r = b.conform([
-  // true, 'z',
-  // true, 'c',
-  // false, 'e',
+  true, 'z',
+  true, 'c',
+  false, 'e',
   'z',
 ]);
 // var r = s.conform([

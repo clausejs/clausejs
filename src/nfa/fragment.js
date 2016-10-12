@@ -203,8 +203,7 @@ build.ZERO_OR_MORE = function(frag) {
 
   var nameInTranstions = newF.head.transitions.map(function (t) {
     var s = fragmentState([t]);
-    var namedInTrans = fragmentTransition(
-      epsilonState(), s);
+    var namedInTrans = fragmentTransition(epsilonState(), s);
     return namedInTrans;
   });
   var newHead = fragmentState(nameInTranstions);

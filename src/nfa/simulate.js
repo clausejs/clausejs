@@ -18,7 +18,7 @@ function simulate(nfa, rawInput) {
     result: null,
   };
 
-  var initial = { state: 0, offset: 0, names: [] };
+  var initial = { state: 0, offset: 0 };
   // var names = [];
   var frontier = [initial];
   // console.log('input: ', input);
@@ -47,32 +47,25 @@ function simulate(nfa, rawInput) {
       if ((transition.isEpsilon ||
            !isProblem(transition.conform(observed))) &&
           nextOffset <= input.length) {
-        var newNames = current.names.concat([]);
         if(transition.isEpsilon) {
-          if(transition.dir === 'in' && transition.name !== undefined) {
-            if(transition.name !== null) {
-              newNames.push(transition.name);
-            }
-          } else if (transition.dir === 'out' && transition.name !== undefined) {
-            if(transition.name !== null) {
-              var n = newNames.pop();
-              if(n !== transition.name) {
-                // console.error(current.state, n, transition.name);
-                throw new Error('this shouldn\'t be happening');
-              }
-            }
+          if(transition.dir) {
+            move = {dir: transition.dir, name: transition.name, op: transition.op, group: transition.group};
+          } else {
+            move = null;
           }
-          move = {dir: transition.dir, name: transition.name, op: transition.op, group: transition.group};
+        } else {
+          move = { dir: 'pred' };
         }
       	var next = {
           state: nextState,
           offset: nextOffset,
           move: move,
-          names: newNames,
           prev: current,
-          observed: observed,
           isEpsilon: transition.isEpsilon || false,
         };
+        if(!transition.isEpsilon) {
+          next.observed = observed;
+        }
       	frontier.push(next);
       }
     }
@@ -82,6 +75,8 @@ function simulate(nfa, rawInput) {
 };
 
 var FOLD = function() {};
+var ENTER = function() {};
+var MAYBE_ENTER = function() {};
 var Name = function(n) { this.value = n; };
 var Maybe = function() {};
 
@@ -94,78 +89,67 @@ function _getMatch(nfa, input, finalState) {
   // console.log(util.inspect(chain, false, null));
   var valStack = [];
   var r = {};
+  // console.log(chain);
   chain.forEach(function (curr) {
-    // console.log(curr);
-    var nnames = ['ROOT'].concat(curr.names);
-    switch(curr.move.dir) {
-      case 'enter' : {
-        valStack.push(null);
-      } break;
-      case 'maybe_enter': {
-        // valStack.push(new Maybe());
-      } break;
-      case 'in': {
-        valStack.push(new Name(curr.move.name));
-      } break;
-      case 'loop': {
-        if(valStack[valStack.length - 1] !== null) {
-          valStack.push(FOLD);
-        }
-      } break;
-      default: {
-        _pushOrFold(valStack, curr.observed);
-      } break;
-      case 'out': {
-        var val = valStack.pop();
-        var name = valStack.pop().value;
-        var acc = valStack.pop();
-        var newAcc;
-        if(name) {
-          newAcc = _mergeIn(acc, name, val);
-        } else {
-          newAcc = _foldIn(acc, val);
-        }
-        _pushOrFold(valStack, newAcc);
-      } break;
-      case 'maybe_exit': {
-      } break;
-      case 'exit': {
-        if(valStack.length > 1) {
-          var v = valStack.pop();
-          var acc = valStack.pop();
-          var newAcc = _foldIn(acc, v);
-          valStack.push(newAcc);
-        }
-      } break;
+    // console.log(curr, valStack);
+    if(curr.move) {
+      switch(curr.move.dir) {
+        case 'enter' : {
+          valStack.push(ENTER);
+        } break;
+        case 'maybe_enter' : {
+          valStack.push(MAYBE_ENTER);
+        } break;
+        case 'in': {
+          valStack.push(new Name(curr.move.name));
+        } break;
+        case 'loop': {
+          if(valStack[valStack.length - 1] !== null) {
+            valStack.push(FOLD);
+          }
+        } break;
+        case 'pred': {
+          valStack.push(curr.observed);
+        } break;
+        case 'out': {
+          var val = valStack.pop();
+          if(!(val instanceof Name)) {
+            var name = valStack.pop().value;
+            var newAcc = {};
+            newAcc[name] = val;
+            valStack.push(newAcc);
+          }
+        } break;
+        case 'maybe_exit': {
+          var c = valStack.pop();
+          var acc = null;
+          while(c!==MAYBE_ENTER) {
+            if(c!==FOLD) {
+              acc = _foldIn(acc, c);
+            }
+            c = valStack.pop();
+          }
+          valStack.push(acc);
+        } break;
+        case 'exit': {
+          var c = valStack.pop();
+          var acc = {};
+          while(c!==ENTER) {
+            acc = Object.assign(acc, c);
+            c = valStack.pop();
+          }
+          valStack.push(acc);
+        } break;
+        default: console.error(curr); throw 'FUUU';
+      }
     }
-    // console.log(curr.move, valStack);
+    // console.log(curr, valStack);
   });
   return valStack.pop();
 }
 
-function _pushOrFold(stack, v) {
-  var op = _last(stack);
-  if(op === FOLD) {
-    stack.pop();
-    var acc = stack.pop();
-    stack.push(_foldIn(acc, v));
-  } else {
-    stack.push(v);
-  }
-}
-
 function _last(arr) {
   return arr[arr.length - 1];
-}
-
-function _mergeIn(acc, name, val) {
-  var r;
-  if(acc === null) {
-    r = { name: val };
-  } else {
-    r = Object.assign({ name: val }, acc);
-  }
-  return r;
 }
 
 function _foldIn(acc, val) {
@@ -211,19 +195,23 @@ function _getValue(object, path) {
 function _stateChain(nfa, finalState) {
   var chain = [];
   var curr = finalState;
+  var prev;
   while(curr) {
-    // if(!curr.isEpsilon) {
-      chain.unshift({
-        offset: curr.offset,
-        names: curr.names,
-        move: curr.move,
-        observed: curr.observed,
+    if(!prev || (curr.state !== prev.state) && curr.move) {
+          // console.log(curr.isEpsilon, curr.move, curr.state);
+      var o = {
         isEpsilon: curr.isEpsilon,
-      });
-    // }
+        move: curr.move,
+      };
+      if(!curr.isEpsilon) {
+        o.observed = curr.observed;
+      }
+      chain.unshift(o);
+    }
+    prev = curr;
     curr = curr.prev;
   }
-  chain.shift();
+  // console.log(chain);
   return chain;
 }
 
