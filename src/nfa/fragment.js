@@ -152,12 +152,8 @@ build.OR = function(frags) {
     var transIn = fragmentTransition(
       namedEpsilonState('in', f.name, 'OR', true), f.head);
     var newHead = fragmentState([transIn]);
-
     var newF = namedFragment(f.name, newHead, [trans]);
-    var frontedF = frontWithState(
-      namedEpsilonState('enter', null, 'OR'),
-      newF)
-    return frontedF;
+    return newF;
 
     // var util = require('util');
     // console.log('--------------------------------');

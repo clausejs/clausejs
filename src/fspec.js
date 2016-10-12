@@ -38,8 +38,8 @@ function fspec(fnSpec) {
       // var util = require('util');
       // console.log(util.inspect(argsSpec, false, null));
       var conformedArgs = conform(argsSpec, args);
-      var util = require('util');
-      console.log(conformedArgs.named);
+      // var util = require('util');
+      // console.log(conformedArgs.named);
       // console.log(util.inspect(conformedArgs, false, null));
       var retVal = fn.call(null, conformedArgs);
       checkRet(retVal);
@@ -55,7 +55,7 @@ function fspec(fnSpec) {
     }
   }
 
-  function checkRet(ret) {
+  function checkRet(retVal) {
     if(retSpec) {
       if(!isValid(retSpec, retVal)) {
         throw new Problem(retSpec, retSpec, 'Return value ' + retVal + ' did not pass function spec for ' + fnName);

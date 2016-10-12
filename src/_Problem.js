@@ -4,7 +4,7 @@ function Problem(val, failsPredicate, msg) {
   this.falsePredicate = failsPredicate;
   this.problemMessage = msg;
   this.stack = (new Error()).stack;
-  this.message = msg + '; val: ' + JSON.stringify(val);
+  this.message = msg + '; offending value: ' + JSON.stringify(val);
 };
 
 Problem.prototype = new Error;

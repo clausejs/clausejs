@@ -74,11 +74,13 @@ function simulate(nfa, rawInput) {
   return r;
 };
 
-var FOLD = function() {};
-var ENTER = function() {};
-var MAYBE_ENTER = function() {};
+// var FOLD = function() {};
+// var ENTER = function() {};
+// var MAYBE_ENTER = function() {};
+var FOLD = 'FOLD';
+var ENTER = 'ENTER';
+var MAYBE_ENTER = 'MAYBE_ENTER';
 var Name = function(n) { this.value = n; };
-var Maybe = function() {};
 
 function _getMatch(nfa, input, finalState) {
   var chain = _stateChain(nfa, finalState);
@@ -145,6 +147,10 @@ function _getMatch(nfa, input, finalState) {
     }
     // console.log(curr, valStack);
   });
+  if(valStack.length !== 1) {
+    console.error(valStack);
+     throw 'FUUU2';
+  }
   return valStack.pop();
 }
 
@@ -155,7 +161,7 @@ function _last(arr) {
 function _foldIn(acc, val) {
   var r;
   if(acc === null) {
-    r = val;
+    r = [val];
   } else if (!isArray(acc)) {
     r = [acc, val];
   } else {
@@ -202,6 +208,7 @@ function _stateChain(nfa, finalState) {
       var o = {
         isEpsilon: curr.isEpsilon,
         move: curr.move,
+        state: curr.state,
       };
       if(!curr.isEpsilon) {
         o.observed = curr.observed;

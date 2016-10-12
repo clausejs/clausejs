@@ -21,8 +21,12 @@ var oneOrMoreOp = genSingleArgOp(c.ONE_OR_MORE);
 
 var refNameOrExprSpec = orOp({
   named: [
-      { name: 'refName', expr: refNameSpec },
-      { name: 'expression', expr: exprSpec },
+      { name: 'refName', expr: {
+        expression: refNameSpec,
+      } },
+      { name: 'expression', expr: {
+        expression: exprSpec,
+      } },
     ],
 });
 
@@ -30,19 +34,27 @@ var multipleArgOpSpec = {
   args: orOp({
     named: [
       {
-        name: 'unnamed',
-        expr: zeroOrMoreOp( refNameOrExprSpec ),
+        name: 'named',
+        expr: {
+          expression: zeroOrMoreOp(
+            catOp({
+              named: [
+                  { name: 'name', expr: {
+                    expression: nameSpec,
+                  } },
+                  { name: 'expr', expr: {
+                    expression: refNameOrExprSpec,
+                  } },
+                ],
+            })
+          ),
+        },
       },
       {
-        name: 'named',
-        expr: zeroOrMoreOp(
-          catOp({
-            named: [
-                { name: 'name', expr: nameSpec },
-                { name: 'expr', expr: refNameOrExprSpec },
-              ],
-          })
-        ),
+        name: 'unnamed',
+        expr: {
+          expression: zeroOrMoreOp( refNameOrExprSpec ),
+        },
       },
     ],
   }),
@@ -52,7 +64,9 @@ var multipleArgOpSpec = {
 var singleArgOpSpec = {
   args: catOp({
     named: [
-      { name: 'expr', expr: exprSpec },
+      { name: 'expr', expr: {
+        expression: refNameOrExprSpec,
+      } },
     ],
   }),
   ret: specSpec,
@@ -61,18 +75,34 @@ var singleArgOpSpec = {
 function genMultiArgOp(type) {
   return function (conformedArgs) {
     // console.log(conformedArgs);
-    var exprs = conformedArgs.named || conformedArgs.unnamed;
-    var coercedExprs = exprs.map(function(p) {
-      var s = coerceIntoSpec(p.expr);
-      return Object.assign({}, p, { expr: s });
-    });
+    var exprs;
+    if(conformedArgs.named) {
+      exprs = conformedArgs.named;
 
-    var s = new Spec(
-      type, { exprs: coercedExprs }, null, null
-    );
+      // console.log(exprs);
+      var coercedExprs = exprs.map(function(p) {
+        var expr = p.expr;
+        if(expr.expression) {
+          var s = coerceIntoSpec(expr.expression);
+          return Object.assign({}, p, { expr: s });
+        } else {
+          console.error(p);
+          throw 'Not implemented';
+        }
+        // console.log(p);
+        // var s = coerceIntoSpec(p.expr);
+        // return Object.assign({}, p, { expr: s });
+      });
 
-    s.conform = nfaConformer(s);
-    return s;
+      var s = new Spec(
+        type, { exprs: coercedExprs }, null, null
+      );
+
+      s.conform = nfaConformer(s);
+      return s;
+    } else {
+      throw 'unnamed not impl';
+    }
   };
 }
 
@@ -89,46 +119,46 @@ function genSingleArgOp(type) {
   };
 }
 
-///////////////////////////////////////////////////////////
-var isBool = require('../preds/isBool');
-var isStr = require('../preds/isStr');
-
-// var boolOrStr = orOp({
+// ///////////////////////////////////////////////////////////
+// var isBool = require('../preds/isBool');
+// var isStr = require('../preds/isStr');
+//
+// // var boolOrStr = orOp({
+// //   named: [
+// //     { name: 'var1', expr: coerceIntoSpec(isBool) },
+// //     { name: 'var2', expr: coerceIntoSpec(isStr) },
+// //   ],
+// // });
+//
+// var bb = zeroOrMoreOp(
+//   catOp({
+//     named: [
+//       {name: 'verifi', expr: coerceIntoSpec(isBool)},
+//       {name: 'commenti', expr: coerceIntoSpec(isStr)},
+//     ],
+//   })
+// );
+//
+// var b = orOp({
 //   named: [
-//     { name: 'var1', expr: coerceIntoSpec(isBool) },
-//     { name: 'var2', expr: coerceIntoSpec(isStr) },
+//     { name: 'group1', expr: bb},
+//     { name: 'group2', expr: coerceIntoSpec(isStr) },
 //   ],
 // });
-
-var bb = zeroOrMoreOp(
-  catOp({
-    named: [
-      {name: 'verifi', expr: coerceIntoSpec(isBool)},
-      {name: 'commenti', expr: coerceIntoSpec(isStr)},
-    ],
-  })
-);
-
-var b = orOp({
-  named: [
-    { name: 'group1', expr: bb},
-    { name: 'group2', expr: coerceIntoSpec(isStr) },
-  ],
-});
-
-var r = b.conform([
-  true, 'z',
-  true, 'c',
-  false, 'e',
-  'z',
-]);
-// var r = s.conform([
+//
+// var r = b.conform([
 //   true, 'z',
-//   false, 'w',
+//   true, 'c',
+//   false, 'e',
 //   'z',
 // ]);
-console.log(r);
-///////////////////////////////////////////////////////////
+// // var r = s.conform([
+// //   true, 'z',
+// //   false, 'w',
+// //   'z',
+// // ]);
+// console.log(r);
+// ///////////////////////////////////////////////////////////
 
 module.exports = {
   cat: fspec(multipleArgOpSpec).wrapConformedArgs(catOp),
