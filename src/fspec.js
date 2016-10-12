@@ -35,6 +35,7 @@ function fspec(fnSpec) {
   function getArgConformedFn(fn) {
     return function () {
       var args = Array.from(arguments);
+      // console.log(args);
       // var util = require('util');
       // console.log(util.inspect(argsSpec, false, null));
       var conformedArgs = conform(argsSpec, args);

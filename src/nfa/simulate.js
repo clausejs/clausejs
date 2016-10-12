@@ -137,7 +137,7 @@ function _getMatch(nfa, input, finalState) {
           var c = valStack.pop();
           var acc = {};
           while(c!==ENTER) {
-            acc = Object.assign(acc, c);
+            acc = Object.assign({}, c, acc);
             c = valStack.pop();
           }
           valStack.push(acc);
@@ -163,9 +163,9 @@ function _foldIn(acc, val) {
   if(acc === null) {
     r = [val];
   } else if (!isArray(acc)) {
-    r = [acc, val];
+    r = [val, acc];
   } else {
-    r = acc.concat([val]);
+    r = [val].concat(acc);
   }
   return r;
 }
