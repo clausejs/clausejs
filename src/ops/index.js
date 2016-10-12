@@ -100,8 +100,29 @@ function genMultiArgOp(type) {
 
       s.conform = nfaConformer(s);
       return s;
-    } else {
-      throw 'unnamed not impl';
+    } else if (conformedArgs.unnamed){
+      exprs = conformedArgs.unnamed;
+
+      // console.log(exprs);
+      var coercedExprs = exprs.map(function(p) {
+        if(p.expression) {
+          var s = coerceIntoSpec(p.expression);
+          return Object.assign({}, p, { expr: s });
+        } else {
+          console.error(p);
+          throw 'Not implemented';
+        }
+        // console.log(p);
+        // var s = coerceIntoSpec(p.expr);
+        // return Object.assign({}, p, { expr: s });
+      });
+
+      var s = new Spec(
+        type, { exprs: coercedExprs }, null, null
+      );
+
+      s.conform = nfaConformer(s);
+      return s;
     }
   };
 }

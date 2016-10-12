@@ -117,8 +117,13 @@ function _getMatch(nfa, input, finalState) {
           var val = valStack.pop();
           if(!(val instanceof Name)) {
             var name = valStack.pop().value;
-            var newAcc = {};
-            newAcc[name] = val;
+            var newAcc;
+            if(name === null || name === undefined) {
+              newAcc = val;
+            } else {
+              newAcc = {};
+              newAcc[name] = val;
+            }
             valStack.push(newAcc);
           }
         } break;
@@ -141,6 +146,9 @@ function _getMatch(nfa, input, finalState) {
             c = valStack.pop();
           }
           valStack.push(acc);
+        } break;
+        case 'exit_unnamed': {
+          // TODO
         } break;
         default: console.error(curr); throw 'FUUU';
       }
