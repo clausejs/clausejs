@@ -109,14 +109,14 @@ var bb = zeroOrMoreOp(
   })
 );
 
-var s = catOp({
+var b = catOp({
   named: [
     // { name: 'group1', expr: bb},
     { name: 'group2', expr: coerceIntoSpec(isStr) },
   ],
 });
 
-var r = s.conform([
+var r = b.conform([
   // true, 'z',
   // true, 'c',
   // false, 'e',
@@ -127,7 +127,7 @@ var r = s.conform([
 //   false, 'w',
 //   'z',
 // ]);
-// console.log(r);
+console.log(r);
 ///////////////////////////////////////////////////////////
 
 module.exports = {

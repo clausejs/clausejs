@@ -2,9 +2,6 @@ var Problem = require('../_Problem');
 var isProblem = require('../utils/isProblem');
 var isArray = require('isarray');
 
-
-var FOLD = function() {};
-
 function simulate(nfa, rawInput) {
   var input, isCocerced;
 
@@ -84,6 +81,10 @@ function simulate(nfa, rawInput) {
   return r;
 };
 
+var FOLD = function() {};
+var Name = function(n) { this.value = n; };
+var Maybe = function() {};
+
 function _getMatch(nfa, input, finalState) {
   var chain = _stateChain(nfa, finalState);
   // chain.forEach(function (c) {
@@ -96,24 +97,65 @@ function _getMatch(nfa, input, finalState) {
   chain.forEach(function (curr) {
     // console.log(curr);
     var nnames = ['ROOT'].concat(curr.names);
-    if(curr.isEpsilon) {
-      switch(curr.move.dir) {
-        case 'enter':
-          valStack.push()
-        break;
-        case 'in':
-        break;
-        case 'loop':
-        break;
-        case 'out':
-        break;
-        case 'exit':
-        break;
-        default: throw new Error('shouldn\'t happen');
-      }
+    switch(curr.move.dir) {
+      case 'enter' : {
+        valStack.push(null);
+      } break;
+      case 'maybe_enter': {
+        // valStack.push(new Maybe());
+      } break;
+      case 'in': {
+        valStack.push(new Name(curr.move.name));
+      } break;
+      case 'loop': {
+        if(valStack[valStack.length - 1] !== null) {
+          valStack.push(FOLD);
+        }
+      } break;
+      default: {
+        _pushOrFold(valStack, curr.observed);
+      } break;
+      case 'out': {
+        var val = valStack.pop();
+        var name = valStack.pop().value;
+        var acc = valStack.pop();
+        var newAcc;
+        if(name) {
+          newAcc = _mergeIn(acc, name, val);
+        } else {
+          newAcc = _foldIn(acc, val);
+        }
+        _pushOrFold(valStack, newAcc);
+      } break;
+      case 'maybe_exit': {
+      } break;
+      case 'exit': {
+        if(valStack.length > 1) {
+          var v = valStack.pop();
+          var acc = valStack.pop();
+          var newAcc = _foldIn(acc, v);
+          valStack.push(newAcc);
+        }
+      } break;
     }
+    // console.log(curr.move, valStack);
   });
   return valStack.pop();
+}
+
+function _pushOrFold(stack, v) {
+  var op = _last(stack);
+  if(op === FOLD) {
+    stack.pop();
+    var acc = stack.pop();
+    stack.push(_foldIn(acc, v));
+  } else {
+    stack.push(v);
+  }
+}
+
+function _last(arr) {
+  return arr[arr.length - 1];
 }
 
 function _mergeIn(acc, name, val) {
