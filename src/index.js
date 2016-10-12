@@ -1,20 +1,20 @@
-var speco = require('./index.unspecked');
+var specky = require('./index.unspecked');
 // var isSpec = require('./utils/isSpec');
 // var isPred = require('./utils/isPred');
-// var fspec = speco.fspec, cat = speco.cat, keys = speco.keys, zeroOrMore = speco.zeroOrMore;
+// var fspec = specky.fspec, cat = specky.cat, keys = specky.keys, zeroOrMore = specky.zeroOrMore;
 
-var specked = speco;
-// var specked = specThemAll(speco);
+var specked = specky;
+// var specked = specThemAll(specky);
 //
 // function specThemAll (s) {
 //   var specked = {};
 //
 //   //apply fn specs if it exists
-//   for (var fnName in speco) {
+//   for (var fnName in specky) {
 //     if(specs.hasOwnProperty(fnName)) {
-//       specked[fnName] = specs[fnName](speco[fnName]);
+//       specked[fnName] = specs[fnName](specky[fnName]);
 //     } else {
-//       specked[fnName] = speco[fnName];
+//       specked[fnName] = specky[fnName];
 //     }
 //   }
 //   return specked;
@@ -22,4 +22,4 @@ var specked = speco;
 
 
 module.exports = specked;
-// module.exports = speco;
+// module.exports = specky;

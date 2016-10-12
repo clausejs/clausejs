@@ -1,4 +1,4 @@
-# Speco 👓 [![Circle CI](https://circleci.com/gh/settinghead/speco.svg?style=svg)](https://circleci.com/gh/settinghead/speco)
+# Specky 👓 [![Circle CI](https://circleci.com/gh/settinghead/specky.svg?style=svg)](https://circleci.com/gh/settinghead/specky)
 
 ### Project status
 - Pre-alpha. Not useable. Under active research & development.

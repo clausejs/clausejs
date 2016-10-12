@@ -4,11 +4,11 @@ var webpack = require('webpack');
 module.exports = {
     entry: './src/index.js',
     output: {
-        library: 'speco',
+        library: 'specky',
         libraryTarget: 'umd',
         umdNamedDefine: true,
         path: './dist',
-        filename: 'speco.min.js',
+        filename: 'specky.min.js',
     },
     module: {
       test: /\.js$/,
