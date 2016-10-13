@@ -7,7 +7,7 @@ var or = ops.or;
 var cat = ops.cat;
 
 function and() {
-
+  //TODO
 }
 
 module.exports = and;

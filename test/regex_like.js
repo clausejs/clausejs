@@ -38,12 +38,21 @@ describe('nfa regex', function() {
 
       });
 
-    check.it('use in conjunction with cat', [], function() {
+    it('use in conjunction with cat', function() {
       var ZeroOrMoreStrings = S.zeroOrMore(S.isStr);
       var ZeroOrMoreIntegers = S.zeroOrMore(Number.isInteger);
-      var expr = S.cat(ZeroOrMoreStrings, ZeroOrMoreIntegers, ZeroOrMoreStrings, S.isBool);
-      var validData = ['a', 'b', 1, 2, 3, true];
+      var oneOrMoreIntegers = S.oneOrMore(Number.isInteger);
+      var expr = S.cat(
+        ZeroOrMoreStrings,
+        ZeroOrMoreIntegers,
+        ZeroOrMoreStrings,
+        S.isBool,
+        oneOrMoreIntegers,
+        oneOrMoreIntegers,
+        ZeroOrMoreStrings);
+      var validData = ['a', 'b', 1, 2, 3, true, 2 , 3, 4];
       var invalidData = [2, 3, 4, 5];
+      // console.log(expr.conform(validData));
       expect(S.isValid(expr, validData)).to.be.true;
       expect(S.isValid(expr, invalidData)).to.be.false;
     });
