@@ -81,6 +81,7 @@ var FOLD = 'FOLD';
 var ENTER = 'ENTER';
 var MAYBE_ENTER = 'MAYBE_ENTER';
 var Name = function(n) { this.value = n; };
+var ArrayFragment = function(val) { this.value = val; };
 
 function _getMatch(nfa, input, finalState) {
   var chain = _stateChain(nfa, finalState);
@@ -92,6 +93,7 @@ function _getMatch(nfa, input, finalState) {
   var valStack = [];
   var r = {};
   // console.log(chain);
+  // console.log('-------------------');
   chain.forEach(function (curr) {
     // console.log(curr, valStack);
     if(curr.move) {
@@ -119,7 +121,7 @@ function _getMatch(nfa, input, finalState) {
             var name = valStack.pop().value;
             var newAcc;
             if(name === null || name === undefined) {
-              newAcc = val;
+              newAcc = new ArrayFragment(val);
             } else {
               newAcc = {};
               newAcc[name] = val;
@@ -140,15 +142,20 @@ function _getMatch(nfa, input, finalState) {
         } break;
         case 'exit': {
           var c = valStack.pop();
-          var acc = {};
+          var acc = null;
           while(c!==ENTER) {
-            acc = Object.assign({}, c, acc);
+            if(c instanceof ArrayFragment) {
+              if(acc === null) {
+                acc = c.value;
+              } else {
+                acc = [c.value].concat(acc);
+              }
+            } else {
+              acc = Object.assign({}, c, acc);
+            }
             c = valStack.pop();
           }
           valStack.push(acc);
-        } break;
-        case 'exit_unnamed': {
-          // TODO
         } break;
         default: console.error(curr); throw 'FUUU';
       }
@@ -159,6 +166,7 @@ function _getMatch(nfa, input, finalState) {
     console.error(valStack);
      throw 'FUUU2';
   }
+
   return valStack.pop();
 }
 
