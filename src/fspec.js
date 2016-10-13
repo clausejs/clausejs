@@ -9,30 +9,30 @@ function fspec(fnSpec) {
   var retSpec = fnSpec.ret;
 
   var wrapSpecChecker = function (fn) {
-    var speckedFn = getSpeckedFn(fn);
     var fnName = functionName(fn);
+    var speckedFn = getSpeckedFn(fnName, fn);
     var namedSpecedFn = namedFn(fnName, speckedFn, '__specked');
     return namedSpeckedFn;
   }
 
   var wrapConformedArgs = function (fn) {
-    var argConformedFn = getArgConformedFn(fn);
     var fnName = functionName(fn);
+    var argConformedFn = getArgConformedFn(fnName, fn);
     var namedArgConformedFn = namedFn(fnName, argConformedFn, '__conformed');
     return namedArgConformedFn;
   }
 
-  function getSpeckedFn(fn) {
+  function getSpeckedFn(fnName, fn) {
     return function () {
       var args = Array.from(arguments);
-      checkArgs(args);
+      checkArgs(fnName, args);
       var retVal = fn.apply(null, args);
-      checkRet(retVal);
+      checkRet(fnName, retVal);
       return retVal;
     };
   }
 
-  function getArgConformedFn(fn) {
+  function getArgConformedFn(fnName, fn) {
     return function () {
       var args = Array.from(arguments);
       // console.log(args);
@@ -43,7 +43,7 @@ function fspec(fnSpec) {
       // console.log(conformedArgs.named);
       // console.log(util.inspect(conformedArgs, false, null));
       var retVal = fn.call(null, conformedArgs);
-      checkRet(retVal);
+      checkRet(fnName, retVal);
       return retVal;
     };
   }
@@ -56,7 +56,7 @@ function fspec(fnSpec) {
     }
   }
 
-  function checkRet(retVal) {
+  function checkRet(fnName, retVal) {
     if(retSpec) {
       if(!isValid(retSpec, retVal)) {
         throw new Problem(retSpec, retSpec, 'Return value ' + retVal + ' did not pass function spec for ' + fnName);
