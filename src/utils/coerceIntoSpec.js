@@ -2,8 +2,9 @@ var isPred = require('./isPred');
 var isSpec = require('./isSpec');
 var Spec = require('../_Spec');
 var Problem = require('../_Problem');
+var namedFn = require('./namedFn');
 
-var SPEC_TYPE_PRED = 'PRED';
+var SPEC_TYPE = 'PRED';
 
 function coerceIntoSpec(expr) {
   if(isSpec(expr)) {
@@ -16,7 +17,7 @@ function coerceIntoSpec(expr) {
 }
 
 function _wrap(pred) {
-  return new Spec(SPEC_TYPE_PRED, pred, predConformer(pred), null);
+  return new Spec(SPEC_TYPE, { pred: pred }, predConformer(pred), null);
 }
 
 function predConformer(pred) {

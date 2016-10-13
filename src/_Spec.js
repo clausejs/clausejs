@@ -1,24 +1,18 @@
-var specPrettyPrint = require('./utils/specPrettyPrint');
 var isArray = require('isarray');
 
 function _Spec(type, args, conformFn, generateFn) {
 
   if(arguments.length !== 4) {
-    throw new Error('Wrong number of arguments passed to new _Spec()');
+    throw new Error('Wrong number of arguments (' + arguments.length + ') passed to new _Spec()');
   }
 
   if(args === null || args === undefined) {
     throw new Error('No argument list passed to new _Spec()');
   }
 
-  if(args !== null && args !== undefined && !isArray(args)) {
-    args = [args];
-  }
+  this.type = type;
 
-  this.type = type || null;
-  this.args = args || null;
-
-  this.conform = function tryConform(x, _this) {
+  this.conform = function (x, _this) {
     return conformFn.call(_this, x);
   };
 
@@ -27,11 +21,9 @@ function _Spec(type, args, conformFn, generateFn) {
       return generateFn.call(_this, x);
     }
   }
-  this.___isSpec = true;
+
+  Object.assign(this, args);
 };
 
-_Spec.prototype.toString = function() {
-  return specPrettyPrint(this);
-};
 
 module.exports = _Spec;

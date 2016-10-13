@@ -11,6 +11,12 @@ module.exports = {
         filename: 'specky.min.js',
     },
     module: {
+      test: /\.js$/,
+      exclude: /(node_modules|bower_components)/,
+      loader: 'babel', // 'babel-loader' is also a valid name to reference
+      query: {
+        presets: ['es2015'],
+      },
     },
     plugins: [
         new webpack.optimize.UglifyJsPlugin({
@@ -30,5 +36,5 @@ module.exports = {
       //    },
       //    concurrency: 3,
       //  }),
-    ]
+    ],
 }

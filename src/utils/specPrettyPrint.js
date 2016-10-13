@@ -12,16 +12,24 @@ function _pp(spec, level) {
     return _indent(level) + 'Pred: ' + fnName(spec) + '\n';
   } else if (isSpec(spec)) {
     var accu = _indent(level) + 'Spec: ' + spec.type + '\n';
-
-    if(isArray(spec.args)) {
+    if(isArray(spec.exprs)) {
       var i;
 
-      for (i = 0; i < spec.args.length; i++) {
-        accu += _pp(spec.args[i], level + 1);
+      for (i = 0; i < spec.exprs.length; i++) {
+        var p = spec.exprs[i];
+        var expr;
+        if(p.expression) {
+          expr = p.expression;
+        } else {
+          throw 'no impl';
+        }
+        accu += _pp(expr, level + 1);
       }
     }
-    else {
-      accu += _pp(spec.args, level + 1);
+    else if (spec.expr) {
+      accu += _pp(spec.expr, level + 1);
+    } else if (spec.pred) {
+      accu += _pp(spec.pred, level + 1);
     }
     return accu;
   }

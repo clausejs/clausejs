@@ -1,16 +1,14 @@
-
-
-var s = require('../src/');
+var S = require('../src/');
 var expect = require('chai').expect;
-var Problem = s.Problem;
+var Problem = S.Problem;
 var Spec = require('../src/_Spec');
-var identity = s.identity;
+var identity = S.identity;
 
 describe('or', function() {
   it('should accept one or more conditions', function() {
-    var NumOrStr = s.or(s.isNum, s.isStr, s.isBool);
-    expect(s.isValid(NumOrStr, 'hello')).to.be.true;
-    expect(s.isValid(NumOrStr, 33)).to.be.true;
-    expect(s.isValid(NumOrStr, new Object())).to.be.false;
+    var NumOrStr = S.or(S.isNum, S.isStr, S.isBool);
+    expect(S.isValid(NumOrStr, 'hello')).to.be.true;
+    expect(S.isValid(NumOrStr, 33)).to.be.true;
+    expect(S.isValid(NumOrStr, new Object())).to.be.false;
   });
 });

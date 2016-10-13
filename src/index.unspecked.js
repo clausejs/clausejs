@@ -1,15 +1,16 @@
+var ops = require('./ops');
 module.exports = {
-  cat: require('./cat'),
+  cat: ops.cat,
+  zeroOrMore: ops.zeroOrMore,
+  oneOrMore: ops.oneOrMore,
+  or: ops.or,
   conform: require('./conform'),
   fspec: require('./fspec'),
   isValid: require('./isValid'),
   keys: require('./keys'),
   identity: require('./identity'),
   isProblem: require('./utils/isProblem'),
-  or: require('./or'),
   Problem: require('./_Problem'),
-  zeroOrMore: require('./zeroOrMore'),
-  oneOrMore: require('./oneOrMore'),
 
   /* Predicates */
   isBool: require('./preds/isBool'),

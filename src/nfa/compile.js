@@ -12,6 +12,7 @@ var indexedFragmentStates = function(fragment) {
       state.index = nextIndex;
       nextIndex++;
       state.transitions.forEach(function(transition) {
+        // console.log(transition);
       	frontier.push(transition.target);
       });
       states.push(state);
@@ -22,31 +23,35 @@ var indexedFragmentStates = function(fragment) {
 
 var evalFunctions = {};
 
-function evalSpec(expr) {
+function evalSpec(spec) {
   var evalFn;
 
-  if (expr.type === null) {
-    throw "Expression has no type: " + expr;
-  } else if (!(expr.type in evalFunctions)) {
+  if (spec.type === null) {
+    throw "Spec has no type: " + spec;
+  } else if (!(spec.type in evalFunctions)) {
     evalFn = evalFunctions.PRED;
   } else {
-    evalFn = evalFunctions[expr.type];
+    evalFn = evalFunctions[spec.type];
   }
-  var r = evalFn(expr);
+  var r = evalFn(spec);
   return r;
 };
 
+
 var evalChildThen = function(wrapper) {
-  return function(expr) {
-    var childFrag = evalSpec(expr.args[0]);
+  return function(spec) {
+    var childFrag = evalSpec(spec.expr);
     return wrapper(childFrag);
   };
 };
 
 var evalChildrenThen = function(wrapper) {
-  return function(expr) {
-    var evalChild = function(child) { return evalSpec(child); };
-    var childFrags = expr.args.map(evalChild);
+  return function(spec) {
+    var childFrags = spec.exprs.map(function(child) {
+      var s = evalSpec(child.expr);
+      s.name = child.name;
+      return s;
+    });
     return wrapper(childFrags);
   };
 };
@@ -67,14 +72,17 @@ evalFunctions.PRED = function(x) {
 };
 
 function wrapRoot(expr) {
-  return new Spec('ROOT', expr, null, null);
+  return new Spec('ROOT', { expr: expr }, null, null);
 }
 
 var compile = function(expr) {
   var rootedExpr = wrapRoot(expr);
   var fragment = evalSpec(rootedExpr);
-  var states = indexedFragmentStates(fragment);
 
+  // var util = require('util');
+  // console.log(util.inspect(fragment, false, null));
+
+  var states = indexedFragmentStates(fragment);
   var numStates = states.length;
   var nfaTransitions = {};
   var finalState;
@@ -83,8 +91,8 @@ var compile = function(expr) {
       finalState = state.index;
     };
     var outTrans = {};
-    state.transitions.map(function(fragTrans) {
-      outTrans[fragTrans.target.index] = fragTrans.name;
+    state.transitions.forEach(function(fragTrans) {
+      outTrans[fragTrans.target.index] = fragTrans.spec;
     });
     nfaTransitions[state.index.toString()] = outTrans;
   });
@@ -93,7 +101,7 @@ var compile = function(expr) {
     numStates: numStates,
     finalState: finalState,
     transitions: nfaTransitions,
-    expression: expr
+    expression: expr,
   };
 };
 
