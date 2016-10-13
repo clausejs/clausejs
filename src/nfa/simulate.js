@@ -74,12 +74,12 @@ function simulate(nfa, rawInput) {
   return r;
 };
 
-// var FOLD = function() {};
-// var ENTER = function() {};
-// var MAYBE_ENTER = function() {};
-var FOLD = 'FOLD';
-var ENTER = 'ENTER';
-var MAYBE_ENTER = 'MAYBE_ENTER';
+var FOLD = function() {};
+var ENTER = function() {};
+var MAYBE_ENTER = function() {};
+// var FOLD = 'FOLD';
+// var ENTER = 'ENTER';
+// var MAYBE_ENTER = 'MAYBE_ENTER';
 var Name = function(n) { this.value = n; };
 var ArrayFragment = function(val) { this.value = val; };
 
