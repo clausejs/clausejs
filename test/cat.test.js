@@ -2,7 +2,7 @@ var S = require('../src/');
 var expect = require('chai').expect;
 var Problem = S.Problem;
 
-describe.only('cat', function() {
+describe('cat', function() {
   var fn = function() {};
   var conformist = [ fn, {}, fn, {a: 1} ];
   var nonconformist = [ {}, fn, {}, fn];

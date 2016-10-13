@@ -12,7 +12,7 @@ function fspec(fnSpec) {
     var fnName = functionName(fn);
     var speckedFn = getSpeckedFn(fnName, fn);
     var namedSpecedFn = namedFn(fnName, speckedFn, '__specked');
-    return namedSpeckedFn;
+    return namedSpecedFn;
   }
 
   var wrapConformedArgs = function (fn) {
@@ -40,7 +40,7 @@ function fspec(fnSpec) {
       // console.log(util.inspect(argsSpec, false, null));
       var conformedArgs = conform(argsSpec, args);
       // var util = require('util');
-      // console.log(conformedArgs.named);
+      // console.log(conformedArgs);
       // console.log(util.inspect(conformedArgs, false, null));
       var retVal = fn.call(null, conformedArgs);
       checkRet(fnName, retVal);
@@ -48,7 +48,7 @@ function fspec(fnSpec) {
     };
   }
 
-  function checkArgs(args) {
+  function checkArgs(fnName, args) {
     if(argsSpec) {
       if(!isValid(argsSpec, args)) {
         throw new Problem(fnName, argsSpec, 'Arguments ' + args + ' did not pass spec for function ' + fnName);

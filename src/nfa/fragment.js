@@ -137,8 +137,8 @@ build.CAT = function(frags) {
 build.OR = function(frags) {
   frags = frags.map(function(f) {
     var originalTails = f.tails;
-    var trans = fragmentTransition(
-      namedEpsilonState('out', f.name, 'OR', true), null);
+    var outState = namedEpsilonState('out', f.name, 'OR', true);
+    var trans = fragmentTransition(outState, null);
     var nameOutState = fragmentState([trans]);
     patch(f.tails, nameOutState);
 
@@ -149,32 +149,32 @@ build.OR = function(frags) {
     // });
     // var newHead = fragmentState(nameInTranstions);
 
-    var transIn = fragmentTransition(
-      namedEpsilonState('in', f.name, 'OR', true), f.head);
+    var transIn = fragmentTransition(namedEpsilonState('in', f.name, 'OR', true), f.head);
     var newHead = fragmentState([transIn]);
     var newF = namedFragment(f.name, newHead, [trans]);
-    return newF;
 
     // var util = require('util');
     // console.log('--------------------------------');
-    // console.log(util.inspect(f, false, null));
+    // console.log(util.inspect(newF, false, null));
     // console.log('--------------------------------');
-    // return f;
+
+    return newF;
   });
   var binaryAlt = function(frag1, frag2) {
-    var trans1 = frag1.head.transitions[0];
-    var trans2 = frag2.head.transitions[0];
-    var head = fragmentState([trans1, trans2]);
+    var combinedTransitions = frag1.head.transitions.concat(frag2.head.transitions);
+    var head = fragmentState(combinedTransitions);
     var tails = frag1.tails.concat(frag2.tails);
-    return namedFragment(frag1.name, head, tails);
+    var acc = namedFragment(frag1.name, head, tails);
+    // var util = require('util');
+    // console.log('--------------------------------');
+    // console.log(util.inspect(frag1, false, null));
+    // console.log('--------------------------------');
+    return acc;
   };
 
   var newF = frags.reduce(binaryAlt);
-  newF = frontWithState(
-    namedEpsilonState('enter', null, 'OR'),
-    newF);
-  newF = rearWithState(
-    namedEpsilonState('exit', null, 'OR'), newF);
+  newF = frontWithState(namedEpsilonState('enter', null, 'OR'), newF);
+  newF = rearWithState(namedEpsilonState('exit', null, 'OR'), newF);
 
   // var util = require('util');
   // console.log('--------------------------------');

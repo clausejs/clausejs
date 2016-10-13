@@ -23,7 +23,7 @@ describe('nfa regex', function() {
       [gen.array(gen.int), gen.notEmpty(gen.array(gen.string))],
       function(ints, strs) {
         var ZeroOrMoreIntegers = S.zeroOrMore(Number.isInteger);
-        expect(S.isValid(ZeroOrMoreIntegers, intS.concat(strs))).to.be.false;
+        expect(S.isValid(ZeroOrMoreIntegers, ints.concat(strs))).to.be.false;
         expect(S.isValid(ZeroOrMoreIntegers, strs)).to.be.false;
     });
 

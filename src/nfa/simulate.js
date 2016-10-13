@@ -166,7 +166,7 @@ function _getMatch(nfa, input, finalState) {
     console.error(valStack);
      throw 'FUUU2';
   }
-
+  // console.log(valStack);
   return valStack.pop();
 }
 

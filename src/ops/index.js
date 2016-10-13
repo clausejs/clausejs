@@ -36,24 +36,30 @@ var multipleArgOpSpec = {
       {
         name: 'named',
         expr: {
-          expression: zeroOrMoreOp(
-            catOp({
-              named: [
-                  { name: 'name', expr: {
-                    expression: nameSpec,
-                  } },
-                  { name: 'expr', expr: {
-                    expression: refNameOrExprSpec,
-                  } },
-                ],
-            })
-          ),
+          expression: zeroOrMoreOp({
+            expr: {
+              expression: catOp({
+                named: [
+                    { name: 'name', expr: {
+                      expression: nameSpec,
+                    } },
+                    { name: 'expr', expr: {
+                      expression: refNameOrExprSpec,
+                    } },
+                  ],
+              }),
+            },
+          }),
         },
       },
       {
         name: 'unnamed',
         expr: {
-          expression: zeroOrMoreOp( refNameOrExprSpec ),
+          expression: zeroOrMoreOp({
+            expr: {
+              expression: refNameOrExprSpec,
+            },
+          }),
         },
       },
     ],
@@ -129,9 +135,18 @@ function genMultiArgOp(type) {
 
 function genSingleArgOp(type) {
   return function (conformedArgs) {
+    var p = conformedArgs.expr;
+    var expr;
+
+    if(p.expression) {
+      expr = p.expression;
+    } else {
+      throw 'not impl';
+    }
+
     var s = new Spec(
       type,
-      { expr: coerceIntoSpec(conformedArgs) },
+      { expr: coerceIntoSpec(expr) },
       null, null
     );
 
