@@ -191,7 +191,8 @@ build.ZERO_OR_MORE = function(frag) {
   // console.log(util.inspect(newHead, false, null));
   // console.log('--------------------------------');
 
-  var loopTrans = fragmentTransition(namedEpsilonState('loop', null, 'ZERO_OR_MORE', null), frag.head);
+  var l = 'ZERO_OR_MORE';
+  var loopTrans = fragmentTransition(namedEpsilonState('loop', null, l, null), frag.head);
   var breakTrans = fragmentTransition(epsilonState(), null);
   var head = fragmentState([loopTrans, breakTrans]);
   patch(frag.tails, head);
@@ -203,13 +204,10 @@ build.ZERO_OR_MORE = function(frag) {
     return namedInTrans;
   });
   var newHead = fragmentState(nameInTranstions);
-  newF = fragment(newHead, newF.tails);
 
-  newF = frontWithState(
-    namedEpsilonState('maybe_enter', null, 'ZERO_OR_MORE'),
-    newF);
-  newF = rearWithState(
-    namedEpsilonState('maybe_exit', null, 'ZERO_OR_MORE'), newF);
+  newF = fragment(newHead, newF.tails);
+  newF = frontWithState(namedEpsilonState('maybe_enter', null, l), newF);
+  newF = rearWithState(namedEpsilonState('maybe_exit', null, l), newF);
 
   // var util = require('util');
   // console.log('--------------------------------');
@@ -219,19 +217,31 @@ build.ZERO_OR_MORE = function(frag) {
 };
 
 build.ONE_OR_MORE = function(frag) {
-  var loopTrans = fragmentTransition(epsilonState(), frag.head);
+  var l = 'ONE_OR_MORE';
+  var loopTrans = fragmentTransition(namedEpsilonState('loop', null, l, null), frag.head);
   var breakTrans = fragmentTransition(epsilonState(), null);
   var state = fragmentState([loopTrans, breakTrans]);
   patch(frag.tails, state);
-  return fragment(frag.head, [breakTrans]);
+
+  var newF = fragment(frag.head, [breakTrans]);
+  newF = frontWithState(namedEpsilonState('maybe_enter', null, l), newF);
+  newF = rearWithState(namedEpsilonState('maybe_exit', null, l), newF);
+
+  return newF;
 };
 
 build.ZERO_OR_ONE = function(frag) {
-  var matchTrans = fragmentTransition(epsilonState(), frag.head);
+  var l = 'ZERO_OR_ONE';
+  var matchTrans = fragmentTransition(namedEpsilonState('loop', null, l, null), frag.head);
   var skipTrans = fragmentTransition(epsilonState(), null);
   var head = fragmentState([matchTrans, skipTrans]);
   var tails = frag.tails.concat([skipTrans]);
-  return fragment(head, tails);
+
+  var newF = fragment(head, tails);
+  newF = frontWithState(namedEpsilonState('maybe_enter', null, l), newF);
+  newF = rearWithState(namedEpsilonState('maybe_exit', null, l), newF);
+
+  return newF;
 };
 
 build.ROOT = function(frag) {
