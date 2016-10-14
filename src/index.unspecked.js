@@ -1,19 +1,9 @@
-var ops = require('./ops');
-module.exports = {
-  cat: ops.cat,
-  zeroOrMore: ops.zeroOrMore,
-  oneOrMore: ops.oneOrMore,
-  zeroOrOne: ops.zeroOrOne,
-  or: ops.or,
-  conform: require('./conform'),
-  fspec: require('./fspec'),
-  isValid: require('./isValid'),
-  keys: require('./keys'),
-  identity: require('./identity'),
-  isProblem: require('./utils/isProblem'),
-  Problem: require('./_Problem'),
+var oAssign = require('object-assign');
+var namespaceFn = require('./namespace');
 
-  /* Predicates */
+var ops = require('./ops');
+
+var predicates = {
   isBool: require('./preds/isBool'),
   isBoolean: require('./preds/isBool'),
   isFn: require('./preds/isFn'),
@@ -24,3 +14,18 @@ module.exports = {
   isStr: require('./preds/isStr'),
   isString: require('./preds/isStr'),
 };
+
+var core = {
+  and: require('./ops/and'),
+  conform: require('./conform'),
+  fspec: require('./fspec'),
+  isValid: require('./isValid'),
+  keys: require('./keys'),
+  identity: require('./identity'),
+  isProblem: require('./utils/isProblem'),
+  Problem: require('./_Problem'),
+};
+
+var r = oAssign(namespaceFn, ops, core, predicates);
+
+module.exports = r;
