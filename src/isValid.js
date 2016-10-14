@@ -1,5 +1,3 @@
-
-
 var Problem = require('./_Problem');
 var isProblem = require('./utils/isProblem');
 var isPred = require('./utils/isPred');

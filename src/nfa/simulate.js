@@ -4,13 +4,11 @@ var isArray = require('isarray');
 var oAssign = require('object-assign');
 
 function simulate(nfa, rawInput) {
-  var input, isCocerced;
+  var input;
 
   if(!isArray(rawInput)) {
-    isCoerced = true;
     input = [rawInput];
   } else {
-    isCoerced = false;
     input = rawInput;
   }
 
@@ -26,7 +24,6 @@ function simulate(nfa, rawInput) {
   // var util = require('util');
   // console.log('nfa', util.inspect(nfa, false, null));
   while (frontier.length > 0) {
-    // console.log(frontier);
     var current = frontier.shift();
     if (current.state === nfa.finalState && current.offset === input.length) {
       r.matched = true;
@@ -139,6 +136,9 @@ function _getMatch(nfa, input, finalState) {
             }
             c = valStack.pop();
           }
+          if(acc === null) {
+            acc = [];
+          }
           valStack.push(acc);
         } break;
         case 'exit': {
@@ -156,6 +156,9 @@ function _getMatch(nfa, input, finalState) {
             }
             c = valStack.pop();
           }
+          if(acc === null) {
+            acc = [];
+          }
           valStack.push(acc);
         } break;
         default: console.error(curr); throw 'FUUU';
@@ -167,8 +170,8 @@ function _getMatch(nfa, input, finalState) {
     console.error(valStack);
      throw 'FUUU2';
   }
-  // console.log(valStack);
-  return valStack.pop();
+  var r = valStack.pop();
+  return r;
 }
 
 function _last(arr) {

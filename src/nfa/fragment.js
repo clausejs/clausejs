@@ -47,8 +47,7 @@ function namedEpsilonState (dir, name, op, group) {
 }
 
 function frontWithState(state, f) {
-  var transIn = fragmentTransition(
-    state, f.head);
+  var transIn = fragmentTransition(state, f.head);
   var newHead = fragmentState([transIn]);
   var newF = fragment(newHead, f.tails);
   return newF;
@@ -117,14 +116,20 @@ build.CAT = function(frags) {
     // console.log('--------------------------------');
     return newF;
   });
-  var r = frags.reduce(binaryConcat);
-  r = frontWithState(
-    namedEpsilonState('enter', null, 'CAT'),
-    r
-  );
+  var r;
+  if(frags.length > 0) {
+    r = frags.reduce(binaryConcat);
+  } else {
+    var s = epsilonState();
+    var t = fragmentTransition(s, null);
+    var ss = fragmentState([t]);
+    r = fragment(ss, [t]);
 
-  r = rearWithState(
-    namedEpsilonState('exit', null, 'CAT'), r);
+    // var util = require('util');
+    // console.log(util.inspect(r, false, null));
+  }
+  r = frontWithState(namedEpsilonState('enter', null, 'CAT'), r);
+  r = rearWithState(namedEpsilonState('exit', null, 'CAT'), r);
 
   // var util = require('util');
   // console.log('--------------------------------');

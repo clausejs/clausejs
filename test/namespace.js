@@ -1,4 +1,7 @@
 var s = require('../src');
+var expect = require('chai').expect;
+
+var isSpec = require('../src/utils/isSpec');
 
 describe.skip('namespace', function() {
 
@@ -6,7 +9,7 @@ describe.skip('namespace', function() {
     //TODO: clear registry
   });
 
-  it('should register', function() {
+  it('should register and retrieve', function() {
 
     s('todo', {
       'item': [s.keys({req: ['title', 'content', 'date', 'isDone']}), {
@@ -15,10 +18,16 @@ describe.skip('namespace', function() {
         'date': s.isDate,
         'isDone': s.isBool,
       }],
-      'list': s.collOf('item'),
+      // 'list': s.collOf('item'),
     });
 
-    expect(s.isValid('todo.list', [])).to.be.true;
-    expect(s.isValid('todo.item', [])).to.be.false;
+    var ListSpec = s('todo.list');
+    var ItemSpec = s('todo.item');
+
+    expect(isSpec(ListSpec)).to.be.true;
+    expect(isSpec(ItemSpec)).to.be.true;
+
+    expect(s.isValid(ListSpec, [])).to.be.true;
+    expect(s.isValid(ItemSpec, [])).to.be.false;
   });
 });

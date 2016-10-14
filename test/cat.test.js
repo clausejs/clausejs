@@ -13,6 +13,15 @@ describe('cat', function() {
   var UnnamedSpec = S.cat(S.isFn, S.isObj,S.isFn, S.isObj);
 
   describe('conform', function() {
+
+    it('empty case', function() {
+      var EmptySpec = S.cat();
+      var conformed = EmptySpec.conform([]);
+      var unconformed = EmptySpec.conform([1]);
+      expect(conformed).to.deep.equal([]);
+      expect(unconformed instanceof Problem).to.be.true;
+    });
+
     it('named', function() {
       var conformed = NamedSpec.conform(conformist);
       expect(conformed).to.deep.equal({ z: fn, b: {}, c: fn, a: { a: 1 } });
