@@ -3,6 +3,7 @@ module.exports = {
   cat: ops.cat,
   zeroOrMore: ops.zeroOrMore,
   oneOrMore: ops.oneOrMore,
+  zeroOrOne: ops.zeroOrOne,
   or: ops.or,
   conform: require('./conform'),
   fspec: require('./fspec'),

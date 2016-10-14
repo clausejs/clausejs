@@ -1,3 +1,5 @@
+var oAssign = require('object-assign');
+
 var Spec = require('../_Spec');
 var fspec = require('../fspec');
 var isExpr = require('../utils/isExpr');
@@ -18,6 +20,7 @@ var catOp = genMultiArgOp(c.CAT);
 var orOp = genMultiArgOp(c.OR);
 var zeroOrMoreOp = genSingleArgOp(c.ZERO_OR_MORE);
 var oneOrMoreOp = genSingleArgOp(c.ONE_OR_MORE);
+var zeroOrOneOp = genSingleArgOp(c.ZERO_OR_ONE);
 
 var refNameOrExprSpec = orOp({
   named: [
@@ -90,14 +93,14 @@ function genMultiArgOp(type) {
         var expr = p.expr;
         if(expr.expression) {
           var s = coerceIntoSpec(expr.expression);
-          return Object.assign({}, p, { expr: s });
+          return oAssign({}, p, { expr: s });
         } else {
           console.error(p);
           throw 'Not implemented';
         }
         // console.log(p);
         // var s = coerceIntoSpec(p.expr);
-        // return Object.assign({}, p, { expr: s });
+        // return oAssign({}, p, { expr: s });
       });
 
       var s = new Spec(
@@ -113,14 +116,14 @@ function genMultiArgOp(type) {
       var coercedExprs = exprs.map(function(p) {
         if(p.expression) {
           var s = coerceIntoSpec(p.expression);
-          return Object.assign({}, p, { expr: s });
+          return oAssign({}, p, { expr: s });
         } else {
           console.error(p);
           throw 'Not implemented';
         }
         // console.log(p);
         // var s = coerceIntoSpec(p.expr);
-        // return Object.assign({}, p, { expr: s });
+        // return oAssign({}, p, { expr: s });
       });
 
       var s = new Spec(
@@ -200,5 +203,6 @@ module.exports = {
   cat: fspec(multipleArgOpSpec).wrapConformedArgs(catOp),
   or: fspec(multipleArgOpSpec).wrapConformedArgs(orOp),
   zeroOrMore: fspec(singleArgOpSpec).wrapConformedArgs(zeroOrMoreOp),
+  zeroOrOne: fspec(singleArgOpSpec).wrapConformedArgs(zeroOrOneOp),
   oneOrMore: fspec(singleArgOpSpec).wrapConformedArgs(oneOrMoreOp),
 };

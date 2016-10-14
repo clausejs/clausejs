@@ -34,6 +34,7 @@
     "webpack": "^1.13.2"
   },
   "dependencies": {
-    "isarray": "^1.0.0"
+    "isarray": "^1.0.0",
+    "object-assign": "^4.1.0"
   }
 }

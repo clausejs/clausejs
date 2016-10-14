@@ -1,4 +1,5 @@
 var isArray = require('isarray');
+var oAssign = require('object-assign');
 
 function _Spec(type, args, conformFn, generateFn) {
 
@@ -22,7 +23,7 @@ function _Spec(type, args, conformFn, generateFn) {
     }
   }
 
-  Object.assign(this, args);
+  oAssign(this, args);
 };
 
 

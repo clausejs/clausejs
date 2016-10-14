@@ -1,6 +1,7 @@
 var Problem = require('../_Problem');
 var isProblem = require('../utils/isProblem');
 var isArray = require('isarray');
+var oAssign = require('object-assign');
 
 function simulate(nfa, rawInput) {
   var input, isCocerced;
@@ -151,7 +152,7 @@ function _getMatch(nfa, input, finalState) {
                 acc = [c.value].concat(acc);
               }
             } else {
-              acc = Object.assign({}, c, acc);
+              acc = oAssign({}, c, acc);
             }
             c = valStack.pop();
           }
