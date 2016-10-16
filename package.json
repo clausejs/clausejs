@@ -35,6 +35,7 @@
   },
   "dependencies": {
     "isarray": "^1.0.0",
-    "object-assign": "^4.1.0"
+    "object-assign": "^4.1.0",
+    "object-path": "^0.11.2"
   }
 }
