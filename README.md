@@ -1,11 +1,11 @@
 # Specky 👓 [![Circle CI](https://circleci.com/gh/settinghead/specky.svg?style=svg)](https://circleci.com/gh/settinghead/specky)
 
 ### Project status
-- Pre-alpha. Not useable. Under active research & development.
+- Pre-alpha. Under active development.
 
 ### What
 
-A highly flexible JavaScript data validation and conformation framework that enables you to:
+A powerful & highly flexible JavaScript data validation and conformation framework that enables you to:
 
 - Build your data validation rules (specs) with composable, regex-like expressions built from primitives predicates such as `and`, `or`, `any`, `oneOrMore`, `zeroOrMore`, etc
 - Validate and make assertions about your data with these predicate functions

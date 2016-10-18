@@ -45,14 +45,19 @@ function namespaceFn(cargs) {
     var val = cargs['def']['val'];
     if (val['expr']) {
       var expr = val['expr'];
-      oPath.set(reg, name, expr);
+      oPath.set(reg, name, {expr: expr});
       return expr;
     } else {
       throw 'no impl';
     }
   } else if(cargs['get']) {
     var name = cargs['get']['name'];
-    return oPath.get(reg, name);
+    var nameObj = oPath.get(reg, name);
+    if(nameObj) {
+      return nameObj.expr;
+    } else {
+      return undefined;
+    }
   }
 
   return retVal;
