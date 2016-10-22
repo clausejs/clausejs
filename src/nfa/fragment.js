@@ -245,7 +245,10 @@ build.ZERO_OR_ONE = function(frag) {
   var newF = fragment(head, tails);
   newF = frontWithState(namedEpsilonState('maybe_enter', null, l), newF);
   newF = rearWithState(namedEpsilonState('maybe_exit', null, l), newF);
-
+  // var util = require('util');
+  // console.log('--------------------------------');
+  // console.log(util.inspect(newF, false, null));
+  // console.log('--------------------------------');
   return newF;
 };
 

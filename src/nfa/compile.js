@@ -58,7 +58,8 @@ var evalChildrenThen = function(wrapper) {
 
 ['ROOT',
  'ZERO_OR_MORE',
- 'ONE_OR_MORE'].forEach(function (fragName) {
+ 'ONE_OR_MORE',
+ 'ZERO_OR_ONE'].forEach(function (fragName) {
    evalFunctions[fragName] = evalChildThen(fragment[fragName]);
  });
 

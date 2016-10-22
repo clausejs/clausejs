@@ -21,6 +21,7 @@ var core = {
   fspec: require('./fspec'),
   isValid: require('./isValid'),
   keys: require('./keys'),
+  props: require('./ops/props'),
   identity: require('./identity'),
   isProblem: require('./utils/isProblem'),
   Problem: require('./_Problem'),
