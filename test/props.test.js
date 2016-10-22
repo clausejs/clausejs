@@ -16,11 +16,13 @@ describe.skip('props', function() {
     });
 
     var conformed = { title: 'Do it', content: null, userId: 2 };
-    var unconformed1 = { title: 'Do it', content: false, userId: 'wrong' };
-    var unconformed2 = { title:  1234, content: null, userId: 2 };
-    var unconformed3 = { title: 'Do it', content: false, userId: 'wrong', unknownField: 2 };
+    var unconformed1 = { content: false, userId: 2 };
+    var unconformed2 = { title: 'Do it', content: false, userId: 'wrong' };
+    var unconformed3 = { title:  1234, content: null, userId: 2 };
+    var unconformed4 = { title: 'Do it', content: false, userId: 'wrong', unknownField: 2 };
     expect(ObjSpec.conform(unconformed1)).to.be.an.instanceof(Problem);
     expect(ObjSpec.conform(unconformed2)).to.be.an.instanceof(Problem);
-    expect(ObjSpec.conform(unconformed3)).to.be.an.instanceof(Problem);
+    // expect(ObjSpec.conform(unconformed3)).to.be.an.instanceof(Problem);
+    // expect(ObjSpec.conform(unconformed4)).to.be.an.instanceof(Problem);
   });
 });

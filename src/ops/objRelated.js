@@ -11,10 +11,11 @@ var SPEC_TYPE_KEYS = 'KEYS';
 
 function keys(params) {
   var reqSpecs = params.req;
+  var optSpecs = params.opt;
   return new Spec(SPEC_TYPE_KEYS, params, _genKeyConformer(reqSpecs), null);
 };
 
-function _genKeyConformer(reqSpecs) {
+function _genKeyConformer(reqSpecs, optSpec) {
   return function tryConformKeys(x) {
     var reqProblems = reqSpecs.filter(function doesNotHaveKey(r) { return x[r] === undefined; });
     if(reqProblems.length > 0) {
@@ -47,10 +48,15 @@ function props(cargs) {
   return new Spec(TYPE_PROPS, cargs, _genPropsConformer(req), null);
 }
 
-function _genPropsConformer(req) {
+function _genPropsConformer(req, opt) {
+  var keyConformer;
   return function tryConformProps(x) {
+    if (!keyConformer) {
+      keyConformer = _genKeyConformer(req, opt); //lazy
+    }
+    var keyResult = keyConformer(x);
     //TODO
-    return x;
+    return keyResult;
   }
 }
 
