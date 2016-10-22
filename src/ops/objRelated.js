@@ -1,7 +1,10 @@
 var Spec = require('../models/Spec');
+var oAssign = require('object-assign');
 var Problem = require('../models/Problem');
 var isSpec = require('../utils/isSpec');
 var isObj = require('../preds/isObj');
+var isStr = require('../preds/isStr');
+var isExpr = require('../utils/isExpr');
 var core = require('./core');
 var cat = core.cat;
 var or = core.or;
@@ -17,42 +20,79 @@ function keys(params) {
 
 function _genKeyConformer(reqSpecs, optSpec) {
   return function tryConformKeys(x) {
-    var reqProblems = reqSpecs.filter(function doesNotHaveKey(r) { return x[r] === undefined; });
-    if(reqProblems.length > 0) {
-      return new Problem(x, reqProblems, 'req: keys required: ' + reqProblems.join(', ') );
-    } else {
-      return x;
+    if(reqSpecs) {
+      var reqProblems = [];
+      for(var k in reqSpecs) {
+        if(x[k] === undefined) {
+          reqProblems.push(x[k]);
+        }
+      }
+      if(reqProblems.length > 0) {
+        return new Problem(x, reqProblems, 'req: keys required: ' + reqProblems.join(', ') );
+      }
     }
+    return x;
   }
 }
 
 var TYPE_PROPS = 'PROPS';
 
-var KeyDefs = isObj; //TODO
-var FieldDefs = isObj;
+var FieldDefs = propsOp({
+  opt: {
+    'fields':
+    {
+      keySpec: isExpr,
+      valSpec: or(
+        'expr', isExpr,
+        'keyValExprPair', cat('keyExpr', isExpr, 'valExpr', isExpr)
+      ),
+    },
+  },
+});
+
+var PropArgs = propsOp({
+  opt: {
+    req: { valSpec: FieldDefs },
+    opt: { valSpec: FieldDefs },
+  },
+});
 
 var PropsSpec = fspec({
-  args: cat(
-    'keyDefs', KeyDefs,
-    'fieldDefs', core.zeroOrOne(FieldDefs)
-  ),
+  args: cat(FieldDefs),
   ret: isSpec,
 });
 
-function props(cargs) {
+function propsOp(cargs) {
   //TODO
-  var keyDefs = cargs.keyDefs;
-  var req = keyDefs.req;
-  var opt = keyDefs.opt;
+  var req = cargs.req;
+  var opt = cargs.opt;
 
-  return new Spec(TYPE_PROPS, cargs, _genPropsConformer(req), null);
+  return new Spec(TYPE_PROPS, cargs, _genPropsConformer(req, opt), null);
 }
 
-function _genPropsConformer(req, opt) {
+function parseFieldDef(x, d, defs) {
+
+}
+
+function _genPropsConformer(reqSpecs, optSpecs) {
   var keyConformer;
   return function tryConformProps(x) {
+
+    var r = {};
+
+    if(reqSpecs) {
+      for (var i = 0; i < reqSpecs.length; i++) {
+        var defs = reqSpecs[i];
+        r[defs.name] = parseFieldDef(x, defs);
+      }
+    }
+
+    if(optSpecs) {
+      r = oAssign(r, parseFieldDef());
+    }
+
     if (!keyConformer) {
-      keyConformer = _genKeyConformer(req, opt); //lazy
+      keyConformer = _genKeyConformer(reqSpecs, optSpecs); //lazy
     }
     var keyResult = keyConformer(x);
     //TODO
@@ -62,5 +102,5 @@ function _genPropsConformer(req, opt) {
 
 module.exports = {
   keys: keys,
-  props: PropsSpec.wrapConformedArgs(props),
+  props: PropsSpec.wrapConformedArgs(propsOp),
 };
