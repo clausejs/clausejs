@@ -1,5 +1,3 @@
-
-
 function isFunction(x) {
   var getType = {};
   // (x || false) guarantees returning of boolean type

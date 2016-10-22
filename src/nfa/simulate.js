@@ -30,7 +30,7 @@ function simulate(nfa, rawInput) {
       r.result = _getMatch(nfa, rawInput, current);
       return r;
     }
-    for (nextStateStr in nfa.transitions[current.state]) {
+    for (var nextStateStr in nfa.transitions[current.state]) {
       var nextState = parseInt(nextStateStr);
       var observed = input[current.offset];
       var transition = nfa.transitions[current.state][nextState];
