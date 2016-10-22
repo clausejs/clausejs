@@ -1,10 +1,10 @@
 var oPath = require('object-path');
 
 var ops = require('../ops');
-var fspec = require('../fspec');
 
 var cat = ops.cat;
 var or = ops.or;
+var fspec = ops.fspec;
 var isSpec = require('../utils/isSpec');
 var isStr = require('../preds/isStr');
 var isObj = require('../preds/isObj');

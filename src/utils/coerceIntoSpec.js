@@ -1,7 +1,7 @@
 var isPred = require('./isPred');
 var isSpec = require('./isSpec');
-var Spec = require('../_Spec');
-var Problem = require('../_Problem');
+var Spec = require('../models/Spec');
+var Problem = require('../models/Problem');
 var namedFn = require('./namedFn');
 
 var SPEC_TYPE = 'PRED';

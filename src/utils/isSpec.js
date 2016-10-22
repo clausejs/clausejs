@@ -1,4 +1,4 @@
-var Spec = require('../_Spec');
+var Spec = require('../models/Spec');
 
 function isSpec(x) {
   if(!x) {

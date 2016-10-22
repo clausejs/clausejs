@@ -1,7 +1,7 @@
 var S = require('../src/');
 var expect = require('chai').expect;
 var Problem = S.Problem;
-var Spec = require('../src/_Spec');
+var Spec = require('../src/models/Spec');
 var identity = S.identity;
 
 describe('or', function() {

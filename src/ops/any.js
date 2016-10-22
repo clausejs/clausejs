@@ -1,6 +1,6 @@
 
 
-var Spec = require('./_Spec');
+var Spec = require('./models/Spec');
 var identity = require('./identity');
 var SPEC_TYPE_ANY = 'ANY';
 

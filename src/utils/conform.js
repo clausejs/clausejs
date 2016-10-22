@@ -1,4 +1,4 @@
-var isSpec = require('./utils/isSpec');
+var isSpec = require('../utils/isSpec');
 
 function conform(spec, x) {
   if(spec && isSpec(spec)) {

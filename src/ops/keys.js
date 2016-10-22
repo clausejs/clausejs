@@ -1,7 +1,6 @@
 
-
-var Spec = require('./_Spec');
-var Problem = require('./_Problem');
+var Spec = require('../models/Spec');
+var Problem = require('../models/Problem');
 var SPEC_TYPE_KEYS = 'KEYS';
 
 function keys(params) {

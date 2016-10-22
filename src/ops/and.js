@@ -1,15 +1,15 @@
-var fspec = require('../fspec');
 var isExpr = require('../utils/isExpr');
 var isSpec = require('../utils/isSpec');
 var isBool = require('../preds/isBool');
 var isProblem = require('../utils/isProblem');
 var coerceIntoSpec = require('../utils/coerceIntoSpec');
 var exprSpec = coerceIntoSpec(isExpr);
-var Spec = require('../_Spec');
-var ops = require('./');
-var oneOrMore = ops.oneOrMore;
-var or = ops.or;
-var cat = ops.cat;
+var Spec = require('../models/Spec');
+var core = require('./core');
+var oneOrMore = core.oneOrMore;
+var or = core.or;
+var cat = core.cat;
+var fspec = require('./fspec');
 
 var AndSpec = fspec({
   args: cat('exprs', oneOrMore(isExpr)),

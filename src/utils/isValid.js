@@ -1,7 +1,7 @@
-var Problem = require('./_Problem');
-var isProblem = require('./utils/isProblem');
-var isPred = require('./utils/isPred');
-var isSpec = require('./utils/isSpec');
+var Problem = require('../models/Problem');
+var isProblem = require('./isProblem');
+var isPred = require('./isPred');
+var isSpec = require('./isSpec');
 var conform = require('./conform');
 
 function isValid(pred, x) {

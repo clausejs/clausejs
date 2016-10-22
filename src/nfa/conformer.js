@@ -1,6 +1,6 @@
 var simulate = require('./simulate');
 var compile = require('./compile');
-var Problem = require('../_Problem');
+var Problem = require('../models/Problem');
 
 function nfaConformer(spec) {
   var nfa; //lazy

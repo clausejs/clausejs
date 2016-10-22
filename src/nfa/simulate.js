@@ -1,4 +1,4 @@
-var Problem = require('../_Problem');
+var Problem = require('../models/Problem');
 var isProblem = require('../utils/isProblem');
 var isArray = require('isarray');
 var oAssign = require('object-assign');

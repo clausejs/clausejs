@@ -1,7 +1,7 @@
 var expect = require('chai').expect;
 var S = require('../src/');
 var Problem = S.Problem;
-var Spec = require('../src/_Spec');
+var Spec = require('../src/models/Spec');
 var isSpec = require('../src/utils/isSpec');
 var identity = S.identity;
 

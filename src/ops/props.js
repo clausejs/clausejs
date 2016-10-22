@@ -1,11 +1,12 @@
-var Spec = require('../_Spec');
-var fspec = require('../fspec');
-var ops = require('./');
+var Spec = require('../models/Spec');
 var isSpec = require('../utils/isSpec');
-var keys = require('../keys');
+var keys = require('./keys');
 var isObj = require('../preds/isObj');
-var cat = ops.cat;
-var or = ops.or;
+var core = require('./core');
+var cat = core.cat;
+var or = core.or;
+var fspec = require('./fspec');
+
 
 var TYPE = 'PROPS';
 
@@ -15,7 +16,7 @@ var FieldDefs = isObj;
 var PropsSpec = fspec({
   args: cat(
     'keyDefs', KeyDefs,
-    'fieldDefs', ops.zeroOrOne(FieldDefs)
+    'fieldDefs', core.zeroOrOne(FieldDefs)
   ),
   ret: isSpec,
 });

@@ -1,8 +1,8 @@
-var Problem = require('./_Problem');
-var isValid = require('./isValid');
-var functionName = require('./utils/fnName');
-var namedFn = require('./utils/namedFn');
-var conform = require('./conform');
+var Problem = require('../models/Problem');
+var isValid = require('../utils/isValid');
+var functionName = require('../utils/fnName');
+var namedFn = require('../utils/namedFn');
+var conform = require('../utils/conform');
 
 function fspec(fnSpec) {
   var argsSpec = fnSpec.args;

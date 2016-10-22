@@ -2,6 +2,7 @@ var oAssign = require('object-assign');
 var namespaceFn = require('./namespace');
 
 var ops = require('./ops');
+var utils = require('./utils');
 
 var predicates = {
   isBool: require('./preds/isBool'),
@@ -15,18 +16,12 @@ var predicates = {
   isString: require('./preds/isStr'),
 };
 
-var core = {
-  and: require('./ops/and'),
-  conform: require('./conform'),
-  fspec: require('./fspec'),
-  isValid: require('./isValid'),
-  keys: require('./keys'),
-  props: require('./ops/props'),
-  identity: require('./identity'),
+var models = {
   isProblem: require('./utils/isProblem'),
-  Problem: require('./_Problem'),
+  Problem: require('./models/Problem'),
 };
 
-var r = oAssign(namespaceFn, ops, core, predicates);
+
+var r = oAssign(namespaceFn, ops, utils, models, predicates);
 
 module.exports = r;
