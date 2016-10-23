@@ -10,7 +10,7 @@ describe('namespace', function() {
     //TODO: clear registry
   });
 
-  describe.skip('simple defs and gets', function() {
+  describe('simple defs and gets', function() {
     it('should def and get', function() {
       s('xyz.superapp.item', s.and(s.isObj, s.props({req: ['title', 'content']})));
       s('xyz.superapp.item.title', s.isStr);

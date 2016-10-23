@@ -226,7 +226,8 @@ function _conformNamedOrExpr(x, nameOrExpr) {
     throw 'no impl';
   }
 }
-
+var props = PropsSpec.wrapConformedArgs(propsOp);
 module.exports = {
-  props: PropsSpec.wrapConformedArgs(propsOp),
+  props: props,
+  keys: props,
 };
