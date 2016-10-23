@@ -7,10 +7,10 @@
     "defaultParams": false,                     // enable default function parameters
     "forOf": false,                             // enable for-of loops
     "generators": false,                        // enable generators
-    "objectLiteralComputedProperties": false,   // enable computed object literal property names
+    "objectLiteralComputedProperties": true,   // enable computed object literal property names
     "objectLiteralDuplicateProperties": false,  // enable duplicate object literal properties in strict mode
-    "objectLiteralShorthandMethods": false,     // enable object literal shorthand methods
-    "objectLiteralShorthandProperties": false,  // enable object literal shorthand properties
+    "objectLiteralShorthandMethods": true,     // enable object literal shorthand methods
+    "objectLiteralShorthandProperties": true,  // enable object literal shorthand properties
     "octalLiterals": false,                     // enable octal literals
     "regexUFlag": false,                        // enable the regular expression u flag
     "regexYFlag": false,                        // enable the regular expression y flag

@@ -29,12 +29,15 @@ describe.skip('props', function() {
     var unconformed4 = { title: 'Do it', content: false, userId: 'wrong', unknownField: 2 };
 
     expect(ObjSpec.conform(conformed1)).to.deep.equal(conformed1);
-    // expect(ObjSpec.conform(conformed2)).to.deep.equal(
-    //   { title: 'Do it', content: null, userId: 2, ooProps: {
-    //     ooA: 1, ooB: 2, ooC: 3,
-    //   }});
-    //
     // expect(ObjSpec.conform(unconformed1)).to.be.an.instanceof(Problem);
+
+    // console.log(ObjSpec.conform(conformed2));
+
+    expect(ObjSpec.conform(conformed2)).to.deep.equal(
+      { title: 'Do it', content: null, userId: 2, ooProps: {
+        ooA: 1, ooB: 2, ooC: 3,
+      }});
+
     // expect(ObjSpec.conform(unconformed2)).to.be.an.instanceof(Problem);
     // expect(ObjSpec.conform(unconformed3)).to.be.an.instanceof(Problem);
     // expect(ObjSpec.conform(unconformed4)).to.be.an.instanceof(Problem);

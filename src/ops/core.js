@@ -21,7 +21,7 @@ var zeroOrMoreOp = genSingleArgOp(c.ZERO_OR_MORE);
 var oneOrMoreOp = genSingleArgOp(c.ONE_OR_MORE);
 var zeroOrOneOp = genSingleArgOp(c.ZERO_OR_ONE);
 
-var refNameOrExprSpec = orOp({
+var RefNameOrExprSpec = orOp({
   named: [
       { name: 'refName', expr: {
         expression: refNameSpec,
@@ -46,7 +46,7 @@ var multipleArgOpSpec = {
                       expression: nameSpec,
                     } },
                     { name: 'expr', expr: {
-                      expression: refNameOrExprSpec,
+                      expression: RefNameOrExprSpec,
                     } },
                   ],
               }),
@@ -59,7 +59,7 @@ var multipleArgOpSpec = {
         expr: {
           expression: zeroOrMoreOp({
             expr: {
-              expression: refNameOrExprSpec,
+              expression: RefNameOrExprSpec,
             },
           }),
         },
@@ -73,7 +73,7 @@ var singleArgOpSpec = {
   args: catOp({
     named: [
       { name: 'expr', expr: {
-        expression: refNameOrExprSpec,
+        expression: RefNameOrExprSpec,
       } },
     ],
   }),
@@ -157,6 +157,15 @@ function genSingleArgOp(type) {
   };
 }
 
+module.exports = {
+  cat: fspec(multipleArgOpSpec).wrapConformedArgs(catOp),
+  or: fspec(multipleArgOpSpec).wrapConformedArgs(orOp),
+  zeroOrMore: fspec(singleArgOpSpec).wrapConformedArgs(zeroOrMoreOp),
+  zeroOrOne: fspec(singleArgOpSpec).wrapConformedArgs(zeroOrOneOp),
+  oneOrMore: fspec(singleArgOpSpec).wrapConformedArgs(oneOrMoreOp),
+  RefNameOrExprSpec: RefNameOrExprSpec,
+};
+
 // ///////////////////////////////////////////////////////////
 // var isBool = require('../preds/isBool');
 // var isStr = require('../preds/isStr');
@@ -197,11 +206,3 @@ function genSingleArgOp(type) {
 // // ]);
 // console.log(r);
 // ///////////////////////////////////////////////////////////
-
-module.exports = {
-  cat: fspec(multipleArgOpSpec).wrapConformedArgs(catOp),
-  or: fspec(multipleArgOpSpec).wrapConformedArgs(orOp),
-  zeroOrMore: fspec(singleArgOpSpec).wrapConformedArgs(zeroOrMoreOp),
-  zeroOrOne: fspec(singleArgOpSpec).wrapConformedArgs(zeroOrOneOp),
-  oneOrMore: fspec(singleArgOpSpec).wrapConformedArgs(oneOrMoreOp),
-};
