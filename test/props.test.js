@@ -8,7 +8,7 @@ function startWithOo(key) {
   return key.indexOf('oo') === 0;
 }
 
-describe.skip('props', function() {
+describe('props', function() {
   it('simple keyset', function() {
     var ObjSpec = props({
       req: {
@@ -23,25 +23,23 @@ describe.skip('props', function() {
 
     // console.log(ObjSpec);
 
-    var conformed1 = { title: 'Do it', content: null, userId: 2 };
-    var conformed2 = { title: 'Do it', content: null, userId: 2, ooA: 1, ooB: 2, ooC: 3 };
+    var conformed1 = { title: 'Do it', content: 'blah', userId: 2 };
+    var conformed2 = { title: 'Do it', content: 'blah', userId: 2, ooA: 1, ooB: 2, ooC: 3 };
     var unconformed1 = { content: false, userId: 2 };
     var unconformed2 = { title: 'Do it', content: false, userId: 'wrong' };
     var unconformed3 = { title:  1234, content: null, userId: 2 };
     var unconformed4 = { title: 'Do it', content: false, userId: 'wrong', unknownField: 2 };
 
     expect(ObjSpec.conform(conformed1)).to.deep.equal(conformed1);
-    // expect(ObjSpec.conform(unconformed1)).to.be.an.instanceof(Problem);
+    expect(ObjSpec.conform(unconformed1)).to.be.an.instanceof(Problem);
 
-    // console.log(ObjSpec.conform(conformed2));
+    expect(ObjSpec.conform(conformed2)).to.deep.equal(
+      { title: 'Do it', content: 'blah', userId: 2, ooProps: {
+        ooA: 1, ooB: 2, ooC: 3,
+      }});
 
-    // expect(ObjSpec.conform(conformed2)).to.deep.equal(
-    //   { title: 'Do it', content: null, userId: 2, ooProps: {
-    //     ooA: 1, ooB: 2, ooC: 3,
-    //   }});
-
-    // expect(ObjSpec.conform(unconformed2)).to.be.an.instanceof(Problem);
-    // expect(ObjSpec.conform(unconformed3)).to.be.an.instanceof(Problem);
-    // expect(ObjSpec.conform(unconformed4)).to.be.an.instanceof(Problem);
+    expect(ObjSpec.conform(unconformed2)).to.be.an.instanceof(Problem);
+    expect(ObjSpec.conform(unconformed3)).to.be.an.instanceof(Problem);
+    expect(ObjSpec.conform(unconformed4)).to.be.an.instanceof(Problem);
   });
 });

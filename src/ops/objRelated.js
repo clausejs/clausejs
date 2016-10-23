@@ -15,14 +15,15 @@ function _genKeyConformer(reqSpecs, optSpec) {
   return function tryConformKeys(x) {
     if(reqSpecs) {
       var reqProblems = [];
-      var found = undefined;
-      var f = reqSpecs.fields;
+      var found;
+      var fields = reqSpecs.fields;
 
-      for(var name in reqSpecs.fields) {
-        if(reqSpecs.fields[name].keySpec) { //key spec
+      for(var name in fields) {
+        found = undefined;
+        if(fields[name].keySpec) { //key spec
           found = false;
           for (var kk in x) {
-            var rr = _conformNamedOrExpr(kk, f.keySpec);
+            var rr = _conformNamedOrExpr(kk, fields[name].keySpec);
             if(!isProblem(rr)) { //found a match
               found = true;
               break;
@@ -30,7 +31,7 @@ function _genKeyConformer(reqSpecs, optSpec) {
           }
         } else { //plain string key
           if(x[name] === undefined) {
-            reqProblems.push(x[k]);
+            reqProblems.push(name);
           }
         }
       }
@@ -46,26 +47,34 @@ var TYPE_PROPS = 'PROPS';
 
 var FieldDefs = propsOp({
   opt: {
-    'fields':
-    {
-      keySpec: coerceIntoSpec(isStr),
-      valSpec: {
-        expr: or(
-          'expr', RefNameOrExprSpec,
-          'keyValExprPair', cat(
-            'keySpec', RefNameOrExprSpec,
-            'valSpec', RefNameOrExprSpec
-          )
-        )
+    fields: {
+      'fields':
+      {
+        keyValExprPair: {
+          keySpec: {
+            expression: coerceIntoSpec(isStr),
+          },
+          valSpec: {
+            expression: or(
+              'valExprOnly', RefNameOrExprSpec,
+              'keyValExprPair', cat(
+                'keySpec', RefNameOrExprSpec,
+                'valSpec', RefNameOrExprSpec
+              )
+            )
+          },
+        }
       },
-    },
+    }
   },
 });
 
 var PropArgs = propsOp({
   opt: {
-    'req': { valSpec: { expr: FieldDefs } },
-    'opt': { valSpec: { expr: FieldDefs } },
+    fields: {
+      'req': { valExprOnly: { expression: FieldDefs } },
+      'opt': { valExprOnly: { expression: FieldDefs } },
+    }
   },
 });
 
@@ -101,9 +110,10 @@ function _genPropsConformer(reqSpecs, optSpecs) {
     }
 
     var conformed = {};
-    if(reqSpecs) {
-      for (var name in reqSpecs) {
-        var defs = reqSpecs[name];
+    if(reqSpecs && reqSpecs.fields) {
+      var fields = reqSpecs.fields;
+      for (var name in fields) {
+        var defs = fields[name];
         var r = parseFieldDef(x, name, defs);
         if (isProblem(r)) {
           return r;
@@ -114,10 +124,10 @@ function _genPropsConformer(reqSpecs, optSpecs) {
         }
       }
     }
-
-    if(optSpecs) {
-      for (var name in optSpecs) {
-        var defs = optSpecs[name];
+    if(optSpecs && optSpecs.fields) {
+      var fields = optSpecs.fields;
+      for (var name in fields) {
+        var defs = fields[name];
         var r = parseFieldDef(x, name, defs);
         if (isProblem(r)) {
           // console.log(r.falsePredicate);
@@ -140,53 +150,50 @@ function _genPropsConformer(reqSpecs, optSpecs) {
 }
 
 function parseFieldDef(x, name, defs) {
-  var { keySpec, valSpec } = defs;
+  var { valExprOnly, keyValExprPair } = defs;
   // console.log(name, defs);
   var r;
-  if(keySpec) {
-    r = {};
+  if(keyValExprPair) {
+    var { keySpec, valSpec } = keyValExprPair;
+    r = undefined;
     for (var k in x) {
-      var rr = keySpec.conform(k);
+      var rr =_conformNamedOrExpr(k, keySpec);
       if(!isProblem(rr)) {
-        if (valSpec) {
-          if(valSpec.expr) {
-            var rrr = valSpec.expr.conform(x[rr]);
-            if(isProblem(rrr)) {
-              // console.log(rrr);
-              return rrr;
-            } else {
-              r[k] = rrr;
-            }
-          } else if (valSpec.keyValExprPair) {
-            throw 'zzz';
-          } else {
-            throw 'zzz';
-          }
+        // console.log(valSpec, x[rr]);
+        var rrr = _conformNamedOrExpr(x[rr], valSpec);
+        // console.log(rrr);
+        if(isProblem(rrr)) {
+          // console.log(rrr);
+          return rrr;
         } else {
-          r[k] = x[rr];
+          if(r === undefined) {
+            r = {};
+          }
+          r[k] = rrr;
         }
       }
     }
-  } else {
+  } else if (valExprOnly) {
+    var valSpec = valExprOnly;
+    // console.log(valSpec);
     // console.log(r);
     r = x[name];
-    // console.log(name);
-    if (valSpec) {
-      if(valSpec.expr) {
-        r = valSpec.expr.conform(r);
-      } else if (valSpec.keyValExprPair) {
-        throw 'zzz';
-      } else {
-        throw 'zzz';
-      }
-    }
+    // console.log(name, x);
+    r = _conformNamedOrExpr(r, valSpec);
   }
+  // console.log('======');
   // console.log(r);
+  // console.log('======');
   return r;
 }
 
 function _conformNamedOrExpr(x, nameOrExpr) {
-  throw 'no impl';
+  if(nameOrExpr.expression) {
+    var expr = coerceIntoSpec(nameOrExpr.expression);
+    return expr.conform(x);
+  } else {
+    throw 'no impl';
+  }
 }
 
 module.exports = {

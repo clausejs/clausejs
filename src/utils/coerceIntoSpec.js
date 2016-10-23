@@ -3,6 +3,7 @@ var isSpec = require('./isSpec');
 var Spec = require('../models/Spec');
 var Problem = require('../models/Problem');
 var namedFn = require('./namedFn');
+var fnName = require('./fnName');
 
 var SPEC_TYPE = 'PRED';
 
@@ -25,7 +26,7 @@ function predConformer(pred) {
     if(pred(x)) {
       return x;
     } else {
-      return new Problem(x, pred, 'Predicate returns false');
+      return new Problem(x, pred, 'Predicate ' + fnName(pred) + ' returns false on value ' + JSON.stringify(x));
     }
   }
 }
