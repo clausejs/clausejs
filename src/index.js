@@ -1,25 +1,26 @@
-var specky = require('./index.unspecked');
-// var isSpec = require('./utils/isSpec');
-// var isPred = require('./utils/isPred');
-// var fspec = specky.fspec, cat = specky.cat, keys = specky.keys, zeroOrMore = specky.zeroOrMore;
+var oAssign = require('object-assign');
+var namespaceFn = require('./namespace');
 
-var specked = specky;
-// var specked = specThemAll(specky);
-//
-// function specThemAll (s) {
-//   var specked = {};
-//
-//   //apply fn specs if it exists
-//   for (var fnName in specky) {
-//     if(specs.hasOwnProperty(fnName)) {
-//       specked[fnName] = specs[fnName](specky[fnName]);
-//     } else {
-//       specked[fnName] = specky[fnName];
-//     }
-//   }
-//   return specked;
-// }
+var ops = require('./ops');
+var utils = require('./utils');
 
+var predicates = {
+  isBool: require('./preds/isBool'),
+  isBoolean: require('./preds/isBool'),
+  isFn: require('./preds/isFn'),
+  isFunction: require('./preds/isFn'),
+  isNum: require('./preds/isNum'),
+  isObj: require('./preds/isObj'),
+  isObject: require('./preds/isObj'),
+  isStr: require('./preds/isStr'),
+  isString: require('./preds/isStr'),
+};
 
-module.exports = specked;
-// module.exports = specky;
+var models = {
+  Problem: require('./models/Problem'),
+  Spec: require('./models/Spec'),
+};
+
+var r = oAssign(namespaceFn, ops, utils, models, predicates);
+
+module.exports = r;
