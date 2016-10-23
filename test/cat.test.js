@@ -39,7 +39,8 @@ describe('cat', function() {
 
   describe('validity', function() {
     [[NamedSpec, 'named'], [UnnamedSpec, 'unnamed']].forEach(function(p) {
-      var Spec = p[0]; name = p[1];
+      var Spec = p[0];
+      var name = p[1];
       it(name, function() {
         //invalid case: more elems than specs
         expect(S.isValid(Spec, extendedCase)).to.be.false;
