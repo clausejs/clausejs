@@ -189,14 +189,14 @@ build.OR = function(frags) {
   return newF;
 };
 
-build.ZERO_OR_MORE = function(frag) {
+build.Z_OR_M = function(frag) {
 
   // var util = require('util');
   // console.log('--------------------------------');
   // console.log(util.inspect(newHead, false, null));
   // console.log('--------------------------------');
 
-  var l = 'ZERO_OR_MORE';
+  var l = 'Z_OR_M';
   var loopTrans = fragmentTransition(namedEpsilonState('loop', null, l, null), frag.head);
   var breakTrans = fragmentTransition(epsilonState(), null);
   var head = fragmentState([loopTrans, breakTrans]);
@@ -221,8 +221,8 @@ build.ZERO_OR_MORE = function(frag) {
   return newF;
 };
 
-build.ONE_OR_MORE = function(frag) {
-  var l = 'ONE_OR_MORE';
+build.O_OR_M = function(frag) {
+  var l = 'O_OR_M';
   var loopTrans = fragmentTransition(namedEpsilonState('loop', null, l, null), frag.head);
   var breakTrans = fragmentTransition(epsilonState(), null);
   var state = fragmentState([loopTrans, breakTrans]);
@@ -235,8 +235,8 @@ build.ONE_OR_MORE = function(frag) {
   return newF;
 };
 
-build.ZERO_OR_ONE = function(frag) {
-  var l = 'ZERO_OR_ONE';
+build.Z_OR_O = function(frag) {
+  var l = 'Z_OR_O';
   var matchTrans = fragmentTransition(namedEpsilonState('loop', null, l, null), frag.head);
   var skipTrans = fragmentTransition(epsilonState(), null);
   var head = fragmentState([matchTrans, skipTrans]);

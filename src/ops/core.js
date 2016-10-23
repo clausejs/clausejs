@@ -17,9 +17,9 @@ var refNameSpec = coerceIntoSpec(isRefName);
 
 var catOp = genMultiArgOp(c.CAT);
 var orOp = genMultiArgOp(c.OR);
-var zeroOrMoreOp = genSingleArgOp(c.ZERO_OR_MORE);
-var oneOrMoreOp = genSingleArgOp(c.ONE_OR_MORE);
-var zeroOrOneOp = genSingleArgOp(c.ZERO_OR_ONE);
+var zeroOrMoreOp = genSingleArgOp(c.Z_OR_M);
+var oneOrMoreOp = genSingleArgOp(c.O_OR_M);
+var zeroOrOneOp = genSingleArgOp(c.Z_OR_O);
 
 var RefNameOrExprSpec = orOp({
   named: [

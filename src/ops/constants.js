@@ -1,8 +1,8 @@
 module.exports = {
   CAT: 'CAT',
   OR: 'OR',
-  ZERO_OR_MORE: 'ZERO_OR_MORE',
-  ZERO_OR_ONE: 'ZERO_OR_ONE',
-  ONE_OR_MORE: 'ONE_OR_MORE',
+  Z_OR_M: 'Z_OR_M',
+  Z_OR_O: 'Z_OR_O',
+  O_OR_M: 'O_OR_M',
   PRED: 'PRED',
 };

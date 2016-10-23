@@ -56,9 +56,9 @@ var evalChildrenThen = function(wrapper) {
 };
 
 ['ROOT',
- 'ZERO_OR_MORE',
- 'ONE_OR_MORE',
- 'ZERO_OR_ONE'].forEach(function (fragName) {
+ 'Z_OR_M',
+ 'O_OR_M',
+ 'Z_OR_O'].forEach(function (fragName) {
    evalFunctions[fragName] = evalChildThen(fragment[fragName]);
  });
 
