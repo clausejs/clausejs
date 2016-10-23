@@ -16,7 +16,9 @@
     "regexYFlag": false,                        // enable the regular expression y flag
     "templateStrings": false,                   // enable template strings
     "unicodeCodePointEscapes": false,           // enable code point escapes
-    "jsx": false                                // enable JSX
+    "jsx": false,                               // enable JSX
+    "destructuring": true,
+    "modules": true
   },
 
   "env": {
