@@ -9,7 +9,7 @@ function startWithOo(key) {
 }
 
 describe('props', function() {
-  it.skip('simple key set', function() {
+  it('simple key set', function() {
     var ObjSpec = props({
       req: ['a', 'b', 'c'],
     });

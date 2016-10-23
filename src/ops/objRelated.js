@@ -7,23 +7,40 @@ var isObj = require('../preds/isObj');
 var isStr = require('../preds/isStr');
 var core = require('./core');
 var coerceIntoSpec = require('../utils/coerceIntoSpec');
-var {cat, or, RefNameOrExprSpec} = core;
+var {cat, or, RefNameOrExprSpec, zeroOrMore} = core;
 var fspec = require('./fspec');
 var any = require('./any');
+
+function isPropName(x) {
+  return isStr(x);
+}
 
 function _genKeyConformer(reqSpecs, optSpec) {
   return function tryConformKeys(x) {
     if(reqSpecs) {
       var reqProblems = [];
       var found;
-      var fields = reqSpecs.fields;
+      var {fieldDefs, keyList } = reqSpecs;
+      var reqNames;
 
-      for(var name in fields) {
+      if(fieldDefs) {
+        reqNames = [];
+        for(var name in fieldDefs.fields) {
+          reqNames.push(name);
+        }
+      } else if (keyList) {
+        reqNames = keyList.concat([]);
+      } else {
+        throw 'unsupported';
+      }
+
+      for(var i = 0; i < reqNames.length; i++) {
+        var name = reqNames[i];
         found = undefined;
-        if(fields[name].keySpec) { //key spec
+        if(fieldDefs && fieldDefs.fields[name].keySpec) { //key spec
           found = false;
           for (var kk in x) {
-            var rr = _conformNamedOrExpr(kk, fields[name].keySpec);
+            var rr = _conformNamedOrExpr(kk, fieldDefs.fields[name].keySpec);
             if(!isProblem(rr)) { //found a match
               found = true;
               break;
@@ -47,33 +64,40 @@ var TYPE_PROPS = 'PROPS';
 
 var FieldDefs = propsOp({
   opt: {
-    fields: {
-      'fields':
-      {
-        keyValExprPair: {
-          keySpec: {
-            expression: coerceIntoSpec(isStr),
-          },
-          valSpec: {
-            expression: or(
-              'valExprOnly', RefNameOrExprSpec,
-              'keyValExprPair', cat(
-                'keySpec', RefNameOrExprSpec,
-                'valSpec', RefNameOrExprSpec
+    fieldDefs: {
+      fields: {
+        'fields':
+        {
+          keyValExprPair: {
+            keySpec: {
+              expression: coerceIntoSpec(isStr),
+            },
+            valSpec: {
+              expression: or(
+                'valExprOnly', RefNameOrExprSpec,
+                'keyValExprPair', cat(
+                  'keySpec', RefNameOrExprSpec,
+                  'valSpec', RefNameOrExprSpec
+                )
               )
-            )
-          },
-        }
-      },
+            },
+          }
+        },
+      }
     }
   },
 });
 
+var KeyOnlyArray = zeroOrMore(isPropName);
+var KeyArrayOrFieldDefs = or('keyList', KeyOnlyArray, 'fieldDefs', FieldDefs);
+
 var PropArgs = propsOp({
   opt: {
-    fields: {
-      'req': { valExprOnly: { expression: FieldDefs } },
-      'opt': { valExprOnly: { expression: FieldDefs } },
+    fieldDefs: {
+      fields: {
+        'req': { valExprOnly: { expression: KeyArrayOrFieldDefs } },
+        'opt': { valExprOnly: { expression: KeyArrayOrFieldDefs } },
+      }
     }
   },
 });
@@ -99,21 +123,24 @@ function _genPropsConformer(reqSpecs, optSpecs) {
   var keyConformer;
   return function tryConformProps(x) {
     // console.log(x);
+    var fieldDefs;
+    if(reqSpecs) {
+      fieldDefs = reqSpecs.fieldDefs;
+    }
     if (!keyConformer) {
       keyConformer = _genKeyConformer(reqSpecs, optSpecs); //lazy
     }
-    var keyResult = keyConformer(x);
+    var conformed = keyConformer(x);
     // console.log(keyResult);
 
-    if(isProblem(keyResult)) {
-      return keyResult;
+    if(isProblem(conformed)) {
+      return conformed;
     }
 
-    var conformed = {};
-    if(reqSpecs && reqSpecs.fields) {
-      var fields = reqSpecs.fields;
-      for (var name in fields) {
-        var defs = fields[name];
+    if(fieldDefs) {
+      conformed = {};
+      for (var name in fieldDefs.fields) {
+        var defs = fieldDefs.fields[name];
         var r = parseFieldDef(x, name, defs);
         if (isProblem(r)) {
           return r;
@@ -124,10 +151,14 @@ function _genPropsConformer(reqSpecs, optSpecs) {
         }
       }
     }
-    if(optSpecs && optSpecs.fields) {
-      var fields = optSpecs.fields;
-      for (var name in fields) {
-        var defs = fields[name];
+
+    var optFieldDefs;
+    if(optSpecs) {
+      optFieldDefs = optSpecs.fieldDefs;
+    }
+    if(optFieldDefs) {
+      for (var name in optFieldDefs.fields) {
+        var defs = optFieldDefs.fields[name];
         var r = parseFieldDef(x, name, defs);
         if (isProblem(r)) {
           // console.log(r.falsePredicate);
