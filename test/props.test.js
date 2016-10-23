@@ -9,7 +9,20 @@ function startWithOo(key) {
 }
 
 describe('props', function() {
-  it('simple keyset', function() {
+  it.skip('simple key set', function() {
+    var ObjSpec = props({
+      req: ['a', 'b', 'c'],
+    });
+    var conformed1 = { a: '', b: null, c: 2 };
+    var conformed2 = { a: '', b: null, c: 2 };
+    var unconformed1 = { a: '', c: 2 };
+
+    expect(ObjSpec.conform(conformed1)).to.deep.equal(conformed1);
+    expect(ObjSpec.conform(conformed2)).to.deep.equal(conformed2);
+    expect(ObjSpec.conform(unconformed1)).to.be.an.instanceof(Problem);
+  });
+
+  it('key val verify', function() {
     var ObjSpec = props({
       req: {
         'title': s.isStr,
@@ -17,14 +30,18 @@ describe('props', function() {
       },
       opt: {
         'content': s.isStr,
-        'ooProps': [startWithOo, s.isNum],
+        'ooProps': [startWithOo, props({
+          req: {
+            'val': s.isNum,
+          },
+        })],
       },
     });
 
     // console.log(ObjSpec);
 
     var conformed1 = { title: 'Do it', content: 'blah', userId: 2 };
-    var conformed2 = { title: 'Do it', content: 'blah', userId: 2, ooA: 1, ooB: 2, ooC: 3 };
+    var conformed2 = { title: 'Do it', content: 'blah', userId: 2, ooA: {val: 1}, ooB: {val: 2}, ooC: {val: 3} };
     var unconformed1 = { content: false, userId: 2 };
     var unconformed2 = { title: 'Do it', content: false, userId: 'wrong' };
     var unconformed3 = { title:  1234, content: null, userId: 2 };
@@ -35,7 +52,7 @@ describe('props', function() {
 
     expect(ObjSpec.conform(conformed2)).to.deep.equal(
       { title: 'Do it', content: 'blah', userId: 2, ooProps: {
-        ooA: 1, ooB: 2, ooC: 3,
+        ooA: {val: 1}, ooB: {val: 2}, ooC: {val: 3},
       }});
 
     expect(ObjSpec.conform(unconformed2)).to.be.an.instanceof(Problem);
