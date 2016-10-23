@@ -9,15 +9,7 @@ var core = require('./core');
 var coerceIntoSpec = require('../utils/coerceIntoSpec');
 var {cat, or, RefNameOrExprSpec} = core;
 var fspec = require('./fspec');
-
-var SPEC_TYPE_KEYS = 'KEYS';
-
-function keys(params) {
-  var reqSpecs = params.req;
-  var optSpecs = params.opt;
-  return new Spec(SPEC_TYPE_KEYS, params, _genKeyConformer(reqSpecs), null);
-};
-
+var any = require('./any');
 
 function _genKeyConformer(reqSpecs, optSpec) {
   return function tryConformKeys(x) {
@@ -37,7 +29,7 @@ function _genKeyConformer(reqSpecs, optSpec) {
             }
           }
         } else { //plain string key
-          if(x[k] === undefined) {
+          if(x[name] === undefined) {
             reqProblems.push(x[k]);
           }
         }
@@ -90,16 +82,19 @@ function propsOp(cargs) {
   // console.log('-------------------');
 
   var {req, opt} = cargs;
+  // console.log(cargs);
   return new Spec(TYPE_PROPS, cargs, _genPropsConformer(req, opt), null);
 }
 
 function _genPropsConformer(reqSpecs, optSpecs) {
   var keyConformer;
   return function tryConformProps(x) {
+    // console.log(x);
     if (!keyConformer) {
       keyConformer = _genKeyConformer(reqSpecs, optSpecs); //lazy
     }
     var keyResult = keyConformer(x);
+    // console.log(keyResult);
 
     if(isProblem(keyResult)) {
       return keyResult;
@@ -135,13 +130,18 @@ function _genPropsConformer(reqSpecs, optSpecs) {
       }
     }
 
-    // console.log(conformed);
+    // console.log('-------------------');
+    // var util = require('util');
+    // console.log(util.inspect(conformed, false, null));
+    // console.log('-------------------');
+
     return conformed;
   }
 }
 
 function parseFieldDef(x, name, defs) {
   var { keySpec, valSpec } = defs;
+  // console.log(name, defs);
   var r;
   if(keySpec) {
     r = {};
@@ -158,9 +158,9 @@ function parseFieldDef(x, name, defs) {
               r[k] = rrr;
             }
           } else if (valSpec.keyValExprPair) {
-            throw 'z';
+            throw 'zzz';
           } else {
-            throw 'z';
+            throw 'zzz';
           }
         } else {
           r[k] = x[rr];
@@ -170,17 +170,18 @@ function parseFieldDef(x, name, defs) {
   } else {
     // console.log(r);
     r = x[name];
+    // console.log(name);
     if (valSpec) {
       if(valSpec.expr) {
         r = valSpec.expr.conform(r);
       } else if (valSpec.keyValExprPair) {
-        throw 'z';
+        throw 'zzz';
       } else {
-        throw 'z';
+        throw 'zzz';
       }
     }
   }
-  console.log(r);
+  // console.log(r);
   return r;
 }
 
@@ -189,6 +190,5 @@ function _conformNamedOrExpr(x, nameOrExpr) {
 }
 
 module.exports = {
-  keys: keys,
   props: PropsSpec.wrapConformedArgs(propsOp),
 };

@@ -19,6 +19,7 @@ function fspec(fnSpec) {
     var fnName = functionName(fn);
     var argConformedFn = getArgConformedFn(fnName, fn);
     var namedArgConformedFn = namedFn(fnName, argConformedFn, '__conformed');
+
     return namedArgConformedFn;
   }
 
@@ -39,11 +40,12 @@ function fspec(fnSpec) {
       // var util = require('util');
       // console.log(util.inspect(argsSpec, false, null));
       var conformedArgs = conform(argsSpec, args);
-      // var util = require('util');
       // console.log(conformedArgs);
+      // var util = require('util');
       // console.log(util.inspect(conformedArgs, false, null));
       var retVal = fn.call(null, conformedArgs);
       checkRet(fnName, retVal);
+      // console.log(retVal);
       return retVal;
     };
   }

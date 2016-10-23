@@ -4,6 +4,9 @@ var isArray = require('isarray');
 var oAssign = require('object-assign');
 
 function simulate(nfa, rawInput) {
+  // console.log('------raw------');
+  // console.log(rawInput);
+  // console.log('---------------');
   var input;
 
   if(!isArray(rawInput)) {
@@ -28,6 +31,9 @@ function simulate(nfa, rawInput) {
     if (current.state === nfa.finalState && current.offset === input.length) {
       r.matched = true;
       r.result = _getMatch(nfa, rawInput, current);
+      // console.log('-------r--------');
+      // console.log(r);
+      // console.log('----------------');
       return r;
     }
     for (var nextStateStr in nfa.transitions[current.state]) {
@@ -42,8 +48,9 @@ function simulate(nfa, rawInput) {
         nextOffset = current.offset;
       }
 
+      var conformed;
       if ((transition.isEpsilon ||
-           !isProblem(transition.conform(observed))) &&
+           !isProblem(conformed = transition.conform(observed))) &&
           nextOffset <= input.length) {
         if(transition.isEpsilon) {
           if(transition.dir) {
@@ -63,6 +70,7 @@ function simulate(nfa, rawInput) {
         };
         if(!transition.isEpsilon) {
           next.observed = observed;
+          next.conformed = conformed;
         }
       	frontier.push(next);
       }
@@ -83,6 +91,10 @@ var ArrayFragment = function(val) { this.value = val; };
 
 function _getMatch(nfa, input, finalState) {
   var chain = _stateChain(nfa, finalState);
+  // console.log('---------chain----------');
+  // var util = require('util');
+  // console.log(util.inspect(chain, false, null));
+  // console.log('------------------------');
   // chain.forEach(function (c) {
   //   console.log('c', c);
   // })
@@ -111,7 +123,7 @@ function _getMatch(nfa, input, finalState) {
           }
         } break;
         case 'pred': {
-          valStack.push(curr.observed);
+          valStack.push(curr.conformed);
         } break;
         case 'out': {
           var val = valStack.pop();
@@ -232,6 +244,7 @@ function _stateChain(nfa, finalState) {
       };
       if(!curr.isEpsilon) {
         o.observed = curr.observed;
+        o.conformed = curr.conformed;
       }
       chain.unshift(o);
     }

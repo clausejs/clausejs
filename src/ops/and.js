@@ -16,7 +16,7 @@ var AndSpec = fspec({
   ret: isSpec,
 });
 
-function and(conformedArgs) {
+function andOp(conformedArgs) {
   var exprs = conformedArgs;
 
   var conformFn = _genAndConformer(exprs);
@@ -40,4 +40,4 @@ function _genAndConformer(exprs) {
   }
 }
 
-module.exports = AndSpec.wrapConformedArgs(and);
+module.exports = AndSpec.wrapConformedArgs(andOp);

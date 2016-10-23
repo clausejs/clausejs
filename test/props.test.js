@@ -21,6 +21,8 @@ describe.skip('props', function() {
       },
     });
 
+    // console.log(ObjSpec);
+
     var conformed1 = { title: 'Do it', content: null, userId: 2 };
     var conformed2 = { title: 'Do it', content: null, userId: 2, ooA: 1, ooB: 2, ooC: 3 };
     var unconformed1 = { content: false, userId: 2 };
@@ -33,10 +35,10 @@ describe.skip('props', function() {
 
     // console.log(ObjSpec.conform(conformed2));
 
-    expect(ObjSpec.conform(conformed2)).to.deep.equal(
-      { title: 'Do it', content: null, userId: 2, ooProps: {
-        ooA: 1, ooB: 2, ooC: 3,
-      }});
+    // expect(ObjSpec.conform(conformed2)).to.deep.equal(
+    //   { title: 'Do it', content: null, userId: 2, ooProps: {
+    //     ooA: 1, ooB: 2, ooC: 3,
+    //   }});
 
     // expect(ObjSpec.conform(unconformed2)).to.be.an.instanceof(Problem);
     // expect(ObjSpec.conform(unconformed3)).to.be.an.instanceof(Problem);
