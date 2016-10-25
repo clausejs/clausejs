@@ -38,42 +38,44 @@ function simulate(nfa, rawInput) {
     }
     for (var nextStateStr in nfa.transitions[current.state]) {
       var nextState = parseInt(nextStateStr);
-      var observed = input[current.offset];
-      var transition = nfa.transitions[current.state][nextState];
-      var nextOffset;
-      var move;
-      if(!transition.isEpsilon) {
-        nextOffset = current.offset + 1;
-      } else {
-        nextOffset = current.offset;
-      }
-
-      var conformed;
-      if ((transition.isEpsilon ||
-           !isProblem(conformed = transition.conform(observed))) &&
-          nextOffset <= input.length) {
-        if(transition.isEpsilon) {
-          if(transition.dir) {
-            move = {dir: transition.dir, name: transition.name, op: transition.op, group: transition.group};
-          } else {
-            move = null;
-          }
-        } else {
-          move = { dir: 'pred' };
-        }
-      	var next = {
-          state: nextState,
-          offset: nextOffset,
-          move: move,
-          prev: current,
-          isEpsilon: transition.isEpsilon || false,
-        };
+      // console.log(current.offset, input);
+        var observed = input[current.offset];
+        var transition = nfa.transitions[current.state][nextState];
+        var nextOffset;
+        var move;
         if(!transition.isEpsilon) {
-          next.observed = observed;
-          next.conformed = conformed;
+          nextOffset = current.offset + 1;
+        } else {
+          nextOffset = current.offset;
         }
-      	frontier.push(next);
-      }
+
+        var conformed;
+        if ((transition.isEpsilon ||
+             (observed !== undefined &&
+             !isProblem(conformed = transition.conform(observed)))) &&
+            nextOffset <= input.length) {
+          if(transition.isEpsilon) {
+            if(transition.dir) {
+              move = {dir: transition.dir, name: transition.name, op: transition.op, group: transition.group};
+            } else {
+              move = null;
+            }
+          } else {
+            move = { dir: 'pred' };
+          }
+          var next = {
+            state: nextState,
+            offset: nextOffset,
+            move: move,
+            prev: current,
+            isEpsilon: transition.isEpsilon || false,
+          };
+          if(!transition.isEpsilon) {
+            next.observed = observed;
+            next.conformed = conformed;
+          }
+          frontier.push(next);
+        }
     }
   }
 
@@ -91,6 +93,7 @@ var ArrayFragment = function(val) { this.value = val; };
 
 function _getMatch(nfa, input, finalState) {
   var chain = _stateChain(nfa, finalState);
+  // console.log(input);
   // console.log('---------chain----------');
   // var util = require('util');
   // console.log(util.inspect(chain, false, null));

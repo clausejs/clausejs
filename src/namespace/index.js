@@ -44,7 +44,7 @@ var NamespaceFnSpec = fspec({
       'val', ExprOrDefs),
     'get', cat('name', isNamespaceName)
   ),
-  ret: isExpr,
+  ret: or(isExpr, isUndefined),
 });
 
 function namespaceFn(cargs) {

@@ -14,7 +14,11 @@ function _Spec(type, args, conformFn, generateFn) {
   this.type = type;
 
   this.conform = function (x, _this) {
-    return conformFn.call(_this, x);
+    if(x === undefined) {
+      throw new Error('Conform must be called with a test value x.');
+    } else {
+      return conformFn.call(_this, x);
+    }
   };
 
   if(generateFn) {

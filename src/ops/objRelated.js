@@ -3,6 +3,7 @@ var oAssign = require('object-assign');
 var Problem = require('../models/Problem');
 var isSpec = require('../utils/isSpec');
 var isProblem = require('../utils/isProblem');
+var isUndefined = require('../preds/isUndefined');
 var isObj = require('../preds/isObj');
 var isStr = require('../preds/isStr');
 var core = require('./core');
@@ -144,10 +145,9 @@ function _genPropsConformer(reqSpecs, optSpecs) {
         var r = parseFieldDef(x, name, defs);
         if (isProblem(r)) {
           return r;
-        } else {
-          if(r !== undefined) {
-            conformed[name] = r;
-          }
+        }
+        if(!isUndefined(r)) {
+          conformed[name] = r;
         }
       }
     }
@@ -209,8 +209,10 @@ function parseFieldDef(x, name, defs) {
     // console.log(valSpec);
     // console.log(r);
     r = x[name];
-    // console.log(name, x);
-    r = _conformNamedOrExpr(r, valSpec);
+    // console.log(name, r);
+    if(!isUndefined(r)) {
+      r = _conformNamedOrExpr(r, valSpec);
+    }
   }
   // console.log('======');
   // console.log(r);
