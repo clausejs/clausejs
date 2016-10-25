@@ -5,6 +5,7 @@ var isProblem = require('../utils/isProblem');
 var coerceIntoSpec = require('../utils/coerceIntoSpec');
 var exprSpec = coerceIntoSpec(isExpr);
 var Spec = require('../models/Spec');
+var Problem = require('../models/Problem');
 var core = require('./core');
 var oneOrMore = core.oneOrMore;
 var or = core.or;
@@ -17,7 +18,7 @@ var AndSpec = fspec({
 });
 
 function andOp(conformedArgs) {
-  var exprs = conformedArgs;
+  var exprs = conformedArgs.exprs;
 
   var conformFn = _genAndConformer(exprs);
   var andS = new Spec('AND', exprs, conformFn, null);
@@ -27,10 +28,11 @@ function andOp(conformedArgs) {
 function _genAndConformer(exprs) {
   return function andConformer(data) {
     var results = exprs.map(function(e) {
+      e = coerceIntoSpec(e);
       return e.conform(data);
     });
 
-    var problems = e.filter(isProblem);
+    var problems = results.filter(isProblem);
 
     if(problems.length === 0) {
       return data;
