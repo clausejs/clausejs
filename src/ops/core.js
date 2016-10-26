@@ -4,7 +4,7 @@ var Spec = require('../models/Spec');
 var isSpec = require('../utils/isSpec');
 var isPred = require('../utils/isPred');
 var isSpecName = require('../utils/isSpecName');
-var isRefSpec = require('../utils/isSpecRef');
+var isSpecRef = require('../utils/isSpecRef');
 var c = require('../ops/constants');
 var nfaConformer = require('../nfa/conformer');
 var coerceIntoSpec = require('../utils/coerceIntoSpec');
@@ -12,7 +12,7 @@ var fspec = require('./fspec');
 
 var specSpec = coerceIntoSpec(isSpec);
 var nameSpec = coerceIntoSpec(isSpecName);
-var refSpecSpec = coerceIntoSpec(isRefSpec);
+var specSpecRef = coerceIntoSpec(isSpecRef);
 
 var catOp = genMultiArgOp(c.CAT);
 var orOp = genMultiArgOp(c.OR);
@@ -22,8 +22,8 @@ var zeroOrOneOp = genSingleArgOp(c.Z_OR_O);
 
 var ExprSpec = orOp({
   named: [
-      { name: 'refSpec', expr: {
-        spec: refSpecSpec,
+      { name: 'specRef', expr: {
+        spec: specSpecRef,
       } },
       { name: 'pred', expr: {
         pred: isPred,
@@ -98,6 +98,9 @@ function genMultiArgOp(type) {
         } else if (expr.pred) {
           var s = coerceIntoSpec(expr.pred);
           return oAssign({}, p, { expr: s});
+        } else if (expr.specRef) {
+          var s = coerceIntoSpec(expr.specRef);
+          return oAssign({}, p, { expr: s});
         } else {
           console.error(p);
           throw 'Not implemented';
@@ -124,7 +127,10 @@ function genMultiArgOp(type) {
         } else if (p.pred) {
           var s = coerceIntoSpec(p.pred);
           return oAssign({}, p, { expr: s });
-        }else {
+        } else if (p.specRef) {
+          var s = coerceIntoSpec(p.specRef);
+          return oAssign({}, p, { expr: s });
+        } else {
           console.error(p);
           throw 'Not implemented';
         }

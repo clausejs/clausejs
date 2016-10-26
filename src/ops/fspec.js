@@ -4,6 +4,7 @@ var functionName = require('../utils/fnName');
 var isProblem = require('../utils/isProblem');
 var namedFn = require('../utils/namedFn');
 var conform = require('../utils/conform');
+var oAssign = require('object-assign');
 
 function fspec(fnSpec) {
   var argsSpec = fnSpec.args;
@@ -71,6 +72,7 @@ function fspec(fnSpec) {
   }
 
   wrapSpecChecker.wrapConformedArgs = wrapConformedArgs;
+  oAssign(wrapSpecChecker, fnSpec);
 
   return wrapSpecChecker;
 };

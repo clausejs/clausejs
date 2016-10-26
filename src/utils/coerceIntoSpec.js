@@ -1,5 +1,6 @@
 var isPred = require('./isPred');
 var isSpec = require('./isSpec');
+var isSpecRef = require('./isSpecRef');
 var Spec = require('../models/Spec');
 var Problem = require('../models/Problem');
 var namedFn = require('./namedFn');
@@ -8,7 +9,7 @@ var fnName = require('./fnName');
 var SPEC_TYPE = 'PRED';
 
 function coerceIntoSpec(expr) {
-  if(isSpec(expr)) {
+  if(isSpec(expr) || isSpecRef(expr)) {
     return expr;
   } else if (isPred(expr)) {
     return _wrap(expr);

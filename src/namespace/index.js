@@ -2,10 +2,11 @@ var oPath = require('object-path');
 
 var SpecRef = require('../models/SpecRef');
 var { cat, or, fspec, ExprSpec } = require('../ops');
+var { props } = require('../ops/objRelated');
 var isSpec = require('../utils/isSpec');
+var isPred = require('../utils/isPred');
 var coerceIntoSpec = require('../utils/coerceIntoSpec');
 var isStr = require('../preds/isStr');
-var isObj = require('../preds/isObj');
 var isExpr = require('../utils/isExpr');
 var isUndefined = require('../preds/isUndefined');
 
@@ -21,8 +22,6 @@ function isNamespaceName(x) {
 //   'expr': isExpr,
 // });
 
-var NameObjSpec = isObj;
-
 // // TODO: support this
 // function ExprOrDefsDelayed () { return ExprOrDefs; }
 
@@ -30,14 +29,13 @@ var NamespaceFnSpec = fspec({
   args: or(
     'def', cat(
       'name', isNamespaceName,
-      'val', ExprSpec),
+      'val', _getUnchecked('__specky.ExprSpec')),
     'get', cat('name', isNamespaceName)
   ),
   ret: or(isSpecRef, isExpr),
 });
 
 function namespaceFn(cargs) {
-  _maybeInitRegistry();
   var retVal;
 
   if(cargs['def']) {
@@ -66,8 +64,9 @@ function isSpecRef(x) {
 var _get = fspec({
   args: cat(isNamespaceName),
   ret: isSpecRef,
-})(function _get(ref) {
+})(_getUnchecked);
 
+function _getUnchecked(ref) {
   var getFn = (prefix) => {
     var path = reg;
     if(prefix) {
@@ -92,11 +91,16 @@ var _get = fspec({
   };
 
   return new SpecRef({ ref, getFn, conformFn });
+}
+
+var NameObjSpec = props({
+  req: { 'expr': or(isSpec, isPred) }
 });
 
 var _set = fspec({
   args: cat(isNamespaceName, NameObjSpec),
 })(function _set(n, nObj) {
+  _maybeInitRegistry();
   oPath.set(reg, n, nObj);
 });
 
@@ -108,5 +112,7 @@ function _maybeInitRegistry() {
   }
   return reg;
 }
+
+_set('__specky.ExprSpec', { expr: ExprSpec });
 
 module.exports = NamespaceFnSpec.wrapConformedArgs(namespaceFn);
