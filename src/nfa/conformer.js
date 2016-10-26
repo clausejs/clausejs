@@ -13,7 +13,7 @@ function nfaConformer(spec) {
     if(r.matched === true) {
       return r.result;
     } else {
-      return new Problem(x, spec, 'Expression did not match');
+      return new Problem(x, spec, 'NFA expression ' + spec.type + ' did not match');
     }
   }
 }

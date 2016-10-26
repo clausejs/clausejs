@@ -14,6 +14,7 @@ var predicates = {
   isObject: require('./preds/isObj'),
   isStr: require('./preds/isStr'),
   isString: require('./preds/isStr'),
+  isUndefined: require('./preds/isUndefined'),
 };
 
 var models = {

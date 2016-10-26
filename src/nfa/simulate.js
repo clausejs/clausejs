@@ -51,7 +51,7 @@ function simulate(nfa, rawInput) {
 
         var conformed;
         if ((transition.isEpsilon ||
-             (observed !== undefined &&
+             (current.offset < input.length &&
              !isProblem(conformed = transition.conform(observed)))) &&
             nextOffset <= input.length) {
           if(transition.isEpsilon) {

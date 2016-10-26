@@ -11,4 +11,9 @@ describe('or', function() {
     expect(S.isValid(NumOrStr, 33)).to.be.true;
     expect(S.isValid(NumOrStr, new Object())).to.be.false;
   });
+
+  it('undefined case', function() {
+    var ObjOrUndefined = S.or(S.isNum, S.isUndefined);
+    expect(S.isValid(ObjOrUndefined, undefined)).to.be.true;
+  });
 });
