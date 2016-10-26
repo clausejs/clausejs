@@ -1,14 +1,14 @@
 var isArray = require('isarray');
 var oAssign = require('object-assign');
 
-function _Spec(type, args, conformFn, generateFn) {
+function Spec(type, args, conformFn, generateFn) {
 
   if(arguments.length !== 4) {
-    throw new Error('Wrong number of arguments (' + arguments.length + ') passed to new _Spec()');
+    throw new Error('Wrong number of arguments (' + arguments.length + ') passed to new Spec()');
   }
 
   if(args === null || args === undefined) {
-    throw new Error('No argument list passed to new _Spec()');
+    throw new Error('No argument list passed to new Spec()');
   }
 
   this.type = type;
@@ -31,4 +31,4 @@ function _Spec(type, args, conformFn, generateFn) {
 };
 
 
-module.exports = _Spec;
+module.exports = Spec;

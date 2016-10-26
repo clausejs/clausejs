@@ -15,8 +15,9 @@ describe('namespace', function() {
       s('xyz.superapp.item', s.and(s.isObj, s.props({req: ['title', 'content']})));
       s('xyz.superapp.item.title', s.isStr);
 
-      expect(isSpec(s('xyz.superapp.item'))).to.be.true;
-      expect(isPred(s('xyz.superapp.item.title'))).to.be.true;
+      expect(isSpec(s('xyz.superapp.item').get())).to.be.true;
+      expect(isPred(s('xyz.superapp.item.title').get())).to.be.true;
+      expect(s.isUndefined(s('xyz.superapp.item.doesnotexist').get())).to.be.true;
     });
   });
 

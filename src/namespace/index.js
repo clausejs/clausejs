@@ -1,11 +1,9 @@
 var oPath = require('object-path');
 
-var ops = require('../ops');
-
-var cat = ops.cat;
-var or = ops.or;
-var fspec = ops.fspec;
+var SpecRef = require('../models/SpecRef');
+var { cat, or, fspec } = require('../ops');
 var isSpec = require('../utils/isSpec');
+var coerceIntoSpec = require('../utils/coerceIntoSpec');
 var isStr = require('../preds/isStr');
 var isObj = require('../preds/isObj');
 var isExpr = require('../utils/isExpr');
@@ -44,7 +42,7 @@ var NamespaceFnSpec = fspec({
       'val', ExprOrDefs),
     'get', cat('name', isNamespaceName)
   ),
-  ret: or(isExpr, isUndefined),
+  ret: or(isSpecRef, isExpr),
 });
 
 function namespaceFn(cargs) {
@@ -57,28 +55,46 @@ function namespaceFn(cargs) {
     if (val['expr']) {
       var expr = val['expr'];
       _set(name, {expr: expr});
-      return expr;
+      retVal = expr;
     } else {
       throw 'no impl';
     }
   } else if(cargs['get']) {
     var name = cargs['get']['name'];
     var nameObj = _get(name);
-    if(nameObj) {
-      return nameObj.expr;
-    } else {
-      return undefined;
-    }
+    retVal = nameObj;
   }
 
   return retVal;
 };
 
+function isSpecRef(x) {
+  return x instanceof SpecRef;
+}
+
 var _get = fspec({
   args: cat(isNamespaceName),
-  ret: or(NameObjSpec, isUndefined),
-})(function _get(n) {
-  return oPath.get(reg, n);
+  ret: isSpecRef,
+})(function _get(ref) {
+
+  var getFn = () => {
+    var nObj = oPath.get(reg, ref);
+    if (nObj) {
+      return nObj.expr;
+    } else {
+      return undefined;
+    }
+  };
+
+  var conformFn = (x) => {
+    var s = getFn();
+    if(s) {
+      var ss = coerceIntoSpec(s);
+      return ss.conform(x);
+    }
+  };
+
+  return new SpecRef({ ref, getFn, conformFn });
 });
 
 var _set = fspec({
