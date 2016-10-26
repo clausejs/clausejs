@@ -77,8 +77,14 @@ var _get = fspec({
   ret: isSpecRef,
 })(function _get(ref) {
 
-  var getFn = () => {
-    var nObj = oPath.get(reg, ref);
+  var getFn = (prefix) => {
+    var path = reg;
+    if(prefix) {
+      path = prefix + reg;
+    } else {
+      path = reg;
+    }
+    var nObj = oPath.get(path, ref);
     if (nObj) {
       return nObj.expr;
     } else {

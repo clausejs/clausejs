@@ -8,7 +8,7 @@ var isObj = require('../preds/isObj');
 var isStr = require('../preds/isStr');
 var core = require('./core');
 var coerceIntoSpec = require('../utils/coerceIntoSpec');
-var {cat, or, RefNameOrExprSpec, zeroOrMore} = core;
+var { cat, or, zeroOrMore, ExprSpec } = core;
 var fspec = require('./fspec');
 var any = require('./any');
 
@@ -71,14 +71,14 @@ var FieldDefs = propsOp({
         {
           keyValExprPair: {
             keySpec: {
-              expression: coerceIntoSpec(isStr),
+              spec: coerceIntoSpec(isStr),
             },
             valSpec: {
-              expression: or(
-                'valExprOnly', RefNameOrExprSpec,
+              spec: or(
+                'valExprOnly', ExprSpec,
                 'keyValExprPair', cat(
-                  'keySpec', RefNameOrExprSpec,
-                  'valSpec', RefNameOrExprSpec
+                  'keySpec', ExprSpec,
+                  'valSpec', ExprSpec
                 )
               )
             },
@@ -96,8 +96,8 @@ var PropArgs = propsOp({
   opt: {
     fieldDefs: {
       fields: {
-        'req': { valExprOnly: { expression: KeyArrayOrFieldDefs } },
-        'opt': { valExprOnly: { expression: KeyArrayOrFieldDefs } },
+        'req': { valExprOnly: { spec: KeyArrayOrFieldDefs } },
+        'opt': { valExprOnly: { spec: KeyArrayOrFieldDefs } },
       }
     }
   },
@@ -230,10 +230,13 @@ function parseFieldDef(x, name, defs) {
 }
 
 function _conformNamedOrExpr(x, nameOrExpr) {
-  if(nameOrExpr.expression) {
-    var expr = coerceIntoSpec(nameOrExpr.expression);
+  if(nameOrExpr.spec) {
+    var spec = nameOrExpr.spec;
+    return spec.conform(x);
+  } else if (nameOrExpr.pred) {
+    var expr = coerceIntoSpec(nameOrExpr.pred);
     return expr.conform(x);
-  } else {
+  }else {
     throw 'no impl';
   }
 }

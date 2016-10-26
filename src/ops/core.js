@@ -3,8 +3,10 @@ var oAssign = require('object-assign');
 var Spec = require('../models/Spec');
 var isExpr = require('../utils/isExpr');
 var isSpec = require('../utils/isSpec');
+var isPred = require('../utils/isPred');
 var isSpecName = require('../utils/isSpecName');
 var isRefName = require('../utils/isRefName');
+var isRefSpec = require('../utils/isSpecRef');
 var c = require('../ops/constants');
 var nfaConformer = require('../nfa/conformer');
 var coerceIntoSpec = require('../utils/coerceIntoSpec');
@@ -21,13 +23,16 @@ var zeroOrMoreOp = genSingleArgOp(c.Z_OR_M);
 var oneOrMoreOp = genSingleArgOp(c.O_OR_M);
 var zeroOrOneOp = genSingleArgOp(c.Z_OR_O);
 
-var RefNameOrExprSpec = orOp({
+var ExprSpec = orOp({
   named: [
-      { name: 'refName', expr: {
-        expression: refNameSpec,
+      { name: 'refSpec', expr: {
+        spec: refNameSpec,
       } },
-      { name: 'expression', expr: {
-        expression: exprSpec,
+      { name: 'pred', expr: {
+        pred: isPred,
+      } },
+      { name: 'spec', expr: {
+        pred: isSpec,
       } },
     ],
 });
@@ -38,15 +43,15 @@ var multipleArgOpSpec = {
       {
         name: 'named',
         expr: {
-          expression: zeroOrMoreOp({
+          spec: zeroOrMoreOp({
             expr: {
-              expression: catOp({
+              spec: catOp({
                 named: [
                     { name: 'name', expr: {
-                      expression: nameSpec,
+                      spec: nameSpec,
                     } },
                     { name: 'expr', expr: {
-                      expression: RefNameOrExprSpec,
+                      spec: ExprSpec,
                     } },
                   ],
               }),
@@ -57,9 +62,9 @@ var multipleArgOpSpec = {
       {
         name: 'unnamed',
         expr: {
-          expression: zeroOrMoreOp({
+          spec: zeroOrMoreOp({
             expr: {
-              expression: RefNameOrExprSpec,
+              spec: ExprSpec,
             },
           }),
         },
@@ -73,7 +78,7 @@ var singleArgOpSpec = {
   args: catOp({
     named: [
       { name: 'expr', expr: {
-        expression: RefNameOrExprSpec,
+        spec: ExprSpec,
       } },
     ],
   }),
@@ -90,9 +95,12 @@ function genMultiArgOp(type) {
       // console.log(exprs);
       var coercedExprs = exprs.map(function(p) {
         var expr = p.expr;
-        if(expr.expression) {
-          var s = coerceIntoSpec(expr.expression);
+        if(expr.spec) {
+          var s = expr.spec;
           return oAssign({}, p, { expr: s });
+        } else if (expr.pred) {
+          var s = coerceIntoSpec(expr.pred);
+          return oAssign({}, p, { expr: s});
         } else {
           console.error(p);
           throw 'Not implemented';
@@ -113,10 +121,13 @@ function genMultiArgOp(type) {
 
       // console.log(exprs);
       var coercedExprs = exprs.map(function(p) {
-        if(p.expression) {
-          var s = coerceIntoSpec(p.expression);
+        if(p.spec) {
+          var s = p.spec;
           return oAssign({}, p, { expr: s });
-        } else {
+        } else if (p.pred) {
+          var s = coerceIntoSpec(p.pred);
+          return oAssign({}, p, { expr: s });
+        }else {
           console.error(p);
           throw 'Not implemented';
         }
@@ -140,9 +151,11 @@ function genSingleArgOp(type) {
     var p = conformedArgs.expr;
     var expr;
 
-    if(p.expression) {
-      expr = p.expression;
-    } else {
+    if(p.spec) {
+      expr = p.spec;
+    } else if (p.pred) {
+      expr = coerceIntoSpec(p.pred);
+    }else {
       throw 'not impl';
     }
 
@@ -163,7 +176,7 @@ var core = {
   zeroOrMore: fspec(singleArgOpSpec).wrapConformedArgs(zeroOrMoreOp),
   zeroOrOne: fspec(singleArgOpSpec).wrapConformedArgs(zeroOrOneOp),
   oneOrMore: fspec(singleArgOpSpec).wrapConformedArgs(oneOrMoreOp),
-  RefNameOrExprSpec: RefNameOrExprSpec,
+  ExprSpec,
 };
 
 core['alt'] = core.or;
