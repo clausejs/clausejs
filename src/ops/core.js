@@ -157,7 +157,7 @@ function genSingleArgOp(type) {
   };
 }
 
-module.exports = {
+var core = {
   cat: fspec(multipleArgOpSpec).wrapConformedArgs(catOp),
   or: fspec(multipleArgOpSpec).wrapConformedArgs(orOp),
   zeroOrMore: fspec(singleArgOpSpec).wrapConformedArgs(zeroOrMoreOp),
@@ -165,6 +165,13 @@ module.exports = {
   oneOrMore: fspec(singleArgOpSpec).wrapConformedArgs(oneOrMoreOp),
   RefNameOrExprSpec: RefNameOrExprSpec,
 };
+
+core['alt'] = core.or;
+core['*'] = core.zeroOrMore;
+core['+'] = core.oneOrMore;
+core['?'] = core.zeroOrOne;
+
+module.exports = core;
 
 // ///////////////////////////////////////////////////////////
 // var isBool = require('../preds/isBool');

@@ -39,9 +39,9 @@ describe('nfa regex', function() {
       });
 
     it('use in conjunction with cat', function() {
-      var ZeroOrMoreStrings = S.zeroOrMore(S.isStr);
-      var ZeroOrMoreIntegers = S.zeroOrMore(Number.isInteger);
-      var oneOrMoreIntegers = S.oneOrMore(Number.isInteger);
+      var ZeroOrMoreStrings = S['*'](S.isStr);
+      var ZeroOrMoreIntegers = S['*'](Number.isInteger);
+      var oneOrMoreIntegers = S['+'](Number.isInteger);
       var expr = S.cat(
         ZeroOrMoreStrings,
         ZeroOrMoreIntegers,
