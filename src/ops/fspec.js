@@ -1,6 +1,7 @@
 var Problem = require('../models/Problem');
 var isValid = require('../utils/isValid');
 var functionName = require('../utils/fnName');
+var isProblem = require('../utils/isProblem');
 var namedFn = require('../utils/namedFn');
 var conform = require('../utils/conform');
 
@@ -40,6 +41,9 @@ function fspec(fnSpec) {
       // var util = require('util');
       // console.log(util.inspect(argsSpec, false, null));
       var conformedArgs = conform(argsSpec, args);
+      if(isProblem(conformedArgs)) {
+        throw conformedArgs;
+      }
       // console.log(conformedArgs);
       // var util = require('util');
       // console.log(util.inspect(conformedArgs, false, null));
