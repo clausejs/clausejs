@@ -5,7 +5,6 @@ var isExpr = require('../utils/isExpr');
 var isSpec = require('../utils/isSpec');
 var isPred = require('../utils/isPred');
 var isSpecName = require('../utils/isSpecName');
-var isRefName = require('../utils/isRefName');
 var isRefSpec = require('../utils/isSpecRef');
 var c = require('../ops/constants');
 var nfaConformer = require('../nfa/conformer');
@@ -15,7 +14,7 @@ var fspec = require('./fspec');
 var exprSpec = coerceIntoSpec(isExpr);
 var specSpec = coerceIntoSpec(isSpec);
 var nameSpec = coerceIntoSpec(isSpecName);
-var refNameSpec = coerceIntoSpec(isRefName);
+var refSpecSpec = coerceIntoSpec(isRefSpec);
 
 var catOp = genMultiArgOp(c.CAT);
 var orOp = genMultiArgOp(c.OR);
@@ -26,7 +25,7 @@ var zeroOrOneOp = genSingleArgOp(c.Z_OR_O);
 var ExprSpec = orOp({
   named: [
       { name: 'refSpec', expr: {
-        spec: refNameSpec,
+        spec: refSpecSpec,
       } },
       { name: 'pred', expr: {
         pred: isPred,

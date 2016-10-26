@@ -19,8 +19,8 @@ var ExprOrDefs = or(
   'expr', isExpr
   // ,
   // 'defObj', props(
-  //   {opt: ['refNames', isNamespaceName]},
-  //   'refNames', isObj
+  //   {opt: ['refSpecs', isNamespaceName]},
+  //   'refSpecs', isObj
   // )
 );
 
