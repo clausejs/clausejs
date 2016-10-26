@@ -4,7 +4,8 @@ var s = require('./');
 console.log(s);
 
 s('xyz.superapp.item', s.isObj);
-console.log(s('xyz.superapp.item'));
+var r = s('xyz.superapp.item');
+console.log(r.conform({z:1}));
 
 // s('todoapp', {
 //   'headline': s.isStr,

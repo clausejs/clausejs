@@ -1,7 +1,6 @@
 var oAssign = require('object-assign');
 
 var Spec = require('../models/Spec');
-var isExpr = require('../utils/isExpr');
 var isSpec = require('../utils/isSpec');
 var isPred = require('../utils/isPred');
 var isSpecName = require('../utils/isSpecName');
@@ -11,7 +10,6 @@ var nfaConformer = require('../nfa/conformer');
 var coerceIntoSpec = require('../utils/coerceIntoSpec');
 var fspec = require('./fspec');
 
-var exprSpec = coerceIntoSpec(isExpr);
 var specSpec = coerceIntoSpec(isSpec);
 var nameSpec = coerceIntoSpec(isSpecName);
 var refSpecSpec = coerceIntoSpec(isRefSpec);

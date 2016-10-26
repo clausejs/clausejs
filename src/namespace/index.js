@@ -1,7 +1,7 @@
 var oPath = require('object-path');
 
 var SpecRef = require('../models/SpecRef');
-var { cat, or, fspec } = require('../ops');
+var { cat, or, fspec, ExprSpec } = require('../ops');
 var isSpec = require('../utils/isSpec');
 var coerceIntoSpec = require('../utils/coerceIntoSpec');
 var isStr = require('../preds/isStr');
@@ -14,15 +14,6 @@ var reg;
 function isNamespaceName(x) {
   return isStr(x);
 }
-
-var ExprOrDefs = or(
-  'expr', isExpr
-  // ,
-  // 'defObj', props(
-  //   {opt: ['refSpecs', isNamespaceName]},
-  //   'refSpecs', isObj
-  // )
-);
 
 // var NameObjSpec = props({
 //   req: 'expr',
@@ -39,7 +30,7 @@ var NamespaceFnSpec = fspec({
   args: or(
     'def', cat(
       'name', isNamespaceName,
-      'val', ExprOrDefs),
+      'val', ExprSpec),
     'get', cat('name', isNamespaceName)
   ),
   ret: or(isSpecRef, isExpr),
@@ -52,8 +43,8 @@ function namespaceFn(cargs) {
   if(cargs['def']) {
     var name = cargs['def']['name'];
     var val = cargs['def']['val'];
-    if (val['expr']) {
-      var expr = val['expr'];
+    if (val.spec || val.pred) {
+      var expr = val.spec || val.pred;
       _set(name, {expr: expr});
       retVal = expr;
     } else {
