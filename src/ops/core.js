@@ -94,13 +94,13 @@ function genMultiArgOp(type) {
         var expr = p.expr;
         if(expr.spec) {
           var s = expr.spec;
-          return oAssign({}, p, { expr: s });
+          return oAssign({}, p, { expr: s, spec: undefined });
         } else if (expr.pred) {
           var s = coerceIntoSpec(expr.pred);
-          return oAssign({}, p, { expr: s});
+          return oAssign({}, p, { expr: s, pred: undefined });
         } else if (expr.specRef) {
-          var s = coerceIntoSpec(expr.specRef);
-          return oAssign({}, p, { expr: s});
+          var s = expr.specRef;
+          return oAssign({}, p, { expr: s, specRef: undefined });
         } else {
           console.error(p);
           throw 'Not implemented';
@@ -123,13 +123,13 @@ function genMultiArgOp(type) {
       var coercedExprs = exprs.map(function(p) {
         if(p.spec) {
           var s = p.spec;
-          return oAssign({}, p, { expr: s });
+          return oAssign({}, p, { expr: s, spec: undefined });
         } else if (p.pred) {
           var s = coerceIntoSpec(p.pred);
-          return oAssign({}, p, { expr: s });
+          return oAssign({}, p, { expr: s, pred: undefined });
         } else if (p.specRef) {
-          var s = coerceIntoSpec(p.specRef);
-          return oAssign({}, p, { expr: s });
+          var s = p.specRef;
+          return oAssign({}, p, { expr: s, specRef: undefined });
         } else {
           console.error(p);
           throw 'Not implemented';
