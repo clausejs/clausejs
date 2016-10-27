@@ -1,4 +1,3 @@
-
 var Spec = require('../models/Spec');
 var identity = require('../utils/identity');
 var SPEC_TYPE_ANY = 'ANY';

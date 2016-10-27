@@ -4,6 +4,7 @@ var objRelated = require('./objRelated');
 
 var other = {
   and: require('./and'),
+  any: require('./any'),
   fspec: require('./fspec'),
 };
 
