@@ -3,9 +3,21 @@ require("babel-core/register");
 var s = require('./');
 console.log(s);
 
-s('xyz.superapp.item', s.isObj);
-var r = s('xyz.superapp.item');
-console.log(r.conform({z:1}));
+// var SS = s.or('a', s.props({
+//   req: {
+//     normalKeys: [s.isStr, s.isNum],
+//   },
+// }), 'b', s.isNum);
+//
+// var r = SS.conform({ key1: 2 });
+
+
+// s('xyz.superapp.item', s.isObj);
+// var r = s('xyz.superapp.item');
+// console.log(r.conform({z:1}));
+
+s('xyz.superapp.item', s.and(s.isObj));
+// s('xyz.superapp.item.title', s.isStr);
 
 // s('todoapp', {
 //   'headline': s.isStr,

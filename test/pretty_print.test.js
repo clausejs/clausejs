@@ -11,6 +11,6 @@ describe('pretty print', function() {
       S.or(S.isNum, S.cat(S.isNum, S.isBool)));
       var out = specPrettyPrint(complexSpec);
       // console.log(out);
-      expect(out.match(/\n/g).length).to.equal(18);
+      expect(out.match(/\n/g).length).to.equal(25);
   });
 });

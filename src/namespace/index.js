@@ -13,7 +13,7 @@ var isUndefined = require('../preds/isUndefined');
 var reg;
 
 function isNamespaceName(x) {
-  return isStr(x);
+  return isStr(x); // TODO
 }
 
 // var NameObjSpec = props({
@@ -22,14 +22,22 @@ function isNamespaceName(x) {
 //   'expr': isExpr,
 // });
 
-// // TODO: support this
-// function ExprOrDefsDelayed () { return ExprOrDefs; }
+var ExprOrPartialRefMapSpec = or(
+  'expr', _getUnchecked('__specky.Expr'),
+  'partialRefMap', _getUnchecked('__specky.PartialRefMap')
+);
+
+var PartialRefMapSpec = props({
+  req: {
+    'refDefs': [isNamespaceName, ExprOrPartialRefMapSpec]
+  }
+});
 
 var NamespaceFnSpec = fspec({
   args: or(
     'def', cat(
       'name', isNamespaceName,
-      'val', _getUnchecked('__specky.ExprSpec')),
+      'val', ExprOrPartialRefMapSpec),
     'get', cat('name', isNamespaceName)
   ),
   ret: or(isSpecRef, isExpr),
@@ -39,13 +47,24 @@ function namespaceFn(cargs) {
   var retVal;
 
   if(cargs['def']) {
-    var name = cargs['def']['name'];
-    var val = cargs['def']['val'];
-    if (val.spec || val.pred) {
-      var expr = val.spec || val.pred;
-      _set(name, {expr: expr});
-      retVal = expr;
+    var name = cargs.def.name;
+    var val = cargs.def.val;
+    if(val.expr) {
+      var e = val.expr;
+      if (e.spec || e.pred) {
+        var expr = e.spec || e.pred;
+        _set(name, {expr: expr});
+        retVal = expr;
+      } else {
+        console.error(e);
+        throw 'no impl';
+      }
+
+    } else if (val.partialRefMap) {
+      console.error(val);
+      throw 'no impl';
     } else {
+      console.error(val);
       throw 'no impl';
     }
   } else if(cargs['get']) {
@@ -113,6 +132,7 @@ function _maybeInitRegistry() {
   return reg;
 }
 
-_set('__specky.ExprSpec', { expr: ExprSpec });
+_set('__specky.Expr', { expr: ExprSpec });
+_set('__specky.PartialRefMap', { expr: PartialRefMapSpec });
 
 module.exports = NamespaceFnSpec.wrapConformedArgs(namespaceFn);

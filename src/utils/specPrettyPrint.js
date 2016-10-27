@@ -18,11 +18,10 @@ function _pp(spec, level) {
       for (i = 0; i < spec.exprs.length; i++) {
         var p = spec.exprs[i];
         var expr;
-        if(p.spec) {
-          expr = p.spec;
-        } else if (p.pred) {
-          expr = p.pred;
-        }else {
+        if(p.expr) {
+          expr = p.expr;
+        } else {
+          console.error(p);
           throw 'no impl';
         }
         accu += _pp(expr, level + 1);

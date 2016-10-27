@@ -27,7 +27,9 @@ function _genKeyConformer(reqSpecs, optSpec) {
       if(fieldDefs) {
         reqNames = [];
         for(var name in fieldDefs.fields) {
-          reqNames.push(name);
+          if(fieldDefs.fields.hasOwnProperty(name)) {
+            reqNames.push(name);
+          }
         }
       } else if (keyList) {
         reqNames = keyList.concat([]);
@@ -38,13 +40,15 @@ function _genKeyConformer(reqSpecs, optSpec) {
       for(var i = 0; i < reqNames.length; i++) {
         var name = reqNames[i];
         found = undefined;
-        if(fieldDefs && fieldDefs.fields[name].keySpec) { //key spec
+        if(fieldDefs && fieldDefs.fields[name].keyValExprPair) { //key spec
           found = false;
           for (var kk in x) {
-            var rr = _conformNamedOrExpr(kk, fieldDefs.fields[name].keySpec);
-            if(!isProblem(rr)) { //found a match
-              found = true;
-              break;
+            if(x.hasOwnProperty(kk)) {
+              var rr = _conformNamedOrExpr(kk, fieldDefs.fields[name].keyValExprPair.keySpec);
+              if(!isProblem(rr)) { //found a match
+                found = true;
+                break;
+              }
             }
           }
         } else { //plain string key
@@ -124,6 +128,9 @@ function _genPropsConformer(reqSpecs, optSpecs) {
   var keyConformer;
   return function tryConformProps(x) {
     // console.log(x);
+    if(typeof x === 'string') {
+      return new Problem(x, isObj, 'props: ' + x +  ' is of primitive type "' + typeof x +  '"' );
+    }
     var fieldDefs;
     if(reqSpecs) {
       fieldDefs = reqSpecs.fieldDefs;
@@ -141,14 +148,16 @@ function _genPropsConformer(reqSpecs, optSpecs) {
     if(fieldDefs) {
       conformed = oAssign({}, x);
       for (var name in fieldDefs.fields) {
-        var defs = fieldDefs.fields[name];
-        var {result, keysToDelete} = parseFieldDef(x, name, defs);
-        if (isProblem(result)) {
-          return result;
-        }
-        _deleteKeys(conformed, keysToDelete);
-        if(!isUndefined(result)) {
-          conformed[name] = result;
+        if (fieldDefs.fields.hasOwnProperty(name)) {
+          var defs = fieldDefs.fields[name];
+          var {result, keysToDelete} = parseFieldDef(x, name, defs);
+          if (isProblem(result)) {
+            return result;
+          }
+          _deleteKeys(conformed, keysToDelete);
+          if(!isUndefined(result)) {
+            conformed[name] = result;
+          }
         }
       }
     }
@@ -159,15 +168,17 @@ function _genPropsConformer(reqSpecs, optSpecs) {
     }
     if(optFieldDefs) {
       for (var name in optFieldDefs.fields) {
-        var defs = optFieldDefs.fields[name];
-        var {result, keysToDelete} = parseFieldDef(x, name, defs);
-        if (isProblem(result)) {
-          // console.log(r.falsePredicate);
-          return result;
-        }
-        _deleteKeys(conformed, keysToDelete);
-        if(!isUndefined(result)) {
-          conformed[name] = result;
+        if(optFieldDefs.fields.hasOwnProperty(name)) {
+          var defs = optFieldDefs.fields[name];
+          var {result, keysToDelete} = parseFieldDef(x, name, defs);
+          if (isProblem(result)) {
+            // console.log(r.falsePredicate);
+            return result;
+          }
+          _deleteKeys(conformed, keysToDelete);
+          if(!isUndefined(result)) {
+            conformed[name] = result;
+          }
         }
       }
     }
@@ -176,7 +187,7 @@ function _genPropsConformer(reqSpecs, optSpecs) {
     // var util = require('util');
     // console.log(util.inspect(conformed, false, null));
     // console.log('-------------------');
-
+    // console.log('conformed', conformed);
     return conformed;
   }
 }
@@ -236,7 +247,8 @@ function _conformNamedOrExpr(x, nameOrExpr) {
   } else if (nameOrExpr.pred) {
     var expr = coerceIntoSpec(nameOrExpr.pred);
     return expr.conform(x);
-  }else {
+  } else {
+    console.error(nameOrExpr);
     throw 'no impl';
   }
 }
