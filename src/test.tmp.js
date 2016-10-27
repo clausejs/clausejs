@@ -16,8 +16,10 @@ console.log(s);
 // var r = s('xyz.superapp.item');
 // console.log(r.conform({z:1}));
 
-s('xyz.superapp.item', s.and(s.isObj));
-// s('xyz.superapp.item.title', s.isStr);
+s('xyz.superapp.item', s.and(s.isObj, s.props({req: ['title', 'content']})));
+s('xyz.superapp.item.title', s.isStr);
+var r = s('xyz.superapp.item').conform({ title: 'a', content: 'b' });
+console.log(r);
 
 // s('todoapp', {
 //   'headline': s.isStr,
@@ -25,16 +27,16 @@ s('xyz.superapp.item', s.and(s.isObj));
 //     'title': s('../headline'),
 //     'items': s.zeroOrMore(s('../item')),
 //   },
-//   'item': [
-//   s.props({
-//     req: [s('title'), s('content'), s('date'), s('isDone')],
-//     opt: [s('reminder')],
-//   }),
-//   s('title', s('../headline')),
-//   s('content', s.and(s.isStr, s.notEmpty)),
-//   s('date', s.isDate),
-//   s('isDone', s.isBool),
-//   s('reminder', s.isDate)],
+//   // 'item': [
+//   // s.props({
+//   //   req: [s('title'), s('content'), s('date'), s('isDone')],
+//   //   opt: [s('reminder')],
+//   // }),
+//   // s('title', s('../headline')),
+//   // s('content', s.and(s.isStr, s.notEmpty)),
+//   // s('date', s.isDate),
+//   // s('isDone', s.isBool),
+//   // s('reminder', s.isDate)],
 // });
 
 // var ListSpec = s('todoapp.list');

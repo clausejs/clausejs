@@ -58,7 +58,7 @@ function fspec(fnSpec) {
   function checkArgs(fnName, args) {
     if(argsSpec) {
       if(!isValid(argsSpec, args)) {
-        throw new Problem(fnName, argsSpec, 'Arguments ' + args + ' did not pass spec for function ' + fnName);
+        throw new Problem(fnName, argsSpec, 'Arguments ' + args + ' passed to function ' + fnName + ' is not valid.');
       }
     }
   }
@@ -66,7 +66,7 @@ function fspec(fnSpec) {
   function checkRet(fnName, retVal) {
     if(retSpec) {
       if(!isValid(retSpec, retVal)) {
-        throw new Problem(retSpec, retSpec, 'Return value ' + retVal + ' did not pass function spec for ' + fnName);
+        throw new Problem(retSpec, retSpec, 'Return value ' + retVal + ' for function ' + fnName + ' is not valid.');
       }
     }
   }

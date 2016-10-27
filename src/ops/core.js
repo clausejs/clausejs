@@ -158,7 +158,9 @@ function genSingleArgOp(type) {
       expr = p.spec;
     } else if (p.pred) {
       expr = coerceIntoSpec(p.pred);
-    }else {
+    }else if (p.specRef) {
+      expr = p.specRef;
+    } else {
       throw 'not impl';
     }
 

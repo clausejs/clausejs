@@ -128,9 +128,6 @@ function _genPropsConformer(reqSpecs, optSpecs) {
   var keyConformer;
   return function tryConformProps(x) {
     // console.log(x);
-    if(typeof x === 'string') {
-      return new Problem(x, isObj, 'props: ' + x +  ' is of primitive type "' + typeof x +  '"' );
-    }
     var fieldDefs;
     if(reqSpecs) {
       fieldDefs = reqSpecs.fieldDefs;
@@ -208,6 +205,9 @@ function parseFieldDef(x, name, defs) {
     r = undefined;
     for (var k in x) {
       var rr =_conformNamedOrExpr(k, keySpec);
+      if(x === x[rr]) {
+        continue;
+      }
       if(!isProblem(rr)) {
         // console.log(valSpec, x[rr]);
         keysToDelete.push(rr);
@@ -230,7 +230,7 @@ function parseFieldDef(x, name, defs) {
     // console.log(r);
     r = x[name];
     // console.log(name, r);
-    if(!isUndefined(r)) {
+    if(!isUndefined(r) && x[name] !== x) {
       r = _conformNamedOrExpr(r, valSpec);
     }
   }
