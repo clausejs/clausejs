@@ -147,11 +147,11 @@ function _genPropsConformer(reqSpecs, optSpecs) {
       for (var name in fieldDefs.fields) {
         if (fieldDefs.fields.hasOwnProperty(name)) {
           var defs = fieldDefs.fields[name];
-          var {result, keysToDelete} = parseFieldDef(x, name, defs);
+          var {result, keysToDel} = parseFieldDef(x, name, defs);
           if (isProblem(result)) {
             return result;
           }
-          _deleteKeys(conformed, keysToDelete);
+          _deleteKeys(conformed, keysToDel);
           if(!isUndefined(result)) {
             conformed[name] = result;
           }
@@ -167,12 +167,12 @@ function _genPropsConformer(reqSpecs, optSpecs) {
       for (var name in optFieldDefs.fields) {
         if(optFieldDefs.fields.hasOwnProperty(name)) {
           var defs = optFieldDefs.fields[name];
-          var {result, keysToDelete} = parseFieldDef(x, name, defs);
+          var {result, keysToDel} = parseFieldDef(x, name, defs);
           if (isProblem(result)) {
             // console.log(r.falsePredicate);
             return result;
           }
-          _deleteKeys(conformed, keysToDelete);
+          _deleteKeys(conformed, keysToDel);
           if(!isUndefined(result)) {
             conformed[name] = result;
           }
@@ -199,7 +199,7 @@ function parseFieldDef(x, name, defs) {
   var { valExprOnly, keyValExprPair } = defs;
   // console.log(name, defs);
   var r;
-  var keysToDelete = [];
+  var keysToDel = [];
   if(keyValExprPair) {
     var { keySpec, valSpec } = keyValExprPair;
     r = undefined;
@@ -210,12 +210,12 @@ function parseFieldDef(x, name, defs) {
       }
       if(!isProblem(rr)) {
         // console.log(valSpec, x[rr]);
-        keysToDelete.push(rr);
+        keysToDel.push(rr);
         var rrr = _conformNamedOrExpr(x[rr], valSpec);
         // console.log(rrr);
         if(isProblem(rrr)) {
           // console.log(rrr);
-          return { result: rrr, keysToDelete };
+          return { result: rrr, keysToDel };
         } else {
           if(r === undefined) {
             r = {};
@@ -237,7 +237,7 @@ function parseFieldDef(x, name, defs) {
   // console.log('======');
   // console.log(r);
   // console.log('======');
-  return { result: r, keysToDelete };
+  return { result: r, keysToDel };
 }
 
 function _conformNamedOrExpr(x, nameOrExpr) {
