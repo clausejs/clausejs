@@ -49,6 +49,10 @@ s('todoapp',
       s('reminder', s.isDate)],
 });
 
+s('todoapp', () => {
+  s('list', s.isObj)
+});
+
 
 var ListSpec = s('todoapp.list');
 // var ItemSpec = s('todoapp.item');

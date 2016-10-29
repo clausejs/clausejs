@@ -58,7 +58,7 @@ function _genKeyConformer(reqSpecs, optSpec) {
         }
       }
       if(reqProblems.length > 0 || found === false) {
-        return new Problem(x, reqProblems, 'req: keys required: ' + reqProblems.join(', ') );
+        return new Problem(x, reqSpecs, 'req: keys required: ' + reqProblems.join(', ') );
       }
     }
     return x;
@@ -169,7 +169,7 @@ function _genPropsConformer(reqSpecs, optSpecs) {
           var defs = optFieldDefs.fields[name];
           var {result, keysToDel} = parseFieldDef(x, name, defs);
           if (isProblem(result)) {
-            // console.log(r.falsePredicate);
+            // console.log(r.failsPredicate);
             return result;
           }
           _deleteKeys(conformed, keysToDel);

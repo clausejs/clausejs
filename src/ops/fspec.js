@@ -5,6 +5,7 @@ var isProblem = require('../utils/isProblem');
 var namedFn = require('../utils/namedFn');
 var conform = require('../utils/conform');
 var oAssign = require('object-assign');
+var betterThrow = require('../utils/betterThrow');
 
 function fspec(fnSpec) {
   var argsSpec = fnSpec.args;
@@ -28,9 +29,9 @@ function fspec(fnSpec) {
   function getSpeckedFn(fnName, fn) {
     return function () {
       var args = Array.from(arguments);
-      checkArgs(fnName, args);
+      checkArgs(fn, fnName, args);
       var retVal = fn.apply(null, args);
-      checkRet(fnName, retVal);
+      checkRet(fn, fnName, retVal);
       return retVal;
     };
   }
@@ -43,33 +44,38 @@ function fspec(fnSpec) {
       // console.log(util.inspect(argsSpec, false, null));
       var conformedArgs = conform(argsSpec, args);
       if(isProblem(conformedArgs)) {
-        throw conformedArgs;
+        var p = new Problem(fn, argsSpec, `Args for function ${fnName} failed validation`);
+        betterThrow(p);
       }
       // console.log(conformedArgs);
       // var util = require('util');
       // console.log(util.inspect(conformedArgs, false, null));
       var retVal = fn.call(null, conformedArgs);
-      checkRet(fnName, retVal);
+      checkRet(fn, fnName, retVal);
       // console.log(retVal);
       return retVal;
     };
   }
 
-  function checkArgs(fnName, args) {
+  function checkArgs(fn, fnName, args) {
     if(argsSpec) {
       if(!isValid(argsSpec, args)) {
-        throw new Problem(fnName, argsSpec, 'Arguments ' + args + ' passed to function ' + fnName + ' is not valid.');
+        var p = new Problem(fn, argsSpec, `Args for function ${fnName} failed validation`);
+        betterThrow(p);
       }
     }
   }
 
-  function checkRet(fnName, retVal) {
+  function checkRet(fn, fnName, retVal) {
     if(retSpec) {
       if(!isValid(retSpec, retVal)) {
-        throw new Problem(retSpec, retSpec, 'Return value ' + retVal + ' for function ' + fnName + ' is not valid.');
+        var p = Problem(fn, retSpec, 'Return value ' + retVal + ' for function ' + fnName + ' is not valid.');
+        betterThrow(p);
       }
     }
   }
+
+  // var spec = new Spec('FSPEC', fnSpec, wrapSpecChecker, null);
 
   wrapSpecChecker.wrapConformedArgs = wrapConformedArgs;
   oAssign(wrapSpecChecker, fnSpec);
