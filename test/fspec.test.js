@@ -12,7 +12,7 @@ describe('fspec', function() {
       ret: S.isFn,
     });
 
-    var specedFspec = FspecSpec(S.fspec); //meta-ly apply checking to self
+    var specedFspec = FspecSpec.instrument(S.fspec); //meta-ly apply checking to self
     expect(S.isFn(specedFspec)).to.be.true;
 
     expect(function() { specedFspec('spec should not be a string'); }).to.throw(Problem);
@@ -28,7 +28,7 @@ describe('fspec', function() {
       ret: S.isStr,
     });
 
-    var sheepCounter = sheepCounterSpec(function(c) {
+    var sheepCounter = sheepCounterSpec.instrument(function(c) {
       return c + ' sheep and counting.';
     });
 

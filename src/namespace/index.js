@@ -25,7 +25,7 @@ function isNamespaceName(x) {
 var _get = fspec({
   args: cat(isNamespaceName),
   ret: isSpecRef,
-})(_getUnchecked);
+}).instrument(_getUnchecked);
 
 function _getUnchecked(ref) {
   var getFn = (prefix) => {
@@ -127,7 +127,7 @@ var NameObjSpec = props({
 var _set = fspec({
   args: cat(isNamespaceName, NameObjSpec),
   ret: isUndefined,
-})(function _set(n, nObj) {
+}).instrument(function _set(n, nObj) {
   _maybeInitRegistry();
   oPath.set(reg, n, nObj);
 });

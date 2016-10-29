@@ -1,4 +1,6 @@
 var Problem = require('../models/Problem');
+var Spec = require('../models/Spec');
+var Problem = require('../models/Problem');
 var isValid = require('../utils/isValid');
 var functionName = require('../utils/fnName');
 var isProblem = require('../utils/isProblem');
@@ -11,7 +13,7 @@ function fspec(fnSpec) {
   var argsSpec = fnSpec.args;
   var retSpec = fnSpec.ret;
 
-  var wrapSpecChecker = function (fn) {
+  var instrument = function (fn) {
     var fnName = functionName(fn);
     var speckedFn = getSpeckedFn(fnName, fn);
     var namedSpecedFn = namedFn(fnName, speckedFn, '__specked');
@@ -75,12 +77,11 @@ function fspec(fnSpec) {
     }
   }
 
-  // var spec = new Spec('FSPEC', fnSpec, wrapSpecChecker, null);
+  var spec = new Spec('FSPEC', fnSpec, null, null);
+  spec.wrapConformedArgs = wrapConformedArgs;
+  spec.instrument = instrument;
 
-  wrapSpecChecker.wrapConformedArgs = wrapConformedArgs;
-  oAssign(wrapSpecChecker, fnSpec);
-
-  return wrapSpecChecker;
+  return spec;
 };
 
 module.exports = fspec;
