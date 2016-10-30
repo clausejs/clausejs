@@ -14,19 +14,11 @@ function Spec(type, exprs, conformFn, generateFn) {
   this.type = type;
 
   if(conformFn) {
-    this.conform = function (x, _this) {
-      // if(x === undefined) {
-      //   throw new Error('Conform must be called with a test value x.');
-      // } else {
-        return conformFn.call(_this, x);
-      // }
-    };
+    this.conform = conformFn;
   }
 
   if(generateFn) {
-    this.generate = function generate(_this) {
-      return generateFn.call(_this, x);
-    }
+    this.generate = generateFn;
   }
 
   this.exprs = exprs;
