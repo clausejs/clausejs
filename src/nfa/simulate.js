@@ -76,6 +76,10 @@ function simulate(nfa, rawInput) {
           }
           frontier.push(next);
         }
+
+        if(isProblem(conformed)) {
+          r.lastProblem = conformed;
+        }
     }
   }
 

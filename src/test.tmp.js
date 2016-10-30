@@ -3,13 +3,12 @@ require("babel-core/register");
 var s = require('./');
 console.log(s);
 
-var FspecSpec = s.fspec({
-  args: s.cat(s.isSpec),
-  ret: s.isSpec,
-});
+// var FspecSpec = s.fspec({
+//   args: s.cat(s.isObj),
+//   ret: s.isObj,
+// });
 
-var specedFspec = FspecSpec.instrument(s.fspec); //meta-ly apply checking to self
-specSpec('zzz');
+// var specedFspec = FspecSpec.instrument(s.fspec); //meta-ly apply checking to self
 
 // console.log(specedFspec('ss'));
 

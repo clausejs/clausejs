@@ -58,7 +58,7 @@ function _genKeyConformer(reqSpecs, optSpec) {
         }
       }
       if(reqProblems.length > 0 || found === false) {
-        return new Problem(x, reqSpecs, 'req: keys required: ' + reqProblems.join(', ') );
+        return new Problem(x, reqSpecs, [], 'req: keys required: ' + reqProblems.join(', ') );
       }
     }
     return x;

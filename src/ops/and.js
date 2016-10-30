@@ -37,7 +37,7 @@ function _genAndConformer(exprs) {
     if(problems.length === 0) {
       return data;
     } else {
-      return new Problem(data, problems, 'One or more expressions failed AND test');
+      return new Problem(data, exprs, problems, 'One or more expressions failed AND test');
     }
   }
 }

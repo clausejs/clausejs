@@ -27,7 +27,7 @@ function predConformer(pred) {
     if(pred(x)) {
       return x;
     } else {
-      return new Problem(x, pred, 'Predicate ' + fnName(pred) + ' returns false on value ' + JSON.stringify(x));
+      return new Problem(x, pred, [], 'Predicate ' + fnName(pred) + ' returns false on value ' + JSON.stringify(x));
     }
   }
 }
