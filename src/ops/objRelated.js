@@ -125,9 +125,13 @@ function propsOp(cargs) {
   // console.log('-------------------');
 
   var {req, opt} = cargs.propArgs;
-  var walker = function(spec, x) {
-    return spec.conform(x);
+  var walker = cargs.walker;
+  if(!walker) {
+    walker = function(spec, x) {
+      return spec.conform(x);
+    }
   }
+
   // console.log(cargs);
   return new Spec(TYPE_PROPS, [cargs], _genPropsConformer(req, opt, walker), null);
 }

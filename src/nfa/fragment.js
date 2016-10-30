@@ -243,8 +243,8 @@ build.Z_OR_O = function(frag) {
   var tails = frag.tails.concat([skipTrans]);
 
   var newF = fragment(head, tails);
-  newF = frontWithState(namedEpsilonState('maybe_enter', null, l), newF);
-  newF = rearWithState(namedEpsilonState('maybe_exit', null, l), newF);
+  newF = frontWithState(namedEpsilonState('maybe_single_enter', null, l), newF);
+  newF = rearWithState(namedEpsilonState('maybe_single_exit', null, l), newF);
   // var util = require('util');
   // console.log('--------------------------------');
   // console.log(util.inspect(newF, false, null));

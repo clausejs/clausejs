@@ -2,6 +2,7 @@ var Problem = require('../models/Problem');
 var isProblem = require('../utils/isProblem');
 var isArray = require('isarray');
 var oAssign = require('object-assign');
+var isUndefined = require('../preds/isUndefined');
 
 function simulate(nfa, rawInput, walker) {
   // console.log('------raw------');
@@ -89,6 +90,7 @@ function simulate(nfa, rawInput, walker) {
 var FOLD = function() {};
 var ENTER = function() {};
 var MAYBE_ENTER = function() {};
+var MAYBE_SINGLE_ENTER = function() {};
 // var FOLD = 'FOLD';
 // var ENTER = 'ENTER';
 // var MAYBE_ENTER = 'MAYBE_ENTER';
@@ -121,6 +123,9 @@ function _getMatch(nfa, input, finalState) {
         case 'maybe_enter' : {
           valStack.push(MAYBE_ENTER);
         } break;
+        case 'maybe_single_enter' : {
+          valStack.push(MAYBE_SINGLE_ENTER);
+        } break;
         case 'in': {
           valStack.push(new Name(curr.move.name));
         } break;
@@ -141,10 +146,24 @@ function _getMatch(nfa, input, finalState) {
               newAcc = new ArrayFragment(val);
             } else {
               newAcc = {};
-              newAcc[name] = val;
+              if(!isUndefined(val)) {
+                newAcc[name] = val;
+              }
             }
             valStack.push(newAcc);
           }
+        } break;
+        case 'maybe_single_exit': {
+          var c = valStack.pop();
+          var acc = null;
+          while(c!==MAYBE_SINGLE_ENTER) {
+            acc = c;
+            c = valStack.pop();
+          }
+          if(acc === null) {
+            acc = undefined;
+          }
+          valStack.push(acc);
         } break;
         case 'maybe_exit': {
           var c = valStack.pop();
