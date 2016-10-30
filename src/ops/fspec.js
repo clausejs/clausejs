@@ -97,8 +97,8 @@ function fspec(fnSpec) {
 
 function _inst(spec, x) {
   if(spec.type === 'FSPEC') {
-    return x;
-  }  else {
+    return spec.instrument(x);
+  } else {
     var r = coerceIntoSpec(spec).conform(x);
     if(isProblem(r)) {
       return r;
@@ -106,7 +106,6 @@ function _inst(spec, x) {
       return x;
     }
   }
-
 }
 
 module.exports = fspec;

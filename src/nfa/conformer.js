@@ -9,7 +9,7 @@ function nfaConformer(spec) {
     if(!nfa) {
       nfa = compile(spec);
     }
-    var r = simulate(nfa, x);
+    var r = simulate(nfa, x, conformWalker);
     if(r.matched === true) {
       return r.result;
     } else {
@@ -20,6 +20,10 @@ function nfaConformer(spec) {
       return new Problem(x, spec, [], 'NFA expression ' + spec.type + ' did not match; val: ' + JSON.stringify(x));
     }
   }
+}
+
+function conformWalker(spec, x) {
+  return spec.conform(x);
 }
 
 module.exports = nfaConformer;

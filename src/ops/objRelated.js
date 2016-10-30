@@ -6,9 +6,10 @@ var isProblem = require('../utils/isProblem');
 var isUndefined = require('../preds/isUndefined');
 var isObj = require('../preds/isObj');
 var isStr = require('../preds/isStr');
+var isFn = require('../preds/isFn');
 var core = require('./core');
 var coerceIntoSpec = require('../utils/coerceIntoSpec');
-var { cat, or, zeroOrMore, ExprSpec } = core;
+var { cat, or, zeroOrMore, zeroOrOne, ExprSpec } = core;
 var fspec = require('./fspec');
 var any = require('./any');
 
@@ -16,7 +17,7 @@ function isPropName(x) {
   return isStr(x);
 }
 
-function _genKeyConformer(reqSpecs, optSpec) {
+function _genKeyConformer(reqSpecs, optSpec, walker) {
   return function tryConformKeys(x) {
     if(reqSpecs) {
       var reqProblems = [];
@@ -44,7 +45,7 @@ function _genKeyConformer(reqSpecs, optSpec) {
           found = false;
           for (var kk in x) {
             if(x.hasOwnProperty(kk)) {
-              var rr = _conformNamedOrExpr(kk, fieldDefs.fields[name].keyValExprPair.keySpec);
+              var rr = _conformNamedOrExpr(kk, fieldDefs.fields[name].keyValExprPair.keySpec, walker);
               if(!isProblem(rr)) { //found a match
                 found = true;
                 break;
@@ -68,47 +69,51 @@ function _genKeyConformer(reqSpecs, optSpec) {
 var TYPE_PROPS = 'PROPS';
 
 var FieldDefs = propsOp({
-  opt: {
-    fieldDefs: {
-      fields: {
-        'fields':
-        {
-          keyValExprPair: {
-            keySpec: {
-              spec: coerceIntoSpec(isStr),
-            },
-            valSpec: {
-              spec: or(
-                'valExprOnly', ExprSpec,
-                'keyValExprPair', cat(
-                  'keySpec', ExprSpec,
-                  'valSpec', ExprSpec
+  propArgs: {
+    opt: {
+      fieldDefs: {
+        fields: {
+          'fields':
+          {
+            keyValExprPair: {
+              keySpec: {
+                spec: coerceIntoSpec(isStr),
+              },
+              valSpec: {
+                spec: or(
+                  'valExprOnly', ExprSpec,
+                  'keyValExprPair', cat(
+                    'keySpec', ExprSpec,
+                    'valSpec', ExprSpec
+                  )
                 )
-              )
-            },
-          }
-        },
+              },
+            }
+          },
+        }
       }
-    }
-  },
+    },
+  }
 });
 
 var KeyOnlyArray = zeroOrMore(isPropName);
 var KeyArrayOrFieldDefs = or('keyList', KeyOnlyArray, 'fieldDefs', FieldDefs);
 
 var PropArgs = propsOp({
-  opt: {
-    fieldDefs: {
-      fields: {
-        'req': { valExprOnly: { spec: KeyArrayOrFieldDefs } },
-        'opt': { valExprOnly: { spec: KeyArrayOrFieldDefs } },
+  propArgs: {
+    opt: {
+      fieldDefs: {
+        fields: {
+          'req': { valExprOnly: { spec: KeyArrayOrFieldDefs } },
+          'opt': { valExprOnly: { spec: KeyArrayOrFieldDefs } },
+        }
       }
-    }
-  },
+    },
+  }
 });
 
 var PropsSpec = fspec({
-  args: cat(PropArgs),
+  args: cat('propArgs', PropArgs, 'walker', zeroOrOne(isFn)),
   ret: isSpec,
 });
 
@@ -119,12 +124,15 @@ function propsOp(cargs) {
   // console.log(util.inspect(cargs, false, null));
   // console.log('-------------------');
 
-  var {req, opt} = cargs;
+  var {req, opt} = cargs.propArgs;
+  var walker = function(spec, x) {
+    return spec.conform(x);
+  }
   // console.log(cargs);
-  return new Spec(TYPE_PROPS, [cargs], _genPropsConformer(req, opt), null);
+  return new Spec(TYPE_PROPS, [cargs], _genPropsConformer(req, opt, walker), null);
 }
 
-function _genPropsConformer(reqSpecs, optSpecs) {
+function _genPropsConformer(reqSpecs, optSpecs, walker) {
   var keyConformer;
   return function tryConformProps(x) {
     // console.log(x);
@@ -133,7 +141,7 @@ function _genPropsConformer(reqSpecs, optSpecs) {
       fieldDefs = reqSpecs.fieldDefs;
     }
     if (!keyConformer) {
-      keyConformer = _genKeyConformer(reqSpecs, optSpecs); //lazy
+      keyConformer = _genKeyConformer(reqSpecs, optSpecs, walker); //lazy
     }
     var conformed = keyConformer(x);
     // console.log(keyResult);
@@ -147,7 +155,7 @@ function _genPropsConformer(reqSpecs, optSpecs) {
       for (var name in fieldDefs.fields) {
         if (fieldDefs.fields.hasOwnProperty(name)) {
           var defs = fieldDefs.fields[name];
-          var {result, keysToDel} = parseFieldDef(x, name, defs);
+          var {result, keysToDel} = parseFieldDef(x, name, defs, walker);
           if (isProblem(result)) {
             return result;
           }
@@ -167,7 +175,7 @@ function _genPropsConformer(reqSpecs, optSpecs) {
       for (var name in optFieldDefs.fields) {
         if(optFieldDefs.fields.hasOwnProperty(name)) {
           var defs = optFieldDefs.fields[name];
-          var {result, keysToDel} = parseFieldDef(x, name, defs);
+          var {result, keysToDel} = parseFieldDef(x, name, defs, walker);
           if (isProblem(result)) {
             // console.log(r.failsPredicate);
             return result;
@@ -195,7 +203,7 @@ function _deleteKeys(subject, keys) {
   }
 }
 
-function parseFieldDef(x, name, defs) {
+function parseFieldDef(x, name, defs, walker) {
   var { valExprOnly, keyValExprPair } = defs;
   // console.log(name, defs);
   var r;
@@ -204,14 +212,14 @@ function parseFieldDef(x, name, defs) {
     var { keySpec, valSpec } = keyValExprPair;
     r = undefined;
     for (var k in x) {
-      var rr =_conformNamedOrExpr(k, keySpec);
+      var rr =_conformNamedOrExpr(k, keySpec, walker);
       if(x === x[rr]) {
         continue;
       }
       if(!isProblem(rr)) {
         // console.log(valSpec, x[rr]);
         keysToDel.push(rr);
-        var rrr = _conformNamedOrExpr(x[rr], valSpec);
+        var rrr = _conformNamedOrExpr(x[rr], valSpec, walker);
         // console.log(rrr);
         if(isProblem(rrr)) {
           // console.log(rrr);
@@ -231,7 +239,7 @@ function parseFieldDef(x, name, defs) {
     r = x[name];
     // console.log(name, r);
     if(!isUndefined(r) && x[name] !== x) {
-      r = _conformNamedOrExpr(r, valSpec);
+      r = _conformNamedOrExpr(r, valSpec, walker);
     }
   }
   // console.log('======');
@@ -240,13 +248,13 @@ function parseFieldDef(x, name, defs) {
   return { result: r, keysToDel };
 }
 
-function _conformNamedOrExpr(x, nameOrExpr) {
+function _conformNamedOrExpr(x, nameOrExpr, walker) {
   if(nameOrExpr.spec) {
     var spec = nameOrExpr.spec;
-    return spec.conform(x);
+    return walker(spec, x);
   } else if (nameOrExpr.pred) {
     var expr = coerceIntoSpec(nameOrExpr.pred);
-    return expr.conform(x);
+    return walker(expr, x);
   } else {
     console.error(nameOrExpr);
     throw 'no impl';

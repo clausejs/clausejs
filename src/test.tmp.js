@@ -3,14 +3,20 @@ require("babel-core/register");
 var s = require('./');
 console.log(s);
 
-// var FspecSpec = s.fspec({
-//   args: s.cat(s.isObj),
-//   ret: s.isObj,
-// });
+var AmpliferSpec = s.fspec({
+  args: s.cat(s.isNum),
+  ret: s.isNum,
+});
 
-// var specedFspec = FspecSpec.instrument(s.fspec); //meta-ly apply checking to self
-
-// console.log(specedFspec('ss'));
+var AdderFnSpec = s.fspec({
+  args: s.cat('amplifier', AmpliferSpec, 'x', s.isNum),
+  ret: s.fspec({
+    args: s.cat('y', s.isNum),
+    ret: s.isNum,
+  }),
+});
+var adderFn = AdderFnSpec.instrument((amp, x) => (y) => amp(x) + y);
+var r = adderFn((x) => x * 2, 1)(2);
 
 // var SS = s.or('a', s.props({
 //   req: {

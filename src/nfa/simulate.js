@@ -3,7 +3,7 @@ var isProblem = require('../utils/isProblem');
 var isArray = require('isarray');
 var oAssign = require('object-assign');
 
-function simulate(nfa, rawInput) {
+function simulate(nfa, rawInput, walker) {
   // console.log('------raw------');
   // console.log(rawInput);
   // console.log('---------------');
@@ -52,7 +52,7 @@ function simulate(nfa, rawInput) {
         var conformed;
         if ((transition.isEpsilon ||
              (current.offset < input.length &&
-             !isProblem(conformed = transition.conform(observed)))) &&
+             !isProblem(conformed = walker(transition, observed)))) &&
             nextOffset <= input.length) {
           if(transition.isEpsilon) {
             if(transition.dir) {
