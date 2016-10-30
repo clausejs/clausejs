@@ -111,7 +111,7 @@ function genMultiArgOp(type) {
       });
 
       var s = new Spec(
-        type, { exprs: coercedExprs }, null, null
+        type, coercedExprs, null, null
       );
 
       s.conform = nfaConformer(s);
@@ -140,7 +140,7 @@ function genMultiArgOp(type) {
       });
 
       var s = new Spec(
-        type, { exprs: coercedExprs }, null, null
+        type, coercedExprs, null, null
       );
 
       s.conform = nfaConformer(s);
@@ -161,12 +161,12 @@ function genSingleArgOp(type) {
     }else if (p.specRef) {
       expr = p.specRef;
     } else {
-      throw 'not impl';
+      throw 'internal err';
     }
 
     var s = new Spec(
       type,
-      { expr: coerceIntoSpec(expr) },
+      [coerceIntoSpec(expr)],
       null, null
     );
 

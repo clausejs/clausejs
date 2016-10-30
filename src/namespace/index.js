@@ -100,7 +100,7 @@ function _processVal(prefix, val) {
       return expr;
     } else {
       console.error(e);
-      throw 'no impl';
+      throw 'internal erro';
     }
 
   } else if (val.partialRefMap) {

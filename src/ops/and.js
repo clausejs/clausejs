@@ -21,7 +21,7 @@ function andOp(conformedArgs) {
   var exprs = conformedArgs.exprs;
 
   var conformFn = _genAndConformer(exprs);
-  var andS = new Spec('AND', { exprs: exprs }, conformFn, null);
+  var andS = new Spec('AND', exprs, conformFn, null);
   return andS;
 }
 

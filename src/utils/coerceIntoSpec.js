@@ -19,7 +19,7 @@ function coerceIntoSpec(expr) {
 }
 
 function _wrap(pred) {
-  return new Spec(SPEC_TYPE, { pred: pred }, predConformer(pred), null);
+  return new Spec(SPEC_TYPE, [pred], predConformer(pred), null);
 }
 
 function predConformer(pred) {

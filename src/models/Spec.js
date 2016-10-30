@@ -1,25 +1,27 @@
 var isArray = require('isarray');
 var oAssign = require('object-assign');
 
-function Spec(type, args, conformFn, generateFn) {
+function Spec(type, exprs, conformFn, generateFn) {
 
   if(arguments.length !== 4) {
-    throw new Error('Wrong number of arguments (' + arguments.length + ') passed to new Spec()');
+    throw new Error('Wrong number of arguments (' + arguments.length + ') passed to Spec constructor');
   }
 
-  if(args === null || args === undefined) {
-    throw new Error('No argument list passed to new Spec()');
+  if(!isArray(exprs)) {
+    throw new Error('Expect an array of specs');
   }
 
   this.type = type;
 
-  this.conform = function (x, _this) {
-    // if(x === undefined) {
-    //   throw new Error('Conform must be called with a test value x.');
-    // } else {
-      return conformFn.call(_this, x);
-    // }
-  };
+  if(conformFn) {
+    this.conform = function (x, _this) {
+      // if(x === undefined) {
+      //   throw new Error('Conform must be called with a test value x.');
+      // } else {
+        return conformFn.call(_this, x);
+      // }
+    };
+  }
 
   if(generateFn) {
     this.generate = function generate(_this) {
@@ -27,7 +29,7 @@ function Spec(type, args, conformFn, generateFn) {
     }
   }
 
-  oAssign(this, args);
+  this.exprs = exprs;
 };
 
 

@@ -15,8 +15,8 @@ function fspec(fnSpec) {
 
   var instrument = function (fn) {
     var fnName = functionName(fn);
-    var speckedFn = getSpeckedFn(fnName, fn);
-    var namedSpecedFn = namedFn(fnName, speckedFn, '__specked');
+    var instrumentedFn = getInstrumentedFn(fnName, fn);
+    var namedSpecedFn = namedFn(fnName, instrumentedFn, '__instrumented');
     return namedSpecedFn;
   }
 
@@ -28,14 +28,42 @@ function fspec(fnSpec) {
     return namedArgConformedFn;
   }
 
-  function getSpeckedFn(fnName, fn) {
+  function getInstrumentedFn(fnName, fn) {
     return function () {
       var args = Array.from(arguments);
-      checkArgs(fn, fnName, args);
-      var retVal = fn.apply(null, args);
-      checkRet(fn, fnName, retVal);
-      return retVal;
+      var instrumentedArgs = checkArgs(fn, fnName, args);
+      var retVal = fn.apply(null, instrumentedArgs);
+      var instrumentedRetVal = checkRet(fn, fnName, retVal);
+      return instrumentedRetVal;
     };
+  }
+
+  function checkArgs(fn, fnName, args) {
+    if(argsSpec) {
+      var instrumentedArgs = _inst(argsSpec, args);
+      if(isProblem(instrumentedArgs)) {
+        var p = new Problem(args, argsSpec, `Args for function ${fnName} failed validation`);
+        betterThrow(p);
+      } else {
+        return instrumentedArgs;
+      }
+    } else {
+      return args;
+    }
+  }
+
+  function checkRet(fn, fnName, retVal) {
+    if(retSpec) {
+      var instrumentedRetVal = _inst(retSpec, retVal);
+      if(isProblem(instrumentedRetVal)) {
+        var p = new Problem(retVal, retSpec, 'Return value ' + retVal + ' for function ' + fnName + ' is not valid.');
+        betterThrow(p);
+      } else {
+        return instrumentedRetVal;
+      }
+    } else {
+      return retVal;
+    }
   }
 
   function getArgConformedFn(fnName, fn) {
@@ -59,29 +87,24 @@ function fspec(fnSpec) {
     };
   }
 
-  function checkArgs(fn, fnName, args) {
-    if(argsSpec) {
-      if(!isValid(argsSpec, args)) {
-        var p = new Problem(fn, argsSpec, `Args for function ${fnName} failed validation`);
-        betterThrow(p);
-      }
-    }
-  }
-
-  function checkRet(fn, fnName, retVal) {
-    if(retSpec) {
-      if(!isValid(retSpec, retVal)) {
-        var p = Problem(fn, retSpec, 'Return value ' + retVal + ' for function ' + fnName + ' is not valid.');
-        betterThrow(p);
-      }
-    }
-  }
-
-  var spec = new Spec('FSPEC', fnSpec, null, null);
+  var spec = new Spec('FSPEC', [fnSpec], null, null);
   spec.wrapConformedArgs = wrapConformedArgs;
   spec.instrument = instrument;
 
   return spec;
 };
+
+function _inst(spec, x) {
+  //TODO
+  if(!spec.conform) {
+    return x;
+  }
+  var r = spec.conform(x);
+  if(isProblem(r)) {
+    return r;
+  } else {
+    return x;
+  }
+}
 
 module.exports = fspec;

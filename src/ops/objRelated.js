@@ -121,7 +121,7 @@ function propsOp(cargs) {
 
   var {req, opt} = cargs;
   // console.log(cargs);
-  return new Spec(TYPE_PROPS, cargs, _genPropsConformer(req, opt), null);
+  return new Spec(TYPE_PROPS, [cargs], _genPropsConformer(req, opt), null);
 }
 
 function _genPropsConformer(reqSpecs, optSpecs) {

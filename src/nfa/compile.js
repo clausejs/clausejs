@@ -39,7 +39,7 @@ function evalSpec(spec) {
 
 var evalChildThen = function(wrapper) {
   return function(spec) {
-    var childFrag = evalSpec(spec.expr);
+    var childFrag = evalSpec(spec.exprs[0]);
     return wrapper(childFrag);
   };
 };
@@ -72,7 +72,7 @@ evalFunctions.PRED = function(x) {
 };
 
 function wrapRoot(expr) {
-  return new Spec('ROOT', { expr: expr }, null, null);
+  return new Spec('ROOT', [expr], null, null);
 }
 
 var compile = function(expr) {
