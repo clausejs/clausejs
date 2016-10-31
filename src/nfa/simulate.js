@@ -4,8 +4,8 @@ var isArray = require('isarray');
 var oAssign = require('object-assign');
 var isUndefined = require('../preds/isUndefined');
 
-function simulate(nfa, rawInput, opts, walkFn) {
-  var { conform } = opts;
+function simulate(nfa, rawInput, walkFn, opts) {
+  var { conform, instrument } = opts;
   // console.log('------raw------');
   // console.log(rawInput);
   // console.log('---------------');
@@ -51,36 +51,43 @@ function simulate(nfa, rawInput, opts, walkFn) {
           nextOffset = current.offset;
         }
 
-        var conformed;
-        if ((transition.isEpsilon ||
-             (current.offset < input.length &&
-             !isProblem(conformed = walkFn(transition, observed, opts)))) &&
-            nextOffset <= input.length) {
-          if(transition.isEpsilon) {
+        var conformed, next;
+        if (nextOffset <= input.length) {
+          if (transition.isEpsilon) {
             if(transition.dir) {
               move = {dir: transition.dir, name: transition.name, op: transition.op, group: transition.group};
             } else {
               move = null;
             }
-          } else {
-            move = { dir: 'pred' };
-          }
-          var next = {
-            state: nextState,
-            offset: nextOffset,
-            move: move,
-            prev: current,
-            isEpsilon: transition.isEpsilon || false,
-          };
-          if(!transition.isEpsilon) {
-            next.observed = observed;
-            next.conformed = conformed;
-          }
-          frontier.push(next);
-        }
+            next = {
+              state: nextState,
+              offset: nextOffset,
+              move: move,
+              prev: current,
+              isEpsilon: true,
+            };
 
-        if(isProblem(conformed)) {
-          r.lastProblem = conformed;
+            frontier.push(next);
+          } else {
+            conformed = walkFn(transition, observed, opts);
+            if(!isProblem(conformed)) {
+              if(current.offset < input.length) {
+                move = { dir: 'pred' };
+                next = {
+                  state: nextState,
+                  offset: nextOffset,
+                  move: move,
+                  prev: current,
+                  isEpsilon: false,
+                  observed: observed,
+                  conformed: conformed,
+                };
+                frontier.push(next);
+              }
+            } else {
+              r.lastProblem = conformed;
+            }
+          }
         }
     }
   }

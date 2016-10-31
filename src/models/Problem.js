@@ -1,4 +1,6 @@
 function Problem(val, failsPredicate, subproblems, msg) {
+  this.isProblem = true;
+
   if(arguments.length !== 4) {
     throw 'Problem arg len err';
   }

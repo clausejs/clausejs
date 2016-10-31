@@ -1,17 +1,44 @@
 require("babel-core/register");
 
 var s = require('./');
+var S = s;
+
 console.log(s);
 
-var NamedSpec = s.cat('z', s.isFn, 'b', s.isObj, 'c', s.isFn, 'a', s.isObj);
-// var UnnamedSpec = S.cat(S.isFn, S.isObj,S.isFn, S.isObj);
+// var sheepCounterSpec = S.fspec({
+//   args: S.cat(S.isNum),
+//   ret: s.isStr,
+// });
+//
+// var sheepCounter = sheepCounterSpec.instrument(function(c) {
+//   return c + ' sheep and counting.';
+// });
+//
+// var r = sheepCounter('hello');
+// console.log(r);
 
-var EmptySpec = s.cat();
+var AdderFnSpec = s.fspec({
+  args: s.cat('x', s.isNum),
+  ret: s.fspec({
+    args: s.cat('y', s.isNum),
+    ret: s.isNum
+  }),
+});
 
-var conformed = EmptySpec.conform([]);
-var unconformed = EmptySpec.conform([1]);
+var adderFn = AdderFnSpec.instrument((x) => (y) => x + y);
+var brokenAdderFn = AdderFnSpec.instrument(() => (y) => 'z');
+var r = adderFn(1)(2);
+console.log(r);
 
-console.log(conformed, unconformed);
+// var NamedSpec = s.cat('z', s.isFn, 'b', s.isObj, 'c', s.isFn, 'a', s.isObj);
+// // var UnnamedSpec = S.cat(S.isFn, S.isObj,S.isFn, S.isObj);
+//
+// var EmptySpec = s.cat();
+//
+// var conformed = EmptySpec.conform([]);
+// var unconformed = EmptySpec.conform([1]);
+
+// console.log('c', conformed, unconformed);
 // expect(conformed).to.deep.equal({ z: fn, b: {}, c: fn, a: { a: 1 } });
 // var nonconformed = NamedSpec.conform(nonconformist);
 

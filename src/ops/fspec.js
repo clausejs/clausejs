@@ -99,7 +99,7 @@ function _inst(spec, x) {
   if(spec.type === 'FSPEC') {
     return spec.instrument(x);
   } else {
-    var r = walk(coerceIntoSpec(spec), x, { conform: true });
+    var r = walk(coerceIntoSpec(spec), x, { instrument: true });
     if(isProblem(r)) {
       return r;
     } else {

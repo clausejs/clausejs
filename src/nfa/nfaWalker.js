@@ -6,12 +6,12 @@ function nfaWalker(spec, walkFn) {
   var nfa;
 
   return function nfaWalk(x, opts) {
-    var { conform } = opts;
+    var { conform, instrument } = opts;
     if(!nfa) {
       nfa = compile(spec); //lazy
     }
 
-    var { result, matched, lastProblem } = simulate(nfa, x, opts, walkFn);
+    var { result, matched, lastProblem } = simulate(nfa, x, walkFn, opts);
     if(matched === true) {
       return result;
     } else {
@@ -19,10 +19,11 @@ function nfaWalker(spec, walkFn) {
       if(lastProblem) {
         subproblems.push(lastProblem);
       }
-      if (conform) {
+      if (conform || instrument) {
         return new Problem(x, spec, [], 'NFA expression ' + spec.type + ' did not match; val: ' + JSON.stringify(x));
       } else {
-        throw 'unsupported';
+        console.error(opts);
+        throw 'no impl case';
       }
     }
   }
