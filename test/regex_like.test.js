@@ -13,6 +13,7 @@ describe('nfa regex', function() {
 
   describe('zeroOrMore', function() {
     check.it('accepts zero or more int\'s',
+      {times: 20},
       [gen.array(gen.int)], function(ints) {
         var ZeroOrMoreIntegers = S.zeroOrMore(Number.isInteger);
         expect(S.isValid(ZeroOrMoreIntegers, ints)).to.be.true;
@@ -20,6 +21,7 @@ describe('nfa regex', function() {
     });
 
     check.it('rejects mixtures',
+      {times: 20},
       [gen.array(gen.int), gen.notEmpty(gen.array(gen.string))],
       function(ints, strs) {
         var ZeroOrMoreIntegers = S.zeroOrMore(Number.isInteger);
@@ -28,6 +30,7 @@ describe('nfa regex', function() {
     });
 
     check.it('more complex expressions',
+      {times: 20},
       [gen.int, gen.string, gen.strictPosInt],
       function(a, b, n) {
         //imitates regex a(bb+)a

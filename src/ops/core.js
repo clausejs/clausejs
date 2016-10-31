@@ -6,10 +6,9 @@ var isPred = require('../utils/isPred');
 var isSpecName = require('../utils/isSpecName');
 var isSpecRef = require('../utils/isSpecRef');
 var c = require('../ops/constants');
-var nfaConformer = require('../nfa/conformer');
 var coerceIntoSpec = require('../utils/coerceIntoSpec');
 var fspec = require('./fspec');
-
+var walk = require('./walk');
 var specSpec = coerceIntoSpec(isSpec);
 var nameSpec = coerceIntoSpec(isSpecName);
 var specSpecRef = coerceIntoSpec(isSpecRef);
@@ -114,7 +113,9 @@ function genMultiArgOp(type) {
         type, coercedExprs, null, null
       );
 
-      s.conform = nfaConformer(s);
+      s.conform = function conform(x) {
+        return walk(s, x, { conform: true });
+      };
       return s;
     } else if (conformedArgs.unnamed){
       exprs = conformedArgs.unnamed;
@@ -143,7 +144,9 @@ function genMultiArgOp(type) {
         type, coercedExprs, null, null
       );
 
-      s.conform = nfaConformer(s);
+      s.conform = function conform(x) {
+        return walk(s, x, { conform: true });
+      };
       return s;
     }
   };
@@ -170,7 +173,9 @@ function genSingleArgOp(type) {
       null, null
     );
 
-    s.conform = nfaConformer(s);
+    s.conform = function conform(x) {
+      return walk(s, x, { conform: true });
+    }
     return s;
   };
 }

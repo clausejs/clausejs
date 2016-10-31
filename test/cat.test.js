@@ -9,10 +9,16 @@ describe('cat', function() {
   var extendedCase = conformist.concat([{extra: 'elements'}, 2]);
   var emptyCase = [];
   var lesserCase = conformist.slice(0, -1);
-  var NamedSpec = S.cat('z', S.isFn, 'b', S.isObj, 'c', S.isFn, 'a', S.isObj);
-  var UnnamedSpec = S.cat(S.isFn, S.isObj,S.isFn, S.isObj);
+  var NamedSpec, UnnamedSpec;
+
+  function init() {
+    NamedSpec = S.cat('z', S.isFn, 'b', S.isObj, 'c', S.isFn, 'a', S.isObj);
+    UnnamedSpec = S.cat(S.isFn, S.isObj,S.isFn, S.isObj);
+  }
 
   describe('conform', function() {
+
+    beforeEach(init);
 
     it('empty case', function() {
       var EmptySpec = S.cat();
@@ -38,10 +44,14 @@ describe('cat', function() {
   });
 
   describe('validity', function() {
-    [[NamedSpec, 'named'], [UnnamedSpec, 'unnamed']].forEach(function(p) {
-      var Spec = p[0];
+
+    beforeEach(init);
+
+    [[() => NamedSpec, 'named'], [() => UnnamedSpec, 'unnamed']].forEach(function(p) {
       var name = p[1];
       it(name, function() {
+        var Spec = p[0]();
+
         //invalid case: more elems than specs
         expect(S.isValid(Spec, extendedCase)).to.be.false;
 

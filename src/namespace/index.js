@@ -5,10 +5,10 @@ var { cat, or, fspec, ExprSpec } = require('../ops');
 var { props } = require('../ops/objRelated');
 var isSpec = require('../utils/isSpec');
 var isPred = require('../utils/isPred');
-var coerceIntoSpec = require('../utils/coerceIntoSpec');
 var isStr = require('../preds/isStr');
 var isExpr = require('../utils/isExpr');
 var isUndefined = require('../preds/isUndefined');
+var walk = require('../ops/walk');
 
 var reg;
 
@@ -43,15 +43,11 @@ function _getUnchecked(ref) {
     }
   };
 
-  var conformFn = (x) => {
-    var s = getFn();
-    if(s) {
-      var ss = coerceIntoSpec(s);
-      return ss.conform(x);
-    }
-  };
-
-  return new SpecRef({ ref, getFn, conformFn });
+  var sr = new SpecRef({ ref, getFn, null });
+  sr.conform = function specRefConform(x) {
+    return walk(ss, x, { conform: true });
+  }
+  return sr;
 }
 
 var ExprOrPartialRefMapSpec = or(

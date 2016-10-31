@@ -5,7 +5,7 @@ var isValid = require('../utils/isValid');
 var functionName = require('../utils/fnName');
 var isProblem = require('../utils/isProblem');
 var namedFn = require('../utils/namedFn');
-var conform = require('../utils/conform');
+var walk = require('./walk');
 var coerceIntoSpec = require('../utils/coerceIntoSpec');
 var oAssign = require('object-assign');
 var betterThrow = require('../utils/betterThrow');
@@ -73,7 +73,7 @@ function fspec(fnSpec) {
       // console.log(args);
       // var util = require('util');
       // console.log(util.inspect(argsSpec, false, null));
-      var conformedArgs = conform(argsSpec, args);
+      var conformedArgs = walk(argsSpec, args, {conform: true});
       if(isProblem(conformedArgs)) {
         var p = new Problem(args, argsSpec, [conformedArgs], `Args for function ${fnName} failed validation`);
         betterThrow(p);
@@ -81,7 +81,7 @@ function fspec(fnSpec) {
       // console.log(conformedArgs);
       // var util = require('util');
       // console.log(util.inspect(conformedArgs, false, null));
-      var retVal = fn.call(null, conformedArgs);
+      var retVal = fn(conformedArgs);
       checkRet(fn, fnName, retVal);
       // console.log(retVal);
       return retVal;
@@ -99,7 +99,7 @@ function _inst(spec, x) {
   if(spec.type === 'FSPEC') {
     return spec.instrument(x);
   } else {
-    var r = coerceIntoSpec(spec).conform(x);
+    var r = walk(coerceIntoSpec(spec), x, { conform: true });
     if(isProblem(r)) {
       return r;
     } else {

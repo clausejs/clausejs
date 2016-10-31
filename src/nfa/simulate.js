@@ -4,7 +4,8 @@ var isArray = require('isarray');
 var oAssign = require('object-assign');
 var isUndefined = require('../preds/isUndefined');
 
-function simulate(nfa, rawInput, walker) {
+function simulate(nfa, rawInput, opts, walkFn) {
+  var { conform } = opts;
   // console.log('------raw------');
   // console.log(rawInput);
   // console.log('---------------');
@@ -53,7 +54,7 @@ function simulate(nfa, rawInput, walker) {
         var conformed;
         if ((transition.isEpsilon ||
              (current.offset < input.length &&
-             !isProblem(conformed = walker(transition, observed)))) &&
+             !isProblem(conformed = walkFn(transition, observed, opts)))) &&
             nextOffset <= input.length) {
           if(transition.isEpsilon) {
             if(transition.dir) {
