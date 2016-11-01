@@ -157,7 +157,7 @@ function _getMatch(nfa, input, finalState, walkOpts) {
           if(!(val instanceof Name)) {
             var name = valStack.pop().value;
             var newAcc;
-            if(name === null || name === undefined) {
+            if(name === null || name === undefined || !conform) {
               newAcc = new ArrayFragment(val);
             } else {
               newAcc = {};

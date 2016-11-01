@@ -48,7 +48,7 @@ function fspecWalker(spec, walkFn) {
     if(argsSpec) {
       var instrumentedArgs = walkFn(argsSpec, args, walkOpts);
       if(isProblem(instrumentedArgs)) {
-        var p = new Problem(args, argsSpec, [instrumentedArgs], `Args for function ${fnName} failed validation`);
+        var p = new Problem(args, argsSpec, [instrumentedArgs], `Args ${JSON.stringify(args)} for function ${fnName} failed validation`);
         betterThrow(p);
       } else {
         return instrumentedArgs;
@@ -80,7 +80,7 @@ function fspecWalker(spec, walkFn) {
       // console.log(util.inspect(argsSpec, false, null));
       var conformedArgs = walkFn(argsSpec, args, walkOpts);
       if(isProblem(conformedArgs)) {
-        var p = new Problem(args, argsSpec, [conformedArgs], `Args for function ${fnName} failed validation`);
+        var p = new Problem(args, argsSpec, [conformedArgs], `Args ${JSON.stringify(args)} for function ${fnName} is not valid`);
         betterThrow(p);
       }
       // console.log(conformedArgs);

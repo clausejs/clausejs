@@ -21,7 +21,7 @@ describe('fspec', function() {
 
     expect(function() { specedFspec(new Spec('cat', [S.isBool], identity, null), {extra: 'param'}); }).to.throw(Problem);
     expect(function() { specedFspec(); }).to.throw(Problem);
-  });
+});
 
   it('test on sheep counting fn', function() {
     var sheepCounterSpec = S.fspec({
@@ -37,7 +37,7 @@ describe('fspec', function() {
     expect(function() { sheepCounter('hello'); }).to.throw(Problem);
   });
 
-  it.skip('higher order functions', () => {
+  it('higher order functions', () => {
     var AdderFnSpec = s.fspec({
       args: s.cat('x', s.isNum),
       ret: s.fspec({
@@ -49,5 +49,8 @@ describe('fspec', function() {
     var adderFn = AdderFnSpec.instrument((x) => (y) => x + y);
     var brokenAdderFn = AdderFnSpec.instrument(() => (y) => 'z');
     expect(adderFn(1)(2)).to.equal(3);
+    expect(() => adderFn('a')(2)).to.throw(Problem);
+    expect(() => adderFn(1)('z')).to.throw(Problem);
+    expect(() => brokenAdderFn(1)(2)).to.throw(Problem);
   });
 });

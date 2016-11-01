@@ -5,6 +5,25 @@ var S = s;
 
 console.log(s);
 
+var AdderFnSpec = s.fspec({
+  args: s.cat('x', s.isNum),
+  ret: s.fspec({
+    args: s.cat('y', s.isNum),
+    ret: s.isNum,
+  }),
+});
+
+var adderFn = function(x) {
+  return function(y) {
+    return x + y;
+  }
+};
+var adderFn = AdderFnSpec.instrument(adderFn);
+var brokenAdderFn = AdderFnSpec.instrument((x) => (y) => 'z');
+var r = brokenAdderFn(1)(3);
+console.log(r);
+
+
 // var sheepCounterSpec = S.fspec({
 //   args: S.cat(S.isNum),
 //   ret: s.isStr,
@@ -21,18 +40,7 @@ console.log(s);
 // var r = ss.conform([2]);
 // console.log(r);
 
-// var AdderFnSpec = s.fspec({
-//   args: s.cat('x', s.isNum),
-//   ret: s.fspec({
-//     args: s.cat('y', s.isNum),
-//     ret: s.isNum
-//   }),
-// });
-//
-// var adderFn = AdderFnSpec.instrument((x) => (y) => x + y);
-// var brokenAdderFn = AdderFnSpec.instrument(() => (y) => 'z');
-// var r = adderFn(1)(2);
-// console.log(r);
+
 
 // var NamedSpec = s.cat('z', s.isFn, 'b', s.isObj, 'c', s.isFn, 'a', s.isObj);
 // // var UnnamedSpec = S.cat(S.isFn, S.isObj,S.isFn, S.isObj);

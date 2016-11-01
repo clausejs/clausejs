@@ -10,14 +10,15 @@ function propsWalker(spec, walkFn) {
   var {req, opt} = spec.exprs[0].propArgs;
   var reqSpecs = req, optSpecs = opt;
 
-  return function propsWalk(x, opts) {
+  return function propsWalk(x, walkOpts) {
     // console.log(x);
+    var { conform } = walkOpts;
     var fieldDefs;
     if(reqSpecs) {
       fieldDefs = reqSpecs.fieldDefs;
     }
     if (!keyConformer) {
-      keyConformer = _genKeyConformer(reqSpecs, optSpecs, walkFn, opts); //lazy
+      keyConformer = _genKeyConformer(reqSpecs, optSpecs, walkFn, walkOpts); //lazy
     }
     var conformed = keyConformer(x);
     // console.log(keyResult);
@@ -31,13 +32,16 @@ function propsWalker(spec, walkFn) {
       for (var name in fieldDefs.fields) {
         if (fieldDefs.fields.hasOwnProperty(name)) {
           var defs = fieldDefs.fields[name];
-          var {result, keysToDel} = parseFieldDef(x, name, defs, walkFn, opts);
+          var {result, keysToDel} = parseFieldDef(x, name, defs, walkFn, walkOpts);
           if (isProblem(result)) {
             return result;
-          }
-          _deleteKeys(conformed, keysToDel);
-          if(!isUndefined(result)) {
-            conformed[name] = result;
+          } else {
+            if(conform) {
+              _deleteKeys(conformed, keysToDel);
+              if(!isUndefined(result)) {
+                conformed[name] = result;
+              }
+            }
           }
         }
       }
@@ -51,14 +55,16 @@ function propsWalker(spec, walkFn) {
       for (var name in optFieldDefs.fields) {
         if(optFieldDefs.fields.hasOwnProperty(name)) {
           var defs = optFieldDefs.fields[name];
-          var {result, keysToDel} = parseFieldDef(x, name, defs, walkFn, opts);
+          var {result, keysToDel} = parseFieldDef(x, name, defs, walkFn, walkOpts);
           if (isProblem(result)) {
             // console.log(r.failsPredicate);
             return result;
           }
-          _deleteKeys(conformed, keysToDel);
-          if(!isUndefined(result)) {
-            conformed[name] = result;
+          if(conform) {
+            _deleteKeys(conformed, keysToDel);
+            if(!isUndefined(result)) {
+              conformed[name] = result;
+            }
           }
         }
       }
