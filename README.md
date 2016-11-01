@@ -1,4 +1,4 @@
-# Specky 👓 [![Circle CI](https://circleci.com/gh/settinghead/specky.svg?style=svg)](https://circleci.com/gh/settinghead/specky) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+# Specky 👓 [![Circle CI](https://circleci.com/gh/settinghead/specky.svg?style=shield)](https://circleci.com/gh/settinghead/specky) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
 ### Project status
 - Alpha. Feedback and feature suggestions [are welcome](/../../issues/).
