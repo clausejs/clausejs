@@ -5,7 +5,7 @@
 
 ### What
 
-A powerful & highly flexible JavaScript data validation and conformation framework that enables you to:
+A powerful & highly flexible JavaScript data validation and conformation library that enables you to:
 
 - Build your data validation rules (specs) with composable, regex-like expressions built from primitives predicates such as `and`, `or`, `any`, `oneOrMore`, `zeroOrMore`, etc
 - Validate and make assertions about your data with these predicate functions
