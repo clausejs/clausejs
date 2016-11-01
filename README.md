@@ -15,7 +15,9 @@ A powerful & highly flexible JavaScript data validation and conformation framewo
 
 ### Examples
 
-For more examples on usage, refer to examples in the test folder [`/test`](test/).
+- [Use in browser](examples/simple.html)
+- [Promise](examples/promise)
+- For more examples on usage, refer to examples in the test folder [`/test`](test/).
 
 ### Generative Testing
 
