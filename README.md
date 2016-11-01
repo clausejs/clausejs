@@ -1,4 +1,4 @@
-# Specky 👓 [![Circle CI](https://circleci.com/gh/settinghead/specky.svg?style=svg)](https://circleci.com/gh/settinghead/specky)
+# Specky 👓 [![Circle CI](https://circleci.com/gh/settinghead/specky.svg?style=svg)](https://circleci.com/gh/settinghead/specky) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
 ### Project status
 - Alpha. Feedback and feature suggestions [are welcome](/../../issues/).
@@ -28,7 +28,6 @@ WIP
 It facilitates
 
 - A better debugging experience
-- [Data-driven programming](http://stackoverflow.com/a/1065657/707362)
 - Auto generation of property-based/generative tests, and hence
 - More comprehensive test case coverage
 - Creation of constrained environment that is more powerful than typed languages such as TypeScript
