@@ -4,7 +4,7 @@ var webpack = require('webpack');
 module.exports = {
     entry: './src/index.js',
     output: {
-        library: 'specky',
+        library: ['S'],
         libraryTarget: 'umd',
         umdNamedDefine: true,
         path: './dist',
@@ -26,6 +26,10 @@ module.exports = {
         new webpack.optimize.UglifyJsPlugin({
             compress: {
                 warnings: false,
+                keep_fnames: true,
+            },
+            mangle: {
+                keep_fnames: true,
             },
             output: {
                 comments: false,

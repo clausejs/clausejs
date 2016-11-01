@@ -71,7 +71,7 @@ var NamespaceFnSpec = fspec({
   ret: or(isSpecRef, isExpr),
 });
 
-function namespaceFn(cargs) {
+function speckyNamespace(cargs) {
   var retVal;
 
   if(cargs['def']) {
@@ -140,4 +140,4 @@ function _maybeInitRegistry() {
 _set('__specky.Expr', { expr: ExprSpec });
 _set('__specky.PartialRefMap', { expr: PartialRefMapSpec });
 
-module.exports = NamespaceFnSpec.wrapConformedArgs(namespaceFn);
+module.exports = NamespaceFnSpec.wrapConformedArgs(speckyNamespace);

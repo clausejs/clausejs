@@ -1,3 +1,4 @@
+
 var oAssign = require('object-assign');
 var namespaceFn = require('./namespace');
 

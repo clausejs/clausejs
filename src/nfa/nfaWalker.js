@@ -20,7 +20,7 @@ function nfaWalker(spec, walkFn) {
         subproblems.push(lastProblem);
       }
       if (conform || instrument) {
-        return new Problem(x, spec, [], 'NFA expression ' + spec.type + ' did not match; val: ' + JSON.stringify(x));
+        return new Problem(x, spec, [], 'Spec ' + spec.type + ' did not match val: ' + JSON.stringify(x));
       } else {
         console.error(opts);
         throw 'no impl case';
