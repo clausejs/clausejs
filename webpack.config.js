@@ -1,5 +1,6 @@
 var webpack = require('webpack');
 // var ClosureCompilerPlugin = require('webpack-closure-compiler');
+var PROD = JSON.parse(process.env.PROD_ENV || '0');
 
 module.exports = {
     entry: './src/index.js',
@@ -8,7 +9,7 @@ module.exports = {
         libraryTarget: 'umd',
         umdNamedDefine: true,
         path: './dist',
-        filename: 'specky.min.js',
+        filename: PROD ? 'specky.min.js' : 'specky.js',
     },
     module: {
       loaders: [
@@ -22,7 +23,7 @@ module.exports = {
         },
       ],
     },
-    plugins: [
+    plugins: PROD ? [
         new webpack.optimize.UglifyJsPlugin({
             compress: {
                 warnings: false,
@@ -44,5 +45,5 @@ module.exports = {
       //    },
       //    concurrency: 3,
       //  }),
-    ],
+    ] : [],
 }
