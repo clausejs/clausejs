@@ -7,7 +7,7 @@
     "dev": "npm run test:watch",
     "test": "mocha --compilers js:babel-register",
     "test:watch": "mocha --compilers js:babel-register --watch",
-    "build": "webpack && cross-env PROD=1 webpack"
+    "build": "webpack && cross-env PROD_ENV=1 webpack"
   },
   "repository": {
     "type": "git",
