@@ -1,6 +1,6 @@
 {
   "name": "specky",
-  "version": "0.0.0-BROKEN",
+  "version": "0.1.0",
   "description": "Spec support for plain JavaScript.",
   "main": "src/index.js",
   "scripts": {
