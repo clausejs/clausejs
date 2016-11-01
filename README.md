@@ -1,8 +1,5 @@
 # Specky 👓 [![Circle CI](https://circleci.com/gh/settinghead/specky.svg?style=shield)](https://circleci.com/gh/settinghead/specky) [![npm version](https://badge.fury.io/js/specky.svg)](https://badge.fury.io/js/specky) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
-### Project status
-- Alpha. Feedback and feature suggestions [are welcome](/../../issues/).
-
 ### What
 
 A powerful & highly flexible JavaScript data validation and conformation library that enables you to:
@@ -13,24 +10,26 @@ A powerful & highly flexible JavaScript data validation and conformation library
 - Conform your data with a range of available shapes of specs
 - Automatically generate test cases for your spec'ed functions
 
+### Why
+
+- A complement/alternative to unit testing
+- facilitates a better debugging experience
+- Auto generation of test cases based on function specs
+- Guides you through the initial modeling process of code implementation
+- Help create more customizable type and behavior constraints that is more powerful than typed languages such as TypeScript
+
+### Project status
+- Alpha. Feedback and feature suggestions [are welcome](/../../issues/).
+
 ### Examples
 
 - [Use in browser](examples/simple.html)
-- [Promise](examples/promise)
+- [Spec'ing promises](examples/promise)
 - For more examples on usage, refer to examples in the test folder [`/test`](test/).
 
 ### Generative Testing
 
 WIP
-
-### Why
-
-It facilitates
-
-- A better debugging experience
-- Auto generation of property-based/generative tests, and hence
-- More comprehensive test case coverage
-- Creation of constrained environment that is more powerful than typed languages such as TypeScript
 
 ### Run tests
 
