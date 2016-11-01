@@ -17,6 +17,10 @@ A powerful & highly flexible JavaScript data validation and conformation framewo
 
 For more examples on usage, refer to examples in the test folder [`/test`](test/).
 
+### Generative Testing
+
+WIP
+
 ### Why
 
 It facilitates
