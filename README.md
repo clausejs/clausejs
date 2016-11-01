@@ -15,7 +15,7 @@ A powerful & highly flexible JavaScript data validation and conformation framewo
 
 ### Examples
 
-TODO
+For more examples on usage, refer to examples in the test folder [`/test`](test/).
 
 ### Why
 
