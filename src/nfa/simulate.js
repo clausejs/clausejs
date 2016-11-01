@@ -4,8 +4,8 @@ var isArray = require('isarray');
 var oAssign = require('object-assign');
 var isUndefined = require('../preds/isUndefined');
 
-function simulate(nfa, rawInput, walkFn, opts) {
-  var { conform, instrument } = opts;
+function simulate(nfa, rawInput, walkFn, walkOpts) {
+  var { conform, instrument } = walkOpts;
   // console.log('------raw------');
   // console.log(rawInput);
   // console.log('---------------');
@@ -32,7 +32,7 @@ function simulate(nfa, rawInput, walkFn, opts) {
     var current = frontier.shift();
     if (current.state === nfa.finalState && current.offset === input.length) {
       r.matched = true;
-      r.result = _getMatch(nfa, rawInput, current);
+      r.result = _getMatch(nfa, rawInput, current, walkOpts);
       // console.log('-------r--------');
       // console.log(r);
       // console.log('----------------');
@@ -69,23 +69,25 @@ function simulate(nfa, rawInput, walkFn, opts) {
 
             frontier.push(next);
           } else {
-            conformed = walkFn(transition, observed, opts);
-            if(!isProblem(conformed)) {
-              if(current.offset < input.length) {
-                move = { dir: 'pred' };
-                next = {
-                  state: nextState,
-                  offset: nextOffset,
-                  move: move,
-                  prev: current,
-                  isEpsilon: false,
-                  observed: observed,
-                  conformed: conformed,
-                };
-                frontier.push(next);
+            if(conform || instrument) {
+              conformed = walkFn(transition, observed, walkOpts);
+              if(!isProblem(conformed)) {
+                if(current.offset < input.length) {
+                  move = { dir: 'pred' };
+                  next = {
+                    state: nextState,
+                    offset: nextOffset,
+                    move: move,
+                    prev: current,
+                    isEpsilon: false,
+                    observed: observed,
+                    conformed: conformed,
+                  };
+                  frontier.push(next);
+                }
+              } else {
+                r.lastProblem = conformed;
               }
-            } else {
-              r.lastProblem = conformed;
             }
           }
         }
@@ -97,6 +99,7 @@ function simulate(nfa, rawInput, walkFn, opts) {
 
 var FOLD = function() {};
 var ENTER = function() {};
+var MULTI_ENTER = function() {};
 var MAYBE_ENTER = function() {};
 var MAYBE_SINGLE_ENTER = function() {};
 // var FOLD = 'FOLD';
@@ -105,7 +108,8 @@ var MAYBE_SINGLE_ENTER = function() {};
 var Name = function(n) { this.value = n; };
 var ArrayFragment = function(val) { this.value = val; };
 
-function _getMatch(nfa, input, finalState) {
+function _getMatch(nfa, input, finalState, walkOpts) {
+  var { conform, instrument } = walkOpts;
   var chain = _stateChain(nfa, finalState);
   // console.log(input);
   // console.log('---------chain----------');
@@ -127,6 +131,9 @@ function _getMatch(nfa, input, finalState) {
       switch(curr.move.dir) {
         case 'enter' : {
           valStack.push(ENTER);
+        } break;
+        case 'multi_enter' : {
+          valStack.push(MULTI_ENTER);
         } break;
         case 'maybe_enter' : {
           valStack.push(MAYBE_ENTER);
@@ -179,6 +186,26 @@ function _getMatch(nfa, input, finalState) {
           while(c!==MAYBE_ENTER) {
             if(c!==FOLD) {
               acc = _foldIn(acc, c);
+            }
+            c = valStack.pop();
+          }
+          if(acc === null) {
+            acc = [];
+          }
+          valStack.push(acc);
+        } break;
+        case 'multi_exit': {
+          var c = valStack.pop();
+          var acc = null;
+          while(c!==MULTI_ENTER) {
+            if(c instanceof ArrayFragment) {
+              if(acc === null) {
+                acc = [c.value];
+              } else {
+                acc = [c.value].concat(acc);
+              }
+            } else {
+              acc = oAssign({}, c, acc);
             }
             c = valStack.pop();
           }

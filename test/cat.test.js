@@ -28,6 +28,12 @@ describe('cat', function() {
       expect(unconformed instanceof Problem).to.be.true;
     });
 
+    it('single val case', () => {
+      var ss = S.cat(S.isNum);
+      var r = ss.conform([44]);
+      expect(r).to.deep.equal([44]);
+    });
+
     it('named', function() {
       var conformed = NamedSpec.conform(conformist);
       expect(conformed).to.deep.equal({ z: fn, b: {}, c: fn, a: { a: 1 } });

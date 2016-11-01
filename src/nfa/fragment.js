@@ -128,8 +128,8 @@ build.CAT = function(frags) {
     // var util = require('util');
     // console.log(util.inspect(r, false, null));
   }
-  r = frontWithState(namedEpsilonState('enter', null, 'CAT'), r);
-  r = rearWithState(namedEpsilonState('exit', null, 'CAT'), r);
+  r = frontWithState(namedEpsilonState('multi_enter', null, 'CAT'), r);
+  r = rearWithState(namedEpsilonState('multi_exit', null, 'CAT'), r);
 
   // var util = require('util');
   // console.log('--------------------------------');

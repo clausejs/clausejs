@@ -17,18 +17,22 @@ console.log(s);
 // var r = sheepCounter('hello');
 // console.log(r);
 
-var AdderFnSpec = s.fspec({
-  args: s.cat('x', s.isNum),
-  ret: s.fspec({
-    args: s.cat('y', s.isNum),
-    ret: s.isNum
-  }),
-});
+// var ss = s.cat(s.isNum);
+// var r = ss.conform([2]);
+// console.log(r);
 
-var adderFn = AdderFnSpec.instrument((x) => (y) => x + y);
-var brokenAdderFn = AdderFnSpec.instrument(() => (y) => 'z');
-var r = adderFn(1)(2);
-console.log(r);
+// var AdderFnSpec = s.fspec({
+//   args: s.cat('x', s.isNum),
+//   ret: s.fspec({
+//     args: s.cat('y', s.isNum),
+//     ret: s.isNum
+//   }),
+// });
+//
+// var adderFn = AdderFnSpec.instrument((x) => (y) => x + y);
+// var brokenAdderFn = AdderFnSpec.instrument(() => (y) => 'z');
+// var r = adderFn(1)(2);
+// console.log(r);
 
 // var NamedSpec = s.cat('z', s.isFn, 'b', s.isObj, 'c', s.isFn, 'a', s.isObj);
 // // var UnnamedSpec = S.cat(S.isFn, S.isObj,S.isFn, S.isObj);
