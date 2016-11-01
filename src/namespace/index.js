@@ -51,8 +51,8 @@ function _getUnchecked(ref) {
 }
 
 var ExprOrPartialRefMapSpec = or(
-  'expr', _get('__specky.Expr'),
-  'partialRefMap', _get('__specky.PartialRefMap')
+  'expr', _get('__specky.Expr')
+  // 'partialRefMap', _get('__specky.PartialRefMap')
 );
 
 var PartialRefMapSpec = props({
@@ -136,6 +136,8 @@ function _maybeInitRegistry() {
   }
   return reg;
 }
+
+_maybeInitRegistry();
 
 _set('__specky.Expr', { expr: ExprSpec });
 _set('__specky.PartialRefMap', { expr: PartialRefMapSpec });

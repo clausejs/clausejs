@@ -28,7 +28,11 @@ function propsWalker(spec, walkFn) {
     }
 
     if(fieldDefs) {
-      conformed = oAssign({}, x);
+      if(conform) {
+        conformed = oAssign({}, x);
+      } else {
+        conform = x;
+      }
       for (var name in fieldDefs.fields) {
         if (fieldDefs.fields.hasOwnProperty(name)) {
           var defs = fieldDefs.fields[name];
