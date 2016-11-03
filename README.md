@@ -1,4 +1,4 @@
-# Specky 👓 [![Circle CI](https://circleci.com/gh/settinghead/specky.svg?style=shield)](https://circleci.com/gh/settinghead/specky) [![npm version](https://badge.fury.io/js/specky.svg)](https://badge.fury.io/js/specky) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+# Specky 👓 [![Build Status](https://travis-ci.org/settinghead/specky.svg?branch=master)](https://travis-ci.org/settinghead/specky) [![npm version](https://badge.fury.io/js/specky.svg)](https://badge.fury.io/js/specky) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
 ### What
 
