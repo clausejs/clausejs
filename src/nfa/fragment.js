@@ -128,8 +128,8 @@ build.CAT = function(frags) {
     // var util = require('util');
     // console.log(util.inspect(r, false, null));
   }
-  r = frontWithState(namedEpsilonState('multi_enter', null, 'CAT', true), r);
-  r = rearWithState(namedEpsilonState('multi_exit', null, 'CAT', true), r);
+  r = frontWithState(namedEpsilonState('multi_enter', null, 'CAT', 'in'), r);
+  r = rearWithState(namedEpsilonState('multi_exit', null, 'CAT', 'out'), r);
 
   // var util = require('util');
   // console.log('--------------------------------');
@@ -178,8 +178,8 @@ build.OR = function(frags) {
   };
 
   var newF = frags.reduce(binaryAlt);
-  newF = frontWithState(namedEpsilonState('enter', null, 'OR', false), newF);
-  newF = rearWithState(namedEpsilonState('exit', null, 'OR', false), newF);
+  newF = frontWithState(namedEpsilonState('enter', null, 'OR'), newF);
+  newF = rearWithState(namedEpsilonState('exit', null, 'OR'), newF);
 
   // var util = require('util');
   // console.log('--------------------------------');
@@ -211,8 +211,8 @@ build.Z_OR_M = function(frag) {
   var newHead = fragmentState(nameInTranstions);
 
   newF = fragment(newHead, newF.tails);
-  newF = frontWithState(namedEpsilonState('maybe_enter', null, l, true), newF);
-  newF = rearWithState(namedEpsilonState('maybe_exit', null, l, true), newF);
+  newF = frontWithState(namedEpsilonState('maybe_enter', null, l, 'in'), newF);
+  newF = rearWithState(namedEpsilonState('maybe_exit', null, l, 'out'), newF);
 
   // var util = require('util');
   // console.log('--------------------------------');
@@ -229,8 +229,8 @@ build.O_OR_M = function(frag) {
   patch(frag.tails, state);
 
   var newF = fragment(frag.head, [breakTrans]);
-  newF = frontWithState(namedEpsilonState('maybe_enter', null, l, true), newF);
-  newF = rearWithState(namedEpsilonState('maybe_exit', null, l, true), newF);
+  newF = frontWithState(namedEpsilonState('maybe_enter', null, l, 'in'), newF);
+  newF = rearWithState(namedEpsilonState('maybe_exit', null, l, 'out'), newF);
 
   return newF;
 };
@@ -243,8 +243,8 @@ build.Z_OR_O = function(frag) {
   var tails = frag.tails.concat([skipTrans]);
 
   var newF = fragment(head, tails);
-  newF = frontWithState(namedEpsilonState('maybe_single_enter', null, l, false), newF);
-  newF = rearWithState(namedEpsilonState('maybe_single_exit', null, l, false), newF);
+  newF = frontWithState(namedEpsilonState('maybe_single_enter', null, l), newF);
+  newF = rearWithState(namedEpsilonState('maybe_single_exit', null, l), newF);
   // var util = require('util');
   // console.log('--------------------------------');
   // console.log(util.inspect(newF, false, null));

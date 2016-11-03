@@ -73,22 +73,23 @@ var MultipleArgSpec = orOp({
     {
       name: 'named',
       expr: {
-        spec: zeroOrMoreOp({
-          expr: {
-            spec: orOp({
-              unnamed: [
-                {
+        spec: orOp({
+          unnamed: [
+            {
+              spec: zeroOrMoreOp({
+                expr: {
                   spec: NameExprOptionalComment,
                 },
-                // {
-                //   spec: collOfOp({
-                //     expr: NameExprSeq,
-                //   }),
-                // },
-              ]
-            })
-
-          },
+              })
+            },
+            {
+              spec: collOfOp({
+                expr: {
+                  spec: NameExprOptionalComment,
+                },
+              })
+            },
+          ]
         }),
       },
     },

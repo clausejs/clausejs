@@ -4,6 +4,8 @@ var s = require('./');
 var S = s;
 
 console.log(s);
+
+
 var NamedGroupedSpec = S.cat(
   ['z', 'it\'s a fuuuunction', S.isFn],
   ['b', S.isObj],
@@ -11,7 +13,22 @@ var NamedGroupedSpec = S.cat(
   ['a', S.isObj]
 );
 
+var conformist = [function() {}, {}, function() {}, {}];
+
 var conformed = NamedGroupedSpec.conform(conformist);
+
+console.log(conformed);
+
+// var Spec = s.cat('a', s.isNum, 'b', s.isStr);
+
+// var Spec = s.or(
+//   // s.zeroOrMore(s.cat(s.isStr, s.isNum)),
+//   s.collOf(s.cat(s.isStr, s.isNum))
+// );
+
+// var r = Spec.conform([1, '2']);
+
+// console.log(r);
 
 //
 // var AdderFnSpec = s.fspec({
