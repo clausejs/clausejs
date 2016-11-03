@@ -28,7 +28,7 @@ var _get = fspec({
 }).instrument(_getUnchecked);
 
 function _getUnchecked(ref) {
-  var getFn = (prefix) => {
+  var getFn = function(prefix) {
     var path = reg;
     if(prefix) {
       path = prefix + reg;
