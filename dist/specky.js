@@ -1330,7 +1330,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    result: null
 	  };
 
-	  var initial = { state: 0, offset: 0 };
+	  var initial = { state: 0, offset: 0, input: input, groupCount: 0, arrayed: false };
 	  // var names = [];
 	  var frontier = [initial];
 	  // console.log('input: ', input);
@@ -1338,7 +1338,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  // console.log('nfa', util.inspect(nfa, false, null));
 	  while (frontier.length > 0) {
 	    var current = frontier.shift();
-	    if (current.state === nfa.finalState && current.offset === input.length) {
+	    var currentOffset = current.offset;
+
+	    if (current.state === nfa.finalState && currentOffset === input.length) {
 	      r.matched = true;
 	      r.result = _getMatch(nfa, rawInput, current, walkOpts);
 	      // console.log('-------r--------');
@@ -1348,15 +1350,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    for (var nextStateStr in nfa.transitions[current.state]) {
 	      var nextState = parseInt(nextStateStr);
-	      // console.log(current.offset, input);
-	      var observed = input[current.offset];
+	      // console.log(currentOffset, input);
+	      var observed = input[currentOffset];
 	      var transition = nfa.transitions[current.state][nextState];
 	      var nextOffset;
 	      var move;
 	      if (!transition.isEpsilon) {
-	        nextOffset = current.offset + 1;
+	        nextOffset = currentOffset + 1;
 	      } else {
-	        nextOffset = current.offset;
+	        nextOffset = currentOffset;
 	      }
 
 	      var conformed, next;
@@ -1380,7 +1382,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          if (conform || instrument) {
 	            conformed = walkFn(transition, observed, walkOpts);
 	            if (!isProblem(conformed)) {
-	              if (current.offset < input.length) {
+	              if (currentOffset < input.length) {
 	                move = { dir: 'pred' };
 	                next = {
 	                  state: nextState,

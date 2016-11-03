@@ -22,7 +22,7 @@ function simulate(nfa, rawInput, walkFn, walkOpts) {
     result: null,
   };
 
-  var initial = { state: 0, offset: 0 };
+  var initial = { state: 0, offset: 0, input: input, groupCount: 0, arrayed: false };
   // var names = [];
   var frontier = [initial];
   // console.log('input: ', input);
@@ -30,7 +30,8 @@ function simulate(nfa, rawInput, walkFn, walkOpts) {
   // console.log('nfa', util.inspect(nfa, false, null));
   while (frontier.length > 0) {
     var current = frontier.shift();
-    if (current.state === nfa.finalState && current.offset === input.length) {
+    var { offset: currentOffset } = current;
+    if (current.state === nfa.finalState && currentOffset === input.length) {
       r.matched = true;
       r.result = _getMatch(nfa, rawInput, current, walkOpts);
       // console.log('-------r--------');
@@ -40,15 +41,15 @@ function simulate(nfa, rawInput, walkFn, walkOpts) {
     }
     for (var nextStateStr in nfa.transitions[current.state]) {
       var nextState = parseInt(nextStateStr);
-      // console.log(current.offset, input);
-        var observed = input[current.offset];
+      // console.log(currentOffset, input);
+        var observed = input[currentOffset];
         var transition = nfa.transitions[current.state][nextState];
         var nextOffset;
         var move;
         if(!transition.isEpsilon) {
-          nextOffset = current.offset + 1;
+          nextOffset = currentOffset + 1;
         } else {
-          nextOffset = current.offset;
+          nextOffset = currentOffset;
         }
 
         var conformed, next;
@@ -72,7 +73,7 @@ function simulate(nfa, rawInput, walkFn, walkOpts) {
             if(conform || instrument) {
               conformed = walkFn(transition, observed, walkOpts);
               if(!isProblem(conformed)) {
-                if(current.offset < input.length) {
+                if(currentOffset < input.length) {
                   move = { dir: 'pred' };
                   next = {
                     state: nextState,
