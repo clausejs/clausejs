@@ -3,6 +3,7 @@ var oAssign = require('object-assign');
 var Spec = require('../models/Spec');
 var isSpec = require('../utils/isSpec');
 var isPred = require('../utils/isPred');
+var isStr = require('../preds/isStr');
 var isSpecName = require('../utils/isSpecName');
 var isSpecRef = require('../utils/isSpecRef');
 var c = require('../ops/constants');
@@ -33,6 +34,38 @@ var ExprSpec = orOp({
     ],
 });
 
+var NameExprSeq = catOp({
+  named: [
+      { name: 'name', expr: {
+        spec: nameSpec,
+      } },
+      { name: 'expr', expr: {
+        spec: ExprSpec,
+      } },
+    ],
+});
+
+var NameCommentExprSeq = catOp({
+  named: [
+      { name: 'name', expr: {
+        spec: nameSpec,
+      } },
+      { name: 'comment', expr: {
+        spec: isStr,
+      } },
+      { name: 'expr', expr: {
+        spec: ExprSpec,
+      } },
+    ],
+});
+
+var NameExprOptionalComment = orOp({
+  unnamed: [
+    { spec: NameExprSeq },
+    { spec: NameCommentExprSeq },
+  ]
+})
+
 var multipleArgOpSpec = {
   args: orOp({
     named: [
@@ -41,16 +74,19 @@ var multipleArgOpSpec = {
         expr: {
           spec: zeroOrMoreOp({
             expr: {
-              spec: catOp({
-                named: [
-                    { name: 'name', expr: {
-                      spec: nameSpec,
-                    } },
-                    { name: 'expr', expr: {
-                      spec: ExprSpec,
-                    } },
-                  ],
-              }),
+              spec: orOp({
+                unnamed: [
+                  {
+                    spec: NameExprOptionalComment,
+                  },
+                  // {
+                  //   spec: collOfOp({
+                  //     expr: NameExprSeq,
+                  //   }),
+                  // },
+                ]
+              })
+
             },
           }),
         },

@@ -185,7 +185,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var isSpec = __webpack_require__(9);
 	var isPred = __webpack_require__(10);
-	var isStr = __webpack_require__(13);
+	var isStr = __webpack_require__(12);
 	var isExpr = __webpack_require__(41);
 	var isUndefined = __webpack_require__(25);
 	var walk = __webpack_require__(21);
@@ -671,7 +671,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	var Spec = __webpack_require__(7);
 	var isSpec = __webpack_require__(9);
 	var isPred = __webpack_require__(10);
-	var isSpecName = __webpack_require__(12);
+	var isStr = __webpack_require__(12);
+	var isSpecName = __webpack_require__(13);
 	var isSpecRef = __webpack_require__(14);
 	var c = __webpack_require__(15);
 	var coerceIntoSpec = __webpack_require__(16);
@@ -697,6 +698,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	    } }]
 	});
 
+	var NameExprSeq = catOp({
+	  named: [{ name: 'name', expr: {
+	      spec: nameSpec
+	    } }, { name: 'expr', expr: {
+	      spec: ExprSpec
+	    } }]
+	});
+
+	var NameCommentExprSeq = catOp({
+	  named: [{ name: 'name', expr: {
+	      spec: nameSpec
+	    } }, { name: 'comment', expr: {
+	      spec: isStr
+	    } }, { name: 'expr', expr: {
+	      spec: ExprSpec
+	    } }]
+	});
+
+	var NameExprOptionalComment = orOp({
+	  unnamed: [{ spec: NameExprSeq }, { spec: NameCommentExprSeq }]
+	});
+
 	var multipleArgOpSpec = {
 	  args: orOp({
 	    named: [{
@@ -704,13 +727,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	      expr: {
 	        spec: zeroOrMoreOp({
 	          expr: {
-	            spec: catOp({
-	              named: [{ name: 'name', expr: {
-	                  spec: nameSpec
-	                } }, { name: 'expr', expr: {
-	                  spec: ExprSpec
-	                } }]
+	            spec: orOp({
+	              unnamed: [{
+	                spec: NameExprOptionalComment
+	              }]
 	            })
+
 	          }
 	        })
 	      }
@@ -979,19 +1001,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 12 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var isStr = __webpack_require__(13);
-
-	//TODO
-	module.exports = function isSpecName(x) {
-	  return isStr(x);
-	};
-
-/***/ },
-/* 13 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -1001,6 +1010,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	module.exports = isStr;
+
+/***/ },
+/* 13 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var isStr = __webpack_require__(12);
+
+	//TODO
+	module.exports = function isSpecName(x) {
+	  return isStr(x);
+	};
 
 /***/ },
 /* 14 */
@@ -2133,7 +2155,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	"use strict";
 
 	function betterThrow(problem) {
-	  console.error(problem.message, problem);
+	  // console.error(problem.message, problem);
 	  throw problem;
 	}
 
@@ -2449,7 +2471,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var Spec = __webpack_require__(7);
 	var isSpec = __webpack_require__(9);
-	var isStr = __webpack_require__(13);
+	var isStr = __webpack_require__(12);
 	var isFn = __webpack_require__(11);
 	var coerceIntoSpec = __webpack_require__(16);
 
@@ -2596,8 +2618,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  isNum: __webpack_require__(39),
 	  isObj: __webpack_require__(32),
 	  isObject: __webpack_require__(32),
-	  isStr: __webpack_require__(13),
-	  isString: __webpack_require__(13),
+	  isStr: __webpack_require__(12),
+	  isString: __webpack_require__(12),
 	  isUndefined: __webpack_require__(25),
 	  notEmpty: __webpack_require__(40)
 	};

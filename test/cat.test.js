@@ -35,6 +35,15 @@ describe('cat', function() {
     });
 
     it('named', function() {
+      var NamedCommentedSpec = S.cat('z', 'it\'s a fuuuunction', S.isFn, 'b', S.isObj, 'c', 'another fuuuunction', S.isFn, 'a', S.isObj);
+
+      var conformed = NamedCommentedSpec.conform(conformist);
+      expect(conformed).to.deep.equal({ z: fn, b: {}, c: fn, a: { a: 1 } });
+      var nonconformed = NamedCommentedSpec.conform(nonconformist);
+      expect(nonconformed instanceof Problem).to.be.true;
+    });
+
+    it('named with some comments', function() {
       var conformed = NamedSpec.conform(conformist);
       expect(conformed).to.deep.equal({ z: fn, b: {}, c: fn, a: { a: 1 } });
       var nonconformed = NamedSpec.conform(nonconformist);
