@@ -11,9 +11,9 @@ function andWalker(spec, walkFn) {
       return walkFn(e, data, walkOpts);
     });
 
-    var { conform } = walkOpts;
+    var { conform, instrument } = walkOpts;
 
-    if(conform) {
+    if(conform || instrument) {
       var problems = results.filter(isProblem);
 
       if(problems.length === 0) {

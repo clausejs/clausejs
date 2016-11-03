@@ -5,6 +5,7 @@ var isSpec = require('../utils/isSpec');
 var isPred = require('../utils/isPred');
 var isStr = require('../preds/isStr');
 var isSpecName = require('../utils/isSpecName');
+var namedFn = require('../utils/namedFn');
 var isSpecRef = require('../utils/isSpecRef');
 var c = require('../ops/constants');
 var coerceIntoSpec = require('../utils/coerceIntoSpec');
@@ -19,6 +20,7 @@ var orOp = genMultiArgOp(c.OR);
 var zeroOrMoreOp = genSingleArgOp(c.Z_OR_M);
 var oneOrMoreOp = genSingleArgOp(c.O_OR_M);
 var zeroOrOneOp = genSingleArgOp(c.Z_OR_O);
+var collOfOp = genSingleArgOp(c.COLL_OF);
 
 var ExprSpec = orOp({
   named: [
@@ -118,7 +120,7 @@ var singleArgOpSpec = {
 };
 
 function genMultiArgOp(type) {
-  return function (conformedArgs) {
+  return namedFn(type, function (conformedArgs) {
     // console.log(conformedArgs);
     var exprs;
     if(conformedArgs.named) {
@@ -169,6 +171,8 @@ function genMultiArgOp(type) {
           return oAssign({}, p, { expr: s, specRef: undefined });
         } else {
           console.error(p);
+          debugger;
+
           throw 'Not implemented';
         }
         // console.log(p);
@@ -185,11 +189,11 @@ function genMultiArgOp(type) {
       };
       return s;
     }
-  };
+  });
 }
 
 function genSingleArgOp(type) {
-  return function (conformedArgs) {
+  return namedFn(type, function (conformedArgs) {
     var p = conformedArgs.expr;
     var expr;
 
@@ -213,8 +217,10 @@ function genSingleArgOp(type) {
       return walk(s, x, { conform: true });
     }
     return s;
-  };
+  });
 }
+
+var collOf = fspec(singleArgOpSpec).wrapConformedArgs(collOfOp);
 
 var core = {
   cat: fspec(multipleArgOpSpec).wrapConformedArgs(catOp),
@@ -223,6 +229,8 @@ var core = {
   zeroOrOne: fspec(singleArgOpSpec).wrapConformedArgs(zeroOrOneOp),
   oneOrMore: fspec(singleArgOpSpec).wrapConformedArgs(oneOrMoreOp),
   ExprSpec,
+  collOf,
+  arrayOf: collOf,
 };
 
 core['alt'] = core.or;

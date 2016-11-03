@@ -4,24 +4,33 @@ var s = require('./');
 var S = s;
 
 console.log(s);
+var NamedGroupedSpec = S.cat(
+  ['z', 'it\'s a fuuuunction', S.isFn],
+  ['b', S.isObj],
+  ['c', 'another fuuuunction', S.isFn],
+  ['a', S.isObj]
+);
 
-var AdderFnSpec = s.fspec({
-  args: s.cat('x', s.isNum),
-  ret: s.fspec({
-    args: s.cat('y', s.isNum),
-    ret: s.isNum,
-  }),
-});
+var conformed = NamedGroupedSpec.conform(conformist);
 
-var adderFn = function(x) {
-  return function(y) {
-    return x + y;
-  }
-};
-var adderFn = AdderFnSpec.instrument(adderFn);
-var brokenAdderFn = AdderFnSpec.instrument((x) => (y) => 'z');
-var r = brokenAdderFn(1)(3);
-console.log(r);
+//
+// var AdderFnSpec = s.fspec({
+//   args: s.cat('x', s.isNum),
+//   ret: s.fspec({
+//     args: s.cat('y', s.isNum),
+//     ret: s.isNum,
+//   }),
+// });
+//
+// var adderFn = function(x) {
+//   return function(y) {
+//     return x + y;
+//   }
+// };
+// var adderFn = AdderFnSpec.instrument(adderFn);
+// var brokenAdderFn = AdderFnSpec.instrument((x) => (y) => 'z');
+// var r = brokenAdderFn(1)(3);
+// console.log(r);
 
 
 // var sheepCounterSpec = S.fspec({

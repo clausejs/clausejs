@@ -3,6 +3,7 @@ var predWalker = require('../utils/predWalker');
 var fspecWalker = require('./fspecWalker');
 var propsWalker = require('./propsWalker');
 var andWalker = require('./andWalker');
+var collOfWalker = require('./collOfWalker');
 var specRefWalker = require('../namespace/specRefWalker');
 var coerceIntoSpec = require('../utils/coerceIntoSpec');
 
@@ -17,6 +18,8 @@ function _getWalker(expr) {
   var spec = coerceIntoSpec(expr);
   if (['OR', 'CAT', 'Z_OR_M', 'O_OR_M', 'Z_OR_O'].indexOf(spec.type) >= 0) {
     walker = nfaWalker;
+  } else if (['COLL_OF'].indexOf(spec.type) >= 0) {
+    walker = collOfWalker;
   } else if (spec.type === 'PRED') {
     walker = predWalker;
   } else if (spec.type === 'PROPS') {
