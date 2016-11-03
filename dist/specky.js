@@ -722,33 +722,35 @@ return /******/ (function(modules) { // webpackBootstrap
 	  unnamed: [{ spec: NameExprSeq }, { spec: NameCommentExprSeq }]
 	});
 
-	var multipleArgOpSpec = {
-	  args: orOp({
-	    named: [{
-	      name: 'named',
-	      expr: {
-	        spec: zeroOrMoreOp({
-	          expr: {
-	            spec: orOp({
-	              unnamed: [{
-	                spec: NameExprOptionalComment
-	              }]
-	            })
+	var MultipleArgSpec = orOp({
+	  named: [{
+	    name: 'named',
+	    expr: {
+	      spec: zeroOrMoreOp({
+	        expr: {
+	          spec: orOp({
+	            unnamed: [{
+	              spec: NameExprOptionalComment
+	            }]
+	          })
 
-	          }
-	        })
-	      }
-	    }, {
-	      name: 'unnamed',
-	      expr: {
-	        spec: zeroOrMoreOp({
-	          expr: {
-	            spec: ExprSpec
-	          }
-	        })
-	      }
-	    }]
-	  }),
+	        }
+	      })
+	    }
+	  }, {
+	    name: 'unnamed',
+	    expr: {
+	      spec: zeroOrMoreOp({
+	        expr: {
+	          spec: ExprSpec
+	        }
+	      })
+	    }
+	  }]
+	});
+
+	var multipleArgOpSpec = {
+	  args: MultipleArgSpec,
 	  ret: specSpec
 	};
 
@@ -875,6 +877,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = core;
 
 	// ///////////////////////////////////////////////////////////
+	// var isBool = require('../preds/isBool');
+	// var isStr = require('../preds/isStr');
+	// var isNum = require('../preds/isNum');
+	//
+	//
+	// // var Spec = catOp({
+	// //   named: [
+	// //     { name: 'a', expr: { pred: isNum } },
+	// //     { name: 'b', expr: { pred: isStr } },
+	// //   ]
+	// // });
+	// var r = MultipleArgSpec.conform(['a', isStr, 'b', isNum]);
+	// console.log(r);
+
 	// var isBool = require('../preds/isBool');
 	// var isStr = require('../preds/isStr');
 	//
@@ -1861,13 +1877,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  frags = frags.map(function addEpsilonState(f) {
 	    var originalTails = f.tails;
-	    var trans = fragmentTransition(namedEpsilonState('out', f.name, 'CAT', true), null);
+	    var trans = fragmentTransition(namedEpsilonState('out', f.name, 'CAT'), null);
 	    var nameOutState = fragmentState([trans]);
 	    patch(f.tails, nameOutState);
 
 	    var nameInTranstions = f.head.transitions.map(function (t) {
 	      var s = fragmentState([t]);
-	      var namedInTrans = fragmentTransition(namedEpsilonState('in', f.name, 'CAT', true), s);
+	      var namedInTrans = fragmentTransition(namedEpsilonState('in', f.name, 'CAT'), s);
 	      return namedInTrans;
 	    });
 	    var newHead = fragmentState(nameInTranstions);
@@ -1892,8 +1908,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    // var util = require('util');
 	    // console.log(util.inspect(r, false, null));
 	  }
-	  r = frontWithState(namedEpsilonState('multi_enter', null, 'CAT'), r);
-	  r = rearWithState(namedEpsilonState('multi_exit', null, 'CAT'), r);
+	  r = frontWithState(namedEpsilonState('multi_enter', null, 'CAT', true), r);
+	  r = rearWithState(namedEpsilonState('multi_exit', null, 'CAT', true), r);
 
 	  // var util = require('util');
 	  // console.log('--------------------------------');
@@ -1906,7 +1922,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	build.OR = function (frags) {
 	  frags = frags.map(function (f) {
 	    var originalTails = f.tails;
-	    var outState = namedEpsilonState('out', f.name, 'OR', true);
+	    var outState = namedEpsilonState('out', f.name, 'OR');
 	    var trans = fragmentTransition(outState, null);
 	    var nameOutState = fragmentState([trans]);
 	    patch(f.tails, nameOutState);
@@ -1918,7 +1934,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    // });
 	    // var newHead = fragmentState(nameInTranstions);
 
-	    var transIn = fragmentTransition(namedEpsilonState('in', f.name, 'OR', true), f.head);
+	    var transIn = fragmentTransition(namedEpsilonState('in', f.name, 'OR'), f.head);
 	    var newHead = fragmentState([transIn]);
 	    var newF = namedFragment(f.name, newHead, [trans]);
 
@@ -1942,8 +1958,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  };
 
 	  var newF = frags.reduce(binaryAlt);
-	  newF = frontWithState(namedEpsilonState('enter', null, 'OR'), newF);
-	  newF = rearWithState(namedEpsilonState('exit', null, 'OR'), newF);
+	  newF = frontWithState(namedEpsilonState('enter', null, 'OR', false), newF);
+	  newF = rearWithState(namedEpsilonState('exit', null, 'OR', false), newF);
 
 	  // var util = require('util');
 	  // console.log('--------------------------------');
@@ -1961,7 +1977,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  // console.log('--------------------------------');
 
 	  var l = 'Z_OR_M';
-	  var loopTrans = fragmentTransition(namedEpsilonState('loop', null, l, null), frag.head);
+	  var loopTrans = fragmentTransition(namedEpsilonState('loop', null, l), frag.head);
 	  var breakTrans = fragmentTransition(epsilonState(), null);
 	  var head = fragmentState([loopTrans, breakTrans]);
 	  patch(frag.tails, head);
@@ -1975,8 +1991,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var newHead = fragmentState(nameInTranstions);
 
 	  newF = fragment(newHead, newF.tails);
-	  newF = frontWithState(namedEpsilonState('maybe_enter', null, l), newF);
-	  newF = rearWithState(namedEpsilonState('maybe_exit', null, l), newF);
+	  newF = frontWithState(namedEpsilonState('maybe_enter', null, l, true), newF);
+	  newF = rearWithState(namedEpsilonState('maybe_exit', null, l, true), newF);
 
 	  // var util = require('util');
 	  // console.log('--------------------------------');
@@ -1987,28 +2003,28 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	build.O_OR_M = function (frag) {
 	  var l = 'O_OR_M';
-	  var loopTrans = fragmentTransition(namedEpsilonState('loop', null, l, null), frag.head);
+	  var loopTrans = fragmentTransition(namedEpsilonState('loop', null, l), frag.head);
 	  var breakTrans = fragmentTransition(epsilonState(), null);
 	  var state = fragmentState([loopTrans, breakTrans]);
 	  patch(frag.tails, state);
 
 	  var newF = fragment(frag.head, [breakTrans]);
-	  newF = frontWithState(namedEpsilonState('maybe_enter', null, l), newF);
-	  newF = rearWithState(namedEpsilonState('maybe_exit', null, l), newF);
+	  newF = frontWithState(namedEpsilonState('maybe_enter', null, l, true), newF);
+	  newF = rearWithState(namedEpsilonState('maybe_exit', null, l, true), newF);
 
 	  return newF;
 	};
 
 	build.Z_OR_O = function (frag) {
 	  var l = 'Z_OR_O';
-	  var matchTrans = fragmentTransition(namedEpsilonState('loop', null, l, null), frag.head);
+	  var matchTrans = fragmentTransition(namedEpsilonState('loop', null, l), frag.head);
 	  var skipTrans = fragmentTransition(epsilonState(), null);
 	  var head = fragmentState([matchTrans, skipTrans]);
 	  var tails = frag.tails.concat([skipTrans]);
 
 	  var newF = fragment(head, tails);
-	  newF = frontWithState(namedEpsilonState('maybe_single_enter', null, l), newF);
-	  newF = rearWithState(namedEpsilonState('maybe_single_exit', null, l), newF);
+	  newF = frontWithState(namedEpsilonState('maybe_single_enter', null, l, false), newF);
+	  newF = rearWithState(namedEpsilonState('maybe_single_exit', null, l, false), newF);
 	  // var util = require('util');
 	  // console.log('--------------------------------');
 	  // console.log(util.inspect(newF, false, null));

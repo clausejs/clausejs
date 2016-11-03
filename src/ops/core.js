@@ -68,43 +68,45 @@ var NameExprOptionalComment = orOp({
   ]
 })
 
-var multipleArgOpSpec = {
-  args: orOp({
-    named: [
-      {
-        name: 'named',
-        expr: {
-          spec: zeroOrMoreOp({
-            expr: {
-              spec: orOp({
-                unnamed: [
-                  {
-                    spec: NameExprOptionalComment,
-                  },
-                  // {
-                  //   spec: collOfOp({
-                  //     expr: NameExprSeq,
-                  //   }),
-                  // },
-                ]
-              })
+var MultipleArgSpec = orOp({
+  named: [
+    {
+      name: 'named',
+      expr: {
+        spec: zeroOrMoreOp({
+          expr: {
+            spec: orOp({
+              unnamed: [
+                {
+                  spec: NameExprOptionalComment,
+                },
+                // {
+                //   spec: collOfOp({
+                //     expr: NameExprSeq,
+                //   }),
+                // },
+              ]
+            })
 
-            },
-          }),
-        },
+          },
+        }),
       },
-      {
-        name: 'unnamed',
-        expr: {
-          spec: zeroOrMoreOp({
-            expr: {
-              spec: ExprSpec,
-            },
-          }),
-        },
+    },
+    {
+      name: 'unnamed',
+      expr: {
+        spec: zeroOrMoreOp({
+          expr: {
+            spec: ExprSpec,
+          },
+        }),
       },
-    ],
-  }),
+    },
+  ],
+});
+
+var multipleArgOpSpec = {
+  args: MultipleArgSpec,
   ret: specSpec,
 };
 
@@ -240,7 +242,23 @@ core['?'] = core.zeroOrOne;
 
 module.exports = core;
 
+
+
 // ///////////////////////////////////////////////////////////
+// var isBool = require('../preds/isBool');
+// var isStr = require('../preds/isStr');
+// var isNum = require('../preds/isNum');
+//
+//
+// // var Spec = catOp({
+// //   named: [
+// //     { name: 'a', expr: { pred: isNum } },
+// //     { name: 'b', expr: { pred: isStr } },
+// //   ]
+// // });
+// var r = MultipleArgSpec.conform(['a', isStr, 'b', isNum]);
+// console.log(r);
+
 // var isBool = require('../preds/isBool');
 // var isStr = require('../preds/isStr');
 //
