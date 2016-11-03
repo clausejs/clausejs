@@ -18,8 +18,24 @@ A powerful & highly flexible JavaScript data validation and conformation library
 - Guides you through the initial modeling process of code implementation
 - Help create more customizable type and behavior constraints that is more powerful than typed languages such as TypeScript
 
+### Try it
+
+[Try it online](https://jsbin.com/fisiyeh/edit?js,console)
+
+
 ### Project status
 - Alpha. Feedback and feature suggestions [are welcome](/../../issues/).
+
+### Installation
+
+```bash
+npm install specky
+```
+
+Or
+```html
+
+```
 
 ### Examples
 
