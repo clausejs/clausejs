@@ -24,7 +24,7 @@ A powerful & highly flexible JavaScript data validation and conformation library
 
 
 ### Project status
-- Alpha. Feedback and feature suggestions [are welcome](/../../issues/).
+- Alpha. Each new version is subject to constant change based on [bug reports and feature suggestions](/../../issues/).
 
 ### Installation
 
@@ -40,7 +40,7 @@ Or in the `<head>` or `<body>` tag of your HTML:
 ### Examples
 
 - [Use in browser](examples/simple.html)
-- [Spec'ing promises](examples/promise)
+- [Spec'ing promises](examples/promise/index.js)
 - For more examples on usage, refer to examples in the test folder [`/test`](test/).
 
 ### Generative Testing
