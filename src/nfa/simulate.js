@@ -11,18 +11,19 @@ function simulate(nfa, rawInput, walkFn, walkOpts) {
   // console.log('---------------');
   var input;
 
-  if(!isArray(rawInput)) {
-    input = [rawInput];
-  } else {
-    input = rawInput;
-  }
-
   var r = {
     matched: false,
     result: null,
   };
 
-  var initial = { state: 0, offset: 0, input: input, groupCount: 0, arrayed: false };
+  var initialInput;
+  if(!isArray(rawInput)) {
+    initialInput = [rawInput];
+  } else {
+    initialInput = rawInput;
+  }
+
+  var initial = { state: 0, offset: 0, input: initialInput, groupCount: 0, arrayed: false };
   // var names = [];
   var frontier = [initial];
   // console.log('input: ', input);
@@ -30,7 +31,7 @@ function simulate(nfa, rawInput, walkFn, walkOpts) {
   // console.log('nfa', util.inspect(nfa, false, null));
   while (frontier.length > 0) {
     var current = frontier.shift();
-    var { offset: currentOffset } = current;
+    var { offset: currentOffset, input, groupCount, arrayed } = current;
     if (current.state === nfa.finalState && currentOffset === input.length) {
       r.matched = true;
       r.result = _getMatch(nfa, rawInput, current, walkOpts);
@@ -44,6 +45,28 @@ function simulate(nfa, rawInput, walkFn, walkOpts) {
       // console.log(currentOffset, input);
         var observed = input[currentOffset];
         var transition = nfa.transitions[current.state][nextState];
+
+        if(transition.group === 'in') {
+          if (groupCount === 0) {
+            if (isArray(input[0])) {
+              input = input[0];
+              currentOffset = 0;
+              arrayed = true;
+            }
+          }
+          groupCount += 1;
+
+        } else if (transition.group === 'out') {
+          groupCount -= 1;
+          if (groupCount === 0) {
+            if(arrayed) {
+              input = [input];
+              currentOffset = 0;
+              arrayed = false;
+            }
+          }
+        }
+
         var nextOffset;
         var move;
         if(!transition.isEpsilon) {
@@ -61,6 +84,7 @@ function simulate(nfa, rawInput, walkFn, walkOpts) {
               move = null;
             }
             next = {
+              input, groupCount, arrayed,
               state: nextState,
               offset: nextOffset,
               move: move,
@@ -76,6 +100,7 @@ function simulate(nfa, rawInput, walkFn, walkOpts) {
                 if(currentOffset < input.length) {
                   move = { dir: 'pred' };
                   next = {
+                    input, groupCount, arrayed,
                     state: nextState,
                     offset: nextOffset,
                     move: move,

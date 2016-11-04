@@ -1319,18 +1319,19 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  var input;
 
-	  if (!isArray(rawInput)) {
-	    input = [rawInput];
-	  } else {
-	    input = rawInput;
-	  }
-
 	  var r = {
 	    matched: false,
 	    result: null
 	  };
 
-	  var initial = { state: 0, offset: 0, input: input, groupCount: 0, arrayed: false };
+	  var initialInput;
+	  if (!isArray(rawInput)) {
+	    initialInput = [rawInput];
+	  } else {
+	    initialInput = rawInput;
+	  }
+
+	  var initial = { state: 0, offset: 0, input: initialInput, groupCount: 0, arrayed: false };
 	  // var names = [];
 	  var frontier = [initial];
 	  // console.log('input: ', input);
@@ -1339,6 +1340,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  while (frontier.length > 0) {
 	    var current = frontier.shift();
 	    var currentOffset = current.offset;
+	    var input = current.input;
+	    var groupCount = current.groupCount;
+	    var arrayed = current.arrayed;
 
 	    if (current.state === nfa.finalState && currentOffset === input.length) {
 	      r.matched = true;
@@ -1353,6 +1357,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	      // console.log(currentOffset, input);
 	      var observed = input[currentOffset];
 	      var transition = nfa.transitions[current.state][nextState];
+
+	      if (transition.group === 'in') {
+	        if (groupCount === 0) {
+	          if (isArray(input[0])) {
+	            input = input[0];
+	            currentOffset = 0;
+	            arrayed = true;
+	          }
+	        }
+	        groupCount += 1;
+	      } else if (transition.group === 'out') {
+	        groupCount -= 1;
+	        if (groupCount === 0) {
+	          if (arrayed) {
+	            input = [input];
+	            currentOffset = 0;
+	            arrayed = false;
+	          }
+	        }
+	      }
+
 	      var nextOffset;
 	      var move;
 	      if (!transition.isEpsilon) {
@@ -1370,6 +1395,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            move = null;
 	          }
 	          next = {
+	            input: input, groupCount: groupCount, arrayed: arrayed,
 	            state: nextState,
 	            offset: nextOffset,
 	            move: move,
@@ -1385,6 +1411,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	              if (currentOffset < input.length) {
 	                move = { dir: 'pred' };
 	                next = {
+	                  input: input, groupCount: groupCount, arrayed: arrayed,
 	                  state: nextState,
 	                  offset: nextOffset,
 	                  move: move,
