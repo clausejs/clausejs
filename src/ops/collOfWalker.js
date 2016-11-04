@@ -20,7 +20,6 @@ function collOfWalker(spec, walkFn) {
         if(problems.length === 0) {
           return x;
         } else {
-          debugger;
           return new Problem(x, spec, problems, 'One or more elements failed collOf test');
         }
       } else {

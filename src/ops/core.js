@@ -174,8 +174,6 @@ function genMultiArgOp(type) {
           return oAssign({}, p, { expr: s, specRef: undefined });
         } else {
           console.error(p);
-          debugger;
-
           throw 'Not implemented';
         }
         // console.log(p);
@@ -257,7 +255,7 @@ module.exports = core;
 // //     { name: 'b', expr: { pred: isStr } },
 // //   ]
 // // });
-// var r = MultipleArgSpec.conform(['a', isStr, 'b', isNum]);
+// var r = NameExprSeq.conform(['a', isStr]);
 // console.log(r);
 
 // var isBool = require('../preds/isBool');

@@ -16,14 +16,14 @@ function simulate(nfa, rawInput, walkFn, walkOpts) {
     result: null,
   };
 
-  var initialInput;
-  if(!isArray(rawInput)) {
-    initialInput = [rawInput];
-  } else {
-    initialInput = rawInput;
-  }
+  // var initialInput;
+  // if(!isArray(rawInput)) {
+    var initialInput = [rawInput];
+  // } else {
+    // initialInput = rawInput;
+  // }
 
-  var initial = { state: 0, offset: 0, input: initialInput, groupCount: 0, arrayed: false };
+  var initial = { state: 0, offset: 0, leftOff: 0, input: initialInput, groupCount: 0, arrayed: false };
   // var names = [];
   var frontier = [initial];
   // console.log('input: ', input);
@@ -31,7 +31,7 @@ function simulate(nfa, rawInput, walkFn, walkOpts) {
   // console.log('nfa', util.inspect(nfa, false, null));
   while (frontier.length > 0) {
     var current = frontier.shift();
-    var { offset: currentOffset, input, groupCount, arrayed } = current;
+    var { offset: currentOffset, leftOff, input, groupCount, arrayed } = current;
     if (current.state === nfa.finalState && currentOffset === input.length) {
       r.matched = true;
       r.result = _getMatch(nfa, rawInput, current, walkOpts);
@@ -60,10 +60,14 @@ function simulate(nfa, rawInput, walkFn, walkOpts) {
           groupCount -= 1;
           if (groupCount === 0) {
             if(arrayed) {
+              if(currentOffset === input.length) {
+                currentOffset = 1;
+              } else {
+                currentOffset = 0;
+              }
               input = [input];
-              currentOffset = 0;
-              arrayed = false;
             }
+            arrayed = false;
           }
         }
 
@@ -84,7 +88,7 @@ function simulate(nfa, rawInput, walkFn, walkOpts) {
               move = null;
             }
             next = {
-              input, groupCount, arrayed,
+              input, groupCount, arrayed, leftOff,
               state: nextState,
               offset: nextOffset,
               move: move,
@@ -100,7 +104,7 @@ function simulate(nfa, rawInput, walkFn, walkOpts) {
                 if(currentOffset < input.length) {
                   move = { dir: 'pred' };
                   next = {
-                    input, groupCount, arrayed,
+                    input, groupCount, arrayed, leftOff,
                     state: nextState,
                     offset: nextOffset,
                     move: move,
