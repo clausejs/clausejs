@@ -7,6 +7,15 @@ var isSpec = require('../src/utils/isSpec');
 var identity = S.identity;
 
 describe('fspec', function() {
+  it('empty case', () => {
+    var FspecSpec = S.fspec({
+      args: S.cat(isSpec),
+      ret: S.isSpec,
+    });
+
+    expect(FspecSpec.instrument()).to.be.an.instanceof(Problem);
+  });
+
   it('should return a function that checks the spec of a given function as its input', function() {
     var FspecSpec = S.fspec({
       args: S.cat(isSpec),

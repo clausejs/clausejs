@@ -89,7 +89,6 @@ function propsWalker(spec, walkFn) {
   }
 }
 
-
 function _genKeyConformer(reqSpecs, optSpec, walkFn, walkOpts) {
   return function tryConformKeys(x) {
     if(reqSpecs) {
