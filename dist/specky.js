@@ -196,12 +196,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return isStr(x); // TODO
 	}
 
-	// var NameObjSpec = props({
-	//   req: 'expr',
-	// }, {
-	//   'expr': isExpr,
-	// });
-
 	var _get = fspec({
 	  args: cat(isNamespaceName),
 	  ret: isSpecRef
@@ -230,9 +224,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return sr;
 	}
 
-	var ExprOrPartialRefMapSpec = or('expr', _get('__specky.Expr')
-	// 'partialRefMap', _get('__specky.PartialRefMap')
-	);
+	var ExprOrPartialRefMapSpec = or('expr', _get('__specky.Expr'));
 
 	var PartialRefMapSpec = props({
 	  req: {
@@ -2061,6 +2053,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
+	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
 	var isProblem = __webpack_require__(24);
 	var isUndefined = __webpack_require__(25);
 	var oAssign = __webpack_require__(1);
@@ -2092,6 +2086,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (isProblem(conformed)) {
 	      return conformed;
 	    }
+	    var problems = [];
 
 	    if (fieldDefs) {
 	      if (conform) {
@@ -2137,19 +2132,37 @@ return /******/ (function(modules) { // webpackBootstrap
 	          var keysToDel = _parseFieldDef2.keysToDel;
 
 	          if (isProblem(result)) {
-	            return result;
-	          }
-	          if (conform) {
-	            _deleteKeys(conformed, keysToDel);
-	            if (!isUndefined(result)) {
-	              conformed[name] = result;
+	            //TODO: break immediately if don't need full report
+	            problems.push([name, result]);
+	          } else {
+	            if (conform) {
+	              _deleteKeys(conformed, keysToDel);
+	              if (!isUndefined(result)) {
+	                conformed[name] = result;
+	              }
 	            }
 	          }
 	        }
 	      }
 	    }
 
-	    return conformed;
+	    if (problems.length > 0) {
+	      var problemMap = {};
+	      var failedNames = [];
+	      for (var i = 0; i < problems.length; i++) {
+	        var _problems$i = _slicedToArray(problems[i], 2);
+
+	        var n = _problems$i[0];
+	        var p = _problems$i[1];
+
+	        failedNames.push(n);
+	        problemMap[n] = p;
+	      }
+	      var newP = new Problem(x, spec, problemMap, 'Some properties failed validation: ' + failedNames.join(', '));
+	      return newP;
+	    } else {
+	      return conformed;
+	    }
 	  };
 	}
 

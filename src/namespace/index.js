@@ -16,12 +16,6 @@ function isNamespaceName(x) {
   return isStr(x); // TODO
 }
 
-// var NameObjSpec = props({
-//   req: 'expr',
-// }, {
-//   'expr': isExpr,
-// });
-
 var _get = fspec({
   args: cat(isNamespaceName),
   ret: isSpecRef,
@@ -52,7 +46,6 @@ function _getUnchecked(ref) {
 
 var ExprOrPartialRefMapSpec = or(
   'expr', _get('__specky.Expr')
-  // 'partialRefMap', _get('__specky.PartialRefMap')
 );
 
 var PartialRefMapSpec = props({

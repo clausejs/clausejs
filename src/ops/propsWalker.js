@@ -24,6 +24,7 @@ function propsWalker(spec, walkFn) {
     if(isProblem(conformed)) {
       return conformed;
     }
+    var problems = [];
 
     if(fieldDefs) {
       if(conform) {
@@ -58,20 +59,33 @@ function propsWalker(spec, walkFn) {
         if(optFieldDefs.fields.hasOwnProperty(name)) {
           var defs = optFieldDefs.fields[name];
           var {result, keysToDel} = parseFieldDef(x, name, defs, walkFn, walkOpts);
-          if (isProblem(result)) {
-            return result;
-          }
-          if(conform) {
-            _deleteKeys(conformed, keysToDel);
-            if(!isUndefined(result)) {
-              conformed[name] = result;
+          if (isProblem(result)) { //TODO: break immediately if don't need full report
+            problems.push([name, result]);
+          } else {
+            if(conform) {
+              _deleteKeys(conformed, keysToDel);
+              if(!isUndefined(result)) {
+                conformed[name] = result;
+              }
             }
           }
         }
       }
     }
 
-    return conformed;
+    if(problems.length > 0) {
+      var problemMap = {};
+      var failedNames = [];
+      for (var i = 0; i < problems.length; i++) {
+        var [n, p] = problems[i];
+        failedNames.push(n);
+        problemMap[n] = p;
+      }
+      var newP = new Problem(x, spec, problemMap, 'Some properties failed validation: ' + failedNames.join(', '));
+      return newP;
+    } else {
+      return conformed;
+    }
   }
 }
 
