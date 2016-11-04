@@ -72,20 +72,8 @@ build.PRED = function(spec) {
 };
 
 build.CAT = function(frags) {
-  // var i;
-  // for (i = 0; i < frags.length; i++) {
-  //   var curr = frags[i];
-  //   var next = frags[i + 1];
-  //   var trans = fragmentTransition(epsilonState(), f.head);
-  //   trans.outName = curr.name;
-  //
-  // }
-  var binaryConcat = function(frag1, currFrag) {
 
-    // var util = require('util');
-    // console.log('--------------------------------');
-    // console.log(util.inspect(frag1.tails, false, null));
-    // console.log('--------------------------------');
+  var binaryConcat = function(frag1, currFrag) {
     patch(frag1.tails, currFrag.head);
     var head = frag1.head;
     var tails = currFrag.tails;
@@ -109,11 +97,6 @@ build.CAT = function(frags) {
     var newHead = fragmentState(nameInTranstions);
 
     var newF = namedFragment(f.name, newHead, [trans]);
-
-    // var util = require('util');
-    // console.log('--------------------------------');
-    // console.log(util.inspect(newHead, false, null));
-    // console.log('--------------------------------');
     return newF;
   });
   var r;
@@ -124,18 +107,9 @@ build.CAT = function(frags) {
     var t = fragmentTransition(s, null);
     var ss = fragmentState([t]);
     r = fragment(ss, [t]);
-
-    // var util = require('util');
-    // console.log(util.inspect(r, false, null));
   }
   r = frontWithState(namedEpsilonState('multi_enter', null, 'CAT', 'in'), r);
   r = rearWithState(namedEpsilonState('multi_exit', null, 'CAT', 'out'), r);
-
-  // var util = require('util');
-  // console.log('--------------------------------');
-  // console.log(util.inspect(r, false, null));
-  // console.log('--------------------------------');
-
   return r;
 };
 
@@ -146,23 +120,9 @@ build.OR = function(frags) {
     var trans = fragmentTransition(outState, null);
     var nameOutState = fragmentState([trans]);
     patch(f.tails, nameOutState);
-
-    // var nameInTranstions = f.head.transitions.map(function (t) {
-    //   var s = fragmentState([t]);
-    //   var namedInTrans = fragmentTransition(nameInEpsilonState(f.name), s);
-    //   return namedInTrans;
-    // });
-    // var newHead = fragmentState(nameInTranstions);
-
     var transIn = fragmentTransition(namedEpsilonState('in', f.name, 'OR'), f.head);
     var newHead = fragmentState([transIn]);
     var newF = namedFragment(f.name, newHead, [trans]);
-
-    // var util = require('util');
-    // console.log('--------------------------------');
-    // console.log(util.inspect(newF, false, null));
-    // console.log('--------------------------------');
-
     return newF;
   });
   var binaryAlt = function(frag1, frag2) {
@@ -170,10 +130,6 @@ build.OR = function(frags) {
     var head = fragmentState(combinedTransitions);
     var tails = frag1.tails.concat(frag2.tails);
     var acc = namedFragment(frag1.name, head, tails);
-    // var util = require('util');
-    // console.log('--------------------------------');
-    // console.log(util.inspect(frag1, false, null));
-    // console.log('--------------------------------');
     return acc;
   };
 
@@ -181,21 +137,10 @@ build.OR = function(frags) {
   newF = frontWithState(namedEpsilonState('enter', null, 'OR'), newF);
   newF = rearWithState(namedEpsilonState('exit', null, 'OR'), newF);
 
-  // var util = require('util');
-  // console.log('--------------------------------');
-  // console.log(util.inspect(newF, false, null));
-  // console.log('--------------------------------');
-
   return newF;
 };
 
 build.Z_OR_M = function(frag) {
-
-  // var util = require('util');
-  // console.log('--------------------------------');
-  // console.log(util.inspect(newHead, false, null));
-  // console.log('--------------------------------');
-
   var l = 'Z_OR_M';
   var loopTrans = fragmentTransition(namedEpsilonState('loop', null, l), frag.head);
   var breakTrans = fragmentTransition(epsilonState(), null);
@@ -214,10 +159,6 @@ build.Z_OR_M = function(frag) {
   newF = frontWithState(namedEpsilonState('maybe_enter', null, l, 'in'), newF);
   newF = rearWithState(namedEpsilonState('maybe_exit', null, l, 'out'), newF);
 
-  // var util = require('util');
-  // console.log('--------------------------------');
-  // console.log(util.inspect(newF, false, null));
-  // console.log('--------------------------------');
   return newF;
 };
 
@@ -245,10 +186,7 @@ build.Z_OR_O = function(frag) {
   var newF = fragment(head, tails);
   newF = frontWithState(namedEpsilonState('maybe_single_enter', null, l), newF);
   newF = rearWithState(namedEpsilonState('maybe_single_exit', null, l), newF);
-  // var util = require('util');
-  // console.log('--------------------------------');
-  // console.log(util.inspect(newF, false, null));
-  // console.log('--------------------------------');
+
   return newF;
 };
 

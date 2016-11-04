@@ -124,18 +124,12 @@ var singleArgOpSpec = {
 
 function genMultiArgOp(type) {
   return namedFn(type, function (conformedArgs) {
-    // console.log(conformedArgs);
     var exprs;
     if(conformedArgs.named) {
       exprs = conformedArgs.named;
 
-      // console.log(exprs);
       var coercedExprs = exprs.map(function(p) {
         var expr = p.expr;
-        if(!expr) {
-          console.log(conformedArgs);
-          debugger;
-        }
         if(expr.spec) {
           var s = expr.spec;
           return oAssign({}, p, { expr: s, spec: undefined });
@@ -149,9 +143,6 @@ function genMultiArgOp(type) {
           console.error(p);
           throw 'Not implemented';
         }
-        // console.log(p);
-        // var s = coerceIntoSpec(p.expr);
-        // return oAssign({}, p, { expr: s });
       });
 
       var s = new Spec(
@@ -165,7 +156,6 @@ function genMultiArgOp(type) {
     } else if (conformedArgs.unnamed){
       exprs = conformedArgs.unnamed;
 
-      // console.log(exprs);
       var coercedExprs = exprs.map(function(p) {
         if(p.spec) {
           var s = p.spec;
@@ -180,9 +170,6 @@ function genMultiArgOp(type) {
           console.error(p);
           throw 'Not implemented';
         }
-        // console.log(p);
-        // var s = coerceIntoSpec(p.expr);
-        // return oAssign({}, p, { expr: s });
       });
 
       var s = new Spec(
@@ -244,60 +231,3 @@ core['+'] = core.oneOrMore;
 core['?'] = core.zeroOrOne;
 
 module.exports = core;
-
-
-
-// ///////////////////////////////////////////////////////////
-// var isBool = require('../preds/isBool');
-// var isStr = require('../preds/isStr');
-// var isNum = require('../preds/isNum');
-//
-//
-// // var Spec = catOp({
-// //   named: [
-// //     { name: 'a', expr: { pred: isNum } },
-// //     { name: 'b', expr: { pred: isStr } },
-// //   ]
-// // });
-// var r = NameExprSeq.conform(['a', isStr]);
-// console.log(r);
-
-// var isBool = require('../preds/isBool');
-// var isStr = require('../preds/isStr');
-//
-// // var boolOrStr = orOp({
-// //   named: [
-// //     { name: 'var1', expr: coerceIntoSpec(isBool) },
-// //     { name: 'var2', expr: coerceIntoSpec(isStr) },
-// //   ],
-// // });
-//
-// var bb = zeroOrMoreOp(
-//   catOp({
-//     named: [
-//       {name: 'verifi', expr: coerceIntoSpec(isBool)},
-//       {name: 'commenti', expr: coerceIntoSpec(isStr)},
-//     ],
-//   })
-// );
-//
-// var b = orOp({
-//   named: [
-//     { name: 'group1', expr: bb},
-//     { name: 'group2', expr: coerceIntoSpec(isStr) },
-//   ],
-// });
-//
-// var r = b.conform([
-//   true, 'z',
-//   true, 'c',
-//   false, 'e',
-//   'z',
-// ]);
-// // var r = s.conform([
-// //   true, 'z',
-// //   false, 'w',
-// //   'z',
-// // ]);
-// console.log(r);
-// ///////////////////////////////////////////////////////////

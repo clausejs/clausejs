@@ -75,20 +75,15 @@ function fspecWalker(spec, walkFn) {
   function getArgConformedFn(fnName, fn, walkOpts) {
     return function () {
       var args = Array.from(arguments);
-      // console.log(args);
-      // var util = require('util');
-      // console.log(util.inspect(argsSpec, false, null));
+
       var conformedArgs = walkFn(argsSpec, args, walkOpts);
       if(isProblem(conformedArgs)) {
         var p = new Problem(args, argsSpec, [conformedArgs], `Args ${JSON.stringify(args)} for function ${fnName} is not valid`);
         betterThrow(p);
       }
-      // console.log(conformedArgs);
-      // var util = require('util');
-      // console.log(util.inspect(conformedArgs, false, null));
+
       var retVal = fn(conformedArgs);
       checkRet(fn, fnName, retVal, walkOpts);
-      // console.log(retVal);
       return retVal;
     };
   }

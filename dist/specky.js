@@ -770,18 +770,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function genMultiArgOp(type) {
 	  return namedFn(type, function (conformedArgs) {
-	    // console.log(conformedArgs);
 	    var exprs;
 	    if (conformedArgs.named) {
 	      exprs = conformedArgs.named;
 
-	      // console.log(exprs);
 	      var coercedExprs = exprs.map(function (p) {
 	        var expr = p.expr;
-	        if (!expr) {
-	          console.log(conformedArgs);
-	          debugger;
-	        }
 	        if (expr.spec) {
 	          var s = expr.spec;
 	          return oAssign({}, p, { expr: s, spec: undefined });
@@ -795,9 +789,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	          console.error(p);
 	          throw 'Not implemented';
 	        }
-	        // console.log(p);
-	        // var s = coerceIntoSpec(p.expr);
-	        // return oAssign({}, p, { expr: s });
 	      });
 
 	      var s = new Spec(type, coercedExprs, null, null);
@@ -809,7 +800,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    } else if (conformedArgs.unnamed) {
 	      exprs = conformedArgs.unnamed;
 
-	      // console.log(exprs);
 	      var coercedExprs = exprs.map(function (p) {
 	        if (p.spec) {
 	          var s = p.spec;
@@ -824,9 +814,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	          console.error(p);
 	          throw 'Not implemented';
 	        }
-	        // console.log(p);
-	        // var s = coerceIntoSpec(p.expr);
-	        // return oAssign({}, p, { expr: s });
 	      });
 
 	      var s = new Spec(type, coercedExprs, null, null);
@@ -882,61 +869,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	core['?'] = core.zeroOrOne;
 
 	module.exports = core;
-
-	// ///////////////////////////////////////////////////////////
-	// var isBool = require('../preds/isBool');
-	// var isStr = require('../preds/isStr');
-	// var isNum = require('../preds/isNum');
-	//
-	//
-	// // var Spec = catOp({
-	// //   named: [
-	// //     { name: 'a', expr: { pred: isNum } },
-	// //     { name: 'b', expr: { pred: isStr } },
-	// //   ]
-	// // });
-	// var r = NameExprSeq.conform(['a', isStr]);
-	// console.log(r);
-
-	// var isBool = require('../preds/isBool');
-	// var isStr = require('../preds/isStr');
-	//
-	// // var boolOrStr = orOp({
-	// //   named: [
-	// //     { name: 'var1', expr: coerceIntoSpec(isBool) },
-	// //     { name: 'var2', expr: coerceIntoSpec(isStr) },
-	// //   ],
-	// // });
-	//
-	// var bb = zeroOrMoreOp(
-	//   catOp({
-	//     named: [
-	//       {name: 'verifi', expr: coerceIntoSpec(isBool)},
-	//       {name: 'commenti', expr: coerceIntoSpec(isStr)},
-	//     ],
-	//   })
-	// );
-	//
-	// var b = orOp({
-	//   named: [
-	//     { name: 'group1', expr: bb},
-	//     { name: 'group2', expr: coerceIntoSpec(isStr) },
-	//   ],
-	// });
-	//
-	// var r = b.conform([
-	//   true, 'z',
-	//   true, 'c',
-	//   false, 'e',
-	//   'z',
-	// ]);
-	// // var r = s.conform([
-	// //   true, 'z',
-	// //   false, 'w',
-	// //   'z',
-	// // ]);
-	// console.log(r);
-	// ///////////////////////////////////////////////////////////
 
 /***/ },
 /* 7 */
@@ -1315,9 +1247,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	function simulate(nfa, rawInput, walkFn, walkOpts) {
 	  var conform = walkOpts.conform;
 	  var instrument = walkOpts.instrument;
-	  // console.log('------raw------');
-	  // console.log(rawInput);
-	  // console.log('---------------');
 
 	  var input;
 
@@ -1326,19 +1255,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    result: null
 	  };
 
-	  // var initialInput;
-	  // if(!isArray(rawInput)) {
-	  var initialInput = [rawInput];
-	  // } else {
-	  // initialInput = rawInput;
-	  // }
-
-	  var initial = { state: 0, offset: 0, leftOff: 0, input: initialInput, groupCount: 0, arrayed: false };
-	  // var names = [];
+	  var initial = { state: 0, offset: 0, leftOff: 0, input: [rawInput], groupCount: 0, arrayed: false };
 	  var frontier = [initial];
-	  // console.log('input: ', input);
-	  // var util = require('util');
-	  // console.log('nfa', util.inspect(nfa, false, null));
 	  while (frontier.length > 0) {
 	    var current = frontier.shift();
 	    var currentOffset = current.offset;
@@ -1350,14 +1268,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (current.state === nfa.finalState && currentOffset === input.length) {
 	      r.matched = true;
 	      r.result = _getMatch(nfa, rawInput, current, walkOpts);
-	      // console.log('-------r--------');
-	      // console.log(r);
-	      // console.log('----------------');
 	      return r;
 	    }
 	    for (var nextStateStr in nfa.transitions[current.state]) {
 	      var nextState = parseInt(nextStateStr);
-	      // console.log(currentOffset, input);
 	      var observed = input[currentOffset];
 	      var transition = nfa.transitions[current.state][nextState];
 
@@ -1446,9 +1360,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var MULTI_ENTER = function MULTI_ENTER() {};
 	var MAYBE_ENTER = function MAYBE_ENTER() {};
 	var MAYBE_SINGLE_ENTER = function MAYBE_SINGLE_ENTER() {};
-	// var FOLD = 'FOLD';
-	// var ENTER = 'ENTER';
-	// var MAYBE_ENTER = 'MAYBE_ENTER';
+
 	var Name = function Name(n) {
 	  this.value = n;
 	};
@@ -1461,22 +1373,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var instrument = walkOpts.instrument;
 
 	  var chain = _stateChain(nfa, finalState);
-	  // console.log(input);
-	  // console.log('---------chain----------');
-	  // var util = require('util');
-	  // console.log(util.inspect(chain, false, null));
-	  // console.log('------------------------');
-	  // chain.forEach(function (c) {
-	  //   console.log('c', c);
-	  // })
-	  // var util = require('util');
-	  // console.log(util.inspect(chain, false, null));
 	  var valStack = [];
 	  var r = {};
-	  // console.log(chain);
-	  // console.log('-------------------');
+
 	  chain.forEach(function (curr) {
-	    // console.log(curr, valStack);
 	    if (curr.move) {
 	      switch (curr.move.dir) {
 	        case 'enter':
@@ -1600,7 +1500,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	          console.error(curr);throw 'FUUU';
 	      }
 	    }
-	    // console.log(curr, valStack);
 	  });
 	  if (valStack.length !== 1) {
 	    console.error(valStack);
@@ -1660,7 +1559,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var prev;
 	  while (curr) {
 	    if (!prev || curr.state !== prev.state && curr.move) {
-	      // console.log(curr.isEpsilon, curr.move, curr.state);
 	      var o = {
 	        isEpsilon: curr.isEpsilon,
 	        move: curr.move,
@@ -1675,7 +1573,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    prev = curr;
 	    curr = curr.prev;
 	  }
-	  // console.log(chain);
 	  return chain;
 	}
 
@@ -1724,7 +1621,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      state.index = nextIndex;
 	      nextIndex++;
 	      state.transitions.forEach(function (transition) {
-	        // console.log(transition);
 	        frontier.push(transition.target);
 	      });
 	      states.push(state);
@@ -1786,10 +1682,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	var compile = function compile(expr) {
 	  var rootedExpr = wrapRoot(expr);
 	  var fragment = evalSpec(rootedExpr);
-
-	  // var util = require('util');
-	  // console.log(util.inspect(fragment, false, null));
-
 	  var states = indexedFragmentStates(fragment);
 	  var numStates = states.length;
 	  var nfaTransitions = {};
@@ -1895,20 +1787,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 	build.CAT = function (frags) {
-	  // var i;
-	  // for (i = 0; i < frags.length; i++) {
-	  //   var curr = frags[i];
-	  //   var next = frags[i + 1];
-	  //   var trans = fragmentTransition(epsilonState(), f.head);
-	  //   trans.outName = curr.name;
-	  //
-	  // }
-	  var binaryConcat = function binaryConcat(frag1, currFrag) {
 
-	    // var util = require('util');
-	    // console.log('--------------------------------');
-	    // console.log(util.inspect(frag1.tails, false, null));
-	    // console.log('--------------------------------');
+	  var binaryConcat = function binaryConcat(frag1, currFrag) {
 	    patch(frag1.tails, currFrag.head);
 	    var head = frag1.head;
 	    var tails = currFrag.tails;
@@ -1930,11 +1810,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var newHead = fragmentState(nameInTranstions);
 
 	    var newF = namedFragment(f.name, newHead, [trans]);
-
-	    // var util = require('util');
-	    // console.log('--------------------------------');
-	    // console.log(util.inspect(newHead, false, null));
-	    // console.log('--------------------------------');
 	    return newF;
 	  });
 	  var r;
@@ -1945,18 +1820,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var t = fragmentTransition(s, null);
 	    var ss = fragmentState([t]);
 	    r = fragment(ss, [t]);
-
-	    // var util = require('util');
-	    // console.log(util.inspect(r, false, null));
 	  }
 	  r = frontWithState(namedEpsilonState('multi_enter', null, 'CAT', 'in'), r);
 	  r = rearWithState(namedEpsilonState('multi_exit', null, 'CAT', 'out'), r);
-
-	  // var util = require('util');
-	  // console.log('--------------------------------');
-	  // console.log(util.inspect(r, false, null));
-	  // console.log('--------------------------------');
-
 	  return r;
 	};
 
@@ -1967,23 +1833,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var trans = fragmentTransition(outState, null);
 	    var nameOutState = fragmentState([trans]);
 	    patch(f.tails, nameOutState);
-
-	    // var nameInTranstions = f.head.transitions.map(function (t) {
-	    //   var s = fragmentState([t]);
-	    //   var namedInTrans = fragmentTransition(nameInEpsilonState(f.name), s);
-	    //   return namedInTrans;
-	    // });
-	    // var newHead = fragmentState(nameInTranstions);
-
 	    var transIn = fragmentTransition(namedEpsilonState('in', f.name, 'OR'), f.head);
 	    var newHead = fragmentState([transIn]);
 	    var newF = namedFragment(f.name, newHead, [trans]);
-
-	    // var util = require('util');
-	    // console.log('--------------------------------');
-	    // console.log(util.inspect(newF, false, null));
-	    // console.log('--------------------------------');
-
 	    return newF;
 	  });
 	  var binaryAlt = function binaryAlt(frag1, frag2) {
@@ -1991,10 +1843,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var head = fragmentState(combinedTransitions);
 	    var tails = frag1.tails.concat(frag2.tails);
 	    var acc = namedFragment(frag1.name, head, tails);
-	    // var util = require('util');
-	    // console.log('--------------------------------');
-	    // console.log(util.inspect(frag1, false, null));
-	    // console.log('--------------------------------');
 	    return acc;
 	  };
 
@@ -2002,21 +1850,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  newF = frontWithState(namedEpsilonState('enter', null, 'OR'), newF);
 	  newF = rearWithState(namedEpsilonState('exit', null, 'OR'), newF);
 
-	  // var util = require('util');
-	  // console.log('--------------------------------');
-	  // console.log(util.inspect(newF, false, null));
-	  // console.log('--------------------------------');
-
 	  return newF;
 	};
 
 	build.Z_OR_M = function (frag) {
-
-	  // var util = require('util');
-	  // console.log('--------------------------------');
-	  // console.log(util.inspect(newHead, false, null));
-	  // console.log('--------------------------------');
-
 	  var l = 'Z_OR_M';
 	  var loopTrans = fragmentTransition(namedEpsilonState('loop', null, l), frag.head);
 	  var breakTrans = fragmentTransition(epsilonState(), null);
@@ -2035,10 +1872,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  newF = frontWithState(namedEpsilonState('maybe_enter', null, l, 'in'), newF);
 	  newF = rearWithState(namedEpsilonState('maybe_exit', null, l, 'out'), newF);
 
-	  // var util = require('util');
-	  // console.log('--------------------------------');
-	  // console.log(util.inspect(newF, false, null));
-	  // console.log('--------------------------------');
 	  return newF;
 	};
 
@@ -2066,10 +1899,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var newF = fragment(head, tails);
 	  newF = frontWithState(namedEpsilonState('maybe_single_enter', null, l), newF);
 	  newF = rearWithState(namedEpsilonState('maybe_single_exit', null, l), newF);
-	  // var util = require('util');
-	  // console.log('--------------------------------');
-	  // console.log(util.inspect(newF, false, null));
-	  // console.log('--------------------------------');
+
 	  return newF;
 	};
 
@@ -2196,20 +2026,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	  function getArgConformedFn(fnName, fn, walkOpts) {
 	    return function () {
 	      var args = Array.from(arguments);
-	      // console.log(args);
-	      // var util = require('util');
-	      // console.log(util.inspect(argsSpec, false, null));
+
 	      var conformedArgs = walkFn(argsSpec, args, walkOpts);
 	      if (isProblem(conformedArgs)) {
 	        var p = new Problem(args, argsSpec, [conformedArgs], 'Args ' + JSON.stringify(args) + ' for function ' + fnName + ' is not valid');
 	        betterThrow(p);
 	      }
-	      // console.log(conformedArgs);
-	      // var util = require('util');
-	      // console.log(util.inspect(conformedArgs, false, null));
+
 	      var retVal = fn(conformedArgs);
 	      checkRet(fn, fnName, retVal, walkOpts);
-	      // console.log(retVal);
 	      return retVal;
 	    };
 	  }
@@ -2253,7 +2078,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      optSpecs = opt;
 
 	  return function propsWalk(x, walkOpts) {
-	    // console.log(x);
 	    var conform = walkOpts.conform;
 
 	    var fieldDefs;
@@ -2264,7 +2088,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      keyConformer = _genKeyConformer(reqSpecs, optSpecs, walkFn, walkOpts); //lazy
 	    }
 	    var conformed = keyConformer(x);
-	    // console.log(keyResult);
 
 	    if (isProblem(conformed)) {
 	      return conformed;
@@ -2314,7 +2137,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	          var keysToDel = _parseFieldDef2.keysToDel;
 
 	          if (isProblem(result)) {
-	            // console.log(r.failsPredicate);
 	            return result;
 	          }
 	          if (conform) {
@@ -2327,11 +2149,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	    }
 
-	    // console.log('-------------------');
-	    // var util = require('util');
-	    // console.log(util.inspect(conformed, false, null));
-	    // console.log('-------------------');
-	    // console.log('conformed', conformed);
 	    return conformed;
 	  };
 	}
@@ -2399,7 +2216,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	function parseFieldDef(x, name, defs, walkFn, walkOpts) {
 	  var valExprOnly = defs.valExprOnly;
 	  var keyValExprPair = defs.keyValExprPair;
-	  // console.log(name, defs);
 
 	  var r;
 	  var keysToDel = [];
@@ -2414,12 +2230,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        continue;
 	      }
 	      if (!isProblem(rr)) {
-	        // console.log(valSpec, x[rr]);
 	        keysToDel.push(rr);
 	        var rrr = _conformNamedOrExpr(x[rr], valSpec, walkFn, walkOpts);
-	        // console.log(rrr);
 	        if (isProblem(rrr)) {
-	          // console.log(rrr);
 	          return { result: rrr, keysToDel: keysToDel };
 	        } else {
 	          if (r === undefined) {
@@ -2431,17 +2244,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  } else if (valExprOnly) {
 	    var valSpec = valExprOnly;
-	    // console.log(valSpec);
-	    // console.log(r);
 	    r = x[name];
-	    // console.log(name, r);
 	    if (!isUndefined(r) && x[name] !== x) {
 	      r = _conformNamedOrExpr(r, valSpec, walkFn, walkOpts);
 	    }
 	  }
-	  // console.log('======');
-	  // console.log(r);
-	  // console.log('======');
 	  return { result: r, keysToDel: keysToDel };
 	}
 
@@ -2648,14 +2455,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 	function propsOp(cargs) {
-
-	  // console.log('-------------------');
-	  // var util = require('util');
-	  // console.log(util.inspect(cargs, false, null));
-	  // console.log('-------------------');
-
-
-	  // console.log(cargs);
 	  var s = new Spec(TYPE_PROPS, [cargs], null, null);
 	  s.conform = function propsPonform(x) {
 	    return walk(s, x, { conform: true });
@@ -2856,7 +2655,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	function conform(spec, x) {
 	  if (spec && isSpec(spec)) {
 	    var r = spec.conform(x);
-	    // console.log(spec.type, spec.conform);
 	    return r;
 	  } else {
 	    throw new Error('Expression needs to be of type Spec. expression: ' + spec + ', offending value: ' + x);

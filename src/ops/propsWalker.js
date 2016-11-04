@@ -11,7 +11,6 @@ function propsWalker(spec, walkFn) {
   var reqSpecs = req, optSpecs = opt;
 
   return function propsWalk(x, walkOpts) {
-    // console.log(x);
     var { conform } = walkOpts;
     var fieldDefs;
     if(reqSpecs) {
@@ -21,7 +20,6 @@ function propsWalker(spec, walkFn) {
       keyConformer = _genKeyConformer(reqSpecs, optSpecs, walkFn, walkOpts); //lazy
     }
     var conformed = keyConformer(x);
-    // console.log(keyResult);
 
     if(isProblem(conformed)) {
       return conformed;
@@ -61,7 +59,6 @@ function propsWalker(spec, walkFn) {
           var defs = optFieldDefs.fields[name];
           var {result, keysToDel} = parseFieldDef(x, name, defs, walkFn, walkOpts);
           if (isProblem(result)) {
-            // console.log(r.failsPredicate);
             return result;
           }
           if(conform) {
@@ -74,11 +71,6 @@ function propsWalker(spec, walkFn) {
       }
     }
 
-    // console.log('-------------------');
-    // var util = require('util');
-    // console.log(util.inspect(conformed, false, null));
-    // console.log('-------------------');
-    // console.log('conformed', conformed);
     return conformed;
   }
 }
@@ -142,7 +134,6 @@ function _deleteKeys(subject, keys) {
 
 function parseFieldDef(x, name, defs, walkFn, walkOpts) {
   var { valExprOnly, keyValExprPair } = defs;
-  // console.log(name, defs);
   var r;
   var keysToDel = [];
   if(keyValExprPair) {
@@ -154,12 +145,9 @@ function parseFieldDef(x, name, defs, walkFn, walkOpts) {
         continue;
       }
       if(!isProblem(rr)) {
-        // console.log(valSpec, x[rr]);
         keysToDel.push(rr);
         var rrr = _conformNamedOrExpr(x[rr], valSpec, walkFn, walkOpts);
-        // console.log(rrr);
         if(isProblem(rrr)) {
-          // console.log(rrr);
           return { result: rrr, keysToDel };
         } else {
           if(r === undefined) {
@@ -171,17 +159,11 @@ function parseFieldDef(x, name, defs, walkFn, walkOpts) {
     }
   } else if (valExprOnly) {
     var valSpec = valExprOnly;
-    // console.log(valSpec);
-    // console.log(r);
     r = x[name];
-    // console.log(name, r);
     if(!isUndefined(r) && x[name] !== x) {
       r = _conformNamedOrExpr(r, valSpec, walkFn, walkOpts);
     }
   }
-  // console.log('======');
-  // console.log(r);
-  // console.log('======');
   return { result: r, keysToDel };
 }
 

@@ -38,8 +38,6 @@ describe('props', function() {
       },
     });
 
-    // console.log(ObjSpec);
-
     var conformed1 = { title: 'Do it', content: 'blah', userId: 2 };
     var conformed2 = { title: 'Do it', content: 'blah', userId: 2, ooA: {val: 1}, ooB: {val: 2}, ooC: {val: 3} };
     var unconformed1 = { content: false, userId: 2 };

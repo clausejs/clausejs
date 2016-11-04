@@ -55,7 +55,6 @@ describe('nfa regex', function() {
         ZeroOrMoreStrings);
       var validData = ['a', 'b', 1, 2, 3, true, 2 , 3, 4];
       var invalidData = [2, 3, 4, 5];
-      // console.log(expr.conform(validData));
       expect(S.isValid(expr, validData)).to.be.true;
       expect(S.isValid(expr, invalidData)).to.be.false;
     });

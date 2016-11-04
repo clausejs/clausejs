@@ -63,14 +63,6 @@ var PropsSpec = fspec({
 });
 
 function propsOp(cargs) {
-
-  // console.log('-------------------');
-  // var util = require('util');
-  // console.log(util.inspect(cargs, false, null));
-  // console.log('-------------------');
-
-
-  // console.log(cargs);
   var s = new Spec(TYPE_PROPS, [cargs], null, null);
   s.conform = function propsPonform(x) {
     return walk(s, x, { conform: true });

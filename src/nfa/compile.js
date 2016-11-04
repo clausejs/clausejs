@@ -11,7 +11,6 @@ var indexedFragmentStates = function(fragment) {
       state.index = nextIndex;
       nextIndex++;
       state.transitions.forEach(function(transition) {
-        // console.log(transition);
       	frontier.push(transition.target);
       });
       states.push(state);
@@ -78,10 +77,6 @@ function wrapRoot(expr) {
 var compile = function(expr) {
   var rootedExpr = wrapRoot(expr);
   var fragment = evalSpec(rootedExpr);
-
-  // var util = require('util');
-  // console.log(util.inspect(fragment, false, null));
-
   var states = indexedFragmentStates(fragment);
   var numStates = states.length;
   var nfaTransitions = {};

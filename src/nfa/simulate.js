@@ -6,9 +6,6 @@ var isUndefined = require('../preds/isUndefined');
 
 function simulate(nfa, rawInput, walkFn, walkOpts) {
   var { conform, instrument } = walkOpts;
-  // console.log('------raw------');
-  // console.log(rawInput);
-  // console.log('---------------');
   var input;
 
   var r = {
@@ -16,33 +13,18 @@ function simulate(nfa, rawInput, walkFn, walkOpts) {
     result: null,
   };
 
-  // var initialInput;
-  // if(!isArray(rawInput)) {
-    var initialInput = [rawInput];
-  // } else {
-    // initialInput = rawInput;
-  // }
-
-  var initial = { state: 0, offset: 0, leftOff: 0, input: initialInput, groupCount: 0, arrayed: false };
-  // var names = [];
+  var initial = { state: 0, offset: 0, leftOff: 0, input: [rawInput], groupCount: 0, arrayed: false };
   var frontier = [initial];
-  // console.log('input: ', input);
-  // var util = require('util');
-  // console.log('nfa', util.inspect(nfa, false, null));
   while (frontier.length > 0) {
     var current = frontier.shift();
     var { offset: currentOffset, leftOff, input, groupCount, arrayed } = current;
     if (current.state === nfa.finalState && currentOffset === input.length) {
       r.matched = true;
       r.result = _getMatch(nfa, rawInput, current, walkOpts);
-      // console.log('-------r--------');
-      // console.log(r);
-      // console.log('----------------');
       return r;
     }
     for (var nextStateStr in nfa.transitions[current.state]) {
       var nextState = parseInt(nextStateStr);
-      // console.log(currentOffset, input);
         var observed = input[currentOffset];
         var transition = nfa.transitions[current.state][nextState];
 
@@ -132,31 +114,17 @@ var ENTER = function() {};
 var MULTI_ENTER = function() {};
 var MAYBE_ENTER = function() {};
 var MAYBE_SINGLE_ENTER = function() {};
-// var FOLD = 'FOLD';
-// var ENTER = 'ENTER';
-// var MAYBE_ENTER = 'MAYBE_ENTER';
+
 var Name = function(n) { this.value = n; };
 var ArrayFragment = function(val) { this.value = val; };
 
 function _getMatch(nfa, input, finalState, walkOpts) {
   var { conform, instrument } = walkOpts;
   var chain = _stateChain(nfa, finalState);
-  // console.log(input);
-  // console.log('---------chain----------');
-  // var util = require('util');
-  // console.log(util.inspect(chain, false, null));
-  // console.log('------------------------');
-  // chain.forEach(function (c) {
-  //   console.log('c', c);
-  // })
-  // var util = require('util');
-  // console.log(util.inspect(chain, false, null));
   var valStack = [];
   var r = {};
-  // console.log(chain);
-  // console.log('-------------------');
+
   chain.forEach(function (curr) {
-    // console.log(curr, valStack);
     if(curr.move) {
       switch(curr.move.dir) {
         case 'enter' : {
@@ -267,7 +235,6 @@ function _getMatch(nfa, input, finalState, walkOpts) {
         default: console.error(curr); throw 'FUUU';
       }
     }
-    // console.log(curr, valStack);
   });
   if(valStack.length !== 1) {
     console.error(valStack);
@@ -327,7 +294,6 @@ function _stateChain(nfa, finalState) {
   var prev;
   while(curr) {
     if(!prev || (curr.state !== prev.state) && curr.move) {
-          // console.log(curr.isEpsilon, curr.move, curr.state);
       var o = {
         isEpsilon: curr.isEpsilon,
         move: curr.move,
@@ -342,7 +308,6 @@ function _stateChain(nfa, finalState) {
     prev = curr;
     curr = curr.prev;
   }
-  // console.log(chain);
   return chain;
 }
 
