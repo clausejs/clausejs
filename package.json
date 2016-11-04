@@ -1,6 +1,6 @@
 {
   "name": "specky",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A powerful & flexible validation and conformation library for your JavaScript data and functions.",
   "main": "dist/specky.js",
   "scripts": {
@@ -16,7 +16,10 @@
   "keywords": [
     "testing",
     "spec",
-    "javascript"
+    "javascript",
+    "specky",
+    "validation",
+    "schema"
   ],
   "author": "Xiyang Chen <settinghead@gmail.com>",
   "license": "EPL-1.0",
