@@ -26,4 +26,4 @@ function andOp(conformedArgs) {
 }
 
 
-module.exports = AndSpec.wrapConformedArgs(andOp);
+module.exports = AndSpec.instrumentConformed(andOp);

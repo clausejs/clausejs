@@ -78,7 +78,7 @@ function propsOp(cargs) {
   return s;
 }
 
-var props = PropsSpec.wrapConformedArgs(propsOp);
+var props = PropsSpec.instrumentConformed(propsOp);
 
 module.exports = {
   props,

@@ -5,7 +5,6 @@ var S = s;
 
 console.log(s);
 
-
 var NamedGroupedSpec = S.cat(
   ['z', 'it\'s a fuuuunction', S.isFn],
   ['b', S.isObj],

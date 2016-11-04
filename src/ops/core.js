@@ -225,14 +225,14 @@ function genSingleArgOp(type) {
   });
 }
 
-var collOf = fspec(singleArgOpSpec).wrapConformedArgs(collOfOp);
+var collOf = fspec(singleArgOpSpec).instrumentConformed(collOfOp);
 
 var core = {
-  cat: fspec(multipleArgOpSpec).wrapConformedArgs(catOp),
-  or: fspec(multipleArgOpSpec).wrapConformedArgs(orOp),
-  zeroOrMore: fspec(singleArgOpSpec).wrapConformedArgs(zeroOrMoreOp),
-  zeroOrOne: fspec(singleArgOpSpec).wrapConformedArgs(zeroOrOneOp),
-  oneOrMore: fspec(singleArgOpSpec).wrapConformedArgs(oneOrMoreOp),
+  cat: fspec(multipleArgOpSpec).instrumentConformed(catOp),
+  or: fspec(multipleArgOpSpec).instrumentConformed(orOp),
+  zeroOrMore: fspec(singleArgOpSpec).instrumentConformed(zeroOrMoreOp),
+  zeroOrOne: fspec(singleArgOpSpec).instrumentConformed(zeroOrOneOp),
+  oneOrMore: fspec(singleArgOpSpec).instrumentConformed(oneOrMoreOp),
   ExprSpec,
   collOf,
   arrayOf: collOf,

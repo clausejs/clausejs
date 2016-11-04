@@ -11,7 +11,7 @@ function fspecWalker(spec, walkFn) {
     var { conform, instrument } = walkOpts;
 
     if(conform && instrument) {
-      return wrapConformedArgs(fn, walkOpts);
+      return instrumentConformed(fn, walkOpts);
     } else if (instrument) {
       return _instrument(fn, walkOpts);
     } else {
@@ -26,7 +26,7 @@ function fspecWalker(spec, walkFn) {
     return namedSpecedFn;
   }
 
-  function wrapConformedArgs (fn, walkOpts) {
+  function instrumentConformed (fn, walkOpts) {
     var fnName = functionName(fn);
     var argConformedFn = getArgConformedFn(fnName, fn, walkOpts);
     var namedArgConformedFn = namedFn(fnName, argConformedFn, '__conformed');

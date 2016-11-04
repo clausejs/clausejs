@@ -316,7 +316,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	_set('__specky.Expr', { expr: ExprSpec });
 	_set('__specky.PartialRefMap', { expr: PartialRefMapSpec });
 
-	module.exports = NamespaceFnSpec.wrapConformedArgs(speckyNamespace);
+	module.exports = NamespaceFnSpec.instrumentConformed(speckyNamespace);
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
@@ -863,14 +863,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	  });
 	}
 
-	var collOf = fspec(singleArgOpSpec).wrapConformedArgs(collOfOp);
+	var collOf = fspec(singleArgOpSpec).instrumentConformed(collOfOp);
 
 	var core = {
-	  cat: fspec(multipleArgOpSpec).wrapConformedArgs(catOp),
-	  or: fspec(multipleArgOpSpec).wrapConformedArgs(orOp),
-	  zeroOrMore: fspec(singleArgOpSpec).wrapConformedArgs(zeroOrMoreOp),
-	  zeroOrOne: fspec(singleArgOpSpec).wrapConformedArgs(zeroOrOneOp),
-	  oneOrMore: fspec(singleArgOpSpec).wrapConformedArgs(oneOrMoreOp),
+	  cat: fspec(multipleArgOpSpec).instrumentConformed(catOp),
+	  or: fspec(multipleArgOpSpec).instrumentConformed(orOp),
+	  zeroOrMore: fspec(singleArgOpSpec).instrumentConformed(zeroOrMoreOp),
+	  zeroOrOne: fspec(singleArgOpSpec).instrumentConformed(zeroOrOneOp),
+	  oneOrMore: fspec(singleArgOpSpec).instrumentConformed(oneOrMoreOp),
 	  ExprSpec: ExprSpec,
 	  collOf: collOf,
 	  arrayOf: collOf
@@ -1195,7 +1195,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function fspec(fnSpec) {
 	  var spec = new Spec('FSPEC', [fnSpec], null, null);
-	  spec.wrapConformedArgs = function wrapConformedArgs(fn) {
+	  spec.instrumentConformed = function instrumentConformed(fn) {
 	    return walk(spec, fn, { conform: true, instrument: true });
 	  };
 	  spec.instrument = function instrument(fn) {
@@ -2132,7 +2132,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 	    if (conform && instrument) {
-	      return wrapConformedArgs(fn, walkOpts);
+	      return instrumentConformed(fn, walkOpts);
 	    } else if (instrument) {
 	      return _instrument(fn, walkOpts);
 	    } else {
@@ -2147,7 +2147,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return namedSpecedFn;
 	  }
 
-	  function wrapConformedArgs(fn, walkOpts) {
+	  function instrumentConformed(fn, walkOpts) {
 	    var fnName = functionName(fn);
 	    var argConformedFn = getArgConformedFn(fnName, fn, walkOpts);
 	    var namedArgConformedFn = namedFn(fnName, argConformedFn, '__conformed');
@@ -2663,7 +2663,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return s;
 	}
 
-	var props = PropsSpec.wrapConformedArgs(propsOp);
+	var props = PropsSpec.instrumentConformed(propsOp);
 
 	module.exports = {
 	  props: props,
@@ -2715,7 +2715,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return andS;
 	}
 
-	module.exports = AndSpec.wrapConformedArgs(andOp);
+	module.exports = AndSpec.instrumentConformed(andOp);
 
 /***/ },
 /* 38 */

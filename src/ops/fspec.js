@@ -3,7 +3,7 @@ var walk = require('./walk');
 
 function fspec(fnSpec) {
   var spec = new Spec('FSPEC', [fnSpec], null, null);
-  spec.wrapConformedArgs = function wrapConformedArgs(fn) {
+  spec.instrumentConformed = function instrumentConformed(fn) {
     return walk(spec, fn, { conform: true, instrument: true });
   };
   spec.instrument = function instrument(fn) {
