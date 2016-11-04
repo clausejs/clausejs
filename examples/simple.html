@@ -2,25 +2,31 @@
 <head>
   <script src="../dist/specky.js"></script>
   <script>
-  for (var i=0; i < 10000; i++) {
-    var s = S;
+  // Under Node/ES6 module settings:
+  // var s = require('specky');
 
-    var ItemSpec = s.props({
-      req: {
-        title: s.isStr,
-        content: s.isStr,
-      }
-    });
+  // I'm just lazy holding the 'shift' key every single time
+  var s = S;
 
-    var correctItem = { title: 'hi', content: 'lol' };
-    var incorrectItem = { title: 'hi', content: null };
+  var ItemSpec = s.props({
+    req: {
+      title: s.isStr,
+      content: s.isStr,
+    }
+  });
 
-    var r1 = ItemSpec.conform(correctItem);
-    var r2 = ItemSpec.conform(incorrectItem);
-  }
+  var correctItem = { title: 'hi', content: 'lol' };
+
+  // null content not accepted per Spec above
+  var incorrectItem = { title: 'hi', content: null };
+
+  var r1 = ItemSpec.conform(correctItem);
+  var r2 = ItemSpec.conform(incorrectItem);
+
+
   console.log(r1);
   console.log(r2);
-
+  
   </script>
 </head>
 </html>
