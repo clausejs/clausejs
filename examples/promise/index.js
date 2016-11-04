@@ -8,12 +8,10 @@ var PromiseSpec = S.props({
         args: S.cat('message', S.isStr),
         ret: S.isUndefined,
       })),
-      ret: S('promiseTest.Promise'),
+      ret: S.delayed(() => PromiseSpec), //recursive
     }),
   },
 });
-
-S('promiseTest.Promise', PromiseSpec);
 
 var GetPromiseSpec = S.fspec({
   ret: PromiseSpec,
