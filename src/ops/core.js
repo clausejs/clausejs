@@ -132,6 +132,10 @@ function genMultiArgOp(type) {
       // console.log(exprs);
       var coercedExprs = exprs.map(function(p) {
         var expr = p.expr;
+        if(!expr) {
+          console.log(conformedArgs);
+          debugger;
+        }
         if(expr.spec) {
           var s = expr.spec;
           return oAssign({}, p, { expr: s, spec: undefined });

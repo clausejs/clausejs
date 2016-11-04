@@ -778,6 +778,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      // console.log(exprs);
 	      var coercedExprs = exprs.map(function (p) {
 	        var expr = p.expr;
+	        if (!expr) {
+	          console.log(conformedArgs);
+	          debugger;
+	        }
 	        if (expr.spec) {
 	          var s = expr.spec;
 	          return oAssign({}, p, { expr: s, spec: undefined });
@@ -818,8 +822,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	          return oAssign({}, p, { expr: s, specRef: undefined });
 	        } else {
 	          console.error(p);
-	          debugger;
-
 	          throw 'Not implemented';
 	        }
 	        // console.log(p);
@@ -893,7 +895,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	// //     { name: 'b', expr: { pred: isStr } },
 	// //   ]
 	// // });
-	// var r = MultipleArgSpec.conform(['a', isStr, 'b', isNum]);
+	// var r = NameExprSeq.conform(['a', isStr]);
 	// console.log(r);
 
 	// var isBool = require('../preds/isBool');
@@ -1324,14 +1326,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    result: null
 	  };
 
-	  var initialInput;
-	  if (!isArray(rawInput)) {
-	    initialInput = [rawInput];
-	  } else {
-	    initialInput = rawInput;
-	  }
+	  // var initialInput;
+	  // if(!isArray(rawInput)) {
+	  var initialInput = [rawInput];
+	  // } else {
+	  // initialInput = rawInput;
+	  // }
 
-	  var initial = { state: 0, offset: 0, input: initialInput, groupCount: 0, arrayed: false };
+	  var initial = { state: 0, offset: 0, leftOff: 0, input: initialInput, groupCount: 0, arrayed: false };
 	  // var names = [];
 	  var frontier = [initial];
 	  // console.log('input: ', input);
@@ -1340,6 +1342,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  while (frontier.length > 0) {
 	    var current = frontier.shift();
 	    var currentOffset = current.offset;
+	    var leftOff = current.leftOff;
 	    var input = current.input;
 	    var groupCount = current.groupCount;
 	    var arrayed = current.arrayed;
@@ -1371,10 +1374,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	        groupCount -= 1;
 	        if (groupCount === 0) {
 	          if (arrayed) {
+	            if (currentOffset === input.length) {
+	              currentOffset = 1;
+	            } else {
+	              currentOffset = 0;
+	            }
 	            input = [input];
-	            currentOffset = 0;
-	            arrayed = false;
 	          }
+	          arrayed = false;
 	        }
 	      }
 
@@ -1395,7 +1402,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            move = null;
 	          }
 	          next = {
-	            input: input, groupCount: groupCount, arrayed: arrayed,
+	            input: input, groupCount: groupCount, arrayed: arrayed, leftOff: leftOff,
 	            state: nextState,
 	            offset: nextOffset,
 	            move: move,
@@ -1411,7 +1418,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	              if (currentOffset < input.length) {
 	                move = { dir: 'pred' };
 	                next = {
-	                  input: input, groupCount: groupCount, arrayed: arrayed,
+	                  input: input, groupCount: groupCount, arrayed: arrayed, leftOff: leftOff,
 	                  state: nextState,
 	                  offset: nextOffset,
 	                  move: move,
@@ -2534,9 +2541,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var problems = results.filter(isProblem);
 
 	        if (problems.length === 0) {
-	          return x;
+	          return results;
 	        } else {
-	          debugger;
 	          return new Problem(x, spec, problems, 'One or more elements failed collOf test');
 	        }
 	      } else {

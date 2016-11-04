@@ -18,7 +18,7 @@ function collOfWalker(spec, walkFn) {
         var problems = results.filter(isProblem);
 
         if(problems.length === 0) {
-          return x;
+          return results;
         } else {
           return new Problem(x, spec, problems, 'One or more elements failed collOf test');
         }

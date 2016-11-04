@@ -43,7 +43,7 @@ describe('cat', function() {
       expect(nonconformed instanceof Problem).to.be.true;
     });
 
-    it.skip('named, grouped', function() {
+    it('named, grouped', function() {
       var NamedGroupedSpec = S.cat(
         ['z', 'it\'s a fuuuunction', S.isFn],
         ['b', S.isObj],
