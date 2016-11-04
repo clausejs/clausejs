@@ -8,14 +8,18 @@ function fspecWalker(spec, walkFn) {
   var { args: argsSpec, ret: retSpec } =  spec.exprs[0];
 
   return function walkFspec(fn, walkOpts) {
-    var { conform, instrument } = walkOpts;
+    if(fn) {
+      var { conform, instrument } = walkOpts;
 
-    if(conform && instrument) {
-      return instrumentConformed(fn, walkOpts);
-    } else if (instrument) {
-      return _instrument(fn, walkOpts);
+      if(conform && instrument) {
+        return instrumentConformed(fn, walkOpts);
+      } else if (instrument) {
+        return _instrument(fn, walkOpts);
+      } else {
+        return fn;
+      }
     } else {
-      return fn;
+      return new Problem(fn, spec, [], 'function is not specified');
     }
   }
 

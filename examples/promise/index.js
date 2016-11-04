@@ -4,30 +4,66 @@ var Q = require('q');
 var PromiseSpec = S.props({
   req: {
     then: S.fspec({
-      args: S.cat(S.fspec({
-        args: S.cat('message', S.isStr),
-        ret: S.isUndefined,
-      })),
+      args: S.cat(
+        S.or(
+          S.isNull, S.isUndefined,
+          S.fspec({
+            args: S.cat('message', S.isStr),
+            ret: S.isUndefined,
+          })
+        ),
+        S.zeroOrOne(
+          S.or(
+            S.isNull, S.isUndefined,
+            S.fspec({
+              args: S.cat('rejError', S.any),
+            }))
+          )
+        ),
       ret: S.delayed(() => PromiseSpec), //recursive
     }),
   },
 });
 
-var GetPromiseSpec = S.fspec({
+var GetHelloSpec = S.fspec({
+  args: S.cat(),
   ret: PromiseSpec,
 });
 
-var getPromise = GetPromiseSpec.instrument(__getPromise);
+var getHello = GetHelloSpec.instrument(__getHello);
 
-getPromise().then(function(m) {
+getHello().then(function(m) {
   console.log(m);
 });
 
-function __getPromise() {
+var getHelloBad = GetHelloSpec.instrument(__getHelloBad);
+
+// TODO: fix this
+// this will throw an error
+getHelloBad().then(function(m) {
+  console.log(m);
+}).catch(function (e) {
+  console.error(e);
+});
+
+// // // // // // // // // //
+
+function __getHello() {
   var deferred = Q.defer();
 
   setTimeout(function() {
     deferred.resolve('hello');
+  });
+
+  return deferred.promise;
+}
+
+
+function __getHelloBad() {
+  var deferred = Q.defer();
+
+  setTimeout(function() {
+    deferred.resolve(123);
   });
 
   return deferred.promise;

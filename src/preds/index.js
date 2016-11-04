@@ -1,6 +1,7 @@
 module.exports = {
   isBool: require('./isBool'),
   isBoolean: require('./isBool'),
+  isNull: require('./isNull'),
   isFn: require('./isFn'),
   isFunction: require('./isFn'),
   isNum: require('./isNum'),
