@@ -5,6 +5,7 @@ var propsWalker = require('./propsWalker');
 var andWalker = require('./andWalker');
 var collOfWalker = require('./collOfWalker');
 var specRefWalker = require('../namespace/specRefWalker');
+var delayedSpecWalker = require('../utils/delayedSpecWalker');
 var coerceIntoSpec = require('../utils/coerceIntoSpec');
 
 function walk(spec, x, opts) {
@@ -28,6 +29,8 @@ function _getWalker(expr) {
     walker = andWalker;
   } else if (spec.type === 'SpecRef') {
     walker = specRefWalker;
+  } else if (spec.type === 'Delayed') {
+    walker = delayedSpecWalker;
   } else if (spec.type === 'FSPEC') {
     walker = fspecWalker;
   } else {

@@ -9,6 +9,7 @@ var isStr = require('../preds/isStr');
 var isExpr = require('../utils/isExpr');
 var isUndefined = require('../preds/isUndefined');
 var walk = require('../ops/walk');
+var delayed = require('../utils/delayed');
 
 var reg;
 
@@ -45,7 +46,7 @@ function _getUnchecked(ref) {
 }
 
 var ExprOrPartialRefMapSpec = or(
-  'expr', _get('__specky.Expr')
+  'expr', delayed(function() { return ExprSpec }) //TODO
 );
 
 var PartialRefMapSpec = props({
@@ -131,8 +132,5 @@ function _maybeInitRegistry() {
 }
 
 _maybeInitRegistry();
-
-_set('__specky.Expr', { expr: ExprSpec });
-_set('__specky.PartialRefMap', { expr: PartialRefMapSpec });
 
 module.exports = NamespaceFnSpec.instrumentConformed(speckyNamespace);

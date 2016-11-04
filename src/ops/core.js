@@ -7,13 +7,13 @@ var isStr = require('../preds/isStr');
 var isSpecName = require('../utils/isSpecName');
 var namedFn = require('../utils/namedFn');
 var isSpecRef = require('../utils/isSpecRef');
+var isDelayedSpec = require('../utils/isDelayedSpec');
 var c = require('../ops/constants');
 var coerceIntoSpec = require('../utils/coerceIntoSpec');
 var fspec = require('./fspec');
 var walk = require('./walk');
 var specSpec = coerceIntoSpec(isSpec);
 var nameSpec = coerceIntoSpec(isSpecName);
-var specSpecRef = coerceIntoSpec(isSpecRef);
 
 var catOp = genMultiArgOp(c.CAT);
 var orOp = genMultiArgOp(c.OR);
@@ -25,10 +25,13 @@ var collOfOp = genSingleArgOp(c.COLL_OF);
 var ExprSpec = orOp({
   named: [
       { name: 'specRef', expr: {
-        spec: specSpecRef,
+        spec: isSpecRef,
       } },
       { name: 'pred', expr: {
         pred: isPred,
+      } },
+      { name: 'delayedSpec', expr: {
+        spec: isDelayedSpec,
       } },
       { name: 'spec', expr: {
         pred: isSpec,
@@ -139,6 +142,9 @@ function genMultiArgOp(type) {
         } else if (expr.specRef) {
           var s = expr.specRef;
           return oAssign({}, p, { expr: s, specRef: undefined });
+        } else if (expr.delayedSpec) {
+          var s = expr.delayedSpec;
+          return oAssign({}, p, { expr: s, delayedSpec: undefined });
         } else {
           console.error(p);
           throw 'Not implemented';
@@ -166,6 +172,9 @@ function genMultiArgOp(type) {
         } else if (p.specRef) {
           var s = p.specRef;
           return oAssign({}, p, { expr: s, specRef: undefined });
+        } else if (p.delayedSpec) {
+          var s = p.delayedSpec;
+          return oAssign({}, p, { expr: s, delayedSpec: undefined });
         } else {
           console.error(p);
           throw 'Not implemented';
@@ -193,8 +202,10 @@ function genSingleArgOp(type) {
       expr = p.spec;
     } else if (p.pred) {
       expr = coerceIntoSpec(p.pred);
-    }else if (p.specRef) {
+    } else if (p.specRef) {
       expr = p.specRef;
+    } else if (p.delayedSpec) {
+      expr = p.delayedSpec;
     } else {
       throw 'internal err';
     }

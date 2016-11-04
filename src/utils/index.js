@@ -3,4 +3,5 @@ module.exports = {
   isValid: require('./isValid'),
   identity: require('./identity'),
   isProblem: require('./isProblem'),
+  delayed: require('./delayed'),
 };
