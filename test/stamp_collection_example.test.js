@@ -5,7 +5,7 @@ function isFamily(x) {
   return x.lastName.indexOf('Staff') >= 0;
 }
 
-describe('example model', () => {
+describe('stamp collection example', () => {
   it('stampapp', () => {
     var IdSpec = s.isNum;
     var UserSpec = s.props({
