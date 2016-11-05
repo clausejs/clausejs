@@ -3,6 +3,8 @@ var oAssign = require('object-assign');
 var Spec = require('../models/Spec');
 var isSpec = require('../utils/isSpec');
 var isPred = require('../utils/isPred');
+var isObj = require('../preds/isObj');
+var isUndefined = require('../preds/isUndefined');
 var isStr = require('../preds/isStr');
 var isSpecName = require('../utils/isSpecName');
 var namedFn = require('../utils/namedFn');
@@ -117,9 +119,22 @@ var multipleArgOpSpec = {
 var singleArgOpSpec = {
   args: catOp({
     named: [
-      { name: 'expr', expr: {
-        spec: ExprSpec,
-      } },
+      {
+        name: 'expr',
+        expr: {
+          spec: ExprSpec,
+        }
+      },
+      {
+        name: 'opts',
+        expr: {
+          spec: zeroOrOneOp({
+            expr: {
+              pred: isObj,
+            }
+          }),
+        }
+      },
     ],
   }),
   ret: specSpec,
@@ -151,9 +166,7 @@ function genMultiArgOp(type) {
         }
       });
 
-      var s = new Spec(
-        type, coercedExprs, null, null
-      );
+      var s = new Spec( type, coercedExprs, null, null, null);
 
       s.conform = function conform(x) {
         return walk(s, x, { conform: true });
@@ -181,9 +194,7 @@ function genMultiArgOp(type) {
         }
       });
 
-      var s = new Spec(
-        type, coercedExprs, null, null
-      );
+      var s = new Spec(type, coercedExprs, null, null, null);
 
       s.conform = function conform(x) {
         return walk(s, x, { conform: true });
@@ -196,6 +207,7 @@ function genMultiArgOp(type) {
 function genSingleArgOp(type) {
   return namedFn(type, function (conformedArgs) {
     var p = conformedArgs.expr;
+    var opts = conformedArgs.opts;
     var expr;
 
     if(p.spec) {
@@ -213,6 +225,7 @@ function genSingleArgOp(type) {
     var s = new Spec(
       type,
       [coerceIntoSpec(expr)],
+      opts,
       null, null
     );
 

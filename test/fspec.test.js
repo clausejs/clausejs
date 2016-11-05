@@ -28,7 +28,7 @@ describe('fspec', function() {
     expect(function() { specedFspec('spec should not be a string'); }).to.throw(Problem);
     expect(function() { specedFspec({spec: 'should not be simple obj either'}) }).to.throw();
 
-    expect(function() { specedFspec(new Spec('cat', [S.isBool], identity, null), {extra: 'param'}); }).to.throw(Problem);
+    expect(function() { specedFspec(new Spec('cat', [S.isBool], null, identity, null), {extra: 'param'}); }).to.throw(Problem);
     expect(function() { specedFspec(); }).to.throw(Problem);
 });
 

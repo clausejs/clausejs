@@ -1,4 +1,4 @@
-var nfaWalker = require('../nfa/nfaWalker');
+var nfaWalker = require('./nfa/nfaWalker');
 var predWalker = require('../utils/predWalker');
 var fspecWalker = require('./fspecWalker');
 var propsWalker = require('./propsWalker');

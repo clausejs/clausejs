@@ -1,8 +1,8 @@
-var Problem = require('../models/Problem');
-var isProblem = require('../utils/isProblem');
+var Problem = require('../../models/Problem');
+var isProblem = require('../../utils/isProblem');
 var isArray = require('isarray');
 var oAssign = require('object-assign');
-var isUndefined = require('../preds/isUndefined');
+var isUndefined = require('../../preds/isUndefined');
 
 function simulate(nfa, rawInput, walkFn, walkOpts) {
   var { conform, instrument } = walkOpts;
@@ -170,7 +170,9 @@ function _getMatch(nfa, input, finalState, walkOpts) {
           var c = valStack.pop();
           var acc = null;
           while(c!==MAYBE_SINGLE_ENTER) {
-            acc = c;
+            if(c!==FOLD) {
+              acc = c;
+            }
             c = valStack.pop();
           }
           if(acc === null) {

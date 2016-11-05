@@ -1,5 +1,5 @@
 var fragment = require('./fragment.js');
-var Spec = require('../models/Spec');
+var Spec = require('../../models/Spec');
 
 var indexedFragmentStates = function(fragment) {
   var nextIndex = 0;

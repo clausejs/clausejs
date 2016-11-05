@@ -34,7 +34,7 @@ npm install specky
 
 Or in the `<head>` or `<body>` tag of your HTML:
 ```html
-<script src="https://unpkg.com/specky@latest/dist/specky.js"></script>
+<script src="//unpkg.com/specky@latest/dist/specky.js"></script>
 ```
 
 ### Examples
