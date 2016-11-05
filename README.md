@@ -43,7 +43,7 @@ Or in the `<head>` or `<body>` tag of your HTML:
 - [Spec'ing promises](examples/promise/index.js)
 - For more examples on usage, refer to examples in the test folder [`/test`](test/).
 
-### Generative Testing
+### Generative/Property-based Testing
 
 WIP
 
