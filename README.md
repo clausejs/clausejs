@@ -1,6 +1,6 @@
 # Specky 👓 [![Build Status](https://travis-ci.org/settinghead/specky.svg?branch=master)](https://travis-ci.org/settinghead/specky) [![npm version](https://badge.fury.io/js/specky.svg)](https://badge.fury.io/js/specky) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
-### What
+## What
 
 A powerful & highly flexible JavaScript data validation and conformation library that enables you to:
 
@@ -10,7 +10,7 @@ A powerful & highly flexible JavaScript data validation and conformation library
 - Conform your data with a range of available shapes of specs
 - Automatically generate test cases for your spec'ed functions
 
-### Why
+## Why
 
 - A complement/alternative to unit testing
 - facilitates a better debugging experience
@@ -19,15 +19,15 @@ A powerful & highly flexible JavaScript data validation and conformation library
 - Help create more customizable type and behavior constraints that is more powerful than typed languages such as TypeScript
 
 
-### Project status
+## Project status
 - Alpha. Each new version is subject to constant change based on [bug reports and feature suggestions](/../../issues/).
 
 
-### Try it
+## Try it
 
 - [Try it online](https://jsbin.com/fisiyeh/latest/edit?js,console)
 
-### Installation
+## Installation
 
 ```bash
 npm install specky
@@ -38,29 +38,29 @@ Or in the `<head>` or `<body>` tag of your HTML:
 <script src="//unpkg.com/specky@latest/dist/specky.js"></script>
 ```
 
-### Examples
+## Examples
 
 - [Use in browser](examples/simple.html)
 - [Spec'ing promises](examples/promise/index.js)
 - For more examples on usage, refer to examples in the test folder [`/test`](test/).
 
-### Generative/Property-based Testing
+## Generative/Property-based Testing
 
-WIP
+Coming soon.
 
-### Run tests
+## Run tests
 
-#### In Dev mode
+### In Dev mode
 
 ```bash
 npm run dev
 ```
 
-#### In CI mode
+### In CI mode
 ```bash
 npm run test
 ```
 
-### Credit
+## Credit
 - Both origin of the idea and API are heavily inspired by Rich Hickey's [clojure.spec](http://clojure.org/about/spec)
 - NFA spec matching inspired by Thompson NFA regex matching algorithm, and is based on [afader's implementation](https://github.com/afader/thompson-regex-js)
