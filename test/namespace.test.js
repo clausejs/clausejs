@@ -8,6 +8,7 @@ describe('namespace', function() {
 
   afterEach(function () {
     //TODO: clear registry
+    s.clearRegistry();
   });
 
   describe('simple defs and gets', function() {
@@ -30,15 +31,25 @@ describe('namespace', function() {
           'items': s.zeroOrMore(s('../item')),
         },
         'item': [
-        s.props({
-          req: [s('title'), s('content'), s('date'), s('isDone')],
-          opt: [s('reminder')],
-        }),
-        s('title', s('../headline')),
-        s('content', s.and(s.isStr, s.notEmpty)),
-        s('date', s.isDate),
-        s('isDone', s.isBool),
-        s('reminder', s.isDate)],
+          s.props({
+            req: [
+              s('todoapp.item.title'),
+              s('todoapp.item.content'),
+              s('todoapp.item.date'),
+              s('todoapp.item.isDone'),
+            ],
+            opt: [
+              s('todoapp.item.reminder'),
+            ],
+          }),
+          {
+            'title': s('todoapp.headline'),
+            'content': s.and(s.isStr, s.notEmpty),
+            'date': s.isDate,
+            'isDone': s.isBool,
+            'reminder': s.isDate,
+          },
+        ],
       });
 
       var ListSpec = s('todoapp.list');

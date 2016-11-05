@@ -126,11 +126,18 @@ var K = '___SPECKY_REGISTRY';
 
 function _maybeInitRegistry() {
   if(!reg) {
-    reg = global[K] = {};
+    clearRegistry();
   }
   return reg;
 }
 
+function clearRegistry() {
+  reg = global[K] = {};
+}
+
 _maybeInitRegistry();
 
-module.exports = NamespaceFnSpec.instrumentConformed(speckyNamespace);
+var specedSpeckyNamespace = NamespaceFnSpec.instrumentConformed(speckyNamespace);
+specedSpeckyNamespace.clearRegistry = clearRegistry;
+
+module.exports = specedSpeckyNamespace;
