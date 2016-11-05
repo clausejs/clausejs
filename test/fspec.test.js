@@ -50,7 +50,7 @@ describe('fspec', function() {
   });
 
   it('fn validation', () => {
-    
+
     var __goodSampler = function(n, min, max) {
       var r = [];
       for (var i = 0; i < n; i++) {

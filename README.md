@@ -40,10 +40,10 @@ Or in the `<head>` or `<body>` tag of your HTML:
 
 ## Examples
 
-- [Use in browser](examples/simple.html)
+- [Specky in browser](examples/simple.html)
 - [Spec'ing promises](examples/promise/index.js)
 - [Codebreaker game](examples/codebreaker/index.js)
-- For more examples on usage, refer to test cases under [`/test`](test/).
+- In addition, there are plenty of examples in test files under [`/test`](test/).
 
 ## Generative/Property-based Testing
 
