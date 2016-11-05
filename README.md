@@ -20,7 +20,7 @@ A powerful & highly flexible JavaScript data validation and conformation library
 
 ### Try it
 
-[Try it online](https://jsbin.com/fisiyeh/latest/edit?js,console)
+- [Try it online](https://jsbin.com/fisiyeh/latest/edit?js,console)
 
 
 ### Project status
