@@ -20,6 +20,7 @@ position.
 */
 
 var s = require('../../src');
+var _ = require('lodash');
 
 var isPeg = function(x) {
   return ['r', 'y', 'c', 'g'].indexOf(x) >= 0;
@@ -53,4 +54,24 @@ ScoreFnSpec = s.fspec({
       looseMatches: s.isNatInt,
     }
   }),
+});
+
+// ScoreFnSpec.ret.exercise()
+
+ScoreFnSpec = s.fspec({
+  args: s.and(
+    s.cat('secret', CodeSpec, 'guess', CodeSpec),
+    ({secret, guess}) => secret.length === guess.length
+  ),
+  ret: s.props({
+    req: {
+      exactMatches: s.isNatInt,
+      looseMatches: s.isNatInt,
+    }
+  }),
+  fn: ({args: {secret}, ret}) => {
+    var sums = _.sum(_.values(ret));
+    var secretCounts = secret.length;
+    return secretCounts >= sums && sums >= 0;
+  }
 });
