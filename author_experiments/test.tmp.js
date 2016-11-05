@@ -1,6 +1,6 @@
 require("babel-core/register");
 
-var s = require('./');
+var s = require('../src');
 var S = s;
 
 console.log(s);
