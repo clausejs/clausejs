@@ -5,7 +5,7 @@ var namedFn = require('../utils/namedFn');
 var betterThrow = require('../utils/betterThrow');
 
 function fspecWalker(spec, walkFn) {
-  var { args: argsSpec, ret: retSpec } =  spec.opts;
+  var { args: argsSpec, ret: retSpec, fn: validateFn } =  spec.opts;
 
   return function walkFspec(fn, walkOpts) {
     if(fn) {
@@ -44,15 +44,30 @@ function fspecWalker(spec, walkFn) {
       var instrumentedArgs = checkArgs(fn, fnName, args, walkOpts);
       var retVal = fn.apply(this, instrumentedArgs);
       var instrumentedRetVal = checkRet(fn, fnName, retVal, walkOpts);
+
+      // TODO optimize
+      var conformedArgs = walkFn(argsSpec, args, { conform: true });
+      checkFnRelation(fnName, fn, validateFn, conformedArgs, retVal);
       return instrumentedRetVal;
     };
+  }
+
+  function checkFnRelation(fnName, fn, validateFn, conformedArgs, retVal) {
+    if(validateFn) {
+      var r = validateFn.call(null, conformedArgs, retVal);
+      if(!r) {
+        var p = new Problem(fn, spec, [],
+          `Function ${fnName} failed valiation on argument-return value relation`);
+        betterThrow(p);
+      }
+    }
   }
 
   function checkArgs(fn, fnName, args, walkOpts) {
     if(argsSpec) {
       var instrumentedArgs = walkFn(argsSpec, args, walkOpts);
       if(isProblem(instrumentedArgs)) {
-        var p = new Problem(args, argsSpec, [instrumentedArgs], `Args ${JSON.stringify(args)} for function ${fnName} failed validation`);
+        var p = new Problem(args, spec, [instrumentedArgs], `Arguments ${JSON.stringify(args)} for function ${fnName} failed validation`);
         betterThrow(p);
       } else {
         return instrumentedArgs;
@@ -66,7 +81,7 @@ function fspecWalker(spec, walkFn) {
     if(retSpec) {
       var instrumentedRetVal = walkFn(retSpec, retVal, walkOpts);
       if(isProblem(instrumentedRetVal)) {
-        var p = new Problem(retVal, retSpec, [instrumentedRetVal], 'Return value ' + retVal + ' for function ' + fnName + ' is not valid.');
+        var p = new Problem(retVal, spec, [instrumentedRetVal], 'Return value ' + retVal + ' for function ' + fnName + ' is not valid.');
         betterThrow(p);
       } else {
         return instrumentedRetVal;
@@ -88,6 +103,7 @@ function fspecWalker(spec, walkFn) {
 
       var retVal = fn(conformedArgs);
       checkRet(fn, fnName, retVal, walkOpts);
+      checkFnRelation(fnName, fn, validateFn, conformedArgs, retVal);
       return retVal;
     };
   }

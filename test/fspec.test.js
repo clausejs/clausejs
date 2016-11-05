@@ -36,6 +36,9 @@ describe('fspec', function() {
     var sheepCounterSpec = S.fspec({
       args: S.cat(S.isNum),
       ret: S.isStr,
+      fn: (cargs, ret) => {
+        return true;
+      }
     });
 
     var sheepCounter = sheepCounterSpec.instrument(function(c) {
@@ -44,6 +47,43 @@ describe('fspec', function() {
 
     expect(sheepCounter(200)).to.be.a('string');
     expect(function() { sheepCounter('hello'); }).to.throw(Problem);
+  });
+
+  it('fn validation', () => {
+    
+    var __goodSampler = function(n, min, max) {
+      var r = [];
+      for (var i = 0; i < n; i++) {
+        r.push(Math.floor(Math.random() * (max - min)) + min);
+      }
+
+      return r;
+    }
+
+    var __badSampler = function(n, min, max) {
+      var r = [];
+      for (var i = 0; i < n; i++) {
+        r.push(min - 1000);
+      }
+
+      return r;
+    }
+
+    var SampleFspec = S.fspec({
+      args: S.cat('n', S.isNatInt, 'min', S.isNum, 'max', S.isNum),
+      ret: S.isArray,
+      fn: ({n, min, max}, ret) => {
+        var wackies = ret.filter((x) => x >= max || x < min);
+        return wackies.length === 0;
+      }
+    });
+
+    var goodSampler = SampleFspec.instrument(__goodSampler);
+    var badSampler = SampleFspec.instrument(__badSampler);
+
+    expect(goodSampler(10, 2, 3).length).to.equal(10);
+    expect(() => badSampler(10, 2, 3).length).to.throw(Problem);
+
   });
 
   it('higher order functions', () => {

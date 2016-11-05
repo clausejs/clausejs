@@ -2039,6 +2039,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var _spec$opts = spec.opts;
 	  var argsSpec = _spec$opts.args;
 	  var retSpec = _spec$opts.ret;
+	  var validateFn = _spec$opts.fn;
 
 
 	  return function walkFspec(fn, walkOpts) {
@@ -2080,15 +2081,29 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var instrumentedArgs = checkArgs(fn, fnName, args, walkOpts);
 	      var retVal = fn.apply(this, instrumentedArgs);
 	      var instrumentedRetVal = checkRet(fn, fnName, retVal, walkOpts);
+
+	      // TODO optimize
+	      var conformedArgs = walkFn(argsSpec, args, { conform: true });
+	      checkFnRelation(fnName, fn, validateFn, conformedArgs, retVal);
 	      return instrumentedRetVal;
 	    };
+	  }
+
+	  function checkFnRelation(fnName, fn, validateFn, conformedArgs, retVal) {
+	    if (validateFn) {
+	      var r = validateFn.call(null, conformedArgs, retVal);
+	      if (!r) {
+	        var p = new Problem(fn, spec, [], 'Function ' + fnName + ' failed valiation on argument-return value relation');
+	        betterThrow(p);
+	      }
+	    }
 	  }
 
 	  function checkArgs(fn, fnName, args, walkOpts) {
 	    if (argsSpec) {
 	      var instrumentedArgs = walkFn(argsSpec, args, walkOpts);
 	      if (isProblem(instrumentedArgs)) {
-	        var p = new Problem(args, argsSpec, [instrumentedArgs], 'Args ' + JSON.stringify(args) + ' for function ' + fnName + ' failed validation');
+	        var p = new Problem(args, spec, [instrumentedArgs], 'Arguments ' + JSON.stringify(args) + ' for function ' + fnName + ' failed validation');
 	        betterThrow(p);
 	      } else {
 	        return instrumentedArgs;
@@ -2102,7 +2117,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (retSpec) {
 	      var instrumentedRetVal = walkFn(retSpec, retVal, walkOpts);
 	      if (isProblem(instrumentedRetVal)) {
-	        var p = new Problem(retVal, retSpec, [instrumentedRetVal], 'Return value ' + retVal + ' for function ' + fnName + ' is not valid.');
+	        var p = new Problem(retVal, spec, [instrumentedRetVal], 'Return value ' + retVal + ' for function ' + fnName + ' is not valid.');
 	        betterThrow(p);
 	      } else {
 	        return instrumentedRetVal;
@@ -2124,6 +2139,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var retVal = fn(conformedArgs);
 	      checkRet(fn, fnName, retVal, walkOpts);
+	      checkFnRelation(fnName, fn, validateFn, conformedArgs, retVal);
 	      return retVal;
 	    };
 	  }
@@ -2674,6 +2690,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var isFn = __webpack_require__(11);
 	var isObj = __webpack_require__(12);
 	var isStr = __webpack_require__(14);
+	var isArray = __webpack_require__(8);
 
 	module.exports = {
 	  isNull: __webpack_require__(46),
@@ -2685,7 +2702,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  isNatInt: isNatInt, isNaturalNumber: isNatInt,
 	  isInt: isInt, isInteger: isInt,
 	  isObj: isObj, isObject: isObj,
-	  isStr: isStr, isString: isStr
+	  isStr: isStr, isString: isStr,
+	  isArray: isArray
 	};
 
 /***/ },

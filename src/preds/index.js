@@ -5,6 +5,7 @@ var isBool = require('./isBool');
 var isFn = require('./isFn');
 var isObj = require('./isObj');
 var isStr = require('./isStr');
+var isArray = require('isarray');
 
 module.exports = {
   isNull: require('./isNull'),
@@ -17,4 +18,5 @@ module.exports = {
   isInt, isInteger: isInt,
   isObj, isObject: isObj,
   isStr, isString: isStr,
+  isArray,
 };
