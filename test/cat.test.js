@@ -29,7 +29,7 @@ describe('cat', function() {
     });
 
     it('single val case', () => {
-      var ss = S.cat(S.isNum);
+      var ss = S.cat(S.isInt);
       var r = ss.conform([44]);
       expect(r).to.deep.equal([44]);
     });

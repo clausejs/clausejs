@@ -19,7 +19,7 @@ describe('or', function() {
   });
 
   it('combined with cat and zeroOrMore', function() {
-    var Spec = s.or(s.cat(s.isNum, s.isStr), s.cat(s.isStr, s.isNum), s.isNum);
+    var Spec = s.or(s.cat(s.isNatInt, s.isStr), s.cat(s.isStr, s.isNatInt), s.isNatInt);
     expect(Spec.conform('')).to.be.an.instanceOf(Problem);
     expect(Spec.conform(1)).not.to.be.an.instanceOf(Problem);
     expect(Spec.conform([1, '2'])).not.to.be.an.instanceOf(Problem);

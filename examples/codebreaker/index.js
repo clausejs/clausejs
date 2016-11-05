@@ -26,3 +26,31 @@ var isPeg = function(x) {
 }
 
 var CodeSpec = s.collOf(isPeg, { minCount: 4, maxCount: 6 });
+var ScoreFnSpec = s.fspec({
+  args: s.cat('secret', CodeSpec, 'guess', CodeSpec),
+});
+
+// TODO: implement
+// ScoreFnSpec.args.exercise()
+
+ScoreFnSpec = s.fspec({
+  args: s.and(
+    s.cat('secret', CodeSpec, 'guess', CodeSpec),
+    ({secret, guess}) => secret.length === guess.length
+  )
+});
+
+// ScoreFnSpec.args.exercise()
+
+ScoreFnSpec = s.fspec({
+  args: s.and(
+    s.cat('secret', CodeSpec, 'guess', CodeSpec),
+    ({secret, guess}) => secret.length === guess.length
+  ),
+  ret: s.props({
+    req: {
+      exactMatches: s.isNatInt,
+      looseMatches: s.isNatInt,
+    }
+  }),
+});
