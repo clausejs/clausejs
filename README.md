@@ -42,7 +42,8 @@ Or in the `<head>` or `<body>` tag of your HTML:
 
 - [Use in browser](examples/simple.html)
 - [Spec'ing promises](examples/promise/index.js)
-- For more examples on usage, refer to examples in the test folder [`/test`](test/).
+- [Codebreaker game](examples/codebreaker/index.js)
+- For more examples on usage, refer to test cases under [`/test`](test/).
 
 ## Generative/Property-based Testing
 
