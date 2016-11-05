@@ -1216,7 +1216,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var walk = __webpack_require__(25);
 
 	function fspec(fnSpec) {
-	  var spec = new Spec('FSPEC', [fnSpec], null, null, null);
+	  var spec = new Spec('FSPEC', [], fnSpec, null, null);
 	  spec.instrumentConformed = function instrumentConformed(fn) {
 	    return walk(spec, fn, { conform: true, instrument: true });
 	  };
@@ -2036,9 +2036,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	var betterThrow = __webpack_require__(33);
 
 	function fspecWalker(spec, walkFn) {
-	  var _spec$exprs$ = spec.exprs[0];
-	  var argsSpec = _spec$exprs$.args;
-	  var retSpec = _spec$exprs$.ret;
+	  var _spec$opts = spec.opts;
+	  var argsSpec = _spec$opts.args;
+	  var retSpec = _spec$opts.ret;
 
 
 	  return function walkFspec(fn, walkOpts) {

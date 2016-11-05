@@ -5,7 +5,7 @@ var namedFn = require('../utils/namedFn');
 var betterThrow = require('../utils/betterThrow');
 
 function fspecWalker(spec, walkFn) {
-  var { args: argsSpec, ret: retSpec } =  spec.exprs[0];
+  var { args: argsSpec, ret: retSpec } =  spec.opts;
 
   return function walkFspec(fn, walkOpts) {
     if(fn) {
