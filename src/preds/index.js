@@ -1,19 +1,20 @@
 var isNum = require('./isNum');
+var isNatInt = require('./isNatInt');
+var isInt = require('./isInt');
+var isBool = require('./isBool');
+var isFn = require('./isFn');
+var isObj = require('./isObj');
+var isStr = require('./isStr');
 
 module.exports = {
-  isBool: require('./isBool'),
-  isBoolean: require('./isBool'),
   isNull: require('./isNull'),
-  isFn: require('./isFn'),
-  isFunction: require('./isFn'),
-  isNum,
-  isNumber: isNum,
-  isNatInt: require('./isNatInt'),
-  isInt: require('./isInt'),
-  isObj: require('./isObj'),
-  isObject: require('./isObj'),
-  isStr: require('./isStr'),
-  isString: require('./isStr'),
   isUndefined: require('./isUndefined'),
   notEmpty: require('./notEmpty'),
+  isBool, isBoolean: isBool,
+  isFn, isFunction: isFn,
+  isNum, isNumber: isNum,
+  isNatInt, isNaturalNumber: isNatInt,
+  isInt, isInteger: isInt,
+  isObj, isObject: isObj,
+  isStr, isString: isStr,
 };

@@ -2661,56 +2661,33 @@ return /******/ (function(modules) { // webpackBootstrap
 	'use strict';
 
 	var isNum = __webpack_require__(37);
+	var isNatInt = __webpack_require__(43);
+	var isInt = __webpack_require__(44);
+	var isBool = __webpack_require__(45);
+	var isFn = __webpack_require__(11);
+	var isObj = __webpack_require__(12);
+	var isStr = __webpack_require__(14);
 
 	module.exports = {
-	  isBool: __webpack_require__(43),
-	  isBoolean: __webpack_require__(43),
-	  isNull: __webpack_require__(44),
-	  isFn: __webpack_require__(11),
-	  isFunction: __webpack_require__(11),
-	  isNum: isNum,
-	  isNumber: isNum,
-	  isNatInt: __webpack_require__(45),
-	  isInt: __webpack_require__(46),
-	  isObj: __webpack_require__(12),
-	  isObject: __webpack_require__(12),
-	  isStr: __webpack_require__(14),
-	  isString: __webpack_require__(14),
+	  isNull: __webpack_require__(46),
 	  isUndefined: __webpack_require__(13),
-	  notEmpty: __webpack_require__(47)
+	  notEmpty: __webpack_require__(47),
+	  isBool: isBool, isBoolean: isBool,
+	  isFn: isFn, isFunction: isFn,
+	  isNum: isNum, isNumber: isNum,
+	  isNatInt: isNatInt, isNaturalNumber: isNatInt,
+	  isInt: isInt, isInteger: isInt,
+	  isObj: isObj, isObject: isObj,
+	  isStr: isStr, isString: isStr
 	};
 
 /***/ },
 /* 43 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	function isBool(x) {
-	  return typeof x === 'boolean';
-	}
-
-	module.exports = isBool;
-
-/***/ },
-/* 44 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	function isNull(x) {
-	  return x === null;
-	};
-
-	module.exports = isNull;
-
-/***/ },
-/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var isInt = __webpack_require__(46);
+	var isInt = __webpack_require__(44);
 
 	function isNatInt(x) {
 	  return isInt(x) && x >= 0.0;
@@ -2719,7 +2696,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = isNatInt;
 
 /***/ },
-/* 46 */
+/* 44 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2733,6 +2710,30 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	module.exports = isInt;
+
+/***/ },
+/* 45 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	function isBool(x) {
+	  return typeof x === 'boolean';
+	}
+
+	module.exports = isBool;
+
+/***/ },
+/* 46 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	function isNull(x) {
+	  return x === null;
+	};
+
+	module.exports = isNull;
 
 /***/ },
 /* 47 */
