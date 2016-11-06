@@ -9,13 +9,15 @@ function andWalker(spec, walkFn) {
     var { conform, instrument, justValidate } = walkOpts;
 
     if(conform || instrument || justValidate) {
-      var problems;
+      var problems, results;
       if(!justValidate) {
         problems = [];
       }
 
+      var r = data;
+
       for (var i = 0; i < exprs.length; i += 1) {
-        var r = walkFn(exprs[i], data, walkOpts);
+        r = walkFn(exprs[i], data, walkOpts);
         if(isProblem(r)) {
           if(justValidate) {
             return r;
@@ -26,7 +28,11 @@ function andWalker(spec, walkFn) {
       }
 
       if(problems.length === 0) {
-        return data;
+        if (conform) {
+          return r; //return last result TODO: is this correct?
+        } else {
+          return data;
+        }
       } else {
         return new Problem(data, exprs, problems, 'One or more expressions failed AND test');
       }

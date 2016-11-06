@@ -2419,13 +2419,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 	    if (conform || instrument || justValidate) {
-	      var problems;
+	      var problems, results;
 	      if (!justValidate) {
 	        problems = [];
 	      }
 
+	      var r = data;
+
 	      for (var i = 0; i < exprs.length; i += 1) {
-	        var r = walkFn(exprs[i], data, walkOpts);
+	        r = walkFn(exprs[i], data, walkOpts);
 	        if (isProblem(r)) {
 	          if (justValidate) {
 	            return r;
@@ -2436,7 +2438,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 
 	      if (problems.length === 0) {
-	        return data;
+	        if (conform) {
+	          return r; //return last result TODO: is this correct?
+	        } else {
+	          return data;
+	        }
 	      } else {
 	        return new Problem(data, exprs, problems, 'One or more expressions failed AND test');
 	      }
@@ -2465,32 +2471,48 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var opts = spec.opts;
 
 	  return function collOfWalk(x, walkOpts) {
-	    if (isArray(x)) {
-
-	      if (opts) {
-	        var maxCount = opts.maxCount;
-	        var minCount = opts.minCount;
+	    var conform = walkOpts.conform;
+	    var instrument = walkOpts.instrument;
+	    var justValidate = walkOpts.justValidate;
 
 
-	        if (isNum(maxCount) && x.length > maxCount) {
-	          return new Problem(x, spec, problems, 'collOf: collection size ' + x.length + ' exceeds maxCount ' + maxCount + '.');
+	    if (conform || instrument || justValidate) {
+	      if (isArray(x)) {
+
+	        if (opts) {
+	          var maxCount = opts.maxCount;
+	          var minCount = opts.minCount;
+
+
+	          if (isNum(maxCount) && x.length > maxCount) {
+	            return new Problem(x, spec, problems, 'collOf: collection size ' + x.length + ' exceeds maxCount ' + maxCount + '.');
+	          }
+
+	          if (isNum(minCount) && x.length < minCount) {
+	            return new Problem(x, spec, problems, 'collOf: collection size ' + x.length + ' is less than minCount ' + minCount + '.');
+	          }
 	        }
 
-	        if (isNum(minCount) && x.length < minCount) {
-	          return new Problem(x, spec, problems, 'collOf: collection size ' + x.length + ' is less than minCount ' + minCount + '.');
+	        var problems, results;
+	        if (!justValidate) {
+	          problems = [];
 	        }
-	      }
 
-	      var results = x.map(function (y) {
-	        return walkFn(expr, y, walkOpts);
-	      });
-
-	      var conform = walkOpts.conform;
-	      var instrument = walkOpts.instrument;
-
-
-	      if (conform || instrument) {
-	        var problems = results.filter(isProblem);
+	        if (conform) {
+	          results = [];
+	        }
+	        for (var i = 0; i < x.length; i += 1) {
+	          var r = walkFn(expr, x[i], walkOpts);
+	          if (isProblem(r)) {
+	            if (justValidate) {
+	              return r;
+	            } else {
+	              problems.push(r);
+	            }
+	          } else {
+	            results.push(r);
+	          }
+	        }
 
 	        if (problems.length === 0) {
 	          return results;
@@ -2498,10 +2520,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	          return new Problem(x, spec, problems, 'One or more elements failed collOf test');
 	        }
 	      } else {
-	        throw 'no impl';
+	        return new Problem(x, spec, [], 'collOf expects an array');
 	      }
 	    } else {
-	      return new Problem(x, spec, [], 'collOf expects an array');
+	      throw 'no impl';
 	    }
 	  };
 	}
