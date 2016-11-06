@@ -6,9 +6,9 @@ function nfaWalker(spec, walkFn) {
   var nfa;
 
   return function nfaWalk(x, walkOpts) {
-    var { conform, instrument, justValidate } = walkOpts;
+    var { conform, instrument, trailblaze } = walkOpts;
 
-    if(conform || instrument || justValidate) {
+    if(conform || instrument || trailblaze) {
       if(!nfa) {
         nfa = compile(spec); //lazy
       }
@@ -21,7 +21,7 @@ function nfaWalker(spec, walkFn) {
         if(lastProblem) {
           subproblems.push(lastProblem);
         }
-        if (conform || instrument || justValidate) {
+        if (conform || instrument || trailblaze) {
           return new Problem(x, spec, [], 'Spec ' + spec.type + ' did not match val: ' + JSON.stringify(x));
         } else {
           console.error(walkOpts);

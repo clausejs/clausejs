@@ -11,9 +11,9 @@ function propsWalker(spec, walkFn) {
   var reqSpecs = req, optSpecs = opt;
 
   return function propsWalk(x, walkOpts) {
-    var { conform, instrument, justValidate } = walkOpts;
+    var { conform, instrument, trailblaze } = walkOpts;
 
-    if(conform || instrument || justValidate) {
+    if(conform || instrument || trailblaze) {
       var fieldDefs;
       if(reqSpecs) {
         fieldDefs = reqSpecs.fieldDefs;
@@ -39,7 +39,7 @@ function propsWalker(spec, walkFn) {
             var defs = fieldDefs.fields[name];
             var {result, keysToDel} = parseFieldDef(x, name, defs, walkFn, walkOpts);
             if (isProblem(result)) {
-              if(justValidate) {
+              if(trailblaze) {
                 return result;
               } else {
                 problems.push([name, result]);
@@ -66,7 +66,7 @@ function propsWalker(spec, walkFn) {
             var defs = optFieldDefs.fields[name];
             var {result, keysToDel} = parseFieldDef(x, name, defs, walkFn, walkOpts);
             if (isProblem(result)) {
-              if(justValidate) {
+              if(trailblaze) {
                 return result;
               } else {
                 problems.push([name, result]);

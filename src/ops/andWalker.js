@@ -6,11 +6,11 @@ function andWalker(spec, walkFn) {
 
   return function andWalk(data, walkOpts) {
 
-    var { conform, instrument, justValidate } = walkOpts;
+    var { conform, instrument, trailblaze } = walkOpts;
 
-    if(conform || instrument || justValidate) {
+    if(conform || instrument || trailblaze) {
       var problems, results;
-      if(!justValidate) {
+      if(!trailblaze) {
         problems = [];
       }
 
@@ -19,7 +19,7 @@ function andWalker(spec, walkFn) {
       for (var i = 0; i < exprs.length; i += 1) {
         r = walkFn(exprs[i], data, walkOpts);
         if(isProblem(r)) {
-          if(justValidate) {
+          if(trailblaze) {
             return r;
           } else {
             problems.push(r);

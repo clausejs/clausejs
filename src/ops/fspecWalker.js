@@ -9,13 +9,13 @@ function fspecWalker(spec, walkFn) {
 
   return function walkFspec(fn, walkOpts) {
     if(fn) {
-      var { conform, instrument, justValidate } = walkOpts;
+      var { conform, instrument, trailblaze } = walkOpts;
 
       if(conform && instrument) {
         return instrumentConformed(fn, walkOpts);
       } else if (instrument) {
         return _instrument(fn, walkOpts);
-      } else if (justValidate) {
+      } else if (trailblaze) {
         return fn;
       }
     } else {

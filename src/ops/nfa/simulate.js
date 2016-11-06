@@ -5,7 +5,7 @@ var oAssign = require('object-assign');
 var isUndefined = require('../../preds/isUndefined');
 
 function simulate(nfa, rawInput, walkFn, walkOpts) {
-  var { conform, instrument, justValidate } = walkOpts;
+  var { conform, instrument, trailblaze } = walkOpts;
   var input;
 
   var r = {
@@ -81,8 +81,8 @@ function simulate(nfa, rawInput, walkFn, walkOpts) {
 
             frontier.push(next);
           } else {
-            if(conform || instrument || justValidate) {
-              validateResult = walkFn(transition, observed, { justValidate: true });
+            if(conform || instrument || trailblaze) {
+              validateResult = walkFn(transition, observed, { trailblaze: true });
               if(!isProblem(validateResult)) {
                 if(currentOffset < input.length) {
                   move = { dir: 'pred' };

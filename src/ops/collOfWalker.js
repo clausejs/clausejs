@@ -9,9 +9,9 @@ function collOfWalker(spec, walkFn) {
   var opts = spec.opts;
 
   return function collOfWalk(x, walkOpts) {
-    var { conform, instrument, justValidate } = walkOpts;
+    var { conform, instrument, trailblaze } = walkOpts;
 
-    if(conform || instrument || justValidate) {
+    if(conform || instrument || trailblaze) {
       if(isArray(x)) {
 
         if(opts) {
@@ -31,7 +31,7 @@ function collOfWalker(spec, walkFn) {
         }
 
         var problems, results;
-        if(!justValidate) {
+        if(!trailblaze) {
           problems = [];
         }
 
@@ -40,7 +40,7 @@ function collOfWalker(spec, walkFn) {
         for (var i = 0; i < x.length; i += 1) {
           var r = walkFn(expr, x[i], walkOpts);
           if(isProblem(r)) {
-            if(justValidate) {
+            if(trailblaze) {
               return r;
             } else {
               problems.push(r);

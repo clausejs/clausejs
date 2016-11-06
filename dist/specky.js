@@ -1295,10 +1295,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return function nfaWalk(x, walkOpts) {
 	    var conform = walkOpts.conform;
 	    var instrument = walkOpts.instrument;
-	    var justValidate = walkOpts.justValidate;
+	    var trailblaze = walkOpts.trailblaze;
 
 
-	    if (conform || instrument || justValidate) {
+	    if (conform || instrument || trailblaze) {
 	      if (!nfa) {
 	        nfa = compile(spec); //lazy
 	      }
@@ -1316,7 +1316,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (lastProblem) {
 	          subproblems.push(lastProblem);
 	        }
-	        if (conform || instrument || justValidate) {
+	        if (conform || instrument || trailblaze) {
 	          return new Problem(x, spec, [], 'Spec ' + spec.type + ' did not match val: ' + JSON.stringify(x));
 	        } else {
 	          console.error(walkOpts);
@@ -1344,7 +1344,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	function simulate(nfa, rawInput, walkFn, walkOpts) {
 	  var conform = walkOpts.conform;
 	  var instrument = walkOpts.instrument;
-	  var justValidate = walkOpts.justValidate;
+	  var trailblaze = walkOpts.trailblaze;
 
 	  var input;
 
@@ -1425,8 +1425,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	          frontier.push(next);
 	        } else {
-	          if (conform || instrument || justValidate) {
-	            validateResult = walkFn(transition, observed, { justValidate: true });
+	          if (conform || instrument || trailblaze) {
+	            validateResult = walkFn(transition, observed, { trailblaze: true });
 	            if (!isProblem(validateResult)) {
 	              if (currentOffset < input.length) {
 	                move = { dir: 'pred' };
@@ -2015,9 +2015,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return function predWalk(x, opts) {
 	    var conform = opts.conform;
 	    var instrument = opts.instrument;
-	    var justValidate = opts.justValidate;
+	    var trailblaze = opts.trailblaze;
 
-	    if (conform || instrument || justValidate) {
+	    if (conform || instrument || trailblaze) {
 	      var predFn = spec.exprs[0];
 	      if (predFn(x)) {
 	        return x;
@@ -2055,14 +2055,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (fn) {
 	      var conform = walkOpts.conform;
 	      var instrument = walkOpts.instrument;
-	      var justValidate = walkOpts.justValidate;
+	      var trailblaze = walkOpts.trailblaze;
 
 
 	      if (conform && instrument) {
 	        return instrumentConformed(fn, walkOpts);
 	      } else if (instrument) {
 	        return _instrument(fn, walkOpts);
-	      } else if (justValidate) {
+	      } else if (trailblaze) {
 	        return fn;
 	      }
 	    } else {
@@ -2199,10 +2199,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return function propsWalk(x, walkOpts) {
 	    var conform = walkOpts.conform;
 	    var instrument = walkOpts.instrument;
-	    var justValidate = walkOpts.justValidate;
+	    var trailblaze = walkOpts.trailblaze;
 
 
-	    if (conform || instrument || justValidate) {
+	    if (conform || instrument || trailblaze) {
 	      var fieldDefs;
 	      if (reqSpecs) {
 	        fieldDefs = reqSpecs.fieldDefs;
@@ -2233,7 +2233,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var keysToDel = _parseFieldDef.keysToDel;
 
 	            if (isProblem(result)) {
-	              if (justValidate) {
+	              if (trailblaze) {
 	                return result;
 	              } else {
 	                problems.push([name, result]);
@@ -2265,7 +2265,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var keysToDel = _parseFieldDef2.keysToDel;
 
 	            if (isProblem(result)) {
-	              if (justValidate) {
+	              if (trailblaze) {
 	                return result;
 	              } else {
 	                problems.push([name, result]);
@@ -2434,12 +2434,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return function andWalk(data, walkOpts) {
 	    var conform = walkOpts.conform;
 	    var instrument = walkOpts.instrument;
-	    var justValidate = walkOpts.justValidate;
+	    var trailblaze = walkOpts.trailblaze;
 
 
-	    if (conform || instrument || justValidate) {
+	    if (conform || instrument || trailblaze) {
 	      var problems, results;
-	      if (!justValidate) {
+	      if (!trailblaze) {
 	        problems = [];
 	      }
 
@@ -2448,7 +2448,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      for (var i = 0; i < exprs.length; i += 1) {
 	        r = walkFn(exprs[i], data, walkOpts);
 	        if (isProblem(r)) {
-	          if (justValidate) {
+	          if (trailblaze) {
 	            return r;
 	          } else {
 	            problems.push(r);
@@ -2492,10 +2492,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return function collOfWalk(x, walkOpts) {
 	    var conform = walkOpts.conform;
 	    var instrument = walkOpts.instrument;
-	    var justValidate = walkOpts.justValidate;
+	    var trailblaze = walkOpts.trailblaze;
 
 
-	    if (conform || instrument || justValidate) {
+	    if (conform || instrument || trailblaze) {
 	      if (isArray(x)) {
 
 	        if (opts) {
@@ -2513,7 +2513,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 
 	        var problems, results;
-	        if (!justValidate) {
+	        if (!trailblaze) {
 	          problems = [];
 	        }
 
@@ -2522,7 +2522,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        for (var i = 0; i < x.length; i += 1) {
 	          var r = walkFn(expr, x[i], walkOpts);
 	          if (isProblem(r)) {
-	            if (justValidate) {
+	            if (trailblaze) {
 	              return r;
 	            } else {
 	              problems.push(r);
