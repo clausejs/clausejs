@@ -37,7 +37,11 @@ function _getWalker(expr) {
     throw 'unsupported type ' + spec.type;
   }
 
-  return walker(spec, walk);
+  var r = walker(spec, walk);
+  if(r.isProblem && spec.type === 'PROPS') {
+    console.log(r);
+  }
+  return r;
 }
 
 module.exports = walk;

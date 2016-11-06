@@ -5,18 +5,25 @@ var S = s;
 
 console.log(s);
 
-var NamedGroupedSpec = S.cat(
-  ['z', 'it\'s a fuuuunction', S.isFn],
-  ['b', S.isObj],
-  ['c', 'another fuuuunction', S.isFn],
-  ['a', S.isObj]
-);
+var fnList = ['props', 'isValid', 'conform', 'fspec', 'isObj', 'isFn'];
 
-var conformist = [function(){}, {}, function() {}, {}];
+  var SpecObj = S.keys({req: fnList});
+  var InsaneSpecObj = S.keys({req: fnList.concat(['voodooooooooo'])});
+  // expect(S.isValid(SpecObj, S)).to.be.true;
+S.isValid(InsaneSpecObj, S);
 
-var conformed = NamedGroupedSpec.conform(conformist);
-
-console.log(conformed);
+// var NamedGroupedSpec = S.cat(
+//   ['z', 'it\'s a fuuuunction', S.isFn],
+//   ['b', S.isObj],
+//   ['c', 'another fuuuunction', S.isFn],
+//   ['a', S.isObj]
+// );
+//
+// var conformist = [function(){}, {}, function() {}, {}];
+//
+// var conformed = NamedGroupedSpec.conform(conformist);
+//
+// console.log(conformed);
 
 // var Spec = s.cat('a', s.isNum, 'b', s.isStr);
 

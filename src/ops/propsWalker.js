@@ -7,33 +7,44 @@ var coerceIntoSpec = require('../utils/coerceIntoSpec');
 
 function propsWalker(spec, walkFn) {
   var keyConformer;
-  var {req, opt} = spec.exprs[0].propArgs;
-  var reqSpecs = req, optSpecs = opt;
+  var {req: reqSpecs, opt: optSpecs} = spec.exprs[0].propArgs;
 
   return function propsWalk(x, walkOpts) {
+    if(x.keyList) {
+      debugger;
+    }
     var { conform, instrument, trailblaze } = walkOpts;
 
     if(conform || instrument || trailblaze) {
-      var fieldDefs;
+      var fieldDefs, keyList;
       if(reqSpecs) {
         fieldDefs = reqSpecs.fieldDefs;
+        keyList = reqSpecs.keyList;
       }
+
       if (!keyConformer) {
         keyConformer = _genKeyConformer(reqSpecs, optSpecs, walkFn, walkOpts); //lazy
       }
-      var conformed = keyConformer(x);
+      var keyConformedR = keyConformer(x);
 
-      if(isProblem(conformed)) {
-        return conformed;
+      if(isProblem(keyConformedR)) {
+        return keyConformedR;
       }
-      var problems = [];
+      var problems;
+
+      if(conform) {
+        problems = [];
+      }
+
+      var conformed;
+
+      if(conform || trailblaze) {
+        conformed = oAssign({}, x);
+      } else if (instrument) {
+        conformed = x;
+      }
 
       if(fieldDefs) {
-        if(conform) {
-          conformed = oAssign({}, x);
-        } else {
-          conformed = x;
-        }
         for (var name in fieldDefs.fields) {
           if (fieldDefs.fields.hasOwnProperty(name)) {
             var defs = fieldDefs.fields[name];
@@ -56,9 +67,10 @@ function propsWalker(spec, walkFn) {
         }
       }
 
-      var optFieldDefs;
+      var optFieldDefs, optKeyList;
       if(optSpecs) {
         optFieldDefs = optSpecs.fieldDefs;
+        optKeyList = optSpecs.keyList;
       }
       if(optFieldDefs) {
         for (var name in optFieldDefs.fields) {
@@ -83,7 +95,7 @@ function propsWalker(spec, walkFn) {
         }
       }
 
-      if(problems.length > 0) {
+      if(conform && problems.length > 0) {
         var problemMap = {};
         var failedNames = [];
         for (var i = 0; i < problems.length; i++) {
@@ -92,6 +104,10 @@ function propsWalker(spec, walkFn) {
           problemMap[n] = p;
         }
         var newP = new Problem(x, spec, problemMap, 'Some properties failed validation: ' + failedNames.join(', '));
+        // if(newP.subproblems.req && newP.subproblems.req.val.keyList) {
+        //   console.log(JSON.stringify(newP.subproblems, null, 2));
+        //   console.log('-------------------------------------');
+        // }
         return newP;
       } else {
         return conformed;
@@ -119,7 +135,7 @@ function _genKeyConformer(reqSpecs, optSpec, walkFn, walkOpts) {
           }
         }
       } else if (keyList) {
-        reqNames = keyList.concat([]);
+        reqNames = [].concat(keyList);
       } else {
         throw 'unsupported';
       }
@@ -138,7 +154,7 @@ function _genKeyConformer(reqSpecs, optSpec, walkFn, walkOpts) {
               }
             }
           }
-        } else { //plain string key
+        } else if(keyList) { //plain string key
           if(x[name] === undefined) {
             reqProblems.push(name);
           }
@@ -148,6 +164,7 @@ function _genKeyConformer(reqSpecs, optSpec, walkFn, walkOpts) {
         return new Problem(x, reqSpecs, [], 'req: keys required: ' + reqProblems.join(', ') );
       }
     }
+
     return x;
   }
 }

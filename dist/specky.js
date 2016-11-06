@@ -1274,7 +1274,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    throw 'unsupported type ' + spec.type;
 	  }
 
-	  return walker(spec, walk);
+	  var r = walker(spec, walk);
+	  if (r.isProblem && spec.type === 'PROPS') {
+	    console.log(r);
+	  }
+	  return r;
 	}
 
 	module.exports = walk;
@@ -1427,6 +1431,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        } else {
 	          if (conform || instrument || trailblaze) {
 	            validateResult = walkFn(transition, observed, { trailblaze: true });
+	            // validateResult = walkFn(transition, observed, walkOpts);
 	            if (!isProblem(validateResult)) {
 	              if (currentOffset < input.length) {
 	                move = { dir: 'pred' };
@@ -2190,39 +2195,49 @@ return /******/ (function(modules) { // webpackBootstrap
 	function propsWalker(spec, walkFn) {
 	  var keyConformer;
 	  var _spec$exprs$0$propArg = spec.exprs[0].propArgs;
-	  var req = _spec$exprs$0$propArg.req;
-	  var opt = _spec$exprs$0$propArg.opt;
+	  var reqSpecs = _spec$exprs$0$propArg.req;
+	  var optSpecs = _spec$exprs$0$propArg.opt;
 
-	  var reqSpecs = req,
-	      optSpecs = opt;
 
 	  return function propsWalk(x, walkOpts) {
+	    if (x.keyList) {
+	      debugger;
+	    }
 	    var conform = walkOpts.conform;
 	    var instrument = walkOpts.instrument;
 	    var trailblaze = walkOpts.trailblaze;
 
 
 	    if (conform || instrument || trailblaze) {
-	      var fieldDefs;
+	      var fieldDefs, keyList;
 	      if (reqSpecs) {
 	        fieldDefs = reqSpecs.fieldDefs;
+	        keyList = reqSpecs.keyList;
 	      }
+
 	      if (!keyConformer) {
 	        keyConformer = _genKeyConformer(reqSpecs, optSpecs, walkFn, walkOpts); //lazy
 	      }
-	      var conformed = keyConformer(x);
+	      var keyConformedR = keyConformer(x);
 
-	      if (isProblem(conformed)) {
-	        return conformed;
+	      if (isProblem(keyConformedR)) {
+	        return keyConformedR;
 	      }
-	      var problems = [];
+	      var problems;
+
+	      if (conform) {
+	        problems = [];
+	      }
+
+	      var conformed;
+
+	      if (conform || trailblaze) {
+	        conformed = oAssign({}, x);
+	      } else if (instrument) {
+	        conformed = x;
+	      }
 
 	      if (fieldDefs) {
-	        if (conform) {
-	          conformed = oAssign({}, x);
-	        } else {
-	          conformed = x;
-	        }
 	        for (var name in fieldDefs.fields) {
 	          if (fieldDefs.fields.hasOwnProperty(name)) {
 	            var defs = fieldDefs.fields[name];
@@ -2250,9 +2265,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	      }
 
-	      var optFieldDefs;
+	      var optFieldDefs, optKeyList;
 	      if (optSpecs) {
 	        optFieldDefs = optSpecs.fieldDefs;
+	        optKeyList = optSpecs.keyList;
 	      }
 	      if (optFieldDefs) {
 	        for (var name in optFieldDefs.fields) {
@@ -2282,7 +2298,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	      }
 
-	      if (problems.length > 0) {
+	      if (conform && problems.length > 0) {
 	        var problemMap = {};
 	        var failedNames = [];
 	        for (var i = 0; i < problems.length; i++) {
@@ -2295,6 +2311,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	          problemMap[n] = p;
 	        }
 	        var newP = new Problem(x, spec, problemMap, 'Some properties failed validation: ' + failedNames.join(', '));
+	        // if(newP.subproblems.req && newP.subproblems.req.val.keyList) {
+	        //   console.log(JSON.stringify(newP.subproblems, null, 2));
+	        //   console.log('-------------------------------------');
+	        // }
 	        return newP;
 	      } else {
 	        return conformed;
@@ -2323,7 +2343,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          }
 	        }
 	      } else if (keyList) {
-	        reqNames = keyList.concat([]);
+	        reqNames = [].concat(keyList);
 	      } else {
 	        throw 'unsupported';
 	      }
@@ -2344,7 +2364,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	              }
 	            }
 	          }
-	        } else {
+	        } else if (keyList) {
 	          //plain string key
 	          if (x[name] === undefined) {
 	            reqProblems.push(name);
@@ -2355,6 +2375,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return new Problem(x, reqSpecs, [], 'req: keys required: ' + reqProblems.join(', '));
 	      }
 	    }
+
 	    return x;
 	  };
 	}

@@ -83,6 +83,7 @@ function simulate(nfa, rawInput, walkFn, walkOpts) {
           } else {
             if(conform || instrument || trailblaze) {
               validateResult = walkFn(transition, observed, { trailblaze: true });
+              // validateResult = walkFn(transition, observed, walkOpts);
               if(!isProblem(validateResult)) {
                 if(currentOffset < input.length) {
                   move = { dir: 'pred' };
