@@ -6,18 +6,24 @@ function andWalker(spec, walkFn) {
 
   return function andWalk(data, walkOpts) {
 
-    // for (var i = 0; i < exprs.length; i += 1) {
-    //   var r = walkFn()
-    // }
-
-    var results = exprs.map(function(e) {
-      return walkFn(e, data, walkOpts);
-    });
-
     var { conform, instrument, justValidate } = walkOpts;
 
-    if(conform || instrument) {
-      var problems = results.filter(isProblem);
+    if(conform || instrument || justValidate) {
+      var problems;
+      if(!justValidate) {
+        problems = [];
+      }
+
+      for (var i = 0; i < exprs.length; i += 1) {
+        var r = walkFn(exprs[i], data, walkOpts);
+        if(isProblem(r)) {
+          if(justValidate) {
+            return r;
+          } else {
+            problems.push(r);
+          }
+        }
+      }
 
       if(problems.length === 0) {
         return data;

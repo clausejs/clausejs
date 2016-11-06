@@ -5,25 +5,28 @@ var Problem = require('../../models/Problem');
 function nfaWalker(spec, walkFn) {
   var nfa;
 
-  return function nfaWalk(x, opts) {
-    var { conform, instrument } = opts;
-    if(!nfa) {
-      nfa = compile(spec); //lazy
-    }
+  return function nfaWalk(x, walkOpts) {
+    var { conform, instrument, justValidate } = walkOpts;
 
-    var { result, matched, lastProblem } = simulate(nfa, x, walkFn, opts);
-    if(matched === true) {
-      return result;
-    } else {
-      var subproblems = [];
-      if(lastProblem) {
-        subproblems.push(lastProblem);
+    if(conform || instrument || justValidate) {
+      if(!nfa) {
+        nfa = compile(spec); //lazy
       }
-      if (conform || instrument) {
-        return new Problem(x, spec, [], 'Spec ' + spec.type + ' did not match val: ' + JSON.stringify(x));
+
+      var { result, matched, lastProblem } = simulate(nfa, x, walkFn, walkOpts);
+      if(matched === true) {
+        return result;
       } else {
-        console.error(opts);
-        throw 'no impl case';
+        var subproblems = [];
+        if(lastProblem) {
+          subproblems.push(lastProblem);
+        }
+        if (conform || instrument || justValidate) {
+          return new Problem(x, spec, [], 'Spec ' + spec.type + ' did not match val: ' + JSON.stringify(x));
+        } else {
+          console.error(walkOpts);
+          throw 'no impl case';
+        }
       }
     }
   }

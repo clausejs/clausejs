@@ -3,8 +3,8 @@ var Problem = require('../models/Problem');
 
 function predWalker(spec, walkFn) {
   return function predWalk(x, opts) {
-    var conform = { opts };
-    if (conform) {
+    var { conform, instrument, justValidate } = opts;
+    if (conform || instrument || justValidate) {
       var predFn = spec.exprs[0];
       if (predFn(x)) {
         return x;

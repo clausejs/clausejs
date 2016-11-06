@@ -1292,32 +1292,36 @@ return /******/ (function(modules) { // webpackBootstrap
 	function nfaWalker(spec, walkFn) {
 	  var nfa;
 
-	  return function nfaWalk(x, opts) {
-	    var conform = opts.conform;
-	    var instrument = opts.instrument;
+	  return function nfaWalk(x, walkOpts) {
+	    var conform = walkOpts.conform;
+	    var instrument = walkOpts.instrument;
+	    var justValidate = walkOpts.justValidate;
 
-	    if (!nfa) {
-	      nfa = compile(spec); //lazy
-	    }
 
-	    var _simulate = simulate(nfa, x, walkFn, opts);
-
-	    var result = _simulate.result;
-	    var matched = _simulate.matched;
-	    var lastProblem = _simulate.lastProblem;
-
-	    if (matched === true) {
-	      return result;
-	    } else {
-	      var subproblems = [];
-	      if (lastProblem) {
-	        subproblems.push(lastProblem);
+	    if (conform || instrument || justValidate) {
+	      if (!nfa) {
+	        nfa = compile(spec); //lazy
 	      }
-	      if (conform || instrument) {
-	        return new Problem(x, spec, [], 'Spec ' + spec.type + ' did not match val: ' + JSON.stringify(x));
+
+	      var _simulate = simulate(nfa, x, walkFn, walkOpts);
+
+	      var result = _simulate.result;
+	      var matched = _simulate.matched;
+	      var lastProblem = _simulate.lastProblem;
+
+	      if (matched === true) {
+	        return result;
 	      } else {
-	        console.error(opts);
-	        throw 'no impl case';
+	        var subproblems = [];
+	        if (lastProblem) {
+	          subproblems.push(lastProblem);
+	        }
+	        if (conform || instrument || justValidate) {
+	          return new Problem(x, spec, [], 'Spec ' + spec.type + ' did not match val: ' + JSON.stringify(x));
+	        } else {
+	          console.error(walkOpts);
+	          throw 'no impl case';
+	        }
 	      }
 	    }
 	  };
@@ -2007,8 +2011,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function predWalker(spec, walkFn) {
 	  return function predWalk(x, opts) {
-	    var conform = { opts: opts };
-	    if (conform) {
+	    var conform = opts.conform;
+	    var instrument = opts.instrument;
+	    var justValidate = opts.justValidate;
+
+	    if (conform || instrument || justValidate) {
 	      var predFn = spec.exprs[0];
 	      if (predFn(x)) {
 	        return x;
@@ -2406,22 +2413,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var exprs = spec.exprs;
 
 	  return function andWalk(data, walkOpts) {
-
-	    // for (var i = 0; i < exprs.length; i += 1) {
-	    //   var r = walkFn()
-	    // }
-
-	    var results = exprs.map(function (e) {
-	      return walkFn(e, data, walkOpts);
-	    });
-
 	    var conform = walkOpts.conform;
 	    var instrument = walkOpts.instrument;
 	    var justValidate = walkOpts.justValidate;
 
 
-	    if (conform || instrument) {
-	      var problems = results.filter(isProblem);
+	    if (conform || instrument || justValidate) {
+	      var problems;
+	      if (!justValidate) {
+	        problems = [];
+	      }
+
+	      for (var i = 0; i < exprs.length; i += 1) {
+	        var r = walkFn(exprs[i], data, walkOpts);
+	        if (isProblem(r)) {
+	          if (justValidate) {
+	            return r;
+	          } else {
+	            problems.push(r);
+	          }
+	        }
+	      }
 
 	      if (problems.length === 0) {
 	        return data;
