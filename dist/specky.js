@@ -2399,7 +2399,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
-	var coerceIntoSpec = __webpack_require__(21);
 	var Problem = __webpack_require__(22);
 	var isProblem = __webpack_require__(28);
 
@@ -2407,13 +2406,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var exprs = spec.exprs;
 
 	  return function andWalk(data, walkOpts) {
+
+	    // for (var i = 0; i < exprs.length; i += 1) {
+	    //   var r = walkFn()
+	    // }
+
 	    var results = exprs.map(function (e) {
-	      e = coerceIntoSpec(e);
 	      return walkFn(e, data, walkOpts);
 	    });
 
 	    var conform = walkOpts.conform;
 	    var instrument = walkOpts.instrument;
+	    var justValidate = walkOpts.justValidate;
 
 
 	    if (conform || instrument) {

@@ -1,4 +1,3 @@
-var coerceIntoSpec = require('../utils/coerceIntoSpec');
 var Problem = require('../models/Problem');
 var isProblem = require('../utils/isProblem');
 
@@ -6,12 +5,16 @@ function andWalker(spec, walkFn) {
   var exprs = spec.exprs;
 
   return function andWalk(data, walkOpts) {
+
+    // for (var i = 0; i < exprs.length; i += 1) {
+    //   var r = walkFn()
+    // }
+
     var results = exprs.map(function(e) {
-      e = coerceIntoSpec(e);
       return walkFn(e, data, walkOpts);
     });
 
-    var { conform, instrument } = walkOpts;
+    var { conform, instrument, justValidate } = walkOpts;
 
     if(conform || instrument) {
       var problems = results.filter(isProblem);
