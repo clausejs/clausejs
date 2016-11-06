@@ -5,7 +5,7 @@ var oAssign = require('object-assign');
 var isUndefined = require('../../preds/isUndefined');
 
 function simulate(nfa, rawInput, walkFn, walkOpts) {
-  var { conform, instrument } = walkOpts;
+  var { conform, instrument, justValidate } = walkOpts;
   var input;
 
   var r = {
@@ -20,7 +20,7 @@ function simulate(nfa, rawInput, walkFn, walkOpts) {
     var { offset: currentOffset, leftOff, input, groupCount, arrayed } = current;
     if (current.state === nfa.finalState && currentOffset === input.length) {
       r.matched = true;
-      r.result = _getMatch(nfa, rawInput, current, walkOpts);
+      r.result = _getMatch(nfa, rawInput, current, walkFn, walkOpts);
       return r;
     }
     for (var nextStateStr in nfa.transitions[current.state]) {
@@ -61,7 +61,7 @@ function simulate(nfa, rawInput, walkFn, walkOpts) {
           nextOffset = currentOffset;
         }
 
-        var conformed, next;
+        var validateResult, next;
         if (nextOffset <= input.length) {
           if (transition.isEpsilon) {
             if(transition.dir) {
@@ -74,15 +74,16 @@ function simulate(nfa, rawInput, walkFn, walkOpts) {
               state: nextState,
               offset: nextOffset,
               move: move,
+              spec: transition,
               prev: current,
               isEpsilon: true,
             };
 
             frontier.push(next);
           } else {
-            if(conform || instrument) {
-              conformed = walkFn(transition, observed, walkOpts);
-              if(!isProblem(conformed)) {
+            if(conform || instrument || justValidate) {
+              validateResult = walkFn(transition, observed, { justValidate: true });
+              if(!isProblem(validateResult)) {
                 if(currentOffset < input.length) {
                   move = { dir: 'pred' };
                   next = {
@@ -92,13 +93,13 @@ function simulate(nfa, rawInput, walkFn, walkOpts) {
                     move: move,
                     prev: current,
                     isEpsilon: false,
+                    spec: transition,
                     observed: observed,
-                    conformed: conformed,
                   };
                   frontier.push(next);
                 }
               } else {
-                r.lastProblem = conformed;
+                r.lastProblem = validateResult;
               }
             }
           }
@@ -118,9 +119,9 @@ var MAYBE_SINGLE_ENTER = function() {};
 var Name = function(n) { this.value = n; };
 var ArrayFragment = function(val) { this.value = val; };
 
-function _getMatch(nfa, input, finalState, walkOpts) {
+function _getMatch(nfa, input, finalState, walkFn, walkOpts) {
   var { conform, instrument } = walkOpts;
-  var chain = _stateChain(nfa, finalState);
+  var chain = _stateChain(nfa, finalState, walkFn, walkOpts);
   var valStack = [];
   var r = {};
 
@@ -290,7 +291,7 @@ function _getValue(object, path) {
       return o;
   }
 
-function _stateChain(nfa, finalState) {
+function _stateChain(nfa, finalState, walkFn, walkOpts) {
   var chain = [];
   var curr = finalState;
   var prev;
@@ -303,7 +304,7 @@ function _stateChain(nfa, finalState) {
       };
       if(!curr.isEpsilon) {
         o.observed = curr.observed;
-        o.conformed = curr.conformed;
+        o.conformed = walkFn(curr.spec, curr.observed, walkOpts);
       }
       chain.unshift(o);
     }

@@ -52,6 +52,7 @@ describe('cat', function() {
       );
 
       var conformed = NamedGroupedSpec.conform(conformist);
+      expect(conformed).not.to.be.an.instanceOf(Problem);
       expect(conformed).to.deep.equal({ z: fn, b: {}, c: fn, a: { a: 1 } });
       var nonconformed = NamedGroupedSpec.conform(nonconformist);
       expect(nonconformed instanceof Problem).to.be.true;

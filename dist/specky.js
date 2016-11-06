@@ -1344,6 +1344,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	function simulate(nfa, rawInput, walkFn, walkOpts) {
 	  var conform = walkOpts.conform;
 	  var instrument = walkOpts.instrument;
+	  var justValidate = walkOpts.justValidate;
 
 	  var input;
 
@@ -1364,7 +1365,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    if (current.state === nfa.finalState && currentOffset === input.length) {
 	      r.matched = true;
-	      r.result = _getMatch(nfa, rawInput, current, walkOpts);
+	      r.result = _getMatch(nfa, rawInput, current, walkFn, walkOpts);
 	      return r;
 	    }
 	    for (var nextStateStr in nfa.transitions[current.state]) {
@@ -1404,7 +1405,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        nextOffset = currentOffset;
 	      }
 
-	      var conformed, next;
+	      var validateResult, next;
 	      if (nextOffset <= input.length) {
 	        if (transition.isEpsilon) {
 	          if (transition.dir) {
@@ -1417,15 +1418,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	            state: nextState,
 	            offset: nextOffset,
 	            move: move,
+	            spec: transition,
 	            prev: current,
 	            isEpsilon: true
 	          };
 
 	          frontier.push(next);
 	        } else {
-	          if (conform || instrument) {
-	            conformed = walkFn(transition, observed, walkOpts);
-	            if (!isProblem(conformed)) {
+	          if (conform || instrument || justValidate) {
+	            validateResult = walkFn(transition, observed, { justValidate: true });
+	            if (!isProblem(validateResult)) {
 	              if (currentOffset < input.length) {
 	                move = { dir: 'pred' };
 	                next = {
@@ -1435,13 +1437,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	                  move: move,
 	                  prev: current,
 	                  isEpsilon: false,
-	                  observed: observed,
-	                  conformed: conformed
+	                  spec: transition,
+	                  observed: observed
 	                };
 	                frontier.push(next);
 	              }
 	            } else {
-	              r.lastProblem = conformed;
+	              r.lastProblem = validateResult;
 	            }
 	          }
 	        }
@@ -1465,11 +1467,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  this.value = val;
 	};
 
-	function _getMatch(nfa, input, finalState, walkOpts) {
+	function _getMatch(nfa, input, finalState, walkFn, walkOpts) {
 	  var conform = walkOpts.conform;
 	  var instrument = walkOpts.instrument;
 
-	  var chain = _stateChain(nfa, finalState);
+	  var chain = _stateChain(nfa, finalState, walkFn, walkOpts);
 	  var valStack = [];
 	  var r = {};
 
@@ -1652,7 +1654,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return o;
 	}
 
-	function _stateChain(nfa, finalState) {
+	function _stateChain(nfa, finalState, walkFn, walkOpts) {
 	  var chain = [];
 	  var curr = finalState;
 	  var prev;
@@ -1665,7 +1667,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      };
 	      if (!curr.isEpsilon) {
 	        o.observed = curr.observed;
-	        o.conformed = curr.conformed;
+	        o.conformed = walkFn(curr.spec, curr.observed, walkOpts);
 	      }
 	      chain.unshift(o);
 	    }
@@ -2053,13 +2055,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (fn) {
 	      var conform = walkOpts.conform;
 	      var instrument = walkOpts.instrument;
+	      var justValidate = walkOpts.justValidate;
 
 
 	      if (conform && instrument) {
 	        return instrumentConformed(fn, walkOpts);
 	      } else if (instrument) {
 	        return _instrument(fn, walkOpts);
-	      } else {
+	      } else if (justValidate) {
 	        return fn;
 	      }
 	    } else {
@@ -2161,7 +2164,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	"use strict";
 
 	function betterThrow(problem) {
+	  // console.log('----------------------');
 	  // console.error(problem.message, problem);
+	  // console.log('----------------------');
 	  throw problem;
 	}
 
@@ -2193,95 +2198,109 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  return function propsWalk(x, walkOpts) {
 	    var conform = walkOpts.conform;
+	    var instrument = walkOpts.instrument;
+	    var justValidate = walkOpts.justValidate;
 
-	    var fieldDefs;
-	    if (reqSpecs) {
-	      fieldDefs = reqSpecs.fieldDefs;
-	    }
-	    if (!keyConformer) {
-	      keyConformer = _genKeyConformer(reqSpecs, optSpecs, walkFn, walkOpts); //lazy
-	    }
-	    var conformed = keyConformer(x);
 
-	    if (isProblem(conformed)) {
-	      return conformed;
-	    }
-	    var problems = [];
+	    if (conform || instrument || justValidate) {
+	      var fieldDefs;
+	      if (reqSpecs) {
+	        fieldDefs = reqSpecs.fieldDefs;
+	      }
+	      if (!keyConformer) {
+	        keyConformer = _genKeyConformer(reqSpecs, optSpecs, walkFn, walkOpts); //lazy
+	      }
+	      var conformed = keyConformer(x);
 
-	    if (fieldDefs) {
-	      if (conform) {
-	        conformed = oAssign({}, x);
+	      if (isProblem(conformed)) {
+	        return conformed;
+	      }
+	      var problems = [];
+
+	      if (fieldDefs) {
+	        if (conform) {
+	          conformed = oAssign({}, x);
+	        } else {
+	          conform = x;
+	        }
+	        for (var name in fieldDefs.fields) {
+	          if (fieldDefs.fields.hasOwnProperty(name)) {
+	            var defs = fieldDefs.fields[name];
+
+	            var _parseFieldDef = parseFieldDef(x, name, defs, walkFn, walkOpts);
+
+	            var result = _parseFieldDef.result;
+	            var keysToDel = _parseFieldDef.keysToDel;
+
+	            if (isProblem(result)) {
+	              if (justValidate) {
+	                return result;
+	              } else {
+	                problems.push([name, result]);
+	              }
+	            } else {
+	              if (conform) {
+	                _deleteKeys(conformed, keysToDel);
+	                if (!isUndefined(result)) {
+	                  conformed[name] = result;
+	                }
+	              }
+	            }
+	          }
+	        }
+	      }
+
+	      var optFieldDefs;
+	      if (optSpecs) {
+	        optFieldDefs = optSpecs.fieldDefs;
+	      }
+	      if (optFieldDefs) {
+	        for (var name in optFieldDefs.fields) {
+	          if (optFieldDefs.fields.hasOwnProperty(name)) {
+	            var defs = optFieldDefs.fields[name];
+
+	            var _parseFieldDef2 = parseFieldDef(x, name, defs, walkFn, walkOpts);
+
+	            var result = _parseFieldDef2.result;
+	            var keysToDel = _parseFieldDef2.keysToDel;
+
+	            if (isProblem(result)) {
+	              if (justValidate) {
+	                return result;
+	              } else {
+	                problems.push([name, result]);
+	              }
+	            } else {
+	              if (conform) {
+	                _deleteKeys(conformed, keysToDel);
+	                if (!isUndefined(result)) {
+	                  conformed[name] = result;
+	                }
+	              }
+	            }
+	          }
+	        }
+	      }
+
+	      if (problems.length > 0) {
+	        var problemMap = {};
+	        var failedNames = [];
+	        for (var i = 0; i < problems.length; i++) {
+	          var _problems$i = _slicedToArray(problems[i], 2);
+
+	          var n = _problems$i[0];
+	          var p = _problems$i[1];
+
+	          failedNames.push(n);
+	          problemMap[n] = p;
+	        }
+	        var newP = new Problem(x, spec, problemMap, 'Some properties failed validation: ' + failedNames.join(', '));
+	        return newP;
 	      } else {
-	        conform = x;
+	        return conformed;
 	      }
-	      for (var name in fieldDefs.fields) {
-	        if (fieldDefs.fields.hasOwnProperty(name)) {
-	          var defs = fieldDefs.fields[name];
-
-	          var _parseFieldDef = parseFieldDef(x, name, defs, walkFn, walkOpts);
-
-	          var result = _parseFieldDef.result;
-	          var keysToDel = _parseFieldDef.keysToDel;
-
-	          if (isProblem(result)) {
-	            return result;
-	          } else {
-	            if (conform) {
-	              _deleteKeys(conformed, keysToDel);
-	              if (!isUndefined(result)) {
-	                conformed[name] = result;
-	              }
-	            }
-	          }
-	        }
-	      }
-	    }
-
-	    var optFieldDefs;
-	    if (optSpecs) {
-	      optFieldDefs = optSpecs.fieldDefs;
-	    }
-	    if (optFieldDefs) {
-	      for (var name in optFieldDefs.fields) {
-	        if (optFieldDefs.fields.hasOwnProperty(name)) {
-	          var defs = optFieldDefs.fields[name];
-
-	          var _parseFieldDef2 = parseFieldDef(x, name, defs, walkFn, walkOpts);
-
-	          var result = _parseFieldDef2.result;
-	          var keysToDel = _parseFieldDef2.keysToDel;
-
-	          if (isProblem(result)) {
-	            //TODO: break immediately if don't need full report
-	            problems.push([name, result]);
-	          } else {
-	            if (conform) {
-	              _deleteKeys(conformed, keysToDel);
-	              if (!isUndefined(result)) {
-	                conformed[name] = result;
-	              }
-	            }
-	          }
-	        }
-	      }
-	    }
-
-	    if (problems.length > 0) {
-	      var problemMap = {};
-	      var failedNames = [];
-	      for (var i = 0; i < problems.length; i++) {
-	        var _problems$i = _slicedToArray(problems[i], 2);
-
-	        var n = _problems$i[0];
-	        var p = _problems$i[1];
-
-	        failedNames.push(n);
-	        problemMap[n] = p;
-	      }
-	      var newP = new Problem(x, spec, problemMap, 'Some properties failed validation: ' + failedNames.join(', '));
-	      return newP;
 	    } else {
-	      return conformed;
+	      throw 'no impl';
 	    }
 	  };
 	}
@@ -2437,7 +2456,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	      }
 
-	      if (problems.length === 0) {
+	      if (!problems || problems.length === 0) {
 	        if (conform) {
 	          return r; //return last result TODO: is this correct?
 	        } else {
@@ -2498,9 +2517,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	          problems = [];
 	        }
 
-	        if (conform) {
-	          results = [];
-	        }
+	        results = [];
+
 	        for (var i = 0; i < x.length; i += 1) {
 	          var r = walkFn(expr, x[i], walkOpts);
 	          if (isProblem(r)) {
@@ -2514,7 +2532,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          }
 	        }
 
-	        if (problems.length === 0) {
+	        if (!problems || problems.length === 0) {
 	          return results;
 	        } else {
 	          return new Problem(x, spec, problems, 'One or more elements failed collOf test');
@@ -2544,17 +2562,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 38 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
-	'use strict';
-
-	var coerceIntoSpec = __webpack_require__(21);
+	"use strict";
 
 	function specRefWalker(specRef, walkFn) {
 	  return function walkSpecRef(x, walkOpts) {
 	    var s = specRef.get();
 	    if (s) {
-	      var ss = coerceIntoSpec(s);
 	      return walkFn(ss, x, walkOpts);
 	    }
 	  };
@@ -2564,18 +2579,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 39 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
-	'use strict';
-
-	var coerceIntoSpec = __webpack_require__(21);
+	"use strict";
 
 	function delayedSpecWalker(delayedSpec, walkFn) {
 	  return function walkDelayedSpec(x, walkOpts) {
 	    var s = delayedSpec.get();
 	    if (s) {
-	      var ss = coerceIntoSpec(s);
-	      return walkFn(ss, x, walkOpts);
+	      return walkFn(s, x, walkOpts);
 	    }
 	  };
 	}

@@ -11,81 +11,95 @@ function propsWalker(spec, walkFn) {
   var reqSpecs = req, optSpecs = opt;
 
   return function propsWalk(x, walkOpts) {
-    var { conform } = walkOpts;
-    var fieldDefs;
-    if(reqSpecs) {
-      fieldDefs = reqSpecs.fieldDefs;
-    }
-    if (!keyConformer) {
-      keyConformer = _genKeyConformer(reqSpecs, optSpecs, walkFn, walkOpts); //lazy
-    }
-    var conformed = keyConformer(x);
+    var { conform, instrument, justValidate } = walkOpts;
 
-    if(isProblem(conformed)) {
-      return conformed;
-    }
-    var problems = [];
+    if(conform || instrument || justValidate) {
+      var fieldDefs;
+      if(reqSpecs) {
+        fieldDefs = reqSpecs.fieldDefs;
+      }
+      if (!keyConformer) {
+        keyConformer = _genKeyConformer(reqSpecs, optSpecs, walkFn, walkOpts); //lazy
+      }
+      var conformed = keyConformer(x);
 
-    if(fieldDefs) {
-      if(conform) {
-        conformed = oAssign({}, x);
+      if(isProblem(conformed)) {
+        return conformed;
+      }
+      var problems = [];
+
+      if(fieldDefs) {
+        if(conform) {
+          conformed = oAssign({}, x);
+        } else {
+          conform = x;
+        }
+        for (var name in fieldDefs.fields) {
+          if (fieldDefs.fields.hasOwnProperty(name)) {
+            var defs = fieldDefs.fields[name];
+            var {result, keysToDel} = parseFieldDef(x, name, defs, walkFn, walkOpts);
+            if (isProblem(result)) {
+              if(justValidate) {
+                return result;
+              } else {
+                problems.push([name, result]);
+              }
+            } else {
+              if(conform) {
+                _deleteKeys(conformed, keysToDel);
+                if(!isUndefined(result)) {
+                  conformed[name] = result;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      var optFieldDefs;
+      if(optSpecs) {
+        optFieldDefs = optSpecs.fieldDefs;
+      }
+      if(optFieldDefs) {
+        for (var name in optFieldDefs.fields) {
+          if(optFieldDefs.fields.hasOwnProperty(name)) {
+            var defs = optFieldDefs.fields[name];
+            var {result, keysToDel} = parseFieldDef(x, name, defs, walkFn, walkOpts);
+            if (isProblem(result)) {
+              if(justValidate) {
+                return result;
+              } else {
+                problems.push([name, result]);
+              }
+            } else {
+              if(conform) {
+                _deleteKeys(conformed, keysToDel);
+                if(!isUndefined(result)) {
+                  conformed[name] = result;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      if(problems.length > 0) {
+        var problemMap = {};
+        var failedNames = [];
+        for (var i = 0; i < problems.length; i++) {
+          var [n, p] = problems[i];
+          failedNames.push(n);
+          problemMap[n] = p;
+        }
+        var newP = new Problem(x, spec, problemMap, 'Some properties failed validation: ' + failedNames.join(', '));
+        return newP;
       } else {
-        conform = x;
+        return conformed;
       }
-      for (var name in fieldDefs.fields) {
-        if (fieldDefs.fields.hasOwnProperty(name)) {
-          var defs = fieldDefs.fields[name];
-          var {result, keysToDel} = parseFieldDef(x, name, defs, walkFn, walkOpts);
-          if (isProblem(result)) {
-            return result;
-          } else {
-            if(conform) {
-              _deleteKeys(conformed, keysToDel);
-              if(!isUndefined(result)) {
-                conformed[name] = result;
-              }
-            }
-          }
-        }
-      }
-    }
-
-    var optFieldDefs;
-    if(optSpecs) {
-      optFieldDefs = optSpecs.fieldDefs;
-    }
-    if(optFieldDefs) {
-      for (var name in optFieldDefs.fields) {
-        if(optFieldDefs.fields.hasOwnProperty(name)) {
-          var defs = optFieldDefs.fields[name];
-          var {result, keysToDel} = parseFieldDef(x, name, defs, walkFn, walkOpts);
-          if (isProblem(result)) { //TODO: break immediately if don't need full report
-            problems.push([name, result]);
-          } else {
-            if(conform) {
-              _deleteKeys(conformed, keysToDel);
-              if(!isUndefined(result)) {
-                conformed[name] = result;
-              }
-            }
-          }
-        }
-      }
-    }
-
-    if(problems.length > 0) {
-      var problemMap = {};
-      var failedNames = [];
-      for (var i = 0; i < problems.length; i++) {
-        var [n, p] = problems[i];
-        failedNames.push(n);
-        problemMap[n] = p;
-      }
-      var newP = new Problem(x, spec, problemMap, 'Some properties failed validation: ' + failedNames.join(', '));
-      return newP;
     } else {
-      return conformed;
+      throw 'no impl';
     }
+
   }
 }
 

@@ -27,7 +27,7 @@ function andWalker(spec, walkFn) {
         }
       }
 
-      if(problems.length === 0) {
+      if(!problems || problems.length === 0) {
         if (conform) {
           return r; //return last result TODO: is this correct?
         } else {

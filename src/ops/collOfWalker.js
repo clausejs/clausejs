@@ -35,9 +35,8 @@ function collOfWalker(spec, walkFn) {
           problems = [];
         }
 
-        if(conform) {
-          results = [];
-        }
+        results = [];
+
         for (var i = 0; i < x.length; i += 1) {
           var r = walkFn(expr, x[i], walkOpts);
           if(isProblem(r)) {
@@ -51,7 +50,7 @@ function collOfWalker(spec, walkFn) {
           }
         }
 
-        if(problems.length === 0) {
+        if(!problems || problems.length === 0) {
           return results;
         } else {
           return new Problem(x, spec, problems, 'One or more elements failed collOf test');
