@@ -2221,7 +2221,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (conform) {
 	          conformed = oAssign({}, x);
 	        } else {
-	          conform = x;
+	          conformed = x;
 	        }
 	        for (var name in fieldDefs.fields) {
 	          if (fieldDefs.fields.hasOwnProperty(name)) {
