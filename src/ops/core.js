@@ -13,7 +13,7 @@ var isDelayedSpec = require('../utils/isDelayedSpec');
 var c = require('../ops/constants');
 var coerceIntoSpec = require('../utils/coerceIntoSpec');
 var fspec = require('./fspec');
-var walk = require('./walk');
+var walk = require('../walk');
 var specSpec = coerceIntoSpec(isSpec);
 var nameSpec = coerceIntoSpec(isSpecName);
 

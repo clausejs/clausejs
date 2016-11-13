@@ -1,6 +1,6 @@
-var simulate = require('./simulate');
-var compile = require('./compile');
-var Problem = require('../../models/Problem');
+var simulate = require('../ops/nfa/simulate');
+var compile = require('../ops/nfa/compile');
+var Problem = require('../models/Problem');
 
 function nfaWalker(spec, walkFn) {
   var nfa;

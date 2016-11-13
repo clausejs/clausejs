@@ -2084,7 +2084,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  function instrumentConformed(fn, walkOpts) {
 	    var fnName = functionName(fn);
-	    var argConformedFn = getArgConformedFn(fnName, fn, walkOpts);
+	    var argConformedFn = getArgConformedInstrumentedFn(fnName, fn, walkOpts);
 	    var namedArgConformedFn = namedFn(fnName, argConformedFn, '__conformed');
 
 	    return namedArgConformedFn;
@@ -2142,7 +2142,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }
 
-	  function getArgConformedFn(fnName, fn, walkOpts) {
+	  function getArgConformedInstrumentedFn(fnName, fn, walkOpts) {
 	    return function () {
 	      var args = Array.from(arguments);
 

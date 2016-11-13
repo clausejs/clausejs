@@ -1,11 +1,11 @@
-var nfaWalker = require('./nfa/nfaWalker');
-var predWalker = require('../utils/predWalker');
+var nfaWalker = require('./nfaWalker');
+var predWalker = require('./predWalker');
 var fspecWalker = require('./fspecWalker');
 var propsWalker = require('./propsWalker');
 var andWalker = require('./andWalker');
 var collOfWalker = require('./collOfWalker');
-var specRefWalker = require('../namespace/specRefWalker');
-var delayedSpecWalker = require('../utils/delayedSpecWalker');
+var specRefWalker = require('./specRefWalker');
+var delayedSpecWalker = require('./delayedSpecWalker');
 var coerceIntoSpec = require('../utils/coerceIntoSpec');
 
 function walk(spec, x, opts) {

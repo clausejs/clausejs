@@ -1,4 +1,4 @@
-var fnName = require('./fnName');
+var fnName = require('../utils/fnName');
 var Problem = require('../models/Problem');
 
 function predWalker(spec, walkFn) {

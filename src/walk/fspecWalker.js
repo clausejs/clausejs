@@ -32,7 +32,7 @@ function fspecWalker(spec, walkFn) {
 
   function instrumentConformed (fn, walkOpts) {
     var fnName = functionName(fn);
-    var argConformedFn = getArgConformedFn(fnName, fn, walkOpts);
+    var argConformedFn = getArgConformedInstrumentedFn(fnName, fn, walkOpts);
     var namedArgConformedFn = namedFn(fnName, argConformedFn, '__conformed');
 
     return namedArgConformedFn;
@@ -91,7 +91,7 @@ function fspecWalker(spec, walkFn) {
     }
   }
 
-  function getArgConformedFn(fnName, fn, walkOpts) {
+  function getArgConformedInstrumentedFn(fnName, fn, walkOpts) {
     return function () {
       var args = Array.from(arguments);
 

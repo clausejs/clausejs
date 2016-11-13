@@ -1,5 +1,5 @@
 var Spec = require('../models/Spec');
-var walk = require('./walk');
+var walk = require('../walk');
 
 function fspec(fnSpec) {
   var spec = new Spec('FSPEC', [], fnSpec, null, null);

@@ -8,7 +8,7 @@ var isPred = require('../utils/isPred');
 var isStr = require('../preds/isStr');
 var isExpr = require('../utils/isExpr');
 var isUndefined = require('../preds/isUndefined');
-var walk = require('../ops/walk');
+var walk = require('../walk');
 var delayed = require('../utils/delayed');
 
 var reg;
