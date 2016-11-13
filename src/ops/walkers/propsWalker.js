@@ -1,8 +1,8 @@
-var isProblem = require('../utils/isProblem');
-var isUndefined = require('../preds/isUndefined');
+var isProblem = require('../../utils/isProblem');
+var isUndefined = require('../../preds/isUndefined');
 var oAssign = require('object-assign');
-var Problem = require('../models/Problem');
-var coerceIntoSpec = require('../utils/coerceIntoSpec');
+var Problem = require('../../models/Problem');
+var coerceIntoSpec = require('../../utils/coerceIntoSpec');
 
 function propsWalker(spec, walkFn) {
   var keyConformer;

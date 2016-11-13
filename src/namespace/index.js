@@ -49,11 +49,11 @@ var ExprOrPartialRefMapSpec = or(
   'expr', delayed(function() { return ExprSpec }) //TODO
 );
 
-var PartialRefMapSpec = props({
-  req: {
-    'refDefs': [isNamespaceName, ExprOrPartialRefMapSpec]
-  }
-});
+// var PartialRefMapSpec = props({
+//   req: {
+//     'refDefs': [isNamespaceName, ExprOrPartialRefMapSpec]
+//   }
+// });
 
 var NamespaceFnSpec = fspec({
   args: or(

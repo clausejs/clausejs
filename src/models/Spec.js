@@ -1,5 +1,3 @@
-var oAssign = require('object-assign');
-
 function Spec(type, exprs, opts, conformFn, generateFn) {
 
   if(arguments.length !== 5) {

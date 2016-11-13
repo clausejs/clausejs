@@ -1,6 +1,24 @@
 var webpack = require('webpack');
 // var ClosureCompilerPlugin = require('webpack-closure-compiler');
 var PROD = JSON.parse(process.env.PROD_ENV || '0');
+var plugins = [
+  new webpack.LoaderOptionsPlugin({
+    minimize: true,
+    debug: false
+  })
+];
+
+if(PROD) {
+  plugins.push(new webpack.optimize.UglifyJsPlugin({
+    compress: {
+      warnings: true
+    },
+    output: {
+      comments: false
+    },
+    sourceMap: false
+  }));
+}
 
 module.exports = {
     entry: './src/index.js',
@@ -20,27 +38,5 @@ module.exports = {
         },
       ],
     },
-    plugins: PROD ? [
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false,
-                keep_fnames: true,
-            },
-            mangle: {
-                keep_fnames: true,
-            },
-            output: {
-                comments: false,
-            },
-        }),
-      //   new ClosureCompilerPlugin({
-      //    externs: 'src/index.js',
-      //    compiler: {
-      //      language_in: 'ECMASCRIPT6',
-      //      language_out: 'ECMASCRIPT3',
-      //      compilation_level: 'ADVANCED'
-      //    },
-      //    concurrency: 3,
-      //  }),
-    ] : [],
+    plugins: plugins,
 }

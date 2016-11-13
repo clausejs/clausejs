@@ -82,7 +82,6 @@ build.CAT = function(frags) {
   };
 
   frags = frags.map(function addEpsilonState (f) {
-    var originalTails = f.tails;
     var trans = fragmentTransition(
       namedEpsilonState('out', f.name, 'CAT'), null);
     var nameOutState = fragmentState([trans]);
@@ -115,7 +114,6 @@ build.CAT = function(frags) {
 
 build.OR = function(frags) {
   frags = frags.map(function(f) {
-    var originalTails = f.tails;
     var outState = namedEpsilonState('out', f.name, 'OR');
     var trans = fragmentTransition(outState, null);
     var nameOutState = fragmentState([trans]);

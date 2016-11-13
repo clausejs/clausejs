@@ -4,7 +4,6 @@ var isSpecRef = require('./isSpecRef');
 var isDelayedSpec = require('./isDelayedSpec');
 var Spec = require('../models/Spec');
 var Problem = require('../models/Problem');
-var namedFn = require('./namedFn');
 var fnName = require('./fnName');
 
 var SPEC_TYPE = 'PRED';

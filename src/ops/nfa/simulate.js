@@ -247,10 +247,6 @@ function _getMatch(nfa, input, finalState, walkFn, walkOpts) {
   return r;
 }
 
-function _last(arr) {
-  return arr[arr.length - 1];
-}
-
 function _foldIn(acc, val) {
   var r;
   if(acc === null) {
@@ -262,34 +258,6 @@ function _foldIn(acc, val) {
   }
   return r;
 }
-
-function _setToValue(object, path, value) {
-  var o = object;
-  for (var i = 0; i < path.length - 1; i++) {
-    var n = path[i];
-    if (n in o) {
-      o = o[n];
-    } else {
-      o[n] = {};
-      o = o[n];
-    }
-  }
-  o[path[path.length - 1]] = value;
-}
-
-function _getValue(object, path) {
-      var o = object;
-      var a = [].concat(path);
-      while (a.length) {
-          var n = a.shift();
-          if (n in o) {
-              o = o[n];
-          } else {
-              return;
-          }
-      }
-      return o;
-  }
 
 function _stateChain(nfa, finalState, walkFn, walkOpts) {
   var chain = [];

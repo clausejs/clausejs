@@ -4,7 +4,6 @@ var Spec = require('../models/Spec');
 var isSpec = require('../utils/isSpec');
 var isPred = require('../utils/isPred');
 var isObj = require('../preds/isObj');
-var isUndefined = require('../preds/isUndefined');
 var isStr = require('../preds/isStr');
 var isSpecName = require('../utils/isSpecName');
 var namedFn = require('../utils/namedFn');

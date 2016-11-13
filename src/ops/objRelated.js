@@ -3,7 +3,7 @@ var isSpec = require('../utils/isSpec');
 var isStr = require('../preds/isStr');
 var isFn = require('../preds/isFn');
 var coerceIntoSpec = require('../utils/coerceIntoSpec');
-var { cat, or, zeroOrMore, zeroOrOne, ExprSpec } = require('./core');
+var { cat, or, zeroOrMore, ExprSpec } = require('./core');
 var walk = require('../walk');
 var fspec = require('./fspec');
 
