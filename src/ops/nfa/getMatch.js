@@ -11,9 +11,8 @@ var MAYBE_SINGLE_ENTER = function() {};
 var Name = function(n) { this.value = n; };
 var ArrayFragment = function(val) { this.value = val; };
 
-function getMatch(nfa, input, finalState, walkFn, walkOpts) {
+function getMatch(chain, walkFn, walkOpts) {
   var { conform, instrument } = walkOpts;
-  var chain = _stateChain(nfa, finalState, walkFn, walkOpts);
   var valStack = [];
   var r = {};
 
@@ -149,29 +148,6 @@ function _foldIn(acc, val) {
     r = [val].concat(acc);
   }
   return r;
-}
-
-function _stateChain(nfa, finalState, walkFn, walkOpts) {
-  var chain = [];
-  var curr = finalState;
-  var prev;
-  while(curr) {
-    if(!prev || (curr.state !== prev.state) && curr.move) {
-      var o = {
-        isEpsilon: curr.isEpsilon,
-        move: curr.move,
-        state: curr.state,
-      };
-      if(!curr.isEpsilon) {
-        o.observed = curr.observed;
-        o.conformed = walkFn(curr.spec, curr.observed, walkOpts);
-      }
-      chain.unshift(o);
-    }
-    prev = curr;
-    curr = curr.prev;
-  }
-  return chain;
 }
 
 module.exports = getMatch;

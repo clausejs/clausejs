@@ -1,5 +1,4 @@
 var isProblem = require('../../utils/isProblem');
-var getMatch = require('./getMatch');
 
 function simulate(nfa, rawInput, walkFn, walkOpts) {
   var { conform, instrument, trailblaze } = walkOpts;
@@ -7,7 +6,7 @@ function simulate(nfa, rawInput, walkFn, walkOpts) {
 
   var r = {
     matched: false,
-    result: null,
+    chain: null,
   };
 
   var initial = { state: 0, offset: 0, leftOff: 0, input: [rawInput], groupCount: 0, arrayed: false };
@@ -17,7 +16,7 @@ function simulate(nfa, rawInput, walkFn, walkOpts) {
     var { offset: currentOffset, leftOff, input, groupCount, arrayed } = current;
     if (current.state === nfa.finalState && currentOffset === input.length) {
       r.matched = true;
-      r.result = getMatch(nfa, rawInput, current, walkFn, walkOpts);
+      r.chain = _stateChain(nfa, current, walkFn, walkOpts);
       return r;
     }
     for (var nextStateStr in nfa.transitions[current.state]) {
@@ -107,5 +106,29 @@ function simulate(nfa, rawInput, walkFn, walkOpts) {
 
   return r;
 };
+
+function _stateChain(nfa, finalState, walkFn, walkOpts) {
+  var chain = [];
+  var curr = finalState;
+  var prev;
+  while(curr) {
+    if(!prev || (curr.state !== prev.state) && curr.move) {
+      var o = {
+        isEpsilon: curr.isEpsilon,
+        move: curr.move,
+        state: curr.state,
+      };
+      if(!curr.isEpsilon) {
+        o.observed = curr.observed;
+        o.conformed = walkFn(curr.spec, curr.observed, walkOpts);
+      }
+      chain.unshift(o);
+    }
+    prev = curr;
+    curr = curr.prev;
+  }
+  return chain;
+}
+
 
 module.exports = simulate;

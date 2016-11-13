@@ -1,4 +1,5 @@
 var simulate = require('../ops/nfa/simulate');
+var getMatch = require('../ops/nfa/getMatch')
 var compile = require('../ops/nfa/compile');
 var Problem = require('../models/Problem');
 
@@ -13,8 +14,9 @@ function nfaWalker(spec, walkFn) {
         nfa = compile(spec); //lazy
       }
 
-      var { result, matched, lastProblem } = simulate(nfa, x, walkFn, walkOpts);
+      var { chain, matched, lastProblem } = simulate(nfa, x, walkFn, walkOpts);
       if(matched === true) {
+        var result = getMatch(chain, walkFn, walkOpts);
         return result;
       } else {
         var subproblems = [];
