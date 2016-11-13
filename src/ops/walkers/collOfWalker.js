@@ -1,7 +1,7 @@
-var coerceIntoSpec = require('../utils/coerceIntoSpec');
-var Problem = require('../models/Problem');
-var isProblem = require('../utils/isProblem');
-var isNum = require('../preds/isNum');
+var coerceIntoSpec = require('../../utils/coerceIntoSpec');
+var Problem = require('../../models/Problem');
+var isProblem = require('../../utils/isProblem');
+var isNum = require('../../preds/isNum');
 
 function collOfWalker(spec, walkFn) {
   var expr = spec.exprs[0];

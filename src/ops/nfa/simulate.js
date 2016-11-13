@@ -1,6 +1,5 @@
 var Problem = require('../../models/Problem');
 var isProblem = require('../../utils/isProblem');
-var isArray = require('isarray');
 var oAssign = require('object-assign');
 var isUndefined = require('../../preds/isUndefined');
 
@@ -30,7 +29,7 @@ function simulate(nfa, rawInput, walkFn, walkOpts) {
 
         if(transition.group === 'in') {
           if (groupCount === 0) {
-            if (isArray(input[0])) {
+            if (Array.isArray(input[0])) {
               input = input[0];
               currentOffset = 0;
               arrayed = true;
@@ -256,7 +255,7 @@ function _foldIn(acc, val) {
   var r;
   if(acc === null) {
     r = [val];
-  } else if (!isArray(acc)) {
+  } else if (!Array.isArray(acc)) {
     r = [val, acc];
   } else {
     r = [val].concat(acc);

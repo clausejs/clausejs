@@ -1,7 +1,5 @@
-var isArray = require('isarray');
-
 function coerceIntoArray(x) {
-  if(isArray(x) === false) {
+  if(Array.isArray(x) === false) {
     return [x];
   } else {
     return x;

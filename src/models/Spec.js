@@ -1,4 +1,3 @@
-var isArray = require('isarray');
 var oAssign = require('object-assign');
 
 function Spec(type, exprs, opts, conformFn, generateFn) {
@@ -7,7 +6,7 @@ function Spec(type, exprs, opts, conformFn, generateFn) {
     throw new Error('Wrong number of arguments (' + arguments.length + ') passed to Spec constructor');
   }
 
-  if(!isArray(exprs)) {
+  if(!Array.isArray(exprs)) {
     throw new Error('Expect an array of specs');
   }
 
