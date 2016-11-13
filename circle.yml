@@ -1,9 +1,0 @@
-machine:
-  node:
-    version: 4.2.2
-test:
-  post:
-    - npm run build
-general:
-  artifacts:
-    - "dist"

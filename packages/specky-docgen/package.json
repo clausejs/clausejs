@@ -1,0 +1,28 @@
+{
+  "name": "specky-docgen",
+  "version": "0.0.4",
+  "description": "Anto documentation generator for Specky specs",
+  "main": "specky-docgen.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/settinghead/specky.git"
+  },
+  "keywords": [
+    "babel",
+    "testing",
+    "spec",
+    "javascript",
+    "specky",
+    "validation",
+    "schema"
+  ],
+  "author": {
+    "name": "Xiyang Chen",
+    "email": "settinghead@gmail.com"
+  },
+  "license": "EPL-1.0",
+  "bugs": {
+    "url": "https://github.com/settinghead/specky/issues"
+  },
+  "homepage": "https://github.com/settinghead/specky#readme"
+}

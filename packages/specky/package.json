@@ -1,0 +1,28 @@
+{
+  "name": "specky",
+  "version": "0.0.4",
+  "description": "A powerful & flexible validation and conformation library for your JavaScript data and functions.",
+  "main": "specky.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/settinghead/specky.git"
+  },
+  "keywords": [
+    "babel",
+    "testing",
+    "spec",
+    "javascript",
+    "specky",
+    "validation",
+    "schema"
+  ],
+  "author": {
+    "name": "Xiyang Chen",
+    "email": "settinghead@gmail.com"
+  },
+  "license": "EPL-1.0",
+  "bugs": {
+    "url": "https://github.com/settinghead/specky/issues"
+  },
+  "homepage": "https://github.com/settinghead/specky#readme"
+}

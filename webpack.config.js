@@ -8,7 +8,7 @@ module.exports = {
         library: ['S'],
         libraryTarget: 'umd',
         umdNamedDefine: true,
-        path: './dist',
+        path: './packages/specky/dist',
         filename: PROD ? 'specky.min.js' : 'specky.js',
     },
     module: {
