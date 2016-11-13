@@ -71,7 +71,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 54);
+/******/ 	return __webpack_require__(__webpack_require__.s = 55);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -345,14 +345,14 @@ module.exports = function (x) {
 /* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
-var nfaWalker = __webpack_require__(48);
-var predWalker = __webpack_require__(49);
-var fspecWalker = __webpack_require__(47);
-var propsWalker = __webpack_require__(50);
-var andWalker = __webpack_require__(44);
-var collOfWalker = __webpack_require__(45);
-var specRefWalker = __webpack_require__(51);
-var delayedSpecWalker = __webpack_require__(46);
+var nfaWalker = __webpack_require__(49);
+var predWalker = __webpack_require__(50);
+var fspecWalker = __webpack_require__(48);
+var propsWalker = __webpack_require__(51);
+var andWalker = __webpack_require__(45);
+var collOfWalker = __webpack_require__(46);
+var specRefWalker = __webpack_require__(52);
+var delayedSpecWalker = __webpack_require__(47);
 var coerceIntoSpec = __webpack_require__(6);
 
 function walk(spec, x, opts) {
@@ -404,7 +404,7 @@ var isSpec = __webpack_require__(3);
 var isPred = __webpack_require__(7);
 var isObj = __webpack_require__(21);
 var isStr = __webpack_require__(5);
-var isSpecName = __webpack_require__(42);
+var isSpecName = __webpack_require__(43);
 var namedFn = __webpack_require__(28);
 var isSpecRef = __webpack_require__(27);
 var isDelayedSpec = __webpack_require__(25);
@@ -677,18 +677,18 @@ module.exports = r;
 /***/ function(module, exports, __webpack_require__) {
 
 var isNum = __webpack_require__(20);
-var isNatInt = __webpack_require__(38);
+var isNatInt = __webpack_require__(39);
 var isInt = __webpack_require__(19);
-var isBool = __webpack_require__(37);
+var isBool = __webpack_require__(38);
 var isFn = __webpack_require__(12);
 var isObj = __webpack_require__(21);
 var isStr = __webpack_require__(5);
 var isArray = Array.isArray;
 
 module.exports = {
-  isNull: __webpack_require__(39),
+  isNull: __webpack_require__(40),
   isUndefined: __webpack_require__(9),
-  notEmpty: __webpack_require__(40),
+  notEmpty: __webpack_require__(41),
   isBool: isBool, isBoolean: isBool,
   isFn: isFn, isFunction: isFn,
   isNum: isNum, isNumber: isNum,
@@ -947,7 +947,7 @@ module.exports = getNamedFn;
 /* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(global) {var oPath = __webpack_require__(52);
+/* WEBPACK VAR INJECTION */(function(global) {var oPath = __webpack_require__(53);
 
 var SpecRef = __webpack_require__(17);
 
@@ -1094,7 +1094,7 @@ var specedSpeckyNamespace = NamespaceFnSpec.instrumentConformed(speckyNamespace)
 specedSpeckyNamespace.clearRegistry = clearRegistry;
 
 module.exports = specedSpeckyNamespace;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(53)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(54)))
 
 /***/ },
 /* 30 */
@@ -1102,7 +1102,7 @@ module.exports = specedSpeckyNamespace;
 
 module.exports = {
   conform: __webpack_require__(22),
-  isValid: __webpack_require__(43),
+  isValid: __webpack_require__(44),
   identity: __webpack_require__(24),
   isProblem: __webpack_require__(2),
   delayed: __webpack_require__(23)
@@ -1483,124 +1483,9 @@ module.exports = build;
 /* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
-var Problem = __webpack_require__(0);
-var isProblem = __webpack_require__(2);
 var oAssign = __webpack_require__(4);
+var Problem = __webpack_require__(0);
 var isUndefined = __webpack_require__(9);
-
-function simulate(nfa, rawInput, walkFn, walkOpts) {
-  var conform = walkOpts.conform,
-      instrument = walkOpts.instrument,
-      trailblaze = walkOpts.trailblaze;
-
-  var input;
-
-  var r = {
-    matched: false,
-    result: null
-  };
-
-  var initial = { state: 0, offset: 0, leftOff: 0, input: [rawInput], groupCount: 0, arrayed: false };
-  var frontier = [initial];
-  while (frontier.length > 0) {
-    var current = frontier.shift();
-    var currentOffset = current.offset,
-        leftOff = current.leftOff,
-        input = current.input,
-        groupCount = current.groupCount,
-        arrayed = current.arrayed;
-
-    if (current.state === nfa.finalState && currentOffset === input.length) {
-      r.matched = true;
-      r.result = _getMatch(nfa, rawInput, current, walkFn, walkOpts);
-      return r;
-    }
-    for (var nextStateStr in nfa.transitions[current.state]) {
-      var nextState = parseInt(nextStateStr);
-      var observed = input[currentOffset];
-      var transition = nfa.transitions[current.state][nextState];
-
-      if (transition.group === 'in') {
-        if (groupCount === 0) {
-          if (Array.isArray(input[0])) {
-            input = input[0];
-            currentOffset = 0;
-            arrayed = true;
-          }
-        }
-        groupCount += 1;
-      } else if (transition.group === 'out') {
-        groupCount -= 1;
-        if (groupCount === 0) {
-          if (arrayed) {
-            if (currentOffset === input.length) {
-              currentOffset = 1;
-            } else {
-              currentOffset = 0;
-            }
-            input = [input];
-          }
-          arrayed = false;
-        }
-      }
-
-      var nextOffset;
-      var move;
-      if (!transition.isEpsilon) {
-        nextOffset = currentOffset + 1;
-      } else {
-        nextOffset = currentOffset;
-      }
-
-      var validateResult, next;
-      if (nextOffset <= input.length) {
-        if (transition.isEpsilon) {
-          if (transition.dir) {
-            move = { dir: transition.dir, name: transition.name, op: transition.op, group: transition.group };
-          } else {
-            move = null;
-          }
-          next = {
-            input: input, groupCount: groupCount, arrayed: arrayed, leftOff: leftOff,
-            state: nextState,
-            offset: nextOffset,
-            move: move,
-            spec: transition,
-            prev: current,
-            isEpsilon: true
-          };
-
-          frontier.push(next);
-        } else {
-          if (conform || instrument || trailblaze) {
-            validateResult = walkFn(transition, observed, { trailblaze: true });
-            // validateResult = walkFn(transition, observed, walkOpts);
-            if (!isProblem(validateResult)) {
-              if (currentOffset < input.length) {
-                move = { dir: 'pred' };
-                next = {
-                  input: input, groupCount: groupCount, arrayed: arrayed, leftOff: leftOff,
-                  state: nextState,
-                  offset: nextOffset,
-                  move: move,
-                  prev: current,
-                  isEpsilon: false,
-                  spec: transition,
-                  observed: observed
-                };
-                frontier.push(next);
-              }
-            } else {
-              r.lastProblem = validateResult;
-            }
-          }
-        }
-      }
-    }
-  }
-
-  return r;
-};
 
 var FOLD = function FOLD() {};
 var ENTER = function ENTER() {};
@@ -1615,7 +1500,7 @@ var ArrayFragment = function ArrayFragment(val) {
   this.value = val;
 };
 
-function _getMatch(nfa, input, finalState, walkFn, walkOpts) {
+function getMatch(nfa, input, finalState, walkFn, walkOpts) {
   var conform = walkOpts.conform,
       instrument = walkOpts.instrument;
 
@@ -1793,10 +1678,133 @@ function _stateChain(nfa, finalState, walkFn, walkOpts) {
   return chain;
 }
 
-module.exports = simulate;
+module.exports = getMatch;
 
 /***/ },
 /* 37 */
+/***/ function(module, exports, __webpack_require__) {
+
+var isProblem = __webpack_require__(2);
+var getMatch = __webpack_require__(36);
+
+function simulate(nfa, rawInput, walkFn, walkOpts) {
+  var conform = walkOpts.conform,
+      instrument = walkOpts.instrument,
+      trailblaze = walkOpts.trailblaze;
+
+  var input;
+
+  var r = {
+    matched: false,
+    result: null
+  };
+
+  var initial = { state: 0, offset: 0, leftOff: 0, input: [rawInput], groupCount: 0, arrayed: false };
+  var frontier = [initial];
+  while (frontier.length > 0) {
+    var current = frontier.shift();
+    var currentOffset = current.offset,
+        leftOff = current.leftOff,
+        input = current.input,
+        groupCount = current.groupCount,
+        arrayed = current.arrayed;
+
+    if (current.state === nfa.finalState && currentOffset === input.length) {
+      r.matched = true;
+      r.result = getMatch(nfa, rawInput, current, walkFn, walkOpts);
+      return r;
+    }
+    for (var nextStateStr in nfa.transitions[current.state]) {
+      var nextState = parseInt(nextStateStr);
+      var observed = input[currentOffset];
+      var transition = nfa.transitions[current.state][nextState];
+
+      if (transition.group === 'in') {
+        if (groupCount === 0) {
+          if (Array.isArray(input[0])) {
+            input = input[0];
+            currentOffset = 0;
+            arrayed = true;
+          }
+        }
+        groupCount += 1;
+      } else if (transition.group === 'out') {
+        groupCount -= 1;
+        if (groupCount === 0) {
+          if (arrayed) {
+            if (currentOffset === input.length) {
+              currentOffset = 1;
+            } else {
+              currentOffset = 0;
+            }
+            input = [input];
+          }
+          arrayed = false;
+        }
+      }
+
+      var nextOffset;
+      var move;
+      if (!transition.isEpsilon) {
+        nextOffset = currentOffset + 1;
+      } else {
+        nextOffset = currentOffset;
+      }
+
+      var validateResult, next;
+      if (nextOffset <= input.length) {
+        if (transition.isEpsilon) {
+          if (transition.dir) {
+            move = { dir: transition.dir, name: transition.name, op: transition.op, group: transition.group };
+          } else {
+            move = null;
+          }
+          next = {
+            input: input, groupCount: groupCount, arrayed: arrayed, leftOff: leftOff,
+            state: nextState,
+            offset: nextOffset,
+            move: move,
+            spec: transition,
+            prev: current,
+            isEpsilon: true
+          };
+
+          frontier.push(next);
+        } else {
+          if (conform || instrument || trailblaze) {
+            validateResult = walkFn(transition, observed, { trailblaze: true });
+            // validateResult = walkFn(transition, observed, walkOpts);
+            if (!isProblem(validateResult)) {
+              if (currentOffset < input.length) {
+                move = { dir: 'pred' };
+                next = {
+                  input: input, groupCount: groupCount, arrayed: arrayed, leftOff: leftOff,
+                  state: nextState,
+                  offset: nextOffset,
+                  move: move,
+                  prev: current,
+                  isEpsilon: false,
+                  spec: transition,
+                  observed: observed
+                };
+                frontier.push(next);
+              }
+            } else {
+              r.lastProblem = validateResult;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  return r;
+};
+
+module.exports = simulate;
+
+/***/ },
+/* 38 */
 /***/ function(module, exports) {
 
 function isBool(x) {
@@ -1806,7 +1814,7 @@ function isBool(x) {
 module.exports = isBool;
 
 /***/ },
-/* 38 */
+/* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
 var isInt = __webpack_require__(19);
@@ -1818,7 +1826,7 @@ function isNatInt(x) {
 module.exports = isNatInt;
 
 /***/ },
-/* 39 */
+/* 40 */
 /***/ function(module, exports) {
 
 function isNull(x) {
@@ -1828,7 +1836,7 @@ function isNull(x) {
 module.exports = isNull;
 
 /***/ },
-/* 40 */
+/* 41 */
 /***/ function(module, exports) {
 
 
@@ -1843,7 +1851,7 @@ module.exports = function notEmpty(x) {
 };
 
 /***/ },
-/* 41 */
+/* 42 */
 /***/ function(module, exports) {
 
 function betterThrow(problem) {
@@ -1856,7 +1864,7 @@ function betterThrow(problem) {
 module.exports = betterThrow;
 
 /***/ },
-/* 42 */
+/* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
 var isStr = __webpack_require__(5);
@@ -1867,7 +1875,7 @@ module.exports = function isSpecName(x) {
 };
 
 /***/ },
-/* 43 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 var Problem = __webpack_require__(0);
@@ -1891,7 +1899,7 @@ function isValid(pred, x) {
 module.exports = isValid;
 
 /***/ },
-/* 44 */
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
 var Problem = __webpack_require__(0);
@@ -1943,7 +1951,7 @@ function andWalker(spec, walkFn) {
 module.exports = andWalker;
 
 /***/ },
-/* 45 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 var coerceIntoSpec = __webpack_require__(6);
@@ -2015,7 +2023,7 @@ function collOfWalker(spec, walkFn) {
 module.exports = collOfWalker;
 
 /***/ },
-/* 46 */
+/* 47 */
 /***/ function(module, exports) {
 
 function delayedSpecWalker(delayedSpec, walkFn) {
@@ -2030,14 +2038,14 @@ function delayedSpecWalker(delayedSpec, walkFn) {
 module.exports = delayedSpecWalker;
 
 /***/ },
-/* 47 */
+/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
 var isProblem = __webpack_require__(2);
 var Problem = __webpack_require__(0);
 var functionName = __webpack_require__(13);
 var namedFn = __webpack_require__(28);
-var betterThrow = __webpack_require__(41);
+var betterThrow = __webpack_require__(42);
 
 function fspecWalker(spec, walkFn) {
   var _spec$opts = spec.opts,
@@ -2153,10 +2161,10 @@ function fspecWalker(spec, walkFn) {
 module.exports = fspecWalker;
 
 /***/ },
-/* 48 */
+/* 49 */
 /***/ function(module, exports, __webpack_require__) {
 
-var simulate = __webpack_require__(36);
+var simulate = __webpack_require__(37);
 var compile = __webpack_require__(34);
 var Problem = __webpack_require__(0);
 
@@ -2200,7 +2208,7 @@ function nfaWalker(spec, walkFn) {
 module.exports = nfaWalker;
 
 /***/ },
-/* 49 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
 var fnName = __webpack_require__(13);
@@ -2228,7 +2236,7 @@ function predWalker(spec, walkFn) {
 module.exports = predWalker;
 
 /***/ },
-/* 50 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
 var isProblem = __webpack_require__(2);
@@ -2483,7 +2491,7 @@ function _conformNamedOrExpr(x, nameOrExpr, walkFn, walkOpts) {
 module.exports = propsWalker;
 
 /***/ },
-/* 51 */
+/* 52 */
 /***/ function(module, exports) {
 
 function specRefWalker(specRef, walkFn) {
@@ -2498,7 +2506,7 @@ function specRefWalker(specRef, walkFn) {
 module.exports = specRefWalker;
 
 /***/ },
-/* 52 */
+/* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (root, factory){
@@ -2795,7 +2803,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
 /***/ },
-/* 53 */
+/* 54 */
 /***/ function(module, exports) {
 
 var g;
@@ -2820,7 +2828,7 @@ module.exports = g;
 
 
 /***/ },
-/* 54 */
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
 
