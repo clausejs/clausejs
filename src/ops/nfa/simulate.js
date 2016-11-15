@@ -16,7 +16,7 @@ function simulate(nfa, rawInput, walkFn, walkOpts) {
     var { offset: currentOffset, leftOff, input, groupCount, arrayed } = current;
     if (current.state === nfa.finalState && currentOffset === input.length) {
       r.matched = true;
-      r.chain = _stateChain(nfa, current, walkFn, walkOpts);
+      r.chain = _getChain(nfa, current, walkFn, walkOpts);
       return r;
     }
     for (var nextStateStr in nfa.transitions[current.state]) {
@@ -107,7 +107,7 @@ function simulate(nfa, rawInput, walkFn, walkOpts) {
   return r;
 };
 
-function _stateChain(nfa, finalState, walkFn, walkOpts) {
+function _getChain(nfa, finalState, walkFn, walkOpts) {
   var chain = [];
   var curr = finalState;
   var prev;
@@ -120,7 +120,7 @@ function _stateChain(nfa, finalState, walkFn, walkOpts) {
       };
       if(!curr.isEpsilon) {
         o.observed = curr.observed;
-        o.conformed = walkFn(curr.spec, curr.observed, walkOpts);
+        o.spec = curr.spec;
       }
       chain.unshift(o);
     }

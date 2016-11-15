@@ -1500,11 +1500,10 @@ var ArrayFragment = function ArrayFragment(val) {
   this.value = val;
 };
 
-function getMatch(nfa, input, finalState, walkFn, walkOpts) {
+function getMatch(chain, walkFn, walkOpts) {
   var conform = walkOpts.conform,
       instrument = walkOpts.instrument;
 
-  var chain = _stateChain(nfa, finalState, walkFn, walkOpts);
   var valStack = [];
   var r = {};
 
@@ -1655,29 +1654,6 @@ function _foldIn(acc, val) {
   return r;
 }
 
-function _stateChain(nfa, finalState, walkFn, walkOpts) {
-  var chain = [];
-  var curr = finalState;
-  var prev;
-  while (curr) {
-    if (!prev || curr.state !== prev.state && curr.move) {
-      var o = {
-        isEpsilon: curr.isEpsilon,
-        move: curr.move,
-        state: curr.state
-      };
-      if (!curr.isEpsilon) {
-        o.observed = curr.observed;
-        o.conformed = walkFn(curr.spec, curr.observed, walkOpts);
-      }
-      chain.unshift(o);
-    }
-    prev = curr;
-    curr = curr.prev;
-  }
-  return chain;
-}
-
 module.exports = getMatch;
 
 /***/ },
@@ -1685,7 +1661,6 @@ module.exports = getMatch;
 /***/ function(module, exports, __webpack_require__) {
 
 var isProblem = __webpack_require__(2);
-var getMatch = __webpack_require__(36);
 
 function simulate(nfa, rawInput, walkFn, walkOpts) {
   var conform = walkOpts.conform,
@@ -1696,7 +1671,7 @@ function simulate(nfa, rawInput, walkFn, walkOpts) {
 
   var r = {
     matched: false,
-    result: null
+    chain: null
   };
 
   var initial = { state: 0, offset: 0, leftOff: 0, input: [rawInput], groupCount: 0, arrayed: false };
@@ -1711,7 +1686,7 @@ function simulate(nfa, rawInput, walkFn, walkOpts) {
 
     if (current.state === nfa.finalState && currentOffset === input.length) {
       r.matched = true;
-      r.result = getMatch(nfa, rawInput, current, walkFn, walkOpts);
+      r.chain = _stateChain(nfa, current, walkFn, walkOpts);
       return r;
     }
     for (var nextStateStr in nfa.transitions[current.state]) {
@@ -1800,6 +1775,29 @@ function simulate(nfa, rawInput, walkFn, walkOpts) {
 
   return r;
 };
+
+function _stateChain(nfa, finalState, walkFn, walkOpts) {
+  var chain = [];
+  var curr = finalState;
+  var prev;
+  while (curr) {
+    if (!prev || curr.state !== prev.state && curr.move) {
+      var o = {
+        isEpsilon: curr.isEpsilon,
+        move: curr.move,
+        state: curr.state
+      };
+      if (!curr.isEpsilon) {
+        o.observed = curr.observed;
+        o.conformed = walkFn(curr.spec, curr.observed, walkOpts);
+      }
+      chain.unshift(o);
+    }
+    prev = curr;
+    curr = curr.prev;
+  }
+  return chain;
+}
 
 module.exports = simulate;
 
@@ -2165,6 +2163,7 @@ module.exports = fspecWalker;
 /***/ function(module, exports, __webpack_require__) {
 
 var simulate = __webpack_require__(37);
+var getMatch = __webpack_require__(36);
 var compile = __webpack_require__(34);
 var Problem = __webpack_require__(0);
 
@@ -2183,11 +2182,12 @@ function nfaWalker(spec, walkFn) {
       }
 
       var _simulate = simulate(nfa, x, walkFn, walkOpts),
-          result = _simulate.result,
+          chain = _simulate.chain,
           matched = _simulate.matched,
           lastProblem = _simulate.lastProblem;
 
       if (matched === true) {
+        var result = getMatch(chain, walkFn, walkOpts);
         return result;
       } else {
         var subproblems = [];

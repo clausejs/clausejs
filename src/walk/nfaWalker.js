@@ -2,35 +2,37 @@ var simulate = require('../ops/nfa/simulate');
 var getMatch = require('../ops/nfa/getMatch')
 var compile = require('../ops/nfa/compile');
 var Problem = require('../models/Problem');
+var isProblem = require('../utils/isProblem');
 
 function nfaWalker(spec, walkFn) {
   var nfa;
 
-  return function nfaWalk(x, walkOpts) {
-    var { conform, instrument, trailblaze } = walkOpts;
+  return {
+    trailblaze: nfaTrailblaze,
+    reconstruct: nfaReconstruct,
+  }
 
-    if(conform || instrument || trailblaze) {
-      if(!nfa) {
-        nfa = compile(spec); //lazy
-      }
+  function nfaTrailblaze(x, walkOpts) {
 
-      var { chain, matched, lastProblem } = simulate(nfa, x, walkFn, walkOpts);
-      if(matched === true) {
-        var result = getMatch(chain, walkFn, walkOpts);
-        return result;
-      } else {
-        var subproblems = [];
-        if(lastProblem) {
-          subproblems.push(lastProblem);
-        }
-        if (conform || instrument || trailblaze) {
-          return new Problem(x, spec, [], 'Spec ' + spec.type + ' did not match val: ' + JSON.stringify(x));
-        } else {
-          console.error(walkOpts);
-          throw 'no impl case';
-        }
-      }
+    if(!nfa) {
+      nfa = compile(spec); //lazy
     }
+
+    var { chain, matched, lastProblem } = simulate(nfa, x, walkFn, walkOpts);
+    if(matched === true) {
+      return chain;
+    } else {
+      var subproblems = [];
+      if(lastProblem) {
+        subproblems.push(lastProblem);
+      }
+      return new Problem(x, spec, subproblems, 'Spec ' + spec.type + ' did not match val: ' + JSON.stringify(x));
+    }
+  }
+
+  function nfaReconstruct(chain, walkOpts) {
+    var result = getMatch(chain, walkFn, walkOpts);
+    return result;
   }
 }
 

@@ -7,16 +7,23 @@ var betterThrow = require('../utils/betterThrow');
 function fspecWalker(spec, walkFn) {
   var { args: argsSpec, ret: retSpec, fn: validateFn } =  spec.opts;
 
-  return function walkFspec(fn, walkOpts) {
+  return {
+    trailblaze: fspecTrailblaze,
+    reconstruct: fspecReconstruct,
+  };
+
+  function fspecTrailblaze(fn) {
+    return fn;
+  }
+
+  function fspecReconstruct(fn, walkOpts) {
     if(fn) {
-      var { conform, instrument, trailblaze } = walkOpts;
+      var { conform, instrument } = walkOpts;
 
       if(conform && instrument) {
         return instrumentConformed(fn, walkOpts);
       } else if (instrument) {
         return _instrument(fn, walkOpts);
-      } else if (trailblaze) {
-        return fn;
       }
     } else {
       return new Problem(fn, spec, [], 'function is not specified');

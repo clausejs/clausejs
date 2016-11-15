@@ -1,3 +1,4 @@
+var oAssign = require('object-assign');
 var nfaWalker = require('./nfaWalker');
 var predWalker = require('./predWalker');
 var fspecWalker = require('./fspecWalker');
@@ -7,11 +8,28 @@ var collOfWalker = require('./collOfWalker');
 var specRefWalker = require('./specRefWalker');
 var delayedSpecWalker = require('./delayedSpecWalker');
 var coerceIntoSpec = require('../utils/coerceIntoSpec');
+var isProblem = require('../utils/isProblem');
 
 function walk(spec, x, opts) {
+  var { phase, conform, instrument } = opts;
   var walker = _getWalker(spec);
 
-  return walker(x, opts);
+  if(!phase) {
+    // 2-pass algorithm:
+
+    // in Pass 1 we just need to know if x validates to spec, and if so, how
+    var intermediate = walker.trailblaze(x, oAssign({ phase : 'trailblaze' }, opts));
+    if(isProblem(intermediate)) {
+      return intermediate;
+    } else {
+      // in Pass 2 we return conformed and/or instrumented results
+      return walker.reconstruct(intermediate, oAssign({ phase : 'reconstruct' }, opts));
+    }
+  } else if (walker[phase]) {
+    return walker[phase](x, opts);
+  } else {
+    throw '!';
+  }
 }
 
 function _getWalker(expr) {
@@ -38,9 +56,6 @@ function _getWalker(expr) {
   }
 
   var r = walker(spec, walk);
-  if(r.isProblem && spec.type === 'PROPS') {
-    console.log(r);
-  }
   return r;
 }
 

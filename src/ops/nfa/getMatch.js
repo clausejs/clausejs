@@ -40,7 +40,8 @@ function getMatch(chain, walkFn, walkOpts) {
           }
         } break;
         case 'pred': {
-          valStack.push(curr.conformed);
+          var conformed = walkFn(curr.spec, curr.observed, walkOpts);
+          valStack.push(conformed);
         } break;
         case 'out': {
           var val = valStack.pop();
