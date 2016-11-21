@@ -45,15 +45,15 @@ function fspecWalker(spec, walkFn) {
     return namedArgConformedFn;
   }
 
-  function getInstrumentedFn(fnName, fn, walkOpts) {
+  function getInstrumentedFn(fnName, fn) {
     return function () {
       var args = Array.from(arguments);
-      var instrumentedArgs = checkArgs(fn, fnName, args, walkOpts);
+      var instrumentedArgs = checkArgs(fn, fnName, args);
       var retVal = fn.apply(this, instrumentedArgs);
-      var instrumentedRetVal = checkRet(fn, fnName, retVal, walkOpts);
+      var instrumentedRetVal = checkRet(fn, fnName, retVal);
 
       // TODO optimize
-      var conformedArgs = walkFn(argsSpec, args, { conform: true });
+      var conformedArgs = walkFn(argsSpec, args, { });
       checkFnRelation(fnName, fn, validateFn, conformedArgs, retVal);
       return instrumentedRetVal;
     };
@@ -70,9 +70,9 @@ function fspecWalker(spec, walkFn) {
     }
   }
 
-  function checkArgs(fn, fnName, args, walkOpts) {
+  function checkArgs(fn, fnName, args) {
     if(argsSpec) {
-      var instrumentedArgs = walkFn(argsSpec, args, walkOpts);
+      var instrumentedArgs = walkFn(argsSpec, args, { trailblaze: true });
       if(isProblem(instrumentedArgs)) {
         var p = new Problem(args, spec, [instrumentedArgs], `Arguments ${JSON.stringify(args)} for function ${fnName} failed validation`);
         betterThrow(p);
@@ -84,9 +84,9 @@ function fspecWalker(spec, walkFn) {
     }
   }
 
-  function checkRet(fn, fnName, retVal, walkOpts) {
+  function checkRet(fn, fnName, retVal) {
     if(retSpec) {
-      var instrumentedRetVal = walkFn(retSpec, retVal, walkOpts);
+      var instrumentedRetVal = walkFn(retSpec, retVal, { trailblaze: true });
       if(isProblem(instrumentedRetVal)) {
         var p = new Problem(retVal, spec, [instrumentedRetVal], 'Return value ' + retVal + ' for function ' + fnName + ' is not valid.');
         betterThrow(p);
@@ -98,18 +98,18 @@ function fspecWalker(spec, walkFn) {
     }
   }
 
-  function getArgConformedInstrumentedFn(fnName, fn, walkOpts) {
+  function getArgConformedInstrumentedFn(fnName, fn) {
     return function () {
       var args = Array.from(arguments);
 
-      var conformedArgs = walkFn(argsSpec, args, walkOpts);
+      var conformedArgs = walkFn(argsSpec, args, {});
       if(isProblem(conformedArgs)) {
-        var p = new Problem(args, argsSpec, [conformedArgs], `Args ${JSON.stringify(args)} for function ${fnName} is not valid`);
+        var p = new Problem(args, argsSpec, [conformedArgs], `Arguments ${JSON.stringify(args)} for function ${fnName} is not valid`);
         betterThrow(p);
       }
 
       var retVal = fn(conformedArgs);
-      checkRet(fn, fnName, retVal, walkOpts);
+      checkRet(fn, fnName, retVal);
       checkFnRelation(fnName, fn, validateFn, conformedArgs, retVal);
       return retVal;
     };

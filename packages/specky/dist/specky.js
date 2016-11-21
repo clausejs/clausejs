@@ -345,6 +345,7 @@ module.exports = function (x) {
 /* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
+var oAssign = __webpack_require__(4);
 var nfaWalker = __webpack_require__(49);
 var predWalker = __webpack_require__(50);
 var fspecWalker = __webpack_require__(48);
@@ -354,11 +355,31 @@ var collOfWalker = __webpack_require__(46);
 var specRefWalker = __webpack_require__(52);
 var delayedSpecWalker = __webpack_require__(47);
 var coerceIntoSpec = __webpack_require__(6);
+var isProblem = __webpack_require__(2);
 
 function walk(spec, x, opts) {
+  var phase = opts.phase,
+      conform = opts.conform,
+      instrument = opts.instrument;
+
   var walker = _getWalker(spec);
 
-  return walker(x, opts);
+  if (!phase) {
+    // 2-pass algorithm:
+
+    // in Pass 1 we just need to know if x validates to spec, and if so, how
+    var intermediate = walker.trailblaze(x, oAssign({ phase: 'trailblaze' }, opts));
+    if (isProblem(intermediate)) {
+      return intermediate;
+    } else {
+      // in Pass 2 we return conformed and/or instrumented results
+      return walker.reconstruct(intermediate, oAssign({ phase: 'reconstruct' }, opts));
+    }
+  } else if (walker[phase]) {
+    return walker[phase](x, opts);
+  } else {
+    throw '!';
+  }
 }
 
 function _getWalker(expr) {
@@ -385,9 +406,6 @@ function _getWalker(expr) {
   }
 
   var r = walker(spec, walk);
-  if (r.isProblem && spec.type === 'PROPS') {
-    console.log(r);
-  }
   return r;
 }
 
@@ -543,7 +561,7 @@ function genMultiArgOp(type) {
       var s = new Spec(type, coercedExprs, null, null, null);
 
       s.conform = function conform(x) {
-        return walk(s, x, { conform: true });
+        return walk(s, x, {});
       };
       return s;
     } else if (conformedArgs.unnamed) {
@@ -571,7 +589,7 @@ function genMultiArgOp(type) {
       var s = new Spec(type, coercedExprs, null, null, null);
 
       s.conform = function conform(x) {
-        return walk(s, x, { conform: true });
+        return walk(s, x, {});
       };
       return s;
     }
@@ -599,7 +617,7 @@ function genSingleArgOp(type) {
     var s = new Spec(type, [coerceIntoSpec(expr)], opts, null, null);
 
     s.conform = function conform(x) {
-      return walk(s, x, { conform: true });
+      return walk(s, x, {});
     };
     return s;
   });
@@ -624,6 +642,41 @@ core['+'] = core.oneOrMore;
 core['?'] = core.zeroOrOne;
 
 module.exports = core;
+
+// // //
+var TestSpec = orOp({
+  named: [{
+    name: 'named',
+    expr: {
+      spec: orOp({
+        unnamed: [{
+          spec: zeroOrMoreOp({
+            expr: {
+              spec: NameExprOptionalComment
+            }
+          })
+        }, {
+          spec: collOfOp({
+            expr: {
+              spec: NameExprOptionalComment
+            }
+          })
+        }]
+      })
+    }
+  }, {
+    name: 'unnamed',
+    expr: {
+      spec: zeroOrMoreOp({
+        expr: {
+          spec: ExprSpec
+        }
+      })
+    }
+  }]
+});
+
+console.log(TestSpec.conform(['aaa', TestSpec, 'bbb', TestSpec]));
 
 /***/ },
 /* 12 */
@@ -807,7 +860,7 @@ var PropsSpec = fspec({
 function propsOp(cargs) {
   var s = new Spec(TYPE_PROPS, [cargs], null, null, null);
   s.conform = function propsConform(x) {
-    return walk(s, x, { conform: true });
+    return walk(s, x, {});
   };
   return s;
 }
@@ -997,7 +1050,7 @@ function _getUnchecked(ref) {
 
   var sr = new SpecRef({ ref: ref, getFn: getFn, null: null });
   sr.conform = function specRefConform(x) {
-    return walk(ss, x, { conform: true });
+    return walk(ss, x, {});
   };
   return sr;
 }
@@ -1538,7 +1591,8 @@ function getMatch(chain, walkFn, walkOpts) {
           }break;
         case 'pred':
           {
-            valStack.push(curr.conformed);
+            var conformed = walkFn(curr.spec, curr.observed, walkOpts);
+            valStack.push(conformed);
           }break;
         case 'out':
           {
@@ -1635,8 +1689,9 @@ function getMatch(chain, walkFn, walkOpts) {
     }
   });
   if (valStack.length !== 1) {
-    console.error(valStack);
-    throw 'FUUU2';
+    console.error('valStack', valStack);
+    debugger;
+    throw '!valStack.length';
   }
   var r = valStack.pop();
   return r;
@@ -1686,7 +1741,8 @@ function simulate(nfa, rawInput, walkFn, walkOpts) {
 
     if (current.state === nfa.finalState && currentOffset === input.length) {
       r.matched = true;
-      r.chain = _stateChain(nfa, current, walkFn, walkOpts);
+      r.chain = _getChain(nfa, current, walkFn, walkOpts);
+      debugger;
       return r;
     }
     for (var nextStateStr in nfa.transitions[current.state]) {
@@ -1772,11 +1828,13 @@ function simulate(nfa, rawInput, walkFn, walkOpts) {
       }
     }
   }
+  debugger;
+  console.log('z', rawInput, r, nfa, walkOpts);
 
   return r;
 };
 
-function _stateChain(nfa, finalState, walkFn, walkOpts) {
+function _getChain(nfa, finalState, walkFn, walkOpts) {
   var chain = [];
   var curr = finalState;
   var prev;
@@ -1789,7 +1847,7 @@ function _stateChain(nfa, finalState, walkFn, walkOpts) {
       };
       if (!curr.isEpsilon) {
         o.observed = curr.observed;
-        o.conformed = walkFn(curr.spec, curr.observed, walkOpts);
+        o.spec = curr.spec;
       }
       chain.unshift(o);
     }
@@ -1906,44 +1964,42 @@ var isProblem = __webpack_require__(2);
 function andWalker(spec, walkFn) {
   var exprs = spec.exprs;
 
-  return function andWalk(data, walkOpts) {
-    var conform = walkOpts.conform,
-        instrument = walkOpts.instrument,
-        trailblaze = walkOpts.trailblaze;
-
-
-    if (conform || instrument || trailblaze) {
-      var problems, results;
-      if (!trailblaze) {
-        problems = [];
-      }
-
-      var r = data;
-
-      for (var i = 0; i < exprs.length; i += 1) {
-        r = walkFn(exprs[i], data, walkOpts);
-        if (isProblem(r)) {
-          if (trailblaze) {
-            return r;
-          } else {
-            problems.push(r);
-          }
-        }
-      }
-
-      if (!problems || problems.length === 0) {
-        if (conform) {
-          return r; //return last result TODO: is this correct?
-        } else {
-          return data;
-        }
-      } else {
-        return new Problem(data, exprs, problems, 'One or more expressions failed AND test');
-      }
-    } else {
-      throw 'no impl';
-    }
+  return {
+    trailblaze: andTrailblaze,
+    reconstruct: andReconstruct
   };
+
+  function andTrailblaze(data, walkOpts) {
+    var trailblaze = walkOpts.trailblaze;
+
+
+    var r = data;
+    var problems = [];
+
+    for (var i = 0; i < exprs.length; i += 1) {
+      r = walkFn(exprs[i], data, walkOpts);
+      if (isProblem(r)) {
+        problems.push(r);
+        break; //TODO: better handle this
+      }
+    }
+
+    if (!problems || problems.length === 0) {
+      return r;
+    } else {
+      return new Problem(data, exprs, problems, 'One or more expressions failed AND test');
+    }
+  }
+
+  function andReconstruct(guide, walkOpts) {
+    var r = guide;
+
+    for (var i = 0; i < exprs.length; i += 1) {
+      r = walkFn(exprs[i], r, walkOpts);
+    }
+
+    return r;
+  }
 }
 
 module.exports = andWalker;
@@ -1961,61 +2017,58 @@ function collOfWalker(spec, walkFn) {
   var expr = spec.exprs[0];
   var opts = spec.opts;
 
-  return function collOfWalk(x, walkOpts) {
-    var conform = walkOpts.conform,
-        instrument = walkOpts.instrument,
-        trailblaze = walkOpts.trailblaze;
-
-
-    if (conform || instrument || trailblaze) {
-      if (Array.isArray(x)) {
-
-        if (opts) {
-          var maxCount = opts.maxCount,
-              minCount = opts.minCount;
-
-
-          if (isNum(maxCount) && x.length > maxCount) {
-            return new Problem(x, spec, problems, 'collOf: collection size ' + x.length + ' exceeds maxCount ' + maxCount + '.');
-          }
-
-          if (isNum(minCount) && x.length < minCount) {
-            return new Problem(x, spec, problems, 'collOf: collection size ' + x.length + ' is less than minCount ' + minCount + '.');
-          }
-        }
-
-        var problems, results;
-        if (!trailblaze) {
-          problems = [];
-        }
-
-        results = [];
-
-        for (var i = 0; i < x.length; i += 1) {
-          var r = walkFn(expr, x[i], walkOpts);
-          if (isProblem(r)) {
-            if (trailblaze) {
-              return r;
-            } else {
-              problems.push(r);
-            }
-          } else {
-            results.push(r);
-          }
-        }
-
-        if (!problems || problems.length === 0) {
-          return results;
-        } else {
-          return new Problem(x, spec, problems, 'One or more elements failed collOf test');
-        }
-      } else {
-        return new Problem(x, spec, [], 'collOf expects an array');
-      }
-    } else {
-      throw 'no impl';
-    }
+  return {
+    trailblaze: collOfTrailblaze,
+    reconstruct: collOfReconstruct
   };
+
+  function collOfTrailblaze(x, walkOpts) {
+    if (!Array.isArray(x)) {
+      return new Problem(x, spec, [], 'collOf expects an array');
+    } else {
+
+      if (opts) {
+        var maxCount = opts.maxCount,
+            minCount = opts.minCount;
+
+
+        if (isNum(maxCount) && x.length > maxCount) {
+          return new Problem(x, spec, problems, 'collOf: collection size ' + x.length + ' exceeds maxCount ' + maxCount + '.');
+        }
+
+        if (isNum(minCount) && x.length < minCount) {
+          return new Problem(x, spec, problems, 'collOf: collection size ' + x.length + ' is less than minCount ' + minCount + '.');
+        }
+      }
+
+      var problems = [];
+
+      for (var i = 0; i < x.length; i += 1) {
+        var r = walkFn(expr, x[i], walkOpts);
+        if (isProblem(r)) {
+          problems.push(r);
+          break; //TODO
+        }
+      }
+
+      if (problems.length > 0) {
+        return new Problem(x, spec, problems, 'One or more elements failed collOf test');
+      } else {
+        return x;
+      }
+    }
+  }
+
+  function collOfReconstruct(guide, walkOpts) {
+    var results = [];
+
+    for (var i = 0; i < guide.length; i += 1) {
+      var r = walkFn(expr, guide[i], walkOpts);
+      results.push(r);
+    }
+
+    return results;
+  }
 }
 
 module.exports = collOfWalker;
@@ -2025,12 +2078,17 @@ module.exports = collOfWalker;
 /***/ function(module, exports) {
 
 function delayedSpecWalker(delayedSpec, walkFn) {
-  return function walkDelayedSpec(x, walkOpts) {
+  return {
+    trailblaze: walkDelayedSpec,
+    reconstruct: walkDelayedSpec
+  };
+
+  function walkDelayedSpec(x, walkOpts) {
     var s = delayedSpec.get();
     if (s) {
       return walkFn(s, x, walkOpts);
     }
-  };
+  }
 }
 
 module.exports = delayedSpecWalker;
@@ -2052,24 +2110,30 @@ function fspecWalker(spec, walkFn) {
       validateFn = _spec$opts.fn;
 
 
-  return function walkFspec(fn, walkOpts) {
+  return {
+    trailblaze: fspecTrailblaze,
+    reconstruct: fspecReconstruct
+  };
+
+  function fspecTrailblaze(fn) {
+    return fn;
+  }
+
+  function fspecReconstruct(fn, walkOpts) {
     if (fn) {
       var conform = walkOpts.conform,
-          instrument = walkOpts.instrument,
-          trailblaze = walkOpts.trailblaze;
+          instrument = walkOpts.instrument;
 
 
       if (conform && instrument) {
         return instrumentConformed(fn, walkOpts);
       } else if (instrument) {
         return _instrument(fn, walkOpts);
-      } else if (trailblaze) {
-        return fn;
       }
     } else {
       return new Problem(fn, spec, [], 'function is not specified');
     }
-  };
+  }
 
   function _instrument(fn, walkOpts) {
     var fnName = functionName(fn);
@@ -2086,15 +2150,15 @@ function fspecWalker(spec, walkFn) {
     return namedArgConformedFn;
   }
 
-  function getInstrumentedFn(fnName, fn, walkOpts) {
+  function getInstrumentedFn(fnName, fn) {
     return function () {
       var args = Array.from(arguments);
-      var instrumentedArgs = checkArgs(fn, fnName, args, walkOpts);
+      var instrumentedArgs = checkArgs(fn, fnName, args);
       var retVal = fn.apply(this, instrumentedArgs);
-      var instrumentedRetVal = checkRet(fn, fnName, retVal, walkOpts);
+      var instrumentedRetVal = checkRet(fn, fnName, retVal);
 
       // TODO optimize
-      var conformedArgs = walkFn(argsSpec, args, { conform: true });
+      var conformedArgs = walkFn(argsSpec, args, {});
       checkFnRelation(fnName, fn, validateFn, conformedArgs, retVal);
       return instrumentedRetVal;
     };
@@ -2110,9 +2174,9 @@ function fspecWalker(spec, walkFn) {
     }
   }
 
-  function checkArgs(fn, fnName, args, walkOpts) {
+  function checkArgs(fn, fnName, args) {
     if (argsSpec) {
-      var instrumentedArgs = walkFn(argsSpec, args, walkOpts);
+      var instrumentedArgs = walkFn(argsSpec, args, { trailblaze: true });
       if (isProblem(instrumentedArgs)) {
         var p = new Problem(args, spec, [instrumentedArgs], 'Arguments ' + JSON.stringify(args) + ' for function ' + fnName + ' failed validation');
         betterThrow(p);
@@ -2124,9 +2188,9 @@ function fspecWalker(spec, walkFn) {
     }
   }
 
-  function checkRet(fn, fnName, retVal, walkOpts) {
+  function checkRet(fn, fnName, retVal) {
     if (retSpec) {
-      var instrumentedRetVal = walkFn(retSpec, retVal, walkOpts);
+      var instrumentedRetVal = walkFn(retSpec, retVal, { trailblaze: true });
       if (isProblem(instrumentedRetVal)) {
         var p = new Problem(retVal, spec, [instrumentedRetVal], 'Return value ' + retVal + ' for function ' + fnName + ' is not valid.');
         betterThrow(p);
@@ -2138,18 +2202,18 @@ function fspecWalker(spec, walkFn) {
     }
   }
 
-  function getArgConformedInstrumentedFn(fnName, fn, walkOpts) {
+  function getArgConformedInstrumentedFn(fnName, fn) {
     return function () {
       var args = Array.from(arguments);
 
-      var conformedArgs = walkFn(argsSpec, args, walkOpts);
+      var conformedArgs = walkFn(argsSpec, args, {});
       if (isProblem(conformedArgs)) {
-        var p = new Problem(args, argsSpec, [conformedArgs], 'Args ' + JSON.stringify(args) + ' for function ' + fnName + ' is not valid');
+        var p = new Problem(args, argsSpec, [conformedArgs], 'Arguments ' + JSON.stringify(args) + ' for function ' + fnName + ' is not valid');
         betterThrow(p);
       }
 
       var retVal = fn(conformedArgs);
-      checkRet(fn, fnName, retVal, walkOpts);
+      checkRet(fn, fnName, retVal);
       checkFnRelation(fnName, fn, validateFn, conformedArgs, retVal);
       return retVal;
     };
@@ -2166,43 +2230,42 @@ var simulate = __webpack_require__(37);
 var getMatch = __webpack_require__(36);
 var compile = __webpack_require__(34);
 var Problem = __webpack_require__(0);
+var isProblem = __webpack_require__(2);
 
 function nfaWalker(spec, walkFn) {
   var nfa;
 
-  return function nfaWalk(x, walkOpts) {
-    var conform = walkOpts.conform,
-        instrument = walkOpts.instrument,
-        trailblaze = walkOpts.trailblaze;
-
-
-    if (conform || instrument || trailblaze) {
-      if (!nfa) {
-        nfa = compile(spec); //lazy
-      }
-
-      var _simulate = simulate(nfa, x, walkFn, walkOpts),
-          chain = _simulate.chain,
-          matched = _simulate.matched,
-          lastProblem = _simulate.lastProblem;
-
-      if (matched === true) {
-        var result = getMatch(chain, walkFn, walkOpts);
-        return result;
-      } else {
-        var subproblems = [];
-        if (lastProblem) {
-          subproblems.push(lastProblem);
-        }
-        if (conform || instrument || trailblaze) {
-          return new Problem(x, spec, [], 'Spec ' + spec.type + ' did not match val: ' + JSON.stringify(x));
-        } else {
-          console.error(walkOpts);
-          throw 'no impl case';
-        }
-      }
-    }
+  return {
+    trailblaze: nfaTrailblaze,
+    reconstruct: nfaReconstruct
   };
+
+  function nfaTrailblaze(x, walkOpts) {
+
+    if (!nfa) {
+      nfa = compile(spec); //lazy
+    }
+
+    var _simulate = simulate(nfa, x, walkFn, walkOpts),
+        chain = _simulate.chain,
+        matched = _simulate.matched,
+        lastProblem = _simulate.lastProblem;
+
+    if (matched === true) {
+      return chain;
+    } else {
+      var subproblems = [];
+      if (lastProblem) {
+        subproblems.push(lastProblem);
+      }
+      return new Problem(x, spec, subproblems, 'Spec ' + spec.type + ' did not match val: ' + JSON.stringify(x));
+    }
+  }
+
+  function nfaReconstruct(chain, walkOpts) {
+    var result = getMatch(chain, walkFn, walkOpts);
+    return result;
+  }
 }
 
 module.exports = nfaWalker;
@@ -2215,22 +2278,27 @@ var fnName = __webpack_require__(13);
 var Problem = __webpack_require__(0);
 
 function predWalker(spec, walkFn) {
-  return function predWalk(x, opts) {
+  return {
+    trailblaze: predTraiblaze,
+    reconstruct: predReconstruct
+  };
+
+  function predTraiblaze(x, opts) {
     var conform = opts.conform,
         instrument = opts.instrument,
         trailblaze = opts.trailblaze;
 
-    if (conform || instrument || trailblaze) {
-      var predFn = spec.exprs[0];
-      if (predFn(x)) {
-        return x;
-      } else {
-        return new Problem(x, spec, [], 'Predicate ' + fnName(predFn) + ' returns false on value ' + JSON.stringify(x));
-      }
+    var predFn = spec.exprs[0];
+    if (!predFn(x)) {
+      return new Problem(x, spec, [], 'Predicate ' + fnName(predFn) + ' returns false on value ' + JSON.stringify(x));
     } else {
-      throw 'no impl';
+      return x;
     }
-  };
+  }
+
+  function predReconstruct(x, opts) {
+    return x;
+  }
 }
 
 module.exports = predWalker;
@@ -2252,10 +2320,117 @@ function propsWalker(spec, walkFn) {
       optSpecs = _spec$exprs$0$propArg.opt;
 
 
-  return function propsWalk(x, walkOpts) {
-    if (x.keyList) {
-      debugger;
+  return {
+    trailblaze: propsTrailblaze,
+    reconstruct: propsReconstruct
+  };
+
+  function propsTrailblaze(x, walkOpts) {
+    var conform = walkOpts.conform,
+        instrument = walkOpts.instrument,
+        trailblaze = walkOpts.trailblaze;
+
+
+    var fieldDefs, keyList;
+    if (reqSpecs) {
+      fieldDefs = reqSpecs.fieldDefs;
+      keyList = reqSpecs.keyList;
     }
+
+    if (!keyConformer) {
+      keyConformer = _genKeyConformer(reqSpecs, optSpecs, walkFn, walkOpts); //lazy
+    }
+    var keyConformedR = keyConformer(x);
+
+    if (isProblem(keyConformedR)) {
+      return keyConformedR;
+    }
+    var problems = [];
+
+    var guide = { keyGroups: {}, keys: [] };
+
+    if (conform || trailblaze) {
+      guide.val = oAssign({}, x);
+    } else if (instrument) {
+      guide.val = x;
+    }
+
+    if (fieldDefs) {
+      for (var name in fieldDefs.fields) {
+        if (fieldDefs.fields.hasOwnProperty(name)) {
+          var keyValAlts = fieldDefs.fields[name];
+          var result = parseFieldDef(x, name, keyValAlts, walkFn, walkOpts);
+          if (isProblem(result)) {
+            problems.push([name, result]);
+            break; //TODO: improve this
+          } else {
+            var key = result.key,
+                matchedKeys = result.matchedKeys;
+
+            if (key) {
+              guide.keys.push(key);
+            } else if (matchedKeys) {
+              guide.keyGroups[name] = matchedKeys;
+            } else {
+              throw '!';
+            }
+          }
+        }
+      }
+    }
+
+    var optFieldDefs, optKeyList;
+    if (optSpecs) {
+      optFieldDefs = optSpecs.fieldDefs;
+      optKeyList = optSpecs.keyList;
+    }
+    if (optFieldDefs) {
+      for (var name in optFieldDefs.fields) {
+        if (optFieldDefs.fields.hasOwnProperty(name)) {
+          var keyValAlts = fieldDefs.fields[name];
+          var result = parseFieldDef(x, name, keyValAlts, walkFn, walkOpts);
+          if (isProblem(result)) {
+            problems.push([name, result]);
+            break; //TODO: improve this
+          } else {
+            var key = result.key,
+                matchedKeys = result.matchedKeys;
+
+            if (key) {
+              guide.keys.push(key);
+            } else if (matchedKeys) {
+              guide.keyGroups[name] = matchedKeys;
+            } else {
+              throw '!';
+            }
+          }
+        }
+      }
+    }
+
+    if (conform && problems.length > 0) {
+      var problemMap = {};
+      var failedNames = [];
+      for (var i = 0; i < problems.length; i++) {
+        var _problems$i = problems[i],
+            n = _problems$i[0],
+            p = _problems$i[1];
+
+        failedNames.push(n);
+        problemMap[n] = p;
+      }
+      var newP = new Problem(x, spec, problemMap, 'Some properties failed validation: ' + failedNames.join(', '));
+      // if(newP.subproblems.req && newP.subproblems.req.val.keyList) {
+      //   console.log(JSON.stringify(newP.subproblems, null, 2));
+      //   console.log('-------------------------------------');
+      // }
+      return newP;
+    } else {
+      return conformed;
+    }
+  }
+
+  function propsReconstruct(x, walkOpts) {
     var conform = walkOpts.conform,
         instrument = walkOpts.instrument,
         trailblaze = walkOpts.trailblaze;
@@ -2353,9 +2528,9 @@ function propsWalker(spec, walkFn) {
         var problemMap = {};
         var failedNames = [];
         for (var i = 0; i < problems.length; i++) {
-          var _problems$i = problems[i],
-              n = _problems$i[0],
-              p = _problems$i[1];
+          var _problems$i2 = problems[i],
+              n = _problems$i2[0],
+              p = _problems$i2[1];
 
           failedNames.push(n);
           problemMap[n] = p;
@@ -2372,7 +2547,7 @@ function propsWalker(spec, walkFn) {
     } else {
       throw 'no impl';
     }
-  };
+  }
 }
 
 function _genKeyConformer(reqSpecs, optSpec, walkFn, walkOpts) {
@@ -2436,7 +2611,49 @@ function _deleteKeys(subject, keys) {
   }
 }
 
-function parseFieldDef(x, name, defs, walkFn, walkOpts) {
+function parseFieldDef(x, name, keyValAlts, walkFn, walkOpts) {
+  var valExprOnly = keyValAlts.valExprOnly,
+      keyValExprPair = keyValAlts.keyValExprPair;
+
+  var r;
+  if (keyValExprPair) {
+    var matchedKeys = [];
+
+    var keySpec = keyValExprPair.keySpec,
+        valSpec = keyValExprPair.valSpec;
+
+    r = undefined;
+    for (var k in x) {
+      var keyResult = _conformNamedOrExpr(k, keySpec, walkFn, walkOpts);
+      if (x === x[keyResult]) {
+        // single string char case, name = 0
+        continue;
+      }
+      if (!isProblem(keyResult)) {
+        var rrr = _conformNamedOrExpr(x[keyResult], valSpec, walkFn, walkOpts);
+        if (isProblem(rrr)) {
+          return { problem: rrr }; //TODO: improve
+        } else {
+          matchedKeys.push(keyResult);
+        }
+      }
+    }
+    return { matchedKeys: matchedKeys };
+  } else if (valExprOnly) {
+    var valSpec = valExprOnly;
+    var r = x[name];
+    if (!isUndefined(r) && x[name] !== x) {
+      // single string char case, name = 0
+      r = _conformNamedOrExpr(r, valSpec, walkFn, walkOpts);
+      if (isProblem(r)) {
+        return r;
+      }
+    }
+    return { key: name };
+  }
+}
+
+function restoreFieldDefs(x, name, defs, walkFn, walkOpts) {
   var valExprOnly = defs.valExprOnly,
       keyValExprPair = defs.keyValExprPair;
 
@@ -2495,6 +2712,12 @@ module.exports = propsWalker;
 /***/ function(module, exports) {
 
 function specRefWalker(specRef, walkFn) {
+
+  return {
+    trailblaze: walkSpecRef,
+    reconstruct: walkSpecRef
+  };
+
   return function walkSpecRef(x, walkOpts) {
     var s = specRef.get();
     if (s) {

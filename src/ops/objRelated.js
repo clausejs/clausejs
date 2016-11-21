@@ -65,7 +65,7 @@ var PropsSpec = fspec({
 function propsOp(cargs) {
   var s = new Spec(TYPE_PROPS, [cargs], null, null, null);
   s.conform = function propsConform(x) {
-    return walk(s, x, { conform: true });
+    return walk(s, x, { });
   }
   return s;
 }

@@ -168,7 +168,7 @@ function genMultiArgOp(type) {
       var s = new Spec( type, coercedExprs, null, null, null);
 
       s.conform = function conform(x) {
-        return walk(s, x, { conform: true });
+        return walk(s, x, { });
       };
       return s;
     } else if (conformedArgs.unnamed){
@@ -196,7 +196,7 @@ function genMultiArgOp(type) {
       var s = new Spec(type, coercedExprs, null, null, null);
 
       s.conform = function conform(x) {
-        return walk(s, x, { conform: true });
+        return walk(s, x, { });
       };
       return s;
     }
@@ -229,7 +229,7 @@ function genSingleArgOp(type) {
     );
 
     s.conform = function conform(x) {
-      return walk(s, x, { conform: true });
+      return walk(s, x, { });
     }
     return s;
   });
@@ -254,3 +254,42 @@ core['+'] = core.oneOrMore;
 core['?'] = core.zeroOrOne;
 
 module.exports = core;
+
+// // //
+var TestSpec = orOp({
+  named: [
+    {
+      name: 'named',
+      expr: {
+        spec: orOp({
+          unnamed: [
+            {
+              spec: zeroOrMoreOp({
+                expr: {
+                  spec: NameExprOptionalComment,
+                },
+              })
+            },
+            {
+              spec: collOfOp({
+                expr: {
+                  spec: NameExprOptionalComment,
+                },
+              })
+            },
+          ]
+        }),
+      },
+    },
+    {
+      name: 'unnamed',
+      expr: {
+        spec: zeroOrMoreOp({
+          expr: {
+            spec: ExprSpec,
+          },
+        }),
+      },
+    },
+  ],
+});

@@ -1,7 +1,6 @@
 var isProblem = require('../../utils/isProblem');
 
 function simulate(nfa, rawInput, walkFn, walkOpts) {
-  var { conform, instrument, trailblaze } = walkOpts;
   var input;
 
   var r = {
@@ -77,27 +76,25 @@ function simulate(nfa, rawInput, walkFn, walkOpts) {
 
             frontier.push(next);
           } else {
-            if(conform || instrument || trailblaze) {
-              validateResult = walkFn(transition, observed, { trailblaze: true });
-              // validateResult = walkFn(transition, observed, walkOpts);
-              if(!isProblem(validateResult)) {
-                if(currentOffset < input.length) {
-                  move = { dir: 'pred' };
-                  next = {
-                    input, groupCount, arrayed, leftOff,
-                    state: nextState,
-                    offset: nextOffset,
-                    move: move,
-                    prev: current,
-                    isEpsilon: false,
-                    spec: transition,
-                    observed: observed,
-                  };
-                  frontier.push(next);
-                }
-              } else {
-                r.lastProblem = validateResult;
+            validateResult = walkFn(transition, observed, { trailblaze: true });
+            // validateResult = walkFn(transition, observed, walkOpts);
+            if(!isProblem(validateResult)) {
+              if(currentOffset < input.length) {
+                move = { dir: 'pred' };
+                next = {
+                  input, groupCount, arrayed, leftOff,
+                  state: nextState,
+                  offset: nextOffset,
+                  move: move,
+                  prev: current,
+                  isEpsilon: false,
+                  spec: transition,
+                  observed: observed,
+                };
+                frontier.push(next);
               }
+            } else {
+              r.lastProblem = validateResult;
             }
           }
         }
