@@ -2,7 +2,7 @@ var Spec = require('../models/Spec');
 var isSpec = require('../utils/isSpec');
 var isStr = require('../preds/isStr');
 var isFn = require('../preds/isFn');
-var equals = require('../preds/equals');
+var oneOf = require('../preds/oneOf');
 var coerceIntoSpec = require('../utils/coerceIntoSpec');
 var { cat, or, zeroOrMore, ExprSpec } = require('./core');
 var walk = require('../walk');
@@ -56,7 +56,7 @@ var PropArgs = propsOp({
             'requiredFields': {
               keyValExprPair: {
                 keySpecAlts: {
-                  spec: or(equals('req'), equals('required')),
+                  pred: oneOf('req', 'required'),
                 },
                 valSpecAlts: {
                   spec: KeyArrayOrFieldDefs
@@ -66,7 +66,7 @@ var PropArgs = propsOp({
             'optionalFields': {
               keyValExprPair: {
                 keySpecAlts: {
-                  spec: or(equals('opt'), equals('optional')),
+                  pred: oneOf('opt', 'optional'),
                 },
                 valSpecAlts: {
                   spec: KeyArrayOrFieldDefs
