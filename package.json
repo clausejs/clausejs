@@ -1,5 +1,5 @@
 {
-  "name": "specky-src",
+  "name": "specky",
   "version": "0.0.5",
   "description": "A powerful & flexible validation and conformation library for your JavaScript data and functions.",
   "main": "packages/specky/dist/specky.js",

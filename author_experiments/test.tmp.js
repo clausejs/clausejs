@@ -5,22 +5,22 @@ var S = s;
 
 console.log(s);
 
-var AdderFnSpec = s.fspec({
-  args: s.cat('x', s.isNum),
-  ret: s.fspec({
-    args: s.cat('y', s.isNum),
-    ret: s.isNum
-  }),
-});
-
-var adderFn = AdderFnSpec.instrument(function (x) {
-  return function (y) {
-    console.log(x, y);
-    return x + y;
-  };
-});
-var brokenAdderFn = AdderFnSpec.instrument(() => (y) => 'z');
-console.log(adderFn(1)(2))
+// var AdderFnSpec = s.fspec({
+//   args: s.cat('x', s.isNum),
+//   ret: s.fspec({
+//     args: s.cat('y', s.isNum),
+//     ret: s.isNum
+//   }),
+// });
+//
+// var adderFn = AdderFnSpec.instrument(function (x) {
+//   return function (y) {
+//     console.log(x, y);
+//     return x + y;
+//   };
+// });
+// var brokenAdderFn = AdderFnSpec.instrument(() => (y) => 'z');
+// console.log(adderFn(1)(2))
 
 // var NamedGroupedSpec = S.cat(
 //   ['z', 'it\'s a fuuuunction', S.isFn],
