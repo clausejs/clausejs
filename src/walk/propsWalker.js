@@ -88,6 +88,9 @@ function propsWalker(spec, walkFn) {
   }
 
   function propsReconstruct({ val, singles, groups }, walkOpts) {
+
+    var conform = { walkOpts };
+
     if(!singles) {
       debugger;
     }
@@ -111,13 +114,19 @@ function propsWalker(spec, walkFn) {
     });
 
     groups.forEach(function ({ name, matchedKeys }) {
-      conformed[name] = {};
-      var keysToDel = [];
-      matchedKeys.forEach(function (fieldGuide) {
-        restoreField_mut(conformed[name], fieldGuide, walkFn, walkOpts);
-        keysToDel.push(fieldGuide.key);
-      });
-      _deleteKeys(conformed, keysToDel);
+      if(conform) {
+        conformed[name] = {};
+        var keysToDel = [];
+        matchedKeys.forEach(function (fieldGuide) {
+          restoreField_mut(conformed[name], fieldGuide, walkFn, walkOpts);
+          keysToDel.push(fieldGuide.key);
+        });
+        _deleteKeys(conformed, keysToDel);
+      } else {
+        matchedKeys.forEach(function (fieldGuide) {
+          restoreField_mut(conformed, fieldGuide, walkFn, walkOpts);
+        });
+      }
     });
 
     return conformed;

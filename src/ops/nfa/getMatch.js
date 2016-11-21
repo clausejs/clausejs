@@ -12,7 +12,8 @@ var Name = function(n) { this.value = n; };
 var ArrayFragment = function(val) { this.value = val; };
 
 function getMatch(chain, walkFn, walkOpts) {
-  if(!chain) {
+  var { conform } = walkOpts;
+  if(!chain || !chain.forEach) {
     debugger;
   }
   var valStack = [];
@@ -50,7 +51,7 @@ function getMatch(chain, walkFn, walkOpts) {
           if(!(val instanceof Name)) {
             var name = valStack.pop().value;
             var newAcc;
-            if(name === null || name === undefined) {
+            if(name === null || name === undefined || !conform) {
               newAcc = new ArrayFragment(val);
             } else {
               newAcc = {};

@@ -33,29 +33,31 @@ function collOfWalker(spec, walkFn) {
         }
       }
 
-      var problems = [];
+      var guides = [], problems = [];
 
       for (var i = 0; i < x.length; i += 1) {
-        var r = walkFn(expr, x[i], walkOpts);
-        if(isProblem(r)) {
-          problems.push(r);
+        var guide = walkFn(expr, x[i], walkOpts);
+        if(isProblem(guide)) {
+          problems.push(guide);
           break; //TODO
+        } else {
+          guides.push(guide);
         }
       }
 
       if(problems.length > 0) {
         return new Problem(x, spec, problems, 'One or more elements failed collOf test');
       } else {
-        return x;
+        return guides;
       }
     }
   }
 
-  function collOfReconstruct(guide, walkOpts) {
+  function collOfReconstruct(guides, walkOpts) {
     var results = [];
 
-    for (var i = 0; i < guide.length; i += 1) {
-      var r = walkFn(expr, guide[i], walkOpts);
+    for (var i = 0; i < guides.length; i += 1) {
+      var r = walkFn(expr, guides[i], walkOpts);
       results.push(r);
     }
 
