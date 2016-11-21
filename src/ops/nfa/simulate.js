@@ -76,7 +76,7 @@ function simulate(nfa, rawInput, walkFn, walkOpts) {
 
             frontier.push(next);
           } else {
-            validateResult = walkFn(transition, observed, { trailblaze: true });
+            validateResult = walkFn(transition, observed, { phase: 'trailblaze' });
             // validateResult = walkFn(transition, observed, walkOpts);
             if(!isProblem(validateResult)) {
               if(currentOffset < input.length) {
@@ -89,7 +89,7 @@ function simulate(nfa, rawInput, walkFn, walkOpts) {
                   prev: current,
                   isEpsilon: false,
                   spec: transition,
-                  observed: observed,
+                  guide: validateResult,
                 };
                 frontier.push(next);
               }
@@ -116,7 +116,7 @@ function _getChain(nfa, finalState, walkFn, walkOpts) {
         state: curr.state,
       };
       if(!curr.isEpsilon) {
-        o.observed = curr.observed;
+        o.guide = curr.guide;
         o.spec = curr.spec;
       }
       chain.unshift(o);

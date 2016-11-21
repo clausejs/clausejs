@@ -826,7 +826,7 @@ var FieldDefs = propsOp({
                 spec: coerceIntoSpec(isStr)
               },
               valSpec: {
-                spec: or('valExprOnly', ExprSpec, 'keyValExprPair', cat('keySpec', ExprSpec, 'valSpec', ExprSpec))
+                spec: or('valSpecAltsOnly', ExprSpec, 'keyValExprPair', cat('keySpec', ExprSpec, 'valSpec', ExprSpec))
               }
             }
           }
@@ -844,8 +844,8 @@ var PropArgs = propsOp({
     opt: {
       fieldDefs: {
         fields: {
-          'req': { valExprOnly: { spec: KeyArrayOrFieldDefs } },
-          'opt': { valExprOnly: { spec: KeyArrayOrFieldDefs } }
+          'req': { valSpecAltsOnly: { spec: KeyArrayOrFieldDefs } },
+          'opt': { valSpecAltsOnly: { spec: KeyArrayOrFieldDefs } }
         }
       }
     }
@@ -2612,7 +2612,7 @@ function _deleteKeys(subject, keys) {
 }
 
 function parseFieldDef(x, name, keyValAlts, walkFn, walkOpts) {
-  var valExprOnly = keyValAlts.valExprOnly,
+  var valSpecAltsOnly = keyValAlts.valSpecAltsOnly,
       keyValExprPair = keyValAlts.keyValExprPair;
 
   var r;
@@ -2639,8 +2639,8 @@ function parseFieldDef(x, name, keyValAlts, walkFn, walkOpts) {
       }
     }
     return { matchedKeys: matchedKeys };
-  } else if (valExprOnly) {
-    var valSpec = valExprOnly;
+  } else if (valSpecAltsOnly) {
+    var valSpec = valSpecAltsOnly;
     var r = x[name];
     if (!isUndefined(r) && x[name] !== x) {
       // single string char case, name = 0
@@ -2654,7 +2654,7 @@ function parseFieldDef(x, name, keyValAlts, walkFn, walkOpts) {
 }
 
 function restoreFieldDefs(x, name, defs, walkFn, walkOpts) {
-  var valExprOnly = defs.valExprOnly,
+  var valSpecAltsOnly = defs.valSpecAltsOnly,
       keyValExprPair = defs.keyValExprPair;
 
   var r;
@@ -2682,8 +2682,8 @@ function restoreFieldDefs(x, name, defs, walkFn, walkOpts) {
         }
       }
     }
-  } else if (valExprOnly) {
-    var valSpec = valExprOnly;
+  } else if (valSpecAltsOnly) {
+    var valSpec = valSpecAltsOnly;
     r = x[name];
     if (!isUndefined(r) && x[name] !== x) {
       r = _conformNamedOrExpr(r, valSpec, walkFn, walkOpts);

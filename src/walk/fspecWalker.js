@@ -72,7 +72,7 @@ function fspecWalker(spec, walkFn) {
 
   function checkArgs(fn, fnName, args) {
     if(argsSpec) {
-      var instrumentedArgs = walkFn(argsSpec, args, { trailblaze: true });
+      var instrumentedArgs = walkFn(argsSpec, args, { phase: 'trailblaze' });
       if(isProblem(instrumentedArgs)) {
         var p = new Problem(args, spec, [instrumentedArgs], `Arguments ${JSON.stringify(args)} for function ${fnName} failed validation`);
         betterThrow(p);
@@ -86,7 +86,7 @@ function fspecWalker(spec, walkFn) {
 
   function checkRet(fn, fnName, retVal) {
     if(retSpec) {
-      var instrumentedRetVal = walkFn(retSpec, retVal, { trailblaze: true });
+      var instrumentedRetVal = walkFn(retSpec, retVal, { phase: 'trailblaze' });
       if(isProblem(instrumentedRetVal)) {
         var p = new Problem(retVal, spec, [instrumentedRetVal], 'Return value ' + retVal + ' for function ' + fnName + ' is not valid.');
         betterThrow(p);

@@ -12,6 +12,9 @@ var Name = function(n) { this.value = n; };
 var ArrayFragment = function(val) { this.value = val; };
 
 function getMatch(chain, walkFn, walkOpts) {
+  if(!chain) {
+    debugger;
+  }
   var valStack = [];
   var r = {};
 
@@ -39,7 +42,7 @@ function getMatch(chain, walkFn, walkOpts) {
           }
         } break;
         case 'pred': {
-          var conformed = walkFn(curr.spec, curr.observed, walkOpts);
+          var conformed = walkFn(curr.spec, curr.guide, walkOpts);
           valStack.push(conformed);
         } break;
         case 'out': {

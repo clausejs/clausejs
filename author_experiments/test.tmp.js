@@ -7,12 +7,10 @@ console.log(s);
 
 var fnList = ['props', 'isValid', 'conform', 'fspec', 'isObj', 'isFn'];
 
-var TestSpec = s.cat('a', s.isStr, 'b', s.isObj);
-
-  // var SpecObj = S.keys({req: fnList});
-  // var InsaneSpecObj = S.keys({req: fnList.concat(['voodooooooooo'])});
-  // expect(S.isValid(SpecObj, S)).to.be.true;
-// S.isValid(InsaneSpecObj, S);
+// var SpecObj = S.keys({req: fnList});
+// var InsaneSpecObj = S.keys({req: fnList.concat(['voodooooooooo'])});
+// console.log(S.isValid(SpecObj, S));
+// console.log(S.isValid(InsaneSpecObj, S));
 
 // var NamedGroupedSpec = S.cat(
 //   ['z', 'it\'s a fuuuunction', S.isFn],

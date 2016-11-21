@@ -24,12 +24,12 @@ var FieldDefs = propsOp({
               keySpec: {
                 spec: coerceIntoSpec(isStr),
               },
-              valSpec: {
+              valSpecAlts: {
                 spec: or(
-                  'valExprOnly', ExprSpec,
+                  'valSpecAltsOnly', ExprSpec,
                   'keyValExprPair', cat(
-                    'keySpec', ExprSpec,
-                    'valSpec', ExprSpec
+                    'keySpecAlts', ExprSpec,
+                    'valSpecAlts', ExprSpec
                   )
                 )
               },
@@ -49,8 +49,8 @@ var PropArgs = propsOp({
     opt: {
       fieldDefs: {
         fields: {
-          'req': { valExprOnly: { spec: KeyArrayOrFieldDefs } },
-          'opt': { valExprOnly: { spec: KeyArrayOrFieldDefs } },
+          'req': { valSpecAltsOnly: { spec: KeyArrayOrFieldDefs } },
+          'opt': { valSpecAltsOnly: { spec: KeyArrayOrFieldDefs } },
         }
       }
     },
@@ -76,3 +76,20 @@ module.exports = {
   props,
   keys: props,
 };
+
+// // // // //
+
+// var TestSpec = propsOp({
+//   propArgs: {
+//     req: {
+//       fieldDefs: {
+//         fields: {
+//           'a': { valSpecAltsOnly: { pred: isStr } }
+//         }
+//       }
+//     }
+//   }
+// });
+//
+// var r = TestSpec.conform({a: 's'});
+// console.log(r);

@@ -3,6 +3,7 @@ var oAssign = require('object-assign');
 var Spec = require('../models/Spec');
 var isSpec = require('../utils/isSpec');
 var isPred = require('../utils/isPred');
+var specFromAlts = require('../utils/specFromAlts');
 var isObj = require('../preds/isObj');
 var isStr = require('../preds/isStr');
 var isSpecName = require('../utils/isSpecName');
@@ -146,23 +147,13 @@ function genMultiArgOp(type) {
       exprs = conformedArgs.named;
 
       var coercedExprs = exprs.map(function(p) {
-        var expr = p.expr;
-        if(expr.spec) {
-          var s = expr.spec;
-          return oAssign({}, p, { expr: s, spec: undefined });
-        } else if (expr.pred) {
-          var s = coerceIntoSpec(expr.pred);
-          return oAssign({}, p, { expr: s, pred: undefined });
-        } else if (expr.specRef) {
-          var s = expr.specRef;
-          return oAssign({}, p, { expr: s, specRef: undefined });
-        } else if (expr.delayedSpec) {
-          var s = expr.delayedSpec;
-          return oAssign({}, p, { expr: s, delayedSpec: undefined });
-        } else {
-          console.error(p);
-          throw 'Not implemented';
-        }
+        var alts = p.expr;
+        var s = specFromAlts(alts);
+
+        return oAssign({}, p, {
+          expr: s,
+          spec: undefined, pred: undefined,
+          specRef: undefined, delayedSpec: undefined });
       });
 
       var s = new Spec( type, coercedExprs, null, null, null);
