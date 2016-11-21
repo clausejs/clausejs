@@ -159,7 +159,7 @@ function genMultiArgOp(type) {
       var s = new Spec( type, coercedExprs, null, null, null);
 
       s.conform = function conform(x) {
-        return walk(s, x, { });
+        return walk(s, x, { conform: true });
       };
       return s;
     } else if (conformedArgs.unnamed){
@@ -187,7 +187,7 @@ function genMultiArgOp(type) {
       var s = new Spec(type, coercedExprs, null, null, null);
 
       s.conform = function conform(x) {
-        return walk(s, x, { });
+        return walk(s, x, { conform: true });
       };
       return s;
     }
@@ -220,7 +220,7 @@ function genSingleArgOp(type) {
     );
 
     s.conform = function conform(x) {
-      return walk(s, x, { });
+      return walk(s, x, { conform: true });
     }
     return s;
   });

@@ -76,7 +76,7 @@ function simulate(nfa, rawInput, walkFn, walkOpts) {
 
             frontier.push(next);
           } else {
-            validateResult = walkFn(transition, observed, { phase: 'trailblaze' });
+            validateResult = walkFn(transition, observed, walkOpts);
             // validateResult = walkFn(transition, observed, walkOpts);
             if(!isProblem(validateResult)) {
               if(currentOffset < input.length) {
@@ -100,7 +100,6 @@ function simulate(nfa, rawInput, walkFn, walkOpts) {
         }
     }
   }
-
   return r;
 };
 

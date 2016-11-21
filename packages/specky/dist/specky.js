@@ -71,7 +71,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 55);
+/******/ 	return __webpack_require__(__webpack_require__.s = 56);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -251,16 +251,6 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 /***/ },
 /* 5 */
-/***/ function(module, exports) {
-
-function isStr(x) {
-  return x !== null && x !== undefined && x.constructor === String;
-}
-
-module.exports = isStr;
-
-/***/ },
-/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 var isPred = __webpack_require__(7);
@@ -279,6 +269,7 @@ function coerceIntoSpec(expr) {
   } else if (isPred(expr)) {
     return _wrap(expr);
   } else {
+    debugger;
     throw new Error('Expression must either be a Spec object or a predication function that returns true or false. ');
   }
 }
@@ -298,6 +289,16 @@ function predConformer(pred) {
 }
 
 module.exports = coerceIntoSpec;
+
+/***/ },
+/* 6 */
+/***/ function(module, exports) {
+
+function isStr(x) {
+  return x !== null && x !== undefined && x.constructor === String;
+}
+
+module.exports = isStr;
 
 /***/ },
 /* 7 */
@@ -346,15 +347,15 @@ module.exports = function (x) {
 /***/ function(module, exports, __webpack_require__) {
 
 var oAssign = __webpack_require__(4);
-var nfaWalker = __webpack_require__(49);
-var predWalker = __webpack_require__(50);
-var fspecWalker = __webpack_require__(48);
-var propsWalker = __webpack_require__(51);
-var andWalker = __webpack_require__(45);
-var collOfWalker = __webpack_require__(46);
-var specRefWalker = __webpack_require__(52);
-var delayedSpecWalker = __webpack_require__(47);
-var coerceIntoSpec = __webpack_require__(6);
+var nfaWalker = __webpack_require__(50);
+var predWalker = __webpack_require__(51);
+var fspecWalker = __webpack_require__(49);
+var propsWalker = __webpack_require__(52);
+var andWalker = __webpack_require__(46);
+var collOfWalker = __webpack_require__(47);
+var specRefWalker = __webpack_require__(53);
+var delayedSpecWalker = __webpack_require__(48);
+var coerceIntoSpec = __webpack_require__(5);
 var isProblem = __webpack_require__(2);
 
 function walk(spec, x, opts) {
@@ -420,14 +421,15 @@ var oAssign = __webpack_require__(4);
 var Spec = __webpack_require__(1);
 var isSpec = __webpack_require__(3);
 var isPred = __webpack_require__(7);
+var specFromAlts = __webpack_require__(29);
 var isObj = __webpack_require__(21);
-var isStr = __webpack_require__(5);
-var isSpecName = __webpack_require__(43);
+var isStr = __webpack_require__(6);
+var isSpecName = __webpack_require__(44);
 var namedFn = __webpack_require__(28);
 var isSpecRef = __webpack_require__(27);
 var isDelayedSpec = __webpack_require__(25);
-var c = __webpack_require__(33);
-var coerceIntoSpec = __webpack_require__(6);
+var c = __webpack_require__(34);
+var coerceIntoSpec = __webpack_require__(5);
 var fspec = __webpack_require__(8);
 var walk = __webpack_require__(10);
 var specSpec = coerceIntoSpec(isSpec);
@@ -539,29 +541,19 @@ function genMultiArgOp(type) {
       exprs = conformedArgs.named;
 
       var coercedExprs = exprs.map(function (p) {
-        var expr = p.expr;
-        if (expr.spec) {
-          var s = expr.spec;
-          return oAssign({}, p, { expr: s, spec: undefined });
-        } else if (expr.pred) {
-          var s = coerceIntoSpec(expr.pred);
-          return oAssign({}, p, { expr: s, pred: undefined });
-        } else if (expr.specRef) {
-          var s = expr.specRef;
-          return oAssign({}, p, { expr: s, specRef: undefined });
-        } else if (expr.delayedSpec) {
-          var s = expr.delayedSpec;
-          return oAssign({}, p, { expr: s, delayedSpec: undefined });
-        } else {
-          console.error(p);
-          throw 'Not implemented';
-        }
+        var alts = p.expr;
+        var s = specFromAlts(alts);
+
+        return oAssign({}, p, {
+          expr: s,
+          spec: undefined, pred: undefined,
+          specRef: undefined, delayedSpec: undefined });
       });
 
       var s = new Spec(type, coercedExprs, null, null, null);
 
       s.conform = function conform(x) {
-        return walk(s, x, {});
+        return walk(s, x, { conform: true });
       };
       return s;
     } else if (conformedArgs.unnamed) {
@@ -589,7 +581,7 @@ function genMultiArgOp(type) {
       var s = new Spec(type, coercedExprs, null, null, null);
 
       s.conform = function conform(x) {
-        return walk(s, x, {});
+        return walk(s, x, { conform: true });
       };
       return s;
     }
@@ -617,7 +609,7 @@ function genSingleArgOp(type) {
     var s = new Spec(type, [coerceIntoSpec(expr)], opts, null, null);
 
     s.conform = function conform(x) {
-      return walk(s, x, {});
+      return walk(s, x, { conform: true });
     };
     return s;
   });
@@ -676,8 +668,6 @@ var TestSpec = orOp({
   }]
 });
 
-console.log(TestSpec.conform(['aaa', TestSpec, 'bbb', TestSpec]));
-
 /***/ },
 /* 12 */
 /***/ function(module, exports) {
@@ -716,8 +706,8 @@ var _require = __webpack_require__(18),
     keys = _require.keys;
 
 var other = {
-  and: __webpack_require__(31),
-  any: __webpack_require__(32),
+  and: __webpack_require__(32),
+  any: __webpack_require__(33),
   fspec: __webpack_require__(8)
 };
 
@@ -730,18 +720,18 @@ module.exports = r;
 /***/ function(module, exports, __webpack_require__) {
 
 var isNum = __webpack_require__(20);
-var isNatInt = __webpack_require__(39);
+var isNatInt = __webpack_require__(40);
 var isInt = __webpack_require__(19);
-var isBool = __webpack_require__(38);
+var isBool = __webpack_require__(39);
 var isFn = __webpack_require__(12);
 var isObj = __webpack_require__(21);
-var isStr = __webpack_require__(5);
+var isStr = __webpack_require__(6);
 var isArray = Array.isArray;
 
 module.exports = {
-  isNull: __webpack_require__(40),
+  isNull: __webpack_require__(41),
   isUndefined: __webpack_require__(9),
-  notEmpty: __webpack_require__(41),
+  notEmpty: __webpack_require__(42),
   isBool: isBool, isBoolean: isBool,
   isFn: isFn, isFunction: isFn,
   isNum: isNum, isNumber: isNum,
@@ -796,9 +786,9 @@ module.exports = SpecRef;
 
 var Spec = __webpack_require__(1);
 var isSpec = __webpack_require__(3);
-var isStr = __webpack_require__(5);
+var isStr = __webpack_require__(6);
 var isFn = __webpack_require__(12);
-var coerceIntoSpec = __webpack_require__(6);
+var coerceIntoSpec = __webpack_require__(5);
 
 var _require = __webpack_require__(11),
     cat = _require.cat,
@@ -822,11 +812,11 @@ var FieldDefs = propsOp({
         fields: {
           'fields': {
             keyValExprPair: {
-              keySpec: {
+              keySpecAlts: {
                 spec: coerceIntoSpec(isStr)
               },
-              valSpec: {
-                spec: or('valSpecAltsOnly', ExprSpec, 'keyValExprPair', cat('keySpec', ExprSpec, 'valSpec', ExprSpec))
+              valSpecAlts: {
+                spec: or('valSpecAltsOnly', ExprSpec, 'keyValExprPair', cat('keySpecAlts', ExprSpec, 'valSpecAlts', ExprSpec))
               }
             }
           }
@@ -860,7 +850,7 @@ var PropsSpec = fspec({
 function propsOp(cargs) {
   var s = new Spec(TYPE_PROPS, [cargs], null, null, null);
   s.conform = function propsConform(x) {
-    return walk(s, x, {});
+    return walk(s, x, { conform: true });
   };
   return s;
 }
@@ -871,6 +861,23 @@ module.exports = {
   props: props,
   keys: props
 };
+
+// // // // //
+
+// var TestSpec = propsOp({
+//   propArgs: {
+//     req: {
+//       fieldDefs: {
+//         fields: {
+//           'a': { valSpecAltsOnly: { pred: isStr } }
+//         }
+//       }
+//     }
+//   }
+// });
+//
+// var r = TestSpec.conform({a: 's'});
+// console.log(r);
 
 /***/ },
 /* 19 */
@@ -1000,7 +1007,31 @@ module.exports = getNamedFn;
 /* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(global) {var oPath = __webpack_require__(53);
+var coerceIntoSpec = __webpack_require__(5);
+
+module.exports = function specFromAlts(alts) {
+  if (!alts) {
+    debugger;
+  }
+  if (alts.spec) {
+    return alts.spec;
+  } else if (alts.pred) {
+    return coerceIntoSpec(alts.pred);
+  } else if (alts.specRef) {
+    return alts.specRef;
+  } else if (alts.delayedSpec) {
+    return alts.delayedSpec;
+  } else {
+    console.error(p);
+    throw 'Not implemented';
+  }
+};
+
+/***/ },
+/* 30 */
+/***/ function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {var oPath = __webpack_require__(54);
 
 var SpecRef = __webpack_require__(17);
 
@@ -1015,7 +1046,7 @@ var _require2 = __webpack_require__(18),
 
 var isSpec = __webpack_require__(3);
 var isPred = __webpack_require__(7);
-var isStr = __webpack_require__(5);
+var isStr = __webpack_require__(6);
 var isExpr = __webpack_require__(26);
 var isUndefined = __webpack_require__(9);
 var walk = __webpack_require__(10);
@@ -1050,7 +1081,7 @@ function _getUnchecked(ref) {
 
   var sr = new SpecRef({ ref: ref, getFn: getFn, null: null });
   sr.conform = function specRefConform(x) {
-    return walk(ss, x, {});
+    return walk(ss, x, { conform: true });
   };
   return sr;
 }
@@ -1147,22 +1178,22 @@ var specedSpeckyNamespace = NamespaceFnSpec.instrumentConformed(speckyNamespace)
 specedSpeckyNamespace.clearRegistry = clearRegistry;
 
 module.exports = specedSpeckyNamespace;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(54)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(55)))
 
 /***/ },
-/* 30 */
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
 module.exports = {
   conform: __webpack_require__(22),
-  isValid: __webpack_require__(44),
+  isValid: __webpack_require__(45),
   identity: __webpack_require__(24),
   isProblem: __webpack_require__(2),
   delayed: __webpack_require__(23)
 };
 
 /***/ },
-/* 31 */
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
 var _require = __webpack_require__(15),
@@ -1202,7 +1233,7 @@ function andOp(conformedArgs) {
 module.exports = AndSpec.instrumentConformed(andOp);
 
 /***/ },
-/* 32 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
 var Spec = __webpack_require__(1);
@@ -1216,7 +1247,7 @@ function any() {
 module.exports = any;
 
 /***/ },
-/* 33 */
+/* 34 */
 /***/ function(module, exports) {
 
 module.exports = {
@@ -1230,10 +1261,10 @@ module.exports = {
 };
 
 /***/ },
-/* 34 */
+/* 35 */
 /***/ function(module, exports, __webpack_require__) {
 
-var fragment = __webpack_require__(35);
+var fragment = __webpack_require__(36);
 var Spec = __webpack_require__(1);
 
 var indexedFragmentStates = function indexedFragmentStates(fragment) {
@@ -1333,7 +1364,7 @@ var compile = function compile(expr) {
 module.exports = compile;
 
 /***/ },
-/* 35 */
+/* 36 */
 /***/ function(module, exports) {
 
 var fragmentState = function fragmentState(transitions, index) {
@@ -1533,7 +1564,7 @@ build.ROOT = function (frag) {
 module.exports = build;
 
 /***/ },
-/* 36 */
+/* 37 */
 /***/ function(module, exports, __webpack_require__) {
 
 var oAssign = __webpack_require__(4);
@@ -1554,9 +1585,11 @@ var ArrayFragment = function ArrayFragment(val) {
 };
 
 function getMatch(chain, walkFn, walkOpts) {
-  var conform = walkOpts.conform,
-      instrument = walkOpts.instrument;
+  var conform = walkOpts.conform;
 
+  if (!chain || !chain.forEach) {
+    debugger;
+  }
   var valStack = [];
   var r = {};
 
@@ -1591,7 +1624,7 @@ function getMatch(chain, walkFn, walkOpts) {
           }break;
         case 'pred':
           {
-            var conformed = walkFn(curr.spec, curr.observed, walkOpts);
+            var conformed = walkFn(curr.spec, curr.guide, walkOpts);
             valStack.push(conformed);
           }break;
         case 'out':
@@ -1690,7 +1723,6 @@ function getMatch(chain, walkFn, walkOpts) {
   });
   if (valStack.length !== 1) {
     console.error('valStack', valStack);
-    debugger;
     throw '!valStack.length';
   }
   var r = valStack.pop();
@@ -1712,16 +1744,12 @@ function _foldIn(acc, val) {
 module.exports = getMatch;
 
 /***/ },
-/* 37 */
+/* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
 var isProblem = __webpack_require__(2);
 
 function simulate(nfa, rawInput, walkFn, walkOpts) {
-  var conform = walkOpts.conform,
-      instrument = walkOpts.instrument,
-      trailblaze = walkOpts.trailblaze;
-
   var input;
 
   var r = {
@@ -1742,7 +1770,6 @@ function simulate(nfa, rawInput, walkFn, walkOpts) {
     if (current.state === nfa.finalState && currentOffset === input.length) {
       r.matched = true;
       r.chain = _getChain(nfa, current, walkFn, walkOpts);
-      debugger;
       return r;
     }
     for (var nextStateStr in nfa.transitions[current.state]) {
@@ -1802,35 +1829,30 @@ function simulate(nfa, rawInput, walkFn, walkOpts) {
 
           frontier.push(next);
         } else {
-          if (conform || instrument || trailblaze) {
-            validateResult = walkFn(transition, observed, { trailblaze: true });
-            // validateResult = walkFn(transition, observed, walkOpts);
-            if (!isProblem(validateResult)) {
-              if (currentOffset < input.length) {
-                move = { dir: 'pred' };
-                next = {
-                  input: input, groupCount: groupCount, arrayed: arrayed, leftOff: leftOff,
-                  state: nextState,
-                  offset: nextOffset,
-                  move: move,
-                  prev: current,
-                  isEpsilon: false,
-                  spec: transition,
-                  observed: observed
-                };
-                frontier.push(next);
-              }
-            } else {
-              r.lastProblem = validateResult;
+          validateResult = walkFn(transition, observed, walkOpts);
+          // validateResult = walkFn(transition, observed, walkOpts);
+          if (!isProblem(validateResult)) {
+            if (currentOffset < input.length) {
+              move = { dir: 'pred' };
+              next = {
+                input: input, groupCount: groupCount, arrayed: arrayed, leftOff: leftOff,
+                state: nextState,
+                offset: nextOffset,
+                move: move,
+                prev: current,
+                isEpsilon: false,
+                spec: transition,
+                guide: validateResult
+              };
+              frontier.push(next);
             }
+          } else {
+            r.lastProblem = validateResult;
           }
         }
       }
     }
   }
-  debugger;
-  console.log('z', rawInput, r, nfa, walkOpts);
-
   return r;
 };
 
@@ -1846,7 +1868,7 @@ function _getChain(nfa, finalState, walkFn, walkOpts) {
         state: curr.state
       };
       if (!curr.isEpsilon) {
-        o.observed = curr.observed;
+        o.guide = curr.guide;
         o.spec = curr.spec;
       }
       chain.unshift(o);
@@ -1860,7 +1882,7 @@ function _getChain(nfa, finalState, walkFn, walkOpts) {
 module.exports = simulate;
 
 /***/ },
-/* 38 */
+/* 39 */
 /***/ function(module, exports) {
 
 function isBool(x) {
@@ -1870,7 +1892,7 @@ function isBool(x) {
 module.exports = isBool;
 
 /***/ },
-/* 39 */
+/* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
 var isInt = __webpack_require__(19);
@@ -1882,7 +1904,7 @@ function isNatInt(x) {
 module.exports = isNatInt;
 
 /***/ },
-/* 40 */
+/* 41 */
 /***/ function(module, exports) {
 
 function isNull(x) {
@@ -1892,7 +1914,7 @@ function isNull(x) {
 module.exports = isNull;
 
 /***/ },
-/* 41 */
+/* 42 */
 /***/ function(module, exports) {
 
 
@@ -1907,7 +1929,7 @@ module.exports = function notEmpty(x) {
 };
 
 /***/ },
-/* 42 */
+/* 43 */
 /***/ function(module, exports) {
 
 function betterThrow(problem) {
@@ -1920,10 +1942,10 @@ function betterThrow(problem) {
 module.exports = betterThrow;
 
 /***/ },
-/* 43 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
-var isStr = __webpack_require__(5);
+var isStr = __webpack_require__(6);
 
 //TODO
 module.exports = function isSpecName(x) {
@@ -1931,7 +1953,7 @@ module.exports = function isSpecName(x) {
 };
 
 /***/ },
-/* 44 */
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
 var Problem = __webpack_require__(0);
@@ -1955,7 +1977,7 @@ function isValid(pred, x) {
 module.exports = isValid;
 
 /***/ },
-/* 45 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 var Problem = __webpack_require__(0);
@@ -2005,10 +2027,10 @@ function andWalker(spec, walkFn) {
 module.exports = andWalker;
 
 /***/ },
-/* 46 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
-var coerceIntoSpec = __webpack_require__(6);
+var coerceIntoSpec = __webpack_require__(5);
 var Problem = __webpack_require__(0);
 var isProblem = __webpack_require__(2);
 var isNum = __webpack_require__(20);
@@ -2041,29 +2063,32 @@ function collOfWalker(spec, walkFn) {
         }
       }
 
-      var problems = [];
+      var guides = [],
+          problems = [];
 
       for (var i = 0; i < x.length; i += 1) {
-        var r = walkFn(expr, x[i], walkOpts);
-        if (isProblem(r)) {
-          problems.push(r);
+        var guide = walkFn(expr, x[i], walkOpts);
+        if (isProblem(guide)) {
+          problems.push(guide);
           break; //TODO
+        } else {
+          guides.push(guide);
         }
       }
 
       if (problems.length > 0) {
         return new Problem(x, spec, problems, 'One or more elements failed collOf test');
       } else {
-        return x;
+        return guides;
       }
     }
   }
 
-  function collOfReconstruct(guide, walkOpts) {
+  function collOfReconstruct(guides, walkOpts) {
     var results = [];
 
-    for (var i = 0; i < guide.length; i += 1) {
-      var r = walkFn(expr, guide[i], walkOpts);
+    for (var i = 0; i < guides.length; i += 1) {
+      var r = walkFn(expr, guides[i], walkOpts);
       results.push(r);
     }
 
@@ -2074,7 +2099,7 @@ function collOfWalker(spec, walkFn) {
 module.exports = collOfWalker;
 
 /***/ },
-/* 47 */
+/* 48 */
 /***/ function(module, exports) {
 
 function delayedSpecWalker(delayedSpec, walkFn) {
@@ -2094,14 +2119,15 @@ function delayedSpecWalker(delayedSpec, walkFn) {
 module.exports = delayedSpecWalker;
 
 /***/ },
-/* 48 */
+/* 49 */
 /***/ function(module, exports, __webpack_require__) {
 
 var isProblem = __webpack_require__(2);
 var Problem = __webpack_require__(0);
 var functionName = __webpack_require__(13);
 var namedFn = __webpack_require__(28);
-var betterThrow = __webpack_require__(42);
+var betterThrow = __webpack_require__(43);
+var oAssign = __webpack_require__(4);
 
 function fspecWalker(spec, walkFn) {
   var _spec$opts = spec.opts,
@@ -2158,8 +2184,10 @@ function fspecWalker(spec, walkFn) {
       var instrumentedRetVal = checkRet(fn, fnName, retVal);
 
       // TODO optimize
-      var conformedArgs = walkFn(argsSpec, args, {});
-      checkFnRelation(fnName, fn, validateFn, conformedArgs, retVal);
+      var conformedArgs = walkFn(argsSpec, args, { conform: true, instrument: true });
+      var conformedRetVal = walkFn(retSpec, retVal, { conform: true, instrument: true });
+
+      checkFnRelation(fnName, fn, validateFn, conformedArgs, conformedRetVal);
       return instrumentedRetVal;
     };
   }
@@ -2176,12 +2204,12 @@ function fspecWalker(spec, walkFn) {
 
   function checkArgs(fn, fnName, args) {
     if (argsSpec) {
-      var instrumentedArgs = walkFn(argsSpec, args, { trailblaze: true });
+      var instrumentedArgs = walkFn(argsSpec, args, { phase: 'trailblaze' });
       if (isProblem(instrumentedArgs)) {
         var p = new Problem(args, spec, [instrumentedArgs], 'Arguments ' + JSON.stringify(args) + ' for function ' + fnName + ' failed validation');
         betterThrow(p);
       } else {
-        return instrumentedArgs;
+        return walkFn(argsSpec, instrumentedArgs, { phase: 'reconstruct', conform: false, instrument: true });
       }
     } else {
       return args;
@@ -2190,12 +2218,13 @@ function fspecWalker(spec, walkFn) {
 
   function checkRet(fn, fnName, retVal) {
     if (retSpec) {
-      var instrumentedRetVal = walkFn(retSpec, retVal, { trailblaze: true });
+      var instrumentedRetVal = walkFn(retSpec, retVal, { phase: 'trailblaze' });
       if (isProblem(instrumentedRetVal)) {
         var p = new Problem(retVal, spec, [instrumentedRetVal], 'Return value ' + retVal + ' for function ' + fnName + ' is not valid.');
         betterThrow(p);
       } else {
-        return instrumentedRetVal;
+        var r = walkFn(retSpec, instrumentedRetVal, { phase: 'reconstruct', instrument: true, conform: false });
+        return r;
       }
     } else {
       return retVal;
@@ -2206,15 +2235,16 @@ function fspecWalker(spec, walkFn) {
     return function () {
       var args = Array.from(arguments);
 
-      var conformedArgs = walkFn(argsSpec, args, {});
+      var conformedArgs = walkFn(argsSpec, args, { conform: true, instrument: true });
       if (isProblem(conformedArgs)) {
         var p = new Problem(args, argsSpec, [conformedArgs], 'Arguments ' + JSON.stringify(args) + ' for function ' + fnName + ' is not valid');
         betterThrow(p);
       }
 
-      var retVal = fn(conformedArgs);
+      var retVal = fn.call(this, conformedArgs);
+      var conformedRetVal = walkFn(retSpec, retVal, { conform: true, instrument: true });
       checkRet(fn, fnName, retVal);
-      checkFnRelation(fnName, fn, validateFn, conformedArgs, retVal);
+      checkFnRelation(fnName, fn, validateFn, conformedArgs, conformedRetVal);
       return retVal;
     };
   }
@@ -2223,12 +2253,12 @@ function fspecWalker(spec, walkFn) {
 module.exports = fspecWalker;
 
 /***/ },
-/* 49 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
-var simulate = __webpack_require__(37);
-var getMatch = __webpack_require__(36);
-var compile = __webpack_require__(34);
+var simulate = __webpack_require__(38);
+var getMatch = __webpack_require__(37);
+var compile = __webpack_require__(35);
 var Problem = __webpack_require__(0);
 var isProblem = __webpack_require__(2);
 
@@ -2271,7 +2301,7 @@ function nfaWalker(spec, walkFn) {
 module.exports = nfaWalker;
 
 /***/ },
-/* 50 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
 var fnName = __webpack_require__(13);
@@ -2304,14 +2334,15 @@ function predWalker(spec, walkFn) {
 module.exports = predWalker;
 
 /***/ },
-/* 51 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
 var isProblem = __webpack_require__(2);
 var isUndefined = __webpack_require__(9);
 var oAssign = __webpack_require__(4);
 var Problem = __webpack_require__(0);
-var coerceIntoSpec = __webpack_require__(6);
+var coerceIntoSpec = __webpack_require__(5);
+var specFromAlts = __webpack_require__(29);
 
 function propsWalker(spec, walkFn) {
   var keyConformer;
@@ -2326,16 +2357,6 @@ function propsWalker(spec, walkFn) {
   };
 
   function propsTrailblaze(x, walkOpts) {
-    var conform = walkOpts.conform,
-        instrument = walkOpts.instrument,
-        trailblaze = walkOpts.trailblaze;
-
-
-    var fieldDefs, keyList;
-    if (reqSpecs) {
-      fieldDefs = reqSpecs.fieldDefs;
-      keyList = reqSpecs.keyList;
-    }
 
     if (!keyConformer) {
       keyConformer = _genKeyConformer(reqSpecs, optSpecs, walkFn, walkOpts); //lazy
@@ -2347,36 +2368,16 @@ function propsWalker(spec, walkFn) {
     }
     var problems = [];
 
-    var guide = { keyGroups: {}, keys: [] };
+    var guide = { val: x, groups: [], singles: [] };
 
-    if (conform || trailblaze) {
-      guide.val = oAssign({}, x);
-    } else if (instrument) {
-      guide.val = x;
+    var reqFieldDefs, keyList;
+    if (reqSpecs) {
+      reqFieldDefs = reqSpecs.fieldDefs;
+      keyList = reqSpecs.keyList;
     }
 
-    if (fieldDefs) {
-      for (var name in fieldDefs.fields) {
-        if (fieldDefs.fields.hasOwnProperty(name)) {
-          var keyValAlts = fieldDefs.fields[name];
-          var result = parseFieldDef(x, name, keyValAlts, walkFn, walkOpts);
-          if (isProblem(result)) {
-            problems.push([name, result]);
-            break; //TODO: improve this
-          } else {
-            var key = result.key,
-                matchedKeys = result.matchedKeys;
-
-            if (key) {
-              guide.keys.push(key);
-            } else if (matchedKeys) {
-              guide.keyGroups[name] = matchedKeys;
-            } else {
-              throw '!';
-            }
-          }
-        }
-      }
+    if (reqFieldDefs) {
+      processFieldDefs_mut(reqFieldDefs);
     }
 
     var optFieldDefs, optKeyList;
@@ -2385,30 +2386,10 @@ function propsWalker(spec, walkFn) {
       optKeyList = optSpecs.keyList;
     }
     if (optFieldDefs) {
-      for (var name in optFieldDefs.fields) {
-        if (optFieldDefs.fields.hasOwnProperty(name)) {
-          var keyValAlts = fieldDefs.fields[name];
-          var result = parseFieldDef(x, name, keyValAlts, walkFn, walkOpts);
-          if (isProblem(result)) {
-            problems.push([name, result]);
-            break; //TODO: improve this
-          } else {
-            var key = result.key,
-                matchedKeys = result.matchedKeys;
-
-            if (key) {
-              guide.keys.push(key);
-            } else if (matchedKeys) {
-              guide.keyGroups[name] = matchedKeys;
-            } else {
-              throw '!';
-            }
-          }
-        }
-      }
+      processFieldDefs_mut(optFieldDefs);
     }
 
-    if (conform && problems.length > 0) {
+    if (problems.length > 0) {
       var problemMap = {};
       var failedNames = [];
       for (var i = 0; i < problems.length; i++) {
@@ -2426,128 +2407,97 @@ function propsWalker(spec, walkFn) {
       // }
       return newP;
     } else {
-      return conformed;
+      return guide;
+    }
+
+    function processFieldDefs_mut(fieldDefs) {
+      fieldLoop: for (var name in fieldDefs.fields) {
+        if (fieldDefs.fields.hasOwnProperty(name)) {
+          var keyValAlts = fieldDefs.fields[name];
+
+          var _getFieldGuide = getFieldGuide(x, name, keyValAlts, walkFn, walkOpts),
+              noop = _getFieldGuide.noop,
+              problem = _getFieldGuide.problem,
+              singleMatch = _getFieldGuide.singleMatch,
+              groupMatch = _getFieldGuide.groupMatch;
+
+          if (problem) {
+            problems.push([name, problem]);
+            break fieldLoop; //TODO: improve this;
+          } else if (singleMatch) {
+            guide.singles.push(singleMatch);
+          } else if (groupMatch) {
+            if (groupMatch.matchedKeys.length > 0) {
+              guide.groups.push(groupMatch);
+            }
+          } else if (noop) {} else {
+            throw '!';
+          }
+        }
+      }
     }
   }
 
-  function propsReconstruct(x, walkOpts) {
-    var conform = walkOpts.conform,
-        instrument = walkOpts.instrument,
-        trailblaze = walkOpts.trailblaze;
+  function propsReconstruct(_ref, walkOpts) {
+    var val = _ref.val,
+        singles = _ref.singles,
+        groups = _ref.groups;
 
 
-    if (conform || instrument || trailblaze) {
-      var fieldDefs, keyList;
-      if (reqSpecs) {
-        fieldDefs = reqSpecs.fieldDefs;
-        keyList = reqSpecs.keyList;
-      }
+    var conform = { walkOpts: walkOpts };
 
-      if (!keyConformer) {
-        keyConformer = _genKeyConformer(reqSpecs, optSpecs, walkFn, walkOpts); //lazy
-      }
-      var keyConformedR = keyConformer(x);
+    if (!singles) {
+      debugger;
+    }
+    var instrument = walkOpts.instrument;
 
-      if (isProblem(keyConformedR)) {
-        return keyConformedR;
-      }
-      var problems;
+    var fieldDefs, keyList;
+    if (reqSpecs) {
+      fieldDefs = reqSpecs.fieldDefs;
+      keyList = reqSpecs.keyList;
+    }
+
+    var conformed;
+
+    if (instrument) {
+      conformed = val;
+    } else {
+      conformed = oAssign({}, val);
+    }
+
+    singles.forEach(function (fieldGuide) {
+      restoreField_mut(conformed, fieldGuide, walkFn, walkOpts);
+    });
+
+    groups.forEach(function (_ref2) {
+      var name = _ref2.name,
+          matchedKeys = _ref2.matchedKeys;
 
       if (conform) {
-        problems = [];
-      }
-
-      var conformed;
-
-      if (conform || trailblaze) {
-        conformed = oAssign({}, x);
-      } else if (instrument) {
-        conformed = x;
-      }
-
-      if (fieldDefs) {
-        for (var name in fieldDefs.fields) {
-          if (fieldDefs.fields.hasOwnProperty(name)) {
-            var defs = fieldDefs.fields[name];
-
-            var _parseFieldDef = parseFieldDef(x, name, defs, walkFn, walkOpts),
-                result = _parseFieldDef.result,
-                keysToDel = _parseFieldDef.keysToDel;
-
-            if (isProblem(result)) {
-              if (trailblaze) {
-                return result;
-              } else {
-                problems.push([name, result]);
-              }
-            } else {
-              if (conform) {
-                _deleteKeys(conformed, keysToDel);
-                if (!isUndefined(result)) {
-                  conformed[name] = result;
-                }
-              }
-            }
-          }
-        }
-      }
-
-      var optFieldDefs, optKeyList;
-      if (optSpecs) {
-        optFieldDefs = optSpecs.fieldDefs;
-        optKeyList = optSpecs.keyList;
-      }
-      if (optFieldDefs) {
-        for (var name in optFieldDefs.fields) {
-          if (optFieldDefs.fields.hasOwnProperty(name)) {
-            var defs = optFieldDefs.fields[name];
-
-            var _parseFieldDef2 = parseFieldDef(x, name, defs, walkFn, walkOpts),
-                result = _parseFieldDef2.result,
-                keysToDel = _parseFieldDef2.keysToDel;
-
-            if (isProblem(result)) {
-              if (trailblaze) {
-                return result;
-              } else {
-                problems.push([name, result]);
-              }
-            } else {
-              if (conform) {
-                _deleteKeys(conformed, keysToDel);
-                if (!isUndefined(result)) {
-                  conformed[name] = result;
-                }
-              }
-            }
-          }
-        }
-      }
-
-      if (conform && problems.length > 0) {
-        var problemMap = {};
-        var failedNames = [];
-        for (var i = 0; i < problems.length; i++) {
-          var _problems$i2 = problems[i],
-              n = _problems$i2[0],
-              p = _problems$i2[1];
-
-          failedNames.push(n);
-          problemMap[n] = p;
-        }
-        var newP = new Problem(x, spec, problemMap, 'Some properties failed validation: ' + failedNames.join(', '));
-        // if(newP.subproblems.req && newP.subproblems.req.val.keyList) {
-        //   console.log(JSON.stringify(newP.subproblems, null, 2));
-        //   console.log('-------------------------------------');
-        // }
-        return newP;
+        conformed[name] = {};
+        var keysToDel = [];
+        matchedKeys.forEach(function (fieldGuide) {
+          restoreField_mut(conformed[name], fieldGuide, walkFn, walkOpts);
+          keysToDel.push(fieldGuide.key);
+        });
+        _deleteKeys(conformed, keysToDel);
       } else {
-        return conformed;
+        matchedKeys.forEach(function (fieldGuide) {
+          restoreField_mut(conformed, fieldGuide, walkFn, walkOpts);
+        });
       }
-    } else {
-      throw 'no impl';
-    }
+    });
+
+    return conformed;
   }
+}
+
+function restoreField_mut(x, _ref3, walkFn, walkOpts) {
+  var key = _ref3.key,
+      spec = _ref3.spec,
+      guide = _ref3.guide;
+
+  x[key] = walkFn(spec, guide, walkOpts);
 }
 
 function _genKeyConformer(reqSpecs, optSpec, walkFn, walkOpts) {
@@ -2581,7 +2531,7 @@ function _genKeyConformer(reqSpecs, optSpec, walkFn, walkOpts) {
           found = false;
           for (var kk in x) {
             if (x.hasOwnProperty(kk)) {
-              var rr = _conformNamedOrExpr(kk, fieldDefs.fields[name].keyValExprPair.keySpec, walkFn, walkOpts);
+              var rr = _conformNamedOrExpr(kk, fieldDefs.fields[name].keyValExprPair.keySpecAlts, walkFn, walkOpts);
               if (!isProblem(rr)) {
                 //found a match
                 found = true;
@@ -2611,7 +2561,7 @@ function _deleteKeys(subject, keys) {
   }
 }
 
-function parseFieldDef(x, name, keyValAlts, walkFn, walkOpts) {
+function getFieldGuide(x, name, keyValAlts, walkFn, walkOpts) {
   var valSpecAltsOnly = keyValAlts.valSpecAltsOnly,
       keyValExprPair = keyValAlts.keyValExprPair;
 
@@ -2619,96 +2569,57 @@ function parseFieldDef(x, name, keyValAlts, walkFn, walkOpts) {
   if (keyValExprPair) {
     var matchedKeys = [];
 
-    var keySpec = keyValExprPair.keySpec,
-        valSpec = keyValExprPair.valSpec;
+    var keySpecAlts = keyValExprPair.keySpecAlts,
+        valSpecAlts = keyValExprPair.valSpecAlts;
 
     r = undefined;
-    for (var k in x) {
-      var keyResult = _conformNamedOrExpr(k, keySpec, walkFn, walkOpts);
-      if (x === x[keyResult]) {
-        // single string char case, name = 0
-        continue;
-      }
+    keysExamine: for (var k in x) {
+      var keyResult = _conformNamedOrExpr(k, keySpecAlts, walkFn, walkOpts);
       if (!isProblem(keyResult)) {
-        var rrr = _conformNamedOrExpr(x[keyResult], valSpec, walkFn, walkOpts);
-        if (isProblem(rrr)) {
-          return { problem: rrr }; //TODO: improve
+        if (x === x[k]) {
+          // single string char case, where name = 0 and x = ''
+          continue keysExamine;
+        }
+        var valGuide = _conformNamedOrExpr(x[k], valSpecAlts, walkFn, walkOpts);
+        if (isProblem(valGuide)) {
+          return { problem: valGuide }; //TODO: improve
         } else {
-          matchedKeys.push(keyResult);
+          matchedKeys.push({ key: k, spec: specFromAlts(valSpecAlts), guide: valGuide });
         }
       }
     }
-    return { matchedKeys: matchedKeys };
+    return { groupMatch: { name: name, matchedKeys: matchedKeys } };
   } else if (valSpecAltsOnly) {
-    var valSpec = valSpecAltsOnly;
-    var r = x[name];
-    if (!isUndefined(r) && x[name] !== x) {
+    var v = x[name];
+    if (!isUndefined(v) && x[name] !== x) {
       // single string char case, name = 0
-      r = _conformNamedOrExpr(r, valSpec, walkFn, walkOpts);
-      if (isProblem(r)) {
-        return r;
+      var g = _conformNamedOrExpr(v, valSpecAltsOnly, walkFn, walkOpts);
+      if (isProblem(g)) {
+        return { problem: g };
+      } else {
+        return { singleMatch: { key: name, spec: specFromAlts(valSpecAltsOnly), guide: g } };
       }
+    } else {
+      return { noop: true };
     }
-    return { key: name };
-  }
-}
-
-function restoreFieldDefs(x, name, defs, walkFn, walkOpts) {
-  var valSpecAltsOnly = defs.valSpecAltsOnly,
-      keyValExprPair = defs.keyValExprPair;
-
-  var r;
-  var keysToDel = [];
-  if (keyValExprPair) {
-    var keySpec = keyValExprPair.keySpec,
-        valSpec = keyValExprPair.valSpec;
-
-    r = undefined;
-    for (var k in x) {
-      var rr = _conformNamedOrExpr(k, keySpec, walkFn, walkOpts);
-      if (x === x[rr]) {
-        continue;
-      }
-      if (!isProblem(rr)) {
-        keysToDel.push(rr);
-        var rrr = _conformNamedOrExpr(x[rr], valSpec, walkFn, walkOpts);
-        if (isProblem(rrr)) {
-          return { result: rrr, keysToDel: keysToDel };
-        } else {
-          if (r === undefined) {
-            r = {};
-          }
-          r[k] = rrr;
-        }
-      }
-    }
-  } else if (valSpecAltsOnly) {
-    var valSpec = valSpecAltsOnly;
-    r = x[name];
-    if (!isUndefined(r) && x[name] !== x) {
-      r = _conformNamedOrExpr(r, valSpec, walkFn, walkOpts);
-    }
-  }
-  return { result: r, keysToDel: keysToDel };
-}
-
-function _conformNamedOrExpr(x, nameOrExpr, walkFn, walkOpts) {
-  if (nameOrExpr.spec) {
-    var spec = nameOrExpr.spec;
-    return walkFn(spec, x, walkOpts);
-  } else if (nameOrExpr.pred) {
-    var expr = coerceIntoSpec(nameOrExpr.pred);
-    return walkFn(expr, x, walkOpts);
   } else {
-    console.error(nameOrExpr);
-    throw 'no impl';
+    throw '!!';
   }
+}
+
+function _conformNamedOrExpr(x, alts, walkFn, walkOpts) {
+  if (!alts) {
+    debugger;
+  }
+  var s = specFromAlts(alts);
+  var r = walkFn(s, x, walkOpts);
+  return r;
 }
 
 module.exports = propsWalker;
 
 /***/ },
-/* 52 */
+/* 53 */
 /***/ function(module, exports) {
 
 function specRefWalker(specRef, walkFn) {
@@ -2729,7 +2640,7 @@ function specRefWalker(specRef, walkFn) {
 module.exports = specRefWalker;
 
 /***/ },
-/* 53 */
+/* 54 */
 /***/ function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (root, factory){
@@ -3026,7 +2937,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
 /***/ },
-/* 54 */
+/* 55 */
 /***/ function(module, exports) {
 
 var g;
@@ -3051,15 +2962,15 @@ module.exports = g;
 
 
 /***/ },
-/* 55 */
+/* 56 */
 /***/ function(module, exports, __webpack_require__) {
 
 
 var oAssign = __webpack_require__(4);
-var namespaceFn = __webpack_require__(29);
+var namespaceFn = __webpack_require__(30);
 
 var ops = __webpack_require__(14);
-var utils = __webpack_require__(30);
+var utils = __webpack_require__(31);
 
 var predicates = __webpack_require__(15);
 

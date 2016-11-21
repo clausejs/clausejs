@@ -17,7 +17,6 @@ function nfaWalker(spec, walkFn) {
     if(!nfa) {
       nfa = compile(spec); //lazy
     }
-
     var { chain, matched, lastProblem } = simulate(nfa, x, walkFn, walkOpts);
     if(matched === true) {
       return chain;
