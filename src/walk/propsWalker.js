@@ -77,7 +77,9 @@ function propsWalker(spec, walkFn) {
           } else if(singleMatch) {
             guide.singles.push(singleMatch);
           } else if (groupMatch) {
-            guide.groups.push(groupMatch);
+            if(groupMatch.matchedKeys.length > 0) {
+              guide.groups.push(groupMatch);
+            }
           } else if (noop) {
           } else { throw '!'; }
         }
@@ -113,7 +115,7 @@ function propsWalker(spec, walkFn) {
       var keysToDel = [];
       matchedKeys.forEach(function (fieldGuide) {
         restoreField_mut(conformed[name], fieldGuide, walkFn, walkOpts);
-        keysToDel = fieldGuide.key;
+        keysToDel.push(fieldGuide.key);
       });
       _deleteKeys(conformed, keysToDel);
     });
@@ -154,7 +156,7 @@ function _genKeyConformer(reqSpecs, optSpec, walkFn, walkOpts) {
           found = false;
           for (var kk in x) {
             if(x.hasOwnProperty(kk)) {
-              var rr = _conformNamedOrExpr(kk, fieldDefs.fields[name].keyValExprPair.keySpec, walkFn, walkOpts);
+              var rr = _conformNamedOrExpr(kk, fieldDefs.fields[name].keyValExprPair.keySpecAlts, walkFn, walkOpts);
               if(!isProblem(rr)) { //found a match
                 found = true;
                 break;
@@ -189,10 +191,10 @@ function getFieldGuide(x, name, keyValAlts, walkFn, walkOpts) {
   if(keyValExprPair) {
     var matchedKeys = [];
 
-    var { keySpec, valSpecAlts } = keyValExprPair;
+    var { keySpecAlts, valSpecAlts } = keyValExprPair;
     r = undefined;
     keysExamine: for (var k in x) {
-      var keyResult =_conformNamedOrExpr(k, keySpec, walkFn, walkOpts);
+      var keyResult =_conformNamedOrExpr(k, keySpecAlts, walkFn, walkOpts);
       if(!isProblem(keyResult)) {
         if(x === x[k]) { // single string char case, where name = 0 and x = ''
           continue keysExamine;

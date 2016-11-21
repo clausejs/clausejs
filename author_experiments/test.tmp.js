@@ -5,7 +5,41 @@ var S = s;
 
 console.log(s);
 
-var fnList = ['props', 'isValid', 'conform', 'fspec', 'isObj', 'isFn'];
+function startWithOo(key) {
+  return key.indexOf('oo') === 0;
+}
+
+var ObjSpec = S.props({
+  req: {
+    'title': s.isStr,
+    'userId': s.isNum,
+  },
+  opt: {
+    'content': s.isStr,
+    'ooProps': [startWithOo, S.props({
+      req: {
+        'val': s.isNum,
+      },
+    })],
+  },
+});
+
+var conformed1 = { title: 'Do it', content: 'blah', userId: 2 };
+var conformed2 = { title: 'Do it', content: 'blah', userId: 2, ooA: {val: 1}, ooB: {val: 2}, ooC: {val: 3} };
+var unconformed1 = { content: false, userId: 2 };
+var unconformed2 = { title: 'Do it', content: false, userId: 'wrong' };
+var unconformed3 = { title:  1234, content: null, userId: 2 };
+var unconformed4 = { title: 'Do it', content: false, userId: 'wrong', unknownField: 2 };
+
+ObjSpec.conform(conformed1);
+ObjSpec.conform(unconformed1);
+console.log(ObjSpec.conform(conformed2));
+
+ObjSpec.conform(unconformed2);
+ObjSpec.conform(unconformed3);
+ObjSpec.conform(unconformed4);
+
+// var fnList = ['props', 'isValid', 'conform', 'fspec', 'isObj', 'isFn'];
 
 // var SpecObj = S.keys({req: fnList});
 // var InsaneSpecObj = S.keys({req: fnList.concat(['voodooooooooo'])});

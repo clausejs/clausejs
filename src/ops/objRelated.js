@@ -21,7 +21,7 @@ var FieldDefs = propsOp({
           'fields':
           {
             keyValExprPair: {
-              keySpec: {
+              keySpecAlts: {
                 spec: coerceIntoSpec(isStr),
               },
               valSpecAlts: {
