@@ -64,7 +64,7 @@ function propsWalker(spec, walkFn) {
         failedNames.push(n);
         problemMap[n] = p;
       }
-      var newP = new Problem(x, spec, problemMap, 'Some properties failed validation: ' + failedNames.join(', '));
+      var newP = new Problem(x, spec, problemMap, 'At least one property failed validation: ' + failedNames.join(', '));
       // if(newP.subproblems.req && newP.subproblems.req.val.keyList) {
       //   console.log(JSON.stringify(newP.subproblems, null, 2));
       //   console.log('-------------------------------------');

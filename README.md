@@ -12,8 +12,8 @@ A powerful & highly flexible JavaScript data validation and conformation library
 
 ## Performance
 
-- 8.8kb minified & gzipped
-- Extremely fast in handling complex Specs
+- `8.8 kb` minified & gzipped
+- Highly performant in handling both simple and complex Specs
 
 ## Why
 
