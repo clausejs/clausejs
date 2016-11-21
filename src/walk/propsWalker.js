@@ -7,7 +7,15 @@ var specFromAlts = require('../utils/specFromAlts');
 
 function propsWalker(spec, walkFn) {
   var keyConformer;
-  var {req: reqSpecs, opt: optSpecs} = spec.exprs[0].propArgs;
+  var { requiredFields, optionalFields } = spec.exprs[0].propArgs;
+
+  var reqSpecs, optSpecs;
+  if(requiredFields) {
+    reqSpecs = requiredFields.req || requiredFields.required;
+  }
+  if(optionalFields) {
+    optSpecs = optionalFields.opt || optionalFields.optional;
+  }
 
   return {
     trailblaze: propsTrailblaze,

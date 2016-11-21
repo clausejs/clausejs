@@ -1,8 +1,8 @@
 {
-  "name": "specky",
-  "version": "0.0.5",
+  "name": "specky-src",
+  "version": "0.0.6",
+  "private": true,
   "description": "A powerful & flexible validation and conformation library for your JavaScript data and functions.",
-  "main": "packages/specky/dist/specky.js",
   "scripts": {
     "dev": "npm run test:watch",
     "test": "mocha --compilers js:babel-register",

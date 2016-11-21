@@ -4,6 +4,7 @@ var isInt = require('./isInt');
 var isBool = require('./isBool');
 var isFn = require('./isFn');
 var isObj = require('./isObj');
+var equals = require('./equals');
 var isStr = require('./isStr');
 var isArray = Array.isArray;
 
@@ -19,4 +20,5 @@ module.exports = {
   isObj, isObject: isObj,
   isStr, isString: isStr,
   isArray,
+  equals,
 };

@@ -9,11 +9,11 @@ function Problem(val, failsPredicate, subproblems, msg) {
   this.name = 'Problem';
   this.failsPredicate = failsPredicate;
   this.problemMessage = msg;
-  this.stack = (new Error()).stack;
+  // this.stack = (new Error()).stack;
   this.message = msg;
   this.subproblems = subproblems;
 };
 
-Problem.prototype = new Error;
+// Problem.prototype = new Error;
 
 module.exports = Problem;

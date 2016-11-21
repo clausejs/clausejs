@@ -2,6 +2,7 @@ var Spec = require('../models/Spec');
 var isSpec = require('../utils/isSpec');
 var isStr = require('../preds/isStr');
 var isFn = require('../preds/isFn');
+var equals = require('../preds/equals');
 var coerceIntoSpec = require('../utils/coerceIntoSpec');
 var { cat, or, zeroOrMore, ExprSpec } = require('./core');
 var walk = require('../walk');
@@ -15,26 +16,28 @@ var TYPE_PROPS = 'PROPS';
 
 var FieldDefs = propsOp({
   propArgs: {
-    opt: {
-      fieldDefs: {
-        fields: {
-          'fields':
-          {
-            keyValExprPair: {
-              keySpecAlts: {
-                spec: coerceIntoSpec(isStr),
-              },
-              valSpecAlts: {
-                spec: or(
-                  'valSpecAltsOnly', ExprSpec,
-                  'keyValExprPair', cat(
-                    'keySpecAlts', ExprSpec,
-                    'valSpecAlts', ExprSpec
+    optionalFields: {
+      opt: {
+        fieldDefs: {
+          fields: {
+            'fields':
+            {
+              keyValExprPair: {
+                keySpecAlts: {
+                  spec: coerceIntoSpec(isStr),
+                },
+                valSpecAlts: {
+                  spec: or(
+                    'valSpecAltsOnly', ExprSpec,
+                    'keyValExprPair', cat(
+                      'keySpecAlts', ExprSpec,
+                      'valSpecAlts', ExprSpec
+                    )
                   )
-                )
-              },
-            }
-          },
+                },
+              }
+            },
+          }
         }
       }
     },
@@ -46,11 +49,31 @@ var KeyArrayOrFieldDefs = or('keyList', KeyOnlyArray, 'fieldDefs', FieldDefs);
 
 var PropArgs = propsOp({
   propArgs: {
-    opt: {
-      fieldDefs: {
-        fields: {
-          'req': { valSpecAltsOnly: { spec: KeyArrayOrFieldDefs } },
-          'opt': { valSpecAltsOnly: { spec: KeyArrayOrFieldDefs } },
+    optionalFields: {
+      opt: {
+        fieldDefs: {
+          fields: {
+            'requiredFields': {
+              keyValExprPair: {
+                keySpecAlts: {
+                  spec: or(equals('req'), equals('required')),
+                },
+                valSpecAlts: {
+                  spec: KeyArrayOrFieldDefs
+                },
+              },
+            },
+            'optionalFields': {
+              keyValExprPair: {
+                keySpecAlts: {
+                  spec: or(equals('opt'), equals('optional')),
+                },
+                valSpecAlts: {
+                  spec: KeyArrayOrFieldDefs
+                },
+              },
+            },
+          }
         }
       }
     },
@@ -90,6 +113,6 @@ module.exports = {
 //     }
 //   }
 // });
-//
+// //
 // var r = TestSpec.conform({a: 's'});
 // console.log(r);

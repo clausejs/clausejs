@@ -10,6 +10,11 @@ A powerful & highly flexible JavaScript data validation and conformation library
 - Conform your data with a range of available shapes of specs
 - Automatically generate test cases for your spec'ed functions
 
+## Performance
+
+- 8.8kb minified & gzipped
+- Extremely fast in handling complex Specs
+
 ## Why
 
 - A complement/alternative to unit testing
