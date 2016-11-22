@@ -1107,6 +1107,7 @@ function _getUnchecked(ref) {
 
   var sr = new SpecRef({ ref: ref, getFn: getFn, null: null });
   sr.conform = function specRefConform(x) {
+    var ss = getFn();
     return walk(ss, x, { conform: true });
   };
   return sr;
@@ -2709,7 +2710,7 @@ function specRefWalker(specRef, walkFn) {
   function walkSpecRef(x, walkOpts) {
     var s = specRef.get();
     if (s) {
-      return walkFn(ss, x, walkOpts);
+      return walkFn(s, x, walkOpts);
     }
   }
 }
