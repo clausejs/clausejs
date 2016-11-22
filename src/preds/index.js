@@ -6,7 +6,7 @@ var isFn = require('./isFn');
 var isObj = require('./isObj');
 var equals = require('./equals');
 var isStr = require('./isStr');
-var isDate = rquire('./isDate');
+var isDate = require('./isDate');
 var isArray = Array.isArray;
 
 module.exports = {
