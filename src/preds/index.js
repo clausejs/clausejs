@@ -6,6 +6,7 @@ var isFn = require('./isFn');
 var isObj = require('./isObj');
 var equals = require('./equals');
 var isStr = require('./isStr');
+var isDate = rquire('./isDate');
 var isArray = Array.isArray;
 
 module.exports = {
@@ -19,6 +20,7 @@ module.exports = {
   isInt, isInteger: isInt,
   isObj, isObject: isObj,
   isStr, isString: isStr,
-  isArray,
-  equals,
+  isArray, isArr: isArray,
+  equals, equalsTo: equals,
+  isDate,
 };

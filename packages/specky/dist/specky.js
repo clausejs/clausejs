@@ -751,6 +751,7 @@ var isFn = __webpack_require__(12);
 var isObj = __webpack_require__(22);
 var equals = __webpack_require__(39);
 var isStr = __webpack_require__(6);
+var isDate = rquire('./isDate');
 var isArray = Array.isArray;
 
 module.exports = {
@@ -764,8 +765,9 @@ module.exports = {
   isInt: isInt, isInteger: isInt,
   isObj: isObj, isObject: isObj,
   isStr: isStr, isString: isStr,
-  isArray: isArray,
-  equals: equals
+  isArray: isArray, isArr: isArray,
+  equals: equals, equalsTo: equals,
+  isDate: isDate
 };
 
 /***/ },
