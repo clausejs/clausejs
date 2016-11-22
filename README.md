@@ -49,12 +49,13 @@ Or in the `<head>` or `<body>` tag of your HTML:
 - [Codebreaker game](examples/codebreaker/index.js)
 - In addition, there are plenty of examples in test files under [`/test`](test/).
 
-## Planned feature
+## Planned Features
 
 Coming soon.
 
 - `specky-gen`: Generative/Property-based Testing
 - `specky-docgen`: Automatic documentation generation based on function specs
+- `specky-react`: Specky integration for React. A more powerful drop-in replacement for `React.PropTypes`
 
 ## Run tests
 
