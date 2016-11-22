@@ -1,5 +1,5 @@
 var oAssign = require('object-assign');
-var core = require('./core');
+var regex = require('./regex');
 var { props, keys } = require('./objRelated');
 
 var other = {
@@ -8,6 +8,6 @@ var other = {
   fspec: require('./fspec'),
 };
 
-var r = oAssign({}, core, { props, keys }, other);
+var r = oAssign({}, regex, { props, keys }, other);
 
 module.exports = r;

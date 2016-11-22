@@ -699,7 +699,7 @@ module.exports = functionName;
 /***/ function(module, exports, __webpack_require__) {
 
 var oAssign = __webpack_require__(4);
-var core = __webpack_require__(11);
+var regex = __webpack_require__(11);
 
 var _require = __webpack_require__(18),
     props = _require.props,
@@ -711,7 +711,7 @@ var other = {
   fspec: __webpack_require__(8)
 };
 
-var r = oAssign({}, core, { props: props, keys: keys }, other);
+var r = oAssign({}, regex, { props: props, keys: keys }, other);
 
 module.exports = r;
 

@@ -4,7 +4,7 @@ var isSpec = require('../utils/isSpec');
 var isProblem = require('../utils/isProblem');
 var Spec = require('../models/Spec');
 var Problem = require('../models/Problem');
-var {oneOrMore, zeroOrOne, or, cat} = require('./core');
+var { oneOrMore, zeroOrOne, or, cat } = require('./regex');
 var fspec = require('./fspec');
 
 var AndSpec = fspec({

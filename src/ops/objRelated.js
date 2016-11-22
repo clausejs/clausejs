@@ -4,7 +4,7 @@ var isStr = require('../preds/isStr');
 var isFn = require('../preds/isFn');
 var oneOf = require('../preds/oneOf');
 var coerceIntoSpec = require('../utils/coerceIntoSpec');
-var { cat, or, zeroOrMore, ExprSpec } = require('./core');
+var { cat, or, zeroOrMore, ExprSpec } = require('./regex');
 var walk = require('../walk');
 var fspec = require('./fspec');
 
