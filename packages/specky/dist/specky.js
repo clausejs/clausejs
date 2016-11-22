@@ -317,35 +317,6 @@ module.exports = isPred;
 /* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
-var Spec = __webpack_require__(1);
-var walk = __webpack_require__(10);
-
-function fspec(fnSpec) {
-  var spec = new Spec('FSPEC', [], fnSpec, null, null);
-  spec.instrumentConformed = function instrumentConformed(fn) {
-    return walk(spec, fn, { conform: true, instrument: true });
-  };
-  spec.instrument = function instrument(fn) {
-    return walk(spec, fn, { conform: false, instrument: true });
-  };
-
-  return spec;
-};
-
-module.exports = fspec;
-
-/***/ },
-/* 9 */
-/***/ function(module, exports) {
-
-module.exports = function (x) {
-  return x === undefined;
-};
-
-/***/ },
-/* 10 */
-/***/ function(module, exports, __webpack_require__) {
-
 var oAssign = __webpack_require__(4);
 var nfaWalker = __webpack_require__(52);
 var predWalker = __webpack_require__(53);
@@ -413,6 +384,35 @@ function _getWalker(expr) {
 module.exports = walk;
 
 /***/ },
+/* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+var Spec = __webpack_require__(1);
+var walk = __webpack_require__(8);
+
+function fspec(fnSpec) {
+  var spec = new Spec('FSPEC', [], fnSpec, null, null);
+  spec.instrumentConformed = function instrumentConformed(fn) {
+    return walk(spec, fn, { conform: true, instrument: true });
+  };
+  spec.instrument = function instrument(fn) {
+    return walk(spec, fn, { conform: false, instrument: true });
+  };
+
+  return spec;
+};
+
+module.exports = fspec;
+
+/***/ },
+/* 10 */
+/***/ function(module, exports) {
+
+module.exports = function (x) {
+  return x === undefined;
+};
+
+/***/ },
 /* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -430,8 +430,8 @@ var isSpecRef = __webpack_require__(27);
 var isDelayedSpec = __webpack_require__(25);
 var c = __webpack_require__(34);
 var coerceIntoSpec = __webpack_require__(5);
-var fspec = __webpack_require__(8);
-var walk = __webpack_require__(10);
+var fspec = __webpack_require__(9);
+var walk = __webpack_require__(8);
 var specSpec = coerceIntoSpec(isSpec);
 var nameSpec = coerceIntoSpec(isSpecName);
 
@@ -708,7 +708,7 @@ var _require = __webpack_require__(16),
 var other = {
   and: __webpack_require__(32),
   any: __webpack_require__(33),
-  fspec: __webpack_require__(8)
+  fspec: __webpack_require__(9)
 };
 
 var r = oAssign({}, regex, { props: props, keys: keys }, other);
@@ -731,7 +731,7 @@ var isArray = Array.isArray;
 
 module.exports = {
   isNull: __webpack_require__(42),
-  isUndefined: __webpack_require__(9),
+  isUndefined: __webpack_require__(10),
   notEmpty: __webpack_require__(43),
   isBool: isBool, isBoolean: isBool,
   isFn: isFn, isFunction: isFn,
@@ -761,8 +761,8 @@ var _require = __webpack_require__(11),
     zeroOrMore = _require.zeroOrMore,
     ExprSpec = _require.ExprSpec;
 
-var walk = __webpack_require__(10);
-var fspec = __webpack_require__(8);
+var walk = __webpack_require__(8);
+var fspec = __webpack_require__(9);
 
 function isPropName(x) {
   return isStr(x);
@@ -1073,8 +1073,8 @@ var isSpec = __webpack_require__(3);
 var isPred = __webpack_require__(7);
 var isStr = __webpack_require__(6);
 var isExpr = __webpack_require__(26);
-var isUndefined = __webpack_require__(9);
-var walk = __webpack_require__(10);
+var isUndefined = __webpack_require__(10);
+var walk = __webpack_require__(8);
 var delayed = __webpack_require__(23);
 
 var reg;
@@ -1237,7 +1237,8 @@ var _require2 = __webpack_require__(11),
     or = _require2.or,
     cat = _require2.cat;
 
-var fspec = __webpack_require__(8);
+var fspec = __webpack_require__(9);
+var walk = __webpack_require__(8);
 
 var AndSpec = fspec({
   args: cat('exprs', oneOrMore(isExpr), 'walker', zeroOrOne(isFn)),
@@ -1249,8 +1250,8 @@ function andOp(conformedArgs) {
 
 
   var andS = new Spec('AND', exprs, null, null, null);
-  andS.conform = function andWalk(x, opts) {
-    walk(andS, x, opts);
+  andS.conform = function andConform(x) {
+    return walk(andS, x, { conform: true });
   };
   return andS;
 }
@@ -1594,7 +1595,7 @@ module.exports = build;
 
 var oAssign = __webpack_require__(4);
 var Problem = __webpack_require__(0);
-var isUndefined = __webpack_require__(9);
+var isUndefined = __webpack_require__(10);
 
 var FOLD = function FOLD() {};
 var ENTER = function ENTER() {};
@@ -2392,7 +2393,7 @@ module.exports = predWalker;
 /***/ function(module, exports, __webpack_require__) {
 
 var isProblem = __webpack_require__(2);
-var isUndefined = __webpack_require__(9);
+var isUndefined = __webpack_require__(10);
 var oAssign = __webpack_require__(4);
 var Problem = __webpack_require__(0);
 var coerceIntoSpec = __webpack_require__(5);
