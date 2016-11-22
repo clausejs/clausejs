@@ -1,5 +1,5 @@
 var oPath = require('object-path');
-
+var oAssign = require('object-assign');
 var SpecRef = require('../models/SpecRef');
 var { cat, or, fspec, ExprSpec } = require('../core');
 var { props } = require('../core/objRelated');
@@ -26,11 +26,12 @@ function _getUnchecked(ref) {
   var getFn = function(prefix) {
     var path = reg;
     if(prefix) {
-      path = prefix + reg;
+      path = prefix + ref;
     } else {
-      path = reg;
+      path = ref;
     }
-    var nObj = oPath.get(path, ref);
+    var nObj = oPath.get(reg, path);
+
     if (nObj) {
       return nObj.expr;
     } else {
@@ -119,7 +120,8 @@ var _set = fspec({
   ret: isUndefined,
 }).instrument(function _set(n, nObj) {
   _maybeInitRegistry();
-  oPath.set(reg, n, nObj);
+  var existing = oPath.get(reg, n);
+  oPath.set(reg, n, oAssign({}, existing, nObj));
 });
 
 var K = '___SPECKY_REGISTRY';

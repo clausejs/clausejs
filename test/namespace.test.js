@@ -6,15 +6,20 @@ var isPred = require('../src/utils/isPred');
 
 describe('namespace', function() {
 
-  afterEach(function () {
-    //TODO: clear registry
-    s.clearRegistry();
-  });
+  beforeEach(s.clearRegistry);
+  afterEach(s.clearRegistry);
 
   describe('simple defs and gets', function() {
     it('should def and get', function() {
-      s('xyz.superapp.item', s.and(s.isObj, s.props({req: ['title', 'content']})));
       s('xyz.superapp.item.title', s.isStr);
+      s('xyz.superapp.item', s.and(
+        s.isObj,
+        s.props({
+          required: {
+            title: (s('xyz.superapp.item.title')),
+            content: s.isStr,
+          }
+      })));
 
       expect(isSpec(s('xyz.superapp.item').get())).to.be.true;
       expect(isPred(s('xyz.superapp.item.title').get())).to.be.true;

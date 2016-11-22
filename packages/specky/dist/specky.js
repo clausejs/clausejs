@@ -145,22 +145,6 @@ module.exports = isProblem;
 
 /***/ },
 /* 3 */
-/***/ function(module, exports, __webpack_require__) {
-
-var Spec = __webpack_require__(1);
-
-function isSpec(x) {
-  if (!x) {
-    return false;
-  } else {
-    return x instanceof Spec;
-  }
-}
-
-module.exports = isSpec;
-
-/***/ },
-/* 4 */
 /***/ function(module, exports) {
 
 "use strict";
@@ -250,11 +234,27 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 
 /***/ },
+/* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+var Spec = __webpack_require__(1);
+
+function isSpec(x) {
+  if (!x) {
+    return false;
+  } else {
+    return x instanceof Spec;
+  }
+}
+
+module.exports = isSpec;
+
+/***/ },
 /* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 var isPred = __webpack_require__(7);
-var isSpec = __webpack_require__(3);
+var isSpec = __webpack_require__(4);
 var isSpecRef = __webpack_require__(27);
 var isDelayedSpec = __webpack_require__(25);
 var Spec = __webpack_require__(1);
@@ -317,7 +317,7 @@ module.exports = isPred;
 /* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
-var oAssign = __webpack_require__(4);
+var oAssign = __webpack_require__(3);
 var nfaWalker = __webpack_require__(52);
 var predWalker = __webpack_require__(53);
 var fspecWalker = __webpack_require__(51);
@@ -416,10 +416,10 @@ module.exports = function (x) {
 /* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
-var oAssign = __webpack_require__(4);
+var oAssign = __webpack_require__(3);
 
 var Spec = __webpack_require__(1);
-var isSpec = __webpack_require__(3);
+var isSpec = __webpack_require__(4);
 var isPred = __webpack_require__(7);
 var specFromAlts = __webpack_require__(29);
 var isObj = __webpack_require__(21);
@@ -698,7 +698,7 @@ module.exports = functionName;
 /* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
-var oAssign = __webpack_require__(4);
+var oAssign = __webpack_require__(3);
 var regex = __webpack_require__(11);
 
 var _require = __webpack_require__(16),
@@ -749,7 +749,7 @@ module.exports = {
 /***/ function(module, exports, __webpack_require__) {
 
 var Spec = __webpack_require__(1);
-var isSpec = __webpack_require__(3);
+var isSpec = __webpack_require__(4);
 var isStr = __webpack_require__(6);
 var isFn = __webpack_require__(12);
 var oneOf = __webpack_require__(44);
@@ -944,7 +944,7 @@ module.exports = isObject;
 /* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
-var isSpec = __webpack_require__(3);
+var isSpec = __webpack_require__(4);
 
 function conform(spec, x) {
   if (spec && isSpec(spec)) {
@@ -995,7 +995,7 @@ module.exports = function isSpecRef(x) {
 /***/ function(module, exports, __webpack_require__) {
 
 var isPred = __webpack_require__(7);
-var isSpec = __webpack_require__(3);
+var isSpec = __webpack_require__(4);
 
 function isExpr(x) {
   return isPred(x) || isSpec(x);
@@ -1057,7 +1057,7 @@ module.exports = function specFromAlts(alts) {
 /***/ function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var oPath = __webpack_require__(56);
-
+var oAssign = __webpack_require__(3);
 var SpecRef = __webpack_require__(18);
 
 var _require = __webpack_require__(14),
@@ -1069,7 +1069,7 @@ var _require = __webpack_require__(14),
 var _require2 = __webpack_require__(16),
     props = _require2.props;
 
-var isSpec = __webpack_require__(3);
+var isSpec = __webpack_require__(4);
 var isPred = __webpack_require__(7);
 var isStr = __webpack_require__(6);
 var isExpr = __webpack_require__(26);
@@ -1092,11 +1092,12 @@ function _getUnchecked(ref) {
   var getFn = function getFn(prefix) {
     var path = reg;
     if (prefix) {
-      path = prefix + reg;
+      path = prefix + ref;
     } else {
-      path = reg;
+      path = ref;
     }
-    var nObj = oPath.get(path, ref);
+    var nObj = oPath.get(reg, path);
+
     if (nObj) {
       return nObj.expr;
     } else {
@@ -1181,7 +1182,8 @@ var _set = fspec({
   ret: isUndefined
 }).instrument(function _set(n, nObj) {
   _maybeInitRegistry();
-  oPath.set(reg, n, nObj);
+  var existing = oPath.get(reg, n);
+  oPath.set(reg, n, oAssign({}, existing, nObj));
 });
 
 var K = '___SPECKY_REGISTRY';
@@ -1226,7 +1228,7 @@ var _require = __webpack_require__(15),
     isFn = _require.isFn;
 
 var isExpr = __webpack_require__(26);
-var isSpec = __webpack_require__(3);
+var isSpec = __webpack_require__(4);
 var isProblem = __webpack_require__(2);
 var Spec = __webpack_require__(1);
 var Problem = __webpack_require__(0);
@@ -1593,7 +1595,7 @@ module.exports = build;
 /* 37 */
 /***/ function(module, exports, __webpack_require__) {
 
-var oAssign = __webpack_require__(4);
+var oAssign = __webpack_require__(3);
 var Problem = __webpack_require__(0);
 var isUndefined = __webpack_require__(10);
 
@@ -2014,7 +2016,7 @@ module.exports = function isSpecName(x) {
 var Problem = __webpack_require__(0);
 var isProblem = __webpack_require__(2);
 var isPred = __webpack_require__(7);
-var isSpec = __webpack_require__(3);
+var isSpec = __webpack_require__(4);
 var conform = __webpack_require__(22);
 
 function isValid(pred, x) {
@@ -2182,7 +2184,7 @@ var Problem = __webpack_require__(0);
 var functionName = __webpack_require__(13);
 var namedFn = __webpack_require__(28);
 var betterThrow = __webpack_require__(45);
-var oAssign = __webpack_require__(4);
+var oAssign = __webpack_require__(3);
 
 function fspecWalker(spec, walkFn) {
   var _spec$opts = spec.opts,
@@ -2394,7 +2396,7 @@ module.exports = predWalker;
 
 var isProblem = __webpack_require__(2);
 var isUndefined = __webpack_require__(10);
-var oAssign = __webpack_require__(4);
+var oAssign = __webpack_require__(3);
 var Problem = __webpack_require__(0);
 var coerceIntoSpec = __webpack_require__(5);
 var specFromAlts = __webpack_require__(29);
@@ -2704,12 +2706,12 @@ function specRefWalker(specRef, walkFn) {
     reconstruct: walkSpecRef
   };
 
-  return function walkSpecRef(x, walkOpts) {
+  function walkSpecRef(x, walkOpts) {
     var s = specRef.get();
     if (s) {
       return walkFn(ss, x, walkOpts);
     }
-  };
+  }
 }
 
 module.exports = specRefWalker;
@@ -3041,7 +3043,7 @@ module.exports = g;
 /***/ function(module, exports, __webpack_require__) {
 
 
-var oAssign = __webpack_require__(4);
+var oAssign = __webpack_require__(3);
 var namespaceFn = __webpack_require__(30);
 
 var ops = __webpack_require__(14);
