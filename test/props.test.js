@@ -22,6 +22,22 @@ describe('props', function() {
     expect(ObjSpec.conform(unconformed1)).to.be.an.instanceof(Problem);
   });
 
+  it('single val specs', () => {
+    var ObjSpec = props({
+      required: {
+        a: s.isStr,
+        b: s.any,
+        c: s.isNum,
+      },
+    });
+    var conformed1 = { a: '', b: null, c: 2 };
+    var conformed2 = { a: '', b: null, c: 2 };
+    var unconformed1 = { a: '', c: 2 };
+
+    expect(ObjSpec.conform(conformed1)).to.deep.equal(conformed1);
+    expect(ObjSpec.conform(conformed2)).to.deep.equal(conformed2);
+    expect(ObjSpec.conform(unconformed1)).to.be.an.instanceof(Problem);
+  });
 
   it('key val verify', function() {
     var ObjSpec1 = props({

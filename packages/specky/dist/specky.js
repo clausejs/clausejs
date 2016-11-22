@@ -2562,8 +2562,8 @@ function restoreField_mut(x, _ref3, walkFn, walkOpts) {
 function _genKeyConformer(reqSpecs, optSpec, walkFn, walkOpts) {
   return function tryConformKeys(x) {
     if (reqSpecs) {
-      var reqProblems = [];
-      var found;
+      var reqProblems = [],
+          missingKeys = [];
       var fieldDefs = reqSpecs.fieldDefs,
           keyList = reqSpecs.keyList;
 
@@ -2584,29 +2584,45 @@ function _genKeyConformer(reqSpecs, optSpec, walkFn, walkOpts) {
 
       for (var i = 0; i < reqNames.length; i++) {
         var name = reqNames[i];
-        found = undefined;
         if (fieldDefs && fieldDefs.fields[name].keyValExprPair) {
           //key spec
-          found = false;
-          for (var kk in x) {
+          var found = false;
+          keyTrav: for (var kk in x) {
             if (x.hasOwnProperty(kk)) {
               var rr = _conformNamedOrExpr(kk, fieldDefs.fields[name].keyValExprPair.keySpecAlts, walkFn, walkOpts);
               if (!isProblem(rr)) {
                 //found a match
                 found = true;
-                break;
+                break keyTrav;
               }
             }
+          }
+          if (!found) {
+            missingKeys.push(name);
+          }
+        } else if (fieldDefs && fieldDefs.fields[name].valSpecAltsOnly) {
+          //key spec
+          if (x.hasOwnProperty(name)) {
+            var rr = _conformNamedOrExpr(x[name], fieldDefs.fields[name].valSpecAltsOnly, walkFn, walkOpts);
+            if (isProblem(rr)) {
+              //found a match
+              reqProblems.push(rr);
+              missingKeys.push(name);
+            }
+          } else {
+            missingKeys.push(name);
           }
         } else if (keyList) {
           //plain string key
           if (x[name] === undefined) {
-            reqProblems.push(name);
+            missingKeys.push(name);
           }
         }
       }
-      if (reqProblems.length > 0 || found === false) {
-        return new Problem(x, reqSpecs, [], 'req: keys required: ' + reqProblems.join(', '));
+      if (missingKeys.length > 0) {
+        return new Problem(x, reqSpecs, reqProblems, 'req: keys required: ' + missingKeys.join(', '));
+      } else if (reqProblems.length > 0) {
+        return new Problem(x, reqSpecs, reqProblems, 'req: validation failed for the following keys: ' + missingKeys.join(', '));
       }
     }
 
