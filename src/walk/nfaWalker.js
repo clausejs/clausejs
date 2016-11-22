@@ -1,6 +1,6 @@
-var simulate = require('../ops/nfa/simulate');
-var getMatch = require('../ops/nfa/getMatch')
-var compile = require('../ops/nfa/compile');
+var simulate = require('../core/nfa/simulate');
+var getMatch = require('../core/nfa/getMatch')
+var compile = require('../core/nfa/compile');
 var Problem = require('../models/Problem');
 var isProblem = require('../utils/isProblem');
 

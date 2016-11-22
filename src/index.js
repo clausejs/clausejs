@@ -2,7 +2,7 @@
 var oAssign = require('object-assign');
 var namespaceFn = require('./namespace');
 
-var ops = require('./ops');
+var ops = require('./core');
 var utils = require('./utils');
 
 var predicates = require('./preds');

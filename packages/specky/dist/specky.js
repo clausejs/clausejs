@@ -701,7 +701,7 @@ module.exports = functionName;
 var oAssign = __webpack_require__(4);
 var regex = __webpack_require__(11);
 
-var _require = __webpack_require__(18),
+var _require = __webpack_require__(16),
     props = _require.props,
     keys = _require.keys;
 
@@ -746,44 +746,6 @@ module.exports = {
 
 /***/ },
 /* 16 */
-/***/ function(module, exports) {
-
-function DelayedSpec(_ref) {
-  var getFn = _ref.getFn;
-
-  this.type = 'Delayed';
-  this.get = getFn;
-  var _this = this;
-
-  ['conform', 'instrument'].forEach(function (mName) {
-    _this[mName] = function (x) {
-      var Spec = getFn();
-      return Spec[mName].call(this, x);
-    };
-  });
-}
-
-module.exports = DelayedSpec;
-
-/***/ },
-/* 17 */
-/***/ function(module, exports) {
-
-function SpecRef(_ref) {
-  var ref = _ref.ref,
-      getFn = _ref.getFn,
-      conformFn = _ref.conformFn;
-
-  this.type = 'SpecRef';
-  this.get = getFn;
-  this.conform = conformFn;
-  this.ref = ref;
-}
-
-module.exports = SpecRef;
-
-/***/ },
-/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 var Spec = __webpack_require__(1);
@@ -905,6 +867,44 @@ module.exports = {
 // console.log(r);
 
 /***/ },
+/* 17 */
+/***/ function(module, exports) {
+
+function DelayedSpec(_ref) {
+  var getFn = _ref.getFn;
+
+  this.type = 'Delayed';
+  this.get = getFn;
+  var _this = this;
+
+  ['conform', 'instrument'].forEach(function (mName) {
+    _this[mName] = function (x) {
+      var Spec = getFn();
+      return Spec[mName].call(this, x);
+    };
+  });
+}
+
+module.exports = DelayedSpec;
+
+/***/ },
+/* 18 */
+/***/ function(module, exports) {
+
+function SpecRef(_ref) {
+  var ref = _ref.ref,
+      getFn = _ref.getFn,
+      conformFn = _ref.conformFn;
+
+  this.type = 'SpecRef';
+  this.get = getFn;
+  this.conform = conformFn;
+  this.ref = ref;
+}
+
+module.exports = SpecRef;
+
+/***/ },
 /* 19 */
 /***/ function(module, exports) {
 
@@ -961,7 +961,7 @@ module.exports = conform;
 /* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
-var DelayedSpec = __webpack_require__(16);
+var DelayedSpec = __webpack_require__(17);
 
 function delayed(getFn) {
   return new DelayedSpec({ getFn: getFn });
@@ -983,7 +983,7 @@ module.exports = identity;
 /* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
-var DelayedSpec = __webpack_require__(16);
+var DelayedSpec = __webpack_require__(17);
 
 //TODO
 module.exports = function isSpecRef(x) {
@@ -1007,7 +1007,7 @@ module.exports = isExpr;
 /* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
-var SpecRef = __webpack_require__(17);
+var SpecRef = __webpack_require__(18);
 
 //TODO
 module.exports = function isSpecRef(x) {
@@ -1058,7 +1058,7 @@ module.exports = function specFromAlts(alts) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var oPath = __webpack_require__(56);
 
-var SpecRef = __webpack_require__(17);
+var SpecRef = __webpack_require__(18);
 
 var _require = __webpack_require__(14),
     cat = _require.cat,
@@ -1066,7 +1066,7 @@ var _require = __webpack_require__(14),
     fspec = _require.fspec,
     ExprSpec = _require.ExprSpec;
 
-var _require2 = __webpack_require__(18),
+var _require2 = __webpack_require__(16),
     props = _require2.props;
 
 var isSpec = __webpack_require__(3);

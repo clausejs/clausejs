@@ -1,8 +1,8 @@
 var oPath = require('object-path');
 
 var SpecRef = require('../models/SpecRef');
-var { cat, or, fspec, ExprSpec } = require('../ops');
-var { props } = require('../ops/objRelated');
+var { cat, or, fspec, ExprSpec } = require('../core');
+var { props } = require('../core/objRelated');
 var isSpec = require('../utils/isSpec');
 var isPred = require('../utils/isPred');
 var isStr = require('../preds/isStr');
