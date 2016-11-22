@@ -1,7 +1,6 @@
 {
   "name": "specky-src",
   "version": "0.0.7",
-  "private": true,
   "description": "A powerful & flexible validation and conformation library for your JavaScript data and functions.",
   "scripts": {
     "dev": "npm run test:watch",
@@ -26,7 +25,7 @@
     "name": "Xiyang Chen",
     "email": "settinghead@gmail.com"
   },
-  "license": "EPL-1.0",
+  "license": "BSD-3-Clause",
   "bugs": {
     "url": "https://github.com/settinghead/specky/issues"
   },
