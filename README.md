@@ -10,12 +10,7 @@ A powerful & highly flexible JavaScript data validation and conformation library
 - Conform your data with a range of available shapes of specs
 - Automatically generate test cases for your spec'ed functions
 
-## Performance
-
-- `8.8 kb` minified & gzipped
-- Highly performant in handling both simple and complex Specs
-
-## Why
+## Why Specky
 
 - A complement/alternative to unit testing
 - facilitates a better debugging experience
@@ -23,6 +18,10 @@ A powerful & highly flexible JavaScript data validation and conformation library
 - Guides you through the initial modeling process of code implementation
 - Help create more customizable type and behavior constraints that is more powerful than typed languages such as TypeScript
 
+## Performance
+
+- `8.8 kb` minified & gzipped
+- Highly performant in handling both simple and complex Specs
 
 ## Project status
 - Alpha. Each new version is subject to constant change based on [bug reports and feature suggestions](/../../issues/).
