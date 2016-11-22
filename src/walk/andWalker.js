@@ -1,8 +1,9 @@
 var Problem = require('../models/Problem');
 var isProblem = require('../utils/isProblem');
+var specFromAlts = require('../utils/specFromAlts');
 
 function andWalker(spec, walkFn) {
-  var exprs = spec.exprs;
+  var exprs = spec.exprs.map(specFromAlts);
 
   return {
     trailblaze: andTrailblaze,
@@ -31,13 +32,8 @@ function andWalker(spec, walkFn) {
   }
 
   function andReconstruct(guide, walkOpts) {
-    var r = guide;
-
-    for (var i = 0; i < exprs.length; i += 1) {
-      r = walkFn(exprs[i], r, walkOpts);
-    }
-
-    return r;
+    //TODO: implement conformed AND
+    return guide;
   }
 }
 

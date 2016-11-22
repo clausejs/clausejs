@@ -4,12 +4,12 @@ var isSpec = require('../utils/isSpec');
 var isProblem = require('../utils/isProblem');
 var Spec = require('../models/Spec');
 var Problem = require('../models/Problem');
-var { oneOrMore, zeroOrOne, or, cat } = require('./regex');
+var { oneOrMore, zeroOrOne, or, cat, ExprSpec } = require('./regex');
 var fspec = require('./fspec');
 var walk = require('../walk');
 
 var AndSpec = fspec({
-  args: cat('exprs', oneOrMore(isExpr), 'walker', zeroOrOne(isFn)),
+  args: cat('exprs', oneOrMore(ExprSpec)),
   ret: isSpec,
 });
 

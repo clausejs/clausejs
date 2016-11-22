@@ -13,7 +13,7 @@ module.exports = function specFromAlts(alts) {
   } else if (alts.delayedSpec) {
     return alts.delayedSpec;
   } else {
-    console.error(p);
+    console.error(alts);
     throw 'Not implemented';
   }
 }
