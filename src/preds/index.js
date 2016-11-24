@@ -5,9 +5,11 @@ var isBool = require('./isBool');
 var isFn = require('./isFn');
 var isObj = require('./isObj');
 var equals = require('./equals');
+var oneOf = require('./oneOf');
 var isStr = require('./isStr');
 var isDate = require('./isDate');
 var instanceOf = require('./instanceOf');
+var isUuid = require('./isUuid');
 var isArray = Array.isArray;
 
 var e = {
@@ -23,8 +25,10 @@ var e = {
   isStr, isString: isStr,
   isArray, isArr: isArray,
   equals, equalsTo: equals,
+  oneOf,
   isDate,
   instanceOf,
+  isUuid, isUUID: isUuid,
 };
 
 e.default = e;
