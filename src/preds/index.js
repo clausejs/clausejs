@@ -7,9 +7,10 @@ var isObj = require('./isObj');
 var equals = require('./equals');
 var isStr = require('./isStr');
 var isDate = require('./isDate');
+var instanceOf = require('./instanceOf');
 var isArray = Array.isArray;
 
-module.exports = {
+var e = {
   isNull: require('./isNull'),
   isUndefined: require('./isUndefined'),
   notEmpty: require('./notEmpty'),
@@ -23,4 +24,8 @@ module.exports = {
   isArray, isArr: isArray,
   equals, equalsTo: equals,
   isDate,
+  instanceOf,
 };
+
+e.default = e;
+module.exports = e;

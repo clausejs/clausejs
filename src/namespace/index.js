@@ -39,7 +39,7 @@ function _getUnchecked(ref) {
     }
   };
 
-  var sr = new SpecRef({ ref, getFn, null });
+  var sr = new SpecRef({ ref, getFn, conformFn: null });
   sr.conform = function specRefConform(x) {
     var ss = getFn();
     return walk(ss, x, { conform: true });
