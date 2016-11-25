@@ -1,6 +1,6 @@
 {
   "name": "specky-docgen",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "Anto documentation generator for Specky specs",
   "main": "specky-docgen.js",
   "repository": {

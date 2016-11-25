@@ -78,6 +78,8 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 0 */
 /***/ function(module, exports) {
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 function Problem(val, failsPredicate, subproblems, msg) {
   this.isProblem = true;
 
@@ -94,12 +96,20 @@ function Problem(val, failsPredicate, subproblems, msg) {
 };
 
 function _constructMsg(msg, val, subproblems) {
-  if (subproblems.length === 0) {
-    return msg + '; val: ' + JSON.stringify(val);
-  } else {
-    var reasons = subproblems.map(function (r) {
-      return '(' + r.message + ')';
-    });
+  if (Array.isArray(subproblems)) {
+    if (subproblems.length === 0) {
+      return msg + '; val: ' + JSON.stringify(val);
+    } else {
+      var reasons = subproblems.map(function (r) {
+        return '(' + r.message + ')';
+      });
+      return msg + ', because ' + reasons.join(', ');
+    }
+  } else if ((typeof subproblems === 'undefined' ? 'undefined' : _typeof(subproblems)) === 'object') {
+    var reasons = [];
+    for (var name in subproblems) {
+      reasons.push('(' + name + ': ' + reasons.message + ')');
+    }
     return msg + ', because ' + reasons.join(', ');
   }
 }

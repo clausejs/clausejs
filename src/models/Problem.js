@@ -14,13 +14,21 @@ function Problem(val, failsPredicate, subproblems, msg) {
 };
 
 function _constructMsg(msg, val, subproblems) {
-  if (subproblems.length === 0) {
-    return `${msg}; val: ${JSON.stringify(val)}`;
-  } else {
-    var reasons = subproblems.map(function(r) {
-      return `(${r.message})`;
-    });
-    return `${msg}, because ${reasons.join(', ')}`;  
+  if(Array.isArray(subproblems)) {
+    if (subproblems.length === 0) {
+      return `${msg}; val: ${JSON.stringify(val)}`;
+    } else {
+      var reasons = subproblems.map(function(r) {
+        return `(${r.message})`;
+      });
+      return `${msg}, because ${reasons.join(', ')}`;
+    }
+  } else if (typeof subproblems === 'object') {
+    var reasons = [];
+    for (var name in subproblems) {
+      reasons.push(`(${name}: ${reasons.message})`);
+    }
+    return `${msg}, because ${reasons.join(', ')}`;
   }
 }
 
