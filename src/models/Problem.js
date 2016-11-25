@@ -8,11 +8,21 @@ function Problem(val, failsPredicate, subproblems, msg) {
   this.val = val;
   this.name = 'Problem';
   this.failsPredicate = failsPredicate;
-  this.problemMessage = msg;
   // this.stack = (new Error()).stack;
-  this.message = msg;
+  this.message = _constructMsg(msg, val, subproblems);
   this.subproblems = subproblems;
 };
+
+function _constructMsg(msg, val, subproblems) {
+  if (subproblems.length === 0) {
+    return `${msg}; val: ${JSON.stringify(val)}`;
+  } else {
+    var reasons = subproblems.map(function(r) {
+      return `(${r.message})`;
+    });
+    return `${msg}, because ${reasons.join(', ')}`;  
+  }
+}
 
 // Problem.prototype = new Error;
 

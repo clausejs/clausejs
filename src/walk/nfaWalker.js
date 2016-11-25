@@ -25,7 +25,7 @@ function nfaWalker(spec, walkFn) {
       if(lastProblem) {
         subproblems.push(lastProblem);
       }
-      return new Problem(x, spec, subproblems, 'Spec ' + spec.type + ' did not match val: ' + JSON.stringify(x));
+      return new Problem(x, spec, subproblems, 'Spec ' + spec.type + ' did not match value');
     }
   }
 

@@ -11,11 +11,10 @@ function predWalker(spec, walkFn) {
     var { conform, instrument, trailblaze } = opts;
     var predFn = spec.exprs[0];
     if (!predFn(x)) {
-      return new Problem(x, spec, [], 'Predicate ' + fnName(predFn) + ' returns false on value ' + JSON.stringify(x));
+      return new Problem(x, spec, [], 'Predicate ' + fnName(predFn) + '() returns false');
     } else {
       return x;
     }
-
   }
 
   function predReconstruct(x, opts) {

@@ -88,11 +88,21 @@ function Problem(val, failsPredicate, subproblems, msg) {
   this.val = val;
   this.name = 'Problem';
   this.failsPredicate = failsPredicate;
-  this.problemMessage = msg;
   // this.stack = (new Error()).stack;
-  this.message = msg;
+  this.message = _constructMsg(msg, val, subproblems);
   this.subproblems = subproblems;
 };
+
+function _constructMsg(msg, val, subproblems) {
+  if (subproblems.length === 0) {
+    return msg + '; val: ' + JSON.stringify(val);
+  } else {
+    var reasons = subproblems.map(function (r) {
+      return '(' + r.message + ')';
+    });
+    return msg + ', because ' + reasons.join(', ');
+  }
+}
 
 // Problem.prototype = new Error;
 
@@ -283,7 +293,7 @@ function predConformer(pred) {
     if (pred(x)) {
       return x;
     } else {
-      return new Problem(x, pred, [], 'Predicate ' + fnName(pred) + ' returns false on value ' + JSON.stringify(x));
+      return new Problem(x, pred, [], 'Predicate ' + fnName(pred) + ' returns false');
     }
   };
 }
@@ -408,7 +418,7 @@ module.exports = fspec;
 /* 10 */
 /***/ function(module, exports) {
 
-module.exports = function (x) {
+module.exports = function isUndefined(x) {
   return x === undefined;
 };
 
@@ -2380,7 +2390,7 @@ function nfaWalker(spec, walkFn) {
       if (lastProblem) {
         subproblems.push(lastProblem);
       }
-      return new Problem(x, spec, subproblems, 'Spec ' + spec.type + ' did not match val: ' + JSON.stringify(x));
+      return new Problem(x, spec, subproblems, 'Spec ' + spec.type + ' did not match value');
     }
   }
 
@@ -2412,7 +2422,7 @@ function predWalker(spec, walkFn) {
 
     var predFn = spec.exprs[0];
     if (!predFn(x)) {
-      return new Problem(x, spec, [], 'Predicate ' + fnName(predFn) + ' returns false on value ' + JSON.stringify(x));
+      return new Problem(x, spec, [], 'Predicate ' + fnName(predFn) + '() returns false');
     } else {
       return x;
     }
