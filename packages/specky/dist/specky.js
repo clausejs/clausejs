@@ -2068,7 +2068,7 @@ var isProblem = __webpack_require__(1);
 var conform = __webpack_require__(13); // TODO : replace with checkProblem
 
 module.exports = function enforce(spec, x) {
-  var r = conform(x);
+  var r = conform(spec, x);
   if (isProblem(r)) {
     throw r;
   }
