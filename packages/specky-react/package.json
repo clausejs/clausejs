@@ -1,7 +1,7 @@
 {
-  "name": "specky",
+  "name": "specky-react",
   "version": "0.0.14",
-  "description": "A powerful & flexible validation and conformation library for your JavaScript data and functions.",
+  "description": "Anto documentation generator for Specky specs",
   "main": "index.js",
   "repository": {
     "type": "git",
@@ -9,7 +9,7 @@
   },
   "keywords": [
     "babel",
-    "testing",
+    "react",
     "spec",
     "javascript",
     "specky",
@@ -19,6 +19,10 @@
   "author": {
     "name": "Xiyang Chen",
     "email": "settinghead@gmail.com"
+  },
+  "peerDependencies": {
+    "specky": "0.0.14",
+    "react": ">14.0.0"
   },
   "license": "BSD-3-Clause",
   "bugs": {

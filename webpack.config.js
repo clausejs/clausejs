@@ -1,3 +1,5 @@
+const SPECKY_EXTERN = 'S';
+
 var webpack = require('webpack');
 // var ClosureCompilerPlugin = require('webpack-closure-compiler');
 var PROD = JSON.parse(process.env.PROD_ENV || '0');
@@ -21,13 +23,22 @@ if(PROD) {
 }
 
 module.exports = {
-    entry: './src/index.js',
+    entry: {
+      'dist/specky': './src/index.js',
+      'dist/specky-react': './src/react/index.js',
+    },
     output: {
-        library: ['S'],
+        library: [SPECKY_EXTERN],
         libraryTarget: 'umd',
         umdNamedDefine: true,
         path: './packages/specky/dist',
-        filename: PROD ? 'specky.min.js' : 'specky.js',
+        filename: PROD ? '[name].min.js' : '[name].js',
+    },
+    externals: {
+        // require("jquery") is external and available
+        //  on the global var jQuery
+        "react": "React",
+        "specky": SPECKY_EXTERN,
     },
     module: {
       loaders: [
