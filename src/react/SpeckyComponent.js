@@ -1,39 +1,7 @@
-const S = require('specky');
-import React from 'react';
+const React = require('react');
+import fromBaseClass from './fromBaseClass';
 
-function enforce(spec, x) {
-  const r = spec.conform(x);
-  if (S.isProblem(r)) {
-    throw r;
-  }
-}
+const SpeckyComponent = fromBaseClass(React.Component);
 
-class SpeckyComponent extends React.Component {
-  constructor() {
-    super();
-    const { propSpecs } = this.constructor;
-    if (propSpecs) {
-      const nullablePropSpecs = S.or(propSpecs, S.isUndefined, S.isNull);
-
-      const currWillUpdateFn = this.componentWillUpdate;
-      this.componentWillUpdate = (nextProps) => {
-        enforce(nullablePropSpecs, nextProps);
-        if (currWillUpdateFn) {
-          return currWillUpdateFn.apply(this, arguments);
-        }
-        return undefined;
-      };
-
-      const currWillMountFn = this.componentWillMount;
-      this.componentWillMount = () => {
-        enforce(nullablePropSpecs, this.props);
-        if (currWillMountFn) {
-          return currWillMountFn.apply(this, arguments);
-        }
-        return undefined;
-      };
-    }
-  }
-}
-
-export default SpeckyComponent;
+module.exports = SpeckyComponent;
+module.exports.default = SpeckyComponent;

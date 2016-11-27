@@ -1,1 +1,1 @@
-module.exports = require('specky/dist/specky-react');
+module.exports = require('./dist/specky-react');

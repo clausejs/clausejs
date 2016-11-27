@@ -1,3 +1,3 @@
 'use strict';
 
-module.exports = require('specky/dist/specky');
+module.exports = require('./dist/specky');

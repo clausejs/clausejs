@@ -4,11 +4,12 @@
 
 A powerful & highly flexible JavaScript data validation and conformation library that enables you to:
 
-- Build your data validation rules (specs) with composable, regex-like expressions built from primitives predicates such as `and`, `or`, `any`, `oneOrMore`, `zeroOrMore`, etc
+- Build your data validation rules (specs) with composable, regex-like expressions built from primitives predicates such as `and`, `or`, `any`, `props`, `oneOrMore`, `zeroOrMore`, etc
 - Validate and make assertions about your data with these predicate functions
 - Assert & validate the shape and properties of your function's arguments and its return value
 - Conform your data with a range of available shapes of specs
-- Automatically generate test cases for your spec'ed functions
+- Automatic generation of test cases for your functions (coming soon)
+- Automatic documentation generation (coming soon)
 
 ## Why Specky
 

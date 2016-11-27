@@ -22,11 +22,15 @@
   },
   "peerDependencies": {
     "specky": "0.0.14",
-    "react": ">14.0.0"
+    "react": ">=0.14.0"
   },
   "license": "BSD-3-Clause",
   "bugs": {
     "url": "https://github.com/settinghead/specky/issues"
   },
-  "homepage": "https://github.com/settinghead/specky#readme"
+  "homepage": "https://github.com/settinghead/specky#readme",
+  "dependencies": {
+    "react": "^15.4.1",
+    "specky": "0.0.14"
+  }
 }

@@ -1,13 +1,13 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("React"), require("S"));
+		module.exports = factory(require("react"), require("specky"));
 	else if(typeof define === 'function' && define.amd)
-		define("S", ["React", "S"], factory);
+		define(["react", "specky"], factory);
 	else if(typeof exports === 'object')
-		exports["S"] = factory(require("React"), require("S"));
+		exports["S"] = factory(require("react"), require("specky"));
 	else
 		root["S"] = factory(root["React"], root["S"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_62__, __WEBPACK_EXTERNAL_MODULE_63__) {
+})(this, function(__WEBPACK_EXTERNAL_MODULE_64__, __WEBPACK_EXTERNAL_MODULE_65__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -71,99 +71,116 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 65);
+/******/ 	return __webpack_require__(__webpack_require__.s = 67);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 32:
+/***/ 18:
 /***/ function(module, exports, __webpack_require__) {
 
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(62);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var S = __webpack_require__(63);
+var S = __webpack_require__(65);
 
+function fromBaseClass(baseClass) {
+  var SpeckyComponent = function (_baseClass) {
+    _inherits(SpeckyComponent, _baseClass);
 
-function enforce(spec, x) {
-  var r = spec.conform(x);
-  if (S.isProblem(r)) {
-    throw r;
-  }
-}
+    function SpeckyComponent() {
+      var _arguments = arguments;
 
-var SpeckyComponent = function (_React$Component) {
-  _inherits(SpeckyComponent, _React$Component);
+      _classCallCheck(this, SpeckyComponent);
 
-  function SpeckyComponent() {
-    var _arguments = arguments;
+      var _this = _possibleConstructorReturn(this, _baseClass.call(this));
 
-    _classCallCheck(this, SpeckyComponent);
+      var propSpecs = _this.constructor.propSpecs;
 
-    var _this = _possibleConstructorReturn(this, _React$Component.call(this));
+      if (propSpecs) {
+        (function () {
+          var nullablePropSpecs = S.or(propSpecs, S.isUndefined, S.isNull);
 
-    var propSpecs = _this.constructor.propSpecs;
+          var currWillUpdateFn = _this.componentWillUpdate;
+          _this.componentWillUpdate = function (nextProps) {
+            S.enforce(nullablePropSpecs, nextProps);
+            if (currWillUpdateFn) {
+              return currWillUpdateFn.apply(_this, _arguments);
+            }
+            return undefined;
+          };
 
-    if (propSpecs) {
-      (function () {
-        var nullablePropSpecs = S.or(propSpecs, S.isUndefined, S.isNull);
-
-        var currWillUpdateFn = _this.componentWillUpdate;
-        _this.componentWillUpdate = function (nextProps) {
-          enforce(nullablePropSpecs, nextProps);
-          if (currWillUpdateFn) {
-            return currWillUpdateFn.apply(_this, _arguments);
-          }
-          return undefined;
-        };
-
-        var currWillMountFn = _this.componentWillMount;
-        _this.componentWillMount = function () {
-          enforce(nullablePropSpecs, _this.props);
-          if (currWillMountFn) {
-            return currWillMountFn.apply(_this, _arguments);
-          }
-          return undefined;
-        };
-      })();
+          var currWillMountFn = _this.componentWillMount;
+          _this.componentWillMount = function () {
+            S.enforce(nullablePropSpecs, _this.props);
+            if (currWillMountFn) {
+              return currWillMountFn.apply(_this, _arguments);
+            }
+            return undefined;
+          };
+        })();
+      }
+      return _this;
     }
-    return _this;
-  }
+
+    return SpeckyComponent;
+  }(baseClass);
 
   return SpeckyComponent;
-}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
+}
 
-/* harmony default export */ exports["default"] = SpeckyComponent;
-
-/***/ },
-
-/***/ 62:
-/***/ function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_62__;
+module.exports = fromBaseClass;
+module.exports.default = fromBaseClass;
 
 /***/ },
 
-/***/ 63:
+/***/ 33:
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__fromBaseClass__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__fromBaseClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__fromBaseClass__);
+var React = __webpack_require__(64);
+
+
+var SpeckyComponent = __WEBPACK_IMPORTED_MODULE_0__fromBaseClass___default()(React.Component);
+
+module.exports = SpeckyComponent;
+module.exports.default = SpeckyComponent;
+
+/***/ },
+
+/***/ 64:
 /***/ function(module, exports) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE_63__;
+module.exports = __WEBPACK_EXTERNAL_MODULE_64__;
 
 /***/ },
 
 /***/ 65:
+/***/ function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_65__;
+
+/***/ },
+
+/***/ 67:
 /***/ function(module, exports, __webpack_require__) {
 
-var SpeckyComponent = __webpack_require__(32);
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__SpeckyComponent__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__SpeckyComponent___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__SpeckyComponent__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__fromBaseClass__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__fromBaseClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__fromBaseClass__);
+
+
 
 module.exports = {
-  SpeckyComponent: SpeckyComponent
+  SpeckyComponent: __WEBPACK_IMPORTED_MODULE_0__SpeckyComponent___default.a,
+  fromBaseClass: __WEBPACK_IMPORTED_MODULE_1__fromBaseClass___default.a
 };
 
 /***/ }

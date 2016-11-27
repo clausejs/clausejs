@@ -24,21 +24,30 @@ if(PROD) {
 
 module.exports = {
     entry: {
-      'dist/specky': './src/index.js',
-      'dist/specky-react': './src/react/index.js',
+      'packages/specky/dist/specky': './src/index.js',
+      'packages/specky-react/dist/specky-react': './src/react/index.js',
     },
     output: {
         library: [SPECKY_EXTERN],
         libraryTarget: 'umd',
-        umdNamedDefine: true,
-        path: './packages/specky/dist',
+        path: './',
         filename: PROD ? '[name].min.js' : '[name].js',
     },
     externals: {
         // require("jquery") is external and available
         //  on the global var jQuery
-        "react": "React",
-        "specky": SPECKY_EXTERN,
+        'react': {
+          root: 'React',
+          commonjs2: 'react',
+          commonjs: 'react',
+          amd: 'react',
+        },
+        'specky': {
+          root: SPECKY_EXTERN,
+          commonjs2: 'specky',
+          commonjs: 'specky',
+          amd: 'specky',
+        },
     },
     module: {
       loaders: [
