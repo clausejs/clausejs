@@ -4,4 +4,5 @@ module.exports = {
   identity: require('./identity'),
   isProblem: require('./isProblem'),
   delayed: require('./delayed'),
+  enforce: require('./enforce'),
 };
