@@ -20,7 +20,7 @@ A powerful & highly flexible JavaScript data validation and conformation library
 
 ## Performance
 
-- `8.8 kb` minified & gzipped
+- [![Size Gzipped](http://img.badgesize.io/settinghead/specky/master/packages/specky/dist/specky.min.js)](packages/specky/dist) [![Size Gzipped](http://img.badgesize.io/settinghead/specky/master/packages/specky/dist/specky.min.js?compression=gzip)](packages/specky/dist)
 - Highly performant in handling both simple and complex Specs
 
 ## Project status
