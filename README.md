@@ -20,11 +20,12 @@ A powerful & highly flexible JavaScript data validation and conformation library
 
 ## Performance
 
-- [![Size Gzipped](http://img.badgesize.io/settinghead/specky/master/packages/specky/dist/specky.min.js)](packages/specky/dist) [![Size Gzipped](http://img.badgesize.io/settinghead/specky/master/packages/specky/dist/specky.min.js?compression=gzip)](packages/specky/dist)
-- Highly performant in handling both simple and complex Specs
+- [![Size Minified](http://img.badgesize.io/settinghead/specky/master/packages/specky/dist/specky.min.js?label=min)](packages/specky/dist) [![Size Gzipped](http://img.badgesize.io/settinghead/specky/master/packages/specky/dist/specky.min.js?compression=gzip&label=min%2Bgzipped)](packages/specky/dist)
+- Uses fast NFA-based algorithms in handling complex Specs
+- In general, very fast.
 
 ## Project status
-- Alpha. Each new version is subject to constant change based on [bug reports and feature suggestions](/../../issues/).
+- Alpha. Subject to constant change and improvement based on [feedback](/../../issues/).
 
 
 ## Try it
@@ -55,7 +56,7 @@ Coming soon.
 
 - `specky-gen`: Generative/Property-based Testing
 - `specky-docgen`: Automatic documentation generation based on function specs
-- `specky-react`: Specky integration for React. A more powerful drop-in replacement for `React.PropTypes`
+- `specky-react`: Specky integration for React. A replacement for `React.PropTypes`
 
 ## Run tests
 
