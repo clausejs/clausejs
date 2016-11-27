@@ -1,6 +1,6 @@
 {
   "name": "specky-docgen",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "Anto documentation generator for Specky specs",
   "main": "specky-docgen.js",
   "repository": {
@@ -19,6 +19,9 @@
   "author": {
     "name": "Xiyang Chen",
     "email": "settinghead@gmail.com"
+  },
+  "peerDependencies": {
+    "specky": "0.0.14"
   },
   "license": "BSD-3-Clause",
   "bugs": {
