@@ -1,5 +1,5 @@
 # MIT License
-Copyright (c) 2013-2016 Xiyang Chen
+Copyright (c) 2016-2017 Xiyang Chen
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
