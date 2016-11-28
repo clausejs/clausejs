@@ -3,7 +3,6 @@
   "version": "0.0.14",
   "description": "A powerful & flexible validation and conformation library for your JavaScript data and functions.",
   "main": "packages/specky/dist/specky.js",
-  "private": true,
   "scripts": {
     "dev": "npm run test:watch",
     "test": "mocha --compilers js:babel-register",
