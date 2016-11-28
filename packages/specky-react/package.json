@@ -24,7 +24,7 @@
     "specky": "0.0.14",
     "react": ">=0.14.0"
   },
-  "license": "BSD-3-Clause",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/settinghead/specky/issues"
   },

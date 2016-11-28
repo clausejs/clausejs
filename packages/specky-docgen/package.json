@@ -23,7 +23,7 @@
   "peerDependencies": {
     "specky": "0.0.14"
   },
-  "license": "BSD-3-Clause",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/settinghead/specky/issues"
   },
