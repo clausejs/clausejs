@@ -6,4 +6,5 @@ module.exports = {
   O_OR_M: 'O_OR_M',
   PRED: 'PRED',
   COLL_OF: 'COLL_OF',
+  PAREN_PAIRS: '❴❰❮❬❨❪﹙₍₎﹚❫❩❭❯❱❵',
 };
