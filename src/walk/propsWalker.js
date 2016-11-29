@@ -181,7 +181,6 @@ function _genKeyConformer(reqSpecs, optSpec, walkFn, walkOpts) {
           if(x.hasOwnProperty(name)) {
             var rr = _conformNamedOrExpr(x[name], fieldDefs.fields[name].valSpecAltsOnly, walkFn, walkOpts);
             if(isProblem(rr)) { //found a match
-              reqProblems.push(rr);
               missingKeys.push(name);
             }
           } else {
@@ -195,9 +194,7 @@ function _genKeyConformer(reqSpecs, optSpec, walkFn, walkOpts) {
         }
       }
       if(missingKeys.length > 0) {
-        return new Problem(x, reqSpecs, reqProblems, 'req: keys required: ' + missingKeys.join(', ') );
-      } else if (reqProblems.length > 0) {
-        return new Problem(x, reqSpecs, reqProblems, 'req: validation failed for the following keys: ' + missingKeys.join(', ') );
+        return new Problem(x, reqSpecs, [], 'req: keys required: ' + missingKeys.join(', ') );
       }
     }
 
