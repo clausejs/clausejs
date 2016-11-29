@@ -80,6 +80,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
+var PAREN_PAIRS = '❰❮❬❨❪﹙₍₎﹚❫❩❭❯❱';
+
 function Problem(val, failsPredicate, subproblems, msg) {
   this.isProblem = true;
 
@@ -91,27 +93,37 @@ function Problem(val, failsPredicate, subproblems, msg) {
   this.name = 'Problem';
   this.failsPredicate = failsPredicate;
   // this.stack = (new Error()).stack;
-  this.message = _constructMsg(msg, val, subproblems);
+  this.rawMsg = msg;
   this.subproblems = subproblems;
-};
 
-function _constructMsg(msg, val, subproblems) {
-  if (Array.isArray(subproblems)) {
-    if (subproblems.length === 0) {
-      return msg + '; val: ' + JSON.stringify(val);
-    } else {
-      var reasons = subproblems.map(function (r) {
-        return '(' + r.message + ')';
-      });
+  this.constructMessage = function constructMessage(lvl) {
+    if (Array.isArray(subproblems)) {
+      if (subproblems.length === 0) {
+        return msg + '; val: ' + JSON.stringify(val);
+      } else {
+        var reasons = subproblems.map(function (r) {
+          return '' + _open(lvl) + r.constructMessage(lvl + 1) + _close(lvl);
+        });
+        return msg + ', because ' + reasons.join(', ');
+      }
+    } else if ((typeof subproblems === 'undefined' ? 'undefined' : _typeof(subproblems)) === 'object') {
+      var reasons = [];
+      for (var name in subproblems) {
+        reasons.push('' + _open(lvl) + name + ': ' + subproblems[name].constructMessage(lvl + 1) + _close(lvl));
+      }
       return msg + ', because ' + reasons.join(', ');
     }
-  } else if ((typeof subproblems === 'undefined' ? 'undefined' : _typeof(subproblems)) === 'object') {
-    var reasons = [];
-    for (var name in subproblems) {
-      reasons.push('(' + name + ': ' + reasons.message + ')');
-    }
-    return msg + ', because ' + reasons.join(', ');
-  }
+  };
+
+  this.message = this.constructMessage(0);
+};
+
+function _open(lvl) {
+  return PAREN_PAIRS[lvl];
+}
+
+function _close(lvl) {
+  return PAREN_PAIRS[PAREN_PAIRS.length - lvl - 1];
 }
 
 // Problem.prototype = new Error;
@@ -1340,7 +1352,8 @@ module.exports = {
   Z_OR_O: 'Z_OR_O',
   O_OR_M: 'O_OR_M',
   PRED: 'PRED',
-  COLL_OF: 'COLL_OF'
+  COLL_OF: 'COLL_OF',
+  PAREN_PAIRS: '❴❰❮❬❨❪﹙₍₎﹚❫❩❭❯❱❵'
 };
 
 /***/ },
@@ -2680,7 +2693,6 @@ function _genKeyConformer(reqSpecs, optSpec, walkFn, walkOpts) {
             var rr = _conformNamedOrExpr(x[name], fieldDefs.fields[name].valSpecAltsOnly, walkFn, walkOpts);
             if (isProblem(rr)) {
               //found a match
-              reqProblems.push(rr);
               missingKeys.push(name);
             }
           } else {
@@ -2694,9 +2706,7 @@ function _genKeyConformer(reqSpecs, optSpec, walkFn, walkOpts) {
         }
       }
       if (missingKeys.length > 0) {
-        return new Problem(x, reqSpecs, reqProblems, 'req: keys required: ' + missingKeys.join(', '));
-      } else if (reqProblems.length > 0) {
-        return new Problem(x, reqSpecs, reqProblems, 'req: validation failed for the following keys: ' + missingKeys.join(', '));
+        return new Problem(x, reqSpecs, [], 'req: keys required: ' + missingKeys.join(', '));
       }
     }
 
