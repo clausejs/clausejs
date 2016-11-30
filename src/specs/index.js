@@ -1,9 +1,10 @@
 import S from '../';
+import NsFn, { Namespace } from './ns';
+
 const registry = {};
 // const S = Specky.withRegistry(nsObj);
 
-S('Specky', S.fspec({
-  args: S.or('retrieve', S.cat('namespace-path', S.isStr))
-}));
+S('Specky.Namespace', Namespace);
+S('Specky', NsFn);
 
 export default S.getRegistry();

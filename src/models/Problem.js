@@ -44,6 +44,6 @@ function _close(lvl) {
   return PAREN_PAIRS[PAREN_PAIRS.length - lvl - 1];
 }
 
-// Problem.prototype = new Error;
+Problem.prototype = new Error;
 
 module.exports = Problem;
