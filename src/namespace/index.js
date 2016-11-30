@@ -142,5 +142,6 @@ _maybeInitRegistry();
 
 var specedSpeckyNamespace = NamespaceFnSpec.instrumentConformed(speckyNamespace);
 specedSpeckyNamespace.clearRegistry = clearRegistry;
+specedSpeckyNamespace.getRegistry = () => reg;
 
 module.exports = specedSpeckyNamespace;

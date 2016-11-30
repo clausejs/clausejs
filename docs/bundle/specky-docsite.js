@@ -71,7 +71,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 31);
+/******/ 	return __webpack_require__(__webpack_require__.s = 69);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -3143,6 +3143,60 @@ try {
 
 module.exports = g;
 
+
+/***/ },
+/* 63 */,
+/* 64 */
+/***/ function(module, exports) {
+
+var gen = function gen(registry) {
+  return "<pre>" + JSON.stringify(registry, null, 2) + "</pre>";
+};
+
+var fns = {
+  gen: gen
+};
+
+module.exports = fns;
+module.exports.default = fns;
+
+/***/ },
+/* 65 */,
+/* 66 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0____ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_____default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0____);
+
+var registry = {};
+// const S = Specky.withRegistry(nsObj);
+
+__WEBPACK_IMPORTED_MODULE_0_____default()('Specky', __WEBPACK_IMPORTED_MODULE_0_____default.a.fspec({
+  args: __WEBPACK_IMPORTED_MODULE_0_____default.a.or('retrieve', __WEBPACK_IMPORTED_MODULE_0_____default.a.cat('namespace-path', __WEBPACK_IMPORTED_MODULE_0_____default.a.isStr))
+}));
+
+/* harmony default export */ exports["a"] = __WEBPACK_IMPORTED_MODULE_0_____default.a.getRegistry();
+
+/***/ },
+/* 67 */,
+/* 68 */,
+/* 69 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__src__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__src___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__src__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__src_docgen__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__src_docgen___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__src_docgen__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__src_specs__ = __webpack_require__(66);
+
+
+
+
+var finalDocStr = __WEBPACK_IMPORTED_MODULE_1__src_docgen___default.a.gen(__WEBPACK_IMPORTED_MODULE_2__src_specs__["a" /* default */]);
+
+document.getElementById('api').innerHTML = finalDocStr;
 
 /***/ }
 /******/ ])

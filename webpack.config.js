@@ -26,6 +26,7 @@ module.exports = {
     entry: {
       'packages/specky/dist/specky': './src/index.js',
       'packages/specky-react/dist/specky-react': './src/react/index.js',
+      'docs/bundle/specky-docsite': './docs/src/index.js',
     },
     output: {
         library: [SPECKY_EXTERN],
