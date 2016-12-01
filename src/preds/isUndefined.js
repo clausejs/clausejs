@@ -1,3 +1,3 @@
-module.exports = function isUndefined(x) {
+module.exports = function isUndefined( x ) {
   return x === undefined;
 };

@@ -1,8 +1,8 @@
 
-module.exports = function notEmpty(x) {
-  if(!x) {
+module.exports = function notEmpty( x ) {
+  if ( !x ) {
     return false;
-  } else if (x.length === 0) {
+  } else if ( x.length === 0 ) {
     return false;
   } else {
     return true;

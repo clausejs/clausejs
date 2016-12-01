@@ -1,5 +1,5 @@
-const gen = (registry) => {
-  return `<pre>${ JSON.stringify(registry, null, 2) }</pre>`;
+const gen = ( registry ) => {
+  return `<pre>${ JSON.stringify( registry, null, 2 ) }</pre>`;
 }
 
 var fns = {

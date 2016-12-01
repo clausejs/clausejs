@@ -1,5 +1,5 @@
-function conformWalker(spec, x) {
-  return spec.conform(x);
+function conformWalker( spec, x ) {
+  return spec.conform( x );
 }
 
 module.exports = conformWalker;

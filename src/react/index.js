@@ -1,4 +1,4 @@
-import SpeckyComponent  from './SpeckyComponent';
+import SpeckyComponent from './SpeckyComponent';
 import fromBaseClass from './fromBaseClass';
 
 module.exports = {

@@ -1,7 +1,7 @@
-var Spec = require('../models/Spec');
+var Spec = require( '../models/Spec' );
 
-function isSpec(x) {
-  if(!x) {
+function isSpec( x ) {
+  if ( !x ) {
     return false;
   } else {
     return x instanceof Spec;

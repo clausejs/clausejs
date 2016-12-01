@@ -1,14 +1,14 @@
-function specRefWalker(specRef, walkFn) {
+function specRefWalker( specRef, walkFn ) {
 
   return {
     trailblaze: walkSpecRef,
     reconstruct: walkSpecRef,
   };
 
-  function walkSpecRef(x, walkOpts) {
+  function walkSpecRef( x, walkOpts ) {
     var s = specRef.get();
-    if(s) {
-      return walkFn(s, x, walkOpts);
+    if ( s ) {
+      return walkFn( s, x, walkOpts );
     }
   }
 }

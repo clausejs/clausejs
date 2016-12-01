@@ -1,4 +1,4 @@
-function isStr(x) {
+function isStr( x ) {
   return x !== null && x !== undefined && x.constructor === String
 }
 

@@ -1,19 +1,19 @@
-var coerceIntoSpec = require('./coerceIntoSpec');
+var coerceIntoSpec = require( './coerceIntoSpec' );
 
-module.exports = function specFromAlts(alts) {
-  if(!alts) {
+module.exports = function specFromAlts( alts ) {
+  if ( !alts ) {
     debugger;
   }
-  if(alts.spec) {
+  if ( alts.spec ) {
     return alts.spec;
-  } else if (alts.pred) {
-    return coerceIntoSpec(alts.pred);
-  } else if (alts.specRef) {
+  } else if ( alts.pred ) {
+    return coerceIntoSpec( alts.pred );
+  } else if ( alts.specRef ) {
     return alts.specRef;
-  } else if (alts.delayedSpec) {
+  } else if ( alts.delayedSpec ) {
     return alts.delayedSpec;
   } else {
-    console.error(alts);
+    console.error( alts );
     throw 'Not implemented';
   }
 }

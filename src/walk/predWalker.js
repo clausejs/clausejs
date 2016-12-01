@@ -1,23 +1,23 @@
-var fnName = require('../utils/fnName');
-var Problem = require('../models/Problem');
+var fnName = require( '../utils/fnName' );
+var Problem = require( '../models/Problem' );
 
-function predWalker(spec, walkFn) {
+function predWalker( spec, walkFn ) {
   return {
     trailblaze: predTraiblaze,
     reconstruct: predReconstruct,
   }
 
-  function predTraiblaze(x, opts) {
+  function predTraiblaze( x, opts ) {
     var { conform, instrument, trailblaze } = opts;
-    var predFn = spec.exprs[0];
-    if (!predFn(x)) {
-      return new Problem(x, spec, [], 'Predicate ' + fnName(predFn) + '() returns false');
+    var predFn = spec.exprs[ 0 ];
+    if ( !predFn( x ) ) {
+      return new Problem( x, spec, [], 'Predicate ' + fnName( predFn ) + '() returns false' );
     } else {
       return x;
     }
   }
 
-  function predReconstruct(x, opts) {
+  function predReconstruct( x, opts ) {
     return x;
   }
 }

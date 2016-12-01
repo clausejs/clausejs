@@ -1,1 +1,1 @@
-require('mocha-testcheck').install();
+require( 'mocha-testcheck' ).install();

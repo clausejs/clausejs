@@ -1,20 +1,20 @@
-var Spec = require('../models/Spec');
-var isSpec = require('../utils/isSpec');
-var isStr = require('../preds/isStr');
-var isFn = require('../preds/isFn');
-var oneOf = require('../preds/oneOf');
-var coerceIntoSpec = require('../utils/coerceIntoSpec');
-var { cat, or, zeroOrMore, ExprSpec } = require('./regex');
-var walk = require('../walk');
-var fspec = require('./fspec');
+var Spec = require( '../models/Spec' );
+var isSpec = require( '../utils/isSpec' );
+var isStr = require( '../preds/isStr' );
+var isFn = require( '../preds/isFn' );
+var oneOf = require( '../preds/oneOf' );
+var coerceIntoSpec = require( '../utils/coerceIntoSpec' );
+var { cat, or, zeroOrMore, ExprSpec } = require( './regex' );
+var walk = require( '../walk' );
+var fspec = require( './fspec' );
 
-function isPropName(x) {
-  return isStr(x);
+function isPropName( x ) {
+  return isStr( x );
 }
 
 var TYPE_PROPS = 'PROPS';
 
-var FieldDefs = propsOp({
+var FieldDefs = propsOp( {
   propArgs: {
     optionalFields: {
       opt: {
@@ -24,7 +24,7 @@ var FieldDefs = propsOp({
             {
               keyValExprPair: {
                 keySpecAlts: {
-                  spec: coerceIntoSpec(isStr),
+                  spec: coerceIntoSpec( isStr ),
                 },
                 valSpecAlts: {
                   spec: or(
@@ -42,12 +42,12 @@ var FieldDefs = propsOp({
       }
     },
   }
-});
+} );
 
-var KeyOnlyArray = zeroOrMore(isPropName);
-var KeyArrayOrFieldDefs = or('keyList', KeyOnlyArray, 'fieldDefs', FieldDefs);
+var KeyOnlyArray = zeroOrMore( isPropName );
+var KeyArrayOrFieldDefs = or( 'keyList', KeyOnlyArray, 'fieldDefs', FieldDefs );
 
-var PropArgs = propsOp({
+var PropArgs = propsOp( {
   propArgs: {
     optionalFields: {
       opt: {
@@ -56,7 +56,7 @@ var PropArgs = propsOp({
             'requiredFields': {
               keyValExprPair: {
                 keySpecAlts: {
-                  pred: oneOf('req', 'required'),
+                  pred: oneOf( 'req', 'required' ),
                 },
                 valSpecAlts: {
                   spec: KeyArrayOrFieldDefs
@@ -66,7 +66,7 @@ var PropArgs = propsOp({
             'optionalFields': {
               keyValExprPair: {
                 keySpecAlts: {
-                  pred: oneOf('opt', 'optional'),
+                  pred: oneOf( 'opt', 'optional' ),
                 },
                 valSpecAlts: {
                   spec: KeyArrayOrFieldDefs
@@ -78,22 +78,22 @@ var PropArgs = propsOp({
       }
     },
   }
-});
+} );
 
-var PropsSpec = fspec({
-  args: cat('propArgs', PropArgs),
+var PropsSpec = fspec( {
+  args: cat( 'propArgs', PropArgs ),
   ret: isSpec,
-});
+} );
 
-function propsOp(cargs) {
-  var s = new Spec(TYPE_PROPS, [cargs], null, null, null);
-  s.conform = function propsConform(x) {
-    return walk(s, x, { conform: true });
+function propsOp( cargs ) {
+  var s = new Spec( TYPE_PROPS, [ cargs ], null, null, null );
+  s.conform = function propsConform( x ) {
+    return walk( s, x, { conform: true } );
   }
   return s;
 }
 
-var props = PropsSpec.instrumentConformed(propsOp);
+var props = PropsSpec.instrumentConformed( propsOp );
 
 module.exports = {
   props,

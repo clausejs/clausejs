@@ -1,4 +1,4 @@
-function SpecRef({ ref, getFn, conformFn }) {
+function SpecRef( { ref, getFn, conformFn } ) {
   this.type = 'SpecRef';
   this.get = getFn;
   this.conform = conformFn;

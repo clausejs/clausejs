@@ -1,4 +1,4 @@
-function identity(x) {
+function identity( x ) {
   return x;
 }
 
