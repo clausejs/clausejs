@@ -7,5 +7,6 @@ module.exports = {
   delayed: require( './delayed' ),
   enforce: require( './enforce' ),
   isExpr: require( './isExpr' ),
+  isSpec: require( './isSpec' ),
   isSpecRef: require( './isSpecRef' ),
 };

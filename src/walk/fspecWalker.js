@@ -55,7 +55,12 @@ function fspecWalker( spec, walkFn ) {
 
       // TODO optimize
       var conformedArgs = walkFn( argsSpec, args, { conform: true, instrument: true } );
-      var conformedRetVal = walkFn( retSpec, retVal, { conform: true, instrument: true } );
+      let conformedRetVal;
+      if ( retSpec ) {
+        conformedRetVal = walkFn( retSpec, retVal, { conform: true, instrument: true } );
+      } else {
+        conformedRetVal = retVal;
+      }
 
       checkFnRelation( fnName, fn, validateFn, conformedArgs, conformedRetVal );
       return instrumentedRetVal;

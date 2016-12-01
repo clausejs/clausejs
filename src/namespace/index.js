@@ -9,7 +9,7 @@ var isUndefined = require( '../preds/isUndefined' );
 var walk = require( '../walk' );
 
 import { isNamespacePath, isSpecRef } from '../utils';
-import { NamespaceFnSpec } from '../specs/ns';
+import { NamespaceFnSpec, MetaFnSpec } from '../specs/ns';
 var reg;
 
 var _get = fspec( {
@@ -18,7 +18,7 @@ var _get = fspec( {
 } ).instrument( _getUnchecked );
 
 function _getUnchecked( ref ) {
-  var getFn = function( prefix ) {
+  var getFn = ( prefix ) => {
     var path = reg;
     if ( prefix ) {
       path = prefix + ref;
@@ -28,7 +28,7 @@ function _getUnchecked( ref ) {
     var nObj = oPath.get( reg, path );
 
     if ( nObj ) {
-      return nObj.expr;
+      return oAssign( nObj.expr, nObj.meta );
     } else {
       return undefined;
     }
@@ -51,13 +51,12 @@ function _getUnchecked( ref ) {
 function speckyNamespace( cargs ) {
   var retVal;
 
-  if ( cargs[ 'def' ] ) {
-    var name = cargs.def.name;
-    var val = cargs.def.val;
-    retVal = _processVal( name, val );
-  } else if ( cargs[ 'get' ] ) {
-    var name = cargs[ 'get' ][ 'name' ];
-    var nameObj = _get( name );
+  if ( cargs[ 'register' ] ) {
+    const { path, val } = cargs[ 'register' ];
+    retVal = _processVal( path, val );
+  } else if ( cargs[ 'retrieve' ] ) {
+    const { path } = cargs[ 'retrieve' ];
+    var nameObj = _get( path );
     retVal = nameObj;
   }
 
@@ -115,9 +114,18 @@ function clearRegistry() {
   reg = global[ K ] = {};
 }
 
-function meta() {
-  // TODO
-}
+const meta = MetaFnSpec.instrumentConformed(
+  function meta( { source: { namespacePath, expression }, metaObj } ) {
+    if ( namespacePath ) {
+      var nObj = oPath.get( reg, namespacePath );
+      oPath.set( reg, namespacePath, oAssign( {}, nObj, { meta: metaObj } ) );
+      return _get( namespacePath );
+    } else if ( expression ) {
+      const spec = coerceIntoSpec( expression );
+      spec.meta = oAssign( spec.meta, metaObj );
+    }
+  }
+);
 
 _maybeInitRegistry();
 

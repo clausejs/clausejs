@@ -18,7 +18,7 @@ var ArrayFragment = function( val ) {
 function getMatch( chain, walkFn, walkOpts ) {
   var { conform } = walkOpts;
   if ( !chain || !chain.forEach ) {
-    debugger;
+    
   }
   var valStack = [];
   var r = {};

@@ -100,9 +100,6 @@ function propsWalker( spec, walkFn ) {
 
     var conform = { walkOpts };
 
-    if ( !singles ) {
-      debugger;
-    }
     var { instrument } = walkOpts;
     var fieldDefs,
       keyList;
@@ -256,9 +253,6 @@ function getFieldGuide( x, name, keyValAlts, walkFn, walkOpts ) {
 }
 
 function _conformNamedOrExpr( x, alts, walkFn, walkOpts ) {
-  if ( !alts ) {
-    debugger;
-  }
   var s = specFromAlts( alts );
   var r = walkFn( s, x, walkOpts );
   return r;

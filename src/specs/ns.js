@@ -1,5 +1,6 @@
 import { or, cat, fspec, ExprSpec } from '../core';
-import { delayed, isNamespacePath, isExpr, isSpecRef } from '../utils';
+import { delayed, isNamespacePath, isExpr, isSpec, isSpecRef } from '../utils';
+import { isObj } from '../preds';
 
 var ExprOrPartialRefMapSpec = or(
   'expr', delayed( function() {
@@ -7,15 +8,24 @@ var ExprOrPartialRefMapSpec = or(
   } ) //TODO
 );
 
-
 const NamespaceFnSpec = fspec( {
   args: or(
-    'def', cat(
-      'name', isNamespacePath,
+    'register', cat(
+      'path', isNamespacePath,
       'val', ExprOrPartialRefMapSpec ),
-    'get', cat( 'name', isNamespacePath )
+    'retrieve', cat( 'path', isNamespacePath )
   ),
   ret: or( isSpecRef, isExpr ),
 } );
 
-export { isSpecRef, NamespaceFnSpec, isNamespacePath };
+const MetaFnSpec = fspec( {
+  args: cat( 'source',
+            or(
+              'namespacePath', isNamespacePath,
+              'expression', isExpr
+            ),
+            'metaObj', isObj ),
+  ret: isExpr,
+} );
+
+export { isSpecRef, NamespaceFnSpec, isNamespacePath, MetaFnSpec };
