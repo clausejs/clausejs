@@ -4,13 +4,13 @@ var expect = require( 'chai' ).expect;
 var isSpec = require( '../src/utils/isSpec' );
 var isPred = require( '../src/utils/isPred' );
 
-describe( 'namespace', function() {
+describe( 'namespace', () => {
 
   beforeEach( s.clearRegistry );
   afterEach( s.clearRegistry );
 
-  describe( 'simple defs and gets', function() {
-    it( 'should def and get', function() {
+  describe( 'simple defs and gets', () => {
+    it( 'should def and get', () => {
       s( 'xyz.superapp.item.title', s.isStr );
       s( 'xyz.superapp.item', s.and(
         s.isObj,
@@ -62,12 +62,12 @@ describe( 'namespace', function() {
       var contentSpec = s( 'todoapp.item.content' );
 
       expect( ListSpec ).to.be.ok;
-      // expect(isSpec(ListSpec)).to.be.true;
-      // expect(isSpec(ItemSpec)).to.be.true;
-      // expect(isSpec(ContentSpec)).to.be.true;
-      //
-      // expect(s.isValid(ListSpec, [])).to.be.true;
-      // expect(s.isValid(ItemSpec, [])).to.be.false;
+      expect( isSpec( ListSpec ) ).to.be.true;
+      expect( isSpec( ItemSpec ) ).to.be.true;
+      expect( isSpec( ContentSpec ) ).to.be.true;
+
+      expect( s.isValid( ListSpec, [] ) ).to.be.true;
+      expect( s.isValid( ItemSpec, [] ) ).to.be.false;
     } );
   } );
 } );

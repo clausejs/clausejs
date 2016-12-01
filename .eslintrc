@@ -8,5 +8,9 @@
   "parserOptions": {
     "sourceType": "module",
     "allowImportExportEverywhere": false
-  }
+  },
+  "rules": {
+    "one-var": 0,
+    "vars-on-top": 0,
+    }
 }
