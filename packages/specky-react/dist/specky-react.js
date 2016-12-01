@@ -7,7 +7,7 @@
 		exports["S"] = factory(require("react"), require("specky"));
 	else
 		root["S"] = factory(root["React"], root["S"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_69__, __WEBPACK_EXTERNAL_MODULE_70__) {
+})(this, function(__WEBPACK_EXTERNAL_MODULE_70__, __WEBPACK_EXTERNAL_MODULE_71__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -71,7 +71,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 72);
+/******/ 	return __webpack_require__(__webpack_require__.s = 73);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -88,7 +88,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var S = __webpack_require__(70);
+var S = __webpack_require__(71);
 
 function fromBaseClass(baseClass) {
   var SpeckyComponent = function (_baseClass) {
@@ -152,20 +152,13 @@ var _fromBaseClass2 = _interopRequireDefault(_fromBaseClass);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var React = __webpack_require__(69);
+var React = __webpack_require__(70);
 
 
 var SpeckyComponent = (0, _fromBaseClass2.default)(React.Component);
 
 module.exports = SpeckyComponent;
 module.exports.default = SpeckyComponent;
-
-/***/ },
-
-/***/ 69:
-/***/ function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_69__;
 
 /***/ },
 
@@ -176,7 +169,14 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_70__;
 
 /***/ },
 
-/***/ 72:
+/***/ 71:
+/***/ function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_71__;
+
+/***/ },
+
+/***/ 73:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";

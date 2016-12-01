@@ -18,4 +18,4 @@ const NamespaceFnSpec = fspec( {
   ret: or( isSpecRef, isExpr ),
 } );
 
-export { NamespaceFnSpec, isSpecRef };
+export { isSpecRef, NamespaceFnSpec, isNamespacePath };

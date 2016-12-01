@@ -12,7 +12,6 @@ import { isNamespacePath, isSpecRef } from '../utils';
 import { NamespaceFnSpec } from '../specs/ns';
 var reg;
 
-
 var _get = fspec( {
   args: cat( isNamespacePath ),
   ret: isSpecRef,
