@@ -1,9 +1,9 @@
-import { or, cat, fspec, ExprSpec } from '../core';
+import { or, cat, fspec, props, any, ExprSpec } from '../core';
 import { delayed, isNamespacePath, isExpr, isSpec, isSpecRef } from '../utils';
-import { isObj } from '../preds';
+import { isObj, isUndefined } from '../preds';
 
 var ExprOrPartialRefMapSpec = or(
-  'expr', delayed( function() {
+  '.expr', delayed( function() {
     return ExprSpec
   } ) //TODO
 );
@@ -28,4 +28,22 @@ const MetaFnSpec = fspec( {
   ret: isExpr,
 } );
 
-export { isSpecRef, NamespaceFnSpec, isNamespacePath, MetaFnSpec };
+function isNamespaceFragment( x ) {
+  return !!/^[^.@%\&\*#]+/.test( x );
+}
+
+// const NamespaceObjSpec = props( {
+//   optional: {
+//     subNamespaces: [ isNamespaceFragment, delayed( () => NamespaceObjSpec ) ],
+//     '.meta': isObj,
+//     '.expr': isExpr,
+//   }
+// } );
+
+const NamespaceObjSpec = any();
+
+export {
+  isSpecRef, NamespaceFnSpec,
+  isNamespacePath, MetaFnSpec,
+  NamespaceObjSpec
+};

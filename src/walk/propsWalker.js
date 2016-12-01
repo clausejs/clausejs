@@ -24,6 +24,9 @@ function propsWalker( spec, walkFn ) {
   };
 
   function propsTrailblaze( x, walkOpts ) {
+    if ( typeof x !== 'object' ) {
+      return new Problem( x, spec, [], 'Value is not an object' );
+    }
 
     if ( !keyConformer ) {
       keyConformer = _genKeyConformer( reqSpecs, optSpecs, walkFn, walkOpts ); //lazy
@@ -194,6 +197,8 @@ function _genKeyConformer( reqSpecs, optSpec, walkFn, walkOpts ) {
           if ( x[ name ] === undefined ) {
             missingKeys.push( name );
           }
+        } else {
+          throw '!';
         }
       }
       if ( missingKeys.length > 0 ) {
@@ -214,23 +219,23 @@ function _deleteKeys( subject, keys ) {
 
 function getFieldGuide( x, name, keyValAlts, walkFn, walkOpts ) {
   var { valSpecAltsOnly, keyValExprPair } = keyValAlts;
-  var r;
   if ( keyValExprPair ) {
     var matchedKeys = [];
 
     var { keySpecAlts, valSpecAlts } = keyValExprPair;
-    r = undefined;
     keysExamine: for ( var k in x ) {
-      var keyResult = _conformNamedOrExpr( k, keySpecAlts, walkFn, walkOpts );
-      if ( !isProblem( keyResult ) ) {
-        if ( x === x[ k ] ) { // single string char case, where name = 0 and x = ''
-          continue keysExamine;
-        }
-        var valGuide = _conformNamedOrExpr( x[ k ], valSpecAlts, walkFn, walkOpts );
-        if ( isProblem( valGuide ) ) {
-          return { problem: valGuide }; //TODO: improve
-        } else {
-          matchedKeys.push( { key: k, spec: specFromAlts( valSpecAlts ), guide: valGuide } );
+      if ( x.hasOwnProperty( k ) ) {
+        var keyResult = _conformNamedOrExpr( k, keySpecAlts, walkFn, walkOpts );
+        if ( !isProblem( keyResult ) ) {
+          if ( x === x[ k ] ) { // single string char case, where name = 0 and x = ''
+            continue keysExamine;
+          }
+          var valGuide = _conformNamedOrExpr( x[ k ], valSpecAlts, walkFn, walkOpts );
+          if ( isProblem( valGuide ) ) {
+            return { problem: valGuide }; //TODO: improve
+          } else {
+            matchedKeys.push( { key: k, spec: specFromAlts( valSpecAlts ), guide: valGuide } );
+          }
         }
       }
     }

@@ -28,7 +28,7 @@ function _getUnchecked( ref ) {
     var nObj = oPath.get( reg, path );
 
     if ( nObj ) {
-      return oAssign( nObj.expr, nObj.meta );
+      return oAssign( nObj[ '.expr' ], nObj[ '.meta' ] );
     } else {
       return undefined;
     }
@@ -64,11 +64,11 @@ function speckyNamespace( cargs ) {
 }
 
 function _processVal( prefix, val ) {
-  if ( val.expr ) {
-    var e = val.expr;
+  if ( val[ '.expr' ] ) {
+    var e = val[ '.expr' ];
     if ( e.spec || e.pred ) {
       var expr = e.spec || e.pred;
-      _set( prefix, { expr: expr } );
+      _set( prefix, { '.expr': expr } );
       return expr;
     } else {
       console.error( e );
@@ -89,7 +89,7 @@ function _processVal( prefix, val ) {
 }
 
 var NameObjSpec = props( {
-  req: { 'expr': or( isSpec, isPred ) }
+  req: { '.expr': or( isSpec, isPred ) }
 } );
 
 var _set = fspec( {
@@ -118,7 +118,7 @@ const meta = MetaFnSpec.instrumentConformed(
   function meta( { source: { namespacePath, expression }, metaObj } ) {
     if ( namespacePath ) {
       var nObj = oPath.get( reg, namespacePath );
-      oPath.set( reg, namespacePath, oAssign( {}, nObj, { meta: metaObj } ) );
+      oPath.set( reg, namespacePath, oAssign( {}, nObj, { '.meta': metaObj } ) );
       return _get( namespacePath );
     } else if ( expression ) {
       const spec = coerceIntoSpec( expression );
