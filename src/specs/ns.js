@@ -1,13 +1,21 @@
-import S from '../';
+import { or, cat, fspec, ExprSpec } from '../core';
+import { delayed, isNamespacePath, isExpr, isSpecRef } from '../utils';
 
-export const Namespace = S.isObj;
+var ExprOrPartialRefMapSpec = or(
+  'expr', delayed( function() {
+    return ExprSpec
+  } ) //TODO
+);
 
-export default S.fspec( {
-  args: S.or(
-    'retrieve', S.cat(
-      'namespacePath', Namespace ),
-    'register', S.cat(
-      'namespacePath', Namespace,
-      'expr', S.isObj )
-    )
+
+const NamespaceFnSpec = fspec( {
+  args: or(
+    'def', cat(
+      'name', isNamespacePath,
+      'val', ExprOrPartialRefMapSpec ),
+    'get', cat( 'name', isNamespacePath )
+  ),
+  ret: or( isSpecRef, isExpr ),
 } );
+
+export { NamespaceFnSpec, isSpecRef };

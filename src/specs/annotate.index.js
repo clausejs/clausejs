@@ -10,7 +10,7 @@ M( 'Specky', {
       comment: 'Registers a namespace path with an expression.',
     },
     '?retrieve': {
-      comment: 'Retr,ieves an expression by namespace path',
+      comment: 'Retrieves an expression by namespace path',
     }
   },
   '.ret': {

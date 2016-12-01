@@ -71,7 +71,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 18);
+/******/ 	return __webpack_require__(__webpack_require__.s = 31);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -302,11 +302,11 @@ module.exports = isSpec;
 
 var isPred = __webpack_require__(7);
 var isSpec = __webpack_require__(4);
-var isSpecRef = __webpack_require__(30);
+var isSpecRef = __webpack_require__(17);
 var isDelayedSpec = __webpack_require__(28);
 var Spec = __webpack_require__(2);
 var Problem = __webpack_require__(0);
-var fnName = __webpack_require__(14);
+var fnName = __webpack_require__(16);
 
 var SPEC_TYPE = 'PRED';
 
@@ -357,7 +357,7 @@ module.exports = isStr;
 "use strict";
 'use strict';
 
-var isFn = __webpack_require__(12);
+var isFn = __webpack_require__(14);
 var Spec = __webpack_require__(2);
 
 function isPred(x) {
@@ -374,14 +374,14 @@ module.exports = isPred;
 'use strict';
 
 var oAssign = __webpack_require__(3);
-var nfaWalker = __webpack_require__(57);
-var predWalker = __webpack_require__(58);
-var fspecWalker = __webpack_require__(56);
-var propsWalker = __webpack_require__(59);
-var andWalker = __webpack_require__(53);
-var collOfWalker = __webpack_require__(54);
-var specRefWalker = __webpack_require__(60);
-var delayedSpecWalker = __webpack_require__(55);
+var nfaWalker = __webpack_require__(59);
+var predWalker = __webpack_require__(60);
+var fspecWalker = __webpack_require__(58);
+var propsWalker = __webpack_require__(61);
+var andWalker = __webpack_require__(55);
+var collOfWalker = __webpack_require__(56);
+var specRefWalker = __webpack_require__(62);
+var delayedSpecWalker = __webpack_require__(57);
 var coerceIntoSpec = __webpack_require__(5);
 var isProblem = __webpack_require__(1);
 
@@ -482,16 +482,59 @@ module.exports = function isUndefined(x) {
 'use strict';
 
 var oAssign = __webpack_require__(3);
+var regex = __webpack_require__(13);
+
+var _require = __webpack_require__(20),
+    props = _require.props,
+    keys = _require.keys;
+
+var other = {
+  and: __webpack_require__(34),
+  any: __webpack_require__(35),
+  fspec: __webpack_require__(9)
+};
+
+var r = oAssign({}, regex, { props: props, keys: keys }, other);
+
+module.exports = r;
+
+/***/ },
+/* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+'use strict';
+
+module.exports = {
+  conform: __webpack_require__(15),
+  isValid: __webpack_require__(54),
+  isNamespacePath: __webpack_require__(52),
+  identity: __webpack_require__(27),
+  isProblem: __webpack_require__(1),
+  delayed: __webpack_require__(50),
+  enforce: __webpack_require__(51),
+  isExpr: __webpack_require__(29),
+  isSpecRef: __webpack_require__(17)
+};
+
+/***/ },
+/* 13 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+'use strict';
+
+var oAssign = __webpack_require__(3);
 
 var Spec = __webpack_require__(2);
 var isSpec = __webpack_require__(4);
 var isPred = __webpack_require__(7);
-var specFromAlts = __webpack_require__(15);
-var isObj = __webpack_require__(24);
+var specFromAlts = __webpack_require__(18);
+var isObj = __webpack_require__(25);
 var isStr = __webpack_require__(6);
-var isSpecName = __webpack_require__(51);
-var namedFn = __webpack_require__(31);
-var isSpecRef = __webpack_require__(30);
+var isSpecName = __webpack_require__(53);
+var namedFn = __webpack_require__(30);
+var isSpecRef = __webpack_require__(17);
 var isDelayedSpec = __webpack_require__(28);
 var c = __webpack_require__(36);
 var coerceIntoSpec = __webpack_require__(5);
@@ -734,7 +777,7 @@ var TestSpec = orOp({
 });
 
 /***/ },
-/* 12 */
+/* 14 */
 /***/ function(module, exports) {
 
 "use strict";
@@ -749,7 +792,7 @@ function isFunction(x) {
 module.exports = isFunction;
 
 /***/ },
-/* 13 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -769,7 +812,7 @@ function conform(spec, x) {
 module.exports = conform;
 
 /***/ },
-/* 14 */
+/* 16 */
 /***/ function(module, exports) {
 
 "use strict";
@@ -786,7 +829,21 @@ function functionName(fun) {
 module.exports = functionName;
 
 /***/ },
-/* 15 */
+/* 17 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+'use strict';
+
+var SpecRef = __webpack_require__(22);
+
+//TODO
+module.exports = function isSpecRef(x) {
+  return x instanceof SpecRef;
+};
+
+/***/ },
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -813,44 +870,20 @@ module.exports = function specFromAlts(alts) {
 };
 
 /***/ },
-/* 16 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 'use strict';
 
-var oAssign = __webpack_require__(3);
-var regex = __webpack_require__(11);
-
-var _require = __webpack_require__(19),
-    props = _require.props,
-    keys = _require.keys;
-
-var other = {
-  and: __webpack_require__(34),
-  any: __webpack_require__(35),
-  fspec: __webpack_require__(9)
-};
-
-var r = oAssign({}, regex, { props: props, keys: keys }, other);
-
-module.exports = r;
-
-/***/ },
-/* 17 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-'use strict';
-
-var isNum = __webpack_require__(23);
+var isNum = __webpack_require__(24);
 var isNatInt = __webpack_require__(45);
-var isInt = __webpack_require__(22);
+var isInt = __webpack_require__(23);
 var isBool = __webpack_require__(43);
-var isFn = __webpack_require__(12);
-var isObj = __webpack_require__(24);
+var isFn = __webpack_require__(14);
+var isObj = __webpack_require__(25);
 var equals = __webpack_require__(41);
-var oneOf = __webpack_require__(25);
+var oneOf = __webpack_require__(26);
 var isStr = __webpack_require__(6);
 var isDate = __webpack_require__(44);
 var instanceOf = __webpack_require__(42);
@@ -880,38 +913,7 @@ e.default = e;
 module.exports = e;
 
 /***/ },
-/* 18 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-'use strict';
-
-var _namespace = __webpack_require__(32);
-
-var _namespace2 = _interopRequireDefault(_namespace);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var oAssign = __webpack_require__(3);
-
-
-var ops = __webpack_require__(16);
-var utils = __webpack_require__(33);
-
-var predicates = __webpack_require__(17);
-
-var models = {
-  Problem: __webpack_require__(0),
-  Spec: __webpack_require__(2)
-};
-
-var r = oAssign(_namespace2.default, ops, utils, models, predicates);
-r.default = r;
-
-module.exports = r;
-
-/***/ },
-/* 19 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -920,11 +922,11 @@ module.exports = r;
 var Spec = __webpack_require__(2);
 var isSpec = __webpack_require__(4);
 var isStr = __webpack_require__(6);
-var isFn = __webpack_require__(12);
-var oneOf = __webpack_require__(25);
+var isFn = __webpack_require__(14);
+var oneOf = __webpack_require__(26);
 var coerceIntoSpec = __webpack_require__(5);
 
-var _require = __webpack_require__(11),
+var _require = __webpack_require__(13),
     cat = _require.cat,
     or = _require.or,
     zeroOrMore = _require.zeroOrMore,
@@ -1036,7 +1038,7 @@ module.exports = {
 // console.log(r);
 
 /***/ },
-/* 20 */
+/* 21 */
 /***/ function(module, exports) {
 
 "use strict";
@@ -1060,7 +1062,7 @@ function DelayedSpec(_ref) {
 module.exports = DelayedSpec;
 
 /***/ },
-/* 21 */
+/* 22 */
 /***/ function(module, exports) {
 
 "use strict";
@@ -1080,7 +1082,7 @@ function SpecRef(_ref) {
 module.exports = SpecRef;
 
 /***/ },
-/* 22 */
+/* 23 */
 /***/ function(module, exports) {
 
 "use strict";
@@ -1097,7 +1099,7 @@ function isInt(x) {
 module.exports = isInt;
 
 /***/ },
-/* 23 */
+/* 24 */
 /***/ function(module, exports) {
 
 "use strict";
@@ -1110,7 +1112,7 @@ function isNum(x) {
 module.exports = isNum;
 
 /***/ },
-/* 24 */
+/* 25 */
 /***/ function(module, exports) {
 
 "use strict";
@@ -1125,7 +1127,7 @@ function isObject(x) {
 module.exports = isObject;
 
 /***/ },
-/* 25 */
+/* 26 */
 /***/ function(module, exports) {
 
 "use strict";
@@ -1147,21 +1149,6 @@ module.exports = function oneOf(items) {
 };
 
 /***/ },
-/* 26 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-'use strict';
-
-var DelayedSpec = __webpack_require__(20);
-
-function delayed(getFn) {
-  return new DelayedSpec({ getFn: getFn });
-}
-
-module.exports = delayed;
-
-/***/ },
 /* 27 */
 /***/ function(module, exports) {
 
@@ -1181,7 +1168,7 @@ module.exports = identity;
 "use strict";
 'use strict';
 
-var DelayedSpec = __webpack_require__(20);
+var DelayedSpec = __webpack_require__(21);
 
 //TODO
 module.exports = function isSpecRef(x) {
@@ -1206,20 +1193,6 @@ module.exports = isExpr;
 
 /***/ },
 /* 30 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-'use strict';
-
-var SpecRef = __webpack_require__(21);
-
-//TODO
-module.exports = function isSpecRef(x) {
-  return x instanceof SpecRef;
-};
-
-/***/ },
-/* 31 */
 /***/ function(module, exports) {
 
 "use strict";
@@ -1236,7 +1209,67 @@ function getNamedFn(fnName, fn, suffix) {
 module.exports = getNamedFn;
 
 /***/ },
+/* 31 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+'use strict';
+
+var _namespace = __webpack_require__(33);
+
+var _namespace2 = _interopRequireDefault(_namespace);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var oAssign = __webpack_require__(3);
+
+
+var ops = __webpack_require__(11);
+var utils = __webpack_require__(12);
+
+var predicates = __webpack_require__(19);
+
+var models = {
+  Problem: __webpack_require__(0),
+  Spec: __webpack_require__(2)
+};
+
+var r = oAssign(_namespace2.default, ops, utils, models, predicates);
+r.default = r;
+
+module.exports = r;
+
+/***/ },
 /* 32 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.isSpecRef = exports.NamespaceFnSpec = undefined;
+
+var _core = __webpack_require__(11);
+
+var _utils = __webpack_require__(12);
+
+var ExprOrPartialRefMapSpec = (0, _core.or)('expr', (0, _utils.delayed)(function () {
+  return _core.ExprSpec;
+}) //TODO
+);
+
+var NamespaceFnSpec = (0, _core.fspec)({
+  args: (0, _core.or)('def', (0, _core.cat)('name', _utils.isNamespacePath, 'val', ExprOrPartialRefMapSpec), 'get', (0, _core.cat)('name', _utils.isNamespacePath)),
+  ret: (0, _core.or)(_utils.isSpecRef, _utils.isExpr)
+});
+
+exports.NamespaceFnSpec = NamespaceFnSpec;
+exports.isSpecRef = _utils.isSpecRef;
+
+/***/ },
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1245,36 +1278,30 @@ module.exports = getNamedFn;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var oPath = __webpack_require__(61);
+
+var _core = __webpack_require__(11);
+
+var _utils = __webpack_require__(12);
+
+var _ns = __webpack_require__(32);
+
+var oPath = __webpack_require__(63);
 var oAssign = __webpack_require__(3);
-var SpecRef = __webpack_require__(21);
+var SpecRef = __webpack_require__(22);
 
-var _require = __webpack_require__(16),
-    cat = _require.cat,
-    or = _require.or,
-    fspec = _require.fspec,
-    ExprSpec = _require.ExprSpec;
-
-var _require2 = __webpack_require__(19),
-    props = _require2.props;
+var _require = __webpack_require__(20),
+    props = _require.props;
 
 var isSpec = __webpack_require__(4);
 var isPred = __webpack_require__(7);
-var isStr = __webpack_require__(6);
-var isExpr = __webpack_require__(29);
 var isUndefined = __webpack_require__(10);
 var walk = __webpack_require__(8);
-var delayed = __webpack_require__(26);
 
 var reg;
 
-function isNamespaceName(x) {
-  return isStr(x); // TODO
-}
-
-var _get = fspec({
-  args: cat(isNamespaceName),
-  ret: isSpecRef
+var _get = (0, _core.fspec)({
+  args: (0, _core.cat)(_utils.isNamespacePath),
+  ret: _utils.isSpecRef
 }).instrument(_getUnchecked);
 
 function _getUnchecked(ref) {
@@ -1302,21 +1329,11 @@ function _getUnchecked(ref) {
   return sr;
 }
 
-var ExprOrPartialRefMapSpec = or('expr', delayed(function () {
-  return ExprSpec;
-}) //TODO
-);
-
 // var PartialRefMapSpec = props({
 //   req: {
-//     'refDefs': [isNamespaceName, ExprOrPartialRefMapSpec]
+//     'refDefs': [isNamespacePath, ExprOrPartialRefMapSpec]
 //   }
 // });
-
-var NamespaceFnSpec = fspec({
-  args: or('def', cat('name', isNamespaceName, 'val', ExprOrPartialRefMapSpec), 'get', cat('name', isNamespaceName)),
-  ret: or(isSpecRef, isExpr)
-});
 
 function speckyNamespace(cargs) {
   var retVal;
@@ -1359,16 +1376,12 @@ function _processVal(prefix, val) {
   }
 }
 
-function isSpecRef(x) {
-  return x instanceof SpecRef;
-}
-
 var NameObjSpec = props({
-  req: { 'expr': or(isSpec, isPred) }
+  req: { 'expr': (0, _core.or)(isSpec, isPred) }
 });
 
-var _set = fspec({
-  args: cat(isNamespaceName, NameObjSpec),
+var _set = (0, _core.fspec)({
+  args: (0, _core.cat)(_utils.isNamespacePath, NameObjSpec),
   ret: isUndefined
 }).instrument(function _set(n, nObj) {
   _maybeInitRegistry();
@@ -1389,32 +1402,21 @@ function clearRegistry() {
   reg = global[K] = {};
 }
 
+function meta() {
+  // TODO
+}
+
 _maybeInitRegistry();
 
-var specedSpeckyNamespace = NamespaceFnSpec.instrumentConformed(speckyNamespace);
+var specedSpeckyNamespace = _ns.NamespaceFnSpec.instrumentConformed(speckyNamespace);
 specedSpeckyNamespace.clearRegistry = clearRegistry;
 specedSpeckyNamespace.getRegistry = function () {
   return reg;
 };
+specedSpeckyNamespace.meta = meta;
 
 exports.default = specedSpeckyNamespace;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(62)))
-
-/***/ },
-/* 33 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-'use strict';
-
-module.exports = {
-  conform: __webpack_require__(13),
-  isValid: __webpack_require__(52),
-  identity: __webpack_require__(27),
-  isProblem: __webpack_require__(1),
-  delayed: __webpack_require__(26),
-  enforce: __webpack_require__(50)
-};
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(64)))
 
 /***/ },
 /* 34 */
@@ -1423,7 +1425,7 @@ module.exports = {
 "use strict";
 'use strict';
 
-var _require = __webpack_require__(17),
+var _require = __webpack_require__(19),
     isBool = _require.isBool,
     isFn = _require.isFn;
 
@@ -1433,7 +1435,7 @@ var isProblem = __webpack_require__(1);
 var Spec = __webpack_require__(2);
 var Problem = __webpack_require__(0);
 
-var _require2 = __webpack_require__(11),
+var _require2 = __webpack_require__(13),
     oneOrMore = _require2.oneOrMore,
     zeroOrOne = _require2.zeroOrOne,
     or = _require2.or,
@@ -2186,7 +2188,7 @@ module.exports = function isDate(date) {
 "use strict";
 'use strict';
 
-var isInt = __webpack_require__(22);
+var isInt = __webpack_require__(23);
 
 function isNatInt(x) {
   return isInt(x) && x >= 0.0;
@@ -2240,12 +2242,12 @@ module.exports = function notEmpty(x) {
 /***/ function(module, exports) {
 
 "use strict";
-"use strict";
+'use strict';
 
 function betterThrow(problem) {
-  // console.log('----------------------');
-  // console.error(problem.message, problem);
-  // console.log('----------------------');
+  console.log('----------------------');
+  console.error(problem.message, problem);
+  console.log('----------------------');
   throw problem;
 }
 
@@ -2258,8 +2260,23 @@ module.exports = betterThrow;
 "use strict";
 'use strict';
 
+var DelayedSpec = __webpack_require__(21);
+
+function delayed(getFn) {
+  return new DelayedSpec({ getFn: getFn });
+}
+
+module.exports = delayed;
+
+/***/ },
+/* 51 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+'use strict';
+
 var isProblem = __webpack_require__(1);
-var conform = __webpack_require__(13); // TODO : replace with checkProblem
+var conform = __webpack_require__(15); // TODO : replace with checkProblem
 
 module.exports = function enforce(spec, x) {
   var r = conform(spec, x);
@@ -2269,7 +2286,26 @@ module.exports = function enforce(spec, x) {
 };
 
 /***/ },
-/* 51 */
+/* 52 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+'use strict';
+
+var _isStr = __webpack_require__(6);
+
+var _isStr2 = _interopRequireDefault(_isStr);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function isNamespacePath(x) {
+  return (0, _isStr2.default)(x); // TODO
+}
+
+module.exports = isNamespacePath;
+
+/***/ },
+/* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2283,7 +2319,7 @@ module.exports = function isSpecName(x) {
 };
 
 /***/ },
-/* 52 */
+/* 54 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2293,7 +2329,7 @@ var Problem = __webpack_require__(0);
 var isProblem = __webpack_require__(1);
 var isPred = __webpack_require__(7);
 var isSpec = __webpack_require__(4);
-var conform = __webpack_require__(13);
+var conform = __webpack_require__(15);
 
 function isValid(pred, x) {
   if (!pred) {
@@ -2310,7 +2346,7 @@ function isValid(pred, x) {
 module.exports = isValid;
 
 /***/ },
-/* 53 */
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2318,7 +2354,7 @@ module.exports = isValid;
 
 var Problem = __webpack_require__(0);
 var isProblem = __webpack_require__(1);
-var specFromAlts = __webpack_require__(15);
+var specFromAlts = __webpack_require__(18);
 
 function andWalker(spec, walkFn) {
   var exprs = spec.exprs.map(specFromAlts);
@@ -2359,7 +2395,7 @@ function andWalker(spec, walkFn) {
 module.exports = andWalker;
 
 /***/ },
-/* 54 */
+/* 56 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2368,7 +2404,7 @@ module.exports = andWalker;
 var coerceIntoSpec = __webpack_require__(5);
 var Problem = __webpack_require__(0);
 var isProblem = __webpack_require__(1);
-var isNum = __webpack_require__(23);
+var isNum = __webpack_require__(24);
 
 function collOfWalker(spec, walkFn) {
   var expr = spec.exprs[0];
@@ -2434,7 +2470,7 @@ function collOfWalker(spec, walkFn) {
 module.exports = collOfWalker;
 
 /***/ },
-/* 55 */
+/* 57 */
 /***/ function(module, exports) {
 
 "use strict";
@@ -2457,7 +2493,7 @@ function delayedSpecWalker(delayedSpec, walkFn) {
 module.exports = delayedSpecWalker;
 
 /***/ },
-/* 56 */
+/* 58 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2465,8 +2501,8 @@ module.exports = delayedSpecWalker;
 
 var isProblem = __webpack_require__(1);
 var Problem = __webpack_require__(0);
-var functionName = __webpack_require__(14);
-var namedFn = __webpack_require__(31);
+var functionName = __webpack_require__(16);
+var namedFn = __webpack_require__(30);
 var betterThrow = __webpack_require__(49);
 var oAssign = __webpack_require__(3);
 
@@ -2594,7 +2630,7 @@ function fspecWalker(spec, walkFn) {
 module.exports = fspecWalker;
 
 /***/ },
-/* 57 */
+/* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2645,13 +2681,13 @@ function nfaWalker(spec, walkFn) {
 module.exports = nfaWalker;
 
 /***/ },
-/* 58 */
+/* 60 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 'use strict';
 
-var fnName = __webpack_require__(14);
+var fnName = __webpack_require__(16);
 var Problem = __webpack_require__(0);
 
 function predWalker(spec, walkFn) {
@@ -2681,7 +2717,7 @@ function predWalker(spec, walkFn) {
 module.exports = predWalker;
 
 /***/ },
-/* 59 */
+/* 61 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2694,7 +2730,7 @@ var isUndefined = __webpack_require__(10);
 var oAssign = __webpack_require__(3);
 var Problem = __webpack_require__(0);
 var coerceIntoSpec = __webpack_require__(5);
-var specFromAlts = __webpack_require__(15);
+var specFromAlts = __webpack_require__(18);
 
 function propsWalker(spec, walkFn) {
   var keyConformer;
@@ -2988,7 +3024,7 @@ function _conformNamedOrExpr(x, alts, walkFn, walkOpts) {
 module.exports = propsWalker;
 
 /***/ },
-/* 60 */
+/* 62 */
 /***/ function(module, exports) {
 
 "use strict";
@@ -3012,7 +3048,7 @@ function specRefWalker(specRef, walkFn) {
 module.exports = specRefWalker;
 
 /***/ },
-/* 61 */
+/* 63 */
 /***/ function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (root, factory){
@@ -3309,7 +3345,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
 /***/ },
-/* 62 */
+/* 64 */
 /***/ function(module, exports) {
 
 var g;

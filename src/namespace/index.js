@@ -1,24 +1,20 @@
 var oPath = require( 'object-path' );
 var oAssign = require( 'object-assign' );
 var SpecRef = require( '../models/SpecRef' );
-var { cat, or, fspec, ExprSpec } = require( '../core' );
+import { cat, or, fspec } from '../core' ;
 var { props } = require( '../core/objRelated' );
 var isSpec = require( '../utils/isSpec' );
 var isPred = require( '../utils/isPred' );
-var isStr = require( '../preds/isStr' );
-var isExpr = require( '../utils/isExpr' );
 var isUndefined = require( '../preds/isUndefined' );
 var walk = require( '../walk' );
-var delayed = require( '../utils/delayed' );
 
+import { isNamespacePath, isSpecRef } from '../utils';
+import { NamespaceFnSpec } from '../specs/ns';
 var reg;
 
-function isNamespaceName( x ) {
-  return isStr( x ); // TODO
-}
 
 var _get = fspec( {
-  args: cat( isNamespaceName ),
+  args: cat( isNamespacePath ),
   ret: isSpecRef,
 } ).instrument( _getUnchecked );
 
@@ -47,27 +43,11 @@ function _getUnchecked( ref ) {
   return sr;
 }
 
-var ExprOrPartialRefMapSpec = or(
-  'expr', delayed( function() {
-    return ExprSpec
-  } ) //TODO
-);
-
 // var PartialRefMapSpec = props({
 //   req: {
-//     'refDefs': [isNamespaceName, ExprOrPartialRefMapSpec]
+//     'refDefs': [isNamespacePath, ExprOrPartialRefMapSpec]
 //   }
 // });
-
-var NamespaceFnSpec = fspec( {
-  args: or(
-    'def', cat(
-      'name', isNamespaceName,
-      'val', ExprOrPartialRefMapSpec ),
-    'get', cat( 'name', isNamespaceName )
-  ),
-  ret: or( isSpecRef, isExpr ),
-} );
 
 function speckyNamespace( cargs ) {
   var retVal;
@@ -110,16 +90,12 @@ function _processVal( prefix, val ) {
   }
 }
 
-function isSpecRef( x ) {
-  return x instanceof SpecRef;
-}
-
 var NameObjSpec = props( {
   req: { 'expr': or( isSpec, isPred ) }
 } );
 
 var _set = fspec( {
-  args: cat( isNamespaceName, NameObjSpec ),
+  args: cat( isNamespacePath, NameObjSpec ),
   ret: isUndefined,
 } ).instrument( function _set( n, nObj ) {
   _maybeInitRegistry();
@@ -140,10 +116,15 @@ function clearRegistry() {
   reg = global[ K ] = {};
 }
 
+function meta() {
+  // TODO
+}
+
 _maybeInitRegistry();
 
 var specedSpeckyNamespace = NamespaceFnSpec.instrumentConformed( speckyNamespace );
 specedSpeckyNamespace.clearRegistry = clearRegistry;
 specedSpeckyNamespace.getRegistry = () => reg;
+specedSpeckyNamespace.meta = meta;
 
 export default specedSpeckyNamespace;
