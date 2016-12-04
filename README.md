@@ -19,6 +19,8 @@ A powerful & highly flexible JavaScript data validation and conformation library
 - Guides you through the initial modeling process of code implementation
 - Help create more customizable type and behavior constraints that is more powerful than typed languages such as TypeScript
 
+[Click here](https://www.youtube.com/watch?v=oyLBGkS5ICk) to watch a good tro video on the rationale behind clojure.spec (and thus Specky).
+
 ## Performance
 
 - [![Size Minified](http://img.badgesize.io/speckyjs/specky/master/packages/specky/dist/specky.min.js?label=min)](packages/specky/dist) [![Size Gzipped](http://img.badgesize.io/speckyjs/specky/master/packages/specky/dist/specky.min.js?compression=gzip&label=min%2Bgzipped)](packages/specky/dist)
