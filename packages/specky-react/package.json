@@ -5,7 +5,7 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/settinghead/specky.git"
+    "url": "git+https://github.com/speckyjs/specky.git"
   },
   "keywords": [
     "babel",
@@ -26,9 +26,9 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/settinghead/specky/issues"
+    "url": "https://github.com/speckyjs/specky/issues"
   },
-  "homepage": "https://github.com/settinghead/specky#readme",
+  "homepage": "https://github.com/speckyjs/specky#readme",
   "dependencies": {
     "react": "^15.4.1",
     "specky": "0.0.15"

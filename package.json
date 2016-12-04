@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/settinghead/specky.git"
+    "url": "git+https://github.com/speckyjs/specky.git"
   },
   "keywords": [
     "babel",
@@ -29,9 +29,9 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/settinghead/specky/issues"
+    "url": "https://github.com/speckyjs/specky/issues"
   },
-  "homepage": "https://github.com/settinghead/specky#readme",
+  "homepage": "https://github.com/speckyjs/specky#readme",
   "dependencies": {
     "object-assign": "^4.1.0",
     "object-path": "^0.11.2"
