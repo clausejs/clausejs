@@ -4,7 +4,7 @@ M( 'Specky.types/NamespacePath', {
   '.comment': 'Represents a namespace path.',
   '.example': 'com.xyz.awesomeApp/User',
 } );
-M( 'Specky/root', {
+M( '/Specky', {
   '.args': {
     'register': {
       '.comment': 'Registers a namespace path with an expression.',

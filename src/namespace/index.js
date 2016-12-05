@@ -25,7 +25,7 @@ function _getUnchecked( ref ) {
     } else {
       path = ref;
     }
-    var nObj = oPath.get( reg, path );
+    var nObj = oPath.get( reg, _slashToDot( path ) );
 
     if ( nObj ) {
       return oAssign( nObj[ '.expr' ], nObj[ '.meta' ] );
@@ -40,6 +40,10 @@ function _getUnchecked( ref ) {
     return walk( ss, x, { conform: true } );
   }
   return sr;
+}
+
+function _slashToDot( p ) {
+  return p.replace( /^(.+)(\/)(.+)$/, '$1.$3' ).replace( /^\//, '' );
 }
 
 // var PartialRefMapSpec = props({
@@ -97,8 +101,8 @@ var _set = fspec( {
   ret: isUndefined,
 } ).instrument( function _set( n, nObj ) {
   _maybeInitRegistry();
-  var existing = oPath.get( reg, n );
-  oPath.set( reg, n, oAssign( {}, existing, nObj ) );
+  var existing = oPath.get( reg, _slashToDot( n ) );
+  oPath.set( reg, _slashToDot( n ), oAssign( {}, existing, nObj ) );
 } );
 
 var K = '___SPECKY_REGISTRY';
@@ -117,8 +121,8 @@ function clearRegistry() {
 const meta = MetaFnSpec.instrumentConformed(
   function meta( { source: { namespacePath, expression }, metaObj } ) {
     if ( namespacePath ) {
-      var nObj = oPath.get( reg, namespacePath );
-      oPath.set( reg, namespacePath, oAssign( {}, nObj, { '.meta': metaObj } ) );
+      var nObj = oPath.get( reg, _slashToDot( namespacePath ) );
+      oPath.set( reg, _slashToDot( namespacePath ), oAssign( {}, nObj, { '.meta': metaObj } ) );
       return _get( namespacePath );
     } else if ( expression ) {
       const spec = coerceIntoSpec( expression );
