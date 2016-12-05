@@ -16,7 +16,7 @@ describe( 'namespace', () => {
         s.isObj,
         s.props( {
           required: {
-            title: ( s( 'xyz.superapp.item.title' ) ),
+            title: ( s( 'xyz.superapp.item/title' ) ),
             content: s.isStr,
           }
         } ) ) );
@@ -35,7 +35,7 @@ describe( 'namespace', () => {
           '/title': s( '../headline' ),
           '/items': s.zeroOrMore( s( '../item' ) ),
         },
-        'item': [
+        '/item':
           s.props( {
             req: [
               s( 'todoapp.item/title' ),
@@ -47,19 +47,18 @@ describe( 'namespace', () => {
               s( 'todoapp.item/reminder' ),
             ],
           } ),
-          {
-            '/title': s( 'todoapp/headline' ),
-            '/content': s.and( s.isStr, s.notEmpty ),
-            '/date': s.isDate,
-            '/isDone': s.isBool,
-            '/reminder': s.isDate,
-          },
-        ],
+        'item': {
+          '/title': s( 'todoapp/headline' ),
+          '/content': s.and( s.isStr, s.notEmpty ),
+          '/date': s.isDate,
+          '/isDone': s.isBool,
+          '/reminder': s.isDate,
+        }
       } );
 
       var ListSpec = s( 'todoapp/list' );
       var ItemSpec = s( 'todoapp/item' );
-      var contentSpec = s( 'todoapp.item/content' );
+      var ContentSpec = s( 'todoapp.item/content' );
 
       expect( ListSpec ).to.be.ok;
       expect( isSpec( ListSpec ) ).to.be.true;

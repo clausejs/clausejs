@@ -1,10 +1,10 @@
 import S, { meta as M } from '../';
 
-M( 'Specky.types.NamespacePath', {
+M( 'Specky.types/NamespacePath', {
   '.comment': 'Represents a namespace path.',
-  '.example': 'com.xyz.awesomeApp.User',
+  '.example': 'com.xyz.awesomeApp/User',
 } );
-M( 'Specky', {
+M( 'Specky/root', {
   '.args': {
     'register': {
       '.comment': 'Registers a namespace path with an expression.',
