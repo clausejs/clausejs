@@ -59,7 +59,7 @@ function propsWalker( spec, walkFn ) {
       optKeyList = optSpecs.keyList;
     }
     if ( optFieldDefs ) {
-      processFieldDefs_mut( optFieldDefs );
+      processFieldDefs_mut( optFieldDefs, true );
     }
 
     if ( problems.length > 0 ) {
@@ -150,8 +150,7 @@ function restoreField_mut( x, { key, spec, guide }, walkFn, walkOpts ) {
 function _genKeyConformer( reqSpecs, optSpec, walkFn, walkOpts ) {
   return function tryConformKeys( x ) {
     if ( reqSpecs ) {
-      var reqProblems = [],
-        missingKeys = [];
+      let missingKeys = [];
       var { fieldDefs, keyList } = reqSpecs;
       var reqNames;
 

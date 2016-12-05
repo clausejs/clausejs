@@ -295,6 +295,19 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 /***/ },
 /* 5 */
+/***/ function(module, exports) {
+
+"use strict";
+"use strict";
+
+function isStr(x) {
+  return x !== null && x !== undefined && x.constructor === String;
+}
+
+module.exports = isStr;
+
+/***/ },
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -338,19 +351,6 @@ function predConformer(pred) {
 module.exports = coerceIntoSpec;
 
 /***/ },
-/* 6 */
-/***/ function(module, exports) {
-
-"use strict";
-"use strict";
-
-function isStr(x) {
-  return x !== null && x !== undefined && x.constructor === String;
-}
-
-module.exports = isStr;
-
-/***/ },
 /* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -382,7 +382,7 @@ var andWalker = __webpack_require__(55);
 var collOfWalker = __webpack_require__(56);
 var specRefWalker = __webpack_require__(62);
 var delayedSpecWalker = __webpack_require__(57);
-var coerceIntoSpec = __webpack_require__(5);
+var coerceIntoSpec = __webpack_require__(6);
 var isProblem = __webpack_require__(2);
 
 function walk(spec, x, opts) {
@@ -527,7 +527,7 @@ var isFn = __webpack_require__(16);
 var isObj = __webpack_require__(26);
 var equals = __webpack_require__(41);
 var oneOf = __webpack_require__(27);
-var isStr = __webpack_require__(6);
+var isStr = __webpack_require__(5);
 var isDate = __webpack_require__(44);
 var instanceOf = __webpack_require__(42);
 var isUuid = __webpack_require__(47);
@@ -545,7 +545,7 @@ var e = {
   isObj: isObj, isObject: isObj,
   isStr: isStr, isString: isStr,
   isArray: isArray, isArr: isArray,
-  equals: equals, equalsTo: equals,
+  equals: equals, equalsTo: equals, eq: equals,
   oneOf: oneOf,
   isDate: isDate,
   instanceOf: instanceOf,
@@ -589,13 +589,13 @@ var isSpec = __webpack_require__(3);
 var isPred = __webpack_require__(7);
 var specFromAlts = __webpack_require__(19);
 var isObj = __webpack_require__(26);
-var isStr = __webpack_require__(6);
+var isStr = __webpack_require__(5);
 var isSpecName = __webpack_require__(53);
 var namedFn = __webpack_require__(32);
 var isSpecRef = __webpack_require__(11);
 var isDelayedSpec = __webpack_require__(30);
 var c = __webpack_require__(36);
-var coerceIntoSpec = __webpack_require__(5);
+var coerceIntoSpec = __webpack_require__(6);
 var fspec = __webpack_require__(9);
 var walk = __webpack_require__(8);
 var specSpec = coerceIntoSpec(isSpec);
@@ -893,7 +893,7 @@ module.exports = functionName;
 "use strict";
 'use strict';
 
-var coerceIntoSpec = __webpack_require__(5);
+var coerceIntoSpec = __webpack_require__(6);
 
 module.exports = function specFromAlts(alts) {
   if (!alts) {}
@@ -951,10 +951,10 @@ module.exports = r;
 
 var Spec = __webpack_require__(1);
 var isSpec = __webpack_require__(3);
-var isStr = __webpack_require__(6);
+var isStr = __webpack_require__(5);
 var isFn = __webpack_require__(16);
 var oneOf = __webpack_require__(27);
-var coerceIntoSpec = __webpack_require__(5);
+var coerceIntoSpec = __webpack_require__(6);
 
 var _require = __webpack_require__(15),
     cat = _require.cat,
@@ -1344,7 +1344,7 @@ function _getUnchecked(ref) {
     } else {
       path = ref;
     }
-    var nObj = oPath.get(reg, path);
+    var nObj = oPath.get(reg, _slashToDot(path));
 
     if (nObj) {
       return oAssign(nObj['.expr'], nObj['.meta']);
@@ -1359,6 +1359,10 @@ function _getUnchecked(ref) {
     return walk(ss, x, { conform: true });
   };
   return sr;
+}
+
+function _slashToDot(p) {
+  return p.replace(/^(.+)(\/)(.+)$/, '$1.$3').replace(/^\//, '');
 }
 
 // var PartialRefMapSpec = props({
@@ -1420,8 +1424,8 @@ var _set = (0, _core.fspec)({
   ret: isUndefined
 }).instrument(function _set(n, nObj) {
   _maybeInitRegistry();
-  var existing = oPath.get(reg, n);
-  oPath.set(reg, n, oAssign({}, existing, nObj));
+  var existing = oPath.get(reg, _slashToDot(n));
+  oPath.set(reg, _slashToDot(n), oAssign({}, existing, nObj));
 });
 
 var K = '___SPECKY_REGISTRY';
@@ -1444,8 +1448,8 @@ var meta = _namespace.MetaFnSpec.instrumentConformed(function meta(_ref) {
       metaObj = _ref.metaObj;
 
   if (namespacePath) {
-    var nObj = oPath.get(reg, namespacePath);
-    oPath.set(reg, namespacePath, oAssign({}, nObj, { '.meta': metaObj }));
+    var nObj = oPath.get(reg, _slashToDot(namespacePath));
+    oPath.set(reg, _slashToDot(namespacePath), oAssign({}, nObj, { '.meta': metaObj }));
     return _get(namespacePath);
   } else if (expression) {
     var spec = coerceIntoSpec(expression);
@@ -2042,6 +2046,7 @@ module.exports = getMatch;
 'use strict';
 
 var isProblem = __webpack_require__(2);
+var isStr = __webpack_require__(5);
 
 function simulate(nfa, rawInput, walkFn, walkOpts) {
   var input;
@@ -2073,7 +2078,7 @@ function simulate(nfa, rawInput, walkFn, walkOpts) {
 
       if (transition.group === 'in') {
         if (groupCount === 0) {
-          if (Array.isArray(input[0])) {
+          if (Array.isArray(input[0]) || isStr(input[0])) {
             input = input[0];
             currentOffset = 0;
             arrayed = true;
@@ -2336,14 +2341,15 @@ module.exports = function enforce(spec, x) {
 "use strict";
 'use strict';
 
-var _isStr = __webpack_require__(6);
+var _isStr = __webpack_require__(5);
 
 var _isStr2 = _interopRequireDefault(_isStr);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function isNamespacePath(x) {
-  return (0, _isStr2.default)(x); // TODO
+  return (/^[a-zA-Z0-9\-_\.]*\/([a-zA-Z0-9\-_]+)$/.test(x)
+  );
 }
 
 module.exports = isNamespacePath;
@@ -2355,7 +2361,7 @@ module.exports = isNamespacePath;
 "use strict";
 'use strict';
 
-var isStr = __webpack_require__(6);
+var isStr = __webpack_require__(5);
 
 //TODO
 module.exports = function isSpecName(x) {
@@ -2445,7 +2451,7 @@ module.exports = andWalker;
 "use strict";
 'use strict';
 
-var coerceIntoSpec = __webpack_require__(5);
+var coerceIntoSpec = __webpack_require__(6);
 var Problem = __webpack_require__(0);
 var isProblem = __webpack_require__(2);
 var isNum = __webpack_require__(25);
@@ -2780,7 +2786,7 @@ var isProblem = __webpack_require__(2);
 var isUndefined = __webpack_require__(10);
 var oAssign = __webpack_require__(4);
 var Problem = __webpack_require__(0);
-var coerceIntoSpec = __webpack_require__(5);
+var coerceIntoSpec = __webpack_require__(6);
 var specFromAlts = __webpack_require__(19);
 
 function propsWalker(spec, walkFn) {
@@ -2836,7 +2842,7 @@ function propsWalker(spec, walkFn) {
       optKeyList = optSpecs.keyList;
     }
     if (optFieldDefs) {
-      processFieldDefs_mut(optFieldDefs);
+      processFieldDefs_mut(optFieldDefs, true);
     }
 
     if (problems.length > 0) {
@@ -2946,8 +2952,7 @@ function restoreField_mut(x, _ref3, walkFn, walkOpts) {
 function _genKeyConformer(reqSpecs, optSpec, walkFn, walkOpts) {
   return function tryConformKeys(x) {
     if (reqSpecs) {
-      var reqProblems = [],
-          missingKeys = [];
+      var missingKeys = [];
       var fieldDefs = reqSpecs.fieldDefs,
           keyList = reqSpecs.keyList;
 
@@ -3431,7 +3436,7 @@ var _namespace = __webpack_require__(28);
 
 var gen = function gen(registry) {
   var conformedReg = _namespace.NamespaceObjSpec.conform(registry);
-  var docstr = _walk(null, conformedReg);
+  var docstr = _walk(null, null, conformedReg);
   return docstr;
 };
 
@@ -3439,19 +3444,21 @@ var fns = {
   gen: gen
 };
 
-function _walk(prefix, creg) {
+function _walk(prefix, currentFrag, creg) {
+  var currentNs = prefix ? prefix + '.' + currentFrag : currentFrag;
   var r = '';
   var subresults = [];
   var nsComment = void 0,
-      exprResult = void 0;
+      exprResult = void 0,
+      subNamespaces = void 0;
   for (var key in creg) {
     if (creg.hasOwnProperty(key)) {
       switch (key) {
         case 'subNamespaces':
-          for (var subnamespace in creg[key]) {
-            if (creg[key].hasOwnProperty(subnamespace)) {
-              var subNsName = prefix ? prefix + '.' + subnamespace : subnamespace;
-              var subresult = _walk(subNsName, creg[key][subnamespace]);
+          subNamespaces = creg[key];
+          for (var subnamespace in subNamespaces) {
+            if (subNamespaces.hasOwnProperty(subnamespace)) {
+              var subresult = _walk(currentNs, subnamespace, subNamespaces[subnamespace]);
               subresults.push(subresult);
             }
           }
@@ -3460,7 +3467,7 @@ function _walk(prefix, creg) {
           nsComment = '<p><i>' + creg[key] + '</i></p>';
           break;
         case '.meta':
-          exprResult = _exprMeta(creg[key], creg['.expr']);
+          exprResult = _exprMeta(currentFrag, creg[key], creg['.expr']);
           break;
         default:
           break;
@@ -3468,16 +3475,16 @@ function _walk(prefix, creg) {
     }
   }
 
-  if (prefix && (nsComment || exprResult)) {
-    r += '<h3>' + prefix + '</h3><hr />';
+  if (exprResult) {
+    r += exprResult;
+  }
+
+  if (currentNs && (nsComment || _hasExprs(subNamespaces))) {
+    r += '<h3>' + currentNs + '</h3><hr />';
   }
 
   if (nsComment) {
     r += nsComment;
-  }
-
-  if (exprResult) {
-    r += exprResult;
   }
 
   if (subresults.length > 0) {
@@ -3487,8 +3494,20 @@ function _walk(prefix, creg) {
   return r;
 }
 
-function _exprMeta(meta, expr) {
-  return '<pre>' + JSON.stringify(meta, null, 2) + '</pre>';
+function _hasExprs(subNamespaces) {
+  if (!subNamespaces) {
+    return false;
+  }
+  return Object.keys(subNamespaces).filter(function (n) {
+    return subNamespaces[n]['.expr'];
+  }).length > 0;
+}
+
+function _exprMeta(exprName, meta, expr) {
+  if (!expr) {
+    throw new Error('Expression ' + exprName + ' does not exist in the registry');
+  }
+  return '\n    <h4>' + exprName + '</h4>\n    <i>Type: ' + expr.type + '</i>\n    <pre>' + JSON.stringify(meta, null, 2) + '</pre>\n    ';
 }
 
 module.exports = fns;
@@ -3508,11 +3527,11 @@ var _2 = _interopRequireDefault(_);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-(0, _.meta)('Specky.types.NamespacePath', {
+(0, _.meta)('Specky.types/NamespacePath', {
   '.comment': 'Represents a namespace path.',
-  '.example': 'com.xyz.awesomeApp.User'
+  '.example': 'com.xyz.awesomeApp/User'
 });
-(0, _.meta)('Specky', {
+(0, _.meta)('/Specky', {
   '.args': {
     'register': {
       '.comment': 'Registers a namespace path with an expression.'
@@ -3555,8 +3574,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 // const S = Specky.withRegistry(nsObj);
 
-(0, _2.default)('Specky.types.NamespacePath', _namespace.isNamespacePath);
-(0, _2.default)('Specky', _namespace.NamespaceFnSpec);
+(0, _2.default)('Specky.types/NamespacePath', _namespace.isNamespacePath);
+(0, _2.default)('/Specky', _namespace.NamespaceFnSpec);
 
 exports.default = _2.default.getRegistry();
 
