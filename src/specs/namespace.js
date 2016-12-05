@@ -32,15 +32,14 @@ function isNamespaceFragment( x ) {
   return !!/^[^.@%\&\*#]+/.test( x );
 }
 
-// const NamespaceObjSpec = props( {
-//   optional: {
-//     subNamespaces: [ isNamespaceFragment, delayed( () => NamespaceObjSpec ) ],
-//     '.meta': isObj,
-//     '.expr': isExpr,
-//   }
-// } );
+const NamespaceObjSpec = props( {
+  optional: {
+    subNamespaces: [ isNamespaceFragment, delayed( () => NamespaceObjSpec ) ],
+    '.meta': isObj,
+    '.expr': isExpr,
+  }
+} );
 
-const NamespaceObjSpec = any();
 
 export {
   isSpecRef, NamespaceFnSpec,

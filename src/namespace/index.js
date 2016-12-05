@@ -9,7 +9,7 @@ var isUndefined = require( '../preds/isUndefined' );
 var walk = require( '../walk' );
 
 import { isNamespacePath, isSpecRef } from '../utils';
-import { NamespaceFnSpec, MetaFnSpec } from '../specs/ns';
+import { NamespaceFnSpec, MetaFnSpec } from '../specs/namespace';
 var reg;
 
 var _get = fspec( {

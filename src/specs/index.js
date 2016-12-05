@@ -1,5 +1,5 @@
 import S from '../';
-import { NamespaceFnSpec, isNamespacePath } from './ns';
+import { NamespaceFnSpec, isNamespacePath } from './namespace';
 
 // const S = Specky.withRegistry(nsObj);
 
