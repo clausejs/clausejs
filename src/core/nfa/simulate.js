@@ -1,4 +1,5 @@
 var isProblem = require( '../../utils/isProblem' );
+var isStr = require( '../../preds/isStr' );
 
 function simulate( nfa, rawInput, walkFn, walkOpts ) {
   var input;
@@ -25,7 +26,7 @@ function simulate( nfa, rawInput, walkFn, walkOpts ) {
 
       if ( transition.group === 'in' ) {
         if ( groupCount === 0 ) {
-          if ( Array.isArray( input[ 0 ] ) ) {
+          if ( Array.isArray( input[ 0 ] ) || isStr( input [ 0 ] ) ) {
             input = input[ 0 ];
             currentOffset = 0;
             arrayed = true;

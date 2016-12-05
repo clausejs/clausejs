@@ -41,6 +41,15 @@ describe( 'nfa regex', function() {
 
       } );
 
+    check.it( 'strings',
+    { times: 20 },
+  [ gen.strictPosInt, gen.strictPosInt ],
+    ( m, n ) => {
+      var expr = cat( oneOrMore( S.equals( 'a' ) ), S.equals( 'b' ), oneOrMore( S.equals( 'c' ) ) );
+      var val = `${repeat( m, 'a' ).join( '' )}b${repeat( n, 'c' ).join( '' )}`;
+      expect( S.isValid( expr, val ) ).to.be.true;
+    } );
+
     it( 'use in conjunction with cat', function() {
       var ZeroOrMoreStrings = S[ '*' ]( S.isStr );
       var ZeroOrMoreIntegers = S[ '*' ]( Number.isInteger );
