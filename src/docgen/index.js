@@ -1,5 +1,7 @@
 import { NamespaceObjSpec } from '../specs/namespace';
-
+import fnName from '../utils/fnName';
+import isPred from '../utils/isPred';
+import isSpec from '../utils/isSpec';
 
 const gen = ( registry ) => {
   var conformedReg = NamespaceObjSpec.conform( registry );
@@ -73,11 +75,29 @@ function _exprMeta( exprName, meta, expr ) {
   if ( !expr ) {
     throw new Error( `Expression ${exprName} does not exist in the registry` );
   }
+  let docstr;
+  if ( expr.type === 'FSPEC' ) {
+    docstr = _genFspec( exprName, expr, meta );
+  } else {
+    docstr = `<pre>${JSON.stringify( meta, null, 2 )}</pre>`;
+  }
   return `
-    <h4>${meta[ '.name' ] || exprName}</h4>
-    <i>Type: ${expr.type}</i>
-    <pre>${JSON.stringify( meta, null, 2 )}</pre>
+    <h5>${meta[ '.name' ] || exprName}</h5>
+    <i>Type: ${_type( expr )}</i>
+    ${docstr}
     `;
+}
+
+function _type( expr ) {
+  if ( isSpec( expr ) ) {
+    return expr.type;
+  } else if ( isPred( expr ) ) {
+    return `Predicate ${fnName( expr )}()`;
+  }
+}
+
+function _genFspec( exprName, spec, meta ) {
+  return `<pre>${JSON.stringify( meta, null, 2 )}\n${JSON.stringify( spec, null, 2 )}</pre>`;
 }
 
 module.exports = fns;

@@ -76,7 +76,7 @@ function _processVal( prefix, val ) {
       return expr;
     } else {
       console.error( e );
-      throw 'internal erro';
+      throw '!';
     }
 
   } else if ( val.partialRefMap ) {
@@ -88,7 +88,7 @@ function _processVal( prefix, val ) {
     }
   } else {
     console.error( val );
-    throw 'no impl';
+    throw '!';
   }
 }
 
