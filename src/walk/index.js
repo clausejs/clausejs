@@ -1,6 +1,7 @@
 var oAssign = require( 'object-assign' );
 var nfaWalker = require( './nfaWalker' );
 var predWalker = require( './predWalker' );
+var wallWalker = require( './wallWalker' );
 var fspecWalker = require( './fspecWalker' );
 var propsWalker = require( './propsWalker' );
 var andWalker = require( './andWalker' );
@@ -41,6 +42,8 @@ function _getWalker( expr ) {
     walker = collOfWalker;
   } else if ( spec.type === 'PRED' ) {
     walker = predWalker;
+  } else if ( spec.type === 'WALL' ) {
+    walker = wallWalker;
   } else if ( spec.type === 'PROPS' ) {
     walker = propsWalker;
   } else if ( spec.type === 'AND' ) {

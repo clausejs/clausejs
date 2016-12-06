@@ -6,6 +6,7 @@ var other = {
   and: require( './and' ),
   any: require( './any' ),
   fspec: require( './fspec' ),
+  wall: require( './wall' ),
 };
 
 var r = oAssign( {}, regex, { props, keys }, other );

@@ -68,4 +68,27 @@ describe( 'nfa regex', function() {
       expect( S.isValid( expr, invalidData ) ).to.be.false;
     } );
   } );
+
+  describe.only( 'nested regex/wall()', () => {
+    it( 'wall()', () => {
+      var flat = [ 'a', 1, true, 'b', 2, false, 'c', 3, true ];
+      var nested = [ [ 'a', 1, true ], [ 'b', 2, false ], [ 'c', 3, true ] ];
+      var moreNested = [ [ [ 'a', 1, true ] ], [ [ 'b', 2, false ] ], [ [ 'c', 3, true ] ] ];
+
+      var FlatSpec = S.oneOrMore( S.cat( S.isStr, S.isNum, S.isBool ) );
+      var NestedSpec = S.oneOrMore( S.wall( S.cat( S.isStr, S.isNum, S.isBool ) ) );
+      var NestedNestedSpec = S.oneOrMore( S.wall( S.cat( S.wall( S.cat( S.isStr, S.isNum, S.isBool ) ) ) ) );
+
+      [ flat, nested, moreNested ].forEach( ( d, i ) => {
+        [ FlatSpec, NestedSpec, NestedNestedSpec ].forEach( ( spec, j ) => {
+          let r = S.isValid( spec, d );
+          if ( i === j ) {
+            expect( r ).to.be.true;
+          } else {
+            expect( r ).to.be.false;
+          }
+        } )
+      } );
+    } );
+  } );
 } );
