@@ -24,7 +24,7 @@ A powerful & highly flexible JavaScript data validation and conformation library
 
 - [![Size Minified](http://img.badgesize.io/speckyjs/specky/master/packages/specky/dist/specky.min.js?label=min)](packages/specky/dist) [![Size Gzipped](http://img.badgesize.io/speckyjs/specky/master/packages/specky/dist/specky.min.js?compression=gzip&label=min%2Bgzipped)](packages/specky/dist)
 - Uses fast NFA-based algorithms in handling complex Specs
-- In general, very fast.
+- In general, pretty fast.
 
 ## Project status
 - Alpha. Subject to constant change and improvement based on [feedback](/../../issues/).
