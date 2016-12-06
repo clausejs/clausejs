@@ -97,7 +97,22 @@ function _type( expr ) {
 }
 
 function _genFspec( exprName, spec, meta ) {
-  return `<pre>${JSON.stringify( meta, null, 2 )}\n${JSON.stringify( spec, null, 2 )}</pre>`;
+  var frags = [];
+  const { args, ret, fn } = spec.opts;
+  if ( args ) {
+    frags.push( [ 'Argument spec', `<pre>${JSON.stringify( args, null, 2 )}</pre>` ] );
+  }
+  if ( ret ) {
+    frags.push( [ 'Return value spec', `<pre>${JSON.stringify( ret, null, 2 )}</pre>` ] );
+  } if ( fn ) {
+    frags.push( [ 'Argument-return value relation', `<pre>${fnName( fn )}</pre>` ] );
+  }
+  const r = `
+    <dl>
+    ${frags.map( ( [ name, src ] ) => `<dt>${name}</dt><dd>${src}</dd>` ).join( '\n' )}
+    </dl>
+  `;
+  return r;
 }
 
 module.exports = fns;

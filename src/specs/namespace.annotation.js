@@ -1,6 +1,5 @@
 import S, { meta as M } from '../';
 
-
 M( '/Specky', {
   '.name': 'S',
   '.args': {
