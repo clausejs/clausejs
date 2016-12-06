@@ -1,4 +1,4 @@
-import { NamespaceObjSpec } from '../specs/namespace';
+import { NamespaceObjSpec } from '../specs/namespace-types';
 import fnName from '../utils/fnName';
 import isPred from '../utils/isPred';
 import isSpec from '../utils/isSpec';

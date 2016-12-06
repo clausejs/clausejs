@@ -1354,7 +1354,7 @@ var _core = __webpack_require__(14);
 
 var _utils = __webpack_require__(16);
 
-var _namespace = __webpack_require__(29);
+var _namespaceTypes = __webpack_require__(29);
 
 var oPath = __webpack_require__(65);
 var oAssign = __webpack_require__(4);
@@ -1480,7 +1480,7 @@ function clearRegistry() {
   reg = global[K] = {};
 }
 
-var meta = _namespace.MetaFnSpec.instrumentConformed(function meta(_ref) {
+var meta = _namespaceTypes.MetaFnSpec.instrumentConformed(function meta(_ref) {
   var _ref$source = _ref.source,
       namespacePath = _ref$source.namespacePath,
       expression = _ref$source.expression,
@@ -1499,7 +1499,7 @@ var meta = _namespace.MetaFnSpec.instrumentConformed(function meta(_ref) {
 
 _maybeInitRegistry();
 
-var specedSpeckyNamespace = _namespace.NamespaceFnSpec.instrumentConformed(speckyNamespace);
+var specedSpeckyNamespace = _namespaceTypes.NamespaceFnSpec.instrumentConformed(speckyNamespace);
 specedSpeckyNamespace.clearRegistry = clearRegistry;
 specedSpeckyNamespace.getRegistry = function () {
   return reg;

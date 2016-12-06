@@ -1,9 +1,5 @@
 import S, { meta as M } from '../';
 
-M( 'specky.types/NamespacePath', {
-  '.comment': 'Represents a namespace path.',
-  '.example': 'com.xyz.awesomeApp/User',
-} );
 
 M( '/Specky', {
   '.name': 'S',
@@ -20,10 +16,7 @@ M( '/Specky', {
   },
 } );
 
-function C( nsPath, comment ) {
-  M( nsPath, { comment } );
-}
-
-function E( nsPath, example ) {
-  M( nsPath, { example } );
-}
+M( 'specky.types/NamespacePath', {
+  '.comment': 'Represents a namespace path.',
+  '.example': 'com.xyz.awesomeApp/User',
+} );

@@ -1,7 +1,7 @@
 import S from '../../src';
 import docgen from '../../src/docgen';
 import Registry from '../../src/specs';
-require( '../../src/specs/annotate.index.js' );
+require( '../../src/specs/index.annotation.js' );
 
 const finalDocStr = docgen.gen( Registry );
 

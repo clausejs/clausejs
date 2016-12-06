@@ -71,7 +71,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 74);
+/******/ 	return __webpack_require__(__webpack_require__.s = 76);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1354,7 +1354,7 @@ var _core = __webpack_require__(14);
 
 var _utils = __webpack_require__(16);
 
-var _namespace = __webpack_require__(29);
+var _namespaceTypes = __webpack_require__(29);
 
 var oPath = __webpack_require__(65);
 var oAssign = __webpack_require__(4);
@@ -1480,7 +1480,7 @@ function clearRegistry() {
   reg = global[K] = {};
 }
 
-var meta = _namespace.MetaFnSpec.instrumentConformed(function meta(_ref) {
+var meta = _namespaceTypes.MetaFnSpec.instrumentConformed(function meta(_ref) {
   var _ref$source = _ref.source,
       namespacePath = _ref$source.namespacePath,
       expression = _ref$source.expression,
@@ -1499,7 +1499,7 @@ var meta = _namespace.MetaFnSpec.instrumentConformed(function meta(_ref) {
 
 _maybeInitRegistry();
 
-var specedSpeckyNamespace = _namespace.NamespaceFnSpec.instrumentConformed(speckyNamespace);
+var specedSpeckyNamespace = _namespaceTypes.NamespaceFnSpec.instrumentConformed(speckyNamespace);
 specedSpeckyNamespace.clearRegistry = clearRegistry;
 specedSpeckyNamespace.getRegistry = function () {
   return reg;
@@ -3499,7 +3499,7 @@ module.exports = g;
 "use strict";
 'use strict';
 
-var _namespace = __webpack_require__(29);
+var _namespaceTypes = __webpack_require__(29);
 
 var _fnName = __webpack_require__(13);
 
@@ -3516,7 +3516,7 @@ var _isSpec2 = _interopRequireDefault(_isSpec);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var gen = function gen(registry) {
-  var conformedReg = _namespace.NamespaceObjSpec.conform(registry);
+  var conformedReg = _namespaceTypes.NamespaceObjSpec.conform(registry);
   var docstr = _walk(null, null, conformedReg);
   return docstr;
 };
@@ -3620,39 +3620,7 @@ module.exports.default = fns;
 "use strict";
 'use strict';
 
-var _ = __webpack_require__(20);
-
-var _2 = _interopRequireDefault(_);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-(0, _.meta)('specky.types/NamespacePath', {
-  '.comment': 'Represents a namespace path.',
-  '.example': 'com.xyz.awesomeApp/User'
-});
-
-(0, _.meta)('/Specky', {
-  '.name': 'S',
-  '.args': {
-    'register': {
-      '.comment': 'Registers a namespace path with an expression.'
-    },
-    'retrieve': {
-      '.comment': 'Retrieves an expression by namespace path'
-    }
-  },
-  '.ret': {
-    '.comment': 'Note: The returned Spec is not immediately resolved'
-  }
-});
-
-function C(nsPath, comment) {
-  (0, _.meta)(nsPath, { comment: comment });
-}
-
-function E(nsPath, example) {
-  (0, _.meta)(nsPath, { example: example });
-}
+__webpack_require__(72);
 
 /***/ },
 /* 71 */
@@ -3669,21 +3637,69 @@ var _ = __webpack_require__(20);
 
 var _2 = _interopRequireDefault(_);
 
-var _namespace = __webpack_require__(29);
+__webpack_require__(73);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // const S = Specky.withRegistry(nsObj);
 
-(0, _2.default)('specky.types/NamespacePath', _namespace.isNamespacePath);
-(0, _2.default)('/Specky', _namespace.NamespaceFnSpec);
-
 exports.default = _2.default.getRegistry();
 
 /***/ },
-/* 72 */,
-/* 73 */,
-/* 74 */
+/* 72 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+'use strict';
+
+var _ = __webpack_require__(20);
+
+var _2 = _interopRequireDefault(_);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+(0, _.meta)('/Specky', {
+  '.name': 'S',
+  '.args': {
+    'register': {
+      '.comment': 'Registers a namespace path with an expression.'
+    },
+    'retrieve': {
+      '.comment': 'Retrieves an expression by namespace path'
+    }
+  },
+  '.ret': {
+    '.comment': 'Note: The returned Spec is not immediately resolved'
+  }
+});
+
+(0, _.meta)('specky.types/NamespacePath', {
+  '.comment': 'Represents a namespace path.',
+  '.example': 'com.xyz.awesomeApp/User'
+});
+
+/***/ },
+/* 73 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+'use strict';
+
+var _ = __webpack_require__(20);
+
+var _2 = _interopRequireDefault(_);
+
+var _namespaceTypes = __webpack_require__(29);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+(0, _2.default)('/Specky', _namespaceTypes.NamespaceFnSpec);
+(0, _2.default)('specky.types/NamespacePath', _namespaceTypes.isNamespacePath);
+
+/***/ },
+/* 74 */,
+/* 75 */,
+/* 76 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";

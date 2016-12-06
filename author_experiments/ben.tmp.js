@@ -5,13 +5,13 @@ function shorternThan100( x ) {
   return x.length < 100;
 }
 
-S( 'tt.Username', S.and( S.isStr, shorternThan100 ) )
-S( 'tt.Email', S.and( S.isStr, ( x ) => x.indexOf( '@' ) > 0 ) )
+S( 'tt/Username', S.and( S.isStr, shorternThan100 ) )
+S( 'tt/Email', S.and( S.isStr, ( x ) => x.indexOf( '@' ) > 0 ) )
 
-S( 'tt.User', S.props( {
+S( 'tt/User', S.props( {
   required: {
-    username: S( 'tt.Username' ),
-    email: S( 'tt.Email' ),
+    username: S( 'tt/Username' ),
+    email: S( 'tt/Email' ),
     firstName: S.isStr,
     lastName: S.isStr,
   },
@@ -36,7 +36,7 @@ const ArrSpec = S.cat(
 
 var GetUserSpec = S.fspec( {
   args: S.or(
-    'byEmail', S.cat( S( 'tt.Email' ) ),
+    'byEmail', S.cat( S( 'tt/Email' ) ),
     'byId', S.cat( S.isNum ),
     'byFirstLastName', S.cat( S.isStr, ( x ) => /[a-zA-Z\']/.test( x ) ),
     'byPhoneNumber', S.cat( ( x ) => /[0-9\-\(\)]/.test( x ) )
