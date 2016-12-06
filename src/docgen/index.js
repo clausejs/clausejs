@@ -74,7 +74,7 @@ function _exprMeta( exprName, meta, expr ) {
     throw new Error( `Expression ${exprName} does not exist in the registry` );
   }
   return `
-    <h4>${exprName}</h4>
+    <h4>${meta[ '.name' ] || exprName}</h4>
     <i>Type: ${expr.type}</i>
     <pre>${JSON.stringify( meta, null, 2 )}</pre>
     `;

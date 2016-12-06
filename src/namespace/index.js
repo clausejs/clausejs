@@ -122,7 +122,8 @@ const meta = MetaFnSpec.instrumentConformed(
   function meta( { source: { namespacePath, expression }, metaObj } ) {
     if ( namespacePath ) {
       var nObj = oPath.get( reg, _slashToDot( namespacePath ) );
-      oPath.set( reg, _slashToDot( namespacePath ), oAssign( {}, nObj, { '.meta': metaObj } ) );
+      var currMeta = nObj && nObj[ '.meta' ];
+      oPath.set( reg, _slashToDot( namespacePath ), oAssign( {}, nObj, { '.meta': oAssign( {}, currMeta, metaObj ) } ) );
       return _get( namespacePath );
     } else if ( expression ) {
       const spec = coerceIntoSpec( expression );
