@@ -8,16 +8,15 @@ A powerful & highly flexible JavaScript data validation and conformation library
 - Validate and make assertions about your data with these predicate functions
 - Assert & validate the shape and properties of your function's arguments and its return value
 - Conform your data with a range of available shapes of specs
-- Automatic generation of test cases for your functions (coming soon)
-- Automatic documentation generation (coming soon)
 
 ## Why Specky
 
 - A complement/alternative to unit testing
 - facilitates a better debugging experience
-- Auto generation of test cases based on function specs
 - Guides you through the initial modeling process of code implementation
 - Help create more customizable type and behavior constraints that is more powerful than typed languages such as TypeScript
+- [WIP] Automatic documentation generation
+- [Coming soon] Automatic generation of test cases for your functions
 
 [Click here](https://www.youtube.com/watch?v=oyLBGkS5ICk) to watch a good tro video on the rationale behind clojure.spec (and thus Specky).
 
