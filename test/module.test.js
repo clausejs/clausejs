@@ -1,13 +1,13 @@
 var S = require( '../src/' );
 var expect = require( 'chai' ).expect;
 
-describe( 'module integrity', function() {
+describe( 'module integrity', () => {
   var fnList = [ 'props', 'isValid', 'conform', 'fspec', 'isObj', 'isFn', 'wall' ];
 
-  it( 'should contain all the core functions', function() {
-    var SpecObj = S.keys( { req: fnList } );
-    var InsaneSpecObj = S.keys( { req: fnList.concat( [ 'voodooooooooo' ] ) } );
-    // expect(S.isValid(SpecObj, S)).to.be.true;
+  it( 'should contain all the core functions', () => {
+    var SpecObj = S.props( { req: [ 'props' ] } );
+    var InsaneSpecObj = S.props( { req: fnList.concat( [ 'voodooooooooo' ] ) } );
+    expect( S.isValid( SpecObj, S ) ).to.be.true;
     expect( S.isValid( InsaneSpecObj, S ) ).to.be.false;
   } );
 } );
