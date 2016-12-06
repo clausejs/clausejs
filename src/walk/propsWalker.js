@@ -24,7 +24,7 @@ function propsWalker( spec, walkFn ) {
   };
 
   function propsTrailblaze( x, walkOpts ) {
-    if ( typeof x !== 'object' ) {
+    if ( [ 'object', 'function' ].indexOf( typeof x ) < 0 ) {
       return new Problem( x, spec, [], 'Value is not an object' );
     }
 
