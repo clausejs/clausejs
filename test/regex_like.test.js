@@ -69,7 +69,7 @@ describe( 'nfa regex', function() {
     } );
   } );
 
-  describe.only( 'nested regex/wall()', () => {
+  describe( 'nested regex/wall()', () => {
     it( 'wall()', () => {
       var flat = [ 'a', 1, true, 'b', 2, false, 'c', 3, true ];
       var nested = [ [ 'a', 1, true ], [ 'b', 2, false ], [ 'c', 3, true ] ];

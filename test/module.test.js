@@ -2,7 +2,7 @@ var S = require( '../src/' );
 var expect = require( 'chai' ).expect;
 
 describe( 'module integrity', function() {
-  var fnList = [ 'props', 'isValid', 'conform', 'fspec', 'isObj', 'isFn' ];
+  var fnList = [ 'props', 'isValid', 'conform', 'fspec', 'isObj', 'isFn', 'wall' ];
 
   it( 'should contain all the core functions', function() {
     var SpecObj = S.keys( { req: fnList } );
