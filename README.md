@@ -20,6 +20,14 @@ A powerful & highly flexible JavaScript data validation and conformation library
 
 [Click here](https://www.youtube.com/watch?v=oyLBGkS5ICk) to watch a good tro video on the rationale behind clojure.spec (and thus Specky).
 
+## Quick Example
+
+- TODO
+
+## Documentation
+
+Please refer to the documentation site: http://speckyjs.github.io/specky
+
 ## Performance
 
 - [![Size Minified](http://img.badgesize.io/speckyjs/specky/master/packages/specky/dist/specky.min.js?label=min)](packages/specky/dist) [![Size Gzipped](http://img.badgesize.io/speckyjs/specky/master/packages/specky/dist/specky.min.js?compression=gzip&label=min%2Bgzipped)](packages/specky/dist)
