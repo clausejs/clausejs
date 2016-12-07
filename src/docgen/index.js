@@ -74,8 +74,6 @@ function _exprMeta( exprName, meta, expr ) {
   let docstr;
   docstr = genForExpression( exprName, expr, meta );
   return `
-    <h5>${meta[ '.name' ] || exprName}</h5>
-    <i>Type: ${_type( expr )}</i>
     ${docstr}
     `;
 }
@@ -84,7 +82,7 @@ function _type( expr ) {
   if ( isSpec( expr ) ) {
     return expr.type;
   } else if ( isPred( expr ) ) {
-    return `Predicate ${fnName( expr )}()`;
+    return `[Predicate] ${fnName( expr )}()`;
   }
 }
 
@@ -92,29 +90,78 @@ function genForExpression( exprName, expr, meta ) {
   let docstr;
   if ( expr.type === 'FSPEC' ) {
     docstr = _genFspec( exprName, expr, meta );
+  } else if ( expr.type === 'OR' ) {
+    docstr = _genOrSpec( exprName, expr, meta );
+
   } else {
-    docstr = `<pre>${JSON.stringify( meta, null, 2 )}</pre>`;
+    docstr = _genUnknownSpec( exprName, expr, meta );
   }
 
   return docstr;
 }
 
+function _genUnknownSpec( exprName, expr, meta ) {
+  const r = `
+  <div class="card">
+    <div class="card-header">
+    ${exprName || _type( expr )}
+    </div>
+    <pre>${JSON.stringify( expr, null, 2 )}</pre>
+    <pre>${JSON.stringify( meta, null, 2 )}</pre>
+  </div>
+  `;
+  return r;
+}
+
+function _genOrSpec( exprName, expr, meta ) {
+  const altDefs = expr.exprs.map( ( { name, expr: altE }, index ) => {
+    const comment = meta[ name ] && meta[ name ].comment || '';
+    return `
+        <li class="list-group-item">
+            <p>${index + 1}. ${name ? `"${name}"` : ''}</p>
+            ${comment }
+            ${genForExpression( null, altE, null )}
+        </li>
+    `;
+  } );
+
+  const r = `
+  <div class="card">
+    <div class="card-block">
+      <p class="card-title">One of the following forms: </p>
+    </div>
+    <ol class="list-group list-group-flush">
+      ${altDefs.join( '' )}
+    </ol>
+  </div>
+  `;
+  return r;
+}
+
 // NOTE: meta param is omitted at the end
-function _genFspec( exprName, spec ) {
-  var frags = [];
-  const { args, ret, fn } = spec.opts;
-  if ( args ) {
-    frags.push( [ 'Arguments', `<pre>${JSON.stringify( args, null, 2 )}</pre>` ] );
+function _genFspec( exprName, spec, meta ) {
+  var frags = [
+    [ 'Type', 'function' ]
+  ];
+  const name = meta[ '.name' ] || exprName;
+  const { args: argsSpec, ret: retSpec, fn } = spec.opts;
+  if ( argsSpec ) {
+    frags.push( [ 'Arguments', genForExpression( null, argsSpec, meta.args ) ] );
   }
-  if ( ret ) {
-    frags.push( [ 'Return value', `<pre>${JSON.stringify( ret, null, 2 )}</pre>` ] );
+  if ( retSpec ) {
+    frags.push( [ 'Return value', genForExpression( null, retSpec, meta.ret ) ] );
   } if ( fn ) {
     frags.push( [ 'Argument-return value relation', `<pre>${fnName( fn )}</pre>` ] );
   }
   const r = `
-    <dl>
-    ${frags.map( ( [ name, src ] ) => `<dt>${name}</dt><dd>${src}</dd>` ).join( '\n' )}
-    </dl>
+    <div class="card">
+      ${name ? `<div class="card-header">${name}()</div>` : ''}
+      <div class="card-block">
+        <dl>
+        ${frags.map( ( [ name, src ] ) => `<dt>${name}</dt><dd>${src}</dd>` ).join( '\n' )}
+        </dl>
+      </div>
+    </div>
   `;
   return r;
 }
@@ -122,7 +169,7 @@ function _genFspec( exprName, spec ) {
 
 var fns = {
   gen,
-  genForSpec,
+  genForExpression,
 };
 module.exports = fns;
 module.exports.default = fns;

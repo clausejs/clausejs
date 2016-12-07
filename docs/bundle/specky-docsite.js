@@ -3506,15 +3506,11 @@ var _isSpec2 = _interopRequireDefault(_isSpec);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var gen = function gen(registry) {
+function gen(registry) {
   var conformedReg = _namespaceTypes.NamespaceObjSpec.conform(registry);
   var docstr = _walk(null, null, conformedReg);
   return docstr;
-};
-
-var fns = {
-  gen: gen
-};
+}
 
 function _walk(prefix, currentFrag, creg) {
   var currentNs = prefix ? prefix + '.' + currentFrag : currentFrag;
@@ -3580,11 +3576,7 @@ function _exprMeta(exprName, meta, expr) {
     throw new Error('Expression ' + exprName + ' does not exist in the registry');
   }
   var docstr = void 0;
-  if (expr.type === 'FSPEC') {
-    docstr = _genFspec(exprName, expr, meta);
-  } else {
-    docstr = '<pre>' + JSON.stringify(meta, null, 2) + '</pre>';
-  }
+  docstr = genForExpression(exprName, expr, meta);
   return '\n    <h5>' + (meta['.name'] || exprName) + '</h5>\n    <i>Type: ' + _type(expr) + '</i>\n    ' + docstr + '\n    ';
 }
 
@@ -3596,19 +3588,30 @@ function _type(expr) {
   }
 }
 
+function genForExpression(exprName, expr, meta) {
+  var docstr = void 0;
+  if (expr.type === 'FSPEC') {
+    docstr = _genFspec(exprName, expr, meta);
+  } else {
+    docstr = '<pre>' + JSON.stringify(meta, null, 2) + '</pre>';
+  }
+
+  return docstr;
+}
+
 // NOTE: meta param is omitted at the end
-function _genFspec(exprName, spec) {
+function _genFspec(exprName, spec, meta) {
   var frags = [];
   var _spec$opts = spec.opts,
-      args = _spec$opts.args,
-      ret = _spec$opts.ret,
+      argsSpec = _spec$opts.args,
+      retSpec = _spec$opts.ret,
       fn = _spec$opts.fn;
 
-  if (args) {
-    frags.push(['Argument spec', '<pre>' + JSON.stringify(args, null, 2) + '</pre>']);
+  if (argsSpec) {
+    frags.push(['Arguments', genForExpression(null, argsSpec, meta.args)]);
   }
-  if (ret) {
-    frags.push(['Return value spec', '<pre>' + JSON.stringify(ret, null, 2) + '</pre>']);
+  if (retSpec) {
+    frags.push(['Return value', '<pre>' + JSON.stringify(retSpec, null, 2) + '</pre>']);
   }if (fn) {
     frags.push(['Argument-return value relation', '<pre>' + (0, _fnName2.default)(fn) + '</pre>']);
   }
@@ -3622,6 +3625,10 @@ function _genFspec(exprName, spec) {
   return r;
 }
 
+var fns = {
+  gen: gen,
+  genForExpression: genForExpression
+};
 module.exports = fns;
 module.exports.default = fns;
 
@@ -3668,23 +3675,23 @@ exports.default = _2.default.getRegistry();
 var _ = __webpack_require__(18);
 
 (0, _.meta)('/Specky', {
-  '.name': 'S',
-  '.args': {
+  'name': 'S',
+  'args': {
     'register': {
-      '.comment': 'Registers a namespace path with an expression.'
+      'comment': 'Registers a namespace path with an expression.'
     },
     'retrieve': {
-      '.comment': 'Retrieves an expression by namespace path'
+      'comment': 'Retrieves an expression by namespace path'
     }
   },
-  '.ret': {
-    '.comment': 'Note: The returned Spec is not immediately resolved'
+  'ret': {
+    'comment': 'Note: The returned Spec is not immediately resolved'
   }
 });
 
 (0, _.meta)('specky.types/NamespacePath', {
-  '.comment': 'Represents a namespace path.',
-  '.example': 'com.xyz.awesomeApp/User'
+  'comment': 'Represents a namespace path.',
+  'example': 'com.xyz.awesomeApp/User'
 });
 
 /***/ },
