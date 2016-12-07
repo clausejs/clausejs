@@ -1,4 +1,4 @@
-module.exports = function oneOf( items ) {
+module.exports = function oneOf( ) {
   var items;
 
   if ( arguments.length === 1 && Array.isArray( arguments[ 0 ] ) ) {
@@ -8,7 +8,7 @@ module.exports = function oneOf( items ) {
   } else {
     throw new Error( 'Items list is required.' );
   }
-  return function( x ) {
+  return function oneOfItems( x ) {
     return items.indexOf( x ) >= 0;
   }
 }

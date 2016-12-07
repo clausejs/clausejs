@@ -1,7 +1,7 @@
 var oAssign = require( 'object-assign' );
-var Problem = require( '../../models/Problem' );
 var isUndefined = require( '../../preds/isUndefined' );
 
+/*eslint func-names: 0*/
 var FOLD = function() {};
 var ENTER = function() {};
 var MULTI_ENTER = function() {};
@@ -17,13 +17,15 @@ var ArrayFragment = function( val ) {
 
 function getMatch( chain, walkFn, walkOpts ) {
   var { conform } = walkOpts;
-  if ( !chain || !chain.forEach ) {
-    
-  }
+  // if ( !chain || !chain.forEach ) {
+  //
+  // }
   var valStack = [];
-  var r = {};
+  var r;
 
   chain.forEach( function( curr ) {
+    var c,
+      acc;
     if ( curr.move ) {
       switch ( curr.move.dir ) {
       case 'enter' : {
@@ -67,8 +69,8 @@ function getMatch( chain, walkFn, walkOpts ) {
         }
       } break;
       case 'maybe_single_exit': {
-        var c = valStack.pop();
-        var acc = null;
+        c = valStack.pop();
+        acc = null;
         while ( c !== MAYBE_SINGLE_ENTER ) {
           if ( c !== FOLD ) {
             acc = c;
@@ -81,8 +83,8 @@ function getMatch( chain, walkFn, walkOpts ) {
         valStack.push( acc );
       } break;
       case 'maybe_exit': {
-        var c = valStack.pop();
-        var acc = null;
+        c = valStack.pop();
+        acc = null;
         while ( c !== MAYBE_ENTER ) {
           if ( c !== FOLD ) {
             acc = _foldIn( acc, c );
@@ -95,8 +97,8 @@ function getMatch( chain, walkFn, walkOpts ) {
         valStack.push( acc );
       } break;
       case 'multi_exit': {
-        var c = valStack.pop();
-        var acc = null;
+        c = valStack.pop();
+        acc = null;
         while ( c !== MULTI_ENTER ) {
           if ( c instanceof ArrayFragment ) {
             if ( acc === null ) {
@@ -115,8 +117,8 @@ function getMatch( chain, walkFn, walkOpts ) {
         valStack.push( acc );
       } break;
       case 'exit': {
-        var c = valStack.pop();
-        var acc = null;
+        c = valStack.pop();
+        acc = null;
         while ( c !== ENTER ) {
           if ( c instanceof ArrayFragment ) {
             if ( acc === null ) {
@@ -142,7 +144,7 @@ function getMatch( chain, walkFn, walkOpts ) {
     console.error( 'valStack', valStack );
     throw '!valStack.length';
   }
-  var r = valStack.pop();
+  r = valStack.pop();
   return r;
 }
 

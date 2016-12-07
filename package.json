@@ -8,7 +8,8 @@
     "dev-docsite": "webpack-dev-server --content-base ./docs --inline",
     "test": "mocha --compilers js:babel-register",
     "test:watch": "mocha --compilers js:babel-register --watch",
-    "build": "webpack && cross-env PROD_ENV=1 webpack"
+    "build": "webpack && cross-env PROD_ENV=1 webpack",
+    "lint": "eslint ./src"
   },
   "repository": {
     "type": "git",

@@ -16,16 +16,17 @@ function Problem( val, failsPredicate, subproblems, msg ) {
 
   this.constructMessage = function constructMessage( lvl ) {
     if ( Array.isArray( subproblems ) ) {
+      var reasons;
       if ( subproblems.length === 0 ) {
         return `${msg}; val: ${JSON.stringify( val )}`;
       } else {
-        var reasons = subproblems.map( function( r ) {
+        reasons = subproblems.map( ( r ) => {
           return `${_open( lvl )}${r.constructMessage( lvl + 1 )}${_close( lvl )}`;
         } );
         return `${msg}, because ${reasons.join( ', ' )}`;
       }
     } else if ( typeof subproblems === 'object' ) {
-      var reasons = [];
+      reasons = [];
       for ( var name in subproblems ) {
         reasons.push( `${_open( lvl )}${name}: ${subproblems[ name ].constructMessage( lvl + 1 )}${_close( lvl )}` );
       }

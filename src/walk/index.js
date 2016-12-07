@@ -12,7 +12,7 @@ var coerceIntoSpec = require( '../utils/coerceIntoSpec' );
 var isProblem = require( '../utils/isProblem' );
 
 function walk( spec, x, opts ) {
-  var { phase, conform, instrument } = opts;
+  var { phase } = opts;
   var walker = _getWalker( spec );
 
   if ( !phase ) {

@@ -1,5 +1,6 @@
 var isProblem = require( './isProblem' );
-var conform = require( './conform' ); // TODO : replace with checkProblem
+// TODO : replace with checkProblem
+var conform = require( './conform' );
 
 module.exports = function enforce( spec, x ) {
   const r = conform( spec, x );

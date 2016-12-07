@@ -2,7 +2,6 @@ var isProblem = require( '../utils/isProblem' );
 var isUndefined = require( '../preds/isUndefined' );
 var oAssign = require( 'object-assign' );
 var Problem = require( '../models/Problem' );
-var coerceIntoSpec = require( '../utils/coerceIntoSpec' );
 var specFromAlts = require( '../utils/specFromAlts' );
 
 function propsWalker( spec, walkFn ) {
@@ -29,7 +28,8 @@ function propsWalker( spec, walkFn ) {
     }
 
     if ( !keyConformer ) {
-      keyConformer = _genKeyConformer( reqSpecs, optSpecs, walkFn, walkOpts ); //lazy
+       // lazy
+      keyConformer = _genKeyConformer( reqSpecs, optSpecs, walkFn, walkOpts );
     }
     var keyConformedR = keyConformer( x );
 
@@ -41,22 +41,18 @@ function propsWalker( spec, walkFn ) {
 
     var guide = { val: x, groups: [], singles: [] };
 
-    var reqFieldDefs,
-      keyList;
+    var reqFieldDefs;
     if ( reqSpecs ) {
       reqFieldDefs = reqSpecs.fieldDefs;
-      keyList = reqSpecs.keyList;
     }
 
     if ( reqFieldDefs ) {
       processFieldDefs_mut( reqFieldDefs );
     }
 
-    var optFieldDefs,
-      optKeyList;
+    var optFieldDefs;
     if ( optSpecs ) {
       optFieldDefs = optSpecs.fieldDefs;
-      optKeyList = optSpecs.keyList;
     }
     if ( optFieldDefs ) {
       processFieldDefs_mut( optFieldDefs, true );
@@ -83,15 +79,15 @@ function propsWalker( spec, walkFn ) {
           var { noop, problem, singleMatch, groupMatch } = getFieldGuide( x, name, keyValAlts, walkFn, walkOpts );
           if ( problem ) {
             problems.push( [ name, problem ] );
-            break fieldLoop; //TODO: improve this;
+            //TODO: improve this;
+            break fieldLoop;
           } else if ( singleMatch ) {
             guide.singles.push( singleMatch );
           } else if ( groupMatch ) {
             if ( groupMatch.matchedKeys.length > 0 ) {
               guide.groups.push( groupMatch );
             }
-          } else if ( noop ) {
-          } else {
+          } else if ( !noop ) {
             throw '!';
           }
         }
@@ -104,12 +100,6 @@ function propsWalker( spec, walkFn ) {
     var conform = { walkOpts };
 
     var { instrument } = walkOpts;
-    var fieldDefs,
-      keyList;
-    if ( reqSpecs ) {
-      fieldDefs = reqSpecs.fieldDefs;
-      keyList = reqSpecs.keyList;
-    }
 
     var conformed;
 
@@ -119,21 +109,21 @@ function propsWalker( spec, walkFn ) {
       conformed = oAssign( {}, val );
     }
 
-    singles.forEach( function( fieldGuide ) {
+    singles.forEach( ( fieldGuide ) => {
       restoreField_mut( conformed, fieldGuide, walkFn, walkOpts );
     } );
 
-    groups.forEach( function( { name, matchedKeys } ) {
+    groups.forEach( ( { name, matchedKeys } ) => {
       if ( conform ) {
         conformed[ name ] = {};
         var keysToDel = [];
-        matchedKeys.forEach( function( fieldGuide ) {
+        matchedKeys.forEach( ( fieldGuide ) => {
           restoreField_mut( conformed[ name ], fieldGuide, walkFn, walkOpts );
           keysToDel.push( fieldGuide.key );
         } );
         _deleteKeys( conformed, keysToDel );
       } else {
-        matchedKeys.forEach( function( fieldGuide ) {
+        matchedKeys.forEach( ( fieldGuide ) => {
           restoreField_mut( conformed, fieldGuide, walkFn, walkOpts );
         } );
       }
@@ -168,33 +158,38 @@ function _genKeyConformer( reqSpecs, optSpec, walkFn, walkOpts ) {
       }
 
       for ( var i = 0; i < reqNames.length; i++ ) {
-        var name = reqNames[ i ];
-        if ( fieldDefs && fieldDefs.fields[ name ].keyValExprPair ) { //key spec
+        var reqName = reqNames[ i ];
+        //key spec
+        if ( fieldDefs && fieldDefs.fields[ reqName ].keyValExprPair ) {
           var found = false;
           keyTrav: for ( var kk in x ) {
             if ( x.hasOwnProperty( kk ) ) {
-              var rr = _conformNamedOrExpr( kk, fieldDefs.fields[ name ].keyValExprPair.keySpecAlts, walkFn, walkOpts );
-              if ( !isProblem( rr ) ) { //found a match
+              var rr = _conformNamedOrExpr( kk, fieldDefs.fields[ reqName ].keyValExprPair.keySpecAlts, walkFn, walkOpts );
+              if ( !isProblem( rr ) ) {
+                //found a match
                 found = true;
                 break keyTrav;
               }
             }
           }
           if ( !found ) {
-            missingKeys.push( name );
+            missingKeys.push( reqName );
           }
-        } else if ( fieldDefs && fieldDefs.fields[ name ].valSpecAltsOnly ) { //key spec
-          if ( x.hasOwnProperty( name ) ) {
-            var rr = _conformNamedOrExpr( x[ name ], fieldDefs.fields[ name ].valSpecAltsOnly, walkFn, walkOpts );
-            if ( isProblem( rr ) ) { //found a match
-              missingKeys.push( name );
+        } else if ( fieldDefs && fieldDefs.fields[ reqName ].valSpecAltsOnly ) {
+          //key spec
+          if ( x.hasOwnProperty( reqName ) ) {
+            var rrr = _conformNamedOrExpr( x[ reqName ], fieldDefs.fields[ reqName ].valSpecAltsOnly, walkFn, walkOpts );
+            if ( isProblem( rrr ) ) {
+              //found a match
+              missingKeys.push( reqName );
             }
           } else {
-            missingKeys.push( name );
+            missingKeys.push( reqName );
           }
-        } else if ( keyList ) { //plain string key
-          if ( x[ name ] === undefined ) {
-            missingKeys.push( name );
+        } else if ( keyList ) {
+           //plain string key
+          if ( x[ reqName ] === undefined ) {
+            missingKeys.push( reqName );
           }
         } else {
           throw '!';
@@ -226,12 +221,14 @@ function getFieldGuide( x, name, keyValAlts, walkFn, walkOpts ) {
       if ( x.hasOwnProperty( k ) ) {
         var keyResult = _conformNamedOrExpr( k, keySpecAlts, walkFn, walkOpts );
         if ( !isProblem( keyResult ) ) {
-          if ( x === x[ k ] ) { // single string char case, where name = 0 and x = ''
+          // single string char case, where name = 0 and x = ''
+          if ( x === x[ k ] ) {
             continue keysExamine;
           }
           var valGuide = _conformNamedOrExpr( x[ k ], valSpecAlts, walkFn, walkOpts );
           if ( isProblem( valGuide ) ) {
-            return { problem: valGuide }; //TODO: improve
+            //TODO: improve
+            return { problem: valGuide };
           } else {
             matchedKeys.push( { key: k, spec: specFromAlts( valSpecAlts ), guide: valGuide } );
           }
@@ -241,7 +238,8 @@ function getFieldGuide( x, name, keyValAlts, walkFn, walkOpts ) {
     return { groupMatch: { name, matchedKeys } };
   } else if ( valSpecAltsOnly ) {
     var v = x[ name ];
-    if ( !isUndefined( v ) && x[ name ] !== x ) { // single string char case, name = 0
+    // single string char case, name = 0
+    if ( !isUndefined( v ) && x[ name ] !== x ) {
       var g = _conformNamedOrExpr( v, valSpecAltsOnly, walkFn, walkOpts );
       if ( isProblem( g ) ) {
         return { problem: g };

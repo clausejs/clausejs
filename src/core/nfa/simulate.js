@@ -2,7 +2,6 @@ var isProblem = require( '../../utils/isProblem' );
 var isStr = require( '../../preds/isStr' );
 
 function simulate( nfa, rawInput, walkFn, walkOpts ) {
-  var input;
 
   var r = {
     matched: false,
@@ -105,7 +104,7 @@ function simulate( nfa, rawInput, walkFn, walkOpts ) {
   return r;
 }
 
-function _getChain( nfa, finalState, walkFn, walkOpts ) {
+function _getChain( nfa, finalState ) {
   var chain = [];
   var curr = finalState;
   var prev;

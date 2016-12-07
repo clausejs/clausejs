@@ -1,4 +1,3 @@
-var coerceIntoSpec = require( '../utils/coerceIntoSpec' );
 var Problem = require( '../models/Problem' );
 var isProblem = require( '../utils/isProblem' );
 var isNum = require( '../preds/isNum' );
@@ -40,7 +39,8 @@ function collOfWalker( spec, walkFn ) {
         var guide = walkFn( expr, x[ i ], walkOpts );
         if ( isProblem( guide ) ) {
           problems.push( guide );
-          break; //TODO
+          //TODO
+          break;
         } else {
           guides.push( guide );
         }

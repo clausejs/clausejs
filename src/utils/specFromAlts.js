@@ -2,7 +2,7 @@ var coerceIntoSpec = require( './coerceIntoSpec' );
 
 module.exports = function specFromAlts( alts ) {
   if ( !alts ) {
-
+    throw '!';
   }
   if ( alts.spec ) {
     return alts.spec;

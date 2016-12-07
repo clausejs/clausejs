@@ -7,6 +7,7 @@ var isSpec = require( '../utils/isSpec' );
 var isPred = require( '../utils/isPred' );
 var isUndefined = require( '../preds/isUndefined' );
 var walk = require( '../walk' );
+var coerceIntoSpec = require( '../utils/coerceIntoSpec' );
 
 import { isNamespacePath, isSpecRef } from '../utils';
 import { NamespaceFnSpec, MetaFnSpec } from '../specs/namespace-types';
@@ -78,14 +79,14 @@ function _processVal( prefix, val ) {
       console.error( e );
       throw '!';
     }
-
-  } else if ( val.partialRefMap ) {
-    var { refDefs } = val.partialRefMap;
-    for ( var k in refDefs ) {
-      if ( refDefs.hasOwnProperty( k ) ) {
-        var retVal = _processVal( refDefs[ k ] );
-      }
-    }
+  // TODO
+  // } else if ( val.partialRefMap ) {
+  //   var { refDefs } = val.partialRefMap;
+  //   for ( var k in refDefs ) {
+  //     if ( refDefs.hasOwnProperty( k ) ) {
+  //       var retVal = _processVal( refDefs[ k ] );
+  //     }
+  //   }
   } else {
     console.error( val );
     throw '!';

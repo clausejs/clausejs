@@ -3,9 +3,10 @@ import { delayed, isNamespacePath, isExpr, isSpecRef } from '../utils';
 import { isObj } from '../preds';
 
 var ExprOrPartialRefMapSpec = or(
-  '.expr', delayed( function() {
-    return ExprSpec
-  } ) //TODO
+  '.expr', delayed( () => {
+    //TODO
+    return ExprSpec;
+  } )
 );
 
 const NamespaceFnSpec = fspec( {

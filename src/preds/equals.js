@@ -1,5 +1,5 @@
 module.exports = function equals( test ) {
-  return function( x ) {
+  return function equalsVal( x ) {
     return x === test;
   }
 };

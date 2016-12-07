@@ -3,8 +3,8 @@ function DelayedSpec( { getFn } ) {
   this.get = getFn;
   var _this = this;
 
-  [ 'conform', 'instrument' ].forEach( function( mName ) {
-    _this[ mName ] = function( x ) {
+  [ 'conform', 'instrument' ].forEach( ( mName ) => {
+    _this[ mName ] = ( x ) => {
       var Spec = getFn();
       return Spec[ mName ].call( this, x );
     };

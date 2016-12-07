@@ -96,7 +96,8 @@ function _type( expr ) {
   }
 }
 
-function _genFspec( exprName, spec, meta ) {
+// NOTE: meta param is omitted at the end
+function _genFspec( exprName, spec ) {
   var frags = [];
   const { args, ret, fn } = spec.opts;
   if ( args ) {

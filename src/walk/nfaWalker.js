@@ -2,7 +2,6 @@ var simulate = require( '../core/nfa/simulate' );
 var getMatch = require( '../core/nfa/getMatch' )
 var compile = require( '../core/nfa/compile' );
 var Problem = require( '../models/Problem' );
-var isProblem = require( '../utils/isProblem' );
 
 function nfaWalker( spec, walkFn ) {
   var nfa;
@@ -15,7 +14,8 @@ function nfaWalker( spec, walkFn ) {
   function nfaTrailblaze( x, walkOpts ) {
 
     if ( !nfa ) {
-      nfa = compile( spec ); //lazy
+      //lazy
+      nfa = compile( spec );
     }
     var { chain, matched, lastProblem } = simulate( nfa, x, walkFn, walkOpts );
     if ( matched === true ) {

@@ -1,7 +1,6 @@
 var Spec = require( '../models/Spec' );
 var isSpec = require( '../utils/isSpec' );
 var isStr = require( '../preds/isStr' );
-var isFn = require( '../preds/isFn' );
 var oneOf = require( '../preds/oneOf' );
 var coerceIntoSpec = require( '../utils/coerceIntoSpec' );
 var { cat, or, zeroOrMore, ExprSpec } = require( './regex' );

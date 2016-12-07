@@ -1,7 +1,7 @@
 var Spec = require( '../models/Spec' );
 var isSpec = require( '../utils/isSpec' );
 var coerceIntoSpec = require( '../utils/coerceIntoSpec' );
-var { cat, ExprSpec } = require( './regex' );
+var { cat } = require( './regex' );
 var fspec = require( './fspec' );
 var walk = require( '../walk' );
 

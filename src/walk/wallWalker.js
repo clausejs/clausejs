@@ -1,5 +1,3 @@
-var Problem = require( '../models/Problem' );
-
 function wallWalker( wallSpec, walkFn ) {
   return {
     trailblaze: wallWalk,

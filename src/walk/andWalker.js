@@ -11,8 +11,6 @@ function andWalker( spec, walkFn ) {
   };
 
   function andTrailblaze( data, walkOpts ) {
-    var { trailblaze } = walkOpts;
-
     var r = data;
     var problems = [];
 
@@ -20,7 +18,8 @@ function andWalker( spec, walkFn ) {
       r = walkFn( exprs[ i ], data, walkOpts );
       if ( isProblem( r ) ) {
         problems.push( r );
-        break; //TODO: better handle this
+         //TODO: better handling of this
+        break;
       }
     }
 
@@ -31,7 +30,7 @@ function andWalker( spec, walkFn ) {
     }
   }
 
-  function andReconstruct( guide, walkOpts ) {
+  function andReconstruct( guide ) {
     //TODO: implement conformed AND
     return guide;
   }

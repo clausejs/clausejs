@@ -1,4 +1,3 @@
-var Problem = require( '../models/Problem' );
 var isProblem = require( './isProblem' );
 var isPred = require( './isPred' );
 var isSpec = require( './isSpec' );

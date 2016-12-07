@@ -1,16 +1,22 @@
 {
   "env": {
-    "browser": true,
+    "browser": false,
     "es6": true,
     "mocha": true,
+    "commonjs": true,
   },
   "extends": "idiomatic",
   "parserOptions": {
     "sourceType": "module",
-    "allowImportExportEverywhere": false
+    "ecmaVersion": 2015,
+  },
+  "globals": {
+    "console": true,
   },
   "rules": {
     "one-var": 0,
     "vars-on-top": 0,
-    }
+    "no-console": ["error", { allow: ["warn", "error"] }],
+    "func-names": ["error", "as-needed"],
+  }
 }

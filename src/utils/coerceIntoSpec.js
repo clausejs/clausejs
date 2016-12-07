@@ -14,7 +14,6 @@ function coerceIntoSpec( expr ) {
   } else if ( isPred( expr ) ) {
     return _wrap( expr );
   } else {
-    
     throw new Error( 'Expression must either be a Spec object or a predication function that returns true or false. ' );
   }
 }

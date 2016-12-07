@@ -141,12 +141,12 @@ var singleArgOpSpec = {
 };
 
 function genMultiArgOp( type ) {
-  return namedFn( type, function( conformedArgs ) {
+  return namedFn( type, function _( conformedArgs ) {
     var exprs;
     if ( conformedArgs.named ) {
       exprs = conformedArgs.named;
 
-      var coercedExprs = exprs.map( function( p ) {
+      var coercedExprs = exprs.map( ( p ) => {
         var alts = p.expr;
         var s = specFromAlts( alts );
 
@@ -165,18 +165,19 @@ function genMultiArgOp( type ) {
     } else if ( conformedArgs.unnamed ) {
       exprs = conformedArgs.unnamed;
 
-      var coercedExprs = exprs.map( function( p ) {
+      coercedExprs = exprs.map( ( p ) => {
+        var s;
         if ( p.spec ) {
-          var s = p.spec;
+          s = p.spec;
           return oAssign( {}, p, { expr: s, spec: undefined } );
         } else if ( p.pred ) {
-          var s = coerceIntoSpec( p.pred );
+          s = coerceIntoSpec( p.pred );
           return oAssign( {}, p, { expr: s, pred: undefined } );
         } else if ( p.specRef ) {
-          var s = p.specRef;
+          s = p.specRef;
           return oAssign( {}, p, { expr: s, specRef: undefined } );
         } else if ( p.delayedSpec ) {
-          var s = p.delayedSpec;
+          s = p.delayedSpec;
           return oAssign( {}, p, { expr: s, delayedSpec: undefined } );
         } else {
           console.error( p );
@@ -184,7 +185,7 @@ function genMultiArgOp( type ) {
         }
       } );
 
-      var s = new Spec( type, coercedExprs, null, null, null );
+      s = new Spec( type, coercedExprs, null, null, null );
 
       s.conform = function conform( x ) {
         return walk( s, x, { conform: true } );
@@ -195,7 +196,7 @@ function genMultiArgOp( type ) {
 }
 
 function genSingleArgOp( type ) {
-  return namedFn( type, function( conformedArgs ) {
+  return namedFn( type, function _( conformedArgs ) {
     var p = conformedArgs.expr;
     var opts = conformedArgs.opts;
     var expr;
@@ -247,40 +248,40 @@ core[ '?' ] = core.zeroOrOne;
 module.exports = core;
 
 // // //
-var TestSpec = orOp( {
-  named: [
-    {
-      name: 'named',
-      expr: {
-        spec: orOp( {
-          unnamed: [
-            {
-              spec: zeroOrMoreOp( {
-                expr: {
-                  spec: NameExprOptionalComment,
-                },
-              } )
-            },
-            {
-              spec: collOfOp( {
-                expr: {
-                  spec: NameExprOptionalComment,
-                },
-              } )
-            },
-          ]
-        } ),
-      },
-    },
-    {
-      name: 'unnamed',
-      expr: {
-        spec: zeroOrMoreOp( {
-          expr: {
-            spec: ExprSpec,
-          },
-        } ),
-      },
-    },
-  ],
-} );
+// var TestSpec = orOp( {
+//   named: [
+//     {
+//       name: 'named',
+//       expr: {
+//         spec: orOp( {
+//           unnamed: [
+//             {
+//               spec: zeroOrMoreOp( {
+//                 expr: {
+//                   spec: NameExprOptionalComment,
+//                 },
+//               } )
+//             },
+//             {
+//               spec: collOfOp( {
+//                 expr: {
+//                   spec: NameExprOptionalComment,
+//                 },
+//               } )
+//             },
+//           ]
+//         } ),
+//       },
+//     },
+//     {
+//       name: 'unnamed',
+//       expr: {
+//         spec: zeroOrMoreOp( {
+//           expr: {
+//             spec: ExprSpec,
+//           },
+//         } ),
+//       },
+//     },
+//   ],
+// } );

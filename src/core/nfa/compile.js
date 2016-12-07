@@ -10,8 +10,8 @@ var indexedFragmentStates = function( fragment ) {
     if ( state.index === null ) {
       state.index = nextIndex;
       nextIndex++;
-      state.transitions.forEach( function( transition ) {
-      	frontier.push( transition.target );
+      state.transitions.forEach( ( transition ) => {
+        frontier.push( transition.target );
       } );
       states.push( state );
     }
@@ -37,15 +37,15 @@ function evalSpec( spec ) {
 
 
 var evalChildThen = function( wrapper ) {
-  return function( spec ) {
+  return function evalChildThenWrapped( spec ) {
     var childFrag = evalSpec( spec.exprs[ 0 ] );
     return wrapper( childFrag );
   };
 };
 
 var evalChildrenThen = function( wrapper ) {
-  return function( spec ) {
-    var childFrags = spec.exprs.map( function( child ) {
+  return function evalChildrenThenWrapped( spec ) {
+    var childFrags = spec.exprs.map( ( child ) => {
       var s = evalSpec( child.expr );
       s.name = child.name;
       return s;
@@ -57,16 +57,16 @@ var evalChildrenThen = function( wrapper ) {
 [ 'ROOT',
   'Z_OR_M',
   'O_OR_M',
-  'Z_OR_O' ].forEach( function( fragName ) {
+  'Z_OR_O' ].forEach( ( fragName ) => {
     evalFunctions[ fragName ] = evalChildThen( fragment[ fragName ] );
   } );
 
 [ 'OR',
-  'CAT' ].forEach( function( fragName ) {
+  'CAT' ].forEach( ( fragName ) => {
     evalFunctions[ fragName ] = evalChildrenThen( fragment[ fragName ] );
   } );
 
-evalFunctions.PRED = function( x ) {
+evalFunctions.PRED = ( x ) => {
   return fragment[ 'PRED' ]( x );
 };
 
@@ -81,12 +81,12 @@ var compile = function( expr ) {
   var numStates = states.length;
   var nfaTransitions = {};
   var finalState;
-  states.forEach( function( state ) {
+  states.forEach( ( state ) => {
     if ( state.transitions.length === 0 ) {
       finalState = state.index;
     }
     var outTrans = {};
-    state.transitions.forEach( function( fragTrans ) {
+    state.transitions.forEach( ( fragTrans ) => {
       outTrans[ fragTrans.target.index ] = fragTrans.spec;
     } );
     nfaTransitions[ state.index.toString() ] = outTrans;
