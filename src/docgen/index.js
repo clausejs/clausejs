@@ -92,7 +92,8 @@ function genForExpression( exprName, expr, meta ) {
     docstr = _genFspec( exprName, expr, meta );
   } else if ( expr.type === 'OR' ) {
     docstr = _genOrSpec( exprName, expr, meta );
-
+  } else if ( isPred( expr ) || expr.type === 'PRED' ) {
+    docstr = _genPredSpec( exprName, expr, meta );
   } else {
     docstr = _genUnknownSpec( exprName, expr, meta );
   }
@@ -100,11 +101,26 @@ function genForExpression( exprName, expr, meta ) {
   return docstr;
 }
 
+function _genPredSpec( exprName, expr, meta ) {
+  let pred = expr.exprs ? expr.exprs[ 0 ] : expr;
+  const name = meta && meta[ 'name' ] || exprName;
+  const predName = fnName( pred );
+  const nameFrag = name ? `${name}: ` : '';
+  const r = `
+    <div class="card">
+      <div class="card-header">
+        ${nameFrag}<em>${predName}()</em> <span class="tag tag-primary">predicate</span>
+      </div>
+    </div>
+  `;
+  return r;
+}
+
 function _genUnknownSpec( exprName, expr, meta ) {
   const r = `
   <div class="card">
     <div class="card-header">
-    ${exprName || _type( expr )}
+    ${exprName || _type( expr )} <div class="tag tag-success">spec</div>
     </div>
     <pre>${JSON.stringify( expr, null, 2 )}</pre>
     <pre>${JSON.stringify( meta, null, 2 )}</pre>
@@ -118,7 +134,7 @@ function _genOrSpec( exprName, expr, meta ) {
     const comment = meta[ name ] && meta[ name ].comment || '';
     return `
         <li class="list-group-item">
-            <p>${index + 1}. ${name ? `"${name}"` : ''}</p>
+            ${name ? `<p>"${name}"</p>` : ''}
             ${comment }
             ${genForExpression( null, altE, null )}
         </li>
@@ -140,10 +156,8 @@ function _genOrSpec( exprName, expr, meta ) {
 
 // NOTE: meta param is omitted at the end
 function _genFspec( exprName, spec, meta ) {
-  var frags = [
-    [ 'Type', 'function' ]
-  ];
-  const name = meta[ '.name' ] || exprName;
+  var frags = [ ];
+  const name = meta[ 'name' ] || exprName;
   const { args: argsSpec, ret: retSpec, fn } = spec.opts;
   if ( argsSpec ) {
     frags.push( [ 'Arguments', genForExpression( null, argsSpec, meta.args ) ] );
@@ -155,7 +169,11 @@ function _genFspec( exprName, spec, meta ) {
   }
   const r = `
     <div class="card">
-      ${name ? `<div class="card-header">${name}()</div>` : ''}
+      ${name ? `
+        <div class="card-header">
+          ${name}() <span class="tag tag-primary">function</span>
+        </div>
+        ` : ''}
       <div class="card-block">
         <dl>
         ${frags.map( ( [ name, src ] ) => `<dt>${name}</dt><dd>${src}</dd>` ).join( '\n' )}

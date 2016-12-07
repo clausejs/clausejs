@@ -3577,14 +3577,14 @@ function _exprMeta(exprName, meta, expr) {
   }
   var docstr = void 0;
   docstr = genForExpression(exprName, expr, meta);
-  return '\n    <h5>' + (meta['.name'] || exprName) + '</h5>\n    <i>Type: ' + _type(expr) + '</i>\n    ' + docstr + '\n    ';
+  return '\n    ' + docstr + '\n    ';
 }
 
 function _type(expr) {
   if ((0, _isSpec2.default)(expr)) {
     return expr.type;
   } else if ((0, _isPred2.default)(expr)) {
-    return 'Predicate ' + (0, _fnName2.default)(expr) + '()';
+    return '[Predicate] ' + (0, _fnName2.default)(expr) + '()';
   }
 }
 
@@ -3592,16 +3592,48 @@ function genForExpression(exprName, expr, meta) {
   var docstr = void 0;
   if (expr.type === 'FSPEC') {
     docstr = _genFspec(exprName, expr, meta);
+  } else if (expr.type === 'OR') {
+    docstr = _genOrSpec(exprName, expr, meta);
+  } else if ((0, _isPred2.default)(expr) || expr.type === 'PRED') {
+    docstr = _genPredSpec(exprName, expr, meta);
   } else {
-    docstr = '<pre>' + JSON.stringify(meta, null, 2) + '</pre>';
+    docstr = _genUnknownSpec(exprName, expr, meta);
   }
 
   return docstr;
 }
 
+function _genPredSpec(exprName, expr, meta) {
+  var pred = expr.exprs ? expr.exprs[0] : expr;
+  var name = meta && meta['name'] || exprName;
+  var predName = (0, _fnName2.default)(pred);
+  var nameFrag = name ? name + ': ' : '';
+  var r = '\n    <div class="card">\n      <div class="card-header">\n        ' + nameFrag + '<em>' + predName + '()</em> <span class="tag tag-primary">predicate</span>\n      </div>\n    </div>\n  ';
+  return r;
+}
+
+function _genUnknownSpec(exprName, expr, meta) {
+  var r = '\n  <div class="card">\n    <div class="card-header">\n    ' + (exprName || _type(expr)) + ' <div class="tag tag-success">spec</div>\n    </div>\n    <pre>' + JSON.stringify(expr, null, 2) + '</pre>\n    <pre>' + JSON.stringify(meta, null, 2) + '</pre>\n  </div>\n  ';
+  return r;
+}
+
+function _genOrSpec(exprName, expr, meta) {
+  var altDefs = expr.exprs.map(function (_ref, index) {
+    var name = _ref.name,
+        altE = _ref.expr;
+
+    var comment = meta[name] && meta[name].comment || '';
+    return '\n        <li class="list-group-item">\n            ' + (name ? '<p>"' + name + '"</p>' : '') + '\n            ' + comment + '\n            ' + genForExpression(null, altE, null) + '\n        </li>\n    ';
+  });
+
+  var r = '\n  <div class="card">\n    <div class="card-block">\n      <p class="card-title">One of the following forms: </p>\n    </div>\n    <ol class="list-group list-group-flush">\n      ' + altDefs.join('') + '\n    </ol>\n  </div>\n  ';
+  return r;
+}
+
 // NOTE: meta param is omitted at the end
 function _genFspec(exprName, spec, meta) {
   var frags = [];
+  var name = meta['name'] || exprName;
   var _spec$opts = spec.opts,
       argsSpec = _spec$opts.args,
       retSpec = _spec$opts.ret,
@@ -3611,17 +3643,17 @@ function _genFspec(exprName, spec, meta) {
     frags.push(['Arguments', genForExpression(null, argsSpec, meta.args)]);
   }
   if (retSpec) {
-    frags.push(['Return value', '<pre>' + JSON.stringify(retSpec, null, 2) + '</pre>']);
+    frags.push(['Return value', genForExpression(null, retSpec, meta.ret)]);
   }if (fn) {
     frags.push(['Argument-return value relation', '<pre>' + (0, _fnName2.default)(fn) + '</pre>']);
   }
-  var r = '\n    <dl>\n    ' + frags.map(function (_ref) {
-    var _ref2 = _slicedToArray(_ref, 2),
-        name = _ref2[0],
-        src = _ref2[1];
+  var r = '\n    <div class="card">\n      ' + (name ? '\n        <div class="card-header">\n          ' + name + '() <span class="tag tag-primary">function</span>\n        </div>\n        ' : '') + '\n      <div class="card-block">\n        <dl>\n        ' + frags.map(function (_ref2) {
+    var _ref3 = _slicedToArray(_ref2, 2),
+        name = _ref3[0],
+        src = _ref3[1];
 
     return '<dt>' + name + '</dt><dd>' + src + '</dd>';
-  }).join('\n') + '\n    </dl>\n  ';
+  }).join('\n') + '\n        </dl>\n      </div>\n    </div>\n  ';
   return r;
 }
 
@@ -3681,7 +3713,7 @@ var _ = __webpack_require__(18);
       'comment': 'Registers a namespace path with an expression.'
     },
     'retrieve': {
-      'comment': 'Retrieves an expression by namespace path'
+      'comment': 'Retrieves an expression by namespace path.'
     }
   },
   'ret': {
