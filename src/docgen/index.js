@@ -3,15 +3,11 @@ import fnName from '../utils/fnName';
 import isPred from '../utils/isPred';
 import isSpec from '../utils/isSpec';
 
-const gen = ( registry ) => {
+function gen( registry ) {
   var conformedReg = NamespaceObjSpec.conform( registry );
   var docstr = _walk( null, null, conformedReg );
   return docstr;
 }
-
-var fns = {
-  gen,
-};
 
 function _walk( prefix, currentFrag, creg ) {
   let currentNs = prefix ? `${prefix}.${currentFrag}` : currentFrag;
@@ -76,11 +72,7 @@ function _exprMeta( exprName, meta, expr ) {
     throw new Error( `Expression ${exprName} does not exist in the registry` );
   }
   let docstr;
-  if ( expr.type === 'FSPEC' ) {
-    docstr = _genFspec( exprName, expr, meta );
-  } else {
-    docstr = `<pre>${JSON.stringify( meta, null, 2 )}</pre>`;
-  }
+  docstr = genForExpression( exprName, expr, meta );
   return `
     <h5>${meta[ '.name' ] || exprName}</h5>
     <i>Type: ${_type( expr )}</i>
@@ -96,15 +88,26 @@ function _type( expr ) {
   }
 }
 
+function genForExpression( exprName, expr, meta ) {
+  let docstr;
+  if ( expr.type === 'FSPEC' ) {
+    docstr = _genFspec( exprName, expr, meta );
+  } else {
+    docstr = `<pre>${JSON.stringify( meta, null, 2 )}</pre>`;
+  }
+
+  return docstr;
+}
+
 // NOTE: meta param is omitted at the end
 function _genFspec( exprName, spec ) {
   var frags = [];
   const { args, ret, fn } = spec.opts;
   if ( args ) {
-    frags.push( [ 'Argument spec', `<pre>${JSON.stringify( args, null, 2 )}</pre>` ] );
+    frags.push( [ 'Arguments', `<pre>${JSON.stringify( args, null, 2 )}</pre>` ] );
   }
   if ( ret ) {
-    frags.push( [ 'Return value spec', `<pre>${JSON.stringify( ret, null, 2 )}</pre>` ] );
+    frags.push( [ 'Return value', `<pre>${JSON.stringify( ret, null, 2 )}</pre>` ] );
   } if ( fn ) {
     frags.push( [ 'Argument-return value relation', `<pre>${fnName( fn )}</pre>` ] );
   }
@@ -116,5 +119,10 @@ function _genFspec( exprName, spec ) {
   return r;
 }
 
+
+var fns = {
+  gen,
+  genForSpec,
+};
 module.exports = fns;
 module.exports.default = fns;
