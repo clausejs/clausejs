@@ -5,4 +5,8 @@ require( '../../src/specs/index.annotation.js' );
 
 const finalDocStr = docgen.gen( Registry );
 
-document.getElementById( 'api' ).innerHTML = finalDocStr;
+$( function() {
+  document.getElementById( 'api' ).innerHTML = finalDocStr;
+
+  $( '[data-toggle="popover"]' ).popover();
+} )

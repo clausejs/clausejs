@@ -109,7 +109,17 @@ function _genPredSpec( exprName, expr, meta ) {
   const r = `
     <div class="card">
       <div class="card-header">
-        ${nameFrag}<em>${predName}()</em> <span class="tag tag-primary">predicate</span>
+        <span
+          data-toggle="popover"
+          data-trigger="hover"
+          data-html="true"
+          title="${predName}()"
+          data-content="<pre>${pred.toString()}</pre>"
+          data-container="body"
+          data-animation="false"
+          >
+          ${nameFrag}<em>${predName}()</em> <span class="tag tag-primary">predicate</span>
+        </span>
       </div>
     </div>
   `;
@@ -134,7 +144,9 @@ function _genOrSpec( exprName, expr, meta ) {
     const comment = meta[ name ] && meta[ name ].comment || '';
     return `
         <li class="list-group-item">
-            ${name ? `<p>"${name}"</p>` : ''}
+            ${name ? `<p class="lead font-italic text-primary">
+                <u>${name}</u>
+              </p>` : ''}
             ${comment }
             ${genForExpression( null, altE, null )}
         </li>
