@@ -68,11 +68,10 @@ function speckyNamespace( cargs ) {
   return retVal;
 }
 
-function _processVal( prefix, val ) {
-  if ( val[ '.expr' ] ) {
-    var e = val[ '.expr' ];
-    if ( e.spec || e.pred ) {
-      var expr = e.spec || e.pred;
+function _processVal( prefix, { expression } ) {
+  if ( expression ) {
+    if ( expression.spec || expression.pred ) {
+      var expr = expression.spec || expression.pred;
       _set( prefix, { '.expr': expr } );
       return expr;
     } else {

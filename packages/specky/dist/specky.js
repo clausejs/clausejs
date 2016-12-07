@@ -1253,7 +1253,7 @@ var _utils = __webpack_require__(15);
 
 var _preds = __webpack_require__(19);
 
-var ExprOrPartialRefMapSpec = (0, _core.or)('.expr', (0, _utils.delayed)(function () {
+var ExprOrPartialRefMapSpec = (0, _core.or)('expression', (0, _utils.delayed)(function () {
   //TODO
   return _core.ExprSpec;
 }));
@@ -1410,9 +1410,9 @@ function speckyNamespace(cargs) {
   if (cargs['register']) {
     var _cargs$register = cargs['register'],
         path = _cargs$register.path,
-        val = _cargs$register.val;
+        _val = _cargs$register.val;
 
-    retVal = _processVal(path, val);
+    retVal = _processVal(path, _val);
   } else if (cargs['retrieve']) {
     var _path = cargs['retrieve'].path;
 
@@ -1423,11 +1423,12 @@ function speckyNamespace(cargs) {
   return retVal;
 }
 
-function _processVal(prefix, val) {
-  if (val['.expr']) {
-    var e = val['.expr'];
-    if (e.spec || e.pred) {
-      var expr = e.spec || e.pred;
+function _processVal(prefix, _ref) {
+  var expression = _ref.expression;
+
+  if (expression) {
+    if (expression.spec || expression.pred) {
+      var expr = expression.spec || expression.pred;
       _set(prefix, { '.expr': expr });
       return expr;
     } else {
@@ -1474,11 +1475,11 @@ function clearRegistry() {
   reg = global[K] = {};
 }
 
-var meta = _namespaceTypes.MetaFnSpec.instrumentConformed(function meta(_ref) {
-  var _ref$source = _ref.source,
-      namespacePath = _ref$source.namespacePath,
-      expression = _ref$source.expression,
-      metaObj = _ref.metaObj;
+var meta = _namespaceTypes.MetaFnSpec.instrumentConformed(function meta(_ref2) {
+  var _ref2$source = _ref2.source,
+      namespacePath = _ref2$source.namespacePath,
+      expression = _ref2$source.expression,
+      metaObj = _ref2.metaObj;
 
   if (namespacePath) {
     var nObj = oPath.get(reg, _slashToDot(namespacePath));
@@ -2386,14 +2387,10 @@ module.exports = isExpr;
 "use strict";
 'use strict';
 
-var _isStr = __webpack_require__(5);
-
-var _isStr2 = _interopRequireDefault(_isStr);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var isStr = __webpack_require__(5);
 
 function isNamespacePath(x) {
-  return (0, _isStr2.default)(x) && /^[a-zA-Z0-9\-_\.]*\/([a-zA-Z0-9\-_]+)$/.test(x);
+  return isStr(x) && /^[a-zA-Z0-9\-_\.]*\/([a-zA-Z0-9\-_]+)$/.test(x);
 }
 
 module.exports = isNamespacePath;

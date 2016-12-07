@@ -1253,7 +1253,7 @@ var _utils = __webpack_require__(15);
 
 var _preds = __webpack_require__(19);
 
-var ExprOrPartialRefMapSpec = (0, _core.or)('.expr', (0, _utils.delayed)(function () {
+var ExprOrPartialRefMapSpec = (0, _core.or)('expression', (0, _utils.delayed)(function () {
   //TODO
   return _core.ExprSpec;
 }));
@@ -1410,9 +1410,9 @@ function speckyNamespace(cargs) {
   if (cargs['register']) {
     var _cargs$register = cargs['register'],
         path = _cargs$register.path,
-        val = _cargs$register.val;
+        _val = _cargs$register.val;
 
-    retVal = _processVal(path, val);
+    retVal = _processVal(path, _val);
   } else if (cargs['retrieve']) {
     var _path = cargs['retrieve'].path;
 
@@ -1423,11 +1423,12 @@ function speckyNamespace(cargs) {
   return retVal;
 }
 
-function _processVal(prefix, val) {
-  if (val['.expr']) {
-    var e = val['.expr'];
-    if (e.spec || e.pred) {
-      var expr = e.spec || e.pred;
+function _processVal(prefix, _ref) {
+  var expression = _ref.expression;
+
+  if (expression) {
+    if (expression.spec || expression.pred) {
+      var expr = expression.spec || expression.pred;
       _set(prefix, { '.expr': expr });
       return expr;
     } else {
@@ -1474,11 +1475,11 @@ function clearRegistry() {
   reg = global[K] = {};
 }
 
-var meta = _namespaceTypes.MetaFnSpec.instrumentConformed(function meta(_ref) {
-  var _ref$source = _ref.source,
-      namespacePath = _ref$source.namespacePath,
-      expression = _ref$source.expression,
-      metaObj = _ref.metaObj;
+var meta = _namespaceTypes.MetaFnSpec.instrumentConformed(function meta(_ref2) {
+  var _ref2$source = _ref2.source,
+      namespacePath = _ref2$source.namespacePath,
+      expression = _ref2$source.expression,
+      metaObj = _ref2.metaObj;
 
   if (namespacePath) {
     var nObj = oPath.get(reg, _slashToDot(namespacePath));
@@ -2386,14 +2387,10 @@ module.exports = isExpr;
 "use strict";
 'use strict';
 
-var _isStr = __webpack_require__(5);
-
-var _isStr2 = _interopRequireDefault(_isStr);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var isStr = __webpack_require__(5);
 
 function isNamespacePath(x) {
-  return (0, _isStr2.default)(x) && /^[a-zA-Z0-9\-_\.]*\/([a-zA-Z0-9\-_]+)$/.test(x);
+  return isStr(x) && /^[a-zA-Z0-9\-_\.]*\/([a-zA-Z0-9\-_]+)$/.test(x);
 }
 
 module.exports = isNamespacePath;
@@ -3594,6 +3591,8 @@ function genForExpression(exprName, expr, meta) {
     docstr = _genFspec(exprName, expr, meta);
   } else if (expr.type === 'OR') {
     docstr = _genOrSpec(exprName, expr, meta);
+  } else if (expr.type === 'CAT') {
+    docstr = _genCatSpec(exprName, expr, meta);
   } else if ((0, _isPred2.default)(expr) || expr.type === 'PRED') {
     docstr = _genPredSpec(exprName, expr, meta);
   } else {
@@ -3603,12 +3602,25 @@ function genForExpression(exprName, expr, meta) {
   return docstr;
 }
 
+function _genCatSpec(exprName, expr, meta) {
+  var altDefs = expr.exprs.map(function (_ref, idx) {
+    var name = _ref.name,
+        altE = _ref.expr;
+
+    var comment = meta && meta[name] && meta[name].comment || '';
+    return '\n        <li class="list-group-item">\n          ' + (name ? '<p>\n            <span class="tag tag-default">No. ' + (idx + 1) + ' </span>\n            <span class="lead font-italic text-primary">\n              <u>' + name + '</u>\n            </span>\n            ' + (comment ? ':<span>' + comment + '</span>' : '') + '\n          </p>' : '') + '\n            ' + genForExpression(null, altE, null) + '\n        </li>\n    ';
+  });
+
+  var r = '\n  <div class="card">\n    <div class="card-block">\n      <p class="card-title">A sequence of the following forms: </p>\n    </div>\n    <ol class="list-group list-group-flush">\n      ' + altDefs.join('') + '\n    </ol>\n  </div>\n  ';
+  return r;
+}
+
 function _genPredSpec(exprName, expr, meta) {
   var pred = expr.exprs ? expr.exprs[0] : expr;
   var name = meta && meta['name'] || exprName;
   var predName = (0, _fnName2.default)(pred);
   var nameFrag = name ? name + ': ' : '';
-  var r = '\n    <div class="card">\n      <div class="card-header">\n        ' + nameFrag + '<em>' + predName + '()</em> <span class="tag tag-primary">predicate</span>\n      </div>\n    </div>\n  ';
+  var r = '\n    <div class="card">\n      <div class="card-header">\n        <span\n          data-toggle="popover"\n          data-trigger="hover"\n          data-html="true"\n          title="' + predName + '()"\n          data-content="<pre>' + pred.toString() + '</pre>"\n          data-container="body"\n          data-animation="false"\n          >\n          ' + nameFrag + '<em>' + predName + '()</em> <span class="tag tag-primary">predicate</span>\n        </span>\n      </div>\n    </div>\n  ';
   return r;
 }
 
@@ -3618,12 +3630,12 @@ function _genUnknownSpec(exprName, expr, meta) {
 }
 
 function _genOrSpec(exprName, expr, meta) {
-  var altDefs = expr.exprs.map(function (_ref, index) {
-    var name = _ref.name,
-        altE = _ref.expr;
+  var altDefs = expr.exprs.map(function (_ref2, index) {
+    var name = _ref2.name,
+        altE = _ref2.expr;
 
-    var comment = meta[name] && meta[name].comment || '';
-    return '\n        <li class="list-group-item">\n            ' + (name ? '<p>"' + name + '"</p>' : '') + '\n            ' + comment + '\n            ' + genForExpression(null, altE, null) + '\n        </li>\n    ';
+    var comment = meta && meta[name] && meta[name].comment || '';
+    return '\n        <li class="list-group-item">\n            ' + (name ? '<p>\n                <span class="lead font-italic text-primary">\n                  <u>' + name + '</u>\n                </span>:\n                <span>' + comment + '</span>\n              </p>' : '') + '\n            ' + genForExpression(null, altE, null) + '\n        </li>\n    ';
   });
 
   var r = '\n  <div class="card">\n    <div class="card-block">\n      <p class="card-title">One of the following forms: </p>\n    </div>\n    <ol class="list-group list-group-flush">\n      ' + altDefs.join('') + '\n    </ol>\n  </div>\n  ';
@@ -3647,10 +3659,10 @@ function _genFspec(exprName, spec, meta) {
   }if (fn) {
     frags.push(['Argument-return value relation', '<pre>' + (0, _fnName2.default)(fn) + '</pre>']);
   }
-  var r = '\n    <div class="card">\n      ' + (name ? '\n        <div class="card-header">\n          ' + name + '() <span class="tag tag-primary">function</span>\n        </div>\n        ' : '') + '\n      <div class="card-block">\n        <dl>\n        ' + frags.map(function (_ref2) {
-    var _ref3 = _slicedToArray(_ref2, 2),
-        name = _ref3[0],
-        src = _ref3[1];
+  var r = '\n    <div class="card">\n      ' + (name ? '\n        <div class="card-header">\n          ' + name + '() <span class="tag tag-primary">function</span>\n        </div>\n        ' : '') + '\n      <div class="card-block">\n        <dl>\n        ' + frags.map(function (_ref3) {
+    var _ref4 = _slicedToArray(_ref3, 2),
+        name = _ref4[0],
+        src = _ref4[1];
 
     return '<dt>' + name + '</dt><dd>' + src + '</dd>';
   }).join('\n') + '\n        </dl>\n      </div>\n    </div>\n  ';
@@ -3771,7 +3783,11 @@ __webpack_require__(70);
 
 var finalDocStr = _docgen2.default.gen(_specs2.default);
 
-document.getElementById('api').innerHTML = finalDocStr;
+$(function () {
+  document.getElementById('api').innerHTML = finalDocStr;
+
+  $('[data-toggle="popover"]').popover();
+});
 
 /***/ }
 /******/ ])

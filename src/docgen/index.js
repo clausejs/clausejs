@@ -92,6 +92,8 @@ function genForExpression( exprName, expr, meta ) {
     docstr = _genFspec( exprName, expr, meta );
   } else if ( expr.type === 'OR' ) {
     docstr = _genOrSpec( exprName, expr, meta );
+  } else if ( expr.type === 'CAT' ) {
+    docstr = _genCatSpec( exprName, expr, meta );
   } else if ( isPred( expr ) || expr.type === 'PRED' ) {
     docstr = _genPredSpec( exprName, expr, meta );
   } else {
@@ -99,6 +101,36 @@ function genForExpression( exprName, expr, meta ) {
   }
 
   return docstr;
+}
+
+function _genCatSpec( exprName, expr, meta ) {
+  const altDefs = expr.exprs.map( ( { name, expr: altE }, idx ) => {
+    const comment = meta && meta[ name ] && meta[ name ].comment || '';
+    return `
+        <li class="list-group-item">
+          ${name ? `<p>
+            <span class="tag tag-default">No. ${idx + 1} </span>
+            <span class="lead font-italic text-primary">
+              <u>${name}</u>
+            </span>
+            ${comment ? `:<span>${ comment }</span>` : ''}
+          </p>` : ''}
+            ${genForExpression( null, altE, null )}
+        </li>
+    `;
+  } );
+
+  const r = `
+  <div class="card">
+    <div class="card-block">
+      <p class="card-title">A sequence of the following forms: </p>
+    </div>
+    <ol class="list-group list-group-flush">
+      ${altDefs.join( '' )}
+    </ol>
+  </div>
+  `;
+  return r;
 }
 
 function _genPredSpec( exprName, expr, meta ) {
@@ -141,13 +173,15 @@ function _genUnknownSpec( exprName, expr, meta ) {
 
 function _genOrSpec( exprName, expr, meta ) {
   const altDefs = expr.exprs.map( ( { name, expr: altE }, index ) => {
-    const comment = meta[ name ] && meta[ name ].comment || '';
+    const comment = meta && meta[ name ] && meta[ name ].comment || '';
     return `
         <li class="list-group-item">
-            ${name ? `<p class="lead font-italic text-primary">
-                <u>${name}</u>
+            ${name ? `<p>
+                <span class="lead font-italic text-primary">
+                  <u>${name}</u>
+                </span>:
+                <span>${ comment }</span>
               </p>` : ''}
-            ${comment }
             ${genForExpression( null, altE, null )}
         </li>
     `;

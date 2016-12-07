@@ -3,7 +3,7 @@ import { delayed, isNamespacePath, isExpr, isSpecRef } from '../utils';
 import { isObj } from '../preds';
 
 var ExprOrPartialRefMapSpec = or(
-  '.expr', delayed( () => {
+  'expression', delayed( () => {
     //TODO
     return ExprSpec;
   } )
