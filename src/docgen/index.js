@@ -114,7 +114,7 @@ function _genCatSpec( exprName, expr, meta ) {
             <span class="lead font-italic text-primary">
               <u>${name}</u>
             </span>
-            ${comment ? `:<span>${ comment }</span>` : ''}
+            ${comment ? `: <span>${ comment }</span>` : ''}
           </p>` : ''}
             ${_codeExample( example )}
             ${genForExpression( null, altE, null )}
@@ -194,8 +194,8 @@ function _genOrSpec( exprName, expr, meta ) {
             ${name ? `<p>
                 <span class="lead font-italic text-primary">
                   <u>${name}</u>
-                </span>:
-                ${comment ? `:<span>${ comment }</span>` : ''}
+                </span>
+                ${comment ? `: <span>${ comment }</span>` : ''}
               </p>` : ''}
               ${_codeExample( example )}
             ${genForExpression( null, altE, null )}
@@ -225,7 +225,7 @@ function _genFspec( exprName, spec, meta ) {
   const name = meta[ 'name' ] || exprName;
   const { args: argsSpec, ret: retSpec, fn } = spec.opts;
   if ( argsSpec ) {
-    frags.push( [ 'Arguments', genForExpression( null, argsSpec, meta.args ) ] );
+    frags.push( [ 'Parameters', genForExpression( null, argsSpec, meta.args ) ] );
   }
   if ( retSpec ) {
     frags.push( [ 'Return value', genForExpression( null, retSpec, meta.ret ) ] );

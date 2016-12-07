@@ -3609,7 +3609,7 @@ function _genCatSpec(exprName, expr, meta) {
 
     var comment = meta && meta[name] && meta[name].comment;
     var example = meta && meta[name] && meta[name].example;
-    return '\n        <li class="list-group-item">\n          ' + (name ? '<p>\n            <span class="tag tag-default">' + (idx + 1) + '. </span>\n            <span class="lead font-italic text-primary">\n              <u>' + name + '</u>\n            </span>\n            ' + (comment ? ':<span>' + comment + '</span>' : '') + '\n          </p>' : '') + '\n            ' + _codeExample(example) + '\n            ' + genForExpression(null, altE, null) + '\n        </li>\n    ';
+    return '\n        <li class="list-group-item">\n          ' + (name ? '<p>\n            <span class="tag tag-default">' + (idx + 1) + '. </span>\n            <span class="lead font-italic text-primary">\n              <u>' + name + '</u>\n            </span>\n            ' + (comment ? ': <span>' + comment + '</span>' : '') + '\n          </p>' : '') + '\n            ' + _codeExample(example) + '\n            ' + genForExpression(null, altE, null) + '\n        </li>\n    ';
   });
 
   var r = '\n  <div class="card">\n    <div class="card-block">\n      <p class="card-title">\n        <span class="tag tag-info">cat</span>\n        A sequence of the following forms:\n      </p>\n    </div>\n    <ol class="list-group list-group-flush">\n      ' + altDefs.join('') + '\n    </ol>\n  </div>\n  ';
@@ -3643,7 +3643,7 @@ function _genOrSpec(exprName, expr, meta) {
     var comment = meta && meta[name] && meta[name].comment;
     var example = meta && meta[name] && meta[name].example;
 
-    return '\n        <li class="list-group-item">\n            ' + (name ? '<p>\n                <span class="lead font-italic text-primary">\n                  <u>' + name + '</u>\n                </span>:\n                ' + (comment ? ':<span>' + comment + '</span>' : '') + '\n              </p>' : '') + '\n              ' + _codeExample(example) + '\n            ' + genForExpression(null, altE, null) + '\n        </li>\n    ';
+    return '\n        <li class="list-group-item">\n            ' + (name ? '<p>\n                <span class="lead font-italic text-primary">\n                  <u>' + name + '</u>\n                </span>\n                ' + (comment ? ': <span>' + comment + '</span>' : '') + '\n              </p>' : '') + '\n              ' + _codeExample(example) + '\n            ' + genForExpression(null, altE, null) + '\n        </li>\n    ';
   });
 
   var r = '\n  <div class="card">\n    <div class="card-block">\n      <p class="card-title">\n        <span class="tag tag-info">or</span>\n        One of the following forms:\n      </p>\n    </div>\n    <ol class="list-group list-group-flush">\n      ' + altDefs.join('') + '\n    </ol>\n  </div>\n  ';
@@ -3660,7 +3660,7 @@ function _genFspec(exprName, spec, meta) {
       fn = _spec$opts.fn;
 
   if (argsSpec) {
-    frags.push(['Arguments', genForExpression(null, argsSpec, meta.args)]);
+    frags.push(['Parameters', genForExpression(null, argsSpec, meta.args)]);
   }
   if (retSpec) {
     frags.push(['Return value', genForExpression(null, retSpec, meta.ret)]);
