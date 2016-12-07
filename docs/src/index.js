@@ -9,4 +9,8 @@ $( function() {
   document.getElementById( 'api' ).innerHTML = finalDocStr;
 
   $( '[data-toggle="popover"]' ).popover();
+
+  $( 'pre code' ).each( function( i, block ) {
+    hljs.highlightBlock( block );
+  } );
 } )

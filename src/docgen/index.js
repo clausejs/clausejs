@@ -105,16 +105,18 @@ function genForExpression( exprName, expr, meta ) {
 
 function _genCatSpec( exprName, expr, meta ) {
   const altDefs = expr.exprs.map( ( { name, expr: altE }, idx ) => {
-    const comment = meta && meta[ name ] && meta[ name ].comment || '';
+    const comment = meta && meta[ name ] && meta[ name ].comment;
+    const example = meta && meta[ name ] && meta[ name ].example;
     return `
         <li class="list-group-item">
           ${name ? `<p>
-            <span class="tag tag-default">No. ${idx + 1} </span>
+            <span class="tag tag-default">${idx + 1}. </span>
             <span class="lead font-italic text-primary">
               <u>${name}</u>
             </span>
             ${comment ? `:<span>${ comment }</span>` : ''}
           </p>` : ''}
+            ${_codeExample( example )}
             ${genForExpression( null, altE, null )}
         </li>
     `;
@@ -133,6 +135,14 @@ function _genCatSpec( exprName, expr, meta ) {
     </ol>
   </div>
   `;
+  return r;
+}
+
+function _codeExample( code ) {
+  const r = `${code ? `
+    <blockquote class="blockquote">
+      <pre><code class="js">${ code }</code></pre>
+    </blockquote>` : ''}`
   return r;
 }
 
@@ -176,15 +186,18 @@ function _genUnknownSpec( exprName, expr, meta ) {
 
 function _genOrSpec( exprName, expr, meta ) {
   const altDefs = expr.exprs.map( ( { name, expr: altE }, index ) => {
-    const comment = meta && meta[ name ] && meta[ name ].comment || '';
+    const comment = meta && meta[ name ] && meta[ name ].comment;
+    const example = meta && meta[ name ] && meta[ name ].example;
+
     return `
         <li class="list-group-item">
             ${name ? `<p>
                 <span class="lead font-italic text-primary">
                   <u>${name}</u>
                 </span>:
-                <span>${ comment }</span>
+                ${comment ? `:<span>${ comment }</span>` : ''}
               </p>` : ''}
+              ${_codeExample( example )}
             ${genForExpression( null, altE, null )}
         </li>
     `;

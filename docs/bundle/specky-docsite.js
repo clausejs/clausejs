@@ -3607,11 +3607,17 @@ function _genCatSpec(exprName, expr, meta) {
     var name = _ref.name,
         altE = _ref.expr;
 
-    var comment = meta && meta[name] && meta[name].comment || '';
-    return '\n        <li class="list-group-item">\n          ' + (name ? '<p>\n            <span class="tag tag-default">No. ' + (idx + 1) + ' </span>\n            <span class="lead font-italic text-primary">\n              <u>' + name + '</u>\n            </span>\n            ' + (comment ? ':<span>' + comment + '</span>' : '') + '\n          </p>' : '') + '\n            ' + genForExpression(null, altE, null) + '\n        </li>\n    ';
+    var comment = meta && meta[name] && meta[name].comment;
+    var example = meta && meta[name] && meta[name].example;
+    return '\n        <li class="list-group-item">\n          ' + (name ? '<p>\n            <span class="tag tag-default">' + (idx + 1) + '. </span>\n            <span class="lead font-italic text-primary">\n              <u>' + name + '</u>\n            </span>\n            ' + (comment ? ':<span>' + comment + '</span>' : '') + '\n          </p>' : '') + '\n            ' + _codeExample(example) + '\n            ' + genForExpression(null, altE, null) + '\n        </li>\n    ';
   });
 
   var r = '\n  <div class="card">\n    <div class="card-block">\n      <p class="card-title">\n        <span class="tag tag-info">cat</span>\n        A sequence of the following forms:\n      </p>\n    </div>\n    <ol class="list-group list-group-flush">\n      ' + altDefs.join('') + '\n    </ol>\n  </div>\n  ';
+  return r;
+}
+
+function _codeExample(code) {
+  var r = '' + (code ? '\n    <blockquote class="blockquote">\n      <pre><code class="js">' + code + '</code></pre>\n    </blockquote>' : '');
   return r;
 }
 
@@ -3634,8 +3640,10 @@ function _genOrSpec(exprName, expr, meta) {
     var name = _ref2.name,
         altE = _ref2.expr;
 
-    var comment = meta && meta[name] && meta[name].comment || '';
-    return '\n        <li class="list-group-item">\n            ' + (name ? '<p>\n                <span class="lead font-italic text-primary">\n                  <u>' + name + '</u>\n                </span>:\n                <span>' + comment + '</span>\n              </p>' : '') + '\n            ' + genForExpression(null, altE, null) + '\n        </li>\n    ';
+    var comment = meta && meta[name] && meta[name].comment;
+    var example = meta && meta[name] && meta[name].example;
+
+    return '\n        <li class="list-group-item">\n            ' + (name ? '<p>\n                <span class="lead font-italic text-primary">\n                  <u>' + name + '</u>\n                </span>:\n                ' + (comment ? ':<span>' + comment + '</span>' : '') + '\n              </p>' : '') + '\n              ' + _codeExample(example) + '\n            ' + genForExpression(null, altE, null) + '\n        </li>\n    ';
   });
 
   var r = '\n  <div class="card">\n    <div class="card-block">\n      <p class="card-title">\n        <span class="tag tag-info">or</span>\n        One of the following forms:\n      </p>\n    </div>\n    <ol class="list-group list-group-flush">\n      ' + altDefs.join('') + '\n    </ol>\n  </div>\n  ';
@@ -3789,6 +3797,10 @@ $(function () {
   document.getElementById('api').innerHTML = finalDocStr;
 
   $('[data-toggle="popover"]').popover();
+
+  $('pre code').each(function (i, block) {
+    hljs.highlightBlock(block);
+  });
 });
 
 /***/ }
