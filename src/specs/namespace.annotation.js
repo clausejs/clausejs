@@ -5,9 +5,11 @@ M( '/Specky', {
   'args': {
     'register': {
       'comment': 'Registers a namespace path with an expression.',
+      'example': 'S("awesomeapp/TodoItem", todoItemSpec)',
     },
     'retrieve': {
       'comment': 'Retrieves an expression by namespace path.',
+      'example': 'S("awesomeapp/TodoItem")',
     }
   },
   'ret': {

@@ -3611,7 +3611,7 @@ function _genCatSpec(exprName, expr, meta) {
     return '\n        <li class="list-group-item">\n          ' + (name ? '<p>\n            <span class="tag tag-default">No. ' + (idx + 1) + ' </span>\n            <span class="lead font-italic text-primary">\n              <u>' + name + '</u>\n            </span>\n            ' + (comment ? ':<span>' + comment + '</span>' : '') + '\n          </p>' : '') + '\n            ' + genForExpression(null, altE, null) + '\n        </li>\n    ';
   });
 
-  var r = '\n  <div class="card">\n    <div class="card-block">\n      <p class="card-title">A sequence of the following forms: </p>\n    </div>\n    <ol class="list-group list-group-flush">\n      ' + altDefs.join('') + '\n    </ol>\n  </div>\n  ';
+  var r = '\n  <div class="card">\n    <div class="card-block">\n      <p class="card-title">\n        <span class="tag tag-info">cat</span>\n        A sequence of the following forms:\n      </p>\n    </div>\n    <ol class="list-group list-group-flush">\n      ' + altDefs.join('') + '\n    </ol>\n  </div>\n  ';
   return r;
 }
 
@@ -3638,7 +3638,7 @@ function _genOrSpec(exprName, expr, meta) {
     return '\n        <li class="list-group-item">\n            ' + (name ? '<p>\n                <span class="lead font-italic text-primary">\n                  <u>' + name + '</u>\n                </span>:\n                <span>' + comment + '</span>\n              </p>' : '') + '\n            ' + genForExpression(null, altE, null) + '\n        </li>\n    ';
   });
 
-  var r = '\n  <div class="card">\n    <div class="card-block">\n      <p class="card-title">One of the following forms: </p>\n    </div>\n    <ol class="list-group list-group-flush">\n      ' + altDefs.join('') + '\n    </ol>\n  </div>\n  ';
+  var r = '\n  <div class="card">\n    <div class="card-block">\n      <p class="card-title">\n        <span class="tag tag-info">or</span>\n        One of the following forms:\n      </p>\n    </div>\n    <ol class="list-group list-group-flush">\n      ' + altDefs.join('') + '\n    </ol>\n  </div>\n  ';
   return r;
 }
 
@@ -3722,10 +3722,12 @@ var _ = __webpack_require__(18);
   'name': 'S',
   'args': {
     'register': {
-      'comment': 'Registers a namespace path with an expression.'
+      'comment': 'Registers a namespace path with an expression.',
+      'example': 'S("awesomeapp/TodoItem", todoItemSpec)'
     },
     'retrieve': {
-      'comment': 'Retrieves an expression by namespace path.'
+      'comment': 'Retrieves an expression by namespace path.',
+      'example': 'S("awesomeapp/TodoItem")'
     }
   },
   'ret': {

@@ -123,7 +123,10 @@ function _genCatSpec( exprName, expr, meta ) {
   const r = `
   <div class="card">
     <div class="card-block">
-      <p class="card-title">A sequence of the following forms: </p>
+      <p class="card-title">
+        <span class="tag tag-info">cat</span>
+        A sequence of the following forms:
+      </p>
     </div>
     <ol class="list-group list-group-flush">
       ${altDefs.join( '' )}
@@ -190,7 +193,10 @@ function _genOrSpec( exprName, expr, meta ) {
   const r = `
   <div class="card">
     <div class="card-block">
-      <p class="card-title">One of the following forms: </p>
+      <p class="card-title">
+        <span class="tag tag-info">or</span>
+        One of the following forms:
+      </p>
     </div>
     <ol class="list-group list-group-flush">
       ${altDefs.join( '' )}
