@@ -1,3 +1,5 @@
+const Spec = require( './Spec' );
+
 function DelayedSpec( { getFn } ) {
   this.type = 'Delayed';
   this.get = getFn;
@@ -10,5 +12,7 @@ function DelayedSpec( { getFn } ) {
     };
   } );
 }
+
+DelayedSpec.prototype = Object.create( Spec.prototype );
 
 module.exports = DelayedSpec;

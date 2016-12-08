@@ -9,6 +9,13 @@
   "author": "Xiyang Chen <settinghead@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "webpack-dev-server": "^1.16.2"
+    "webpack-dev-server": "^2.1.0-beta.12"
+  },
+  "dependencies": {
+    "jquery": "^3.1.1",
+    "tether": "^1.4.0",
+    "bootstrap": "^3.3.7",
+    "highlight.js": "^9.8.0",
+    "bootstrap": "4.0.0-alpha.5"
   }
 }

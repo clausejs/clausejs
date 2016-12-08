@@ -1,4 +1,4 @@
-import Spec from './Spec';
+const Spec = require( './Spec' );
 
 function SpecRef( { ref, getFn, conformFn } ) {
   this.type = 'SpecRef';
