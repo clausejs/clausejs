@@ -4,8 +4,7 @@ import Registry from '../../src/specs';
 require( '../../src/specs/index.annotation.js' );
 
 const finalDocStr = docgen.gen( Registry );
-
-$( function() {
+document.addEventListener( 'DOMContentLoaded', () => {
   document.getElementById( 'api' ).innerHTML = finalDocStr;
 
   $( '[data-toggle="popover"]' ).popover();
@@ -13,4 +12,4 @@ $( function() {
   $( 'pre code' ).each( function( i, block ) {
     hljs.highlightBlock( block );
   } );
-} )
+} );

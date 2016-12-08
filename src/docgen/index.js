@@ -150,7 +150,7 @@ function _genPredSpec( exprName, expr, meta ) {
   let pred = expr.exprs ? expr.exprs[ 0 ] : expr;
   const name = meta && meta[ 'name' ] || exprName;
   const predName = fnName( pred );
-  const nameFrag = name ? `${name}: ` : '';
+  const nameFrag = name ? `${name} ` : '';
   const r = `
     <div class="card">
       ${

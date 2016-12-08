@@ -3625,7 +3625,7 @@ function _genPredSpec(exprName, expr, meta) {
   var pred = expr.exprs ? expr.exprs[0] : expr;
   var name = meta && meta['name'] || exprName;
   var predName = (0, _fnName2.default)(pred);
-  var nameFrag = name ? name + ': ' : '';
+  var nameFrag = name ? name + ' ' : '';
   var r = '\n    <div class="card">\n      ' + (name ? '\n          <div class="card-header">\n            <span>\n              ' + nameFrag + '<span class="tag tag-primary">predicate</span>\n            </span>\n          </div>\n        ' : '') + '\n      <div class="card-block"\n        data-toggle="popover"\n        data-trigger="hover"\n        data-html="true"\n        title="' + predName + '()"\n        data-content="<pre>' + pred.toString() + '</pre>"\n        data-container="body"\n        data-animation="false"\n        data-placement="top"\n        data-delay="500"\n        >\n        ' + (name ? '' : _tagFor('pred')) + '\n        <em>' + predName + '()</em>\n      </div>\n    </div>\n  ';
   return r;
 }
@@ -3797,8 +3797,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 __webpack_require__(70);
 
 var finalDocStr = _docgen2.default.gen(_specs2.default);
-
-$(function () {
+document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('api').innerHTML = finalDocStr;
 
   $('[data-toggle="popover"]').popover();
