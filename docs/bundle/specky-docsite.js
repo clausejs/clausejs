@@ -19792,8 +19792,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./default.css", function() {
-			var newContent = require("!!./../../../../node_modules/css-loader/index.js!./default.css");
+		module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./codepen-embed.css", function() {
+			var newContent = require("!!./../../../../node_modules/css-loader/index.js!./codepen-embed.css");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -36191,7 +36191,7 @@ exports = module.exports = __webpack_require__(68)();
 
 
 // module
-exports.push([module.i, ".hljs{display:block;overflow-x:auto;padding:.5em;background:#f0f0f0}.hljs,.hljs-subst{color:#444}.hljs-comment{color:#888}.hljs-attribute,.hljs-doctag,.hljs-keyword,.hljs-meta-keyword,.hljs-name,.hljs-selector-tag{font-weight:700}.hljs-deletion,.hljs-number,.hljs-quote,.hljs-selector-class,.hljs-selector-id,.hljs-string,.hljs-template-tag,.hljs-type{color:#800}.hljs-section,.hljs-title{color:#800;font-weight:700}.hljs-link,.hljs-regexp,.hljs-selector-attr,.hljs-selector-pseudo,.hljs-symbol,.hljs-template-variable,.hljs-variable{color:#bc6060}.hljs-literal{color:#78a960}.hljs-addition,.hljs-built_in,.hljs-bullet,.hljs-code{color:#397300}.hljs-meta{color:#1f7199}.hljs-meta-string{color:#4d99bf}.hljs-emphasis{font-style:italic}.hljs-strong{font-weight:700}", ""]);
+exports.push([module.i, ".hljs{display:block;overflow-x:auto;padding:.5em;background:#222;color:#fff}.hljs-comment,.hljs-quote{color:#777}.hljs-built_in,.hljs-builtin-name,.hljs-bullet,.hljs-deletion,.hljs-link,.hljs-literal,.hljs-meta,.hljs-number,.hljs-params,.hljs-regexp,.hljs-symbol,.hljs-tag,.hljs-template-variable,.hljs-variable{color:#ab875d}.hljs-attribute,.hljs-name,.hljs-section,.hljs-selector-class,.hljs-selector-id,.hljs-title,.hljs-type{color:#9b869b}.hljs-addition,.hljs-keyword,.hljs-selector-tag,.hljs-string{color:#8f9c6c}.hljs-emphasis{font-style:italic}.hljs-strong{font-weight:700}", ""]);
 
 // exports
 

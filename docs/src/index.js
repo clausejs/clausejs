@@ -4,7 +4,7 @@ import $ from 'jquery';
 import tether from 'tether';
 const HLJS = require( 'highlight.js' );
 require( 'bootstrap/dist/css/bootstrap.css' );
-require( 'highlight.js/styles/default.css' );
+require( 'highlight.js/styles/codepen-embed.css' );
 require( '../../src/specs/index.annotation.js' );
 
 const finalDocStr = docgen.gen( Registry );
