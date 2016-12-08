@@ -1,4 +1,4 @@
-import { NamespaceObjSpec } from '../specs/namespace-types';
+import { NamespaceObjSpec } from '../specs/namespace.types';
 import fnName from '../utils/fnName';
 import isPred from '../utils/isPred';
 import isSpec from '../utils/isSpec';
@@ -153,22 +153,43 @@ function _genPredSpec( exprName, expr, meta ) {
   const nameFrag = name ? `${name}: ` : '';
   const r = `
     <div class="card">
-      <div class="card-header">
-        <span
-          data-toggle="popover"
-          data-trigger="hover"
-          data-html="true"
-          title="${predName}()"
-          data-content="<pre>${pred.toString()}</pre>"
-          data-container="body"
-          data-animation="false"
-          >
-          ${nameFrag}<em>${predName}()</em> <span class="tag tag-primary">predicate</span>
-        </span>
+      ${
+        name ? `
+          <div class="card-header">
+            <span>
+              ${nameFrag}<span class="tag tag-primary">predicate</span>
+            </span>
+          </div>
+        ` : ''
+      }
+      <div class="card-block"
+        data-toggle="popover"
+        data-trigger="hover"
+        data-html="true"
+        title="${predName}()"
+        data-content="<pre>${pred.toString()}</pre>"
+        data-container="body"
+        data-animation="false"
+        data-placement="top"
+        data-delay="500"
+        >
+        ${
+          name ? '' : _tagFor( 'pred' )
+        }
+        <em>${predName}()</em>
       </div>
     </div>
   `;
   return r;
+}
+
+function _tagFor( t ) {
+  switch ( t ) {
+  case 'pred':
+    return '<span class="tag tag-primary">predicate</span>';
+  default:
+    throw '!'
+  }
 }
 
 function _genUnknownSpec( exprName, expr, meta ) {
@@ -205,9 +226,14 @@ function _genOrSpec( exprName, expr, meta ) {
 
   const r = `
   <div class="card">
+    ${exprName ? `
+        <div class="card-header">
+        ${exprName} <span class="tag tag-info">or</span>
+        </div>
+      ` : ''}
     <div class="card-block">
       <p class="card-title">
-        <span class="tag tag-info">or</span>
+        ${exprName ? '' : '<span class="tag tag-info">or</span>'}
         One of the following forms:
       </p>
     </div>

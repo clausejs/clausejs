@@ -10,7 +10,7 @@ var walk = require( '../walk' );
 var coerceIntoSpec = require( '../utils/coerceIntoSpec' );
 
 import { isNamespacePath, isSpecRef } from '../utils';
-import { NamespaceFnSpec, MetaFnSpec } from '../specs/namespace-types';
+import { NamespaceFnSpec, MetaFnSpec } from '../specs/namespace.types';
 var reg;
 
 var _get = fspec( {

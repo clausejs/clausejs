@@ -71,7 +71,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 18);
+/******/ 	return __webpack_require__(__webpack_require__.s = 19);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -320,7 +320,7 @@ var isSpecRef = __webpack_require__(12);
 var isDelayedSpec = __webpack_require__(31);
 var Spec = __webpack_require__(0);
 var Problem = __webpack_require__(2);
-var fnName = __webpack_require__(13);
+var fnName = __webpack_require__(14);
 
 var SPEC_TYPE = 'PRED';
 
@@ -756,27 +756,6 @@ module.exports = function isSpecRef(x) {
 
 /***/ },
 /* 13 */
-/***/ function(module, exports) {
-
-"use strict";
-'use strict';
-
-//extrapolates the name of a function
-function functionName(fun) {
-  // ES6 fn name
-  if (fun && fun.name) {
-    return fun.name;
-  }
-  var ret = fun.toString();
-  ret = ret.substr('function '.length);
-  ret = ret.substr(0, ret.indexOf('('));
-  return ret;
-}
-
-module.exports = functionName;
-
-/***/ },
-/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -800,6 +779,27 @@ var other = {
 var r = oAssign({}, regex, { props: props, keys: keys }, other);
 
 module.exports = r;
+
+/***/ },
+/* 14 */
+/***/ function(module, exports) {
+
+"use strict";
+'use strict';
+
+//extrapolates the name of a function
+function functionName(fun) {
+  // ES6 fn name
+  if (fun && fun.name) {
+    return fun.name;
+  }
+  var ret = fun.toString();
+  ret = ret.substr('function '.length);
+  ret = ret.substr(0, ret.indexOf('('));
+  return ret;
+}
+
+module.exports = functionName;
 
 /***/ },
 /* 15 */
@@ -875,37 +875,6 @@ module.exports = function specFromAlts(alts) {
 "use strict";
 'use strict';
 
-var _namespace = __webpack_require__(33);
-
-var _namespace2 = _interopRequireDefault(_namespace);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var oAssign = __webpack_require__(4);
-
-
-var ops = __webpack_require__(14);
-var utils = __webpack_require__(15);
-
-var predicates = __webpack_require__(19);
-
-var models = {
-  Problem: __webpack_require__(2),
-  Spec: __webpack_require__(0)
-};
-
-var r = oAssign(_namespace2.default, ops, utils, models, predicates);
-r.default = r;
-
-module.exports = r;
-
-/***/ },
-/* 19 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-'use strict';
-
 var isNum = __webpack_require__(26);
 var isNatInt = __webpack_require__(45);
 var isInt = __webpack_require__(25);
@@ -941,6 +910,37 @@ var e = {
 
 e.default = e;
 module.exports = e;
+
+/***/ },
+/* 19 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+'use strict';
+
+var _namespace = __webpack_require__(33);
+
+var _namespace2 = _interopRequireDefault(_namespace);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var oAssign = __webpack_require__(4);
+
+
+var ops = __webpack_require__(13);
+var utils = __webpack_require__(15);
+
+var predicates = __webpack_require__(18);
+
+var models = {
+  Problem: __webpack_require__(2),
+  Spec: __webpack_require__(0)
+};
+
+var r = oAssign(_namespace2.default, ops, utils, models, predicates);
+r.default = r;
+
+module.exports = r;
 
 /***/ },
 /* 20 */
@@ -1247,11 +1247,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.NamespaceObjSpec = exports.MetaFnSpec = exports.isNamespacePath = exports.NamespaceFnSpec = exports.isSpecRef = undefined;
 
-var _core = __webpack_require__(14);
+var _core = __webpack_require__(13);
 
 var _utils = __webpack_require__(15);
 
-var _preds = __webpack_require__(19);
+var _preds = __webpack_require__(18);
 
 var ExprOrPartialRefMapSpec = (0, _core.or)('expression', (0, _utils.delayed)(function () {
   //TODO
@@ -1260,7 +1260,7 @@ var ExprOrPartialRefMapSpec = (0, _core.or)('expression', (0, _utils.delayed)(fu
 
 var NamespaceFnSpec = (0, _core.fspec)({
   args: (0, _core.or)('register', (0, _core.cat)('path', _utils.isNamespacePath, 'val', ExprOrPartialRefMapSpec), 'retrieve', (0, _core.cat)('path', _utils.isNamespacePath)),
-  ret: (0, _core.or)(_utils.isSpecRef, _utils.isExpr)
+  ret: _core.ExprSpec
 });
 
 var MetaFnSpec = (0, _core.fspec)({
@@ -1343,11 +1343,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _core = __webpack_require__(14);
+var _core = __webpack_require__(13);
 
 var _utils = __webpack_require__(15);
 
-var _namespaceTypes = __webpack_require__(29);
+var _namespace = __webpack_require__(29);
 
 var oPath = __webpack_require__(65);
 var oAssign = __webpack_require__(4);
@@ -1475,7 +1475,7 @@ function clearRegistry() {
   reg = global[K] = {};
 }
 
-var meta = _namespaceTypes.MetaFnSpec.instrumentConformed(function meta(_ref2) {
+var meta = _namespace.MetaFnSpec.instrumentConformed(function meta(_ref2) {
   var _ref2$source = _ref2.source,
       namespacePath = _ref2$source.namespacePath,
       expression = _ref2$source.expression,
@@ -1494,7 +1494,7 @@ var meta = _namespaceTypes.MetaFnSpec.instrumentConformed(function meta(_ref2) {
 
 _maybeInitRegistry();
 
-var specedSpeckyNamespace = _namespaceTypes.NamespaceFnSpec.instrumentConformed(speckyNamespace);
+var specedSpeckyNamespace = _namespace.NamespaceFnSpec.instrumentConformed(speckyNamespace);
 specedSpeckyNamespace.clearRegistry = clearRegistry;
 specedSpeckyNamespace.getRegistry = function () {
   return reg;
@@ -2589,7 +2589,7 @@ module.exports = delayedSpecWalker;
 
 var isProblem = __webpack_require__(3);
 var Problem = __webpack_require__(2);
-var functionName = __webpack_require__(13);
+var functionName = __webpack_require__(14);
 var namedFn = __webpack_require__(32);
 var betterThrow = __webpack_require__(49);
 
@@ -2779,7 +2779,7 @@ module.exports = nfaWalker;
 "use strict";
 'use strict';
 
-var fnName = __webpack_require__(13);
+var fnName = __webpack_require__(14);
 var Problem = __webpack_require__(2);
 
 function predWalker(spec) {

@@ -16,7 +16,7 @@ const NamespaceFnSpec = fspec( {
       'val', ExprOrPartialRefMapSpec ),
     'retrieve', cat( 'path', isNamespacePath )
   ),
-  ret: or( isSpecRef, isExpr ),
+  ret: ExprSpec,
 } );
 
 const MetaFnSpec = fspec( {
