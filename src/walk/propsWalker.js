@@ -6,7 +6,7 @@ var specFromAlts = require( '../utils/specFromAlts' );
 
 function propsWalker( spec, walkFn ) {
   var keyConformer;
-  var { requiredFields, optionalFields } = spec.exprs[ 0 ].propArgs;
+  var { requiredFields, optionalFields } = spec.opts.conformedArgs.propArgs;
 
   var reqSpecs,
     optSpecs;

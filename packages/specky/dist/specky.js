@@ -1057,7 +1057,7 @@ var PropsSpec = fspec({
 });
 
 function propsOp(cargs) {
-  var s = new Spec(TYPE_PROPS, [cargs], null, null, null);
+  var s = new Spec(TYPE_PROPS, [], { conformedArgs: cargs }, null, null);
   s.conform = function propsConform(x) {
     return walk(s, x, { conform: true });
   };
@@ -2823,9 +2823,9 @@ var specFromAlts = __webpack_require__(17);
 
 function propsWalker(spec, walkFn) {
   var keyConformer;
-  var _spec$exprs$0$propArg = spec.exprs[0].propArgs,
-      requiredFields = _spec$exprs$0$propArg.requiredFields,
-      optionalFields = _spec$exprs$0$propArg.optionalFields;
+  var _spec$opts$conformedA = spec.opts.conformedArgs.propArgs,
+      requiredFields = _spec$opts$conformedA.requiredFields,
+      optionalFields = _spec$opts$conformedA.optionalFields;
 
 
   var reqSpecs, optSpecs;
