@@ -31,8 +31,8 @@ function _walk( prefix, currentFrag, creg ) {
       case '.nsComment':
         nsComment = `<p><i>${creg[ key ]}</i></p>`;
         break;
-      case '.meta':
-        exprResult = _exprMeta( currentFrag, creg[ key ], creg[ '.expr' ] );
+      case '.expr':
+        exprResult = _exprMeta( currentFrag, creg[ '.expr' ], creg[ '.meta' ] );
         break;
       default:
         break;
@@ -67,7 +67,7 @@ function _hasExprs( subNamespaces ) {
     .filter( ( n ) => subNamespaces[ n ][ '.expr' ] ).length > 0;
 }
 
-function _exprMeta( exprName, meta, expr ) {
+function _exprMeta( exprName, expr, meta ) {
   if ( !expr ) {
     throw new Error( `Expression ${exprName} does not exist in the registry` );
   }
@@ -248,13 +248,13 @@ function _genOrSpec( exprName, expr, meta ) {
 // NOTE: meta param is omitted at the end
 function _genFspec( exprName, spec, meta ) {
   var frags = [ ];
-  const name = meta[ 'name' ] || exprName;
+  const name = meta && meta[ 'name' ] || exprName;
   const { args: argsSpec, ret: retSpec, fn } = spec.opts;
   if ( argsSpec ) {
-    frags.push( [ 'Parameters', genForExpression( null, argsSpec, meta.args ) ] );
+    frags.push( [ 'Parameters', genForExpression( null, argsSpec, meta && meta.args ) ] );
   }
   if ( retSpec ) {
-    frags.push( [ 'Return value', genForExpression( null, retSpec, meta.ret ) ] );
+    frags.push( [ 'Return value', genForExpression( null, retSpec, meta && meta.ret ) ] );
   } if ( fn ) {
     frags.push( [ 'Argument-return value relation', `<pre>${fnName( fn )}</pre>` ] );
   }

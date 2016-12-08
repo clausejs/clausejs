@@ -3531,8 +3531,8 @@ function _walk(prefix, currentFrag, creg) {
         case '.nsComment':
           nsComment = '<p><i>' + creg[key] + '</i></p>';
           break;
-        case '.meta':
-          exprResult = _exprMeta(currentFrag, creg[key], creg['.expr']);
+        case '.expr':
+          exprResult = _exprMeta(currentFrag, creg['.expr'], creg['.meta']);
           break;
         default:
           break;
@@ -3568,7 +3568,7 @@ function _hasExprs(subNamespaces) {
   }).length > 0;
 }
 
-function _exprMeta(exprName, meta, expr) {
+function _exprMeta(exprName, expr, meta) {
   if (!expr) {
     throw new Error('Expression ' + exprName + ' does not exist in the registry');
   }
@@ -3662,17 +3662,17 @@ function _genOrSpec(exprName, expr, meta) {
 // NOTE: meta param is omitted at the end
 function _genFspec(exprName, spec, meta) {
   var frags = [];
-  var name = meta['name'] || exprName;
+  var name = meta && meta['name'] || exprName;
   var _spec$opts = spec.opts,
       argsSpec = _spec$opts.args,
       retSpec = _spec$opts.ret,
       fn = _spec$opts.fn;
 
   if (argsSpec) {
-    frags.push(['Parameters', genForExpression(null, argsSpec, meta.args)]);
+    frags.push(['Parameters', genForExpression(null, argsSpec, meta && meta.args)]);
   }
   if (retSpec) {
-    frags.push(['Return value', genForExpression(null, retSpec, meta.ret)]);
+    frags.push(['Return value', genForExpression(null, retSpec, meta && meta.ret)]);
   }if (fn) {
     frags.push(['Argument-return value relation', '<pre>' + (0, _fnName2.default)(fn) + '</pre>']);
   }
@@ -3760,11 +3760,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var DescribeFnSpec = (0, _.fspec)({
   args: (0, _.cat)((0, _2.default)('specky.types/Expression')),
-  ret: _.isObj
+  ret: (0, _2.default)('specky.utils/SpecDescription')
 });
 
 (0, _2.default)('/specky', _namespace.NamespaceFnSpec);
 (0, _2.default)('specky.types/NamespacePath', _namespace.isNamespacePath);
+(0, _2.default)('specky.utils/SpecDescription', _.isObj);
 (0, _2.default)('specky.types/Expression', _core.ExprSpec);
 (0, _2.default)('specky.utils/describe', DescribeFnSpec);
 
