@@ -137,15 +137,22 @@ function _genCatSpec( globalReg, exprName, expr, meta ) {
     const example = meta && meta[ name ] && meta[ name ].example;
     return `
         <li class="list-group-item">
-          ${name ? `<p>
-            <span class="tag tag-default">${idx + 1}. </span>
-            <span class="lead font-italic text-primary">
-              <u>${name}</u>
-            </span>
-            ${comment ? `: <span>${ comment }</span>` : ''}
-          </p>` : `<span class="tag tag-default">${idx + 1}. </span>`}
-            ${_codeExample( example )}
-            ${genForExpression( globalReg, null, altE, null )}
+          <div class="row">
+            <div class="col-md-12">
+              ${name ? `<p>
+                <span class="tag tag-default">${toOrdinal( idx + 1 )} </span>
+                <span class="lead font-italic text-primary">
+                  ${name}
+                </span>
+                ${comment ? `: <span>${ comment }</span>` : ''}
+                  ` : `<span class="tag tag-default">${toOrdinal( idx + 1 )} </span>`}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              ${_codeExample( example )}
+              ${genForExpression( globalReg, null, altE, null )}
+            </div>
         </li>
     `;
   } );
@@ -154,8 +161,8 @@ function _genCatSpec( globalReg, exprName, expr, meta ) {
   <div class="card">
     <div class="card-block">
       <p class="card-title">
-        <span class="tag tag-info">cat</span>
-        A sequence of the following forms:
+        ${_tagFor( 'cat' )}
+        Must be <em>a sequence of</em> the following expressions:
       </p>
     </div>
     <ol class="list-group list-group-flush">
@@ -215,6 +222,8 @@ function _tagFor( t ) {
   switch ( t ) {
   case 'pred':
     return '<span class="tag tag-primary">predicate</span>';
+  case 'cat': case 'or':
+    return `<span class="tag tag-info">spec: ${t}</span>`;
   default:
     throw '!'
   }
@@ -224,30 +233,50 @@ function _genUnknownSpec( globalReg, exprName, expr, meta ) {
   const r = `
   <div class="card">
     <div class="card-header">
-    ${exprName || _type( expr )} <div class="tag tag-success">spec: ${expr.type}</div>
+    ${exprName || _type( expr )} <div class="tag tag-success">spec: ${expr.type.toLowerCase()}</div>
     </div>
-    <pre>${JSON.stringify( expr, null, 2 )}</pre>
-    <pre>${JSON.stringify( meta, null, 2 )}</pre>
+    <pre>${_stringifyWithFn( expr )}</pre>
+    <pre>${_stringifyWithFn( meta )}</pre>
   </div>
   `;
   return r;
 }
 
+function _stringifyWithFn( objWithFunction ) {
+  return JSON.stringify( objWithFunction, function( key, val ) {
+    if ( typeof val === 'function' ) {
+      return `${val.name}()`; // implicitly `toString` it
+    }
+    return val;
+  }, 2 );
+}
+
 function _genOrSpec( globalReg, exprName, expr, meta ) {
-  const altDefs = expr.exprs.map( ( { name, expr: altE }, index ) => {
+  const altDefs = expr.exprs.map( ( { name, expr: altE }, idx ) => {
     const comment = meta && meta[ name ] && meta[ name ].comment;
     const example = meta && meta[ name ] && meta[ name ].example;
 
     return `
         <li class="list-group-item">
-            ${name ? `<p>
-                <span class="lead font-italic text-primary">
-                  <u>${name}</u>
-                </span>
-                ${comment ? `: <span>${ comment }</span>` : ''}
-              </p>` : ''}
+          <div class="row">
+            <div class="col-md-12">
+              <span class="tag tag-default">
+                alt ${idx + 1}
+              </span>
+              ${name ? `
+                  <span class="lead font-italic text-primary">
+                    ${name}
+                  </span>
+                  ${comment ? `: <span>${ comment }</span>` : ''}
+                ` : ''}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
               ${_codeExample( example )}
-            ${genForExpression( globalReg, null, altE, null )}
+              ${genForExpression( globalReg, null, altE, null )}
+            </div>
+          </div>
         </li>
     `;
   } );
@@ -256,13 +285,13 @@ function _genOrSpec( globalReg, exprName, expr, meta ) {
   <div class="card">
     ${exprName ? `
         <div class="card-header">
-        ${exprName} <span class="tag tag-info">or</span>
+        ${exprName} ${_tagFor( 'or' )}
         </div>
       ` : ''}
     <div class="card-block">
       <p class="card-title">
-        ${exprName ? '' : '<span class="tag tag-info">or</span>'}
-        One of the following forms:
+        ${exprName ? '' : _tagFor( 'or' )}
+        Must be <em>one of</em> the following alternative forms:
       </p>
     </div>
     <ol class="list-group list-group-flush">
@@ -271,6 +300,21 @@ function _genOrSpec( globalReg, exprName, expr, meta ) {
   </div>
   `;
   return r;
+}
+
+function toOrdinal( i ) {
+  var j = i % 10,
+    k = i % 100;
+  if ( j == 1 && k != 11 ) {
+    return i + 'st';
+  }
+  if ( j == 2 && k != 12 ) {
+    return i + 'nd';
+  }
+  if ( j == 3 && k != 13 ) {
+    return i + 'rd';
+  }
+  return i + 'th';
 }
 
 // NOTE: meta param is omitted at the end

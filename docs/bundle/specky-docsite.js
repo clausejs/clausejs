@@ -1280,7 +1280,7 @@ module.exports = identity;
 var DelayedSpec = __webpack_require__(22);
 
 //TODO
-module.exports = function isSpecRef(x) {
+module.exports = function isDelayedSpec(x) {
   return x instanceof DelayedSpec;
 };
 
@@ -19587,10 +19587,10 @@ function _genCatSpec(globalReg, exprName, expr, meta) {
 
     var comment = meta && meta[name] && meta[name].comment;
     var example = meta && meta[name] && meta[name].example;
-    return '\n        <li class="list-group-item">\n          ' + (name ? '<p>\n            <span class="tag tag-default">' + (idx + 1) + '. </span>\n            <span class="lead font-italic text-primary">\n              <u>' + name + '</u>\n            </span>\n            ' + (comment ? ': <span>' + comment + '</span>' : '') + '\n          </p>' : '<span class="tag tag-default">' + (idx + 1) + '. </span>') + '\n            ' + _codeExample(example) + '\n            ' + genForExpression(globalReg, null, altE, null) + '\n        </li>\n    ';
+    return '\n        <li class="list-group-item">\n          <div class="row">\n            <div class="col-md-12">\n              ' + (name ? '<p>\n                <span class="tag tag-default">' + toOrdinal(idx + 1) + ' </span>\n                <span class="lead font-italic text-primary">\n                  ' + name + '\n                </span>\n                ' + (comment ? ': <span>' + comment + '</span>' : '') + '\n                  ' : '<span class="tag tag-default">' + toOrdinal(idx + 1) + ' </span>') + '\n            </div>\n          </div>\n          <div class="row">\n            <div class="col-md-11 offset-md-1">\n              ' + _codeExample(example) + '\n              ' + genForExpression(globalReg, null, altE, null) + '\n            </div>\n        </li>\n    ';
   });
 
-  var r = '\n  <div class="card">\n    <div class="card-block">\n      <p class="card-title">\n        <span class="tag tag-info">cat</span>\n        A sequence of the following forms:\n      </p>\n    </div>\n    <ol class="list-group list-group-flush">\n      ' + altDefs.join('') + '\n    </ol>\n  </div>\n  ';
+  var r = '\n  <div class="card">\n    <div class="card-block">\n      <p class="card-title">\n        ' + _tagFor('cat') + '\n        Must be <em>a sequence of</em> the following expressions:\n      </p>\n    </div>\n    <ol class="list-group list-group-flush">\n      ' + altDefs.join('') + '\n    </ol>\n  </div>\n  ';
   return r;
 }
 
@@ -19612,29 +19612,55 @@ function _tagFor(t) {
   switch (t) {
     case 'pred':
       return '<span class="tag tag-primary">predicate</span>';
+    case 'cat':case 'or':
+      return '<span class="tag tag-info">spec: ' + t + '</span>';
     default:
       throw '!';
   }
 }
 
 function _genUnknownSpec(globalReg, exprName, expr, meta) {
-  var r = '\n  <div class="card">\n    <div class="card-header">\n    ' + (exprName || _type(expr)) + ' <div class="tag tag-success">spec: ' + expr.type + '</div>\n    </div>\n    <pre>' + JSON.stringify(expr, null, 2) + '</pre>\n    <pre>' + JSON.stringify(meta, null, 2) + '</pre>\n  </div>\n  ';
+  var r = '\n  <div class="card">\n    <div class="card-header">\n    ' + (exprName || _type(expr)) + ' <div class="tag tag-success">spec: ' + expr.type.toLowerCase() + '</div>\n    </div>\n    <pre>' + _stringifyWithFn(expr) + '</pre>\n    <pre>' + _stringifyWithFn(meta) + '</pre>\n  </div>\n  ';
   return r;
 }
 
+function _stringifyWithFn(objWithFunction) {
+  return JSON.stringify(objWithFunction, function (key, val) {
+    if (typeof val === 'function') {
+      return val.name + '()'; // implicitly `toString` it
+    }
+    return val;
+  }, 2);
+}
+
 function _genOrSpec(globalReg, exprName, expr, meta) {
-  var altDefs = expr.exprs.map(function (_ref2, index) {
+  var altDefs = expr.exprs.map(function (_ref2, idx) {
     var name = _ref2.name,
         altE = _ref2.expr;
 
     var comment = meta && meta[name] && meta[name].comment;
     var example = meta && meta[name] && meta[name].example;
 
-    return '\n        <li class="list-group-item">\n            ' + (name ? '<p>\n                <span class="lead font-italic text-primary">\n                  <u>' + name + '</u>\n                </span>\n                ' + (comment ? ': <span>' + comment + '</span>' : '') + '\n              </p>' : '') + '\n              ' + _codeExample(example) + '\n            ' + genForExpression(globalReg, null, altE, null) + '\n        </li>\n    ';
+    return '\n        <li class="list-group-item">\n          <div class="row">\n            <div class="col-md-12">\n              <span class="tag tag-default">\n                alt ' + (idx + 1) + '\n              </span>\n              ' + (name ? '\n                  <span class="lead font-italic text-primary">\n                    ' + name + '\n                  </span>\n                  ' + (comment ? ': <span>' + comment + '</span>' : '') + '\n                ' : '') + '\n            </div>\n          </div>\n          <div class="row">\n            <div class="col-md-11 offset-md-1">\n              ' + _codeExample(example) + '\n              ' + genForExpression(globalReg, null, altE, null) + '\n            </div>\n          </div>\n        </li>\n    ';
   });
 
-  var r = '\n  <div class="card">\n    ' + (exprName ? '\n        <div class="card-header">\n        ' + exprName + ' <span class="tag tag-info">or</span>\n        </div>\n      ' : '') + '\n    <div class="card-block">\n      <p class="card-title">\n        ' + (exprName ? '' : '<span class="tag tag-info">or</span>') + '\n        One of the following forms:\n      </p>\n    </div>\n    <ol class="list-group list-group-flush">\n      ' + altDefs.join('') + '\n    </ol>\n  </div>\n  ';
+  var r = '\n  <div class="card">\n    ' + (exprName ? '\n        <div class="card-header">\n        ' + exprName + ' ' + _tagFor('or') + '\n        </div>\n      ' : '') + '\n    <div class="card-block">\n      <p class="card-title">\n        ' + (exprName ? '' : _tagFor('or')) + '\n        Must be <em>one of</em> the following alternative forms:\n      </p>\n    </div>\n    <ol class="list-group list-group-flush">\n      ' + altDefs.join('') + '\n    </ol>\n  </div>\n  ';
   return r;
+}
+
+function toOrdinal(i) {
+  var j = i % 10,
+      k = i % 100;
+  if (j == 1 && k != 11) {
+    return i + 'st';
+  }
+  if (j == 2 && k != 12) {
+    return i + 'nd';
+  }
+  if (j == 3 && k != 13) {
+    return i + 'rd';
+  }
+  return i + 'th';
 }
 
 // NOTE: meta param is omitted at the end

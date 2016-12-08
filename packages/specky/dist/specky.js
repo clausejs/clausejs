@@ -1280,7 +1280,7 @@ module.exports = identity;
 var DelayedSpec = __webpack_require__(22);
 
 //TODO
-module.exports = function isSpecRef(x) {
+module.exports = function isDelayedSpec(x) {
   return x instanceof DelayedSpec;
 };
 
