@@ -35,7 +35,9 @@ function isNamespaceFragment( x ) {
 
 const NamespaceObjSpec = props( {
   optional: {
-    subNamespaces: [ isNamespaceFragment, delayed( () => NamespaceObjSpec ) ],
+    subNamespaces: [ isNamespaceFragment, delayed( () => {
+      return NamespaceObjSpec;
+    } ) ],
     '.meta': isObj,
     '.expr': isExpr,
   }

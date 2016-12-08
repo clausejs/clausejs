@@ -94,6 +94,8 @@ function genForExpression( globalReg, exprName, expr, meta, registry ) {
     docstr = _genSpecRef( globalReg, exprName, path, expr, meta );
   } else if ( expr.type === 'SpecRef' ) {
     docstr = _genSpecRef( globalReg, exprName, null, expr, meta );
+  } else if ( expr.type === 'Delayed' ) {
+    docstr = genForExpression( globalReg, exprName, expr.get(), meta, registry );
   } else if ( expr.type === 'FSPEC' ) {
     docstr = _genFspec( globalReg, exprName, expr, meta );
   } else if ( expr.type === 'OR' ) {
@@ -222,7 +224,7 @@ function _genUnknownSpec( globalReg, exprName, expr, meta ) {
   const r = `
   <div class="card">
     <div class="card-header">
-    ${exprName || _type( expr )} <div class="tag tag-success">spec</div>
+    ${exprName || _type( expr )} <div class="tag tag-success">spec: ${expr.type}</div>
     </div>
     <pre>${JSON.stringify( expr, null, 2 )}</pre>
     <pre>${JSON.stringify( meta, null, 2 )}</pre>

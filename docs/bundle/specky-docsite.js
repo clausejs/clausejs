@@ -19558,6 +19558,8 @@ function genForExpression(globalReg, exprName, expr, meta, registry) {
     docstr = _genSpecRef(globalReg, exprName, path, expr, meta);
   } else if (expr.type === 'SpecRef') {
     docstr = _genSpecRef(globalReg, exprName, null, expr, meta);
+  } else if (expr.type === 'Delayed') {
+    docstr = genForExpression(globalReg, exprName, expr.get(), meta, registry);
   } else if (expr.type === 'FSPEC') {
     docstr = _genFspec(globalReg, exprName, expr, meta);
   } else if (expr.type === 'OR') {
@@ -19616,7 +19618,7 @@ function _tagFor(t) {
 }
 
 function _genUnknownSpec(globalReg, exprName, expr, meta) {
-  var r = '\n  <div class="card">\n    <div class="card-header">\n    ' + (exprName || _type(expr)) + ' <div class="tag tag-success">spec</div>\n    </div>\n    <pre>' + JSON.stringify(expr, null, 2) + '</pre>\n    <pre>' + JSON.stringify(meta, null, 2) + '</pre>\n  </div>\n  ';
+  var r = '\n  <div class="card">\n    <div class="card-header">\n    ' + (exprName || _type(expr)) + ' <div class="tag tag-success">spec: ' + expr.type + '</div>\n    </div>\n    <pre>' + JSON.stringify(expr, null, 2) + '</pre>\n    <pre>' + JSON.stringify(meta, null, 2) + '</pre>\n  </div>\n  ';
   return r;
 }
 
@@ -19740,6 +19742,7 @@ var DescribeFnSpec = (0, _.fspec)({
 });
 
 (0, _2.default)('/specky', _namespace.NamespaceFnSpec);
+(0, _2.default)('specky.types/NamespaceObj', _namespace.NamespaceObjSpec);
 (0, _2.default)('specky.types/NamespacePath', _namespace.isNamespacePath);
 (0, _2.default)('specky.utils/SpecDescription', _.isObj);
 (0, _2.default)('specky.types/Expression', _core.ExprSpec);

@@ -1,6 +1,6 @@
 import S, { fspec, cat, isObj } from '../';
 import { ExprSpec } from '../core';
-import { isNamespacePath, NamespaceFnSpec } from './namespace.types';
+import { isNamespacePath, NamespaceFnSpec, NamespaceObjSpec } from './namespace.types';
 
 // TODO
 // const S = Specky.withRegistry(nsObj);
@@ -11,6 +11,7 @@ const DescribeFnSpec = fspec( {
 } );
 
 S( '/specky', NamespaceFnSpec );
+S( 'specky.types/NamespaceObj', NamespaceObjSpec );
 S( 'specky.types/NamespacePath', isNamespacePath );
 S( 'specky.utils/SpecDescription', isObj );
 S( 'specky.types/Expression', ExprSpec );
