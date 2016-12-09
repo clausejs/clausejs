@@ -197,21 +197,19 @@ function _genPredSpec( globalReg, exprName, expr, meta ) {
           </div>
         ` : ''
       }
-      <div class="card-block"
-        data-toggle="popover"
-        data-trigger="hover"
-        data-html="true"
-        title="${predName}()"
-        data-content="<pre>${pred.toString()}</pre>"
-        data-container="body"
-        data-animation="false"
-        data-placement="top"
-        data-delay="500"
-        >
-        ${
-          name ? '' : _tagFor( 'pred' )
-        }
-        <em>${predName}()</em>
+      <div class="card-block">
+        <span
+          data-toggle="popover"
+          data-trigger="hover"
+          data-html="true"
+          title="${predName}()"
+          data-content="<pre>${pred.toString()}</pre>"
+          data-container="body"
+          data-animation="false"
+          data-delay="500">
+          ${ name ? '' : _tagFor( 'pred' ) }
+          <em>${predName}()</em>
+        </span>
       </div>
     </div>
   `;
