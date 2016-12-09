@@ -1,5 +1,8 @@
 import docgen from '../../src/docgen';
-import Registry from '../../src/specs';
+import '../../src/specs';
+// import '../../author_experiments/ben.tmp';
+import S from '../../src';
+
 import $ from 'jquery';
 import tether from 'tether';
 const HLJS = require( 'highlight.js' );
@@ -7,7 +10,7 @@ require( 'bootstrap/dist/css/bootstrap.css' );
 require( 'highlight.js/styles/codepen-embed.css' );
 require( '../../src/specs/index.annotation.js' );
 
-const finalDocStr = docgen.gen( Registry );
+const finalDocStr = docgen.gen( S.getRegistry() );
 window.$ = window.jQuery = $;
 window.Tether = tether;
 
