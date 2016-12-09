@@ -7,7 +7,7 @@
 		exports["S"] = factory(require("react"), require("specky"));
 	else
 		root["S"] = factory(root["React"], root["S"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_252__, __WEBPACK_EXTERNAL_MODULE_253__) {
+})(this, function(__WEBPACK_EXTERNAL_MODULE_253__, __WEBPACK_EXTERNAL_MODULE_254__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -71,17 +71,10 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 255);
+/******/ 	return __webpack_require__(__webpack_require__.s = 256);
 /******/ })
 /************************************************************************/
 /******/ ({
-
-/***/ 252:
-/***/ function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_252__;
-
-/***/ },
 
 /***/ 253:
 /***/ function(module, exports) {
@@ -90,17 +83,24 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_253__;
 
 /***/ },
 
-/***/ 255:
+/***/ 254:
+/***/ function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_254__;
+
+/***/ },
+
+/***/ 256:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 'use strict';
 
-var _SpeckyComponent = __webpack_require__(75);
+var _SpeckyComponent = __webpack_require__(76);
 
 var _SpeckyComponent2 = _interopRequireDefault(_SpeckyComponent);
 
-var _fromBaseClass = __webpack_require__(67);
+var _fromBaseClass = __webpack_require__(68);
 
 var _fromBaseClass2 = _interopRequireDefault(_fromBaseClass);
 
@@ -113,7 +113,7 @@ module.exports = {
 
 /***/ },
 
-/***/ 67:
+/***/ 68:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -125,7 +125,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var S = __webpack_require__(253);
+var S = __webpack_require__(254);
 
 function fromBaseClass(baseClass) {
   var SpeckyComponent = function (_baseClass) {
@@ -177,19 +177,19 @@ module.exports.default = fromBaseClass;
 
 /***/ },
 
-/***/ 75:
+/***/ 76:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 'use strict';
 
-var _fromBaseClass = __webpack_require__(67);
+var _fromBaseClass = __webpack_require__(68);
 
 var _fromBaseClass2 = _interopRequireDefault(_fromBaseClass);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var React = __webpack_require__(252);
+var React = __webpack_require__(253);
 
 
 var SpeckyComponent = (0, _fromBaseClass2.default)(React.Component);

@@ -2,6 +2,7 @@ import { NamespaceObjSpec } from '../specs/namespace.types';
 import fnName from '../utils/fnName';
 import isPred from '../utils/isPred';
 import isSpec from '../utils/isSpec';
+import describe from '../utils/describe';
 import { resolve } from './namespaceResolver';
 
 function gen( registry ) {
@@ -146,6 +147,7 @@ function _genCatSpec( globalReg, exprName, expr, meta ) {
                 </span>
                 ${comment ? `: <span>${ comment }</span>` : ''}
                   ` : `<span class="tag tag-default">${toOrdinal( idx + 1 )} </span>`}
+              ${_syntax( expr )}
             </div>
           </div>
           <div class="row">
@@ -181,6 +183,13 @@ function _codeExample( code ) {
   return r;
 }
 
+function _syntax( expr ) {
+  // return `<em class="text-success">
+  //   ${describe( expr )}
+  // </em>`;
+  return '';
+}
+
 function _genPredSpec( globalReg, exprName, expr, meta ) {
   let pred = expr.exprs ? expr.exprs[ 0 ] : expr;
   const name = meta && meta[ 'name' ] || exprName;
@@ -193,6 +202,7 @@ function _genPredSpec( globalReg, exprName, expr, meta ) {
           <div class="card-header">
             <span>
               ${nameFrag}<span class="tag tag-primary">predicate</span>
+              ${_syntax( expr )}
             </span>
           </div>
         ` : ''
@@ -231,7 +241,10 @@ function _genUnknownSpec( globalReg, exprName, expr, meta ) {
   const r = `
   <div class="card">
     <div class="card-header">
-    ${exprName || _type( expr )} <div class="tag tag-success">spec: ${expr.type.toLowerCase()}</div>
+    ${exprName || _type( expr )}
+    <div class="tag tag-success">spec: ${expr.type.toLowerCase()}</div>
+    ${_syntax( expr )}
+
     </div>
     <pre>${_stringifyWithFn( expr )}</pre>
     <pre>${_stringifyWithFn( meta )}</pre>
@@ -267,6 +280,7 @@ function _genOrSpec( globalReg, exprName, expr, meta ) {
                   </span>
                   ${comment ? `: <span>${ comment }</span>` : ''}
                 ` : ''}
+              ${_syntax( expr )}
             </div>
           </div>
           <div class="row">
@@ -284,11 +298,13 @@ function _genOrSpec( globalReg, exprName, expr, meta ) {
     ${exprName ? `
         <div class="card-header">
         ${exprName} ${_tagFor( 'or' )}
+        ${_syntax( expr )}
         </div>
       ` : ''}
     <div class="card-block">
       <p class="card-title">
         ${exprName ? '' : _tagFor( 'or' )}
+        ${_syntax( expr )}
         Must be <em>one of</em> the following alternative forms:
       </p>
     </div>
@@ -333,6 +349,7 @@ function _genFspec( globalReg, exprName, spec, meta ) {
       ${name ? `
         <div class="card-header">
           ${name}() <span class="tag tag-primary">function</span>
+          ${_syntax( spec )}
         </div>
         ` : ''}
       <div class="card-block">

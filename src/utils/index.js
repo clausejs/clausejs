@@ -9,4 +9,5 @@ module.exports = {
   isExpr: require( './isExpr' ),
   isSpec: require( './isSpec' ),
   isSpecRef: require( './isSpecRef' ),
+  describe: require( './describe' ),
 };
