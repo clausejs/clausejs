@@ -75,9 +75,7 @@ function _exprMeta( globalReg, exprName, expr, meta ) {
   }
   let docstr;
   docstr = genForExpression( globalReg, exprName, expr, meta );
-  return `
-    ${docstr}
-    `;
+  return docstr;
 }
 
 function _type( expr ) {
@@ -168,7 +166,7 @@ function _genCatSpec( globalReg, exprName, expr, meta ) {
       </p>
     </div>
     <ol class="list-group list-group-flush">
-      ${altDefs.join( '' )}
+      ${altDefs.join( ' ' )}
     </ol>
   </div>
   `;
@@ -184,10 +182,9 @@ function _codeExample( code ) {
 }
 
 function _syntax( expr ) {
-  // return `<em class="text-success">
-  //   ${describe( expr )}
-  // </em>`;
-  return '';
+  return `<em class="text-success">
+    ${describe( expr )}
+  </em>`;
 }
 
 function _genPredSpec( globalReg, exprName, expr, meta ) {

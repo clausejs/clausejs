@@ -157,8 +157,11 @@ function genMultiArgOp( type ) {
       } );
 
       var fragments = coercedExprs.reduce(
-        ( curr, { name, expr } ) =>
-          curr.concat( [ name, ': ', expr, ', ' ] ), [] );
+        ( curr, { name, expr }, idx ) =>
+          curr
+            .concat( [ `"${name}"`, ', ', expr, ] )
+            .concat( idx < coercedExprs.length - 1 ? [ ', ' ] : [] )
+          , [] );
       var s = new Spec( {
         type,
         exprs: coercedExprs,
@@ -197,7 +200,7 @@ function genMultiArgOp( type ) {
         exprs: coercedExprs,
         fragments: coercedExprs.reduce(
           ( curr, { expr } ) =>
-            curr.concat( [ expr, ', ' ] ), [] )
+            curr.concat( [ expr, ',' ] ), [] )
       } );
 
       s.conform = function conform( x ) {

@@ -23,6 +23,9 @@ function _wrap( pred ) {
     type: SPEC_TYPE_PRED,
     exprs: [ pred ],
     fragments: [ pred ],
+    opts: {
+      predicate: pred,
+    },
     conformFn: predConformer( pred ),
   } );
 }
