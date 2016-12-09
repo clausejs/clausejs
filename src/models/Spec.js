@@ -1,4 +1,4 @@
-function Spec( { type, exprs, opts, fragmenter, conformFn, generateFn } ) {
+function Spec( { type, exprs, opts, fragments, conformFn, generateFn } ) {
 
   this.type = type;
 
@@ -14,9 +14,12 @@ function Spec( { type, exprs, opts, fragmenter, conformFn, generateFn } ) {
     this.generate = generateFn;
   }
 
-  if ( exprs ) {
-    this.exprs = exprs;
+  if ( !exprs || !fragments ) {
+    throw new Error( 'Expressions and fragments are required when constructing a spec.' );
   }
+
+  this.exprs = exprs;
+  this.fragments = fragments;
 }
 
 

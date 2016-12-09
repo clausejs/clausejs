@@ -22,6 +22,7 @@ function _wrap( pred ) {
   return new Spec( {
     type: SPEC_TYPE_PRED,
     exprs: [ pred ],
+    fragments: [ pred ],
     conformFn: predConformer( pred ),
   } );
 }

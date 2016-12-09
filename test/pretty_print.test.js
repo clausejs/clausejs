@@ -3,7 +3,7 @@ var expect = require( 'chai' ).expect;
 var S = require( '../src/' );
 var specPrettyPrint = require( '../src/utils/specPrettyPrint' );
 
-describe( 'pretty print', function() {
+describe.skip( 'pretty print', function() {
   it( 'should correctly output a spec tree', function() {
     var complexSpec = S.or(
       S.cat( S.isBool, S.zeroOrMore( S.isNum ) ),

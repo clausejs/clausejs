@@ -13,7 +13,7 @@ module.exports = function specFromAlts( alts ) {
   } else if ( alts.delayedSpec ) {
     return alts.delayedSpec;
   } else {
-    console.error( alts );
+    console.error( 'unsupported:', alts );
     throw 'Not implemented';
   }
 }

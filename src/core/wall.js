@@ -15,6 +15,7 @@ function wallOp( expr ) {
   var wallS = new Spec( {
     type: 'WALL',
     exprs: [ spec ],
+    fragments: [ spec ],
   } );
   wallS.conform = function andConform( x ) {
     return walk( wallS, x, { conform: true } );

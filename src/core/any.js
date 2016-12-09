@@ -6,6 +6,7 @@ function any() {
   return new Spec( {
     type: SPEC_TYPE_ANY,
     exprs: [],
+    fragments: [],
     conformFn: identity
   } );
 }

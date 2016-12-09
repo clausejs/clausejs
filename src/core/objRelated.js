@@ -85,9 +85,14 @@ var PropsSpec = fspec( {
 } );
 
 function propsOp( cargs ) {
+  const { propArgs: { requiredFields, optionalFields } } = cargs;
+
   var s = new Spec( {
     type: TYPE_PROPS,
-    exprs: [ ], opts: { conformedArgs: cargs }
+    exprs: [ ],
+    // TODO: do fragments
+    fragments: [ ],
+    opts: { conformedArgs: cargs }
   } );
   s.conform = function propsConform( x ) {
     return walk( s, x, { conform: true } );

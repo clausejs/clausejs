@@ -15,6 +15,7 @@ function andOp( conformedArgs ) {
   var andS = new Spec( {
     type: 'AND',
     exprs,
+    fragments: exprs,
   } );
   andS.conform = function andConform( x ) {
     return walk( andS, x, { conform: true } );

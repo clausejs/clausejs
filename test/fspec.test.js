@@ -33,7 +33,9 @@ describe( 'fspec', function() {
     } ).to.throw();
 
     expect( () => {
-      specedFspec( new Spec( 'cat', [ S.isBool ], null, identity, null ), { extra: 'param' } );
+      specedFspec( new Spec( {
+        type: 'cat', exprs: [ S.isBool ], fragments: [], conformFn: identity,
+      } ), { extra: 'param' } );
     } ).to.throw( Problem );
     expect( () => {
       specedFspec();
