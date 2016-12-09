@@ -12,7 +12,10 @@ var AndSpec = fspec( {
 function andOp( conformedArgs ) {
   var { exprs } = conformedArgs;
 
-  var andS = new Spec( 'AND', exprs, null, null, null );
+  var andS = new Spec( {
+    type: 'AND',
+    exprs,
+  } );
   andS.conform = function andConform( x ) {
     return walk( andS, x, { conform: true } );
   }

@@ -6,7 +6,7 @@ var Spec = require( '../models/Spec' );
 var Problem = require( '../models/Problem' );
 var fnName = require( './fnName' );
 
-var SPEC_TYPE = 'PRED';
+var SPEC_TYPE_PRED = 'PRED';
 
 function coerceIntoSpec( expr ) {
   if ( isSpec( expr ) || isSpecRef( expr ) || isDelayedSpec( expr ) ) {
@@ -19,7 +19,11 @@ function coerceIntoSpec( expr ) {
 }
 
 function _wrap( pred ) {
-  return new Spec( SPEC_TYPE, [ pred ], null, predConformer( pred ), null );
+  return new Spec( {
+    type: SPEC_TYPE_PRED,
+    exprs: [ pred ],
+    conformFn: predConformer( pred ),
+  } );
 }
 
 function predConformer( pred ) {

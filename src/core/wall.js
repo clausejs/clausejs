@@ -12,7 +12,10 @@ var WallSpec = fspec( {
 
 function wallOp( expr ) {
   var spec = coerceIntoSpec( expr );
-  var wallS = new Spec( 'WALL', [ spec ], null, null, null );
+  var wallS = new Spec( {
+    type: 'WALL',
+    exprs: [ spec ],
+  } );
   wallS.conform = function andConform( x ) {
     return walk( wallS, x, { conform: true } );
   }

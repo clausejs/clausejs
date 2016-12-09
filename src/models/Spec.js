@@ -1,12 +1,4 @@
-function Spec( type, exprs, opts, conformFn, generateFn ) {
-
-  if ( arguments.length !== 5 ) {
-    throw new Error( 'Wrong number of arguments (' + arguments.length + ') passed to Spec constructor' );
-  }
-
-  if ( !Array.isArray( exprs ) ) {
-    throw new Error( 'Expect an array of specs' );
-  }
+function Spec( { type, exprs, opts, fragmenter, conformFn, generateFn } ) {
 
   this.type = type;
 
@@ -22,7 +14,9 @@ function Spec( type, exprs, opts, conformFn, generateFn ) {
     this.generate = generateFn;
   }
 
-  this.exprs = exprs;
+  if ( exprs ) {
+    this.exprs = exprs;
+  }
 }
 
 

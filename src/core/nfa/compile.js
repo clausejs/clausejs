@@ -71,7 +71,10 @@ evalFunctions.PRED = ( x ) => {
 };
 
 function wrapRoot( expr ) {
-  return new Spec( 'ROOT', [ expr ], null, null, null );
+  return new Spec( {
+    type: 'ROOT',
+    exprs: [ expr ],
+  } );
 }
 
 var compile = function( expr ) {

@@ -79,17 +79,16 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports) {
 
 "use strict";
-'use strict';
+"use strict";
 
-function Spec(type, exprs, opts, conformFn, generateFn) {
+function Spec(_ref) {
+  var type = _ref.type,
+      exprs = _ref.exprs,
+      opts = _ref.opts,
+      fragmenter = _ref.fragmenter,
+      conformFn = _ref.conformFn,
+      generateFn = _ref.generateFn;
 
-  if (arguments.length !== 5) {
-    throw new Error('Wrong number of arguments (' + arguments.length + ') passed to Spec constructor');
-  }
-
-  if (!Array.isArray(exprs)) {
-    throw new Error('Expect an array of specs');
-  }
 
   this.type = type;
 
@@ -105,7 +104,9 @@ function Spec(type, exprs, opts, conformFn, generateFn) {
     this.generate = generateFn;
   }
 
-  this.exprs = exprs;
+  if (exprs) {
+    this.exprs = exprs;
+  }
 }
 
 module.exports = Spec;
@@ -318,7 +319,7 @@ var Spec = __webpack_require__(0);
 var Problem = __webpack_require__(2);
 var fnName = __webpack_require__(14);
 
-var SPEC_TYPE = 'PRED';
+var SPEC_TYPE_PRED = 'PRED';
 
 function coerceIntoSpec(expr) {
   if (isSpec(expr) || isSpecRef(expr) || isDelayedSpec(expr)) {
@@ -331,7 +332,11 @@ function coerceIntoSpec(expr) {
 }
 
 function _wrap(pred) {
-  return new Spec(SPEC_TYPE, [pred], null, predConformer(pred), null);
+  return new Spec({
+    type: SPEC_TYPE_PRED,
+    exprs: [pred],
+    conformFn: predConformer(pred)
+  });
 }
 
 function predConformer(pred) {
@@ -446,7 +451,11 @@ var Spec = __webpack_require__(0);
 var walk = __webpack_require__(7);
 
 function fspec(fnSpec) {
-  var spec = new Spec('FSPEC', [], fnSpec, null, null);
+  var spec = new Spec({
+    type: 'FSPEC',
+    exprs: [],
+    opts: fnSpec
+  });
   spec.instrumentConformed = function instrumentConformed(fn) {
     return walk(spec, fn, { conform: true, instrument: true });
   };
@@ -600,7 +609,10 @@ function genMultiArgOp(type) {
           specRef: undefined, delayedSpec: undefined });
       });
 
-      var s = new Spec(type, coercedExprs, null, null, null);
+      var s = new Spec({
+        type: type,
+        exprs: coercedExprs
+      });
 
       s.conform = function conform(x) {
         return walk(s, x, { conform: true });
@@ -629,7 +641,10 @@ function genMultiArgOp(type) {
         }
       });
 
-      s = new Spec(type, coercedExprs, null, null, null);
+      s = new Spec({
+        type: type,
+        exprs: coercedExprs
+      });
 
       s.conform = function conform(x) {
         return walk(s, x, { conform: true });
@@ -657,7 +672,11 @@ function genSingleArgOp(type) {
       throw 'internal err';
     }
 
-    var s = new Spec(type, [coerceIntoSpec(expr)], opts, null, null);
+    var s = new Spec({
+      type: type,
+      exprs: [coerceIntoSpec(expr)],
+      opts: opts
+    });
 
     s.conform = function conform(x) {
       return walk(s, x, { conform: true });
@@ -1084,7 +1103,10 @@ var PropsSpec = fspec({
 });
 
 function propsOp(cargs) {
-  var s = new Spec(TYPE_PROPS, [], { conformedArgs: cargs }, null, null);
+  var s = new Spec({
+    type: TYPE_PROPS,
+    exprs: [], opts: { conformedArgs: cargs }
+  });
   s.conform = function propsConform(x) {
     return walk(s, x, { conform: true });
   };
@@ -1139,7 +1161,10 @@ var WallSpec = fspec({
 
 function wallOp(expr) {
   var spec = coerceIntoSpec(expr);
-  var wallS = new Spec('WALL', [spec], null, null, null);
+  var wallS = new Spec({
+    type: 'WALL',
+    exprs: [spec]
+  });
   wallS.conform = function andConform(x) {
     return walk(wallS, x, { conform: true });
   };
@@ -1533,7 +1558,10 @@ function andOp(conformedArgs) {
   var exprs = conformedArgs.exprs;
 
 
-  var andS = new Spec('AND', exprs, null, null, null);
+  var andS = new Spec({
+    type: 'AND',
+    exprs: exprs
+  });
   andS.conform = function andConform(x) {
     return walk(andS, x, { conform: true });
   };
@@ -1554,7 +1582,11 @@ var identity = __webpack_require__(30);
 var SPEC_TYPE_ANY = 'ANY';
 
 function any() {
-  return new Spec(SPEC_TYPE_ANY, [], null, identity, null);
+  return new Spec({
+    type: SPEC_TYPE_ANY,
+    exprs: [],
+    conformFn: identity
+  });
 }
 
 module.exports = any;
@@ -1651,7 +1683,10 @@ evalFunctions.PRED = function (x) {
 };
 
 function wrapRoot(expr) {
-  return new Spec('ROOT', [expr], null, null, null);
+  return new Spec({
+    type: 'ROOT',
+    exprs: [expr]
+  });
 }
 
 var compile = function compile(expr) {

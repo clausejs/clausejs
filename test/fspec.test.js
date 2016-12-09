@@ -25,17 +25,17 @@ describe( 'fspec', function() {
     var specedFspec = FspecSpec.instrument( S.fspec ); //meta-ly apply checking to self
     expect( S.isFn( specedFspec ) ).to.be.true;
 
-    expect( function() {
+    expect( () => {
       specedFspec( 'spec should not be a string' );
     } ).to.throw( Problem );
-    expect( function() {
+    expect( () => {
       specedFspec( { spec: 'should not be simple obj either' } )
     } ).to.throw();
 
-    expect( function() {
+    expect( () => {
       specedFspec( new Spec( 'cat', [ S.isBool ], null, identity, null ), { extra: 'param' } );
     } ).to.throw( Problem );
-    expect( function() {
+    expect( () => {
       specedFspec();
     } ).to.throw( Problem );
   } );

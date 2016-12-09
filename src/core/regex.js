@@ -156,7 +156,10 @@ function genMultiArgOp( type ) {
           specRef: undefined, delayedSpec: undefined } );
       } );
 
-      var s = new Spec( type, coercedExprs, null, null, null );
+      var s = new Spec( {
+        type,
+        exprs: coercedExprs,
+      } );
 
       s.conform = function conform( x ) {
         return walk( s, x, { conform: true } );
@@ -185,7 +188,10 @@ function genMultiArgOp( type ) {
         }
       } );
 
-      s = new Spec( type, coercedExprs, null, null, null );
+      s = new Spec( {
+        type,
+        exprs: coercedExprs,
+      } );
 
       s.conform = function conform( x ) {
         return walk( s, x, { conform: true } );
@@ -213,12 +219,11 @@ function genSingleArgOp( type ) {
       throw 'internal err';
     }
 
-    var s = new Spec(
+    var s = new Spec( {
       type,
-      [ coerceIntoSpec( expr ) ],
+      exprs: [ coerceIntoSpec( expr ) ],
       opts,
-      null, null
-    );
+    } );
 
     s.conform = function conform( x ) {
       return walk( s, x, { conform: true } );

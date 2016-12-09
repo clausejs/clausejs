@@ -43,7 +43,7 @@ describe( 'nfa regex', function() {
 
     check.it( 'strings',
     { times: 20 },
-  [ gen.strictPosInt, gen.strictPosInt ],
+    [ gen.strictPosInt, gen.strictPosInt ],
     ( m, n ) => {
       var expr = cat( oneOrMore( S.equals( 'a' ) ), S.equals( 'b' ), oneOrMore( S.equals( 'c' ) ) );
       var val = `${repeat( m, 'a' ).join( '' )}b${repeat( n, 'c' ).join( '' )}`;
