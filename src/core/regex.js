@@ -246,17 +246,27 @@ function genSingleArgOp( type ) {
   } );
 }
 
-var collOf = fspec( singleArgOpSpec ).instrumentConformed( collOfOp );
+var CollOfSpec = fspec( singleArgOpSpec );
+var collOf = CollOfSpec.instrumentConformed( collOfOp );
+
+var CatFnSpec = fspec( multipleArgOpSpec );
+var OrFnSpec = fspec( multipleArgOpSpec );
+var ZeroOrMoreFnSpec = fspec( singleArgOpSpec );
+var OneOrMoreFnSpec = fspec( singleArgOpSpec );
+var ZeroOrOneFnSpec = fspec( singleArgOpSpec );
 
 var core = {
-  cat: fspec( multipleArgOpSpec ).instrumentConformed( catOp ),
-  or: fspec( multipleArgOpSpec ).instrumentConformed( orOp ),
-  zeroOrMore: fspec( singleArgOpSpec ).instrumentConformed( zeroOrMoreOp ),
-  zeroOrOne: fspec( singleArgOpSpec ).instrumentConformed( zeroOrOneOp ),
-  oneOrMore: fspec( singleArgOpSpec ).instrumentConformed( oneOrMoreOp ),
+  cat: CatFnSpec.instrumentConformed( catOp ),
+  or: OrFnSpec.instrumentConformed( orOp ),
+  zeroOrMore: ZeroOrMoreFnSpec.instrumentConformed( zeroOrMoreOp ),
+  zeroOrOne: ZeroOrOneFnSpec.instrumentConformed( zeroOrOneOp ),
+  oneOrMore: OneOrMoreFnSpec.instrumentConformed( oneOrMoreOp ),
   ExprSpec,
+  CatFnSpec,
+  OrFnSpec,
+  ZeroOrMoreFnSpec, OneOrMoreFnSpec, ZeroOrOneFnSpec,
+  CollOfSpec,
   collOf,
-  arrayOf: collOf,
 };
 
 core[ 'alt' ] = core.or;

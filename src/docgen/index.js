@@ -159,6 +159,7 @@ function _genSpecRef( globalReg, exprName, path, expr, meta ) {
   const p = path || expr.ref;
   return `
     <div class="card-block">
+      Must satisfy
       ${_specRefLink( p )( ( p ) => p )}
     </div>
   `;
@@ -188,7 +189,8 @@ function _genCatSpec( globalReg, exprName, path, expr, meta ) {
             <div class="col-md-11 offset-md-1">
               ${genForExpression( globalReg, null, altE, meta && meta[ name ] )}
             </div>
-      ''  </li>
+          </div>
+        </li>
     `;
   } );
 
@@ -291,6 +293,7 @@ function _genPredSpec( globalReg, exprName, expr, meta ) {
         data-container="body"
         data-animation="false"
         data-delay="500">
+        Must satisfy
         ${ name ? '' : _tagFor( 'pred' ) }
         <em>${predName}()</em>
       </span>

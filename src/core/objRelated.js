@@ -105,6 +105,7 @@ var props = PropsSpec.instrumentConformed( propsOp );
 module.exports = {
   props,
   keys: props,
+  PropsSpec,
 };
 
 // // // // //

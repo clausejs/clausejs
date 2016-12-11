@@ -23,5 +23,9 @@ function andOp( conformedArgs ) {
   return andS;
 }
 
+var and = AndSpec.instrumentConformed( andOp );
 
-module.exports = AndSpec.instrumentConformed( andOp );
+module.exports = {
+  and,
+  AndSpec,
+};

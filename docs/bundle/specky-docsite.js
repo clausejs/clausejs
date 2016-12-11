@@ -301,11 +301,11 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 "use strict";
 "use strict";
 
-function isStr(x) {
+function isString(x) {
   return x !== null && x !== undefined && x.constructor === String;
 }
 
-module.exports = isStr;
+module.exports = isString;
 
 /***/ },
 /* 6 */
@@ -732,17 +732,27 @@ function genSingleArgOp(type) {
   });
 }
 
-var collOf = fspec(singleArgOpSpec).instrumentConformed(collOfOp);
+var CollOfSpec = fspec(singleArgOpSpec);
+var collOf = CollOfSpec.instrumentConformed(collOfOp);
+
+var CatFnSpec = fspec(multipleArgOpSpec);
+var OrFnSpec = fspec(multipleArgOpSpec);
+var ZeroOrMoreFnSpec = fspec(singleArgOpSpec);
+var OneOrMoreFnSpec = fspec(singleArgOpSpec);
+var ZeroOrOneFnSpec = fspec(singleArgOpSpec);
 
 var core = {
-  cat: fspec(multipleArgOpSpec).instrumentConformed(catOp),
-  or: fspec(multipleArgOpSpec).instrumentConformed(orOp),
-  zeroOrMore: fspec(singleArgOpSpec).instrumentConformed(zeroOrMoreOp),
-  zeroOrOne: fspec(singleArgOpSpec).instrumentConformed(zeroOrOneOp),
-  oneOrMore: fspec(singleArgOpSpec).instrumentConformed(oneOrMoreOp),
+  cat: CatFnSpec.instrumentConformed(catOp),
+  or: OrFnSpec.instrumentConformed(orOp),
+  zeroOrMore: ZeroOrMoreFnSpec.instrumentConformed(zeroOrMoreOp),
+  zeroOrOne: ZeroOrOneFnSpec.instrumentConformed(zeroOrOneOp),
+  oneOrMore: OneOrMoreFnSpec.instrumentConformed(oneOrMoreOp),
   ExprSpec: ExprSpec,
-  collOf: collOf,
-  arrayOf: collOf
+  CatFnSpec: CatFnSpec,
+  OrFnSpec: OrFnSpec,
+  ZeroOrMoreFnSpec: ZeroOrMoreFnSpec, OneOrMoreFnSpec: OneOrMoreFnSpec, ZeroOrOneFnSpec: ZeroOrOneFnSpec,
+  CollOfSpec: CollOfSpec,
+  collOf: collOf
 };
 
 core['alt'] = core.or;
@@ -826,16 +836,19 @@ module.exports = function isSpecRef(x) {
 var oAssign = __webpack_require__(4);
 var regex = __webpack_require__(11);
 
-var _require = __webpack_require__(22),
+var _require = __webpack_require__(20),
     props = _require.props,
     keys = _require.keys;
 
+var _require2 = __webpack_require__(33),
+    and = _require2.and;
+
 var other = {
-  and: __webpack_require__(36),
   any: __webpack_require__(37),
   fspec: __webpack_require__(7),
   wall: __webpack_require__(23),
-  spec: __webpack_require__(23)
+  spec: __webpack_require__(23),
+  and: and
 };
 
 var r = oAssign({}, regex, { props: props, keys: keys }, other);
@@ -860,7 +873,7 @@ module.exports = {
   isExpr: __webpack_require__(54),
   isSpec: __webpack_require__(1),
   isSpecRef: __webpack_require__(13),
-  describe: __webpack_require__(33)
+  describe: __webpack_require__(34)
 };
 
 /***/ },
@@ -968,94 +981,6 @@ module.exports = e;
 
 /***/ },
 /* 20 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.NamespaceObjSpec = exports.MetaFnSpec = exports.isNamespacePath = exports.NamespaceFnSpec = exports.isSpecRef = undefined;
-
-var _core = __webpack_require__(14);
-
-var _utils = __webpack_require__(15);
-
-var _preds = __webpack_require__(19);
-
-var ExprOrPartialRefMapSpec =
-// or(
-//  'expression',
-(0, _utils.delayed)(function () {
-  //TODO
-  return _core.ExprSpec;
-});
-// );
-
-var NamespaceFnSpec = (0, _core.fspec)({
-  args: (0, _core.or)('register', (0, _core.cat)('nsPath', _utils.isNamespacePath, 'expression', ExprOrPartialRefMapSpec), 'retrieve', (0, _core.cat)('nsPath', _utils.isNamespacePath)),
-  ret: _core.ExprSpec
-});
-
-var MetaFnSpec = (0, _core.fspec)({
-  args: (0, _core.cat)('source', (0, _core.or)('namespacePath', _utils.isNamespacePath, 'expression', _utils.isExpr), 'metaObj', _preds.isObj),
-  ret: _utils.isExpr
-});
-
-function isNamespaceFragment(x) {
-  return !!/^[^.@%\&\*#]+/.test(x);
-}
-
-var NamespaceObjSpec = (0, _core.props)({
-  optional: {
-    subNamespaces: [isNamespaceFragment, (0, _utils.delayed)(function () {
-      return NamespaceObjSpec;
-    })],
-    '.meta': _preds.isObj,
-    '.expr': _utils.isExpr
-  }
-});
-
-exports.isSpecRef = _utils.isSpecRef;
-exports.NamespaceFnSpec = NamespaceFnSpec;
-exports.isNamespacePath = _utils.isNamespacePath;
-exports.MetaFnSpec = MetaFnSpec;
-exports.NamespaceObjSpec = NamespaceObjSpec;
-
-/***/ },
-/* 21 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-'use strict';
-
-var _namespace = __webpack_require__(35);
-
-var _namespace2 = _interopRequireDefault(_namespace);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var oAssign = __webpack_require__(4);
-
-
-var ops = __webpack_require__(14);
-var utils = __webpack_require__(15);
-
-var predicates = __webpack_require__(19);
-
-var models = {
-  Problem: __webpack_require__(2),
-  Spec: __webpack_require__(0)
-};
-
-var r = oAssign(_namespace2.default, ops, utils, models, predicates);
-r.default = r;
-
-module.exports = r;
-
-/***/ },
-/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1169,7 +1094,8 @@ var props = PropsSpec.instrumentConformed(propsOp);
 
 module.exports = {
   props: props,
-  keys: props
+  keys: props,
+  PropsSpec: PropsSpec
 };
 
 // // // // //
@@ -1188,6 +1114,94 @@ module.exports = {
 // //
 // var r = TestSpec.conform({a: 's'});
 // console.log(r);
+
+/***/ },
+/* 21 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.NamespaceObjSpec = exports.MetaFnSpec = exports.isNamespacePath = exports.NamespaceFnSpec = exports.isSpecRef = undefined;
+
+var _core = __webpack_require__(14);
+
+var _utils = __webpack_require__(15);
+
+var _preds = __webpack_require__(19);
+
+var ExprOrPartialRefMapSpec =
+// or(
+//  'expression',
+(0, _utils.delayed)(function () {
+  //TODO
+  return _core.ExprSpec;
+});
+// );
+
+var NamespaceFnSpec = (0, _core.fspec)({
+  args: (0, _core.or)('register', (0, _core.cat)('nsPath', _utils.isNamespacePath, 'expression', ExprOrPartialRefMapSpec), 'retrieve', (0, _core.cat)('nsPath', _utils.isNamespacePath)),
+  ret: _core.ExprSpec
+});
+
+var MetaFnSpec = (0, _core.fspec)({
+  args: (0, _core.cat)('source', (0, _core.or)('namespacePath', _utils.isNamespacePath, 'expression', _utils.isExpr), 'metaObj', _preds.isObj),
+  ret: _utils.isExpr
+});
+
+function isNamespaceFragment(x) {
+  return !!/^[^.@%\&\*#]+/.test(x);
+}
+
+var NamespaceObjSpec = (0, _core.props)({
+  optional: {
+    subNamespaces: [isNamespaceFragment, (0, _utils.delayed)(function () {
+      return NamespaceObjSpec;
+    })],
+    '.meta': _preds.isObj,
+    '.expr': _utils.isExpr
+  }
+});
+
+exports.isSpecRef = _utils.isSpecRef;
+exports.NamespaceFnSpec = NamespaceFnSpec;
+exports.isNamespacePath = _utils.isNamespacePath;
+exports.MetaFnSpec = MetaFnSpec;
+exports.NamespaceObjSpec = NamespaceObjSpec;
+
+/***/ },
+/* 22 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+'use strict';
+
+var _namespace = __webpack_require__(36);
+
+var _namespace2 = _interopRequireDefault(_namespace);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var oAssign = __webpack_require__(4);
+
+
+var ops = __webpack_require__(14);
+var utils = __webpack_require__(15);
+
+var predicates = __webpack_require__(19);
+
+var models = {
+  Problem: __webpack_require__(2),
+  Spec: __webpack_require__(0)
+};
+
+var r = oAssign(_namespace2.default, ops, utils, models, predicates);
+r.default = r;
+
+module.exports = r;
 
 /***/ },
 /* 23 */
@@ -1406,6 +1420,51 @@ module.exports = getNamedFn;
 "use strict";
 'use strict';
 
+var isSpec = __webpack_require__(1);
+var Spec = __webpack_require__(0);
+
+var _require = __webpack_require__(11),
+    oneOrMore = _require.oneOrMore,
+    cat = _require.cat,
+    ExprSpec = _require.ExprSpec;
+
+var fspec = __webpack_require__(7);
+var walk = __webpack_require__(9);
+
+var AndSpec = fspec({
+  args: cat('exprs', oneOrMore(ExprSpec)),
+  ret: isSpec
+});
+
+function andOp(conformedArgs) {
+  var exprs = conformedArgs.exprs;
+
+
+  var andS = new Spec({
+    type: 'AND',
+    exprs: exprs,
+    fragments: exprs
+  });
+  andS.conform = function andConform(x) {
+    return walk(andS, x, { conform: true });
+  };
+  return andS;
+}
+
+var and = AndSpec.instrumentConformed(andOp);
+
+module.exports = {
+  and: and,
+  AndSpec: AndSpec
+};
+
+/***/ },
+/* 34 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+'use strict';
+
 var fspec = __webpack_require__(7);
 var isPred = __webpack_require__(6);
 var isSpec = __webpack_require__(1);
@@ -1449,7 +1508,7 @@ function _processInner(spec, interceptor) {
 module.exports = describe;
 
 /***/ },
-/* 34 */
+/* 35 */
 /***/ function(module, exports) {
 
 var g;
@@ -1474,7 +1533,7 @@ module.exports = g;
 
 
 /***/ },
-/* 35 */
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1488,13 +1547,13 @@ var _core = __webpack_require__(14);
 
 var _utils = __webpack_require__(15);
 
-var _namespace = __webpack_require__(20);
+var _namespace = __webpack_require__(21);
 
 var oPath = __webpack_require__(67);
 var oAssign = __webpack_require__(4);
 var SpecRef = __webpack_require__(25);
 
-var _require = __webpack_require__(22),
+var _require = __webpack_require__(20),
     props = _require.props;
 
 var isSpec = __webpack_require__(1);
@@ -1641,47 +1700,7 @@ specedSpeckyNamespace.getRegistry = function () {
 specedSpeckyNamespace.meta = meta;
 
 exports.default = specedSpeckyNamespace;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(34)))
-
-/***/ },
-/* 36 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-'use strict';
-
-var isSpec = __webpack_require__(1);
-var Spec = __webpack_require__(0);
-
-var _require = __webpack_require__(11),
-    oneOrMore = _require.oneOrMore,
-    cat = _require.cat,
-    ExprSpec = _require.ExprSpec;
-
-var fspec = __webpack_require__(7);
-var walk = __webpack_require__(9);
-
-var AndSpec = fspec({
-  args: cat('exprs', oneOrMore(ExprSpec)),
-  ret: isSpec
-});
-
-function andOp(conformedArgs) {
-  var exprs = conformedArgs.exprs;
-
-
-  var andS = new Spec({
-    type: 'AND',
-    exprs: exprs,
-    fragments: exprs
-  });
-  andS.conform = function andConform(x) {
-    return walk(andS, x, { conform: true });
-  };
-  return andS;
-}
-
-module.exports = AndSpec.instrumentConformed(andOp);
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(35)))
 
 /***/ },
 /* 37 */
@@ -19578,7 +19597,7 @@ return Tether;
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
-var _namespace = __webpack_require__(20);
+var _namespace = __webpack_require__(21);
 
 var _fnName = __webpack_require__(10);
 
@@ -19594,7 +19613,7 @@ var _isSpec2 = _interopRequireDefault(_isSpec);
 
 var _preds = __webpack_require__(19);
 
-var _describe = __webpack_require__(33);
+var _describe = __webpack_require__(34);
 
 var _describe2 = _interopRequireDefault(_describe);
 
@@ -19734,7 +19753,7 @@ function genForExpression(globalReg, exprName, expr, meta, registry) {
 
 function _genSpecRef(globalReg, exprName, path, expr, meta) {
   var p = path || expr.ref;
-  return '\n    <div class="card-block">\n      ' + _specRefLink(p)(function (p) {
+  return '\n    <div class="card-block">\n      Must satisfy\n      ' + _specRefLink(p)(function (p) {
     return p;
   }) + '\n    </div>\n  ';
 }
@@ -19752,7 +19771,7 @@ function _genCatSpec(globalReg, exprName, path, expr, meta) {
         altE = _ref3.expr;
 
     var comment = meta && meta[name] && meta[name].comment;
-    return '\n        <li class="list-group-item">\n          <div class="row">\n            <div class="col-md-12">\n              ' + (name ? '<p>\n                <span class="tag tag-default">' + toOrdinal(idx + 1) + ' </span>\n                &lt;<span class="lead font-italic text-primary">' + name + '</span>&gt;\n                ' + (comment ? ': <span>' + comment + '</span>' : '') + '\n                  ' : '<span class="tag tag-default">' + toOrdinal(idx + 1) + ' </span>') + '\n            </div>\n          </div>\n          <div class="row">\n            <div class="col-md-11 offset-md-1">\n              ' + genForExpression(globalReg, null, altE, meta && meta[name]) + '\n            </div>\n      \'\'  </li>\n    ';
+    return '\n        <li class="list-group-item">\n          <div class="row">\n            <div class="col-md-12">\n              ' + (name ? '<p>\n                <span class="tag tag-default">' + toOrdinal(idx + 1) + ' </span>\n                &lt;<span class="lead font-italic text-primary">' + name + '</span>&gt;\n                ' + (comment ? ': <span>' + comment + '</span>' : '') + '\n                  ' : '<span class="tag tag-default">' + toOrdinal(idx + 1) + ' </span>') + '\n            </div>\n          </div>\n          <div class="row">\n            <div class="col-md-11 offset-md-1">\n              ' + genForExpression(globalReg, null, altE, meta && meta[name]) + '\n            </div>\n          </div>\n        </li>\n    ';
   });
 
   var r = '\n    <div class="card-block">\n      <p class="card-title">\n        ' + _syntax(expr, globalReg, path) + '\n      </p>\n      <p class="card-title">\n        ' + _tagFor('cat') + '\n        Must be <em>an ordered list</em> of the following:\n      </p>\n    </div>\n    <ol class="list-group list-group-flush">\n      ' + altDefs.join(' ') + '\n    </ol>\n  ';
@@ -19816,7 +19835,7 @@ function _genPredSpec(globalReg, exprName, expr, meta) {
   var name = meta && meta['name'] || exprName;
   var predName = (0, _fnName2.default)(pred);
   var nameFrag = name ? name + ' ' : '';
-  var r = '\n    <div class="card-block">\n      <span\n        data-toggle="popover"\n        data-trigger="hover"\n        data-html="true"\n        title="' + predName + '()"\n        data-content="<pre>' + pred.toString() + '</pre>"\n        data-container="body"\n        data-animation="false"\n        data-delay="500">\n        ' + (name ? '' : _tagFor('pred')) + '\n        <em>' + predName + '()</em>\n      </span>\n    </div>\n  ';
+  var r = '\n    <div class="card-block">\n      <span\n        data-toggle="popover"\n        data-trigger="hover"\n        data-html="true"\n        title="' + predName + '()"\n        data-content="<pre>' + pred.toString() + '</pre>"\n        data-container="body"\n        data-animation="false"\n        data-delay="500">\n        Must satisfy\n        ' + (name ? '' : _tagFor('pred')) + '\n        <em>' + predName + '()</em>\n      </span>\n    </div>\n  ';
   return r;
 }
 
@@ -19918,7 +19937,7 @@ module.exports.default = fns;
 "use strict";
 'use strict';
 
-var _ = __webpack_require__(21);
+var _ = __webpack_require__(22);
 
 (0, _.meta)('/specky', {
   'name': 'S',
@@ -19963,13 +19982,17 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _ = __webpack_require__(21);
+var _ = __webpack_require__(22);
 
 var _2 = _interopRequireDefault(_);
 
 var _core = __webpack_require__(14);
 
-var _namespace = __webpack_require__(20);
+var _and = __webpack_require__(33);
+
+var _objRelated = __webpack_require__(20);
+
+var _namespace = __webpack_require__(21);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -19985,7 +20008,15 @@ var DescribeFnSpec = (0, _.fspec)({
 (0, _2.default)('specky.types/NamespaceObj', _namespace.NamespaceObjSpec);
 (0, _2.default)('specky.types/NamespacePath', _namespace.isNamespacePath);
 (0, _2.default)('specky.types/Expression', _core.ExprSpec);
-(0, _2.default)('specky.utils/describe', DescribeFnSpec);
+(0, _2.default)('specky/describe', DescribeFnSpec);
+(0, _2.default)('specky.core/cat', _core.CatFnSpec);
+(0, _2.default)('specky.core/or', _core.OrFnSpec);
+(0, _2.default)('specky.core/zeroOrMore', _core.ZeroOrMoreFnSpec);
+(0, _2.default)('specky.core/oneOrMore', _core.OneOrMoreFnSpec);
+(0, _2.default)('specky.core/zeroOrOne', _core.ZeroOrOneFnSpec);
+(0, _2.default)('specky.core/collOf', _core.CollOfSpec);
+(0, _2.default)('specky.core/and', _and.AndSpec);
+(0, _2.default)('specky.core/props', _objRelated.PropsSpec);
 
 exports.default = _2.default.getRegistry();
 
@@ -36328,7 +36359,7 @@ var _lodash = __webpack_require__(253);
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
-var _namespace = __webpack_require__(20);
+var _namespace = __webpack_require__(21);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -53524,7 +53555,7 @@ exports.push([module.i, ".hljs{display:block;overflow-x:auto;padding:.5em;backgr
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(34), __webpack_require__(254)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(35), __webpack_require__(254)(module)))
 
 /***/ },
 /* 254 */
@@ -53567,7 +53598,7 @@ var _docgen2 = _interopRequireDefault(_docgen);
 
 __webpack_require__(78);
 
-var _src = __webpack_require__(21);
+var _src = __webpack_require__(22);
 
 var _src2 = _interopRequireDefault(_src);
 

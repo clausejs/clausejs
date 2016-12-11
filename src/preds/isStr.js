@@ -1,5 +1,5 @@
-function isStr( x ) {
+function isString( x ) {
   return x !== null && x !== undefined && x.constructor === String
 }
 
-module.exports = isStr;
+module.exports = isString;
