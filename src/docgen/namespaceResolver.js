@@ -16,6 +16,11 @@ function resolve( registry, specRef ) {
   return _resolveWithMap( map, specRef );
 }
 
+function getDefList( registry ) {
+  const defs = [];
+  return defs;
+}
+
 function _createResolveMap( registry ) {
   const r = [];
   var conformedReg = NamespaceObjSpec.conform( registry );
@@ -68,5 +73,6 @@ function _findFirst( array, fn ) {
 }
 
 module.exports = {
-  resolve
+  resolve,
+  getDefList,
 };

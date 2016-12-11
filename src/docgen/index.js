@@ -11,6 +11,10 @@ function gen( registry ) {
   return docstr;
 }
 
+function genCot( registry ) {
+  return ``;
+}
+
 function _walk( globalReg, prefix, currentFrag, creg ) {
   let currentNs = prefix ? `${prefix}.${currentFrag}` : currentFrag;
   let r = '';
@@ -80,15 +84,16 @@ function _exprMeta( globalReg, exprName, expr, meta ) {
 
 function _type( expr ) {
   if ( isSpec( expr ) ) {
-    return expr.type;
+    return expr.type.toLowerCase();
   } else if ( isPred( expr ) ) {
-    return `[Predicate] ${fnName( expr )}()`;
+    return 'predicate';
   }
 }
 
 function genForExpression( globalReg, exprName, expr, meta, registry ) {
   let docstr;
   let path = resolve( globalReg, expr );
+
   if ( path && !exprName ) {
     docstr = _genSpecRef( globalReg, exprName, path, expr, meta );
   } else if ( expr.type === 'SpecRef' ) {
@@ -107,13 +112,25 @@ function genForExpression( globalReg, exprName, expr, meta, registry ) {
     docstr = _genUnknownSpec( globalReg, exprName, path, expr, meta );
   }
 
+  const name = meta && meta[ 'name' ] || exprName;
+
+  const docheader = `
+    <div class="card-header">
+      ${name}&nbsp;
+        <span class="tag tag-primary">
+          ${_type( expr )}
+        </span>
+    </div>
+  `;
+
   return ( exprName && path ) ? `
     <a name="${path}"></a>
-    <div data-path="${path}">
-    ${docstr}
+    <div class="card" data-path="${path}">
+      ${docheader}
+      ${docstr}
     </div>
     ` : `
-    <div>
+    <div class="card">
       ${docstr}
     </div>
     `;
@@ -122,16 +139,15 @@ function genForExpression( globalReg, exprName, expr, meta, registry ) {
 function _genSpecRef( globalReg, exprName, path, expr, meta ) {
   const p = path || expr.ref;
   return `
-    <div class="card">
-      <div class="card-block">
-        ${_specRefLink( p )}
-      </a>
+    <div class="card-block">
+      ${_specRefLink( p )( ( p ) => p )}
     </div>
   `;
 }
 
 function _specRefLink( p ) {
-  return `<a href="#${p}" data-path="${p}">${p}</a>`;
+  return pGenFn =>
+    `<a href="#${p}" data-path="${p}">${pGenFn( p )}</a>`;
 }
 
 function _genCatSpec( globalReg, exprName, path, expr, meta ) {
@@ -158,7 +174,6 @@ function _genCatSpec( globalReg, exprName, path, expr, meta ) {
   } );
 
   const r = `
-  <div class="card">
     <div class="card-block">
       <p class="card-title">
         ${_tagFor( 'cat' )}
@@ -172,7 +187,6 @@ function _genCatSpec( globalReg, exprName, path, expr, meta ) {
     <ol class="list-group list-group-flush">
       ${altDefs.join( ' ' )}
     </ol>
-  </div>
   `;
   return r;
 }
@@ -195,9 +209,15 @@ function _refExprFn( reg, currPath ) {
   return ( expr ) => {
     let path = resolve( reg, expr );
     if ( path && path !== currPath ) {
-      return [ 'S("', _specRefLink( path ), '")' ];
+      return [ _specRefLink( path )( p => _unanbiguousName( p ) ) ];
     }
   }
+}
+
+function _unanbiguousName( path ) {
+  // TODO: make sure there are no duplicate names
+  const name = path.substring( path.indexOf( '/' ) + 1 );
+  return name;
 }
 
 function _genPredSpec( globalReg, exprName, expr, meta ) {
@@ -206,30 +226,19 @@ function _genPredSpec( globalReg, exprName, expr, meta ) {
   const predName = fnName( pred );
   const nameFrag = name ? `${name} ` : '';
   const r = `
-    <div class="card">
-      ${
-        name ? `
-          <div class="card-header">
-            <span>
-              ${nameFrag}<span class="tag tag-primary">predicate</span>
-            </span>
-          </div>
-        ` : ''
-      }
-      <div class="card-block">
-        <span
-          data-toggle="popover"
-          data-trigger="hover"
-          data-html="true"
-          title="${predName}()"
-          data-content="<pre>${pred.toString()}</pre>"
-          data-container="body"
-          data-animation="false"
-          data-delay="500">
-          ${ name ? '' : _tagFor( 'pred' ) }
-          <em>${predName}()</em>
-        </span>
-      </div>
+    <div class="card-block">
+      <span
+        data-toggle="popover"
+        data-trigger="hover"
+        data-html="true"
+        title="${predName}()"
+        data-content="<pre>${pred.toString()}</pre>"
+        data-container="body"
+        data-animation="false"
+        data-delay="500">
+        ${ name ? '' : _tagFor( 'pred' ) }
+        <em>${predName}()</em>
+      </span>
     </div>
   `;
   return r;
@@ -248,17 +257,11 @@ function _tagFor( t ) {
 
 function _genUnknownSpec( globalReg, exprName, path, expr, meta ) {
   const r = `
-  <div class="card">
-    <div class="card-header">
-    ${exprName || _type( expr )}
-    <div class="tag tag-success">spec: ${expr.type.toLowerCase()}</div>
-    </div>
     <div class="card-block">
       ${_syntax( expr, globalReg, path )}
       <pre>${_stringifyWithFn( expr )}</pre>
       <pre>${_stringifyWithFn( meta )}</pre>
     </div>
-  </div>
   `;
   return r;
 }
@@ -299,12 +302,6 @@ function _genOrSpec( globalReg, exprName, path, expr, meta ) {
   } );
 
   const r = `
-  <div class="card">
-    ${exprName ? `
-        <div class="card-header">
-          ${exprName} ${_tagFor( 'or' )}
-        </div>
-      ` : ''}
     <div class="card-block">
       ${exprName ? '' : `
         ${_tagFor( 'or' )}
@@ -318,7 +315,6 @@ function _genOrSpec( globalReg, exprName, path, expr, meta ) {
     <ol class="list-group list-group-flush">
       ${altDefs.join( '' )}
     </ol>
-  </div>
   `;
   return r;
 }
@@ -352,18 +348,9 @@ function _genFspec( globalReg, exprName, spec, meta ) {
     frags.push( [ 'Argument-return value relation', `<pre>${fnName( fn )}</pre>` ] );
   }
   const r = `
-    <div class="card">
-      ${name ? `
-        <div class="card-header">
-          ${name}() <span class="tag tag-primary">function</span>
-        </div>
-        ` : ''}
-      <div class="card-block">
-        <dl>
-        ${frags.map( ( [ name, src ] ) => `<dt>${name}</dt><dd>${src}</dd>` ).join( '\n' )}
-        </dl>
-      </div>
-    </div>
+    <dl class="card-block">
+    ${frags.map( ( [ name, src ] ) => `<dt>${name}</dt><dd>${src}</dd>` ).join( '\n' )}
+    </dl>
   `;
   return r;
 }
@@ -372,6 +359,7 @@ function _genFspec( globalReg, exprName, spec, meta ) {
 var fns = {
   gen,
   genForExpression,
+  genCot,
 };
 module.exports = fns;
 module.exports.default = fns;

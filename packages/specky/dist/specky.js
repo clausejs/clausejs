@@ -686,9 +686,9 @@ function genMultiArgOp(type) {
       s = new Spec({
         type: type,
         exprs: coercedExprs,
-        fragments: coercedExprs.reduce(function (curr, _ref2) {
+        fragments: coercedExprs.reduce(function (curr, _ref2, idx) {
           var expr = _ref2.expr;
-          return curr.concat([expr, ',']);
+          return curr.concat([expr]).concat(idx < coercedExprs.length - 1 ? [', '] : []);
         }, [])
       });
 

@@ -10,17 +10,38 @@
     border: 1px dotted;
     padding: 8px;
   }
+  html,body,main.container-fluid {
+      height:100%;
+  }
+
+  .row.main {
+      height: 100%;
+      display: table-row;
+  }
+
+  .row.main .cot {
+    height: 100%;
+    position: fixed;
+    overflow-y: auto;
+    font-size: 0.8em;
+  }
   </style>
   <!-- TODO -->
   <script src="bundle/specky-docsite.js"></script>
   <script src="docs/bundle/specky-docsite.js"></script>
 </head>
 <body>
-  <main class="container">
-    <div class="row">
-      <div class="col-md-12">
+  <main class="container-fluid">
+    <div class="row main">
+      <div class="col-md-2 cot">
+        <h4><u>Specky</u></h4>
+        <ul>
+          <li><a href="https://github.com/speckyjs/specky">Github Repository</a></li>
+        </ul>
+        <div id="cot"></div>
+      </div>
+      <div class="col-md-10 offset-md-2">
         <h1>Specky Documentation</h1>
-
         <h2>API</h2>
         <p>
           <em>

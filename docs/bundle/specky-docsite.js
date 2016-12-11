@@ -686,9 +686,9 @@ function genMultiArgOp(type) {
       s = new Spec({
         type: type,
         exprs: coercedExprs,
-        fragments: coercedExprs.reduce(function (curr, _ref2) {
+        fragments: coercedExprs.reduce(function (curr, _ref2, idx) {
           var expr = _ref2.expr;
-          return curr.concat([expr, ',']);
+          return curr.concat([expr]).concat(idx < coercedExprs.length - 1 ? [', '] : []);
         }, [])
       });
 
@@ -19604,6 +19604,10 @@ function gen(registry) {
   return docstr;
 }
 
+function genCot(registry) {
+  return '';
+}
+
 function _walk(globalReg, prefix, currentFrag, creg) {
   var currentNs = prefix ? prefix + '.' + currentFrag : currentFrag;
   var r = '';
@@ -19674,15 +19678,16 @@ function _exprMeta(globalReg, exprName, expr, meta) {
 
 function _type(expr) {
   if ((0, _isSpec2.default)(expr)) {
-    return expr.type;
+    return expr.type.toLowerCase();
   } else if ((0, _isPred2.default)(expr)) {
-    return '[Predicate] ' + (0, _fnName2.default)(expr) + '()';
+    return 'predicate';
   }
 }
 
 function genForExpression(globalReg, exprName, expr, meta, registry) {
   var docstr = void 0;
   var path = (0, _namespaceResolver.resolve)(globalReg, expr);
+
   if (path && !exprName) {
     docstr = _genSpecRef(globalReg, exprName, path, expr, meta);
   } else if (expr.type === 'SpecRef') {
@@ -19701,16 +19706,24 @@ function genForExpression(globalReg, exprName, expr, meta, registry) {
     docstr = _genUnknownSpec(globalReg, exprName, path, expr, meta);
   }
 
-  return exprName && path ? '\n    <a name="' + path + '"></a>\n    <div data-path="' + path + '">\n    ' + docstr + '\n    </div>\n    ' : '\n    <div>\n      ' + docstr + '\n    </div>\n    ';
+  var name = meta && meta['name'] || exprName;
+
+  var docheader = '\n    <div class="card-header">\n      ' + name + '&nbsp;\n        <span class="tag tag-primary">\n          ' + _type(expr) + '\n        </span>\n    </div>\n  ';
+
+  return exprName && path ? '\n    <a name="' + path + '"></a>\n    <div class="card" data-path="' + path + '">\n      ' + docheader + '\n      ' + docstr + '\n    </div>\n    ' : '\n    <div class="card">\n      ' + docstr + '\n    </div>\n    ';
 }
 
 function _genSpecRef(globalReg, exprName, path, expr, meta) {
   var p = path || expr.ref;
-  return '\n    <div class="card">\n      <div class="card-block">\n        ' + _specRefLink(p) + '\n      </a>\n    </div>\n  ';
+  return '\n    <div class="card-block">\n      ' + _specRefLink(p)(function (p) {
+    return p;
+  }) + '\n    </div>\n  ';
 }
 
 function _specRefLink(p) {
-  return '<a href="#' + p + '" data-path="' + p + '">' + p + '</a>';
+  return function (pGenFn) {
+    return '<a href="#' + p + '" data-path="' + p + '">' + pGenFn(p) + '</a>';
+  };
 }
 
 function _genCatSpec(globalReg, exprName, path, expr, meta) {
@@ -19723,7 +19736,7 @@ function _genCatSpec(globalReg, exprName, path, expr, meta) {
     return '\n        <li class="list-group-item">\n          <div class="row">\n            <div class="col-md-12">\n              ' + (name ? '<p>\n                <span class="tag tag-default">' + toOrdinal(idx + 1) + ' </span>\n                &lt;<span class="lead font-italic text-primary">' + name + '</span>&gt;\n                ' + (comment ? ': <span>' + comment + '</span>' : '') + '\n                  ' : '<span class="tag tag-default">' + toOrdinal(idx + 1) + ' </span>') + '\n            </div>\n          </div>\n          <div class="row">\n            <div class="col-md-11 offset-md-1">\n              ' + genForExpression(globalReg, null, altE, meta && meta[name]) + '\n            </div>\n        </li>\n    ';
   });
 
-  var r = '\n  <div class="card">\n    <div class="card-block">\n      <p class="card-title">\n        ' + _tagFor('cat') + '\n        ' + _syntax(expr, globalReg, path) + '\n        ' + _codeExample(example) + '\n      </p>\n      <p class="card-title">\n        Must be <em>an ordered sequence</em> of the following expressions:\n      </p>\n    </div>\n    <ol class="list-group list-group-flush">\n      ' + altDefs.join(' ') + '\n    </ol>\n  </div>\n  ';
+  var r = '\n    <div class="card-block">\n      <p class="card-title">\n        ' + _tagFor('cat') + '\n        ' + _syntax(expr, globalReg, path) + '\n        ' + _codeExample(example) + '\n      </p>\n      <p class="card-title">\n        Must be <em>an ordered sequence</em> of the following expressions:\n      </p>\n    </div>\n    <ol class="list-group list-group-flush">\n      ' + altDefs.join(' ') + '\n    </ol>\n  ';
   return r;
 }
 
@@ -19740,9 +19753,17 @@ function _refExprFn(reg, currPath) {
   return function (expr) {
     var path = (0, _namespaceResolver.resolve)(reg, expr);
     if (path && path !== currPath) {
-      return ['S("', _specRefLink(path), '")'];
+      return [_specRefLink(path)(function (p) {
+        return _unanbiguousName(p);
+      })];
     }
   };
+}
+
+function _unanbiguousName(path) {
+  // TODO: make sure there are no duplicate names
+  var name = path.substring(path.indexOf('/') + 1);
+  return name;
 }
 
 function _genPredSpec(globalReg, exprName, expr, meta) {
@@ -19750,7 +19771,7 @@ function _genPredSpec(globalReg, exprName, expr, meta) {
   var name = meta && meta['name'] || exprName;
   var predName = (0, _fnName2.default)(pred);
   var nameFrag = name ? name + ' ' : '';
-  var r = '\n    <div class="card">\n      ' + (name ? '\n          <div class="card-header">\n            <span>\n              ' + nameFrag + '<span class="tag tag-primary">predicate</span>\n            </span>\n          </div>\n        ' : '') + '\n      <div class="card-block">\n        <span\n          data-toggle="popover"\n          data-trigger="hover"\n          data-html="true"\n          title="' + predName + '()"\n          data-content="<pre>' + pred.toString() + '</pre>"\n          data-container="body"\n          data-animation="false"\n          data-delay="500">\n          ' + (name ? '' : _tagFor('pred')) + '\n          <em>' + predName + '()</em>\n        </span>\n      </div>\n    </div>\n  ';
+  var r = '\n    <div class="card-block">\n      <span\n        data-toggle="popover"\n        data-trigger="hover"\n        data-html="true"\n        title="' + predName + '()"\n        data-content="<pre>' + pred.toString() + '</pre>"\n        data-container="body"\n        data-animation="false"\n        data-delay="500">\n        ' + (name ? '' : _tagFor('pred')) + '\n        <em>' + predName + '()</em>\n      </span>\n    </div>\n  ';
   return r;
 }
 
@@ -19766,7 +19787,7 @@ function _tagFor(t) {
 }
 
 function _genUnknownSpec(globalReg, exprName, path, expr, meta) {
-  var r = '\n  <div class="card">\n    <div class="card-header">\n    ' + (exprName || _type(expr)) + '\n    <div class="tag tag-success">spec: ' + expr.type.toLowerCase() + '</div>\n    </div>\n    <div class="card-block">\n      ' + _syntax(expr, globalReg, path) + '\n      <pre>' + _stringifyWithFn(expr) + '</pre>\n      <pre>' + _stringifyWithFn(meta) + '</pre>\n    </div>\n  </div>\n  ';
+  var r = '\n    <div class="card-block">\n      ' + _syntax(expr, globalReg, path) + '\n      <pre>' + _stringifyWithFn(expr) + '</pre>\n      <pre>' + _stringifyWithFn(meta) + '</pre>\n    </div>\n  ';
   return r;
 }
 
@@ -19789,7 +19810,7 @@ function _genOrSpec(globalReg, exprName, path, expr, meta) {
     return '\n        <li class="list-group-item">\n          <div class="row">\n            <div class="col-md-12">\n              <span class="tag tag-default">\n                alt ' + (idx + 1) + '\n              </span>\n              ' + (name ? '\n                  &lt;<span class="lead font-italic text-primary">' + name + '</span>&gt;\n              ' + (comment ? ': <span>' + comment + '</span>' : '') + '\n            ' : '') + '\n            </div>\n          </div>\n          <div class="row">\n            <div class="col-md-11 offset-md-1">\n              ' + genForExpression(globalReg, null, altE, meta && meta[name]) + '\n            </div>\n          </div>\n        </li>\n    ';
   });
 
-  var r = '\n  <div class="card">\n    ' + (exprName ? '\n        <div class="card-header">\n          ' + exprName + ' ' + _tagFor('or') + '\n        </div>\n      ' : '') + '\n    <div class="card-block">\n      ' + (exprName ? '' : '\n        ' + _tagFor('or') + '\n      ') + '\n      ' + _syntax(expr, globalReg, path) + '\n      ' + _codeExample(example) + '\n      <p class="card-title">\n        Must be <em>one of</em> the following alternative forms:\n      </p>\n    </div>\n    <ol class="list-group list-group-flush">\n      ' + altDefs.join('') + '\n    </ol>\n  </div>\n  ';
+  var r = '\n    <div class="card-block">\n      ' + (exprName ? '' : '\n        ' + _tagFor('or') + '\n      ') + '\n      ' + _syntax(expr, globalReg, path) + '\n      ' + _codeExample(example) + '\n      <p class="card-title">\n        Must be <em>one of</em> the following alternative forms:\n      </p>\n    </div>\n    <ol class="list-group list-group-flush">\n      ' + altDefs.join('') + '\n    </ol>\n  ';
   return r;
 }
 
@@ -19825,19 +19846,20 @@ function _genFspec(globalReg, exprName, spec, meta) {
   }if (fn) {
     frags.push(['Argument-return value relation', '<pre>' + (0, _fnName2.default)(fn) + '</pre>']);
   }
-  var r = '\n    <div class="card">\n      ' + (name ? '\n        <div class="card-header">\n          ' + name + '() <span class="tag tag-primary">function</span>\n        </div>\n        ' : '') + '\n      <div class="card-block">\n        <dl>\n        ' + frags.map(function (_ref3) {
+  var r = '\n    <dl class="card-block">\n    ' + frags.map(function (_ref3) {
     var _ref4 = _slicedToArray(_ref3, 2),
         name = _ref4[0],
         src = _ref4[1];
 
     return '<dt>' + name + '</dt><dd>' + src + '</dd>';
-  }).join('\n') + '\n        </dl>\n      </div>\n    </div>\n  ';
+  }).join('\n') + '\n    </dl>\n  ';
   return r;
 }
 
 var fns = {
   gen: gen,
-  genForExpression: genForExpression
+  genForExpression: genForExpression,
+  genCot: genCot
 };
 module.exports = fns;
 module.exports.default = fns;
@@ -36280,6 +36302,11 @@ function resolve(registry, specRef) {
   return _resolveWithMap(map, specRef);
 }
 
+function getDefList(registry) {
+  var defs = [];
+  return defs;
+}
+
 function _createResolveMap(registry) {
   var r = [];
   var conformedReg = _namespace.NamespaceObjSpec.conform(registry);
@@ -36336,7 +36363,8 @@ function _findFirst(array, fn) {
 }
 
 module.exports = {
-  resolve: resolve
+  resolve: resolve,
+  getDefList: getDefList
 };
 
 /***/ },
@@ -36396,29 +36424,35 @@ var _tether2 = _interopRequireDefault(_tether);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var HLJS = __webpack_require__(72);
+__webpack_require__(79);
 // import '../../author_experiments/ben.tmp';
 
-__webpack_require__(79);
 __webpack_require__(80);
-__webpack_require__(77);
-
-var finalDocStr = _docgen2.default.gen(_src2.default.getRegistry());
+var HLJS = __webpack_require__(72);
 window.$ = window.jQuery = _jquery2.default;
 window.Tether = _tether2.default;
+__webpack_require__(71);
 
-var bootstrap = __webpack_require__(71);
+__webpack_require__(77);
+var finalDocStr = _docgen2.default.gen(_src2.default.getRegistry());
+var finalCotStr = _docgen2.default.genCot(_src2.default.getRegistry());
 
 (0, _jquery2.default)(function () {
   document.getElementById('api').innerHTML = finalDocStr;
+  document.getElementById('cot').innerHTML = finalCotStr;
+});
 
+(0, _jquery2.default)(function () {
   (0, _jquery2.default)('[data-toggle="popover"]').popover();
 
+  //highlight source code
   (0, _jquery2.default)('pre code').each(function (i, block) {
 
     HLJS.highlightBlock(block);
   });
+});
 
+(0, _jquery2.default)(function flashAnchors() {
   (0, _jquery2.default)('a[href*="#"]').click(function (e) {
     (0, _jquery2.default)('div[data-path="' + (0, _jquery2.default)(e.target).data('path') + '"]').delay(100).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
   });

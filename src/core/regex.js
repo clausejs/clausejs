@@ -199,8 +199,11 @@ function genMultiArgOp( type ) {
         type,
         exprs: coercedExprs,
         fragments: coercedExprs.reduce(
-          ( curr, { expr } ) =>
-            curr.concat( [ expr, ',' ] ), [] )
+          ( curr, { expr }, idx ) =>
+            curr
+              .concat( [ expr ] )
+              .concat( idx < coercedExprs.length - 1 ? [ ', ' ] : [] ),
+            [] )
       } );
 
       s.conform = function conform( x ) {
