@@ -26,7 +26,8 @@ M( 'specky.types/Expression', {
   'comment': 'Represents an Specky expression.',
   'example': 'isPositiveNumber(x); S.cat(...)',
 } );
-//
-// M( 'specky.utils/describe', {
-//   'comment': 'returns an abbreviated description of the spec as a simple tree structure',
-// } );
+
+M( 'specky.utils/describe', {
+  'name': 'S.describe',
+  'comment': 'returns an abbreviated description of the spec as a simple tree structure',
+} );

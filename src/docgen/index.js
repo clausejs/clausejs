@@ -144,9 +144,7 @@ function _genCatSpec( globalReg, exprName, path, expr, meta ) {
             <div class="col-md-12">
               ${name ? `<p>
                 <span class="tag tag-default">${toOrdinal( idx + 1 )} </span>
-                <span class="lead font-italic text-primary">
-                  "${name}"
-                </span>
+                &lt;<span class="lead font-italic text-primary">${name}</span>&gt;
                 ${comment ? `: <span>${ comment }</span>` : ''}
                   ` : `<span class="tag tag-default">${toOrdinal( idx + 1 )} </span>`}
             </div>
@@ -155,7 +153,7 @@ function _genCatSpec( globalReg, exprName, path, expr, meta ) {
             <div class="col-md-11 offset-md-1">
               ${genForExpression( globalReg, null, altE, meta && meta[ name ] )}
             </div>
-        </li>resolve
+        </li>
     `;
   } );
 
@@ -166,6 +164,8 @@ function _genCatSpec( globalReg, exprName, path, expr, meta ) {
         ${_tagFor( 'cat' )}
         ${_syntax( expr, globalReg, path )}
         ${_codeExample( example ) }
+      </p>
+      <p class="card-title">
         Must be <em>an ordered sequence</em> of the following expressions:
       </p>
     </div>
@@ -252,11 +252,12 @@ function _genUnknownSpec( globalReg, exprName, path, expr, meta ) {
     <div class="card-header">
     ${exprName || _type( expr )}
     <div class="tag tag-success">spec: ${expr.type.toLowerCase()}</div>
-    ${_syntax( expr, globalReg, path )}
-
     </div>
-    <pre>${_stringifyWithFn( expr )}</pre>
-    <pre>${_stringifyWithFn( meta )}</pre>
+    <div class="card-block">
+      ${_syntax( expr, globalReg, path )}
+      <pre>${_stringifyWithFn( expr )}</pre>
+      <pre>${_stringifyWithFn( meta )}</pre>
+    </div>
   </div>
   `;
   return r;
@@ -283,11 +284,9 @@ function _genOrSpec( globalReg, exprName, path, expr, meta ) {
                 alt ${idx + 1}
               </span>
               ${name ? `
-                  <span class="lead font-italic text-primary">
-                    &lt;${name}&gt;
-                  </span>
-                  ${comment ? `: <span>${ comment }</span>` : ''}
-                ` : ''}
+                  &lt;<span class="lead font-italic text-primary">${name}</span>&gt;
+              ${comment ? `: <span>${ comment }</span>` : ''}
+            ` : ''}
             </div>
           </div>
           <div class="row">
@@ -303,16 +302,15 @@ function _genOrSpec( globalReg, exprName, path, expr, meta ) {
   <div class="card">
     ${exprName ? `
         <div class="card-header">
-        ${exprName} ${_tagFor( 'or' )}
-        ${_syntax( expr, globalReg, path )}
-        ${_codeExample( example )}
+          ${exprName} ${_tagFor( 'or' )}
         </div>
       ` : ''}
     <div class="card-block">
       ${exprName ? '' : `
         ${_tagFor( 'or' )}
-        ${_syntax( expr, globalReg, path )}
       `}
+      ${_syntax( expr, globalReg, path )}
+      ${_codeExample( example )}
       <p class="card-title">
         Must be <em>one of</em> the following alternative forms:
       </p>
