@@ -13,7 +13,7 @@ M( '/specky', {
     }
   },
   'ret': {
-    'comment': 'Note: The returned Spec is not immediately resolved',
+    'comment': 'Note: The returned Spec is not immediately resolved until one calls its get() method.',
   },
 } );
 

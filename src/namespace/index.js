@@ -57,18 +57,18 @@ function speckyNamespace( cargs ) {
   var retVal;
 
   if ( cargs[ 'register' ] ) {
-    const { path, val } = cargs[ 'register' ];
-    retVal = _processVal( path, val );
+    const { nsPath, expression } = cargs[ 'register' ];
+    retVal = _processVal( nsPath, expression );
   } else if ( cargs[ 'retrieve' ] ) {
-    const { path } = cargs[ 'retrieve' ];
-    var nameObj = _get( path );
+    const { nsPath } = cargs[ 'retrieve' ];
+    var nameObj = _get( nsPath );
     retVal = nameObj;
   }
 
   return retVal;
 }
 
-function _processVal( prefix, { expression } ) {
+function _processVal( prefix, expression ) {
   if ( expression ) {
     if ( expression.spec || expression.pred ) {
       var expr = expression.spec || expression.pred;
@@ -87,7 +87,7 @@ function _processVal( prefix, { expression } ) {
   //     }
   //   }
   } else {
-    console.error( val );
+    console.error( expression );
     throw '!';
   }
 }

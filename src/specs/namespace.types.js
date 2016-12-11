@@ -2,19 +2,21 @@ import { or, cat, fspec, props, ExprSpec } from '../core';
 import { delayed, isNamespacePath, isExpr, isSpecRef } from '../utils';
 import { isObj } from '../preds';
 
-var ExprOrPartialRefMapSpec = or(
-  'expression', delayed( () => {
+var ExprOrPartialRefMapSpec =
+ // or(
+ //  'expression',
+  delayed( () => {
     //TODO
     return ExprSpec;
-  } )
-);
+  } );
+// );
 
 const NamespaceFnSpec = fspec( {
   args: or(
     'register', cat(
-      'path', isNamespacePath,
-      'val', ExprOrPartialRefMapSpec ),
-    'retrieve', cat( 'path', isNamespacePath )
+      'nsPath', isNamespacePath,
+      'expression', ExprOrPartialRefMapSpec ),
+    'retrieve', cat( 'nsPath', isNamespacePath )
   ),
   ret: ExprSpec,
 } );

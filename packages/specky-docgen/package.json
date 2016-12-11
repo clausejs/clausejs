@@ -27,5 +27,8 @@
   "bugs": {
     "url": "https://github.com/speckyjs/specky/issues"
   },
-  "homepage": "https://github.com/speckyjs/specky#readme"
+  "homepage": "https://github.com/speckyjs/specky#readme",
+  "dependencies": {
+    "lodash": "^4.17.2"
+  }
 }

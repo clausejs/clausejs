@@ -1,3 +1,4 @@
+import _ from 'lodash';
 const resolvedMaps = [];
 import { NamespaceObjSpec } from '../specs/namespace.types';
 
@@ -17,8 +18,9 @@ function resolve( registry, specRef ) {
 }
 
 function getDefList( registry ) {
-  const defs = [];
-  return defs;
+  const map = _createResolveMap( registry );
+  var groups = _.groupBy( map, ( [ p ] ) => p );
+  return groups;
 }
 
 function _createResolveMap( registry ) {
@@ -44,7 +46,7 @@ function _walk( prefix, currN, creg, r ) {
         }
         break;
       case '.expr':
-        r.push( [ `${prefix ? prefix : ''}/${currN}`, creg[ '.expr' ] ] );
+        r.push( [ `${prefix ? prefix : ''}`, `${currN}`, creg[ '.expr' ] ] );
         break;
       default:
         break;
@@ -54,9 +56,9 @@ function _walk( prefix, currN, creg, r ) {
 }
 
 function _resolveWithMap( map, specRef ) {
-  const path = _findFirst( map, ( [ p, r ] ) => {
+  const path = _findFirst( map, ( [ p, n, r ] ) => {
     if ( r === specRef ) {
-      return p;
+      return `${p}/${n}`;
     }
   } );
   return path;

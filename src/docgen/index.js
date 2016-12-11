@@ -2,8 +2,9 @@ import { NamespaceObjSpec } from '../specs/namespace.types';
 import fnName from '../utils/fnName';
 import isPred from '../utils/isPred';
 import isSpec from '../utils/isSpec';
+import { isStr } from '../preds';
 import describe from '../utils/describe';
-import { resolve } from './namespaceResolver';
+import { resolve, getDefList } from './namespaceResolver';
 
 function gen( registry ) {
   var conformedReg = NamespaceObjSpec.conform( registry );
@@ -12,7 +13,20 @@ function gen( registry ) {
 }
 
 function genCot( registry ) {
-  return ``;
+  var r = getDefList( registry );
+  var groups = Object.keys( r );
+  return `<dl>
+    ${groups.map( ( p ) => `
+    <dt>
+      ${p}
+    </dt>
+    <dd>
+      <ul>
+      ${r[ p ].map( ( [ p, n ] ) => `<li>${_specRefLink( `${p}/${n}` )( _unanbiguousName )}</li>` ).join( '' )}
+      </ul>
+    </dd>
+    ` ).join( '' )}
+  </dl>`
 }
 
 function _walk( globalReg, prefix, currentFrag, creg ) {
@@ -49,7 +63,6 @@ function _walk( globalReg, prefix, currentFrag, creg ) {
   if ( exprResult ) {
     r += exprResult;
   }
-
   if ( currentNs && ( nsComment || _hasExprs( subNamespaces ) ) ) {
     r += `<h3>${currentNs}/</h3><hr />`;
   }
@@ -82,9 +95,15 @@ function _exprMeta( globalReg, exprName, expr, meta ) {
   return docstr;
 }
 
+const typeTable = {
+  'FSPEC': 'function',
+  'PRED': 'predicate',
+  'CAT': 'cat sequence',
+}
+
 function _type( expr ) {
   if ( isSpec( expr ) ) {
-    return expr.type.toLowerCase();
+    return typeTable[ expr.type ] || expr.type.toLowerCase();
   } else if ( isPred( expr ) ) {
     return 'predicate';
   }
@@ -169,19 +188,18 @@ function _genCatSpec( globalReg, exprName, path, expr, meta ) {
             <div class="col-md-11 offset-md-1">
               ${genForExpression( globalReg, null, altE, meta && meta[ name ] )}
             </div>
-        </li>
+      ''  </li>
     `;
   } );
 
   const r = `
     <div class="card-block">
       <p class="card-title">
-        ${_tagFor( 'cat' )}
         ${_syntax( expr, globalReg, path )}
-        ${_codeExample( example ) }
       </p>
       <p class="card-title">
-        Must be <em>an ordered sequence</em> of the following expressions:
+        ${_tagFor( 'cat' )}
+        Must be <em>an ordered list</em> of the following:
       </p>
     </div>
     <ol class="list-group list-group-flush">
@@ -199,17 +217,54 @@ function _codeExample( code ) {
   return r;
 }
 
+function _synopsis( fspec, globalReg, meta ) {
+  var r = synopsisArray( fspec, globalReg, meta );
+  var h = _synopsisToHtml( r );
+  return h;
+}
+
+function _synopsisToHtml( arr ) {
+  var h = arr.map( ( item ) => {
+    if ( isStr( item ) ) {
+      if ( item.indexOf( '&lt;' ) === 0 ) {
+        return `<li>${item}</li>`;
+      } else {
+        return item;
+      }
+    } else if ( Array.isArray( item ) ) {
+      return `<div>${
+        _synopsisToHtml( item )
+      }</div>`
+    }
+  } ).join( '' );
+  return `<ul>${h}</ul>`;
+}
+
+function synopsisArray( fspec, globalReg ) {
+  return [
+    '&lt;register&gt;:',
+    [
+      'S(', 'nsPath', ', ', 'expression', ')'
+    ],
+    '&lt;retrieve&gt;:',
+    [
+      'var ', 'expression', ' = ', 'S(', 'nsPath', ', ', 'expression', ')'
+    ],
+  ]
+}
+
 function _syntax( expr, globalReg, currPath ) {
-  return `<em class="text-info">
-    ${describe( expr, _refExprFn( globalReg, currPath ) )}
-  </em>`;
+  return ``;
+  // return `<em class="text-info">
+  //   ${describe( expr, _refExprFn( globalReg, currPath ) )}
+  // </em>`;
 }
 
 function _refExprFn( reg, currPath ) {
   return ( expr ) => {
     let path = resolve( reg, expr );
     if ( path && path !== currPath ) {
-      return [ _specRefLink( path )( p => _unanbiguousName( p ) ) ];
+      return [ _specRefLink( path )( _unanbiguousName ) ];
     }
   }
 }
@@ -249,7 +304,7 @@ function _tagFor( t ) {
   case 'pred':
     return '<span class="tag tag-primary">predicate</span>';
   case 'cat': case 'or':
-    return `<span class="tag tag-info">spec: ${t}</span>`;
+    return `<span class="tag tag-info">${t}</span>`;
   default:
     throw '!'
   }
@@ -284,7 +339,7 @@ function _genOrSpec( globalReg, exprName, path, expr, meta ) {
           <div class="row">
             <div class="col-md-12">
               <span class="tag tag-default">
-                alt ${idx + 1}
+                Option ${idx + 1}
               </span>
               ${name ? `
                   &lt;<span class="lead font-italic text-primary">${name}</span>&gt;
@@ -303,13 +358,12 @@ function _genOrSpec( globalReg, exprName, path, expr, meta ) {
 
   const r = `
     <div class="card-block">
+      ${_syntax( expr, globalReg, path )}
+      <p class="card-title">
       ${exprName ? '' : `
         ${_tagFor( 'or' )}
       `}
-      ${_syntax( expr, globalReg, path )}
-      ${_codeExample( example )}
-      <p class="card-title">
-        Must be <em>one of</em> the following alternative forms:
+        Must be <em>one of</em> the following:
       </p>
     </div>
     <ol class="list-group list-group-flush">
@@ -340,7 +394,8 @@ function _genFspec( globalReg, exprName, spec, meta ) {
   const name = meta && meta[ 'name' ] || exprName;
   const { args: argsSpec, ret: retSpec, fn } = spec.opts;
   if ( argsSpec ) {
-    frags.push( [ 'Parameters', genForExpression( globalReg, null, argsSpec, meta && meta.args ) ] );
+    frags.push( [ 'Synopsis', _synopsis( spec, globalReg ) ] );
+    frags.push( [ 'Parameter list', genForExpression( globalReg, null, argsSpec, meta && meta.args ) ] );
   }
   if ( retSpec ) {
     frags.push( [ 'Return value', genForExpression( globalReg, null, retSpec, meta && meta.ret ) ] );
