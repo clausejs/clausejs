@@ -5,11 +5,17 @@ var fnName = require( '../utils/fnName' );
 var isStr = require( '../preds/isStr' );
 var identity = require( '../utils/identity' );
 
-function describe( expr ) {
-  return _fragments( expr ).join( '' );
+function describe( expr, interceptor ) {
+  return _fragments( expr, interceptor ).join( '' );
 }
 
 function _fragments( expr, interceptor ) {
+  if ( interceptor ) {
+    let interceptR = interceptor( expr );
+    if ( interceptR ) {
+      return interceptR;
+    }
+  }
   if ( isPred( expr ) ) {
     return [ fnName( expr ), '()' ];
   } else if ( expr.type === 'PRED' ) {

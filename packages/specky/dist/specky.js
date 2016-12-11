@@ -1409,11 +1409,17 @@ var fnName = __webpack_require__(10);
 var isStr = __webpack_require__(5);
 var identity = __webpack_require__(17);
 
-function describe(expr) {
-  return _fragments(expr).join('');
+function describe(expr, interceptor) {
+  return _fragments(expr, interceptor).join('');
 }
 
 function _fragments(expr, interceptor) {
+  if (interceptor) {
+    var interceptR = interceptor(expr);
+    if (interceptR) {
+      return interceptR;
+    }
+  }
   if (isPred(expr)) {
     return [fnName(expr), '()'];
   } else if (expr.type === 'PRED') {

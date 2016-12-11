@@ -98,13 +98,13 @@ function genForExpression( globalReg, exprName, expr, meta, registry ) {
   } else if ( expr.type === 'FSPEC' ) {
     docstr = _genFspec( globalReg, exprName, expr, meta );
   } else if ( expr.type === 'OR' ) {
-    docstr = _genOrSpec( globalReg, exprName, expr, meta );
+    docstr = _genOrSpec( globalReg, exprName, path, expr, meta );
   } else if ( expr.type === 'CAT' ) {
-    docstr = _genCatSpec( globalReg, exprName, expr, meta );
+    docstr = _genCatSpec( globalReg, exprName, path, expr, meta );
   } else if ( isPred( expr ) || expr.type === 'PRED' ) {
     docstr = _genPredSpec( globalReg, exprName, expr, meta );
   } else {
-    docstr = _genUnknownSpec( globalReg, exprName, expr, meta );
+    docstr = _genUnknownSpec( globalReg, exprName, path, expr, meta );
   }
 
   return ( exprName && path ) ? `
@@ -124,13 +124,17 @@ function _genSpecRef( globalReg, exprName, path, expr, meta ) {
   return `
     <div class="card">
       <div class="card-block">
-        <a href="#${p}" data-path="${p}">${p}</a>
+        ${_specRefLink( p )}
       </a>
     </div>
   `;
 }
 
-function _genCatSpec( globalReg, exprName, expr, meta ) {
+function _specRefLink( p ) {
+  return `<a href="#${p}" data-path="${p}">${p}</a>`;
+}
+
+function _genCatSpec( globalReg, exprName, path, expr, meta ) {
   const example = meta && meta.example;
   const altDefs = expr.exprs.map( ( { name, expr: altE }, idx ) => {
     const comment = meta && meta[ name ] && meta[ name ].comment;
@@ -151,7 +155,7 @@ function _genCatSpec( globalReg, exprName, expr, meta ) {
             <div class="col-md-11 offset-md-1">
               ${genForExpression( globalReg, null, altE, meta && meta[ name ] )}
             </div>
-        </li>
+        </li>resolve
     `;
   } );
 
@@ -160,7 +164,7 @@ function _genCatSpec( globalReg, exprName, expr, meta ) {
     <div class="card-block">
       <p class="card-title">
         ${_tagFor( 'cat' )}
-        ${_syntax( expr )}
+        ${_syntax( expr, globalReg, path )}
         ${_codeExample( example ) }
         Must be <em>an ordered sequence</em> of the following expressions:
       </p>
@@ -181,10 +185,19 @@ function _codeExample( code ) {
   return r;
 }
 
-function _syntax( expr ) {
+function _syntax( expr, globalReg, currPath ) {
   return `<em class="text-info">
-    ${describe( expr )}
+    ${describe( expr, _refExprFn( globalReg, currPath ) )}
   </em>`;
+}
+
+function _refExprFn( reg, currPath ) {
+  return ( expr ) => {
+    let path = resolve( reg, expr );
+    if ( path && path !== currPath ) {
+      return [ 'S("', _specRefLink( path ), '")' ];
+    }
+  }
 }
 
 function _genPredSpec( globalReg, exprName, expr, meta ) {
@@ -199,7 +212,6 @@ function _genPredSpec( globalReg, exprName, expr, meta ) {
           <div class="card-header">
             <span>
               ${nameFrag}<span class="tag tag-primary">predicate</span>
-              ${_syntax( expr )}
             </span>
           </div>
         ` : ''
@@ -234,13 +246,13 @@ function _tagFor( t ) {
   }
 }
 
-function _genUnknownSpec( globalReg, exprName, expr, meta ) {
+function _genUnknownSpec( globalReg, exprName, path, expr, meta ) {
   const r = `
   <div class="card">
     <div class="card-header">
     ${exprName || _type( expr )}
     <div class="tag tag-success">spec: ${expr.type.toLowerCase()}</div>
-    ${_syntax( expr )}
+    ${_syntax( expr, globalReg, path )}
 
     </div>
     <pre>${_stringifyWithFn( expr )}</pre>
@@ -259,7 +271,7 @@ function _stringifyWithFn( objWithFunction ) {
   }, 2 );
 }
 
-function _genOrSpec( globalReg, exprName, expr, meta ) {
+function _genOrSpec( globalReg, exprName, path, expr, meta ) {
   const example = meta && meta.example;
   const altDefs = expr.exprs.map( ( { name, expr: altE }, idx ) => {
     const comment = meta && meta[ name ] && meta[ name ].comment;
@@ -272,7 +284,7 @@ function _genOrSpec( globalReg, exprName, expr, meta ) {
               </span>
               ${name ? `
                   <span class="lead font-italic text-primary">
-                    "${name}"
+                    &lt;${name}&gt;
                   </span>
                   ${comment ? `: <span>${ comment }</span>` : ''}
                 ` : ''}
@@ -292,13 +304,15 @@ function _genOrSpec( globalReg, exprName, expr, meta ) {
     ${exprName ? `
         <div class="card-header">
         ${exprName} ${_tagFor( 'or' )}
-        ${_syntax( expr )}
+        ${_syntax( expr, globalReg, path )}
         ${_codeExample( example )}
         </div>
       ` : ''}
     <div class="card-block">
-      ${exprName ? '' : _tagFor( 'or' )}
-      ${_syntax( expr )}
+      ${exprName ? '' : `
+        ${_tagFor( 'or' )}
+        ${_syntax( expr, globalReg, path )}
+      `}
       <p class="card-title">
         Must be <em>one of</em> the following alternative forms:
       </p>
@@ -344,7 +358,6 @@ function _genFspec( globalReg, exprName, spec, meta ) {
       ${name ? `
         <div class="card-header">
           ${name}() <span class="tag tag-primary">function</span>
-          ${_syntax( spec )}
         </div>
         ` : ''}
       <div class="card-block">
