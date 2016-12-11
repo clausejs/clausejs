@@ -47,7 +47,7 @@ function _walk( globalReg, prefix, currentFrag, creg ) {
   }
 
   if ( currentNs && ( nsComment || _hasExprs( subNamespaces ) ) ) {
-    r += `<h3>${currentNs}</h3><hr />`;
+    r += `<h3>${currentNs}/</h3><hr />`;
   }
 
   if ( nsComment ) {
@@ -131,9 +131,9 @@ function _genSpecRef( globalReg, exprName, path, expr, meta ) {
 }
 
 function _genCatSpec( globalReg, exprName, expr, meta ) {
+  const example = meta && meta.example;
   const altDefs = expr.exprs.map( ( { name, expr: altE }, idx ) => {
     const comment = meta && meta[ name ] && meta[ name ].comment;
-    const example = meta && meta[ name ] && meta[ name ].example;
     return `
         <li class="list-group-item">
           <div class="row">
@@ -141,17 +141,15 @@ function _genCatSpec( globalReg, exprName, expr, meta ) {
               ${name ? `<p>
                 <span class="tag tag-default">${toOrdinal( idx + 1 )} </span>
                 <span class="lead font-italic text-primary">
-                  ${name}
+                  "${name}"
                 </span>
                 ${comment ? `: <span>${ comment }</span>` : ''}
                   ` : `<span class="tag tag-default">${toOrdinal( idx + 1 )} </span>`}
-              ${_syntax( expr )}
             </div>
           </div>
           <div class="row">
             <div class="col-md-11 offset-md-1">
-              ${_codeExample( example )}
-              ${genForExpression( globalReg, null, altE, null )}
+              ${genForExpression( globalReg, null, altE, meta && meta[ name ] )}
             </div>
         </li>
     `;
@@ -162,7 +160,9 @@ function _genCatSpec( globalReg, exprName, expr, meta ) {
     <div class="card-block">
       <p class="card-title">
         ${_tagFor( 'cat' )}
-        Must be <em>a sequence of</em> the following expressions:
+        ${_syntax( expr )}
+        ${_codeExample( example ) }
+        Must be <em>an ordered sequence</em> of the following expressions:
       </p>
     </div>
     <ol class="list-group list-group-flush">
@@ -182,7 +182,7 @@ function _codeExample( code ) {
 }
 
 function _syntax( expr ) {
-  return `<em class="text-success">
+  return `<em class="text-info">
     ${describe( expr )}
   </em>`;
 }
@@ -260,10 +260,9 @@ function _stringifyWithFn( objWithFunction ) {
 }
 
 function _genOrSpec( globalReg, exprName, expr, meta ) {
+  const example = meta && meta.example;
   const altDefs = expr.exprs.map( ( { name, expr: altE }, idx ) => {
     const comment = meta && meta[ name ] && meta[ name ].comment;
-    const example = meta && meta[ name ] && meta[ name ].example;
-
     return `
         <li class="list-group-item">
           <div class="row">
@@ -273,17 +272,15 @@ function _genOrSpec( globalReg, exprName, expr, meta ) {
               </span>
               ${name ? `
                   <span class="lead font-italic text-primary">
-                    ${name}
+                    "${name}"
                   </span>
                   ${comment ? `: <span>${ comment }</span>` : ''}
                 ` : ''}
-              ${_syntax( expr )}
             </div>
           </div>
           <div class="row">
             <div class="col-md-11 offset-md-1">
-              ${_codeExample( example )}
-              ${genForExpression( globalReg, null, altE, null )}
+              ${genForExpression( globalReg, null, altE, meta && meta[ name ] )}
             </div>
           </div>
         </li>
@@ -296,12 +293,13 @@ function _genOrSpec( globalReg, exprName, expr, meta ) {
         <div class="card-header">
         ${exprName} ${_tagFor( 'or' )}
         ${_syntax( expr )}
+        ${_codeExample( example )}
         </div>
       ` : ''}
     <div class="card-block">
+      ${exprName ? '' : _tagFor( 'or' )}
+      ${_syntax( expr )}
       <p class="card-title">
-        ${exprName ? '' : _tagFor( 'or' )}
-        ${_syntax( expr )}
         Must be <em>one of</em> the following alternative forms:
       </p>
     </div>

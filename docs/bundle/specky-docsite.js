@@ -19634,7 +19634,7 @@ function _walk(globalReg, prefix, currentFrag, creg) {
   }
 
   if (currentNs && (nsComment || _hasExprs(subNamespaces))) {
-    r += '<h3>' + currentNs + '</h3><hr />';
+    r += '<h3>' + currentNs + '/</h3><hr />';
   }
 
   if (nsComment) {
@@ -19704,16 +19704,16 @@ function _genSpecRef(globalReg, exprName, path, expr, meta) {
 }
 
 function _genCatSpec(globalReg, exprName, expr, meta) {
+  var example = meta && meta.example;
   var altDefs = expr.exprs.map(function (_ref, idx) {
     var name = _ref.name,
         altE = _ref.expr;
 
     var comment = meta && meta[name] && meta[name].comment;
-    var example = meta && meta[name] && meta[name].example;
-    return '\n        <li class="list-group-item">\n          <div class="row">\n            <div class="col-md-12">\n              ' + (name ? '<p>\n                <span class="tag tag-default">' + toOrdinal(idx + 1) + ' </span>\n                <span class="lead font-italic text-primary">\n                  ' + name + '\n                </span>\n                ' + (comment ? ': <span>' + comment + '</span>' : '') + '\n                  ' : '<span class="tag tag-default">' + toOrdinal(idx + 1) + ' </span>') + '\n              ' + _syntax(expr) + '\n            </div>\n          </div>\n          <div class="row">\n            <div class="col-md-11 offset-md-1">\n              ' + _codeExample(example) + '\n              ' + genForExpression(globalReg, null, altE, null) + '\n            </div>\n        </li>\n    ';
+    return '\n        <li class="list-group-item">\n          <div class="row">\n            <div class="col-md-12">\n              ' + (name ? '<p>\n                <span class="tag tag-default">' + toOrdinal(idx + 1) + ' </span>\n                <span class="lead font-italic text-primary">\n                  "' + name + '"\n                </span>\n                ' + (comment ? ': <span>' + comment + '</span>' : '') + '\n                  ' : '<span class="tag tag-default">' + toOrdinal(idx + 1) + ' </span>') + '\n            </div>\n          </div>\n          <div class="row">\n            <div class="col-md-11 offset-md-1">\n              ' + genForExpression(globalReg, null, altE, meta && meta[name]) + '\n            </div>\n        </li>\n    ';
   });
 
-  var r = '\n  <div class="card">\n    <div class="card-block">\n      <p class="card-title">\n        ' + _tagFor('cat') + '\n        Must be <em>a sequence of</em> the following expressions:\n      </p>\n    </div>\n    <ol class="list-group list-group-flush">\n      ' + altDefs.join(' ') + '\n    </ol>\n  </div>\n  ';
+  var r = '\n  <div class="card">\n    <div class="card-block">\n      <p class="card-title">\n        ' + _tagFor('cat') + '\n        ' + _syntax(expr) + '\n        ' + _codeExample(example) + '\n        Must be <em>an ordered sequence</em> of the following expressions:\n      </p>\n    </div>\n    <ol class="list-group list-group-flush">\n      ' + altDefs.join(' ') + '\n    </ol>\n  </div>\n  ';
   return r;
 }
 
@@ -19723,7 +19723,7 @@ function _codeExample(code) {
 }
 
 function _syntax(expr) {
-  return '<em class="text-success">\n    ' + (0, _describe2.default)(expr) + '\n  </em>';
+  return '<em class="text-info">\n    ' + (0, _describe2.default)(expr) + '\n  </em>';
 }
 
 function _genPredSpec(globalReg, exprName, expr, meta) {
@@ -19761,17 +19761,16 @@ function _stringifyWithFn(objWithFunction) {
 }
 
 function _genOrSpec(globalReg, exprName, expr, meta) {
+  var example = meta && meta.example;
   var altDefs = expr.exprs.map(function (_ref2, idx) {
     var name = _ref2.name,
         altE = _ref2.expr;
 
     var comment = meta && meta[name] && meta[name].comment;
-    var example = meta && meta[name] && meta[name].example;
-
-    return '\n        <li class="list-group-item">\n          <div class="row">\n            <div class="col-md-12">\n              <span class="tag tag-default">\n                alt ' + (idx + 1) + '\n              </span>\n              ' + (name ? '\n                  <span class="lead font-italic text-primary">\n                    ' + name + '\n                  </span>\n                  ' + (comment ? ': <span>' + comment + '</span>' : '') + '\n                ' : '') + '\n              ' + _syntax(expr) + '\n            </div>\n          </div>\n          <div class="row">\n            <div class="col-md-11 offset-md-1">\n              ' + _codeExample(example) + '\n              ' + genForExpression(globalReg, null, altE, null) + '\n            </div>\n          </div>\n        </li>\n    ';
+    return '\n        <li class="list-group-item">\n          <div class="row">\n            <div class="col-md-12">\n              <span class="tag tag-default">\n                alt ' + (idx + 1) + '\n              </span>\n              ' + (name ? '\n                  <span class="lead font-italic text-primary">\n                    "' + name + '"\n                  </span>\n                  ' + (comment ? ': <span>' + comment + '</span>' : '') + '\n                ' : '') + '\n            </div>\n          </div>\n          <div class="row">\n            <div class="col-md-11 offset-md-1">\n              ' + genForExpression(globalReg, null, altE, meta && meta[name]) + '\n            </div>\n          </div>\n        </li>\n    ';
   });
 
-  var r = '\n  <div class="card">\n    ' + (exprName ? '\n        <div class="card-header">\n        ' + exprName + ' ' + _tagFor('or') + '\n        ' + _syntax(expr) + '\n        </div>\n      ' : '') + '\n    <div class="card-block">\n      <p class="card-title">\n        ' + (exprName ? '' : _tagFor('or')) + '\n        ' + _syntax(expr) + '\n        Must be <em>one of</em> the following alternative forms:\n      </p>\n    </div>\n    <ol class="list-group list-group-flush">\n      ' + altDefs.join('') + '\n    </ol>\n  </div>\n  ';
+  var r = '\n  <div class="card">\n    ' + (exprName ? '\n        <div class="card-header">\n        ' + exprName + ' ' + _tagFor('or') + '\n        ' + _syntax(expr) + '\n        ' + _codeExample(example) + '\n        </div>\n      ' : '') + '\n    <div class="card-block">\n      ' + (exprName ? '' : _tagFor('or')) + '\n      ' + _syntax(expr) + '\n      <p class="card-title">\n        Must be <em>one of</em> the following alternative forms:\n      </p>\n    </div>\n    <ol class="list-group list-group-flush">\n      ' + altDefs.join('') + '\n    </ol>\n  </div>\n  ';
   return r;
 }
 
