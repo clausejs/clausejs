@@ -41,17 +41,6 @@ var ExprSpec = orOp( {
   ],
 } );
 
-var NameExprSeq = catOp( {
-  withLabels: [
-    { name: 'name', expr: {
-      spec: nameSpec,
-    } },
-    { name: 'expr', expr: {
-      spec: ExprSpec,
-    } },
-  ],
-} );
-
 var NameExprOptionalComment = catOp( {
   withLabels: [
     { name: 'name', expr: {
@@ -113,7 +102,7 @@ var multipleArgOpSpec = {
   ret: specSpec,
 };
 
-var singleArgOpSpec = {
+var singleArgOpSpecFn = ( optSpec ) => ( {
   args: catOp( {
     withLabels: [
       {
@@ -126,16 +115,14 @@ var singleArgOpSpec = {
         name: 'opts',
         expr: {
           spec: zeroOrOneOp( {
-            expr: {
-              pred: isObj,
-            }
+            expr: optSpec
           } ),
         }
       },
     ],
   } ),
   ret: specSpec,
-};
+} );
 
 function genMultiArgOp( type ) {
   return namedFn( type, function _( conformedArgs ) {
@@ -252,14 +239,14 @@ function genSingleArgOp( type ) {
   } );
 }
 
-var CollOfSpec = fspec( singleArgOpSpec );
+var CollOfSpec = fspec( singleArgOpSpecFn( { pred: isObj } ) );
 var collOf = CollOfSpec.instrumentConformed( collOfOp );
 
 var CatFnSpec = fspec( multipleArgOpSpec );
 var OrFnSpec = fspec( multipleArgOpSpec );
-var ZeroOrMoreFnSpec = fspec( singleArgOpSpec );
-var OneOrMoreFnSpec = fspec( singleArgOpSpec );
-var ZeroOrOneFnSpec = fspec( singleArgOpSpec );
+var ZeroOrMoreFnSpec = fspec( singleArgOpSpecFn( { pred: isObj } ) );
+var OneOrMoreFnSpec = fspec( singleArgOpSpecFn( { pred: isObj } ) );
+var ZeroOrOneFnSpec = fspec( singleArgOpSpecFn( { pred: isObj } ) );
 
 var core = {
   cat: CatFnSpec.instrumentConformed( catOp ),

@@ -3,7 +3,6 @@ var isPred = require( '../utils/isPred' );
 var isSpec = require( '../utils/isSpec' );
 var fnName = require( '../utils/fnName' );
 var isStr = require( '../preds/isStr' );
-var identity = require( '../utils/identity' );
 
 function describe( expr, interceptor ) {
   return _fragments( expr, interceptor ).join( '' );

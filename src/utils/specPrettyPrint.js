@@ -1,6 +1,14 @@
  // TODO
 function specPrettyPrint( spec ) {
-  return JSON.stringify( spec, null, 2 );
+  if ( !spec ) {
+    return '';
+  }
+  return JSON.stringify( spec, ( key, val ) => {
+    if ( typeof val === 'function' ) {
+      return `${val.name}()`; // implicitly `toString` it
+    }
+    return val;
+  }, 2 );
 }
 
 module.exports = specPrettyPrint;

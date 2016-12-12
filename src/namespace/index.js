@@ -75,7 +75,7 @@ function _processVal( prefix, expression ) {
       _set( prefix, { '.expr': expr } );
       return expr;
     } else {
-      console.error( e );
+      console.error( expression );
       throw '!';
     }
   // TODO
