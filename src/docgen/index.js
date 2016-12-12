@@ -129,7 +129,7 @@ function genForExpression( globalReg, exprName, expr, meta ) {
   } else if ( expr.type === 'SpecRef' ) {
     docstr = _genSpecRef( globalReg, exprName, null, expr, meta );
   } else if ( expr.type === 'Delayed' ) {
-    docstr = genForExpression( globalReg, exprName, expr.get(), meta );
+    return genForExpression( globalReg, exprName, expr.get(), meta );
   } else if ( expr.type === 'FSPEC' ) {
     docstr = _genFspec( globalReg, exprName, expr, meta );
   } else if ( expr.type === 'OR' ) {
@@ -160,9 +160,12 @@ function genForExpression( globalReg, exprName, expr, meta ) {
       ${docstr}
     </div>
     ` : `
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        ${!path ? _tagFor( expr ) : '<span class="tag tag-info">spec</span>'}
+      </legend>
       ${docstr}
-    </div>
+      </fieldset>
     `;
 }
 
@@ -211,7 +214,6 @@ function _genCatSpec( globalReg, exprName, path, expr, meta ) {
         ${_syntax( expr, globalReg, path )}
       </p>
       <p class="card-title">
-        ${_tagFor( 'cat' )}
         Must be <em>an ordered list</em> of the following:
       </p>
     </div>
@@ -361,7 +363,6 @@ function _genPredSpec( globalReg, exprName, expr, meta ) {
         data-animation="false"
         data-delay="500">
         A value that satisfies
-        ${ name ? '' : _tagFor( 'pred' ) }
         <em>${predName}()</em>
       </span>
     </div>
@@ -369,21 +370,26 @@ function _genPredSpec( globalReg, exprName, expr, meta ) {
   return r;
 }
 
-function _tagFor( t ) {
-  switch ( t ) {
+function _tagFor( expr ) {
+  let lowerT;
+  if ( isPred( expr ) ) {
+    lowerT = 'pred';
+  } else {
+    lowerT = deref( expr ).type.toLowerCase();
+  }
+  switch ( lowerT ) {
   case 'pred':
     return '<span class="tag tag-primary">predicate</span>';
   case 'cat': case 'or':
-    return `<span class="tag tag-info">${t}</span>`;
+    return `<span class="tag tag-info">${lowerT}</span>`;
   default:
-    return `<span class="tag tag-info">${t}</span>`;
+    return `<span class="tag tag-info">${lowerT}</span>`;
   }
 }
 
 function _genUnknownSpec( globalReg, exprName, path, expr, meta ) {
   const r = `
     <div class="card-block">
-      ${_tagFor( expr.type )}
       ${_syntax( expr, globalReg, path )}
       ${expr.exprs.map( ( exprAlts ) => {
         var { name, expr } = exprAlts;
@@ -400,6 +406,9 @@ function _genUnknownSpec( globalReg, exprName, path, expr, meta ) {
 }
 
 function _stringifyWithFn( objWithFunction ) {
+  if ( !objWithFunction ) {
+    return '';
+  }
   return JSON.stringify( objWithFunction, function( key, val ) {
     if ( typeof val === 'function' ) {
       return `${val.name}()`; // implicitly `toString` it
@@ -439,7 +448,6 @@ function _genOrSpec( globalReg, exprName, path, expr, meta ) {
       ${_syntax( expr, globalReg, path )}
       <p class="card-title">
       ${exprName ? '' : `
-        ${_tagFor( 'or' )}
       `}
         Must be <em>one of</em> the following:
       </p>

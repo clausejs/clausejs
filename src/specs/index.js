@@ -16,7 +16,7 @@ const DescribeFnSpec = fspec( {
 } );
 
 const SingleArgPredSpec = () => fspec( {
-  args: cat( any() ),
+  args: cat( 'x', any() ),
   ret: isBool,
 } );
 

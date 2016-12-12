@@ -19460,7 +19460,7 @@ function genForExpression(globalReg, exprName, expr, meta) {
   } else if (expr.type === 'SpecRef') {
     docstr = _genSpecRef(globalReg, exprName, null, expr, meta);
   } else if (expr.type === 'Delayed') {
-    docstr = genForExpression(globalReg, exprName, expr.get(), meta);
+    return genForExpression(globalReg, exprName, expr.get(), meta);
   } else if (expr.type === 'FSPEC') {
     docstr = _genFspec(globalReg, exprName, expr, meta);
   } else if (expr.type === 'OR') {
@@ -19477,7 +19477,7 @@ function genForExpression(globalReg, exprName, expr, meta) {
 
   var docheader = '\n    <div class="card-header">\n      ' + _stylizeName(expr, name) + '&nbsp;\n        <span class="tag tag-primary">\n          ' + _type(expr) + '\n        </span>\n    </div>\n  ';
 
-  return exprName && path ? '\n    <a name="' + path + '"></a>\n    <div class="card" data-path="' + path + '">\n      ' + docheader + '\n      ' + docstr + '\n    </div>\n    ' : '\n    <div class="card">\n      ' + docstr + '\n    </div>\n    ';
+  return exprName && path ? '\n    <a name="' + path + '"></a>\n    <div class="card" data-path="' + path + '">\n      ' + docheader + '\n      ' + docstr + '\n    </div>\n    ' : '\n      <fieldset class="card">\n      <legend class="spec-type">\n        ' + (!path ? _tagFor(expr) : '<span class="tag tag-info">spec</span>') + '\n      </legend>\n      ' + docstr + '\n      </fieldset>\n    ';
 }
 
 function _genSpecRef(globalReg, exprName, path, expr, meta) {
@@ -19503,7 +19503,7 @@ function _genCatSpec(globalReg, exprName, path, expr, meta) {
     return '\n        <li class="list-group-item">\n          <div class="row">\n            <div class="col-md-12">\n              ' + (name ? '<p>\n                <span class="tag tag-default">' + toOrdinal(idx + 1) + ' </span>\n                &lt;<span class="lead font-italic text-primary">' + name + '</span>&gt;\n                ' + (comment ? ': <span>' + comment + '</span>' : '') + '\n                  ' : '<span class="tag tag-default">' + toOrdinal(idx + 1) + ' </span>') + '\n            </div>\n          </div>\n          <div class="row">\n            <div class="col-md-11 offset-md-1">\n              ' + genForExpression(globalReg, null, altE, meta && meta[name]) + '\n            </div>\n          </div>\n        </li>\n    ';
   });
 
-  var r = '\n    <div class="card-block">\n      <p class="card-title">\n        ' + _syntax(expr, globalReg, path) + '\n      </p>\n      <p class="card-title">\n        ' + _tagFor('cat') + '\n        Must be <em>an ordered list</em> of the following:\n      </p>\n    </div>\n    <ol class="list-group list-group-flush">\n      ' + altDefs.join(' ') + '\n    </ol>\n  ';
+  var r = '\n    <div class="card-block">\n      <p class="card-title">\n        ' + _syntax(expr, globalReg, path) + '\n      </p>\n      <p class="card-title">\n        Must be <em>an ordered list</em> of the following:\n      </p>\n    </div>\n    <ol class="list-group list-group-flush">\n      ' + altDefs.join(' ') + '\n    </ol>\n  ';
   return r;
 }
 
@@ -19680,23 +19680,29 @@ function _genPredSpec(globalReg, exprName, expr, meta) {
   var name = meta && meta['name'] || exprName;
   var predName = (0, _fnName3.default)(pred);
   var nameFrag = name ? name + ' ' : '';
-  var r = '\n    <div class="card-block">\n      <span\n        data-toggle="popover"\n        data-trigger="hover"\n        data-html="true"\n        title="' + predName + '()"\n        data-content="<pre>' + pred.toString() + '</pre>"\n        data-container="body"\n        data-animation="false"\n        data-delay="500">\n        A value that satisfies\n        ' + (name ? '' : _tagFor('pred')) + '\n        <em>' + predName + '()</em>\n      </span>\n    </div>\n  ';
+  var r = '\n    <div class="card-block">\n      <span\n        data-toggle="popover"\n        data-trigger="hover"\n        data-html="true"\n        title="' + predName + '()"\n        data-content="<pre>' + pred.toString() + '</pre>"\n        data-container="body"\n        data-animation="false"\n        data-delay="500">\n        A value that satisfies\n        <em>' + predName + '()</em>\n      </span>\n    </div>\n  ';
   return r;
 }
 
-function _tagFor(t) {
-  switch (t) {
+function _tagFor(expr) {
+  var lowerT = void 0;
+  if ((0, _isPred2.default)(expr)) {
+    lowerT = 'pred';
+  } else {
+    lowerT = (0, _deref2.default)(expr).type.toLowerCase();
+  }
+  switch (lowerT) {
     case 'pred':
       return '<span class="tag tag-primary">predicate</span>';
     case 'cat':case 'or':
-      return '<span class="tag tag-info">' + t + '</span>';
+      return '<span class="tag tag-info">' + lowerT + '</span>';
     default:
-      return '<span class="tag tag-info">' + t + '</span>';
+      return '<span class="tag tag-info">' + lowerT + '</span>';
   }
 }
 
 function _genUnknownSpec(globalReg, exprName, path, expr, meta) {
-  var r = '\n    <div class="card-block">\n      ' + _tagFor(expr.type) + '\n      ' + _syntax(expr, globalReg, path) + '\n      ' + expr.exprs.map(function (exprAlts) {
+  var r = '\n    <div class="card-block">\n      ' + _syntax(expr, globalReg, path) + '\n      ' + expr.exprs.map(function (exprAlts) {
     var name = exprAlts.name,
         expr = exprAlts.expr;
 
@@ -19710,6 +19716,9 @@ function _genUnknownSpec(globalReg, exprName, path, expr, meta) {
 }
 
 function _stringifyWithFn(objWithFunction) {
+  if (!objWithFunction) {
+    return '';
+  }
   return JSON.stringify(objWithFunction, function (key, val) {
     if (typeof val === 'function') {
       return val.name + '()'; // implicitly `toString` it
@@ -19728,7 +19737,7 @@ function _genOrSpec(globalReg, exprName, path, expr, meta) {
     return '\n        <li class="list-group-item">\n          <div class="row">\n            <div class="col-md-12">\n              <span class="tag tag-default">\n                Option ' + (idx + 1) + '\n              </span>\n              ' + (name ? '\n                  &lt;<span class="lead font-italic text-primary">' + name + '</span>&gt;\n              ' + (comment ? ': <span>' + comment + '</span>' : '') + '\n            ' : '') + '\n            </div>\n          </div>\n          <div class="row">\n            <div class="col-md-11 offset-md-1">\n              ' + genForExpression(globalReg, null, altE, meta && meta[name]) + '\n            </div>\n          </div>\n        </li>\n    ';
   });
 
-  var r = '\n    <div class="card-block">\n      ' + _syntax(expr, globalReg, path) + '\n      <p class="card-title">\n      ' + (exprName ? '' : '\n        ' + _tagFor('or') + '\n      ') + '\n        Must be <em>one of</em> the following:\n      </p>\n    </div>\n    <ol class="list-group list-group-flush">\n      ' + altDefs.join('') + '\n    </ol>\n  ';
+  var r = '\n    <div class="card-block">\n      ' + _syntax(expr, globalReg, path) + '\n      <p class="card-title">\n      ' + (exprName ? '' : '\n      ') + '\n        Must be <em>one of</em> the following:\n      </p>\n    </div>\n    <ol class="list-group list-group-flush">\n      ' + altDefs.join('') + '\n    </ol>\n  ';
   return r;
 }
 
@@ -19867,7 +19876,7 @@ var DescribeFnSpec = (0, _.fspec)({
 
 var SingleArgPredSpec = function SingleArgPredSpec() {
   return (0, _.fspec)({
-    args: (0, _.cat)((0, _core.any)()),
+    args: (0, _.cat)('x', (0, _core.any)()),
     ret: _.isBool
   });
 };

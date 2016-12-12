@@ -27,6 +27,9 @@
       font-size: 0.8em;
     }
   }
+  legend.spec-type {
+    font-size: 1.2em;
+  }
   </style>
 </head>
 <body>
@@ -113,13 +116,15 @@
     <dd>Registers or retrieves a spec from global spec regitry by path.</dd>
 <dt>Synopsis</dt><dd><ul><li>&lt;register&gt;:<div><ul><em>S(nsPath, expression)</em></ul></div></li><li>&lt;retrieve&gt;:<div><ul><em>S(nsPath)</em></ul></div></li></ul></dd>
 <dt>Parameter list</dt><dd>
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">or</span>
+      </legend>
       
     <div class="card-block">
       
       <p class="card-title">
       
-        <span class="tag tag-info">or</span>
       
         Must be <em>one of</em> the following:
       </p>
@@ -141,14 +146,16 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">cat</span>
+      </legend>
       
     <div class="card-block">
       <p class="card-title">
         
       </p>
       <p class="card-title">
-        <span class="tag tag-info">cat</span>
         Must be <em>an ordered list</em> of the following:
       </p>
     </div>
@@ -167,19 +174,21 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-primary">predicate</span>
+      </legend>
       
     <div class="card-block">
       <span data-toggle="popover" data-trigger="hover" data-html="true" title="isNamespacePath()" data-content="&lt;pre&gt;function isNamespacePath(x) {
   return isStr(x) &amp;&amp; /^[a-zA-Z0-9\-_\.]*\/([a-zA-Z0-9\-_]+)$/.test(x);
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         A value that satisfies
-        <span class="tag tag-primary">predicate</span>
         <em>isNamespacePath()</em>
       </span>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -198,18 +207,17 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
-      
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">spec</span>
+      </legend>
       
     <div class="card-block">
       A value that satisfies
       <a href="#specky.types/Expression" data-path="specky.types/Expression">specky.types/Expression</a>
     </div>
   
-    </div>
-    
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -217,7 +225,7 @@
     
     </ol>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -238,14 +246,16 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">cat</span>
+      </legend>
       
     <div class="card-block">
       <p class="card-title">
         
       </p>
       <p class="card-title">
-        <span class="tag tag-info">cat</span>
         Must be <em>an ordered list</em> of the following:
       </p>
     </div>
@@ -264,19 +274,21 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-primary">predicate</span>
+      </legend>
       
     <div class="card-block">
       <span data-toggle="popover" data-trigger="hover" data-html="true" title="isNamespacePath()" data-content="&lt;pre&gt;function isNamespacePath(x) {
   return isStr(x) &amp;&amp; /^[a-zA-Z0-9\-_\.]*\/([a-zA-Z0-9\-_]+)$/.test(x);
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         A value that satisfies
-        <span class="tag tag-primary">predicate</span>
         <em>isNamespacePath()</em>
       </span>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -284,7 +296,7 @@
     
     </ol>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -292,17 +304,20 @@
     
     </ol>
   
-    </div>
+      </fieldset>
     </dd>
 <dt>Return value</dt><dd>
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">spec</span>
+      </legend>
       
     <div class="card-block">
       A value that satisfies
       <a href="#specky.types/Expression" data-path="specky.types/Expression">specky.types/Expression</a>
     </div>
   
-    </div>
+      </fieldset>
     </dd>
     </dl>
   
@@ -322,13 +337,15 @@
     <dl class="card-block">
     <dt>Synopsis</dt><dd><ul><li>&lt;named&gt;:<div><ul>Z_OR_MCOLL_OF</ul></div></li><li>&lt;unnamed&gt;:<div>Z_OR_M</div></li></ul></dd>
 <dt>Parameter list</dt><dd>
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">or</span>
+      </legend>
       
     <div class="card-block">
       
       <p class="card-title">
       
-        <span class="tag tag-info">or</span>
       
         Must be <em>one of</em> the following:
       </p>
@@ -350,13 +367,15 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">or</span>
+      </legend>
       
     <div class="card-block">
       
       <p class="card-title">
       
-        <span class="tag tag-info">or</span>
       
         Must be <em>one of</em> the following:
       </p>
@@ -375,19 +394,23 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">z_or_m</span>
+      </legend>
       
     <div class="card-block">
-      <span class="tag tag-info">Z_OR_M</span>
       
       
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">or</span>
+      </legend>
       
     <div class="card-block">
       
       <p class="card-title">
       
-        <span class="tag tag-info">or</span>
       
         Must be <em>one of</em> the following:
       </p>
@@ -406,14 +429,16 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">cat</span>
+      </legend>
       
     <div class="card-block">
       <p class="card-title">
         
       </p>
       <p class="card-title">
-        <span class="tag tag-info">cat</span>
         Must be <em>an ordered list</em> of the following:
       </p>
     </div>
@@ -432,19 +457,21 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-primary">predicate</span>
+      </legend>
       
     <div class="card-block">
       <span data-toggle="popover" data-trigger="hover" data-html="true" title="isSpecName()" data-content="&lt;pre&gt;function isSpecName(x) {
   return isStr(x);
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         A value that satisfies
-        <span class="tag tag-primary">predicate</span>
         <em>isSpecName()</em>
       </span>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -463,14 +490,17 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">spec</span>
+      </legend>
       
     <div class="card-block">
       A value that satisfies
       <a href="#specky.types/Expression" data-path="specky.types/Expression">specky.types/Expression</a>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -478,7 +508,7 @@
     
     </ol>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -496,14 +526,16 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">cat</span>
+      </legend>
       
     <div class="card-block">
       <p class="card-title">
         
       </p>
       <p class="card-title">
-        <span class="tag tag-info">cat</span>
         Must be <em>an ordered list</em> of the following:
       </p>
     </div>
@@ -522,19 +554,21 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-primary">predicate</span>
+      </legend>
       
     <div class="card-block">
       <span data-toggle="popover" data-trigger="hover" data-html="true" title="isSpecName()" data-content="&lt;pre&gt;function isSpecName(x) {
   return isStr(x);
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         A value that satisfies
-        <span class="tag tag-primary">predicate</span>
         <em>isSpecName()</em>
       </span>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -553,19 +587,21 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-primary">predicate</span>
+      </legend>
       
     <div class="card-block">
       <span data-toggle="popover" data-trigger="hover" data-html="true" title="isString()" data-content="&lt;pre&gt;function isString(x) {
   return x !== null &amp;&amp; x !== undefined &amp;&amp; x.constructor === String;
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         A value that satisfies
-        <span class="tag tag-primary">predicate</span>
         <em>isString()</em>
       </span>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -584,14 +620,17 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">spec</span>
+      </legend>
       
     <div class="card-block">
       A value that satisfies
       <a href="#specky.types/Expression" data-path="specky.types/Expression">specky.types/Expression</a>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -599,7 +638,7 @@
     
     </ol>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -607,12 +646,12 @@
     
     </ol>
   
-    </div>
+      </fieldset>
     
-      <pre>undefined</pre>
+      <pre></pre>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -630,19 +669,23 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">coll_of</span>
+      </legend>
       
     <div class="card-block">
-      <span class="tag tag-info">COLL_OF</span>
       
       
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">or</span>
+      </legend>
       
     <div class="card-block">
       
       <p class="card-title">
       
-        <span class="tag tag-info">or</span>
       
         Must be <em>one of</em> the following:
       </p>
@@ -661,14 +704,16 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">cat</span>
+      </legend>
       
     <div class="card-block">
       <p class="card-title">
         
       </p>
       <p class="card-title">
-        <span class="tag tag-info">cat</span>
         Must be <em>an ordered list</em> of the following:
       </p>
     </div>
@@ -687,19 +732,21 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-primary">predicate</span>
+      </legend>
       
     <div class="card-block">
       <span data-toggle="popover" data-trigger="hover" data-html="true" title="isSpecName()" data-content="&lt;pre&gt;function isSpecName(x) {
   return isStr(x);
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         A value that satisfies
-        <span class="tag tag-primary">predicate</span>
         <em>isSpecName()</em>
       </span>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -718,14 +765,17 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">spec</span>
+      </legend>
       
     <div class="card-block">
       A value that satisfies
       <a href="#specky.types/Expression" data-path="specky.types/Expression">specky.types/Expression</a>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -733,7 +783,7 @@
     
     </ol>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -751,14 +801,16 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">cat</span>
+      </legend>
       
     <div class="card-block">
       <p class="card-title">
         
       </p>
       <p class="card-title">
-        <span class="tag tag-info">cat</span>
         Must be <em>an ordered list</em> of the following:
       </p>
     </div>
@@ -777,19 +829,21 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-primary">predicate</span>
+      </legend>
       
     <div class="card-block">
       <span data-toggle="popover" data-trigger="hover" data-html="true" title="isSpecName()" data-content="&lt;pre&gt;function isSpecName(x) {
   return isStr(x);
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         A value that satisfies
-        <span class="tag tag-primary">predicate</span>
         <em>isSpecName()</em>
       </span>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -808,19 +862,21 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-primary">predicate</span>
+      </legend>
       
     <div class="card-block">
       <span data-toggle="popover" data-trigger="hover" data-html="true" title="isString()" data-content="&lt;pre&gt;function isString(x) {
   return x !== null &amp;&amp; x !== undefined &amp;&amp; x.constructor === String;
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         A value that satisfies
-        <span class="tag tag-primary">predicate</span>
         <em>isString()</em>
       </span>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -839,14 +895,17 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">spec</span>
+      </legend>
       
     <div class="card-block">
       A value that satisfies
       <a href="#specky.types/Expression" data-path="specky.types/Expression">specky.types/Expression</a>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -854,7 +913,7 @@
     
     </ol>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -862,12 +921,12 @@
     
     </ol>
   
-    </div>
+      </fieldset>
     
-      <pre>undefined</pre>
+      <pre></pre>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -875,7 +934,7 @@
     
     </ol>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -896,25 +955,30 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">z_or_m</span>
+      </legend>
       
     <div class="card-block">
-      <span class="tag tag-info">Z_OR_M</span>
       
       
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">spec</span>
+      </legend>
       
     <div class="card-block">
       A value that satisfies
       <a href="#specky.types/Expression" data-path="specky.types/Expression">specky.types/Expression</a>
     </div>
   
-    </div>
+      </fieldset>
     
-      <pre>undefined</pre>
+      <pre></pre>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -922,22 +986,24 @@
     
     </ol>
   
-    </div>
+      </fieldset>
     </dd>
 <dt>Return value</dt><dd>
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-primary">predicate</span>
+      </legend>
       
     <div class="card-block">
       <span data-toggle="popover" data-trigger="hover" data-html="true" title="isSpec()" data-content="&lt;pre&gt;function isSpec(x) {
   return x instanceof Spec;
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         A value that satisfies
-        <span class="tag tag-primary">predicate</span>
         <em>isSpec()</em>
       </span>
     </div>
   
-    </div>
+      </fieldset>
     </dd>
     </dl>
   
@@ -958,13 +1024,15 @@
     <dl class="card-block">
     <dt>Synopsis</dt><dd><ul><li>&lt;named&gt;:<div><ul>Z_OR_MCOLL_OF</ul></div></li><li>&lt;unnamed&gt;:<div>Z_OR_M</div></li></ul></dd>
 <dt>Parameter list</dt><dd>
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">or</span>
+      </legend>
       
     <div class="card-block">
       
       <p class="card-title">
       
-        <span class="tag tag-info">or</span>
       
         Must be <em>one of</em> the following:
       </p>
@@ -986,13 +1054,15 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">or</span>
+      </legend>
       
     <div class="card-block">
       
       <p class="card-title">
       
-        <span class="tag tag-info">or</span>
       
         Must be <em>one of</em> the following:
       </p>
@@ -1011,19 +1081,23 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">z_or_m</span>
+      </legend>
       
     <div class="card-block">
-      <span class="tag tag-info">Z_OR_M</span>
       
       
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">or</span>
+      </legend>
       
     <div class="card-block">
       
       <p class="card-title">
       
-        <span class="tag tag-info">or</span>
       
         Must be <em>one of</em> the following:
       </p>
@@ -1042,14 +1116,16 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">cat</span>
+      </legend>
       
     <div class="card-block">
       <p class="card-title">
         
       </p>
       <p class="card-title">
-        <span class="tag tag-info">cat</span>
         Must be <em>an ordered list</em> of the following:
       </p>
     </div>
@@ -1068,19 +1144,21 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-primary">predicate</span>
+      </legend>
       
     <div class="card-block">
       <span data-toggle="popover" data-trigger="hover" data-html="true" title="isSpecName()" data-content="&lt;pre&gt;function isSpecName(x) {
   return isStr(x);
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         A value that satisfies
-        <span class="tag tag-primary">predicate</span>
         <em>isSpecName()</em>
       </span>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -1099,14 +1177,17 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">spec</span>
+      </legend>
       
     <div class="card-block">
       A value that satisfies
       <a href="#specky.types/Expression" data-path="specky.types/Expression">specky.types/Expression</a>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -1114,7 +1195,7 @@
     
     </ol>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -1132,14 +1213,16 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">cat</span>
+      </legend>
       
     <div class="card-block">
       <p class="card-title">
         
       </p>
       <p class="card-title">
-        <span class="tag tag-info">cat</span>
         Must be <em>an ordered list</em> of the following:
       </p>
     </div>
@@ -1158,19 +1241,21 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-primary">predicate</span>
+      </legend>
       
     <div class="card-block">
       <span data-toggle="popover" data-trigger="hover" data-html="true" title="isSpecName()" data-content="&lt;pre&gt;function isSpecName(x) {
   return isStr(x);
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         A value that satisfies
-        <span class="tag tag-primary">predicate</span>
         <em>isSpecName()</em>
       </span>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -1189,19 +1274,21 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-primary">predicate</span>
+      </legend>
       
     <div class="card-block">
       <span data-toggle="popover" data-trigger="hover" data-html="true" title="isString()" data-content="&lt;pre&gt;function isString(x) {
   return x !== null &amp;&amp; x !== undefined &amp;&amp; x.constructor === String;
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         A value that satisfies
-        <span class="tag tag-primary">predicate</span>
         <em>isString()</em>
       </span>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -1220,14 +1307,17 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">spec</span>
+      </legend>
       
     <div class="card-block">
       A value that satisfies
       <a href="#specky.types/Expression" data-path="specky.types/Expression">specky.types/Expression</a>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -1235,7 +1325,7 @@
     
     </ol>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -1243,12 +1333,12 @@
     
     </ol>
   
-    </div>
+      </fieldset>
     
-      <pre>undefined</pre>
+      <pre></pre>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -1266,19 +1356,23 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">coll_of</span>
+      </legend>
       
     <div class="card-block">
-      <span class="tag tag-info">COLL_OF</span>
       
       
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">or</span>
+      </legend>
       
     <div class="card-block">
       
       <p class="card-title">
       
-        <span class="tag tag-info">or</span>
       
         Must be <em>one of</em> the following:
       </p>
@@ -1297,14 +1391,16 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">cat</span>
+      </legend>
       
     <div class="card-block">
       <p class="card-title">
         
       </p>
       <p class="card-title">
-        <span class="tag tag-info">cat</span>
         Must be <em>an ordered list</em> of the following:
       </p>
     </div>
@@ -1323,19 +1419,21 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-primary">predicate</span>
+      </legend>
       
     <div class="card-block">
       <span data-toggle="popover" data-trigger="hover" data-html="true" title="isSpecName()" data-content="&lt;pre&gt;function isSpecName(x) {
   return isStr(x);
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         A value that satisfies
-        <span class="tag tag-primary">predicate</span>
         <em>isSpecName()</em>
       </span>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -1354,14 +1452,17 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">spec</span>
+      </legend>
       
     <div class="card-block">
       A value that satisfies
       <a href="#specky.types/Expression" data-path="specky.types/Expression">specky.types/Expression</a>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -1369,7 +1470,7 @@
     
     </ol>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -1387,14 +1488,16 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">cat</span>
+      </legend>
       
     <div class="card-block">
       <p class="card-title">
         
       </p>
       <p class="card-title">
-        <span class="tag tag-info">cat</span>
         Must be <em>an ordered list</em> of the following:
       </p>
     </div>
@@ -1413,19 +1516,21 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-primary">predicate</span>
+      </legend>
       
     <div class="card-block">
       <span data-toggle="popover" data-trigger="hover" data-html="true" title="isSpecName()" data-content="&lt;pre&gt;function isSpecName(x) {
   return isStr(x);
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         A value that satisfies
-        <span class="tag tag-primary">predicate</span>
         <em>isSpecName()</em>
       </span>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -1444,19 +1549,21 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-primary">predicate</span>
+      </legend>
       
     <div class="card-block">
       <span data-toggle="popover" data-trigger="hover" data-html="true" title="isString()" data-content="&lt;pre&gt;function isString(x) {
   return x !== null &amp;&amp; x !== undefined &amp;&amp; x.constructor === String;
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         A value that satisfies
-        <span class="tag tag-primary">predicate</span>
         <em>isString()</em>
       </span>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -1475,14 +1582,17 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">spec</span>
+      </legend>
       
     <div class="card-block">
       A value that satisfies
       <a href="#specky.types/Expression" data-path="specky.types/Expression">specky.types/Expression</a>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -1490,7 +1600,7 @@
     
     </ol>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -1498,12 +1608,12 @@
     
     </ol>
   
-    </div>
+      </fieldset>
     
-      <pre>undefined</pre>
+      <pre></pre>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -1511,7 +1621,7 @@
     
     </ol>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -1532,25 +1642,30 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">z_or_m</span>
+      </legend>
       
     <div class="card-block">
-      <span class="tag tag-info">Z_OR_M</span>
       
       
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">spec</span>
+      </legend>
       
     <div class="card-block">
       A value that satisfies
       <a href="#specky.types/Expression" data-path="specky.types/Expression">specky.types/Expression</a>
     </div>
   
-    </div>
+      </fieldset>
     
-      <pre>undefined</pre>
+      <pre></pre>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -1558,22 +1673,24 @@
     
     </ol>
   
-    </div>
+      </fieldset>
     </dd>
 <dt>Return value</dt><dd>
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-primary">predicate</span>
+      </legend>
       
     <div class="card-block">
       <span data-toggle="popover" data-trigger="hover" data-html="true" title="isSpec()" data-content="&lt;pre&gt;function isSpec(x) {
   return x instanceof Spec;
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         A value that satisfies
-        <span class="tag tag-primary">predicate</span>
         <em>isSpec()</em>
       </span>
     </div>
   
-    </div>
+      </fieldset>
     </dd>
     </dl>
   
@@ -1594,14 +1711,16 @@
     <dl class="card-block">
     <dt>Synopsis</dt><dd><ul><em>zeroOrMore(<a href="#specky.types/Expression" data-path="specky.types/Expression">expr</a>, opts)</em></ul></dd>
 <dt>Parameter list</dt><dd>
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">cat</span>
+      </legend>
       
     <div class="card-block">
       <p class="card-title">
         
       </p>
       <p class="card-title">
-        <span class="tag tag-info">cat</span>
         Must be <em>an ordered list</em> of the following:
       </p>
     </div>
@@ -1620,14 +1739,17 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">spec</span>
+      </legend>
       
     <div class="card-block">
       A value that satisfies
       <a href="#specky.types/Expression" data-path="specky.types/Expression">specky.types/Expression</a>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -1646,30 +1768,34 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">z_or_o</span>
+      </legend>
       
     <div class="card-block">
-      <span class="tag tag-info">Z_OR_O</span>
       
       
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-primary">predicate</span>
+      </legend>
       
     <div class="card-block">
       <span data-toggle="popover" data-trigger="hover" data-html="true" title="isObject()" data-content="&lt;pre&gt;function isObject(x) {
   return (typeof x === &apos;undefined&apos; ? &apos;undefined&apos; : _typeof(x)) === &apos;object&apos; &amp;&amp; x !== null;
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         A value that satisfies
-        <span class="tag tag-primary">predicate</span>
         <em>isObject()</em>
       </span>
     </div>
   
-    </div>
+      </fieldset>
     
-      <pre>undefined</pre>
+      <pre></pre>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -1677,22 +1803,24 @@
     
     </ol>
   
-    </div>
+      </fieldset>
     </dd>
 <dt>Return value</dt><dd>
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-primary">predicate</span>
+      </legend>
       
     <div class="card-block">
       <span data-toggle="popover" data-trigger="hover" data-html="true" title="isSpec()" data-content="&lt;pre&gt;function isSpec(x) {
   return x instanceof Spec;
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         A value that satisfies
-        <span class="tag tag-primary">predicate</span>
         <em>isSpec()</em>
       </span>
     </div>
   
-    </div>
+      </fieldset>
     </dd>
     </dl>
   
@@ -1713,14 +1841,16 @@
     <dl class="card-block">
     <dt>Synopsis</dt><dd><ul><em>oneOrMore(<a href="#specky.types/Expression" data-path="specky.types/Expression">expr</a>, opts)</em></ul></dd>
 <dt>Parameter list</dt><dd>
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">cat</span>
+      </legend>
       
     <div class="card-block">
       <p class="card-title">
         
       </p>
       <p class="card-title">
-        <span class="tag tag-info">cat</span>
         Must be <em>an ordered list</em> of the following:
       </p>
     </div>
@@ -1739,14 +1869,17 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">spec</span>
+      </legend>
       
     <div class="card-block">
       A value that satisfies
       <a href="#specky.types/Expression" data-path="specky.types/Expression">specky.types/Expression</a>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -1765,30 +1898,34 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">z_or_o</span>
+      </legend>
       
     <div class="card-block">
-      <span class="tag tag-info">Z_OR_O</span>
       
       
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-primary">predicate</span>
+      </legend>
       
     <div class="card-block">
       <span data-toggle="popover" data-trigger="hover" data-html="true" title="isObject()" data-content="&lt;pre&gt;function isObject(x) {
   return (typeof x === &apos;undefined&apos; ? &apos;undefined&apos; : _typeof(x)) === &apos;object&apos; &amp;&amp; x !== null;
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         A value that satisfies
-        <span class="tag tag-primary">predicate</span>
         <em>isObject()</em>
       </span>
     </div>
   
-    </div>
+      </fieldset>
     
-      <pre>undefined</pre>
+      <pre></pre>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -1796,22 +1933,24 @@
     
     </ol>
   
-    </div>
+      </fieldset>
     </dd>
 <dt>Return value</dt><dd>
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-primary">predicate</span>
+      </legend>
       
     <div class="card-block">
       <span data-toggle="popover" data-trigger="hover" data-html="true" title="isSpec()" data-content="&lt;pre&gt;function isSpec(x) {
   return x instanceof Spec;
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         A value that satisfies
-        <span class="tag tag-primary">predicate</span>
         <em>isSpec()</em>
       </span>
     </div>
   
-    </div>
+      </fieldset>
     </dd>
     </dl>
   
@@ -1832,14 +1971,16 @@
     <dl class="card-block">
     <dt>Synopsis</dt><dd><ul><em>zeroOrOne(<a href="#specky.types/Expression" data-path="specky.types/Expression">expr</a>, opts)</em></ul></dd>
 <dt>Parameter list</dt><dd>
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">cat</span>
+      </legend>
       
     <div class="card-block">
       <p class="card-title">
         
       </p>
       <p class="card-title">
-        <span class="tag tag-info">cat</span>
         Must be <em>an ordered list</em> of the following:
       </p>
     </div>
@@ -1858,14 +1999,17 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">spec</span>
+      </legend>
       
     <div class="card-block">
       A value that satisfies
       <a href="#specky.types/Expression" data-path="specky.types/Expression">specky.types/Expression</a>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -1884,30 +2028,34 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">z_or_o</span>
+      </legend>
       
     <div class="card-block">
-      <span class="tag tag-info">Z_OR_O</span>
       
       
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-primary">predicate</span>
+      </legend>
       
     <div class="card-block">
       <span data-toggle="popover" data-trigger="hover" data-html="true" title="isObject()" data-content="&lt;pre&gt;function isObject(x) {
   return (typeof x === &apos;undefined&apos; ? &apos;undefined&apos; : _typeof(x)) === &apos;object&apos; &amp;&amp; x !== null;
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         A value that satisfies
-        <span class="tag tag-primary">predicate</span>
         <em>isObject()</em>
       </span>
     </div>
   
-    </div>
+      </fieldset>
     
-      <pre>undefined</pre>
+      <pre></pre>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -1915,22 +2063,24 @@
     
     </ol>
   
-    </div>
+      </fieldset>
     </dd>
 <dt>Return value</dt><dd>
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-primary">predicate</span>
+      </legend>
       
     <div class="card-block">
       <span data-toggle="popover" data-trigger="hover" data-html="true" title="isSpec()" data-content="&lt;pre&gt;function isSpec(x) {
   return x instanceof Spec;
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         A value that satisfies
-        <span class="tag tag-primary">predicate</span>
         <em>isSpec()</em>
       </span>
     </div>
   
-    </div>
+      </fieldset>
     </dd>
     </dl>
   
@@ -1951,14 +2101,16 @@
     <dl class="card-block">
     <dt>Synopsis</dt><dd><ul><em>collOf(<a href="#specky.types/Expression" data-path="specky.types/Expression">expr</a>, opts)</em></ul></dd>
 <dt>Parameter list</dt><dd>
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">cat</span>
+      </legend>
       
     <div class="card-block">
       <p class="card-title">
         
       </p>
       <p class="card-title">
-        <span class="tag tag-info">cat</span>
         Must be <em>an ordered list</em> of the following:
       </p>
     </div>
@@ -1977,14 +2129,17 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">spec</span>
+      </legend>
       
     <div class="card-block">
       A value that satisfies
       <a href="#specky.types/Expression" data-path="specky.types/Expression">specky.types/Expression</a>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -2003,30 +2158,34 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">z_or_o</span>
+      </legend>
       
     <div class="card-block">
-      <span class="tag tag-info">Z_OR_O</span>
       
       
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-primary">predicate</span>
+      </legend>
       
     <div class="card-block">
       <span data-toggle="popover" data-trigger="hover" data-html="true" title="isObject()" data-content="&lt;pre&gt;function isObject(x) {
   return (typeof x === &apos;undefined&apos; ? &apos;undefined&apos; : _typeof(x)) === &apos;object&apos; &amp;&amp; x !== null;
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         A value that satisfies
-        <span class="tag tag-primary">predicate</span>
         <em>isObject()</em>
       </span>
     </div>
   
-    </div>
+      </fieldset>
     
-      <pre>undefined</pre>
+      <pre></pre>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -2034,22 +2193,24 @@
     
     </ol>
   
-    </div>
+      </fieldset>
     </dd>
 <dt>Return value</dt><dd>
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-primary">predicate</span>
+      </legend>
       
     <div class="card-block">
       <span data-toggle="popover" data-trigger="hover" data-html="true" title="isSpec()" data-content="&lt;pre&gt;function isSpec(x) {
   return x instanceof Spec;
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         A value that satisfies
-        <span class="tag tag-primary">predicate</span>
         <em>isSpec()</em>
       </span>
     </div>
   
-    </div>
+      </fieldset>
     </dd>
     </dl>
   
@@ -2070,40 +2231,47 @@
     <dl class="card-block">
     <dt>Synopsis</dt><dd>O_OR_M</dd>
 <dt>Parameter list</dt><dd>
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">o_or_m</span>
+      </legend>
       
     <div class="card-block">
-      <span class="tag tag-info">O_OR_M</span>
       
       
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">spec</span>
+      </legend>
       
     <div class="card-block">
       A value that satisfies
       <a href="#specky.types/Expression" data-path="specky.types/Expression">specky.types/Expression</a>
     </div>
   
-    </div>
+      </fieldset>
     
-      <pre>undefined</pre>
+      <pre></pre>
     </div>
   
-    </div>
+      </fieldset>
     </dd>
 <dt>Return value</dt><dd>
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-primary">predicate</span>
+      </legend>
       
     <div class="card-block">
       <span data-toggle="popover" data-trigger="hover" data-html="true" title="isSpec()" data-content="&lt;pre&gt;function isSpec(x) {
   return x instanceof Spec;
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         A value that satisfies
-        <span class="tag tag-primary">predicate</span>
         <em>isSpec()</em>
       </span>
     </div>
   
-    </div>
+      </fieldset>
     </dd>
     </dl>
   
@@ -2124,14 +2292,16 @@
     <dl class="card-block">
     <dt>Synopsis</dt><dd><ul><em>props(propArgs)</em></ul></dd>
 <dt>Parameter list</dt><dd>
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">cat</span>
+      </legend>
       
     <div class="card-block">
       <p class="card-title">
         
       </p>
       <p class="card-title">
-        <span class="tag tag-info">cat</span>
         Must be <em>an ordered list</em> of the following:
       </p>
     </div>
@@ -2150,16 +2320,18 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">props</span>
+      </legend>
       
     <div class="card-block">
-      <span class="tag tag-info">PROPS</span>
       
       
-      <pre>undefined</pre>
+      <pre></pre>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -2167,22 +2339,24 @@
     
     </ol>
   
-    </div>
+      </fieldset>
     </dd>
 <dt>Return value</dt><dd>
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-primary">predicate</span>
+      </legend>
       
     <div class="card-block">
       <span data-toggle="popover" data-trigger="hover" data-html="true" title="isSpec()" data-content="&lt;pre&gt;function isSpec(x) {
   return x instanceof Spec;
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         A value that satisfies
-        <span class="tag tag-primary">predicate</span>
         <em>isSpec()</em>
       </span>
     </div>
   
-    </div>
+      </fieldset>
     </dd>
     </dl>
   
@@ -2204,14 +2378,16 @@
     <dd>Returns an abbreviated description of the spec as a simple tree structure.</dd>
 <dt>Synopsis</dt><dd><ul><em>S.describe()</em></ul></dd>
 <dt>Parameter list</dt><dd>
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">cat</span>
+      </legend>
       
     <div class="card-block">
       <p class="card-title">
         
       </p>
       <p class="card-title">
-        <span class="tag tag-info">cat</span>
         Must be <em>an ordered list</em> of the following:
       </p>
     </div>
@@ -2226,14 +2402,17 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">or</span>
+      </legend>
       
     <div class="card-block">
       A value that satisfies
       <a href="#specky.types/Expression" data-path="specky.types/Expression">specky.types/Expression</a>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -2241,22 +2420,24 @@
     
     </ol>
   
-    </div>
+      </fieldset>
     </dd>
 <dt>Return value</dt><dd>
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-primary">predicate</span>
+      </legend>
       
     <div class="card-block">
       <span data-toggle="popover" data-trigger="hover" data-html="true" title="isString()" data-content="&lt;pre&gt;function isString(x) {
   return x !== null &amp;&amp; x !== undefined &amp;&amp; x.constructor === String;
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         A value that satisfies
-        <span class="tag tag-primary">predicate</span>
         <em>isString()</em>
       </span>
     </div>
   
-    </div>
+      </fieldset>
     </dd>
     </dl>
   
@@ -2275,16 +2456,18 @@
   
       
     <dl class="card-block">
-    <dt>Synopsis</dt><dd><ul><em>isObj()</em></ul></dd>
+    <dt>Synopsis</dt><dd><ul><em>isObj(x)</em></ul></dd>
 <dt>Parameter list</dt><dd>
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">cat</span>
+      </legend>
       
     <div class="card-block">
       <p class="card-title">
         
       </p>
       <p class="card-title">
-        <span class="tag tag-info">cat</span>
         Must be <em>an ordered list</em> of the following:
       </p>
     </div>
@@ -2293,22 +2476,28 @@
         <li class="list-group-item">
           <div class="row">
             <div class="col-md-12">
-              <span class="tag tag-default">1st </span>
-            </div>
+              <p>
+                <span class="tag tag-default">1st </span>
+                &lt;<span class="lead font-italic text-primary">x</span>&gt;
+                
+                  
+            </p></div>
           </div>
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">any</span>
+      </legend>
       
     <div class="card-block">
-      <span class="tag tag-info">ANY</span>
       
       
-      <pre>undefined</pre>
+      <pre></pre>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -2316,22 +2505,24 @@
     
     </ol>
   
-    </div>
+      </fieldset>
     </dd>
 <dt>Return value</dt><dd>
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-primary">predicate</span>
+      </legend>
       
     <div class="card-block">
       <span data-toggle="popover" data-trigger="hover" data-html="true" title="isBool()" data-content="&lt;pre&gt;function isBool(x) {
   return typeof x === &apos;boolean&apos;;
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         A value that satisfies
-        <span class="tag tag-primary">predicate</span>
         <em>isBool()</em>
       </span>
     </div>
   
-    </div>
+      </fieldset>
     </dd>
     </dl>
   
@@ -2350,16 +2541,18 @@
   
       
     <dl class="card-block">
-    <dt>Synopsis</dt><dd><ul><em>isStr()</em></ul></dd>
+    <dt>Synopsis</dt><dd><ul><em>isStr(x)</em></ul></dd>
 <dt>Parameter list</dt><dd>
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">cat</span>
+      </legend>
       
     <div class="card-block">
       <p class="card-title">
         
       </p>
       <p class="card-title">
-        <span class="tag tag-info">cat</span>
         Must be <em>an ordered list</em> of the following:
       </p>
     </div>
@@ -2368,22 +2561,28 @@
         <li class="list-group-item">
           <div class="row">
             <div class="col-md-12">
-              <span class="tag tag-default">1st </span>
-            </div>
+              <p>
+                <span class="tag tag-default">1st </span>
+                &lt;<span class="lead font-italic text-primary">x</span>&gt;
+                
+                  
+            </p></div>
           </div>
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">any</span>
+      </legend>
       
     <div class="card-block">
-      <span class="tag tag-info">ANY</span>
       
       
-      <pre>undefined</pre>
+      <pre></pre>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -2391,22 +2590,24 @@
     
     </ol>
   
-    </div>
+      </fieldset>
     </dd>
 <dt>Return value</dt><dd>
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-primary">predicate</span>
+      </legend>
       
     <div class="card-block">
       <span data-toggle="popover" data-trigger="hover" data-html="true" title="isBool()" data-content="&lt;pre&gt;function isBool(x) {
   return typeof x === &apos;boolean&apos;;
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         A value that satisfies
-        <span class="tag tag-primary">predicate</span>
         <em>isBool()</em>
       </span>
     </div>
   
-    </div>
+      </fieldset>
     </dd>
     </dl>
   
@@ -2425,16 +2626,18 @@
   
       
     <dl class="card-block">
-    <dt>Synopsis</dt><dd><ul><em>isArray()</em></ul></dd>
+    <dt>Synopsis</dt><dd><ul><em>isArray(x)</em></ul></dd>
 <dt>Parameter list</dt><dd>
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">cat</span>
+      </legend>
       
     <div class="card-block">
       <p class="card-title">
         
       </p>
       <p class="card-title">
-        <span class="tag tag-info">cat</span>
         Must be <em>an ordered list</em> of the following:
       </p>
     </div>
@@ -2443,22 +2646,28 @@
         <li class="list-group-item">
           <div class="row">
             <div class="col-md-12">
-              <span class="tag tag-default">1st </span>
-            </div>
+              <p>
+                <span class="tag tag-default">1st </span>
+                &lt;<span class="lead font-italic text-primary">x</span>&gt;
+                
+                  
+            </p></div>
           </div>
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">any</span>
+      </legend>
       
     <div class="card-block">
-      <span class="tag tag-info">ANY</span>
       
       
-      <pre>undefined</pre>
+      <pre></pre>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -2466,22 +2675,24 @@
     
     </ol>
   
-    </div>
+      </fieldset>
     </dd>
 <dt>Return value</dt><dd>
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-primary">predicate</span>
+      </legend>
       
     <div class="card-block">
       <span data-toggle="popover" data-trigger="hover" data-html="true" title="isBool()" data-content="&lt;pre&gt;function isBool(x) {
   return typeof x === &apos;boolean&apos;;
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         A value that satisfies
-        <span class="tag tag-primary">predicate</span>
         <em>isBool()</em>
       </span>
     </div>
   
-    </div>
+      </fieldset>
     </dd>
     </dl>
   
@@ -2500,16 +2711,18 @@
   
       
     <dl class="card-block">
-    <dt>Synopsis</dt><dd><ul><em>isDate()</em></ul></dd>
+    <dt>Synopsis</dt><dd><ul><em>isDate(x)</em></ul></dd>
 <dt>Parameter list</dt><dd>
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">cat</span>
+      </legend>
       
     <div class="card-block">
       <p class="card-title">
         
       </p>
       <p class="card-title">
-        <span class="tag tag-info">cat</span>
         Must be <em>an ordered list</em> of the following:
       </p>
     </div>
@@ -2518,22 +2731,28 @@
         <li class="list-group-item">
           <div class="row">
             <div class="col-md-12">
-              <span class="tag tag-default">1st </span>
-            </div>
+              <p>
+                <span class="tag tag-default">1st </span>
+                &lt;<span class="lead font-italic text-primary">x</span>&gt;
+                
+                  
+            </p></div>
           </div>
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">any</span>
+      </legend>
       
     <div class="card-block">
-      <span class="tag tag-info">ANY</span>
       
       
-      <pre>undefined</pre>
+      <pre></pre>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -2541,22 +2760,24 @@
     
     </ol>
   
-    </div>
+      </fieldset>
     </dd>
 <dt>Return value</dt><dd>
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-primary">predicate</span>
+      </legend>
       
     <div class="card-block">
       <span data-toggle="popover" data-trigger="hover" data-html="true" title="isBool()" data-content="&lt;pre&gt;function isBool(x) {
   return typeof x === &apos;boolean&apos;;
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         A value that satisfies
-        <span class="tag tag-primary">predicate</span>
         <em>isBool()</em>
       </span>
     </div>
   
-    </div>
+      </fieldset>
     </dd>
     </dl>
   
@@ -2575,16 +2796,18 @@
   
       
     <dl class="card-block">
-    <dt>Synopsis</dt><dd><ul><em>isNull()</em></ul></dd>
+    <dt>Synopsis</dt><dd><ul><em>isNull(x)</em></ul></dd>
 <dt>Parameter list</dt><dd>
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">cat</span>
+      </legend>
       
     <div class="card-block">
       <p class="card-title">
         
       </p>
       <p class="card-title">
-        <span class="tag tag-info">cat</span>
         Must be <em>an ordered list</em> of the following:
       </p>
     </div>
@@ -2593,22 +2816,28 @@
         <li class="list-group-item">
           <div class="row">
             <div class="col-md-12">
-              <span class="tag tag-default">1st </span>
-            </div>
+              <p>
+                <span class="tag tag-default">1st </span>
+                &lt;<span class="lead font-italic text-primary">x</span>&gt;
+                
+                  
+            </p></div>
           </div>
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">any</span>
+      </legend>
       
     <div class="card-block">
-      <span class="tag tag-info">ANY</span>
       
       
-      <pre>undefined</pre>
+      <pre></pre>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -2616,22 +2845,24 @@
     
     </ol>
   
-    </div>
+      </fieldset>
     </dd>
 <dt>Return value</dt><dd>
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-primary">predicate</span>
+      </legend>
       
     <div class="card-block">
       <span data-toggle="popover" data-trigger="hover" data-html="true" title="isBool()" data-content="&lt;pre&gt;function isBool(x) {
   return typeof x === &apos;boolean&apos;;
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         A value that satisfies
-        <span class="tag tag-primary">predicate</span>
         <em>isBool()</em>
       </span>
     </div>
   
-    </div>
+      </fieldset>
     </dd>
     </dl>
   
@@ -2650,16 +2881,18 @@
   
       
     <dl class="card-block">
-    <dt>Synopsis</dt><dd><ul><em>isUndefined()</em></ul></dd>
+    <dt>Synopsis</dt><dd><ul><em>isUndefined(x)</em></ul></dd>
 <dt>Parameter list</dt><dd>
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">cat</span>
+      </legend>
       
     <div class="card-block">
       <p class="card-title">
         
       </p>
       <p class="card-title">
-        <span class="tag tag-info">cat</span>
         Must be <em>an ordered list</em> of the following:
       </p>
     </div>
@@ -2668,22 +2901,28 @@
         <li class="list-group-item">
           <div class="row">
             <div class="col-md-12">
-              <span class="tag tag-default">1st </span>
-            </div>
+              <p>
+                <span class="tag tag-default">1st </span>
+                &lt;<span class="lead font-italic text-primary">x</span>&gt;
+                
+                  
+            </p></div>
           </div>
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">any</span>
+      </legend>
       
     <div class="card-block">
-      <span class="tag tag-info">ANY</span>
       
       
-      <pre>undefined</pre>
+      <pre></pre>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -2691,22 +2930,24 @@
     
     </ol>
   
-    </div>
+      </fieldset>
     </dd>
 <dt>Return value</dt><dd>
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-primary">predicate</span>
+      </legend>
       
     <div class="card-block">
       <span data-toggle="popover" data-trigger="hover" data-html="true" title="isBool()" data-content="&lt;pre&gt;function isBool(x) {
   return typeof x === &apos;boolean&apos;;
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         A value that satisfies
-        <span class="tag tag-primary">predicate</span>
         <em>isBool()</em>
       </span>
     </div>
   
-    </div>
+      </fieldset>
     </dd>
     </dl>
   
@@ -2725,16 +2966,18 @@
   
       
     <dl class="card-block">
-    <dt>Synopsis</dt><dd><ul><em>notEmpty()</em></ul></dd>
+    <dt>Synopsis</dt><dd><ul><em>notEmpty(x)</em></ul></dd>
 <dt>Parameter list</dt><dd>
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">cat</span>
+      </legend>
       
     <div class="card-block">
       <p class="card-title">
         
       </p>
       <p class="card-title">
-        <span class="tag tag-info">cat</span>
         Must be <em>an ordered list</em> of the following:
       </p>
     </div>
@@ -2743,22 +2986,28 @@
         <li class="list-group-item">
           <div class="row">
             <div class="col-md-12">
-              <span class="tag tag-default">1st </span>
-            </div>
+              <p>
+                <span class="tag tag-default">1st </span>
+                &lt;<span class="lead font-italic text-primary">x</span>&gt;
+                
+                  
+            </p></div>
           </div>
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">any</span>
+      </legend>
       
     <div class="card-block">
-      <span class="tag tag-info">ANY</span>
       
       
-      <pre>undefined</pre>
+      <pre></pre>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -2766,22 +3015,24 @@
     
     </ol>
   
-    </div>
+      </fieldset>
     </dd>
 <dt>Return value</dt><dd>
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-primary">predicate</span>
+      </legend>
       
     <div class="card-block">
       <span data-toggle="popover" data-trigger="hover" data-html="true" title="isBool()" data-content="&lt;pre&gt;function isBool(x) {
   return typeof x === &apos;boolean&apos;;
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         A value that satisfies
-        <span class="tag tag-primary">predicate</span>
         <em>isBool()</em>
       </span>
     </div>
   
-    </div>
+      </fieldset>
     </dd>
     </dl>
   
@@ -2800,16 +3051,18 @@
   
       
     <dl class="card-block">
-    <dt>Synopsis</dt><dd><ul><em>isBool()</em></ul></dd>
+    <dt>Synopsis</dt><dd><ul><em>isBool(x)</em></ul></dd>
 <dt>Parameter list</dt><dd>
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">cat</span>
+      </legend>
       
     <div class="card-block">
       <p class="card-title">
         
       </p>
       <p class="card-title">
-        <span class="tag tag-info">cat</span>
         Must be <em>an ordered list</em> of the following:
       </p>
     </div>
@@ -2818,22 +3071,28 @@
         <li class="list-group-item">
           <div class="row">
             <div class="col-md-12">
-              <span class="tag tag-default">1st </span>
-            </div>
+              <p>
+                <span class="tag tag-default">1st </span>
+                &lt;<span class="lead font-italic text-primary">x</span>&gt;
+                
+                  
+            </p></div>
           </div>
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">any</span>
+      </legend>
       
     <div class="card-block">
-      <span class="tag tag-info">ANY</span>
       
       
-      <pre>undefined</pre>
+      <pre></pre>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -2841,22 +3100,24 @@
     
     </ol>
   
-    </div>
+      </fieldset>
     </dd>
 <dt>Return value</dt><dd>
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-primary">predicate</span>
+      </legend>
       
     <div class="card-block">
       <span data-toggle="popover" data-trigger="hover" data-html="true" title="isBool()" data-content="&lt;pre&gt;function isBool(x) {
   return typeof x === &apos;boolean&apos;;
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         A value that satisfies
-        <span class="tag tag-primary">predicate</span>
         <em>isBool()</em>
       </span>
     </div>
   
-    </div>
+      </fieldset>
     </dd>
     </dl>
   
@@ -2875,16 +3136,18 @@
   
       
     <dl class="card-block">
-    <dt>Synopsis</dt><dd><ul><em>isFn()</em></ul></dd>
+    <dt>Synopsis</dt><dd><ul><em>isFn(x)</em></ul></dd>
 <dt>Parameter list</dt><dd>
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">cat</span>
+      </legend>
       
     <div class="card-block">
       <p class="card-title">
         
       </p>
       <p class="card-title">
-        <span class="tag tag-info">cat</span>
         Must be <em>an ordered list</em> of the following:
       </p>
     </div>
@@ -2893,22 +3156,28 @@
         <li class="list-group-item">
           <div class="row">
             <div class="col-md-12">
-              <span class="tag tag-default">1st </span>
-            </div>
+              <p>
+                <span class="tag tag-default">1st </span>
+                &lt;<span class="lead font-italic text-primary">x</span>&gt;
+                
+                  
+            </p></div>
           </div>
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">any</span>
+      </legend>
       
     <div class="card-block">
-      <span class="tag tag-info">ANY</span>
       
       
-      <pre>undefined</pre>
+      <pre></pre>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -2916,22 +3185,24 @@
     
     </ol>
   
-    </div>
+      </fieldset>
     </dd>
 <dt>Return value</dt><dd>
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-primary">predicate</span>
+      </legend>
       
     <div class="card-block">
       <span data-toggle="popover" data-trigger="hover" data-html="true" title="isBool()" data-content="&lt;pre&gt;function isBool(x) {
   return typeof x === &apos;boolean&apos;;
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         A value that satisfies
-        <span class="tag tag-primary">predicate</span>
         <em>isBool()</em>
       </span>
     </div>
   
-    </div>
+      </fieldset>
     </dd>
     </dl>
   
@@ -2950,16 +3221,18 @@
   
       
     <dl class="card-block">
-    <dt>Synopsis</dt><dd><ul><em>isNum()</em></ul></dd>
+    <dt>Synopsis</dt><dd><ul><em>isNum(x)</em></ul></dd>
 <dt>Parameter list</dt><dd>
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">cat</span>
+      </legend>
       
     <div class="card-block">
       <p class="card-title">
         
       </p>
       <p class="card-title">
-        <span class="tag tag-info">cat</span>
         Must be <em>an ordered list</em> of the following:
       </p>
     </div>
@@ -2968,22 +3241,28 @@
         <li class="list-group-item">
           <div class="row">
             <div class="col-md-12">
-              <span class="tag tag-default">1st </span>
-            </div>
+              <p>
+                <span class="tag tag-default">1st </span>
+                &lt;<span class="lead font-italic text-primary">x</span>&gt;
+                
+                  
+            </p></div>
           </div>
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">any</span>
+      </legend>
       
     <div class="card-block">
-      <span class="tag tag-info">ANY</span>
       
       
-      <pre>undefined</pre>
+      <pre></pre>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -2991,22 +3270,24 @@
     
     </ol>
   
-    </div>
+      </fieldset>
     </dd>
 <dt>Return value</dt><dd>
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-primary">predicate</span>
+      </legend>
       
     <div class="card-block">
       <span data-toggle="popover" data-trigger="hover" data-html="true" title="isBool()" data-content="&lt;pre&gt;function isBool(x) {
   return typeof x === &apos;boolean&apos;;
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         A value that satisfies
-        <span class="tag tag-primary">predicate</span>
         <em>isBool()</em>
       </span>
     </div>
   
-    </div>
+      </fieldset>
     </dd>
     </dl>
   
@@ -3025,16 +3306,18 @@
   
       
     <dl class="card-block">
-    <dt>Synopsis</dt><dd><ul><em>isInt()</em></ul></dd>
+    <dt>Synopsis</dt><dd><ul><em>isInt(x)</em></ul></dd>
 <dt>Parameter list</dt><dd>
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">cat</span>
+      </legend>
       
     <div class="card-block">
       <p class="card-title">
         
       </p>
       <p class="card-title">
-        <span class="tag tag-info">cat</span>
         Must be <em>an ordered list</em> of the following:
       </p>
     </div>
@@ -3043,22 +3326,28 @@
         <li class="list-group-item">
           <div class="row">
             <div class="col-md-12">
-              <span class="tag tag-default">1st </span>
-            </div>
+              <p>
+                <span class="tag tag-default">1st </span>
+                &lt;<span class="lead font-italic text-primary">x</span>&gt;
+                
+                  
+            </p></div>
           </div>
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">any</span>
+      </legend>
       
     <div class="card-block">
-      <span class="tag tag-info">ANY</span>
       
       
-      <pre>undefined</pre>
+      <pre></pre>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -3066,22 +3355,24 @@
     
     </ol>
   
-    </div>
+      </fieldset>
     </dd>
 <dt>Return value</dt><dd>
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-primary">predicate</span>
+      </legend>
       
     <div class="card-block">
       <span data-toggle="popover" data-trigger="hover" data-html="true" title="isBool()" data-content="&lt;pre&gt;function isBool(x) {
   return typeof x === &apos;boolean&apos;;
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         A value that satisfies
-        <span class="tag tag-primary">predicate</span>
         <em>isBool()</em>
       </span>
     </div>
   
-    </div>
+      </fieldset>
     </dd>
     </dl>
   
@@ -3100,16 +3391,18 @@
   
       
     <dl class="card-block">
-    <dt>Synopsis</dt><dd><ul><em>isNatInt()</em></ul></dd>
+    <dt>Synopsis</dt><dd><ul><em>isNatInt(x)</em></ul></dd>
 <dt>Parameter list</dt><dd>
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">cat</span>
+      </legend>
       
     <div class="card-block">
       <p class="card-title">
         
       </p>
       <p class="card-title">
-        <span class="tag tag-info">cat</span>
         Must be <em>an ordered list</em> of the following:
       </p>
     </div>
@@ -3118,22 +3411,28 @@
         <li class="list-group-item">
           <div class="row">
             <div class="col-md-12">
-              <span class="tag tag-default">1st </span>
-            </div>
+              <p>
+                <span class="tag tag-default">1st </span>
+                &lt;<span class="lead font-italic text-primary">x</span>&gt;
+                
+                  
+            </p></div>
           </div>
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-info">any</span>
+      </legend>
       
     <div class="card-block">
-      <span class="tag tag-info">ANY</span>
       
       
-      <pre>undefined</pre>
+      <pre></pre>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -3141,22 +3440,24 @@
     
     </ol>
   
-    </div>
+      </fieldset>
     </dd>
 <dt>Return value</dt><dd>
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-primary">predicate</span>
+      </legend>
       
     <div class="card-block">
       <span data-toggle="popover" data-trigger="hover" data-html="true" title="isBool()" data-content="&lt;pre&gt;function isBool(x) {
   return typeof x === &apos;boolean&apos;;
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         A value that satisfies
-        <span class="tag tag-primary">predicate</span>
         <em>isBool()</em>
       </span>
     </div>
   
-    </div>
+      </fieldset>
     </dd>
     </dl>
   
@@ -3175,10 +3476,9 @@
   
       
     <div class="card-block">
-      <span class="tag tag-info">PROPS</span>
       
       
-      <pre>undefined</pre>
+      <pre></pre>
     </div>
   
     </div>
@@ -3200,7 +3500,6 @@
   return isStr(x) &amp;&amp; /^[a-zA-Z0-9\-_\.]*\/([a-zA-Z0-9\-_]+)$/.test(x);
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         A value that satisfies
-        
         <em>isNamespacePath()</em>
       </span>
     </div>
@@ -3243,19 +3542,21 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-primary">predicate</span>
+      </legend>
       
     <div class="card-block">
       <span data-toggle="popover" data-trigger="hover" data-html="true" title="isSpecRef()" data-content="&lt;pre&gt;function isSpecRef(x) {
   return x instanceof SpecRef;
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         A value that satisfies
-        <span class="tag tag-primary">predicate</span>
         <em>isSpecRef()</em>
       </span>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -3276,19 +3577,21 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-primary">predicate</span>
+      </legend>
       
     <div class="card-block">
       <span data-toggle="popover" data-trigger="hover" data-html="true" title="isPred()" data-content="&lt;pre&gt;function isPred(x) {
   return isFn(x);
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         A value that satisfies
-        <span class="tag tag-primary">predicate</span>
         <em>isPred()</em>
       </span>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -3309,19 +3612,21 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-primary">predicate</span>
+      </legend>
       
     <div class="card-block">
       <span data-toggle="popover" data-trigger="hover" data-html="true" title="isDelayedSpec()" data-content="&lt;pre&gt;function isDelayedSpec(x) {
   return x instanceof DelayedSpec;
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         A value that satisfies
-        <span class="tag tag-primary">predicate</span>
         <em>isDelayedSpec()</em>
       </span>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -3342,19 +3647,21 @@
           <div class="row">
             <div class="col-md-11 offset-md-1">
               
-    <div class="card">
+      <fieldset class="card">
+      <legend class="spec-type">
+        <span class="tag tag-primary">predicate</span>
+      </legend>
       
     <div class="card-block">
       <span data-toggle="popover" data-trigger="hover" data-html="true" title="isSpec()" data-content="&lt;pre&gt;function isSpec(x) {
   return x instanceof Spec;
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         A value that satisfies
-        <span class="tag tag-primary">predicate</span>
         <em>isSpec()</em>
       </span>
     </div>
   
-    </div>
+      </fieldset>
     
             </div>
           </div>
@@ -3368,7 +3675,7 @@
     </div>
   </main>
   <!-- TODO -->
-  <script async src="bundle/specky-docsite.js"></script>
-  <script async src="docs/bundle/specky-docsite.js"></script>
+  <script src="bundle/specky-docsite.js"></script>
+  <script src="docs/bundle/specky-docsite.js"></script>
 </body>
 </html>
