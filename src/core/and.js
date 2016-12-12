@@ -1,17 +1,15 @@
 var isSpec = require( '../utils/isSpec' );
 var Spec = require( '../models/Spec' );
-var { oneOrMore, cat, ExprSpec } = require( './regex' );
+var { oneOrMore, ExprSpec } = require( './regex' );
 var fspec = require( './fspec' );
 var walk = require( '../walk' );
 
 var AndSpec = fspec( {
-  args: cat( 'exprs', oneOrMore( ExprSpec ) ),
+  args: oneOrMore( ExprSpec ),
   ret: isSpec,
 } );
 
-function andOp( conformedArgs ) {
-  var { exprs } = conformedArgs;
-
+function andOp( exprs ) {
   var andS = new Spec( {
     type: 'AND',
     exprs,
