@@ -25,7 +25,7 @@ var zeroOrOneOp = genSingleArgOp( c.Z_OR_O );
 var collOfOp = genSingleArgOp( c.COLL_OF );
 
 var ExprSpec = orOp( {
-  named: [
+  withLabels: [
     { name: 'specRef', expr: {
       spec: isSpecRef,
     } },
@@ -42,7 +42,7 @@ var ExprSpec = orOp( {
 } );
 
 var NameExprSeq = catOp( {
-  named: [
+  withLabels: [
     { name: 'name', expr: {
       spec: nameSpec,
     } },
@@ -52,13 +52,17 @@ var NameExprSeq = catOp( {
   ],
 } );
 
-var NameCommentExprSeq = catOp( {
-  named: [
+var NameExprOptionalComment = catOp( {
+  withLabels: [
     { name: 'name', expr: {
       spec: nameSpec,
     } },
     { name: 'comment', expr: {
-      spec: isStr,
+      spec: zeroOrOneOp( {
+        expr: {
+          pred: isStr,
+        }
+      } ),
     } },
     { name: 'expr', expr: {
       spec: ExprSpec,
@@ -66,20 +70,13 @@ var NameCommentExprSeq = catOp( {
   ],
 } );
 
-var NameExprOptionalComment = orOp( {
-  unnamed: [
-    { spec: NameExprSeq },
-    { spec: NameCommentExprSeq },
-  ]
-} )
-
 var MultipleArgSpec = orOp( {
-  named: [
+  withLabels: [
     {
-      name: 'named',
+      name: 'withLabels',
       expr: {
         spec: orOp( {
-          unnamed: [
+          withoutLabels: [
             {
               spec: zeroOrMoreOp( {
                 expr: {
@@ -99,7 +96,7 @@ var MultipleArgSpec = orOp( {
       },
     },
     {
-      name: 'unnamed',
+      name: 'withoutLabels',
       expr: {
         spec: zeroOrMoreOp( {
           expr: {
@@ -118,7 +115,7 @@ var multipleArgOpSpec = {
 
 var singleArgOpSpec = {
   args: catOp( {
-    named: [
+    withLabels: [
       {
         name: 'expr',
         expr: {
@@ -143,8 +140,8 @@ var singleArgOpSpec = {
 function genMultiArgOp( type ) {
   return namedFn( type, function _( conformedArgs ) {
     var exprs;
-    if ( conformedArgs.named ) {
-      exprs = conformedArgs.named;
+    if ( conformedArgs.withLabels ) {
+      exprs = conformedArgs.withLabels;
 
       var coercedExprs = exprs.map( ( p ) => {
         var alts = p.expr;
@@ -176,8 +173,8 @@ function genMultiArgOp( type ) {
         return walk( s, x, { conform: true } );
       };
       return s;
-    } else if ( conformedArgs.unnamed ) {
-      exprs = conformedArgs.unnamed;
+    } else if ( conformedArgs.withoutLabels ) {
+      exprs = conformedArgs.withoutLabels;
 
       coercedExprs = exprs.map( ( p ) => {
         var s;
@@ -287,12 +284,12 @@ module.exports = core;
 
 // // //
 // var TestSpec = orOp( {
-//   named: [
+//   withLabels: [
 //     {
-//       name: 'named',
+//       name: 'withLabels',
 //       expr: {
 //         spec: orOp( {
-//           unnamed: [
+//           withoutLabels: [
 //             {
 //               spec: zeroOrMoreOp( {
 //                 expr: {
@@ -312,7 +309,7 @@ module.exports = core;
 //       },
 //     },
 //     {
-//       name: 'unnamed',
+//       name: 'withoutLabels',
 //       expr: {
 //         spec: zeroOrMoreOp( {
 //           expr: {

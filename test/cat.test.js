@@ -2,7 +2,7 @@ var S = require( '../src/' );
 var expect = require( 'chai' ).expect;
 var Problem = S.Problem;
 
-describe( 'cat', function() {
+describe( 'cat', () => {
   var fn = function() {};
   var conformist = [ fn, {}, fn, { a: 1 } ];
   var nonconformist = [ {}, fn, {}, fn ];
@@ -10,18 +10,20 @@ describe( 'cat', function() {
   var emptyCase = [];
   var lesserCase = conformist.slice( 0, -1 );
   var NamedSpec,
-    UnnamedSpec;
+    UnnamedSpec,
+    NamedCommentedSpec;
 
   function init() {
     NamedSpec = S.cat( 'z', S.isFn, 'b', S.isObj, 'c', S.isFn, 'a', S.isObj );
+    NamedCommentedSpec = S.cat( 'z', 'very zeeee', S.isFn, 'b', S.isObj, 'c', 'c for da win, man', S.isFn, 'a', S.isObj );
     UnnamedSpec = S.cat( S.isFn, S.isObj, S.isFn, S.isObj );
   }
 
-  describe( 'conform', function() {
+  describe( 'conform', () => {
 
     beforeEach( init );
 
-    it( 'empty case', function() {
+    it( 'empty case', () => {
       var EmptySpec = S.cat();
       var conformed = EmptySpec.conform( [] );
       var unconformed = EmptySpec.conform( [ 1 ] );
@@ -35,7 +37,7 @@ describe( 'cat', function() {
       expect( r ).to.deep.equal( [ 44 ] );
     } );
 
-    it( 'named', function() {
+    it( 'named', () => {
       var NamedCommentedSpec = S.cat( 'z', 'it\'s a fuuuunction', S.isFn, 'b', S.isObj, 'c', 'another fuuuunction', S.isFn, 'a', S.isObj );
 
       var conformed = NamedCommentedSpec.conform( conformist );
@@ -44,7 +46,7 @@ describe( 'cat', function() {
       expect( nonconformed instanceof Problem ).to.be.true;
     } );
 
-    it( 'named, grouped', function() {
+    it( 'named, grouped', () => {
       var NamedGroupedSpec = S.cat(
         [ 'z', 'it\'s a fuuuunction', S.isFn ],
         [ 'b', S.isObj ],
@@ -59,14 +61,16 @@ describe( 'cat', function() {
       expect( nonconformed instanceof Problem ).to.be.true;
     } );
 
-    it( 'named with some comments', function() {
-      var conformed = NamedSpec.conform( conformist );
+    it( 'named with some comments', () => {
+      var conformed = NamedCommentedSpec.conform( conformist );
       expect( conformed ).to.deep.equal( { z: fn, b: {}, c: fn, a: { a: 1 } } );
-      var nonconformed = NamedSpec.conform( nonconformist );
+      var nonconformed = NamedCommentedSpec.conform( nonconformist );
       expect( nonconformed instanceof Problem ).to.be.true;
+      expect( NamedCommentedSpec.exprs[ 0 ].comment ).to.contain( 'zee' );
+      expect( NamedCommentedSpec.exprs[ 2 ].comment ).to.contain( 'man' );
     } );
 
-    it( 'unnamed', function() {
+    it( 'withoutLabels', () => {
       var conformed = UnnamedSpec.conform( conformist );
       expect( conformed ).to.deep.equal( conformist );
       var nonconformed = UnnamedSpec.conform( nonconformist );
@@ -74,13 +78,13 @@ describe( 'cat', function() {
     } );
   } );
 
-  describe( 'validity', function() {
+  describe( 'validity', () => {
 
     beforeEach( init );
 
-    [ [ () => NamedSpec, 'named' ], [ () => UnnamedSpec, 'unnamed' ] ].forEach( function( p ) {
+    [ [ () => NamedSpec, 'named' ], [ () => UnnamedSpec, 'withoutLabels' ] ].forEach( ( p ) => {
       var name = p[ 1 ];
-      it( name, function() {
+      it( name, () => {
         var Spec = p[ 0 ]();
 
         //invalid case: more elems than specs
