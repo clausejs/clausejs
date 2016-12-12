@@ -1,4 +1,4 @@
-import S, { fspec, cat, isObj, isStr, isBool } from '../';
+import S, { fspec, cat, props, isStr, isBool, isArray, isFn, and } from '../';
 import { any, ExprSpec, CatFnSpec, OrFnSpec,
   CollOfSpec,
   ZeroOrMoreFnSpec, OneOrMoreFnSpec, ZeroOrOneFnSpec } from '../core';
@@ -20,6 +20,16 @@ const SingleArgPredSpec = () => fspec( {
   ret: isBool,
 } );
 
+const FspecFnSpec = fspec( {
+  args: cat( 'fspecFields', props( {
+    optional: {
+      args: and( isArray, S( 'specky.types/Expression' ) ),
+      ret: S( 'specky.types/Expression' ),
+      fn: isFn,
+    }
+  } ) ),
+} );
+
 S( '/specky', NamespaceFnSpec );
 
 S( 'specky.core/cat', CatFnSpec );
@@ -30,6 +40,8 @@ S( 'specky.core/zeroOrOne', ZeroOrOneFnSpec );
 S( 'specky.core/collOf', CollOfSpec );
 S( 'specky.core/and', AndSpec );
 S( 'specky.core/props', PropsSpec );
+S( 'specky.core/fspec', FspecFnSpec );
+
 S( 'specky.utils/describe', DescribeFnSpec );
 
 S( 'specky.preds/isObj', SingleArgPredSpec() );

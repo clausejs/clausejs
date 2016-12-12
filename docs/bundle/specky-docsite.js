@@ -338,7 +338,6 @@ function fspec(fnSpec) {
       ret = fnSpec.ret,
       fn = fnSpec.fn;
 
-  var c = 0;
   var spec = new Spec({
     type: 'FSPEC',
     exprs: [],
@@ -19887,6 +19886,16 @@ var SingleArgPredSpec = function SingleArgPredSpec() {
   });
 };
 
+var FspecFnSpec = (0, _.fspec)({
+  args: (0, _.cat)('fspecFields', (0, _.props)({
+    optional: {
+      args: (0, _.and)(_.isArray, (0, _2.default)('specky.types/Expression')),
+      ret: (0, _2.default)('specky.types/Expression'),
+      fn: _.isFn
+    }
+  }))
+});
+
 (0, _2.default)('/specky', _namespace.NamespaceFnSpec);
 
 (0, _2.default)('specky.core/cat', _core.CatFnSpec);
@@ -19897,6 +19906,8 @@ var SingleArgPredSpec = function SingleArgPredSpec() {
 (0, _2.default)('specky.core/collOf', _core.CollOfSpec);
 (0, _2.default)('specky.core/and', _and.AndSpec);
 (0, _2.default)('specky.core/props', _objRelated.PropsSpec);
+(0, _2.default)('specky.core/fspec', FspecFnSpec);
+
 (0, _2.default)('specky.utils/describe', DescribeFnSpec);
 
 (0, _2.default)('specky.preds/isObj', SingleArgPredSpec());

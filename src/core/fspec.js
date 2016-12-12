@@ -4,7 +4,6 @@ var fnName = require( '../utils/fnName' );
 
 function fspec( fnSpec ) {
   const { args, ret, fn } = fnSpec;
-  let c = 0;
   var spec = new Spec( {
     type: 'FSPEC',
     exprs: [],

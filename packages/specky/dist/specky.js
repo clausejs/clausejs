@@ -338,7 +338,6 @@ function fspec(fnSpec) {
       ret = fnSpec.ret,
       fn = fnSpec.fn;
 
-  var c = 0;
   var spec = new Spec({
     type: 'FSPEC',
     exprs: [],
