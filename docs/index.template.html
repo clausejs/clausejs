@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Specky</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <link rel="stylesheet" href="bootstrap.min.css">
+  <style>
+  .spec-def{
+    border: 1px dotted;
+    padding: 8px;
+  }
+  html,body,main.container-fluid {
+      height:100%;
+  }
+
+  .row.main {
+      height: 100%;
+  }
+  @media (min-width: 544px) {
+    .row.main .cot {
+      height: 100%;
+      position: fixed;
+      overflow-y: auto;
+      overflow-x: hidden;
+      font-size: 0.8em;
+    }
+  }
+  </style>
+</head>
+<body>
+  <main class="container-fluid">
+    <div class="row main">
+      <div class="col-md-2 cot">
+        <h4><u>Specky</u></h4>
+        <ul>
+          <li><a href="https://github.com/speckyjs/specky">Github Repository</a></li>
+        </ul>
+        <h5>API</h5>
+        <div id="cot"></div>
+      </div>
+      <div class="col-md-10 offset-md-2">
+        <h1>Specky Documentation</h1>
+        <h2>API</h2>
+        <p>
+          <em>
+            Specky uses itself to generate its own documentation. How meta is that?
+          </em>
+        </p>
+        <p><em>Work in progress. </em></p>
+        <p>Below is an auto-generated API reference based on <a href="https://github.com/speckyjs/specky/blob/master/src/specs/index.js">spec declarations</a> and their corrosponding <a href="https://github.com/speckyjs/specky/blob/master/src/specs/index.annotation.js">annotations</a>.
+        <div id="api"></div>
+      </div>
+    </div>
+  </main>
+  <!-- TODO -->
+  <script async src="bundle/specky-docsite.js"></script>
+  <script async src="docs/bundle/specky-docsite.js"></script>
+</body>
+</html>

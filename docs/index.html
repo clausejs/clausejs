@@ -5,6 +5,7 @@
   <title>Specky</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <link rel="stylesheet" href="bootstrap.min.css">
   <style>
   .spec-def{
     border: 1px dotted;
@@ -27,9 +28,6 @@
     }
   }
   </style>
-  <!-- TODO -->
-  <script src="bundle/specky-docsite.js"></script>
-  <script src="docs/bundle/specky-docsite.js"></script>
 </head>
 <body>
   <main class="container-fluid">
@@ -40,7 +38,45 @@
           <li><a href="https://github.com/speckyjs/specky">Github Repository</a></li>
         </ul>
         <h5>API</h5>
-        <div id="cot"></div>
+        <div id="cot"><dl>
+    
+    <dt>
+      
+    </dt>
+    <dd>
+      <ul>
+      <li><a href="#/specky" data-path="/specky">specky()</a></li>
+      </ul>
+    </dd>
+    
+    <dt>
+      specky.core
+    </dt>
+    <dd>
+      <ul>
+      <li><a href="#specky.core/cat" data-path="specky.core/cat">cat()</a></li><li><a href="#specky.core/or" data-path="specky.core/or">or()</a></li><li><a href="#specky.core/zeroOrMore" data-path="specky.core/zeroOrMore">zeroOrMore()</a></li><li><a href="#specky.core/oneOrMore" data-path="specky.core/oneOrMore">oneOrMore()</a></li><li><a href="#specky.core/zeroOrOne" data-path="specky.core/zeroOrOne">zeroOrOne()</a></li><li><a href="#specky.core/collOf" data-path="specky.core/collOf">collOf()</a></li><li><a href="#specky.core/and" data-path="specky.core/and">and()</a></li><li><a href="#specky.core/props" data-path="specky.core/props">props()</a></li>
+      </ul>
+    </dd>
+    
+    <dt>
+      specky.utils
+    </dt>
+    <dd>
+      <ul>
+      <li><a href="#specky.utils/describe" data-path="specky.utils/describe">describe()</a></li>
+      </ul>
+    </dd>
+    
+    <dt>
+      specky.types
+    </dt>
+    <dd>
+      <ul>
+      <li><a href="#specky.types/NamespaceObj" data-path="specky.types/NamespaceObj">NamespaceObj</a></li><li><a href="#specky.types/NamespacePath" data-path="specky.types/NamespacePath">NamespacePath</a></li><li><a href="#specky.types/Expression" data-path="specky.types/Expression">Expression</a></li>
+      </ul>
+    </dd>
+    
+  </dl></div>
       </div>
       <div class="col-md-10 offset-md-2">
         <h1>Specky Documentation</h1>
@@ -52,9 +88,2378 @@
         </p>
         <p><em>Work in progress. </em></p>
         <p>Below is an auto-generated API reference based on <a href="https://github.com/speckyjs/specky/blob/master/src/specs/index.js">spec declarations</a> and their corrosponding <a href="https://github.com/speckyjs/specky/blob/master/src/specs/index.annotation.js">annotations</a>.
-        <div id="api"></div>
-      </div>
+        <div id="api">
+    <a name="/specky"></a>
+    <div class="card" data-path="/specky">
+      
+    <div class="card-header">
+      S()&#xA0;
+        <span class="tag tag-primary">
+          function
+        </span>
+    </div>
+  
+      
+    <dl class="card-block">
+    <dd>Registers or retrieves a spec from global spec regitry by path.</dd>
+<dt>Synopsis</dt><dd><ul><li>&lt;register&gt;:<div><ul><em>S(nsPath, expression)</em></ul></div></li><li>&lt;retrieve&gt;:<div><ul><em>S(nsPath)</em></ul></div></li></ul></dd>
+<dt>Parameter list</dt><dd>
+    <div class="card">
+      
+    <div class="card-block">
+      
+      <p class="card-title">
+      
+        <span class="tag tag-info">or</span>
+      
+        Must be <em>one of</em> the following:
+      </p>
+    </div>
+    <ol class="list-group list-group-flush">
+      
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <span class="tag tag-default">
+                Option 1
+              </span>
+              
+                  &lt;<span class="lead font-italic text-primary">register</span>&gt;
+              : <span>Registers a namespace path with the given expression.</span>
+            
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      <p class="card-title">
+        
+      </p>
+      <p class="card-title">
+        <span class="tag tag-info">cat</span>
+        Must be <em>an ordered list</em> of the following:
+      </p>
+    </div>
+    <ol class="list-group list-group-flush">
+      
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                <span class="tag tag-default">1st </span>
+                &lt;<span class="lead font-italic text-primary">nsPath</span>&gt;
+                
+                  
+            </p></div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isNamespacePath()" data-content="&lt;pre&gt;function isNamespacePath(x) {
+  return isStr(x) &amp;&amp; /^[a-zA-Z0-9\-_\.]*\/([a-zA-Z0-9\-_]+)$/.test(x);
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <span class="tag tag-primary">predicate</span>
+        <em>isNamespacePath()</em>
+      </span>
+    </div>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+     
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                <span class="tag tag-default">2nd </span>
+                &lt;<span class="lead font-italic text-primary">expression</span>&gt;
+                
+                  
+            </p></div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card">
+      
+    <div class="card-block">
+      A value that satisfies
+      <a href="#specky.types/Expression" data-path="specky.types/Expression">specky.types/Expression</a>
+    </div>
+  
+    </div>
+    
+    </div>
+    
+            </div>
+          </div>
+        </li>
+    
+    </ol>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+    
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <span class="tag tag-default">
+                Option 2
+              </span>
+              
+                  &lt;<span class="lead font-italic text-primary">retrieve</span>&gt;
+              : <span>Retrieves an expression by namespace path.</span>
+            
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      <p class="card-title">
+        
+      </p>
+      <p class="card-title">
+        <span class="tag tag-info">cat</span>
+        Must be <em>an ordered list</em> of the following:
+      </p>
+    </div>
+    <ol class="list-group list-group-flush">
+      
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                <span class="tag tag-default">1st </span>
+                &lt;<span class="lead font-italic text-primary">nsPath</span>&gt;
+                
+                  
+            </p></div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isNamespacePath()" data-content="&lt;pre&gt;function isNamespacePath(x) {
+  return isStr(x) &amp;&amp; /^[a-zA-Z0-9\-_\.]*\/([a-zA-Z0-9\-_]+)$/.test(x);
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <span class="tag tag-primary">predicate</span>
+        <em>isNamespacePath()</em>
+      </span>
+    </div>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+    
+    </ol>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+    
+    </ol>
+  
+    </div>
+    </dd>
+<dt>Return value</dt><dd>
+    <div class="card">
+      
+    <div class="card-block">
+      A value that satisfies
+      <a href="#specky.types/Expression" data-path="specky.types/Expression">specky.types/Expression</a>
+    </div>
+  
+    </div>
+    </dd>
+    </dl>
+  
+    </div>
+    <h3>specky.core/</h3><hr>
+    <a name="specky.core/cat"></a>
+    <div class="card" data-path="specky.core/cat">
+      
+    <div class="card-header">
+      cat()&#xA0;
+        <span class="tag tag-primary">
+          function
+        </span>
+    </div>
+  
+      
+    <dl class="card-block">
+    <dt>Synopsis</dt><dd><ul><li>&lt;named&gt;:<div><ul>Z_OR_MCOLL_OF</ul></div></li><li>&lt;unnamed&gt;:<div>Z_OR_M</div></li></ul></dd>
+<dt>Parameter list</dt><dd>
+    <div class="card">
+      
+    <div class="card-block">
+      
+      <p class="card-title">
+      
+        <span class="tag tag-info">or</span>
+      
+        Must be <em>one of</em> the following:
+      </p>
+    </div>
+    <ol class="list-group list-group-flush">
+      
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <span class="tag tag-default">
+                Option 1
+              </span>
+              
+                  &lt;<span class="lead font-italic text-primary">named</span>&gt;
+              
+            
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      
+      <p class="card-title">
+      
+        <span class="tag tag-info">or</span>
+      
+        Must be <em>one of</em> the following:
+      </p>
+    </div>
+    <ol class="list-group list-group-flush">
+      
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <span class="tag tag-default">
+                Option 1
+              </span>
+              
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      <span class="tag tag-info">Z_OR_M</span>
+      
+      
+    <div class="card">
+      
+    <div class="card-block">
+      
+      <p class="card-title">
+      
+        <span class="tag tag-info">or</span>
+      
+        Must be <em>one of</em> the following:
+      </p>
+    </div>
+    <ol class="list-group list-group-flush">
+      
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <span class="tag tag-default">
+                Option 1
+              </span>
+              
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      <p class="card-title">
+        
+      </p>
+      <p class="card-title">
+        <span class="tag tag-info">cat</span>
+        Must be <em>an ordered list</em> of the following:
+      </p>
+    </div>
+    <ol class="list-group list-group-flush">
+      
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                <span class="tag tag-default">1st </span>
+                &lt;<span class="lead font-italic text-primary">name</span>&gt;
+                
+                  
+            </p></div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isSpecName()" data-content="&lt;pre&gt;function isSpecName(x) {
+  return isStr(x);
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <span class="tag tag-primary">predicate</span>
+        <em>isSpecName()</em>
+      </span>
+    </div>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+     
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                <span class="tag tag-default">2nd </span>
+                &lt;<span class="lead font-italic text-primary">expr</span>&gt;
+                
+                  
+            </p></div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      A value that satisfies
+      <a href="#specky.types/Expression" data-path="specky.types/Expression">specky.types/Expression</a>
+    </div>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+    
+    </ol>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+    
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <span class="tag tag-default">
+                Option 2
+              </span>
+              
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      <p class="card-title">
+        
+      </p>
+      <p class="card-title">
+        <span class="tag tag-info">cat</span>
+        Must be <em>an ordered list</em> of the following:
+      </p>
+    </div>
+    <ol class="list-group list-group-flush">
+      
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                <span class="tag tag-default">1st </span>
+                &lt;<span class="lead font-italic text-primary">name</span>&gt;
+                
+                  
+            </p></div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isSpecName()" data-content="&lt;pre&gt;function isSpecName(x) {
+  return isStr(x);
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <span class="tag tag-primary">predicate</span>
+        <em>isSpecName()</em>
+      </span>
+    </div>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+     
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                <span class="tag tag-default">2nd </span>
+                &lt;<span class="lead font-italic text-primary">comment</span>&gt;
+                
+                  
+            </p></div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isString()" data-content="&lt;pre&gt;function isString(x) {
+  return x !== null &amp;&amp; x !== undefined &amp;&amp; x.constructor === String;
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <span class="tag tag-primary">predicate</span>
+        <em>isString()</em>
+      </span>
+    </div>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+     
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                <span class="tag tag-default">3rd </span>
+                &lt;<span class="lead font-italic text-primary">expr</span>&gt;
+                
+                  
+            </p></div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      A value that satisfies
+      <a href="#specky.types/Expression" data-path="specky.types/Expression">specky.types/Expression</a>
+    </div>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+    
+    </ol>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+    
+    </ol>
+  
+    </div>
+    
+      <pre>undefined</pre>
+    </div>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+    
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <span class="tag tag-default">
+                Option 2
+              </span>
+              
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      <span class="tag tag-info">COLL_OF</span>
+      
+      
+    <div class="card">
+      
+    <div class="card-block">
+      
+      <p class="card-title">
+      
+        <span class="tag tag-info">or</span>
+      
+        Must be <em>one of</em> the following:
+      </p>
+    </div>
+    <ol class="list-group list-group-flush">
+      
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <span class="tag tag-default">
+                Option 1
+              </span>
+              
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      <p class="card-title">
+        
+      </p>
+      <p class="card-title">
+        <span class="tag tag-info">cat</span>
+        Must be <em>an ordered list</em> of the following:
+      </p>
+    </div>
+    <ol class="list-group list-group-flush">
+      
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                <span class="tag tag-default">1st </span>
+                &lt;<span class="lead font-italic text-primary">name</span>&gt;
+                
+                  
+            </p></div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isSpecName()" data-content="&lt;pre&gt;function isSpecName(x) {
+  return isStr(x);
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <span class="tag tag-primary">predicate</span>
+        <em>isSpecName()</em>
+      </span>
+    </div>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+     
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                <span class="tag tag-default">2nd </span>
+                &lt;<span class="lead font-italic text-primary">expr</span>&gt;
+                
+                  
+            </p></div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      A value that satisfies
+      <a href="#specky.types/Expression" data-path="specky.types/Expression">specky.types/Expression</a>
+    </div>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+    
+    </ol>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+    
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <span class="tag tag-default">
+                Option 2
+              </span>
+              
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      <p class="card-title">
+        
+      </p>
+      <p class="card-title">
+        <span class="tag tag-info">cat</span>
+        Must be <em>an ordered list</em> of the following:
+      </p>
+    </div>
+    <ol class="list-group list-group-flush">
+      
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                <span class="tag tag-default">1st </span>
+                &lt;<span class="lead font-italic text-primary">name</span>&gt;
+                
+                  
+            </p></div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isSpecName()" data-content="&lt;pre&gt;function isSpecName(x) {
+  return isStr(x);
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <span class="tag tag-primary">predicate</span>
+        <em>isSpecName()</em>
+      </span>
+    </div>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+     
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                <span class="tag tag-default">2nd </span>
+                &lt;<span class="lead font-italic text-primary">comment</span>&gt;
+                
+                  
+            </p></div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isString()" data-content="&lt;pre&gt;function isString(x) {
+  return x !== null &amp;&amp; x !== undefined &amp;&amp; x.constructor === String;
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <span class="tag tag-primary">predicate</span>
+        <em>isString()</em>
+      </span>
+    </div>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+     
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                <span class="tag tag-default">3rd </span>
+                &lt;<span class="lead font-italic text-primary">expr</span>&gt;
+                
+                  
+            </p></div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      A value that satisfies
+      <a href="#specky.types/Expression" data-path="specky.types/Expression">specky.types/Expression</a>
+    </div>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+    
+    </ol>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+    
+    </ol>
+  
+    </div>
+    
+      <pre>undefined</pre>
+    </div>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+    
+    </ol>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+    
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <span class="tag tag-default">
+                Option 2
+              </span>
+              
+                  &lt;<span class="lead font-italic text-primary">unnamed</span>&gt;
+              
+            
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      <span class="tag tag-info">Z_OR_M</span>
+      
+      
+    <div class="card">
+      
+    <div class="card-block">
+      A value that satisfies
+      <a href="#specky.types/Expression" data-path="specky.types/Expression">specky.types/Expression</a>
+    </div>
+  
+    </div>
+    
+      <pre>undefined</pre>
+    </div>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+    
+    </ol>
+  
+    </div>
+    </dd>
+<dt>Return value</dt><dd>
+    <div class="card">
+      
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isSpec()" data-content="&lt;pre&gt;function isSpec(x) {
+  return x instanceof Spec;
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <span class="tag tag-primary">predicate</span>
+        <em>isSpec()</em>
+      </span>
+    </div>
+  
+    </div>
+    </dd>
+    </dl>
+  
+    </div>
+    
+
+    <a name="specky.core/or"></a>
+    <div class="card" data-path="specky.core/or">
+      
+    <div class="card-header">
+      or()&#xA0;
+        <span class="tag tag-primary">
+          function
+        </span>
+    </div>
+  
+      
+    <dl class="card-block">
+    <dt>Synopsis</dt><dd><ul><li>&lt;named&gt;:<div><ul>Z_OR_MCOLL_OF</ul></div></li><li>&lt;unnamed&gt;:<div>Z_OR_M</div></li></ul></dd>
+<dt>Parameter list</dt><dd>
+    <div class="card">
+      
+    <div class="card-block">
+      
+      <p class="card-title">
+      
+        <span class="tag tag-info">or</span>
+      
+        Must be <em>one of</em> the following:
+      </p>
+    </div>
+    <ol class="list-group list-group-flush">
+      
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <span class="tag tag-default">
+                Option 1
+              </span>
+              
+                  &lt;<span class="lead font-italic text-primary">named</span>&gt;
+              
+            
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      
+      <p class="card-title">
+      
+        <span class="tag tag-info">or</span>
+      
+        Must be <em>one of</em> the following:
+      </p>
+    </div>
+    <ol class="list-group list-group-flush">
+      
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <span class="tag tag-default">
+                Option 1
+              </span>
+              
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      <span class="tag tag-info">Z_OR_M</span>
+      
+      
+    <div class="card">
+      
+    <div class="card-block">
+      
+      <p class="card-title">
+      
+        <span class="tag tag-info">or</span>
+      
+        Must be <em>one of</em> the following:
+      </p>
+    </div>
+    <ol class="list-group list-group-flush">
+      
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <span class="tag tag-default">
+                Option 1
+              </span>
+              
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      <p class="card-title">
+        
+      </p>
+      <p class="card-title">
+        <span class="tag tag-info">cat</span>
+        Must be <em>an ordered list</em> of the following:
+      </p>
+    </div>
+    <ol class="list-group list-group-flush">
+      
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                <span class="tag tag-default">1st </span>
+                &lt;<span class="lead font-italic text-primary">name</span>&gt;
+                
+                  
+            </p></div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isSpecName()" data-content="&lt;pre&gt;function isSpecName(x) {
+  return isStr(x);
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <span class="tag tag-primary">predicate</span>
+        <em>isSpecName()</em>
+      </span>
+    </div>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+     
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                <span class="tag tag-default">2nd </span>
+                &lt;<span class="lead font-italic text-primary">expr</span>&gt;
+                
+                  
+            </p></div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      A value that satisfies
+      <a href="#specky.types/Expression" data-path="specky.types/Expression">specky.types/Expression</a>
+    </div>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+    
+    </ol>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+    
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <span class="tag tag-default">
+                Option 2
+              </span>
+              
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      <p class="card-title">
+        
+      </p>
+      <p class="card-title">
+        <span class="tag tag-info">cat</span>
+        Must be <em>an ordered list</em> of the following:
+      </p>
+    </div>
+    <ol class="list-group list-group-flush">
+      
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                <span class="tag tag-default">1st </span>
+                &lt;<span class="lead font-italic text-primary">name</span>&gt;
+                
+                  
+            </p></div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isSpecName()" data-content="&lt;pre&gt;function isSpecName(x) {
+  return isStr(x);
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <span class="tag tag-primary">predicate</span>
+        <em>isSpecName()</em>
+      </span>
+    </div>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+     
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                <span class="tag tag-default">2nd </span>
+                &lt;<span class="lead font-italic text-primary">comment</span>&gt;
+                
+                  
+            </p></div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isString()" data-content="&lt;pre&gt;function isString(x) {
+  return x !== null &amp;&amp; x !== undefined &amp;&amp; x.constructor === String;
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <span class="tag tag-primary">predicate</span>
+        <em>isString()</em>
+      </span>
+    </div>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+     
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                <span class="tag tag-default">3rd </span>
+                &lt;<span class="lead font-italic text-primary">expr</span>&gt;
+                
+                  
+            </p></div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      A value that satisfies
+      <a href="#specky.types/Expression" data-path="specky.types/Expression">specky.types/Expression</a>
+    </div>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+    
+    </ol>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+    
+    </ol>
+  
+    </div>
+    
+      <pre>undefined</pre>
+    </div>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+    
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <span class="tag tag-default">
+                Option 2
+              </span>
+              
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      <span class="tag tag-info">COLL_OF</span>
+      
+      
+    <div class="card">
+      
+    <div class="card-block">
+      
+      <p class="card-title">
+      
+        <span class="tag tag-info">or</span>
+      
+        Must be <em>one of</em> the following:
+      </p>
+    </div>
+    <ol class="list-group list-group-flush">
+      
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <span class="tag tag-default">
+                Option 1
+              </span>
+              
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      <p class="card-title">
+        
+      </p>
+      <p class="card-title">
+        <span class="tag tag-info">cat</span>
+        Must be <em>an ordered list</em> of the following:
+      </p>
+    </div>
+    <ol class="list-group list-group-flush">
+      
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                <span class="tag tag-default">1st </span>
+                &lt;<span class="lead font-italic text-primary">name</span>&gt;
+                
+                  
+            </p></div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isSpecName()" data-content="&lt;pre&gt;function isSpecName(x) {
+  return isStr(x);
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <span class="tag tag-primary">predicate</span>
+        <em>isSpecName()</em>
+      </span>
+    </div>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+     
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                <span class="tag tag-default">2nd </span>
+                &lt;<span class="lead font-italic text-primary">expr</span>&gt;
+                
+                  
+            </p></div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      A value that satisfies
+      <a href="#specky.types/Expression" data-path="specky.types/Expression">specky.types/Expression</a>
+    </div>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+    
+    </ol>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+    
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <span class="tag tag-default">
+                Option 2
+              </span>
+              
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      <p class="card-title">
+        
+      </p>
+      <p class="card-title">
+        <span class="tag tag-info">cat</span>
+        Must be <em>an ordered list</em> of the following:
+      </p>
+    </div>
+    <ol class="list-group list-group-flush">
+      
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                <span class="tag tag-default">1st </span>
+                &lt;<span class="lead font-italic text-primary">name</span>&gt;
+                
+                  
+            </p></div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isSpecName()" data-content="&lt;pre&gt;function isSpecName(x) {
+  return isStr(x);
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <span class="tag tag-primary">predicate</span>
+        <em>isSpecName()</em>
+      </span>
+    </div>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+     
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                <span class="tag tag-default">2nd </span>
+                &lt;<span class="lead font-italic text-primary">comment</span>&gt;
+                
+                  
+            </p></div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isString()" data-content="&lt;pre&gt;function isString(x) {
+  return x !== null &amp;&amp; x !== undefined &amp;&amp; x.constructor === String;
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <span class="tag tag-primary">predicate</span>
+        <em>isString()</em>
+      </span>
+    </div>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+     
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                <span class="tag tag-default">3rd </span>
+                &lt;<span class="lead font-italic text-primary">expr</span>&gt;
+                
+                  
+            </p></div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      A value that satisfies
+      <a href="#specky.types/Expression" data-path="specky.types/Expression">specky.types/Expression</a>
+    </div>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+    
+    </ol>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+    
+    </ol>
+  
+    </div>
+    
+      <pre>undefined</pre>
+    </div>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+    
+    </ol>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+    
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <span class="tag tag-default">
+                Option 2
+              </span>
+              
+                  &lt;<span class="lead font-italic text-primary">unnamed</span>&gt;
+              
+            
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      <span class="tag tag-info">Z_OR_M</span>
+      
+      
+    <div class="card">
+      
+    <div class="card-block">
+      A value that satisfies
+      <a href="#specky.types/Expression" data-path="specky.types/Expression">specky.types/Expression</a>
+    </div>
+  
+    </div>
+    
+      <pre>undefined</pre>
+    </div>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+    
+    </ol>
+  
+    </div>
+    </dd>
+<dt>Return value</dt><dd>
+    <div class="card">
+      
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isSpec()" data-content="&lt;pre&gt;function isSpec(x) {
+  return x instanceof Spec;
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <span class="tag tag-primary">predicate</span>
+        <em>isSpec()</em>
+      </span>
+    </div>
+  
+    </div>
+    </dd>
+    </dl>
+  
+    </div>
+    
+
+    <a name="specky.core/zeroOrMore"></a>
+    <div class="card" data-path="specky.core/zeroOrMore">
+      
+    <div class="card-header">
+      zeroOrMore()&#xA0;
+        <span class="tag tag-primary">
+          function
+        </span>
+    </div>
+  
+      
+    <dl class="card-block">
+    <dt>Synopsis</dt><dd><ul><em>zeroOrMore(<a href="#specky.types/Expression" data-path="specky.types/Expression">expr</a>, opts)</em></ul></dd>
+<dt>Parameter list</dt><dd>
+    <div class="card">
+      
+    <div class="card-block">
+      <p class="card-title">
+        
+      </p>
+      <p class="card-title">
+        <span class="tag tag-info">cat</span>
+        Must be <em>an ordered list</em> of the following:
+      </p>
+    </div>
+    <ol class="list-group list-group-flush">
+      
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                <span class="tag tag-default">1st </span>
+                &lt;<span class="lead font-italic text-primary">expr</span>&gt;
+                
+                  
+            </p></div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      A value that satisfies
+      <a href="#specky.types/Expression" data-path="specky.types/Expression">specky.types/Expression</a>
+    </div>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+     
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                <span class="tag tag-default">2nd </span>
+                &lt;<span class="lead font-italic text-primary">opts</span>&gt;
+                
+                  
+            </p></div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      <span class="tag tag-info">Z_OR_O</span>
+      
+      
+    <div class="card">
+      
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isObject()" data-content="&lt;pre&gt;function isObject(x) {
+  return (typeof x === &apos;undefined&apos; ? &apos;undefined&apos; : _typeof(x)) === &apos;object&apos; &amp;&amp; x !== null;
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <span class="tag tag-primary">predicate</span>
+        <em>isObject()</em>
+      </span>
+    </div>
+  
+    </div>
+    
+      <pre>undefined</pre>
+    </div>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+    
+    </ol>
+  
+    </div>
+    </dd>
+<dt>Return value</dt><dd>
+    <div class="card">
+      
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isSpec()" data-content="&lt;pre&gt;function isSpec(x) {
+  return x instanceof Spec;
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <span class="tag tag-primary">predicate</span>
+        <em>isSpec()</em>
+      </span>
+    </div>
+  
+    </div>
+    </dd>
+    </dl>
+  
+    </div>
+    
+
+    <a name="specky.core/oneOrMore"></a>
+    <div class="card" data-path="specky.core/oneOrMore">
+      
+    <div class="card-header">
+      oneOrMore()&#xA0;
+        <span class="tag tag-primary">
+          function
+        </span>
+    </div>
+  
+      
+    <dl class="card-block">
+    <dt>Synopsis</dt><dd><ul><em>oneOrMore(<a href="#specky.types/Expression" data-path="specky.types/Expression">expr</a>, opts)</em></ul></dd>
+<dt>Parameter list</dt><dd>
+    <div class="card">
+      
+    <div class="card-block">
+      <p class="card-title">
+        
+      </p>
+      <p class="card-title">
+        <span class="tag tag-info">cat</span>
+        Must be <em>an ordered list</em> of the following:
+      </p>
+    </div>
+    <ol class="list-group list-group-flush">
+      
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                <span class="tag tag-default">1st </span>
+                &lt;<span class="lead font-italic text-primary">expr</span>&gt;
+                
+                  
+            </p></div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      A value that satisfies
+      <a href="#specky.types/Expression" data-path="specky.types/Expression">specky.types/Expression</a>
+    </div>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+     
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                <span class="tag tag-default">2nd </span>
+                &lt;<span class="lead font-italic text-primary">opts</span>&gt;
+                
+                  
+            </p></div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      <span class="tag tag-info">Z_OR_O</span>
+      
+      
+    <div class="card">
+      
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isObject()" data-content="&lt;pre&gt;function isObject(x) {
+  return (typeof x === &apos;undefined&apos; ? &apos;undefined&apos; : _typeof(x)) === &apos;object&apos; &amp;&amp; x !== null;
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <span class="tag tag-primary">predicate</span>
+        <em>isObject()</em>
+      </span>
+    </div>
+  
+    </div>
+    
+      <pre>undefined</pre>
+    </div>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+    
+    </ol>
+  
+    </div>
+    </dd>
+<dt>Return value</dt><dd>
+    <div class="card">
+      
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isSpec()" data-content="&lt;pre&gt;function isSpec(x) {
+  return x instanceof Spec;
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <span class="tag tag-primary">predicate</span>
+        <em>isSpec()</em>
+      </span>
+    </div>
+  
+    </div>
+    </dd>
+    </dl>
+  
+    </div>
+    
+
+    <a name="specky.core/zeroOrOne"></a>
+    <div class="card" data-path="specky.core/zeroOrOne">
+      
+    <div class="card-header">
+      zeroOrOne()&#xA0;
+        <span class="tag tag-primary">
+          function
+        </span>
+    </div>
+  
+      
+    <dl class="card-block">
+    <dt>Synopsis</dt><dd><ul><em>zeroOrOne(<a href="#specky.types/Expression" data-path="specky.types/Expression">expr</a>, opts)</em></ul></dd>
+<dt>Parameter list</dt><dd>
+    <div class="card">
+      
+    <div class="card-block">
+      <p class="card-title">
+        
+      </p>
+      <p class="card-title">
+        <span class="tag tag-info">cat</span>
+        Must be <em>an ordered list</em> of the following:
+      </p>
+    </div>
+    <ol class="list-group list-group-flush">
+      
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                <span class="tag tag-default">1st </span>
+                &lt;<span class="lead font-italic text-primary">expr</span>&gt;
+                
+                  
+            </p></div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      A value that satisfies
+      <a href="#specky.types/Expression" data-path="specky.types/Expression">specky.types/Expression</a>
+    </div>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+     
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                <span class="tag tag-default">2nd </span>
+                &lt;<span class="lead font-italic text-primary">opts</span>&gt;
+                
+                  
+            </p></div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      <span class="tag tag-info">Z_OR_O</span>
+      
+      
+    <div class="card">
+      
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isObject()" data-content="&lt;pre&gt;function isObject(x) {
+  return (typeof x === &apos;undefined&apos; ? &apos;undefined&apos; : _typeof(x)) === &apos;object&apos; &amp;&amp; x !== null;
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <span class="tag tag-primary">predicate</span>
+        <em>isObject()</em>
+      </span>
+    </div>
+  
+    </div>
+    
+      <pre>undefined</pre>
+    </div>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+    
+    </ol>
+  
+    </div>
+    </dd>
+<dt>Return value</dt><dd>
+    <div class="card">
+      
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isSpec()" data-content="&lt;pre&gt;function isSpec(x) {
+  return x instanceof Spec;
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <span class="tag tag-primary">predicate</span>
+        <em>isSpec()</em>
+      </span>
+    </div>
+  
+    </div>
+    </dd>
+    </dl>
+  
+    </div>
+    
+
+    <a name="specky.core/collOf"></a>
+    <div class="card" data-path="specky.core/collOf">
+      
+    <div class="card-header">
+      collOf()&#xA0;
+        <span class="tag tag-primary">
+          function
+        </span>
+    </div>
+  
+      
+    <dl class="card-block">
+    <dt>Synopsis</dt><dd><ul><em>collOf(<a href="#specky.types/Expression" data-path="specky.types/Expression">expr</a>, opts)</em></ul></dd>
+<dt>Parameter list</dt><dd>
+    <div class="card">
+      
+    <div class="card-block">
+      <p class="card-title">
+        
+      </p>
+      <p class="card-title">
+        <span class="tag tag-info">cat</span>
+        Must be <em>an ordered list</em> of the following:
+      </p>
+    </div>
+    <ol class="list-group list-group-flush">
+      
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                <span class="tag tag-default">1st </span>
+                &lt;<span class="lead font-italic text-primary">expr</span>&gt;
+                
+                  
+            </p></div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      A value that satisfies
+      <a href="#specky.types/Expression" data-path="specky.types/Expression">specky.types/Expression</a>
+    </div>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+     
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                <span class="tag tag-default">2nd </span>
+                &lt;<span class="lead font-italic text-primary">opts</span>&gt;
+                
+                  
+            </p></div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      <span class="tag tag-info">Z_OR_O</span>
+      
+      
+    <div class="card">
+      
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isObject()" data-content="&lt;pre&gt;function isObject(x) {
+  return (typeof x === &apos;undefined&apos; ? &apos;undefined&apos; : _typeof(x)) === &apos;object&apos; &amp;&amp; x !== null;
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <span class="tag tag-primary">predicate</span>
+        <em>isObject()</em>
+      </span>
+    </div>
+  
+    </div>
+    
+      <pre>undefined</pre>
+    </div>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+    
+    </ol>
+  
+    </div>
+    </dd>
+<dt>Return value</dt><dd>
+    <div class="card">
+      
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isSpec()" data-content="&lt;pre&gt;function isSpec(x) {
+  return x instanceof Spec;
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <span class="tag tag-primary">predicate</span>
+        <em>isSpec()</em>
+      </span>
+    </div>
+  
+    </div>
+    </dd>
+    </dl>
+  
+    </div>
+    
+
+    <a name="specky.core/and"></a>
+    <div class="card" data-path="specky.core/and">
+      
+    <div class="card-header">
+      and()&#xA0;
+        <span class="tag tag-primary">
+          function
+        </span>
+    </div>
+  
+      
+    <dl class="card-block">
+    <dt>Synopsis</dt><dd>O_OR_M</dd>
+<dt>Parameter list</dt><dd>
+    <div class="card">
+      
+    <div class="card-block">
+      <span class="tag tag-info">O_OR_M</span>
+      
+      
+    <div class="card">
+      
+    <div class="card-block">
+      A value that satisfies
+      <a href="#specky.types/Expression" data-path="specky.types/Expression">specky.types/Expression</a>
+    </div>
+  
+    </div>
+    
+      <pre>undefined</pre>
+    </div>
+  
+    </div>
+    </dd>
+<dt>Return value</dt><dd>
+    <div class="card">
+      
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isSpec()" data-content="&lt;pre&gt;function isSpec(x) {
+  return x instanceof Spec;
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <span class="tag tag-primary">predicate</span>
+        <em>isSpec()</em>
+      </span>
+    </div>
+  
+    </div>
+    </dd>
+    </dl>
+  
+    </div>
+    
+
+    <a name="specky.core/props"></a>
+    <div class="card" data-path="specky.core/props">
+      
+    <div class="card-header">
+      props()&#xA0;
+        <span class="tag tag-primary">
+          function
+        </span>
+    </div>
+  
+      
+    <dl class="card-block">
+    <dt>Synopsis</dt><dd><ul><em>props(propArgs)</em></ul></dd>
+<dt>Parameter list</dt><dd>
+    <div class="card">
+      
+    <div class="card-block">
+      <p class="card-title">
+        
+      </p>
+      <p class="card-title">
+        <span class="tag tag-info">cat</span>
+        Must be <em>an ordered list</em> of the following:
+      </p>
+    </div>
+    <ol class="list-group list-group-flush">
+      
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                <span class="tag tag-default">1st </span>
+                &lt;<span class="lead font-italic text-primary">propArgs</span>&gt;
+                
+                  
+            </p></div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      <span class="tag tag-info">PROPS</span>
+      
+      
+      <pre>undefined</pre>
+    </div>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+    
+    </ol>
+  
+    </div>
+    </dd>
+<dt>Return value</dt><dd>
+    <div class="card">
+      
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isSpec()" data-content="&lt;pre&gt;function isSpec(x) {
+  return x instanceof Spec;
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <span class="tag tag-primary">predicate</span>
+        <em>isSpec()</em>
+      </span>
+    </div>
+  
+    </div>
+    </dd>
+    </dl>
+  
+    </div>
+    
+<h3>specky.utils/</h3><hr>
+    <a name="specky.utils/describe"></a>
+    <div class="card" data-path="specky.utils/describe">
+      
+    <div class="card-header">
+      S.describe()&#xA0;
+        <span class="tag tag-primary">
+          function
+        </span>
+    </div>
+  
+      
+    <dl class="card-block">
+    <dd>Returns an abbreviated description of the spec as a simple tree structure.</dd>
+<dt>Synopsis</dt><dd><ul><em>S.describe()</em></ul></dd>
+<dt>Parameter list</dt><dd>
+    <div class="card">
+      
+    <div class="card-block">
+      <p class="card-title">
+        
+      </p>
+      <p class="card-title">
+        <span class="tag tag-info">cat</span>
+        Must be <em>an ordered list</em> of the following:
+      </p>
+    </div>
+    <ol class="list-group list-group-flush">
+      
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <span class="tag tag-default">1st </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      A value that satisfies
+      <a href="#specky.types/Expression" data-path="specky.types/Expression">specky.types/Expression</a>
+    </div>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+    
+    </ol>
+  
+    </div>
+    </dd>
+<dt>Return value</dt><dd>
+    <div class="card">
+      
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isString()" data-content="&lt;pre&gt;function isString(x) {
+  return x !== null &amp;&amp; x !== undefined &amp;&amp; x.constructor === String;
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <span class="tag tag-primary">predicate</span>
+        <em>isString()</em>
+      </span>
+    </div>
+  
+    </div>
+    </dd>
+    </dl>
+  
+    </div>
+    
+<h3>specky.types/</h3><hr>
+    <a name="specky.types/NamespaceObj"></a>
+    <div class="card" data-path="specky.types/NamespaceObj">
+      
+    <div class="card-header">
+      NamespaceObj&#xA0;
+        <span class="tag tag-primary">
+          props
+        </span>
+    </div>
+  
+      
+    <div class="card-block">
+      <span class="tag tag-info">PROPS</span>
+      
+      
+      <pre>undefined</pre>
+    </div>
+  
+    </div>
+    
+
+    <a name="specky.types/NamespacePath"></a>
+    <div class="card" data-path="specky.types/NamespacePath">
+      
+    <div class="card-header">
+      NamespacePath&#xA0;
+        <span class="tag tag-primary">
+          predicate
+        </span>
+    </div>
+  
+      
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isNamespacePath()" data-content="&lt;pre&gt;function isNamespacePath(x) {
+  return isStr(x) &amp;&amp; /^[a-zA-Z0-9\-_\.]*\/([a-zA-Z0-9\-_]+)$/.test(x);
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        
+        <em>isNamespacePath()</em>
+      </span>
+    </div>
+  
+    </div>
+    
+
+    <a name="specky.types/Expression"></a>
+    <div class="card" data-path="specky.types/Expression">
+      
+    <div class="card-header">
+      Expression&#xA0;
+        <span class="tag tag-primary">
+          or
+        </span>
+    </div>
+  
+      
+    <div class="card-block">
+      
+      <p class="card-title">
+      
+        Must be <em>one of</em> the following:
+      </p>
+    </div>
+    <ol class="list-group list-group-flush">
+      
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <span class="tag tag-default">
+                Option 1
+              </span>
+              
+                  &lt;<span class="lead font-italic text-primary">specRef</span>&gt;
+              
+            
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isSpecRef()" data-content="&lt;pre&gt;function isSpecRef(x) {
+  return x instanceof SpecRef;
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <span class="tag tag-primary">predicate</span>
+        <em>isSpecRef()</em>
+      </span>
+    </div>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+    
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <span class="tag tag-default">
+                Option 2
+              </span>
+              
+                  &lt;<span class="lead font-italic text-primary">pred</span>&gt;
+              
+            
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isPred()" data-content="&lt;pre&gt;function isPred(x) {
+  return isFn(x);
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <span class="tag tag-primary">predicate</span>
+        <em>isPred()</em>
+      </span>
+    </div>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+    
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <span class="tag tag-default">
+                Option 3
+              </span>
+              
+                  &lt;<span class="lead font-italic text-primary">delayedSpec</span>&gt;
+              
+            
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isDelayedSpec()" data-content="&lt;pre&gt;function isDelayedSpec(x) {
+  return x instanceof DelayedSpec;
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <span class="tag tag-primary">predicate</span>
+        <em>isDelayedSpec()</em>
+      </span>
+    </div>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+    
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <span class="tag tag-default">
+                Option 4
+              </span>
+              
+                  &lt;<span class="lead font-italic text-primary">spec</span>&gt;
+              
+            
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    <div class="card">
+      
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isSpec()" data-content="&lt;pre&gt;function isSpec(x) {
+  return x instanceof Spec;
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <span class="tag tag-primary">predicate</span>
+        <em>isSpec()</em>
+      </span>
+    </div>
+  
+    </div>
+    
+            </div>
+          </div>
+        </li>
+    
+    </ol>
+  
+    </div>
+    </div>
+      </p></div>
     </div>
   </main>
+  <!-- TODO -->
+  <script async src="bundle/specky-docsite.js"></script>
+  <script async src="docs/bundle/specky-docsite.js"></script>
 </body>
 </html>

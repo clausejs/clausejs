@@ -5,7 +5,7 @@ import '../../src/specs';
 import S from '../../src';
 import $ from 'jquery';
 import tether from 'tether';
-require( 'bootstrap/dist/css/bootstrap.css' );
+// require( 'bootstrap/dist/css/bootstrap.css' );
 require( 'highlight.js/styles/default.css' );
 const HLJS = require( 'highlight.js' );
 window.$ = window.jQuery = $;
