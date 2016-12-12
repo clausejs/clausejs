@@ -10,4 +10,5 @@ module.exports = {
   isSpec: require( './isSpec' ),
   isSpecRef: require( './isSpecRef' ),
   describe: require( './describe' ),
+  deref: require( './deref' ),
 };

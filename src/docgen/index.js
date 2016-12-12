@@ -4,6 +4,7 @@ import isPred from '../utils/isPred';
 import isSpec from '../utils/isSpec';
 import { isStr } from '../preds';
 import describe from '../utils/describe';
+import deref from '../utils/deref';
 import { resolve, getDefList } from './namespaceResolver';
 
 function gen( registry ) {
@@ -11,6 +12,7 @@ function gen( registry ) {
   var docstr = _walk( registry, null, null, conformedReg );
   return docstr;
 }
+
 
 function genCot( registry ) {
   var r = getDefList( registry );
@@ -22,7 +24,8 @@ function genCot( registry ) {
     </dt>
     <dd>
       <ul>
-      ${r[ p ].map( ( [ p, n ] ) => `<li>${_specRefLink( `${p}/${n}` )( _unanbiguousName )}</li>` ).join( '' )}
+      ${r[ p ].map( ( [ p, n, ref ] ) =>
+        `<li>${_specRefLink( `${p}/${n}` )( ( p ) => _stylizeName( deref( ref ), _unanbiguousName( p ) ) )}</li>` ).join( '' )}
       </ul>
     </dd>
     ` ).join( '' )}
@@ -101,6 +104,14 @@ const typeTable = {
   'CAT': 'cat sequence',
 }
 
+function _stylizeName( expr, name ) {
+  if ( expr.type === 'FSPEC' ) {
+    return `${name}()`;
+  } else {
+    return name;
+  }
+}
+
 function _type( expr ) {
   if ( isSpec( expr ) ) {
     return typeTable[ expr.type ] || expr.type.toLowerCase();
@@ -135,7 +146,7 @@ function genForExpression( globalReg, exprName, expr, meta, registry ) {
 
   const docheader = `
     <div class="card-header">
-      ${name}&nbsp;
+      ${_stylizeName( expr, name )}&nbsp;
         <span class="tag tag-primary">
           ${_type( expr )}
         </span>
@@ -220,19 +231,21 @@ function _codeExample( code ) {
 }
 
 function _synopsis( fspec, globalReg, meta ) {
-  var r = synopsisArray( fspec, globalReg, meta );
+  var r = synopsisArray( fspec, globalReg, meta, [] );
   var h = _synopsisToHtml( r );
   return h;
+}
+
+function AltName( name ) {
+  this.name = name;
 }
 
 function _synopsisToHtml( arr ) {
   var h = arr.map( ( item ) => {
     if ( isStr( item ) ) {
-      if ( item.indexOf( '&lt;' ) === 0 ) {
-        return `<li>${item}</li>`;
-      } else {
-        return item;
-      }
+      return item;
+    } else if ( item instanceof AltName ) {
+      return `<li>&lt;${item.name}&gt;:</li>`;
     } else if ( Array.isArray( item ) ) {
       return `<div>${
         _synopsisToHtml( item )
@@ -242,13 +255,13 @@ function _synopsisToHtml( arr ) {
   return `<ul>${h}</ul>`;
 }
 
-function synopsisArray( fspec, globalReg ) {
+function synopsisArray( fspec, globalReg, meta, defs ) {
   return [
-    '&lt;register&gt;:',
+    new AltName( 'register' ),
     [
       'S(', 'nsPath', ', ', 'expression', ')'
     ],
-    '&lt;retrieve&gt;:',
+    new AltName( 'retrieve' ),
     [
       'var ', 'expression', ' = ', 'S(', 'nsPath', ', ', 'expression', ')'
     ],
@@ -395,7 +408,11 @@ function toOrdinal( i ) {
 function _genFspec( globalReg, exprName, spec, meta ) {
   var frags = [ ];
   const name = meta && meta[ 'name' ] || exprName;
+  const comment = meta && meta[ 'comment' ];
   const { args: argsSpec, ret: retSpec, fn } = spec.opts;
+  if ( comment ) {
+    frags.push( [ null, comment ] );
+  }
   if ( argsSpec ) {
     frags.push( [ 'Synopsis', _synopsis( spec, globalReg ) ] );
     frags.push( [ 'Parameter list', genForExpression( globalReg, null, argsSpec, meta && meta.args ) ] );
@@ -407,7 +424,11 @@ function _genFspec( globalReg, exprName, spec, meta ) {
   }
   const r = `
     <dl class="card-block">
-    ${frags.map( ( [ name, src ] ) => `<dt>${name}</dt><dd>${src}</dd>` ).join( '\n' )}
+    ${frags.map( ( [ name, src ] ) => {
+      const title = name ? `<dt>${name}</dt>` : '';
+      const def = `<dd>${src}</dd>`;
+      return `${title}${def}`;
+    } ).join( '\n' )}
     </dl>
   `;
   return r;

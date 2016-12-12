@@ -16,10 +16,7 @@ const DescribeFnSpec = fspec( {
 } );
 
 S( '/specky', NamespaceFnSpec );
-S( 'specky.types/NamespaceObj', NamespaceObjSpec );
-S( 'specky.types/NamespacePath', isNamespacePath );
-S( 'specky.types/Expression', ExprSpec );
-S( 'specky/describe', DescribeFnSpec );
+
 S( 'specky.core/cat', CatFnSpec );
 S( 'specky.core/or', OrFnSpec );
 S( 'specky.core/zeroOrMore', ZeroOrMoreFnSpec );
@@ -28,5 +25,9 @@ S( 'specky.core/zeroOrOne', ZeroOrOneFnSpec );
 S( 'specky.core/collOf', CollOfSpec );
 S( 'specky.core/and', AndSpec );
 S( 'specky.core/props', PropsSpec );
+S( 'specky.utils/describe', DescribeFnSpec );
+S( 'specky.types/NamespaceObj', NamespaceObjSpec );
+S( 'specky.types/NamespacePath', isNamespacePath );
+S( 'specky.types/Expression', ExprSpec );
 
 export default S.getRegistry();

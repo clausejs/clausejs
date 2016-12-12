@@ -2,9 +2,10 @@ import { meta as M } from '../';
 
 M( '/specky', {
   'name': 'S',
+  'comment': 'Registers or retrieves a spec from global spec regitry by path.',
   'args': {
     'register': {
-      'comment': 'Registers a namespace path with an expression.',
+      'comment': 'Registers a namespace path with the given expression.',
       'example': 'S("awesomeapp/TodoItem", todoItemSpec)',
     },
     'retrieve': {
@@ -29,5 +30,5 @@ M( 'specky.types/Expression', {
 
 M( 'specky.utils/describe', {
   'name': 'S.describe',
-  'comment': 'returns an abbreviated description of the spec as a simple tree structure',
+  'comment': 'Returns an abbreviated description of the spec as a simple tree structure.',
 } );
