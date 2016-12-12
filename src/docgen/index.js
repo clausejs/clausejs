@@ -138,6 +138,8 @@ function genForExpression( globalReg, exprName, expr, meta ) {
     docstr = _genCatSpec( globalReg, exprName, path, expr, meta );
   } else if ( isPred( expr ) || expr.type === 'PRED' ) {
     docstr = _genPredSpec( globalReg, exprName, expr, meta );
+  } else if ( isPred( expr ) || expr.type === 'ANY' ) {
+    docstr = _genAnySpec( );
   } else {
     docstr = _genUnknownSpec( globalReg, exprName, path, expr, meta );
   }
@@ -167,6 +169,12 @@ function genForExpression( globalReg, exprName, expr, meta ) {
       ${docstr}
       </fieldset>
     `;
+}
+
+function _genAnySpec() {
+  return `
+    <div class="card-block">Any value.</div>
+  `
 }
 
 function _genSpecRef( globalReg, exprName, path, expr, meta ) {

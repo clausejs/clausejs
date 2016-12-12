@@ -19469,6 +19469,8 @@ function genForExpression(globalReg, exprName, expr, meta) {
     docstr = _genCatSpec(globalReg, exprName, path, expr, meta);
   } else if ((0, _isPred2.default)(expr) || expr.type === 'PRED') {
     docstr = _genPredSpec(globalReg, exprName, expr, meta);
+  } else if ((0, _isPred2.default)(expr) || expr.type === 'ANY') {
+    docstr = _genAnySpec();
   } else {
     docstr = _genUnknownSpec(globalReg, exprName, path, expr, meta);
   }
@@ -19478,6 +19480,10 @@ function genForExpression(globalReg, exprName, expr, meta) {
   var docheader = '\n    <div class="card-header">\n      ' + _stylizeName(expr, name) + '&nbsp;\n        <span class="tag tag-primary">\n          ' + _type(expr) + '\n        </span>\n    </div>\n  ';
 
   return exprName && path ? '\n    <a name="' + path + '"></a>\n    <div class="card" data-path="' + path + '">\n      ' + docheader + '\n      ' + docstr + '\n    </div>\n    ' : '\n      <fieldset class="card">\n      <legend class="spec-type">\n        ' + (!path ? _tagFor(expr) : '<span class="tag tag-info">spec</span>') + '\n      </legend>\n      ' + docstr + '\n      </fieldset>\n    ';
+}
+
+function _genAnySpec() {
+  return '\n    <div class="card-block">Any value.</div>\n  ';
 }
 
 function _genSpecRef(globalReg, exprName, path, expr, meta) {
