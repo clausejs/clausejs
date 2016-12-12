@@ -7,18 +7,20 @@ A powerful & highly flexible JavaScript data validation and conformation library
 - Build your data validation rules (specs) with composable, regex-like expressions built from primitives predicates such as `and`, `or`, `any`, `props`, `oneOrMore`, `zeroOrMore`, etc
 - Validate and make assertions about your data with these predicate functions
 - Assert & validate the shape and properties of your function's arguments and its return value
-- Conform your data with a range of available shapes of specs
+- Conform your data with a range of available shapes of specs to simply data parsing
 
 ## Why Specky
 
-- A complement/alternative to unit testing
-- facilitates a better debugging experience
-- Guides you through the initial modeling process of code implementation
-- Help create more customizable type and behavior constraints that is more powerful than typed languages such as TypeScript
-- [WIP] Automatic documentation generation
-- [Coming soon] Automatic generation of test cases for your functions
+By writing specs for your app *only once*, you will get
 
-[Click here](https://www.youtube.com/watch?v=oyLBGkS5ICk) to watch a good high-level video on the rationale behind clojure.spec (and thus Specky).
+- Runtime validation for your data and functions
+- Advanced data conformation that simplifies your code for data processing
+- [WIP] Automatically generated documentation (via [specky-docgen](packages/specky-docgen))
+- [WIP] React props validation (via [specky-react](packages/specky-react))
+- [Coming soon] Automatically generated of test cases for your functions (via [specky-gen](packages/specky-gen))
+- A safety harness with more customizable type and behavior constraints that is even more powerful than typed languages such as TypeScript
+
+In addition, [Click here](https://www.youtube.com/watch?v=oyLBGkS5ICk) to watch a good high-level video on the rationale behind clojure.spec (and thus Specky).
 
 ## Quick Example
 
