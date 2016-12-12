@@ -1,13 +1,12 @@
 var Spec = require( '../models/Spec' );
-var isSpec = require( '../utils/isSpec' );
 var coerceIntoSpec = require( '../utils/coerceIntoSpec' );
-var { cat } = require( './regex' );
+var { cat, ExprSpec } = require( './regex' );
 var fspec = require( './fspec' );
 var walk = require( '../walk' );
 
-var WallSpec = fspec( {
-  args: cat( isSpec ),
-  ret: isSpec,
+var WallFnSpec = fspec( {
+  args: cat( ExprSpec ),
+  ret: ExprSpec,
 } );
 
 function wallOp( expr ) {
@@ -23,5 +22,8 @@ function wallOp( expr ) {
   return wallS;
 }
 
+var wall = WallFnSpec.instrument( wallOp );
 
-module.exports = WallSpec.instrument( wallOp );
+module.exports = {
+  WallFnSpec, wall,
+};

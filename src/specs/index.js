@@ -3,6 +3,7 @@ import { any, ExprSpec, CatFnSpec, OrFnSpec,
   CollOfSpec,
   ZeroOrMoreFnSpec, OneOrMoreFnSpec, ZeroOrOneFnSpec } from '../core';
 import { AndSpec } from '../core/and';
+import { WallFnSpec } from '../core/wall';
 import { PropsSpec } from '../core/objRelated';
 import { isNamespacePath, NamespaceFnSpec, NamespaceObjSpec } from './namespace.types';
 
@@ -40,6 +41,7 @@ S( 'specky.core/zeroOrOne', ZeroOrOneFnSpec );
 S( 'specky.core/collOf', CollOfSpec );
 S( 'specky.core/and', AndSpec );
 S( 'specky.core/props', PropsSpec );
+S( 'specky.core/wall', WallFnSpec );
 S( 'specky.core/fspec', FspecFnSpec );
 
 S( 'specky.utils/describe', DescribeFnSpec );

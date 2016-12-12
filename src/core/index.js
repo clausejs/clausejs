@@ -2,11 +2,11 @@ var oAssign = require( 'object-assign' );
 var regex = require( './regex' );
 var { props, keys } = require( './objRelated' );
 var { and } = require( './and' );
+var { wall } = require( './wall' );
 var other = {
   any: require( './any' ),
   fspec: require( './fspec' ),
-  wall: require( './wall' ),
-  spec: require( './wall' ),
+  wall, spec: wall,
   and,
 };
 

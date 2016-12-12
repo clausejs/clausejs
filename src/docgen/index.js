@@ -13,7 +13,6 @@ function gen( registry ) {
   return docstr;
 }
 
-
 function genCot( registry ) {
   var r = getDefList( registry );
   var groups = Object.keys( r );
@@ -24,8 +23,10 @@ function genCot( registry ) {
     </dt>
     <dd>
       <ul>
-      ${r[ p ].map( ( [ p, n, ref ] ) =>
-        `<li>${_specRefLink( `${p}/${n}` )( ( p ) => _stylizeName( deref( ref ), _unanbiguousName( p ) ) )}</li>` ).join( '' )}
+      ${r[ p ]
+        .map( ( [ p, n, ref ] ) =>
+          `<li>${_specRefLink( `${p}/${n}` )( ( p ) => _stylizeName( deref( ref ), _unanbiguousName( p ) ) )}</li>` )
+        .join( '' )}
       </ul>
     </dd>
     ` ).join( '' )}
