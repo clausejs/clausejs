@@ -1435,21 +1435,17 @@ var Spec = __webpack_require__(0);
 
 var _require = __webpack_require__(11),
     oneOrMore = _require.oneOrMore,
-    cat = _require.cat,
     ExprSpec = _require.ExprSpec;
 
 var fspec = __webpack_require__(7);
 var walk = __webpack_require__(9);
 
 var AndSpec = fspec({
-  args: cat('exprs', oneOrMore(ExprSpec)),
+  args: oneOrMore(ExprSpec),
   ret: isSpec
 });
 
-function andOp(conformedArgs) {
-  var exprs = conformedArgs.exprs;
-
-
+function andOp(exprs) {
   var andS = new Spec({
     type: 'AND',
     exprs: exprs,
@@ -19763,7 +19759,7 @@ function _type(expr) {
   }
 }
 
-function genForExpression(globalReg, exprName, expr, meta, registry) {
+function genForExpression(globalReg, exprName, expr, meta) {
   var docstr = void 0;
   var path = (0, _namespaceResolver.resolve)(globalReg, expr);
 
@@ -19772,7 +19768,7 @@ function genForExpression(globalReg, exprName, expr, meta, registry) {
   } else if (expr.type === 'SpecRef') {
     docstr = _genSpecRef(globalReg, exprName, null, expr, meta);
   } else if (expr.type === 'Delayed') {
-    docstr = genForExpression(globalReg, exprName, expr.get(), meta, registry);
+    docstr = genForExpression(globalReg, exprName, expr.get(), meta);
   } else if (expr.type === 'FSPEC') {
     docstr = _genFspec(globalReg, exprName, expr, meta);
   } else if (expr.type === 'OR') {
@@ -19794,7 +19790,7 @@ function genForExpression(globalReg, exprName, expr, meta, registry) {
 
 function _genSpecRef(globalReg, exprName, path, expr, meta) {
   var p = path || expr.ref;
-  return '\n    <div class="card-block">\n      Must satisfy\n      ' + _specRefLink(p)(function (p) {
+  return '\n    <div class="card-block">\n      A value that satisfies\n      ' + _specRefLink(p)(function (p) {
     return p;
   }) + '\n    </div>\n  ';
 }
@@ -19957,7 +19953,7 @@ function synopsisArray(prefixes, suffixes, exprName, spec, globalReg, meta, defs
       _loop(i);
     }
 
-    return prefixes.concat(_obj).concat(suffixes);
+    return ['<em>'].concat(prefixes).concat(_obj).concat(suffixes).concat(['</em>']);
   } else {
     console.error(spec);
     // throw '!';
@@ -19992,7 +19988,7 @@ function _genPredSpec(globalReg, exprName, expr, meta) {
   var name = meta && meta['name'] || exprName;
   var predName = (0, _fnName3.default)(pred);
   var nameFrag = name ? name + ' ' : '';
-  var r = '\n    <div class="card-block">\n      <span\n        data-toggle="popover"\n        data-trigger="hover"\n        data-html="true"\n        title="' + predName + '()"\n        data-content="<pre>' + pred.toString() + '</pre>"\n        data-container="body"\n        data-animation="false"\n        data-delay="500">\n        Must satisfy\n        ' + (name ? '' : _tagFor('pred')) + '\n        <em>' + predName + '()</em>\n      </span>\n    </div>\n  ';
+  var r = '\n    <div class="card-block">\n      <span\n        data-toggle="popover"\n        data-trigger="hover"\n        data-html="true"\n        title="' + predName + '()"\n        data-content="<pre>' + pred.toString() + '</pre>"\n        data-container="body"\n        data-animation="false"\n        data-delay="500">\n        A value that satisfies\n        ' + (name ? '' : _tagFor('pred')) + '\n        <em>' + predName + '()</em>\n      </span>\n    </div>\n  ';
   return r;
 }
 
@@ -20003,12 +19999,21 @@ function _tagFor(t) {
     case 'cat':case 'or':
       return '<span class="tag tag-info">' + t + '</span>';
     default:
-      throw '!';
+      return '<span class="tag tag-info">' + t + '</span>';
   }
 }
 
 function _genUnknownSpec(globalReg, exprName, path, expr, meta) {
-  var r = '\n    <div class="card-block">\n      ' + _syntax(expr, globalReg, path) + '\n      <pre>' + _stringifyWithFn(expr) + '</pre>\n      <pre>' + _stringifyWithFn(meta) + '</pre>\n    </div>\n  ';
+  var r = '\n    <div class="card-block">\n      ' + _tagFor(expr.type) + '\n      ' + _syntax(expr, globalReg, path) + '\n      ' + expr.exprs.map(function (exprAlts) {
+    var name = exprAlts.name,
+        expr = exprAlts.expr;
+
+    if (expr) {
+      return genForExpression(globalReg, name, expr, meta && meta[name]);
+    } else {
+      return genForExpression(globalReg, null, exprAlts, null);
+    }
+  }).join('') + '\n      <pre>' + _stringifyWithFn(meta) + '</pre>\n    </div>\n  ';
   return r;
 }
 

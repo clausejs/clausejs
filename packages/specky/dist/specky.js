@@ -1435,21 +1435,17 @@ var Spec = __webpack_require__(0);
 
 var _require = __webpack_require__(11),
     oneOrMore = _require.oneOrMore,
-    cat = _require.cat,
     ExprSpec = _require.ExprSpec;
 
 var fspec = __webpack_require__(7);
 var walk = __webpack_require__(9);
 
 var AndSpec = fspec({
-  args: cat('exprs', oneOrMore(ExprSpec)),
+  args: oneOrMore(ExprSpec),
   ret: isSpec
 });
 
-function andOp(conformedArgs) {
-  var exprs = conformedArgs.exprs;
-
-
+function andOp(exprs) {
   var andS = new Spec({
     type: 'AND',
     exprs: exprs,

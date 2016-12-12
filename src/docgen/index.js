@@ -120,7 +120,7 @@ function _type( expr ) {
   }
 }
 
-function genForExpression( globalReg, exprName, expr, meta, registry ) {
+function genForExpression( globalReg, exprName, expr, meta ) {
   let docstr;
   let path = resolve( globalReg, expr );
 
@@ -129,7 +129,7 @@ function genForExpression( globalReg, exprName, expr, meta, registry ) {
   } else if ( expr.type === 'SpecRef' ) {
     docstr = _genSpecRef( globalReg, exprName, null, expr, meta );
   } else if ( expr.type === 'Delayed' ) {
-    docstr = genForExpression( globalReg, exprName, expr.get(), meta, registry );
+    docstr = genForExpression( globalReg, exprName, expr.get(), meta );
   } else if ( expr.type === 'FSPEC' ) {
     docstr = _genFspec( globalReg, exprName, expr, meta );
   } else if ( expr.type === 'OR' ) {
@@ -170,7 +170,7 @@ function _genSpecRef( globalReg, exprName, path, expr, meta ) {
   const p = path || expr.ref;
   return `
     <div class="card-block">
-      Must satisfy
+      A value that satisfies
       ${_specRefLink( p )( ( p ) => p )}
     </div>
   `;
@@ -309,8 +309,11 @@ function synopsisArray( prefixes, suffixes, exprName, spec, globalReg, meta, def
       }
     }
 
-    return prefixes.concat( obj ).concat( suffixes );
-
+    return [ '<em>' ]
+      .concat( prefixes )
+      .concat( obj )
+      .concat( suffixes )
+      .concat( [ '</em>' ] );
   } else {
     console.error( spec );
     // throw '!';
@@ -357,7 +360,7 @@ function _genPredSpec( globalReg, exprName, expr, meta ) {
         data-container="body"
         data-animation="false"
         data-delay="500">
-        Must satisfy
+        A value that satisfies
         ${ name ? '' : _tagFor( 'pred' ) }
         <em>${predName}()</em>
       </span>
@@ -373,15 +376,23 @@ function _tagFor( t ) {
   case 'cat': case 'or':
     return `<span class="tag tag-info">${t}</span>`;
   default:
-    throw '!'
+    return `<span class="tag tag-info">${t}</span>`;
   }
 }
 
 function _genUnknownSpec( globalReg, exprName, path, expr, meta ) {
   const r = `
     <div class="card-block">
+      ${_tagFor( expr.type )}
       ${_syntax( expr, globalReg, path )}
-      <pre>${_stringifyWithFn( expr )}</pre>
+      ${expr.exprs.map( ( exprAlts ) => {
+        var { name, expr } = exprAlts;
+        if ( expr ) {
+          return genForExpression( globalReg, name, expr, meta && meta[ name ] );
+        } else {
+          return genForExpression( globalReg, null, exprAlts, null );
+        }
+      } ).join( '' )}
       <pre>${_stringifyWithFn( meta )}</pre>
     </div>
   `;
