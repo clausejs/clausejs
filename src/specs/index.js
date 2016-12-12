@@ -1,5 +1,5 @@
-import S, { fspec, cat, isObj, isStr } from '../';
-import { ExprSpec, CatFnSpec, OrFnSpec,
+import S, { fspec, cat, isObj, isStr, isBool } from '../';
+import { any, ExprSpec, CatFnSpec, OrFnSpec,
   CollOfSpec,
   ZeroOrMoreFnSpec, OneOrMoreFnSpec, ZeroOrOneFnSpec } from '../core';
 import { AndSpec } from '../core/and';
@@ -15,6 +15,11 @@ const DescribeFnSpec = fspec( {
   ret: isStr,
 } );
 
+const SingleArgPredSpec = () => fspec( {
+  args: cat( any() ),
+  ret: isBool,
+} );
+
 S( '/specky', NamespaceFnSpec );
 
 S( 'specky.core/cat', CatFnSpec );
@@ -26,6 +31,20 @@ S( 'specky.core/collOf', CollOfSpec );
 S( 'specky.core/and', AndSpec );
 S( 'specky.core/props', PropsSpec );
 S( 'specky.utils/describe', DescribeFnSpec );
+
+S( 'specky.preds/isObj', SingleArgPredSpec() );
+S( 'specky.preds/isStr', SingleArgPredSpec() );
+S( 'specky.preds/isArray', SingleArgPredSpec() );
+S( 'specky.preds/isDate', SingleArgPredSpec() );
+S( 'specky.preds/isNull', SingleArgPredSpec() );
+S( 'specky.preds/isUndefined', SingleArgPredSpec() );
+S( 'specky.preds/notEmpty', SingleArgPredSpec() );
+S( 'specky.preds/isBool', SingleArgPredSpec() );
+S( 'specky.preds/isFn', SingleArgPredSpec() );
+S( 'specky.preds/isNum', SingleArgPredSpec() );
+S( 'specky.preds/isInt', SingleArgPredSpec() );
+S( 'specky.preds/isNatInt', SingleArgPredSpec() );
+
 S( 'specky.types/NamespaceObj', NamespaceObjSpec );
 S( 'specky.types/NamespacePath', isNamespacePath );
 S( 'specky.types/Expression', ExprSpec );

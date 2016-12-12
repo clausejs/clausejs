@@ -19865,6 +19865,13 @@ var DescribeFnSpec = (0, _.fspec)({
   ret: _.isStr
 });
 
+var SingleArgPredSpec = function SingleArgPredSpec() {
+  return (0, _.fspec)({
+    args: (0, _.cat)((0, _core.any)()),
+    ret: _.isBool
+  });
+};
+
 (0, _2.default)('/specky', _namespace.NamespaceFnSpec);
 
 (0, _2.default)('specky.core/cat', _core.CatFnSpec);
@@ -19876,6 +19883,20 @@ var DescribeFnSpec = (0, _.fspec)({
 (0, _2.default)('specky.core/and', _and.AndSpec);
 (0, _2.default)('specky.core/props', _objRelated.PropsSpec);
 (0, _2.default)('specky.utils/describe', DescribeFnSpec);
+
+(0, _2.default)('specky.preds/isObj', SingleArgPredSpec());
+(0, _2.default)('specky.preds/isStr', SingleArgPredSpec());
+(0, _2.default)('specky.preds/isArray', SingleArgPredSpec());
+(0, _2.default)('specky.preds/isDate', SingleArgPredSpec());
+(0, _2.default)('specky.preds/isNull', SingleArgPredSpec());
+(0, _2.default)('specky.preds/isUndefined', SingleArgPredSpec());
+(0, _2.default)('specky.preds/notEmpty', SingleArgPredSpec());
+(0, _2.default)('specky.preds/isBool', SingleArgPredSpec());
+(0, _2.default)('specky.preds/isFn', SingleArgPredSpec());
+(0, _2.default)('specky.preds/isNum', SingleArgPredSpec());
+(0, _2.default)('specky.preds/isInt', SingleArgPredSpec());
+(0, _2.default)('specky.preds/isNatInt', SingleArgPredSpec());
+
 (0, _2.default)('specky.types/NamespaceObj', _namespace.NamespaceObjSpec);
 (0, _2.default)('specky.types/NamespacePath', _namespace.isNamespacePath);
 (0, _2.default)('specky.types/Expression', _core.ExprSpec);
