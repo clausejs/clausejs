@@ -162,10 +162,14 @@ function genMultiArgOp( type ) {
             .concat( [ `"${name}"`, ', ', expr, ] )
             .concat( idx < coercedExprs.length - 1 ? [ ', ' ] : [] )
           , [] );
+      let opts = {
+        named: true,
+      };
       var s = new Spec( {
         type,
         exprs: coercedExprs,
         fragments,
+        opts,
       } );
 
       s.conform = function conform( x ) {
@@ -195,9 +199,14 @@ function genMultiArgOp( type ) {
         }
       } );
 
+      let opts = {
+        named: false,
+      };
+
       s = new Spec( {
         type,
         exprs: coercedExprs,
+        opts,
         fragments: coercedExprs.reduce(
           ( curr, { expr }, idx ) =>
             curr

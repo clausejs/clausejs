@@ -18,7 +18,7 @@ A powerful & highly flexible JavaScript data validation and conformation library
 - [WIP] Automatic documentation generation
 - [Coming soon] Automatic generation of test cases for your functions
 
-[Click here](https://www.youtube.com/watch?v=oyLBGkS5ICk) to watch a good tro video on the rationale behind clojure.spec (and thus Specky).
+[Click here](https://www.youtube.com/watch?v=oyLBGkS5ICk) to watch a good high-level video on the rationale behind clojure.spec (and thus Specky).
 
 ## Quick Example
 

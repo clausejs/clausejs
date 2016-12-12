@@ -2,7 +2,7 @@ import { NamespaceObjSpec } from '../specs/namespace.types';
 import fnName from '../utils/fnName';
 import isPred from '../utils/isPred';
 import isSpec from '../utils/isSpec';
-import { isStr } from '../preds';
+import { isStr, isObj } from '../preds';
 import describe from '../utils/describe';
 import deref from '../utils/deref';
 import { resolve, getDefList } from './namespaceResolver';
@@ -230,8 +230,8 @@ function _codeExample( code ) {
   return r;
 }
 
-function _synopsis( fspec, globalReg, meta ) {
-  var r = synopsisArray( fspec, globalReg, meta, [] );
+function _synopsis( exprName, fspec, globalReg, meta ) {
+  var r = synopsisArray( [], [], exprName, fspec, globalReg, meta, [] );
   var h = _synopsisToHtml( r );
   return h;
 }
@@ -241,31 +241,82 @@ function AltName( name ) {
 }
 
 function _synopsisToHtml( arr ) {
-  var h = arr.map( ( item ) => {
-    if ( isStr( item ) ) {
-      return item;
-    } else if ( item instanceof AltName ) {
-      return `<li>&lt;${item.name}&gt;:</li>`;
-    } else if ( Array.isArray( item ) ) {
-      return `<div>${
-        _synopsisToHtml( item )
-      }</div>`
+  let h;
+  if ( Array.isArray( arr ) ) {
+    h = arr.map( _synopsisToHtml ).join( '' );
+    h = `<ul>${h}</ul>`;
+  } else if ( isObj( arr ) ) {
+    var nameItemPairs = [];
+    for ( var name in arr ) {
+      nameItemPairs.push( [ name, arr[ name ] ] );
     }
-  } ).join( '' );
-  return `<ul>${h}</ul>`;
+    h = nameItemPairs.map( ( [ name, item ] ) => {
+      return `<li>&lt;${name}&gt;:<div>${_synopsisToHtml( item )}</div></li>`
+    } ).join( '' );
+    h = `<ul>${h}</ul>`;
+  } else if ( isStr( arr ) ) {
+    h = arr;
+  }
+  return h;
+
 }
 
-function synopsisArray( fspec, globalReg, meta, defs ) {
-  return [
-    new AltName( 'register' ),
-    [
-      'S(', 'nsPath', ', ', 'expression', ')'
-    ],
-    new AltName( 'retrieve' ),
-    [
-      'var ', 'expression', ' = ', 'S(', 'nsPath', ', ', 'expression', ')'
-    ],
-  ]
+function synopsisArray( prefixes, suffixes, exprName, spec, globalReg, meta, defs ) {
+  if ( !spec ) {
+    return prefixes.concat( suffixes );
+  } else if ( spec.type == 'FSPEC' ) {
+    let fnName = meta && meta.name || exprName;
+
+    return synopsisArray( [ fnName, '(' ], [ ')' ], null, spec.opts.args, globalReg, meta && meta.args, defs );
+    // return {
+    //   register: [
+    //     'S(', 'nsPath', ', ', 'expression', ')'
+    //   ],
+    //   retrieve: [
+    //     'var ', 'expression', ' = ', 'S(', 'nsPath', ', ', 'expression', ')'
+    //   ],
+    // };
+  } else if ( spec.type === 'OR' ) {
+    var { named } = spec.opts;
+    let obj;
+    if ( named ) {
+      obj = {};
+      for ( let eAlt of spec.exprs ) {
+        obj[ eAlt.name ] = synopsisArray( prefixes, suffixes, null, eAlt.expr, globalReg, meta && meta[ eAlt.name ], defs );
+      }
+    } else {
+      obj = [];
+      for ( let eAlt of spec.exprs ) {
+        obj.push( synopsisArray( prefixes, suffixes, null, eAlt.expr, globalReg, meta && meta[ eAlt.name ], defs ) );
+      }
+    }
+    return obj;
+  } else if ( spec.type === 'CAT' ) {
+    var { named } = spec.opts;
+    let obj = [];
+    for ( let i = 0; i < spec.exprs.length; i++ ) {
+      let eAlt = spec.exprs[ i ];
+      let path = resolve( globalReg, eAlt.expr );
+      if ( named ) {
+        obj.push( path ? _specRefLink( path )( () => eAlt.name ) : eAlt.name );
+      } else {
+        if ( path ) {
+          obj.push( _specRefLink( path )( _unanbiguousName ) );
+        }
+      }
+      if ( i < spec.exprs.length - 1 ) {
+        obj.push( ', ' );
+      }
+    }
+
+    return prefixes.concat( obj ).concat( suffixes );
+
+  } else {
+    console.error( spec );
+    // throw '!';
+    return spec.type;
+  }
+
 }
 
 function _syntax( expr, globalReg, currPath ) {
@@ -414,7 +465,7 @@ function _genFspec( globalReg, exprName, spec, meta ) {
     frags.push( [ null, comment ] );
   }
   if ( argsSpec ) {
-    frags.push( [ 'Synopsis', _synopsis( spec, globalReg ) ] );
+    frags.push( [ 'Synopsis', _synopsis( exprName, spec, globalReg, meta ) ] );
     frags.push( [ 'Parameter list', genForExpression( globalReg, null, argsSpec, meta && meta.args ) ] );
   }
   if ( retSpec ) {

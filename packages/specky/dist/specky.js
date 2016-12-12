@@ -650,10 +650,14 @@ function genMultiArgOp(type) {
             expr = _ref.expr;
         return curr.concat(['"' + name + '"', ', ', expr]).concat(idx < coercedExprs.length - 1 ? [', '] : []);
       }, []);
+      var opts = {
+        named: true
+      };
       var s = new Spec({
         type: type,
         exprs: coercedExprs,
-        fragments: fragments
+        fragments: fragments,
+        opts: opts
       });
 
       s.conform = function conform(x) {
@@ -683,9 +687,14 @@ function genMultiArgOp(type) {
         }
       });
 
+      var _opts = {
+        named: false
+      };
+
       s = new Spec({
         type: type,
         exprs: coercedExprs,
+        opts: _opts,
         fragments: coercedExprs.reduce(function (curr, _ref2, idx) {
           var expr = _ref2.expr;
           return curr.concat([expr]).concat(idx < coercedExprs.length - 1 ? [', '] : []);

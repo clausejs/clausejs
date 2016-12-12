@@ -650,10 +650,14 @@ function genMultiArgOp(type) {
             expr = _ref.expr;
         return curr.concat(['"' + name + '"', ', ', expr]).concat(idx < coercedExprs.length - 1 ? [', '] : []);
       }, []);
+      var opts = {
+        named: true
+      };
       var s = new Spec({
         type: type,
         exprs: coercedExprs,
-        fragments: fragments
+        fragments: fragments,
+        opts: opts
       });
 
       s.conform = function conform(x) {
@@ -683,9 +687,14 @@ function genMultiArgOp(type) {
         }
       });
 
+      var _opts = {
+        named: false
+      };
+
       s = new Spec({
         type: type,
         exprs: coercedExprs,
+        opts: _opts,
         fragments: coercedExprs.reduce(function (curr, _ref2, idx) {
           var expr = _ref2.expr;
           return curr.concat([expr]).concat(idx < coercedExprs.length - 1 ? [', '] : []);
@@ -19616,9 +19625,9 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 
 var _namespace = __webpack_require__(21);
 
-var _fnName = __webpack_require__(10);
+var _fnName2 = __webpack_require__(10);
 
-var _fnName2 = _interopRequireDefault(_fnName);
+var _fnName3 = _interopRequireDefault(_fnName2);
 
 var _isPred = __webpack_require__(6);
 
@@ -19815,8 +19824,8 @@ function _codeExample(code) {
   return r;
 }
 
-function _synopsis(fspec, globalReg, meta) {
-  var r = synopsisArray(fspec, globalReg, meta, []);
+function _synopsis(exprName, fspec, globalReg, meta) {
+  var r = synopsisArray([], [], exprName, fspec, globalReg, meta, []);
   var h = _synopsisToHtml(r);
   return h;
 }
@@ -19826,20 +19835,134 @@ function AltName(name) {
 }
 
 function _synopsisToHtml(arr) {
-  var h = arr.map(function (item) {
-    if ((0, _preds.isStr)(item)) {
-      return item;
-    } else if (item instanceof AltName) {
-      return '<li>&lt;' + item.name + '&gt;:</li>';
-    } else if (Array.isArray(item)) {
-      return '<div>' + _synopsisToHtml(item) + '</div>';
+  var h = void 0;
+  if (Array.isArray(arr)) {
+    h = arr.map(_synopsisToHtml).join('');
+    h = '<ul>' + h + '</ul>';
+  } else if ((0, _preds.isObj)(arr)) {
+    var nameItemPairs = [];
+    for (var name in arr) {
+      nameItemPairs.push([name, arr[name]]);
     }
-  }).join('');
-  return '<ul>' + h + '</ul>';
+    h = nameItemPairs.map(function (_ref4) {
+      var _ref5 = _slicedToArray(_ref4, 2),
+          name = _ref5[0],
+          item = _ref5[1];
+
+      return '<li>&lt;' + name + '&gt;:<div>' + _synopsisToHtml(item) + '</div></li>';
+    }).join('');
+    h = '<ul>' + h + '</ul>';
+  } else if ((0, _preds.isStr)(arr)) {
+    h = arr;
+  }
+  return h;
 }
 
-function synopsisArray(fspec, globalReg, meta, defs) {
-  return [new AltName('register'), ['S(', 'nsPath', ', ', 'expression', ')'], new AltName('retrieve'), ['var ', 'expression', ' = ', 'S(', 'nsPath', ', ', 'expression', ')']];
+function synopsisArray(prefixes, suffixes, exprName, spec, globalReg, meta, defs) {
+  if (!spec) {
+    return prefixes.concat(suffixes);
+  } else if (spec.type == 'FSPEC') {
+    var _fnName = meta && meta.name || exprName;
+
+    return synopsisArray([_fnName, '('], [')'], null, spec.opts.args, globalReg, meta && meta.args, defs);
+    // return {
+    //   register: [
+    //     'S(', 'nsPath', ', ', 'expression', ')'
+    //   ],
+    //   retrieve: [
+    //     'var ', 'expression', ' = ', 'S(', 'nsPath', ', ', 'expression', ')'
+    //   ],
+    // };
+  } else if (spec.type === 'OR') {
+    var named = spec.opts.named;
+
+    var obj = void 0;
+    if (named) {
+      obj = {};
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        for (var _iterator = spec.exprs[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var eAlt = _step.value;
+
+          obj[eAlt.name] = synopsisArray(prefixes, suffixes, null, eAlt.expr, globalReg, meta && meta[eAlt.name], defs);
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator.return) {
+            _iterator.return();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+    } else {
+      obj = [];
+      var _iteratorNormalCompletion2 = true;
+      var _didIteratorError2 = false;
+      var _iteratorError2 = undefined;
+
+      try {
+        for (var _iterator2 = spec.exprs[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+          var _eAlt = _step2.value;
+
+          obj.push(synopsisArray(prefixes, suffixes, null, _eAlt.expr, globalReg, meta && meta[_eAlt.name], defs));
+        }
+      } catch (err) {
+        _didIteratorError2 = true;
+        _iteratorError2 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion2 && _iterator2.return) {
+            _iterator2.return();
+          }
+        } finally {
+          if (_didIteratorError2) {
+            throw _iteratorError2;
+          }
+        }
+      }
+    }
+    return obj;
+  } else if (spec.type === 'CAT') {
+    var named = spec.opts.named;
+
+    var _obj = [];
+
+    var _loop = function _loop(i) {
+      var eAlt = spec.exprs[i];
+      var path = (0, _namespaceResolver.resolve)(globalReg, eAlt.expr);
+      if (named) {
+        _obj.push(path ? _specRefLink(path)(function () {
+          return eAlt.name;
+        }) : eAlt.name);
+      } else {
+        if (path) {
+          _obj.push(_specRefLink(path)(_unanbiguousName));
+        }
+      }
+      if (i < spec.exprs.length - 1) {
+        _obj.push(', ');
+      }
+    };
+
+    for (var i = 0; i < spec.exprs.length; i++) {
+      _loop(i);
+    }
+
+    return prefixes.concat(_obj).concat(suffixes);
+  } else {
+    console.error(spec);
+    // throw '!';
+    return spec.type;
+  }
 }
 
 function _syntax(expr, globalReg, currPath) {
@@ -19867,7 +19990,7 @@ function _unanbiguousName(path) {
 function _genPredSpec(globalReg, exprName, expr, meta) {
   var pred = expr.exprs ? expr.exprs[0] : expr;
   var name = meta && meta['name'] || exprName;
-  var predName = (0, _fnName2.default)(pred);
+  var predName = (0, _fnName3.default)(pred);
   var nameFrag = name ? name + ' ' : '';
   var r = '\n    <div class="card-block">\n      <span\n        data-toggle="popover"\n        data-trigger="hover"\n        data-html="true"\n        title="' + predName + '()"\n        data-content="<pre>' + pred.toString() + '</pre>"\n        data-container="body"\n        data-animation="false"\n        data-delay="500">\n        Must satisfy\n        ' + (name ? '' : _tagFor('pred')) + '\n        <em>' + predName + '()</em>\n      </span>\n    </div>\n  ';
   return r;
@@ -19900,9 +20023,9 @@ function _stringifyWithFn(objWithFunction) {
 
 function _genOrSpec(globalReg, exprName, path, expr, meta) {
   var example = meta && meta.example;
-  var altDefs = expr.exprs.map(function (_ref4, idx) {
-    var name = _ref4.name,
-        altE = _ref4.expr;
+  var altDefs = expr.exprs.map(function (_ref6, idx) {
+    var name = _ref6.name,
+        altE = _ref6.expr;
 
     var comment = meta && meta[name] && meta[name].comment;
     return '\n        <li class="list-group-item">\n          <div class="row">\n            <div class="col-md-12">\n              <span class="tag tag-default">\n                Option ' + (idx + 1) + '\n              </span>\n              ' + (name ? '\n                  &lt;<span class="lead font-italic text-primary">' + name + '</span>&gt;\n              ' + (comment ? ': <span>' + comment + '</span>' : '') + '\n            ' : '') + '\n            </div>\n          </div>\n          <div class="row">\n            <div class="col-md-11 offset-md-1">\n              ' + genForExpression(globalReg, null, altE, meta && meta[name]) + '\n            </div>\n          </div>\n        </li>\n    ';
@@ -19941,18 +20064,18 @@ function _genFspec(globalReg, exprName, spec, meta) {
     frags.push([null, comment]);
   }
   if (argsSpec) {
-    frags.push(['Synopsis', _synopsis(spec, globalReg)]);
+    frags.push(['Synopsis', _synopsis(exprName, spec, globalReg, meta)]);
     frags.push(['Parameter list', genForExpression(globalReg, null, argsSpec, meta && meta.args)]);
   }
   if (retSpec) {
     frags.push(['Return value', genForExpression(globalReg, null, retSpec, meta && meta.ret)]);
   }if (fn) {
-    frags.push(['Argument-return value relation', '<pre>' + (0, _fnName2.default)(fn) + '</pre>']);
+    frags.push(['Argument-return value relation', '<pre>' + (0, _fnName3.default)(fn) + '</pre>']);
   }
-  var r = '\n    <dl class="card-block">\n    ' + frags.map(function (_ref5) {
-    var _ref6 = _slicedToArray(_ref5, 2),
-        name = _ref6[0],
-        src = _ref6[1];
+  var r = '\n    <dl class="card-block">\n    ' + frags.map(function (_ref7) {
+    var _ref8 = _slicedToArray(_ref7, 2),
+        name = _ref8[0],
+        src = _ref8[1];
 
     var title = name ? '<dt>' + name + '</dt>' : '';
     var def = '<dd>' + src + '</dd>';
