@@ -7,4 +7,5 @@ module.exports = function enforce( spec, x ) {
   if ( isProblem( r ) ) {
     throw r;
   }
+  return undefined;
 };

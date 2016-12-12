@@ -1,6 +1,7 @@
-import S, { fspec, cat, props, isStr, isBool, isArray, isFn, and } from '../';
+import S, { fspec, cat, or, props, isStr, isBool,
+  isArray, isFn, and, isNum, isNull, isUndefined, isSpec, isDelayedSpec, isProblem } from '../';
 import { any, ExprSpec, CatFnSpec, OrFnSpec,
-  CollOfSpec,
+  CollOfSpec, collOf,
   ZeroOrMoreFnSpec, OneOrMoreFnSpec, ZeroOrOneFnSpec } from '../core';
 import { AndSpec } from '../core/and';
 import { WallFnSpec } from '../core/wall';
@@ -21,6 +22,11 @@ const SingleArgPredSpec = () => fspec( {
   ret: isBool,
 } );
 
+const AnySpec = fspec( {
+  args: any(),
+  ret: isSpec,
+} );
+
 const FspecFnSpec = fspec( {
   args: cat( 'fspecFields', props( {
     optional: {
@@ -31,6 +37,47 @@ const FspecFnSpec = fspec( {
   } ) ),
 } );
 
+const InstanceOfFnSpec = fspec( {
+  args: cat( 'type', isFn ),
+  ret: fspec( {
+    args: cat( 'x', any() ),
+    ret: isBool,
+  } )
+} );
+
+const EqualsFnSpec = fspec( {
+  args: cat( 'valueToCompare', any() ),
+  ret: fspec( {
+    args: cat( 'x', any() ),
+    ret: isBool,
+  } )
+} );
+
+const OneOfFnSpec = fspec( {
+  args: cat( 'values', collOf( S( 'specky.types/Primitive' ) ) ),
+  ret: isBool,
+} );
+
+const PrimitiveSpec = or( isStr, isNum, isBool, isNull, isUndefined );
+
+const EnforceFnSpec = fspec( {
+  args: cat( 'expression', ExprSpec, 'valueToCheck', any() ),
+  ret: isUndefined
+} );
+
+const ConformFnSpec = fspec( {
+  args: cat( 'expression', ExprSpec, 'valueToConform', any() ),
+  ret: or( 'conformedValue', any(), 'problem', S( 'specky.types/Problem' ) ),
+} );
+
+const DelayedFnSpec = fspec( {
+  args: cat( 'getFn', fspec( {
+    args: any(),
+    ret: ExprSpec,
+  } ) ),
+  ret: isDelayedSpec,
+} );
+
 S( '/specky', NamespaceFnSpec );
 
 S( 'specky.core/cat', CatFnSpec );
@@ -38,12 +85,16 @@ S( 'specky.core/or', OrFnSpec );
 S( 'specky.core/zeroOrMore', ZeroOrMoreFnSpec );
 S( 'specky.core/oneOrMore', OneOrMoreFnSpec );
 S( 'specky.core/zeroOrOne', ZeroOrOneFnSpec );
+S( 'specky.core/any', AnySpec );
 S( 'specky.core/collOf', CollOfSpec );
 S( 'specky.core/and', AndSpec );
 S( 'specky.core/props', PropsSpec );
 S( 'specky.core/wall', WallFnSpec );
 S( 'specky.core/fspec', FspecFnSpec );
 
+S( 'specky.utils/enforce', EnforceFnSpec );
+S( 'specky.utils/conform', ConformFnSpec );
+S( 'specky.utils/delayed', DelayedFnSpec );
 S( 'specky.utils/describe', DescribeFnSpec );
 
 S( 'specky.preds/isObj', SingleArgPredSpec() );
@@ -58,9 +109,15 @@ S( 'specky.preds/isFn', SingleArgPredSpec() );
 S( 'specky.preds/isNum', SingleArgPredSpec() );
 S( 'specky.preds/isInt', SingleArgPredSpec() );
 S( 'specky.preds/isNatInt', SingleArgPredSpec() );
+S( 'specky.preds/isUuid', SingleArgPredSpec() );
+S( 'specky.preds/oneOf', OneOfFnSpec );
+S( 'specky.preds/equals', EqualsFnSpec );
+S( 'specky.preds/instanceOf', InstanceOfFnSpec );
 
+S( 'specky.types/Expression', ExprSpec );
+S( 'specky.types/Problem', isProblem );
 S( 'specky.types/NamespaceObj', NamespaceObjSpec );
 S( 'specky.types/NamespacePath', isNamespacePath );
-S( 'specky.types/Expression', ExprSpec );
+S( 'specky.types/Primitive', PrimitiveSpec );
 
 export default S.getRegistry();

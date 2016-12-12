@@ -182,7 +182,7 @@ function _genSpecRef( globalReg, exprName, path, expr, meta ) {
   const p = path || expr.ref;
   return `
     <div class="card-block">
-      A value that satisfies
+      A value that is of
       ${_specRefLink( p )( ( p ) => p )}
     </div>
   `;
@@ -223,7 +223,7 @@ function _genCatSpec( globalReg, exprName, path, expr, meta ) {
         ${_syntax( expr, globalReg, path )}
       </p>
       <p class="card-title">
-        Must be <em>an ordered list</em> of the following:
+        Should be <em>an ordered list</em> of the following:
       </p>
     </div>
     <ol class="list-group list-group-flush">
@@ -381,14 +381,17 @@ function _genPredSpec( globalReg, exprName, expr, meta ) {
 
 function _tagFor( expr ) {
   let lowerT;
-  if ( isPred( expr ) ) {
+  let derefedExpr = deref( expr );
+  if ( isPred( derefedExpr ) ) {
     lowerT = 'pred';
   } else {
-    lowerT = deref( expr ).type.toLowerCase();
+    lowerT = derefedExpr.type.toLowerCase();
   }
   switch ( lowerT ) {
   case 'pred':
     return '<span class="tag tag-primary">predicate</span>';
+  case 'fspec':
+    return '<span class="tag tag-primary">function</span>';
   case 'cat': case 'or':
     return `<span class="tag tag-info">${lowerT}</span>`;
   default:
@@ -458,7 +461,7 @@ function _genOrSpec( globalReg, exprName, path, expr, meta ) {
       <p class="card-title">
       ${exprName ? '' : `
       `}
-        Must be <em>one of</em> the following:
+        Should be <em>one of</em> the following:
       </p>
     </div>
     <ol class="list-group list-group-flush">
@@ -494,7 +497,7 @@ function _genFspec( globalReg, exprName, spec, meta ) {
   }
   if ( argsSpec ) {
     frags.push( [ 'Synopsis', _synopsis( exprName, spec, globalReg, meta ) ] );
-    frags.push( [ 'Parameter list', genForExpression( globalReg, null, argsSpec, meta && meta.args ) ] );
+    frags.push( [ 'Argument list', genForExpression( globalReg, null, argsSpec, meta && meta.args ) ] );
   }
   if ( retSpec ) {
     frags.push( [ 'Return value', genForExpression( globalReg, null, retSpec, meta && meta.ret ) ] );

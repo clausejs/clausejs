@@ -2550,6 +2550,7 @@ module.exports = function enforce(spec, x) {
   if (isProblem(r)) {
     throw r;
   }
+  return undefined;
 };
 
 /***/ },
@@ -19484,7 +19485,7 @@ function _genAnySpec() {
 
 function _genSpecRef(globalReg, exprName, path, expr, meta) {
   var p = path || expr.ref;
-  return '\n    <div class="card-block">\n      A value that satisfies\n      ' + _specRefLink(p)(function (p) {
+  return '\n    <div class="card-block">\n      A value that is of\n      ' + _specRefLink(p)(function (p) {
     return p;
   }) + '\n    </div>\n  ';
 }
@@ -19505,7 +19506,7 @@ function _genCatSpec(globalReg, exprName, path, expr, meta) {
     return '\n        <li class="list-group-item">\n          <div class="row">\n            <div class="col-md-12">\n              ' + (name ? '<p>\n                <span class="tag tag-default">' + toOrdinal(idx + 1) + ' </span>\n                &lt;<span class="lead font-italic text-primary">' + name + '</span>&gt;\n                ' + (comment ? ': <span>' + comment + '</span>' : '') + '\n                  ' : '<span class="tag tag-default">' + toOrdinal(idx + 1) + ' </span>') + '\n            </div>\n          </div>\n          <div class="row">\n            <div class="col-md-11 offset-md-1">\n              ' + genForExpression(globalReg, null, altE, meta && meta[name]) + '\n            </div>\n          </div>\n        </li>\n    ';
   });
 
-  var r = '\n    <div class="card-block">\n      <p class="card-title">\n        ' + _syntax(expr, globalReg, path) + '\n      </p>\n      <p class="card-title">\n        Must be <em>an ordered list</em> of the following:\n      </p>\n    </div>\n    <ol class="list-group list-group-flush">\n      ' + altDefs.join(' ') + '\n    </ol>\n  ';
+  var r = '\n    <div class="card-block">\n      <p class="card-title">\n        ' + _syntax(expr, globalReg, path) + '\n      </p>\n      <p class="card-title">\n        Should be <em>an ordered list</em> of the following:\n      </p>\n    </div>\n    <ol class="list-group list-group-flush">\n      ' + altDefs.join(' ') + '\n    </ol>\n  ';
   return r;
 }
 
@@ -19688,14 +19689,17 @@ function _genPredSpec(globalReg, exprName, expr, meta) {
 
 function _tagFor(expr) {
   var lowerT = void 0;
-  if ((0, _isPred2.default)(expr)) {
+  var derefedExpr = (0, _deref2.default)(expr);
+  if ((0, _isPred2.default)(derefedExpr)) {
     lowerT = 'pred';
   } else {
-    lowerT = (0, _deref2.default)(expr).type.toLowerCase();
+    lowerT = derefedExpr.type.toLowerCase();
   }
   switch (lowerT) {
     case 'pred':
       return '<span class="tag tag-primary">predicate</span>';
+    case 'fspec':
+      return '<span class="tag tag-primary">function</span>';
     case 'cat':case 'or':
       return '<span class="tag tag-info">' + lowerT + '</span>';
     default:
@@ -19739,7 +19743,7 @@ function _genOrSpec(globalReg, exprName, path, expr, meta) {
     return '\n        <li class="list-group-item">\n          <div class="row">\n            <div class="col-md-12">\n              <span class="tag tag-default">\n                Option ' + (idx + 1) + '\n              </span>\n              ' + (name ? '\n                  &lt;<span class="lead font-italic text-primary">' + name + '</span>&gt;\n              ' + (comment ? ': <span>' + comment + '</span>' : '') + '\n            ' : '') + '\n            </div>\n          </div>\n          <div class="row">\n            <div class="col-md-11 offset-md-1">\n              ' + genForExpression(globalReg, null, altE, meta && meta[name]) + '\n            </div>\n          </div>\n        </li>\n    ';
   });
 
-  var r = '\n    <div class="card-block">\n      ' + _syntax(expr, globalReg, path) + '\n      <p class="card-title">\n      ' + (exprName ? '' : '\n      ') + '\n        Must be <em>one of</em> the following:\n      </p>\n    </div>\n    <ol class="list-group list-group-flush">\n      ' + altDefs.join('') + '\n    </ol>\n  ';
+  var r = '\n    <div class="card-block">\n      ' + _syntax(expr, globalReg, path) + '\n      <p class="card-title">\n      ' + (exprName ? '' : '\n      ') + '\n        Should be <em>one of</em> the following:\n      </p>\n    </div>\n    <ol class="list-group list-group-flush">\n      ' + altDefs.join('') + '\n    </ol>\n  ';
   return r;
 }
 
@@ -19773,7 +19777,7 @@ function _genFspec(globalReg, exprName, spec, meta) {
   }
   if (argsSpec) {
     frags.push(['Synopsis', _synopsis(exprName, spec, globalReg, meta)]);
-    frags.push(['Parameter list', genForExpression(globalReg, null, argsSpec, meta && meta.args)]);
+    frags.push(['Argument list', genForExpression(globalReg, null, argsSpec, meta && meta.args)]);
   }
   if (retSpec) {
     frags.push(['Return value', genForExpression(globalReg, null, retSpec, meta && meta.ret)]);
@@ -19885,6 +19889,11 @@ var SingleArgPredSpec = function SingleArgPredSpec() {
   });
 };
 
+var AnySpec = (0, _.fspec)({
+  args: (0, _core.any)(),
+  ret: _.isSpec
+});
+
 var FspecFnSpec = (0, _.fspec)({
   args: (0, _.cat)('fspecFields', (0, _.props)({
     optional: {
@@ -19895,6 +19904,47 @@ var FspecFnSpec = (0, _.fspec)({
   }))
 });
 
+var InstanceOfFnSpec = (0, _.fspec)({
+  args: (0, _.cat)('type', _.isFn),
+  ret: (0, _.fspec)({
+    args: (0, _.cat)('x', (0, _core.any)()),
+    ret: _.isBool
+  })
+});
+
+var EqualsFnSpec = (0, _.fspec)({
+  args: (0, _.cat)('valueToCompare', (0, _core.any)()),
+  ret: (0, _.fspec)({
+    args: (0, _.cat)('x', (0, _core.any)()),
+    ret: _.isBool
+  })
+});
+
+var OneOfFnSpec = (0, _.fspec)({
+  args: (0, _.cat)('values', (0, _core.collOf)((0, _2.default)('specky.types/Primitive'))),
+  ret: _.isBool
+});
+
+var PrimitiveSpec = (0, _.or)(_.isStr, _.isNum, _.isBool, _.isNull, _.isUndefined);
+
+var EnforceFnSpec = (0, _.fspec)({
+  args: (0, _.cat)('expression', _core.ExprSpec, 'valueToCheck', (0, _core.any)()),
+  ret: _.isUndefined
+});
+
+var ConformFnSpec = (0, _.fspec)({
+  args: (0, _.cat)('expression', _core.ExprSpec, 'valueToConform', (0, _core.any)()),
+  ret: (0, _.or)('conformedValue', (0, _core.any)(), 'problem', (0, _2.default)('specky.types/Problem'))
+});
+
+var DelayedFnSpec = (0, _.fspec)({
+  args: (0, _.cat)('getFn', (0, _.fspec)({
+    args: (0, _core.any)(),
+    ret: _core.ExprSpec
+  })),
+  ret: _.isDelayedSpec
+});
+
 (0, _2.default)('/specky', _namespace.NamespaceFnSpec);
 
 (0, _2.default)('specky.core/cat', _core.CatFnSpec);
@@ -19902,12 +19952,16 @@ var FspecFnSpec = (0, _.fspec)({
 (0, _2.default)('specky.core/zeroOrMore', _core.ZeroOrMoreFnSpec);
 (0, _2.default)('specky.core/oneOrMore', _core.OneOrMoreFnSpec);
 (0, _2.default)('specky.core/zeroOrOne', _core.ZeroOrOneFnSpec);
+(0, _2.default)('specky.core/any', AnySpec);
 (0, _2.default)('specky.core/collOf', _core.CollOfSpec);
 (0, _2.default)('specky.core/and', _and.AndSpec);
 (0, _2.default)('specky.core/props', _objRelated.PropsSpec);
 (0, _2.default)('specky.core/wall', _wall.WallFnSpec);
 (0, _2.default)('specky.core/fspec', FspecFnSpec);
 
+(0, _2.default)('specky.utils/enforce', EnforceFnSpec);
+(0, _2.default)('specky.utils/conform', ConformFnSpec);
+(0, _2.default)('specky.utils/delayed', DelayedFnSpec);
 (0, _2.default)('specky.utils/describe', DescribeFnSpec);
 
 (0, _2.default)('specky.preds/isObj', SingleArgPredSpec());
@@ -19922,10 +19976,16 @@ var FspecFnSpec = (0, _.fspec)({
 (0, _2.default)('specky.preds/isNum', SingleArgPredSpec());
 (0, _2.default)('specky.preds/isInt', SingleArgPredSpec());
 (0, _2.default)('specky.preds/isNatInt', SingleArgPredSpec());
+(0, _2.default)('specky.preds/isUuid', SingleArgPredSpec());
+(0, _2.default)('specky.preds/oneOf', OneOfFnSpec);
+(0, _2.default)('specky.preds/equals', EqualsFnSpec);
+(0, _2.default)('specky.preds/instanceOf', InstanceOfFnSpec);
 
+(0, _2.default)('specky.types/Expression', _core.ExprSpec);
+(0, _2.default)('specky.types/Problem', _.isProblem);
 (0, _2.default)('specky.types/NamespaceObj', _namespace.NamespaceObjSpec);
 (0, _2.default)('specky.types/NamespacePath', _namespace.isNamespacePath);
-(0, _2.default)('specky.types/Expression', _core.ExprSpec);
+(0, _2.default)('specky.types/Primitive', PrimitiveSpec);
 
 exports.default = _2.default.getRegistry();
 
