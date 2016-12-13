@@ -1,6 +1,6 @@
 {
   "name": "specky",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "A powerful & flexible validation and conformation library for your JavaScript data and functions.",
   "main": "index.js",
   "repository": {
