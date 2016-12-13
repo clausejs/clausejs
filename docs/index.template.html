@@ -7,6 +7,9 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <link rel="stylesheet" href="bootstrap.min.css">
   <style>
+  body {
+    font-size: 0.9em;
+  }
   .spec-def{
     border: 1px dotted;
     padding: 8px;
@@ -17,50 +20,68 @@
   main {
     padding: 15px;
   }
-
+  .card .card-block {
+    padding: 0.5em;
+  }
   .row.main {
       height: 100%;
   }
   .row.main .main {
-    padding-left: 30px;
+    padding-left: 40px;
   }
-  @media (min-width: 544px) {
+  @media (min-width: 576px) {
     .row.main .cot {
       height: 100%;
       position: fixed;
       max-width: 180px;
       overflow-y: auto;
-      overflow-x: hidden;
+      overflow-x: auto;
       font-size: 0.8em;
     }
   }
   legend.spec-type {
     font-size: 1.2em;
   }
+  .cot {
+    padding-left: 3px;
+  }
+  .cot ul {
+    padding-left: 28px;
+  }
   </style>
 </head>
 <body>
   <main class="container">
     <div class="row main">
-      <div class="col-md-2 cot">
+      <div class="col-md-2 col-sm-3 cot">
         <h5><u>Specky</u></h5>
         <ul>
           <li><a href="https://github.com/speckyjs/specky">Github Repository</a></li>
         </ul>
+        <a href="#introduction"><h6>Introduction</h6></a>
+        <a href="#conformation"><h6>Conformation</h6></a>
         <h6>API</h6>
         <div id="cot"></div>
       </div>
-      <div class="col-md-10 offset-md-2 main">
+      <div class="col-md-10 col-sm-9 offset-md-2 offset-sm-3 main">
         <h1>Specky Documentation</h1>
-        <h2>API</h2>
-        <p>
+        <section id="introduction">
+          <h3>Introduction</h3>
+          TODO
+        </section>
+        <section id="conformation">
+          <h3>Conformation</h3>
+          TODO
+        </section>
+        <h3>API</h3>
+        <blockquote class="blockquote">
           <em>
             Specky uses itself to generate its own documentation. How meta is that?
           </em>
-        </p>
+        </blockquote class="blockquote">
         <p><em>Work in progress. </em></p>
         <p>Below is an auto-generated API reference based on <a href="https://github.com/speckyjs/specky/blob/master/src/specs/index.js">spec declarations</a> and their corrosponding <a href="https://github.com/speckyjs/specky/blob/master/src/specs/index.annotation.js">annotations</a>.
-        <div id="api"></div>
+        <section id="api"></section>
       </div>
     </div>
     <footer class="text-sm-center">
