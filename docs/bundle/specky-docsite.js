@@ -154,27 +154,31 @@ function Problem(val, failsPredicate, subproblems, msg) {
   this.rawMsg = msg;
   this.subproblems = subproblems;
 
-  this.constructMessage = function constructMessage(lvl) {
-    if (Array.isArray(subproblems)) {
-      var reasons;
-      if (subproblems.length === 0) {
-        return msg + '; val: ' + JSON.stringify(val);
-      } else {
-        reasons = subproblems.map(function (r) {
-          return '' + _open(lvl) + r.constructMessage(lvl + 1) + _close(lvl);
-        });
-        return msg + ', because ' + reasons.join(', ');
-      }
-    } else if ((typeof subproblems === 'undefined' ? 'undefined' : _typeof(subproblems)) === 'object') {
-      reasons = [];
-      for (var name in subproblems) {
-        reasons.push('' + _open(lvl) + name + ': ' + subproblems[name].constructMessage(lvl + 1) + _close(lvl));
-      }
-      return msg + ', because ' + reasons.join(', ');
-    }
-  };
+  this.message = _constructMessage(this, 0);
+}
 
-  this.message = this.constructMessage(0);
+function _constructMessage(_ref, lvl) {
+  var subproblems = _ref.subproblems,
+      val = _ref.val,
+      rawMsg = _ref.rawMsg;
+
+  if (Array.isArray(subproblems)) {
+    var reasons;
+    if (subproblems.length === 0) {
+      return rawMsg + '; val: ' + JSON.stringify(val);
+    } else {
+      reasons = subproblems.map(function (r) {
+        return '' + _open(lvl) + _constructMessage(r, lvl + 1) + _close(lvl);
+      });
+      return rawMsg + ', because ' + reasons.join(', ');
+    }
+  } else if ((typeof subproblems === 'undefined' ? 'undefined' : _typeof(subproblems)) === 'object') {
+    reasons = [];
+    for (var name in subproblems) {
+      reasons.push('' + _open(lvl) + name + ': ' + _constructMessage(subproblems[name], lvl + 1) + _close(lvl));
+    }
+    return rawMsg + ', because ' + reasons.join(', ');
+  }
 }
 
 function _open(lvl) {
@@ -19717,7 +19721,7 @@ function _genUnknownSpec(globalReg, exprName, path, expr, meta) {
     } else {
       return genForExpression(globalReg, null, exprAlts, null);
     }
-  }).join('') + '\n      <pre>' + _stringifyWithFn(meta) + '</pre>\n    </div>\n  ';
+  }).join('') + '\n    </div>\n  ';
   return r;
 }
 
