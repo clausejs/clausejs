@@ -59,13 +59,16 @@
     border-bottom-style: none;
   }
   .list-group.list-for-or>.list-group-item {
-    border-top-width: 3px;
-    border-top-style: double;
+    border-top-width: 2px;
+    border-top-style: dashed;
     border-bottom-style: none;
   }
   .inline-headers h6, .inline-headers h5, .inline-headers h4, .inline-headers h3 {
     display: inline-block;
     vertical-align: baseline;
+  }
+  .card.card-outline-info, .card.card-outline-primary {
+    border-style: dotted;
   }
   </style>
 </head>
@@ -113,8 +116,9 @@
       </p>
     </footer>
   </main>
-  <!-- TODO -->
-  <script src="bundle/specky-docsite.js"></script>
-  <script src="docs/bundle/specky-docsite.js"></script>
+  <!-- TODO get rid of this temporary hack -->
+  <script src="docs/bundle/content.js"></script>
+  <script src="bundle/functional.js"></script>
+  <script src="docs/bundle/functional.js"></script>
 </body>
 </html>

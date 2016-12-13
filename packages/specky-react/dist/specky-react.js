@@ -71,7 +71,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 257);
+/******/ 	return __webpack_require__(__webpack_require__.s = 258);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -90,7 +90,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_255__;
 
 /***/ },
 
-/***/ 257:
+/***/ 258:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -100,7 +100,7 @@ var _SpeckyComponent = __webpack_require__(75);
 
 var _SpeckyComponent2 = _interopRequireDefault(_SpeckyComponent);
 
-var _fromBaseClass = __webpack_require__(69);
+var _fromBaseClass = __webpack_require__(70);
 
 var _fromBaseClass2 = _interopRequireDefault(_fromBaseClass);
 
@@ -113,7 +113,7 @@ module.exports = {
 
 /***/ },
 
-/***/ 69:
+/***/ 70:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -183,7 +183,7 @@ module.exports.default = fromBaseClass;
 "use strict";
 'use strict';
 
-var _fromBaseClass = __webpack_require__(69);
+var _fromBaseClass = __webpack_require__(70);
 
 var _fromBaseClass2 = _interopRequireDefault(_fromBaseClass);
 
