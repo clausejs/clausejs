@@ -14,27 +14,27 @@ function Problem( val, failsPredicate, subproblems, msg ) {
   this.rawMsg = msg;
   this.subproblems = subproblems;
 
-  this.constructMessage = function constructMessage( lvl ) {
-    if ( Array.isArray( subproblems ) ) {
-      var reasons;
-      if ( subproblems.length === 0 ) {
-        return `${msg}; val: ${JSON.stringify( val )}`;
-      } else {
-        reasons = subproblems.map( ( r ) => {
-          return `${_open( lvl )}${r.constructMessage( lvl + 1 )}${_close( lvl )}`;
-        } );
-        return `${msg}, because ${reasons.join( ', ' )}`;
-      }
-    } else if ( typeof subproblems === 'object' ) {
-      reasons = [];
-      for ( var name in subproblems ) {
-        reasons.push( `${_open( lvl )}${name}: ${subproblems[ name ].constructMessage( lvl + 1 )}${_close( lvl )}` );
-      }
-      return `${msg}, because ${reasons.join( ', ' )}`;
-    }
-  };
+  this.message = _constructMessage( this, 0 );
+}
 
-  this.message = this.constructMessage( 0 );
+function _constructMessage( { subproblems, val, rawMsg }, lvl ) {
+  if ( Array.isArray( subproblems ) ) {
+    var reasons;
+    if ( subproblems.length === 0 ) {
+      return `${rawMsg}; val: ${JSON.stringify( val )}`;
+    } else {
+      reasons = subproblems.map( ( r ) => {
+        return `${_open( lvl )}${_constructMessage( r, lvl + 1 )}${_close( lvl )}`;
+      } );
+      return `${rawMsg}, because ${reasons.join( ', ' )}`;
+    }
+  } else if ( typeof subproblems === 'object' ) {
+    reasons = [];
+    for ( var name in subproblems ) {
+      reasons.push( `${_open( lvl )}${name}: ${_constructMessage( subproblems[ name ], lvl + 1 )}${_close( lvl )}` );
+    }
+    return `${rawMsg}, because ${reasons.join( ', ' )}`;
+  }
 }
 
 function _open( lvl ) {
