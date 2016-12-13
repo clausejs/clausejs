@@ -28,7 +28,7 @@ In addition, [Click here](https://www.youtube.com/watch?v=oyLBGkS5ICk) to watch 
 
 ## Documentation
 
-Please refer to the documentation site: http://speckyjs.github.io/specky
+Please refer to the documentation site: http://specky.js.org
 
 ## Performance
 
