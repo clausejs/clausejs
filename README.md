@@ -13,6 +13,7 @@ A powerful & highly flexible JavaScript data validation and conformation library
 
 By writing specs for your app *only once*, you will get
 
+- A clearly-defined contract for your app's functions and data structures
 - Runtime validation for your data and functions
 - Advanced data conformation that simplifies your code for data processing
 - [WIP] Automatically generated documentation (via [specky-docgen](packages/specky-docgen))
