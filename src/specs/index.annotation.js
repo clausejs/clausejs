@@ -5,16 +5,16 @@ M( '/specky', {
   'comment': 'Registers or retrieves a spec from global spec regitry by path.',
   'args': {
     'register': {
-      'comment': 'Registers a namespace path with the given expression.',
+      'comment': 'Put the given expression onto the given path in the global spec registry.',
       'example': 'S("awesomeapp/TodoItem", todoItemSpec)',
     },
     'retrieve': {
-      'comment': 'Retrieves an expression by namespace path.',
+      'comment': 'Retrieves an expression from the given namespace path, or returns null if not found.',
       'example': 'S("awesomeapp/TodoItem")',
     }
   },
   'ret': {
-    'comment': 'Note: The returned Spec is not immediately resolved until one calls its get() method.',
+    'comment': 'Note: The returned Spec is of type SpecRef and is not immediately resolved until one calls its get() method.',
   },
 } );
 

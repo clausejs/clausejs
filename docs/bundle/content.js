@@ -14053,7 +14053,7 @@ function genForExpression(globalReg, exprName, expr, meta) {
 
   return '\n    ' + (exprName && path ? '<a name="' + path + '"></a>' : '') + '\n    ' + _wrapCard({
     header: exprName && path ? '\n      <h6>' + _stylizeName(expr, name) + '</h6>&nbsp;\n        <span class="tag tag-primary">\n          ' + _type(expr) + '\n        </span>\n      ' : null,
-    legend: !path ? _tagFor(expr) : '<span class="tag tag-info">spec</span>',
+    legend: !path ? _tagFor(expr) : '<span class="tag tag-info">of spec</span>',
     borderlabel: _labelFor(expr)
   })(docstr);
 }
@@ -14093,9 +14093,21 @@ function _typeFor(expr) {
   var lowerT = _rawTypeFor(expr);
   switch (lowerT) {
     case 'pred':
-      return 'predicate';
+      return 'of predicate';
     case 'fspec':
-      return 'function';
+      return 'of fspec (function type)';
+    case 'z_or_m':
+      return 'zero or more of (*)';
+    case 'o_or_m':
+      return 'one or more of (+)';
+    case 'z_or_o':
+      return 'zero or one of (?)';
+    case 'coll_of':
+      return 'collection of';
+    case 'cat':
+      return 'cat (seq) of';
+    case 'or':
+      return 'or (alts)';
     default:
       return '<span class="tag tag-info">' + lowerT + '</span>';
   }
@@ -14436,16 +14448,16 @@ var _ = __webpack_require__(21);
   'comment': 'Registers or retrieves a spec from global spec regitry by path.',
   'args': {
     'register': {
-      'comment': 'Registers a namespace path with the given expression.',
+      'comment': 'Put the given expression onto the given path in the global spec registry.',
       'example': 'S("awesomeapp/TodoItem", todoItemSpec)'
     },
     'retrieve': {
-      'comment': 'Retrieves an expression by namespace path.',
+      'comment': 'Retrieves an expression from the given namespace path, or returns null if not found.',
       'example': 'S("awesomeapp/TodoItem")'
     }
   },
   'ret': {
-    'comment': 'Note: The returned Spec is not immediately resolved until one calls its get() method.'
+    'comment': 'Note: The returned Spec is of type SpecRef and is not immediately resolved until one calls its get() method.'
   }
 });
 

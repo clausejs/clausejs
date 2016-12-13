@@ -156,7 +156,7 @@ function genForExpression( globalReg, exprName, expr, meta ) {
           ${_type( expr )}
         </span>
       ` : null,
-      legend: !path ? _tagFor( expr ) : '<span class="tag tag-info">spec</span>',
+      legend: !path ? _tagFor( expr ) : '<span class="tag tag-info">of spec</span>',
       borderlabel: _labelFor( expr )
     } )( docstr )}`;
 }
@@ -203,9 +203,21 @@ function _typeFor( expr ) {
   var lowerT = _rawTypeFor( expr );
   switch ( lowerT ) {
   case 'pred':
-    return 'predicate';
+    return 'of predicate';
   case 'fspec':
-    return 'function';
+    return 'of fspec (function type)';
+  case 'z_or_m':
+    return 'zero or more of (*)';
+  case 'o_or_m':
+    return 'one or more of (+)';
+  case 'z_or_o':
+    return 'zero or one of (?)';
+  case 'coll_of':
+    return 'collection of';
+  case 'cat':
+    return 'cat (seq) of';
+  case 'or':
+    return 'or (alts)';
   default:
     return `<span class="tag tag-info">${lowerT}</span>`;
   }
