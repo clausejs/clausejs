@@ -147,29 +147,83 @@ function genForExpression( globalReg, exprName, expr, meta ) {
 
   const name = meta && meta[ 'name' ] || exprName;
 
-  const docheader = `
-    <div class="card-header">
-      ${_stylizeName( expr, name )}&nbsp;
+  return `
+    ${( exprName && path ) ? `<a name="${path}"></a>` : ''}
+    ${_wrapCard( {
+      header: ( exprName && path ) ? `
+      <h6>${_stylizeName( expr, name )}</h6>&nbsp;
         <span class="tag tag-primary">
           ${_type( expr )}
         </span>
-    </div>
-  `;
+      ` : null,
+      legend: !path ? _tagFor( expr ) : '<span class="tag tag-info">spec</span>',
+      borderlabel: _labelFor( expr )
+    } )( docstr )}`;
+}
 
-  return ( exprName && path ) ? `
-    <a name="${path}"></a>
-    <div class="card" data-path="${path}">
-      ${docheader}
-      ${docstr}
-    </div>
-    ` : `
-      <fieldset class="card">
-      <legend class="spec-type">
-        ${!path ? _tagFor( expr ) : '<span class="tag tag-info">spec</span>'}
-      </legend>
-      ${docstr}
-      </fieldset>
+
+function _wrapCard( { header, legend, borderlabel } ) {
+  if ( header ) {
+    return ( body ) => `
+        <div class="card">
+          <div class="card-header inline-headers">
+            ${header}
+          </div>
+        ${body}
+        </div>
+      `;
+  } else if ( legend ) {
+    return ( body ) => `
+    <fieldset class="card card-outline-${borderlabel || 'default'}">
+    <legend class="spec-type">
+      ${legend}
+    </legend>
+    ${body}
+    </fieldset>
     `;
+  }
+}
+
+function _tagFor( expr ) {
+  return `<span class="tag tag-${_labelFor( expr )}">${_typeFor( expr )}</span>`;
+}
+
+function _rawTypeFor( expr ) {
+  let lowerT;
+  let derefedExpr = deref( expr );
+  if ( isPred( derefedExpr ) ) {
+    lowerT = 'pred';
+  } else {
+    lowerT = derefedExpr.type.toLowerCase();
+  }
+  return lowerT;
+}
+
+function _typeFor( expr ) {
+  var lowerT = _rawTypeFor( expr );
+  switch ( lowerT ) {
+  case 'pred':
+    return 'predicate';
+  case 'fspec':
+    return 'function';
+  default:
+    return `<span class="tag tag-info">${lowerT}</span>`;
+  }
+}
+
+function _labelFor( expr ) {
+  var lowerT = _rawTypeFor( expr );
+
+  switch ( lowerT ) {
+  case 'pred':
+    return 'primary';
+  case 'fspec':
+    return 'info';
+  case 'cat': case 'or':
+    return 'info';
+  default:
+    return 'info';
+  }
 }
 
 function _genAnySpec() {
@@ -198,7 +252,7 @@ function _genCatSpec( globalReg, exprName, path, expr, meta ) {
   const altDefs = expr.exprs.map( ( { name, expr: altE }, idx ) => {
     const comment = meta && meta[ name ] && meta[ name ].comment;
     return `
-        <li class="list-group-item">
+        <li class="list-group-item card-outline-${_labelFor( expr )}">
           <div class="row">
             <div class="col-md-12">
               ${name ? `<p>
@@ -226,7 +280,7 @@ function _genCatSpec( globalReg, exprName, path, expr, meta ) {
         Should be <em>an ordered list</em> of the following:
       </p>
     </div>
-    <ol class="list-group list-group-flush">
+    <ol class="list-group list-group-flush list-for-cat">
       ${altDefs.join( ' ' )}
     </ol>
   `;
@@ -379,25 +433,6 @@ function _genPredSpec( globalReg, exprName, expr, meta ) {
   return r;
 }
 
-function _tagFor( expr ) {
-  let lowerT;
-  let derefedExpr = deref( expr );
-  if ( isPred( derefedExpr ) ) {
-    lowerT = 'pred';
-  } else {
-    lowerT = derefedExpr.type.toLowerCase();
-  }
-  switch ( lowerT ) {
-  case 'pred':
-    return '<span class="tag tag-primary">predicate</span>';
-  case 'fspec':
-    return '<span class="tag tag-primary">function</span>';
-  case 'cat': case 'or':
-    return `<span class="tag tag-info">${lowerT}</span>`;
-  default:
-    return `<span class="tag tag-info">${lowerT}</span>`;
-  }
-}
 
 function _genUnknownSpec( globalReg, exprName, path, expr, meta ) {
   const r = `
@@ -433,7 +468,7 @@ function _genOrSpec( globalReg, exprName, path, expr, meta ) {
   const altDefs = expr.exprs.map( ( { name, expr: altE }, idx ) => {
     const comment = meta && meta[ name ] && meta[ name ].comment;
     return `
-        <li class="list-group-item">
+        <li class="list-group-item card-outline-${_labelFor( expr )}">
           <div class="row">
             <div class="col-md-12">
               <span class="tag tag-default">
@@ -463,7 +498,7 @@ function _genOrSpec( globalReg, exprName, path, expr, meta ) {
         Should be <em>one of</em> the following:
       </p>
     </div>
-    <ol class="list-group list-group-flush">
+    <ol class="list-group list-group-flush list-for-or">
       ${altDefs.join( '' )}
     </ol>
   `;

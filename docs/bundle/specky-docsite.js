@@ -19478,9 +19478,69 @@ function genForExpression(globalReg, exprName, expr, meta) {
 
   var name = meta && meta['name'] || exprName;
 
-  var docheader = '\n    <div class="card-header">\n      ' + _stylizeName(expr, name) + '&nbsp;\n        <span class="tag tag-primary">\n          ' + _type(expr) + '\n        </span>\n    </div>\n  ';
+  return '\n    ' + (exprName && path ? '<a name="' + path + '"></a>' : '') + '\n    ' + _wrapCard({
+    header: exprName && path ? '\n      <h6>' + _stylizeName(expr, name) + '</h6>&nbsp;\n        <span class="tag tag-primary">\n          ' + _type(expr) + '\n        </span>\n      ' : null,
+    legend: !path ? _tagFor(expr) : '<span class="tag tag-info">spec</span>',
+    borderlabel: _labelFor(expr)
+  })(docstr);
+}
 
-  return exprName && path ? '\n    <a name="' + path + '"></a>\n    <div class="card" data-path="' + path + '">\n      ' + docheader + '\n      ' + docstr + '\n    </div>\n    ' : '\n      <fieldset class="card">\n      <legend class="spec-type">\n        ' + (!path ? _tagFor(expr) : '<span class="tag tag-info">spec</span>') + '\n      </legend>\n      ' + docstr + '\n      </fieldset>\n    ';
+function _wrapCard(_ref3) {
+  var header = _ref3.header,
+      legend = _ref3.legend,
+      borderlabel = _ref3.borderlabel;
+
+  if (header) {
+    return function (body) {
+      return '\n        <div class="card">\n          <div class="card-header inline-headers">\n            ' + header + '\n          </div>\n        ' + body + '\n        </div>\n      ';
+    };
+  } else if (legend) {
+    return function (body) {
+      return '\n    <fieldset class="card card-outline-' + (borderlabel || 'default') + '">\n    <legend class="spec-type">\n      ' + legend + '\n    </legend>\n    ' + body + '\n    </fieldset>\n    ';
+    };
+  }
+}
+
+function _tagFor(expr) {
+  return '<span class="tag tag-' + _labelFor(expr) + '">' + _typeFor(expr) + '</span>';
+}
+
+function _rawTypeFor(expr) {
+  var lowerT = void 0;
+  var derefedExpr = (0, _deref2.default)(expr);
+  if ((0, _isPred2.default)(derefedExpr)) {
+    lowerT = 'pred';
+  } else {
+    lowerT = derefedExpr.type.toLowerCase();
+  }
+  return lowerT;
+}
+
+function _typeFor(expr) {
+  var lowerT = _rawTypeFor(expr);
+  switch (lowerT) {
+    case 'pred':
+      return 'predicate';
+    case 'fspec':
+      return 'function';
+    default:
+      return '<span class="tag tag-info">' + lowerT + '</span>';
+  }
+}
+
+function _labelFor(expr) {
+  var lowerT = _rawTypeFor(expr);
+
+  switch (lowerT) {
+    case 'pred':
+      return 'primary';
+    case 'fspec':
+      return 'info';
+    case 'cat':case 'or':
+      return 'info';
+    default:
+      return 'info';
+  }
 }
 
 function _genAnySpec() {
@@ -19502,15 +19562,15 @@ function _specRefLink(p) {
 
 function _genCatSpec(globalReg, exprName, path, expr, meta) {
   var example = meta && meta.example;
-  var altDefs = expr.exprs.map(function (_ref3, idx) {
-    var name = _ref3.name,
-        altE = _ref3.expr;
+  var altDefs = expr.exprs.map(function (_ref4, idx) {
+    var name = _ref4.name,
+        altE = _ref4.expr;
 
     var comment = meta && meta[name] && meta[name].comment;
-    return '\n        <li class="list-group-item">\n          <div class="row">\n            <div class="col-md-12">\n              ' + (name ? '<p>\n                <span class="tag tag-default">' + toOrdinal(idx + 1) + ' </span>\n                &lt;<span class="lead font-italic text-primary">' + name + '</span>&gt;\n                ' + (comment ? ': <span>' + comment + '</span>' : '') + '\n                  ' : '<span class="tag tag-default">' + toOrdinal(idx + 1) + ' </span>') + '\n            </div>\n          </div>\n          <div class="row">\n            <div class="col-md-11 offset-md-1">\n              ' + genForExpression(globalReg, null, altE, meta && meta[name]) + '\n            </div>\n          </div>\n        </li>\n    ';
+    return '\n        <li class="list-group-item card-outline-' + _labelFor(expr) + '">\n          <div class="row">\n            <div class="col-md-12">\n              ' + (name ? '<p>\n                <span class="tag tag-default">' + toOrdinal(idx + 1) + ' </span>\n                &lt;<span class="lead font-italic text-primary">' + name + '</span>&gt;\n                ' + (comment ? ': <span>' + comment + '</span>' : '') + '\n                  ' : '<span class="tag tag-default">' + toOrdinal(idx + 1) + ' </span>') + '\n            </div>\n          </div>\n          <div class="row">\n            <div class="col-md-11 offset-md-1">\n              ' + genForExpression(globalReg, null, altE, meta && meta[name]) + '\n            </div>\n          </div>\n        </li>\n    ';
   });
 
-  var r = '\n    <div class="card-block">\n      <p class="card-title">\n        ' + _syntax(expr, globalReg, path) + '\n      </p>\n      <p class="card-title">\n        Should be <em>an ordered list</em> of the following:\n      </p>\n    </div>\n    <ol class="list-group list-group-flush">\n      ' + altDefs.join(' ') + '\n    </ol>\n  ';
+  var r = '\n    <div class="card-block">\n      <p class="card-title">\n        ' + _syntax(expr, globalReg, path) + '\n      </p>\n      <p class="card-title">\n        Should be <em>an ordered list</em> of the following:\n      </p>\n    </div>\n    <ol class="list-group list-group-flush list-for-cat">\n      ' + altDefs.join(' ') + '\n    </ol>\n  ';
   return r;
 }
 
@@ -19539,10 +19599,10 @@ function _synopsisToHtml(arr) {
     for (var name in arr) {
       nameItemPairs.push([name, arr[name]]);
     }
-    h = nameItemPairs.map(function (_ref4) {
-      var _ref5 = _slicedToArray(_ref4, 2),
-          name = _ref5[0],
-          item = _ref5[1];
+    h = nameItemPairs.map(function (_ref5) {
+      var _ref6 = _slicedToArray(_ref5, 2),
+          name = _ref6[0],
+          item = _ref6[1];
 
       return '<li>&lt;' + name + '&gt;:<div>' + _synopsisToHtml(item) + '</div></li>';
     }).join('');
@@ -19691,26 +19751,6 @@ function _genPredSpec(globalReg, exprName, expr, meta) {
   return r;
 }
 
-function _tagFor(expr) {
-  var lowerT = void 0;
-  var derefedExpr = (0, _deref2.default)(expr);
-  if ((0, _isPred2.default)(derefedExpr)) {
-    lowerT = 'pred';
-  } else {
-    lowerT = derefedExpr.type.toLowerCase();
-  }
-  switch (lowerT) {
-    case 'pred':
-      return '<span class="tag tag-primary">predicate</span>';
-    case 'fspec':
-      return '<span class="tag tag-primary">function</span>';
-    case 'cat':case 'or':
-      return '<span class="tag tag-info">' + lowerT + '</span>';
-    default:
-      return '<span class="tag tag-info">' + lowerT + '</span>';
-  }
-}
-
 function _genUnknownSpec(globalReg, exprName, path, expr, meta) {
   var r = '\n    <div class="card-block">\n      ' + _syntax(expr, globalReg, path) + '\n      ' + expr.exprs.map(function (exprAlts) {
     var name = exprAlts.name,
@@ -19739,15 +19779,15 @@ function _stringifyWithFn(objWithFunction) {
 
 function _genOrSpec(globalReg, exprName, path, expr, meta) {
   var example = meta && meta.example;
-  var altDefs = expr.exprs.map(function (_ref6, idx) {
-    var name = _ref6.name,
-        altE = _ref6.expr;
+  var altDefs = expr.exprs.map(function (_ref7, idx) {
+    var name = _ref7.name,
+        altE = _ref7.expr;
 
     var comment = meta && meta[name] && meta[name].comment;
-    return '\n        <li class="list-group-item">\n          <div class="row">\n            <div class="col-md-12">\n              <span class="tag tag-default">\n                Option ' + (idx + 1) + '\n              </span>\n              ' + (name ? '\n                  &lt;<span class="lead font-italic text-primary">' + name + '</span>&gt;\n              ' + (comment ? ': <span>' + comment + '</span>' : '') + '\n            ' : '') + '\n            </div>\n          </div>\n          <div class="row">\n            <div class="col-md-11 offset-md-1">\n              ' + genForExpression(globalReg, null, altE, meta && meta[name]) + '\n            </div>\n          </div>\n        </li>\n    ';
+    return '\n        <li class="list-group-item card-outline-' + _labelFor(expr) + '">\n          <div class="row">\n            <div class="col-md-12">\n              <span class="tag tag-default">\n                Option ' + (idx + 1) + '\n              </span>\n              ' + (name ? '\n                  &lt;<span class="lead font-italic text-primary">' + name + '</span>&gt;\n              ' + (comment ? ': <span>' + comment + '</span>' : '') + '\n            ' : '') + '\n            </div>\n          </div>\n          <div class="row">\n            <div class="col-md-11 offset-md-1">\n              ' + genForExpression(globalReg, null, altE, meta && meta[name]) + '\n            </div>\n          </div>\n        </li>\n    ';
   });
 
-  var r = '\n    <div class="card-block">\n      ' + _syntax(expr, globalReg, path) + '\n      <p class="card-title">\n      ' + (exprName ? '' : '\n      ') + '\n        Should be <em>one of</em> the following:\n      </p>\n    </div>\n    <ol class="list-group list-group-flush">\n      ' + altDefs.join('') + '\n    </ol>\n  ';
+  var r = '\n    <div class="card-block">\n      ' + _syntax(expr, globalReg, path) + '\n      <p class="card-title">\n      ' + (exprName ? '' : '\n      ') + '\n        Should be <em>one of</em> the following:\n      </p>\n    </div>\n    <ol class="list-group list-group-flush list-for-or">\n      ' + altDefs.join('') + '\n    </ol>\n  ';
   return r;
 }
 
@@ -19788,10 +19828,10 @@ function _genFspec(globalReg, exprName, spec, meta) {
   }if (fn) {
     frags.push(['Argument-return value relation', '<pre>' + (0, _fnName3.default)(fn) + '</pre>']);
   }
-  var r = '\n    <dl class="card-block">\n    ' + frags.map(function (_ref7) {
-    var _ref8 = _slicedToArray(_ref7, 2),
-        name = _ref8[0],
-        src = _ref8[1];
+  var r = '\n    <dl class="card-block">\n    ' + frags.map(function (_ref8) {
+    var _ref9 = _slicedToArray(_ref8, 2),
+        name = _ref9[0],
+        src = _ref9[1];
 
     var title = name ? '<dt>' + name + '</dt>' : '';
     var def = '<dd>' + src + '</dd>';
