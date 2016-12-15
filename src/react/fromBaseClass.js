@@ -9,8 +9,8 @@ function fromBaseClass( baseClass ) {
         const nullablePropSpecs = S.or( propSpecs, S.isUndefined, S.isNull );
 
         const currWillUpdateFn = this.componentWillUpdate;
-        this.componentWillUpdate = ( nextProps ) => {
-          S.enforce( nullablePropSpecs, nextProps );
+        this.componentWillUpdate = ( nextShape ) => {
+          S.enforce( nullablePropSpecs, nextShape );
           if ( currWillUpdateFn ) {
             return currWillUpdateFn.apply( this, arguments );
           }
@@ -19,7 +19,7 @@ function fromBaseClass( baseClass ) {
 
         const currWillMountFn = this.componentWillMount;
         this.componentWillMount = () => {
-          S.enforce( nullablePropSpecs, this.props );
+          S.enforce( nullablePropSpecs, this.shape );
           if ( currWillMountFn ) {
             return currWillMountFn.apply( this, arguments );
           }

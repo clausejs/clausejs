@@ -3,7 +3,7 @@ var nfaWalker = require( './nfaWalker' );
 var predWalker = require( './predWalker' );
 var wallWalker = require( './wallWalker' );
 var fspecWalker = require( './fspecWalker' );
-var propsWalker = require( './propsWalker' );
+var shapeWalker = require( './shapeWalker' );
 var andWalker = require( './andWalker' );
 var collOfWalker = require( './collOfWalker' );
 var specRefWalker = require( './specRefWalker' );
@@ -44,8 +44,8 @@ function _getWalker( expr ) {
     walker = predWalker;
   } else if ( spec.type === 'WALL' ) {
     walker = wallWalker;
-  } else if ( spec.type === 'PROPS' ) {
-    walker = propsWalker;
+  } else if ( spec.type === 'SHAPE' ) {
+    walker = shapeWalker;
   } else if ( spec.type === 'AND' ) {
     walker = andWalker;
   } else if ( spec.type === 'SpecRef' ) {

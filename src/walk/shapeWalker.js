@@ -4,7 +4,7 @@ var oAssign = require( 'object-assign' );
 var Problem = require( '../models/Problem' );
 var specFromAlts = require( '../utils/specFromAlts' );
 
-function propsWalker( spec, walkFn ) {
+function shapeWalker( spec, walkFn ) {
   var keyConformer;
   var { requiredFields, optionalFields } = spec.opts.conformedArgs.propArgs;
 
@@ -18,11 +18,11 @@ function propsWalker( spec, walkFn ) {
   }
 
   return {
-    trailblaze: propsTrailblaze,
-    reconstruct: propsReconstruct,
+    trailblaze: shapeTrailblaze,
+    reconstruct: shapeReconstruct,
   };
 
-  function propsTrailblaze( x, walkOpts ) {
+  function shapeTrailblaze( x, walkOpts ) {
     if ( [ 'object', 'function' ].indexOf( typeof x ) < 0 ) {
       return new Problem( x, spec, [], 'Value is not an object' );
     }
@@ -95,7 +95,7 @@ function propsWalker( spec, walkFn ) {
     }
   }
 
-  function propsReconstruct( { val, singles, groups }, walkOpts ) {
+  function shapeReconstruct( { val, singles, groups }, walkOpts ) {
 
     var conform = { walkOpts };
 
@@ -260,4 +260,4 @@ function _conformNamedOrExpr( x, alts, walkFn, walkOpts ) {
   return r;
 }
 
-module.exports = propsWalker;
+module.exports = shapeWalker;

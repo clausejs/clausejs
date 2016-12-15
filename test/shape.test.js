@@ -2,15 +2,15 @@ var expect = require( 'chai' ).expect;
 
 var s = require( '../src' );
 var Problem = s.Problem;
-var props = s.props;
+var shape = s.shape;
 
 function startWithOo( key ) {
   return key.indexOf( 'oo' ) === 0;
 }
 
-describe( 'props', function() {
+describe( 'shape', function() {
   it( 'simple key set', function() {
-    var ObjSpec = props( {
+    var ObjSpec = shape( {
       req: [ 'a', 'b', 'c' ],
     } );
     var conformed1 = { a: '', b: null, c: 2 };
@@ -23,7 +23,7 @@ describe( 'props', function() {
   } );
 
   it( 'single val specs', () => {
-    var ObjSpec = props( {
+    var ObjSpec = shape( {
       required: {
         a: s.isStr,
         b: s.any,
@@ -40,14 +40,14 @@ describe( 'props', function() {
   } );
 
   it( 'key val verify', function() {
-    var ObjSpec1 = props( {
+    var ObjSpec1 = shape( {
       req: {
         'title': s.isStr,
         'userId': s.isNum,
       },
       opt: {
         'content': s.isStr,
-        'ooProps': [ startWithOo, props( {
+        'ooShape': [ startWithOo, shape( {
           req: {
             'val': s.isNum,
           },
@@ -56,14 +56,14 @@ describe( 'props', function() {
     } );
 
     //alternative spelling
-    var ObjSpec2 = props( {
+    var ObjSpec2 = shape( {
       required: {
         'title': s.isStr,
         'userId': s.isNum,
       },
       optional: {
         'content': s.isStr,
-        'ooProps': [ startWithOo, props( {
+        'ooShape': [ startWithOo, shape( {
           required: {
             'val': s.isNum,
           },
@@ -84,7 +84,7 @@ describe( 'props', function() {
       expect( ObjSpec.conform( unconformed1 ) ).to.be.an.instanceof( Problem );
 
       expect( ObjSpec.conform( conformed2 ) ).to.deep.equal(
-        { title: 'Do it', content: 'blah', userId: 2, ooProps: {
+        { title: 'Do it', content: 'blah', userId: 2, ooShape: {
           ooA: { val: 1 }, ooB: { val: 2 }, ooC: { val: 3 },
         } } );
 

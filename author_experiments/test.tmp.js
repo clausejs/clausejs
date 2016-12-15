@@ -35,14 +35,14 @@ console.log(s);
 //   return key.indexOf('oo') === 0;
 // }
 //
-// var ObjSpec = S.props({
+// var ObjSpec = S.shape({
 //   req: {
 //     'title': s.isStr,
 //     'userId': s.isNum,
 //   },
 //   opt: {
 //     'content': s.isStr,
-//     'ooProps': [startWithOo, S.props({
+//     'ooShape': [startWithOo, S.shape({
 //       req: {
 //         'val': s.isNum,
 //       },
@@ -65,7 +65,7 @@ console.log(s);
 // ObjSpec.conform(unconformed3);
 // ObjSpec.conform(unconformed4);
 
-// var fnList = ['props', 'isValid', 'conform', 'fspec', 'isObj', 'isFn'];
+// var fnList = ['shape', 'isValid', 'conform', 'fspec', 'isObj', 'isFn'];
 
 // var SpecObj = S.keys({req: fnList});
 // var InsaneSpecObj = S.keys({req: fnList.concat(['voodooooooooo'])});
@@ -161,7 +161,7 @@ console.log(s);
 // var adderFn = AdderFnSpec.instrument((amp, x) => (y) => amp(x) + y);
 // var r = adderFn((x) => x * 2, 1)(2);
 
-// var SS = s.or('a', s.props({
+// var SS = s.or('a', s.shape({
 //   req: {
 //     normalKeys: [s.isStr, s.isNum],
 //   },
@@ -174,7 +174,7 @@ console.log(s);
 // var r = s('xyz.superapp.item');
 // console.log(r.conform({z:1}));
 
-// s('xyz.superapp.item', s.and(s.isObj, s.props({req: ['title', 'content']})));
+// s('xyz.superapp.item', s.and(s.isObj, s.shape({req: ['title', 'content']})));
 // s('xyz.superapp.item.title', s.isStr);
 // var r = s('xyz.superapp.item').conform({ title: 'a', content: 'b' });
 // console.log(r);
@@ -182,14 +182,14 @@ console.log(s);
 // s('todoapp',
 //   s('headline', s.and(s.isStr, s.notEmpty)),
 //   {
-//     'list': s.props({
+//     'list': s.shape({
 //       req: {
 //         'title': s('todoapp.headline'),
 //         'items': s.zeroOrMore(s('todoapp.item')),
 //       },
 //     }),
 //     'item': [
-//       s.props({
+//       s.shape({
 //         req: {
 //           title: s('./title'),
 //           content: s('./content'),

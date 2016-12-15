@@ -145,8 +145,8 @@ function fromBaseClass(baseClass) {
           var nullablePropSpecs = S.or(propSpecs, S.isUndefined, S.isNull);
 
           var currWillUpdateFn = _this.componentWillUpdate;
-          _this.componentWillUpdate = function (nextProps) {
-            S.enforce(nullablePropSpecs, nextProps);
+          _this.componentWillUpdate = function (nextShape) {
+            S.enforce(nullablePropSpecs, nextShape);
             if (currWillUpdateFn) {
               return currWillUpdateFn.apply(_this, _arguments);
             }
@@ -155,7 +155,7 @@ function fromBaseClass(baseClass) {
 
           var currWillMountFn = _this.componentWillMount;
           _this.componentWillMount = function () {
-            S.enforce(nullablePropSpecs, _this.props);
+            S.enforce(nullablePropSpecs, _this.shape);
             if (currWillMountFn) {
               return currWillMountFn.apply(_this, _arguments);
             }

@@ -1,7 +1,7 @@
 var S = require('../../src');
 var Q = require('q');
 
-var PromiseSpec = S.props({
+var PromiseSpec = S.shape({
   req: {
     then: S.fspec({
       args: S.cat(

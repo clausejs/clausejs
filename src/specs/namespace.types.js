@@ -1,4 +1,4 @@
-import { or, cat, fspec, props, ExprSpec } from '../core';
+import { or, cat, fspec, shape, ExprSpec } from '../core';
 import { delayed, isNamespacePath, isExpr, isSpecRef } from '../utils';
 import { isObj } from '../preds';
 
@@ -35,7 +35,7 @@ function isNamespaceFragment( x ) {
   return !!/^[^.@%\&\*#]+/.test( x );
 }
 
-const NamespaceObjSpec = props( {
+const NamespaceObjSpec = shape( {
   optional: {
     subNamespaces: [ isNamespaceFragment, delayed( () => {
       return NamespaceObjSpec;

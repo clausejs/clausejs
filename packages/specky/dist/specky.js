@@ -424,7 +424,7 @@ var nfaWalker = __webpack_require__(64);
 var predWalker = __webpack_require__(65);
 var wallWalker = __webpack_require__(68);
 var fspecWalker = __webpack_require__(63);
-var propsWalker = __webpack_require__(66);
+var shapeWalker = __webpack_require__(66);
 var andWalker = __webpack_require__(60);
 var collOfWalker = __webpack_require__(61);
 var specRefWalker = __webpack_require__(67);
@@ -466,8 +466,8 @@ function _getWalker(expr) {
     walker = predWalker;
   } else if (spec.type === 'WALL') {
     walker = wallWalker;
-  } else if (spec.type === 'PROPS') {
-    walker = propsWalker;
+  } else if (spec.type === 'SHAPE') {
+    walker = shapeWalker;
   } else if (spec.type === 'AND') {
     walker = andWalker;
   } else if (spec.type === 'SpecRef') {
@@ -841,7 +841,7 @@ var oAssign = __webpack_require__(4);
 var regex = __webpack_require__(11);
 
 var _require = __webpack_require__(19),
-    props = _require.props,
+    shape = _require.shape,
     keys = _require.keys;
 
 var _require2 = __webpack_require__(33),
@@ -857,7 +857,7 @@ var other = {
   and: and
 };
 
-var r = oAssign({}, regex, { props: props, keys: keys }, other);
+var r = oAssign({}, regex, { shape: shape, keys: keys }, other);
 
 module.exports = r;
 
@@ -999,9 +999,9 @@ function isPropName(x) {
   return isStr(x);
 }
 
-var TYPE_PROPS = 'PROPS';
+var TYPE_SHAPE = 'SHAPE';
 
-var FieldDefs = propsOp({
+var FieldDefs = shapeOp({
   propArgs: {
     optionalFields: {
       opt: {
@@ -1027,7 +1027,7 @@ var FieldDefs = propsOp({
 var KeyOnlyArray = zeroOrMore(isPropName);
 var KeyArrayOrFieldDefs = or('keyList', KeyOnlyArray, 'fieldDefs', FieldDefs);
 
-var PropArgs = propsOp({
+var PropArgs = shapeOp({
   propArgs: {
     optionalFields: {
       opt: {
@@ -1060,41 +1060,41 @@ var PropArgs = propsOp({
   }
 });
 
-var PropsSpec = fspec({
+var ShapeSpec = fspec({
   args: cat('propArgs', PropArgs),
   ret: isSpec
 });
 
-function propsOp(cargs) {
+function shapeOp(cargs) {
   var _cargs$propArgs = cargs.propArgs,
       requiredFields = _cargs$propArgs.requiredFields,
       optionalFields = _cargs$propArgs.optionalFields;
 
 
   var s = new Spec({
-    type: TYPE_PROPS,
+    type: TYPE_SHAPE,
     exprs: [],
     // TODO: do fragments
     fragments: [],
     opts: { conformedArgs: cargs }
   });
-  s.conform = function propsConform(x) {
+  s.conform = function shapeConform(x) {
     return walk(s, x, { conform: true });
   };
   return s;
 }
 
-var props = PropsSpec.instrumentConformed(propsOp);
+var shape = ShapeSpec.instrumentConformed(shapeOp);
 
 module.exports = {
-  props: props,
-  keys: props,
-  PropsSpec: PropsSpec
+  shape: shape,
+  keys: shape,
+  ShapeSpec: ShapeSpec
 };
 
 // // // // //
 
-// var TestSpec = propsOp({
+// var TestSpec = shapeOp({
 //   propArgs: {
 //     req: {
 //       fieldDefs: {
@@ -1150,7 +1150,7 @@ function isNamespaceFragment(x) {
   return !!/^[^.@%\&\*#]+/.test(x);
 }
 
-var NamespaceObjSpec = (0, _core.props)({
+var NamespaceObjSpec = (0, _core.shape)({
   optional: {
     subNamespaces: [isNamespaceFragment, (0, _utils.delayed)(function () {
       return NamespaceObjSpec;
@@ -1577,7 +1577,7 @@ var oAssign = __webpack_require__(4);
 var SpecRef = __webpack_require__(23);
 
 var _require = __webpack_require__(19),
-    props = _require.props;
+    shape = _require.shape;
 
 var isSpec = __webpack_require__(1);
 var isPred = __webpack_require__(6);
@@ -1621,7 +1621,7 @@ function _slashToDot(p) {
   return p.replace(/^(.+)(\/)(.+)$/, '$1.$3').replace(/^\//, '');
 }
 
-// var PartialRefMapSpec = props({
+// var PartialRefMapSpec = shape({
 //   req: {
 //     'refDefs': [isNamespacePath, ExprOrPartialRefMapSpec]
 //   }
@@ -1670,7 +1670,7 @@ function _processVal(prefix, expression) {
   }
 }
 
-var NameObjSpec = props({
+var NameObjSpec = shape({
   req: { '.expr': (0, _core.or)(isSpec, isPred) }
 });
 
@@ -3016,7 +3016,7 @@ var oAssign = __webpack_require__(4);
 var Problem = __webpack_require__(2);
 var specFromAlts = __webpack_require__(17);
 
-function propsWalker(spec, walkFn) {
+function shapeWalker(spec, walkFn) {
   var keyConformer;
   var _spec$opts$conformedA = spec.opts.conformedArgs.propArgs,
       requiredFields = _spec$opts$conformedA.requiredFields,
@@ -3032,11 +3032,11 @@ function propsWalker(spec, walkFn) {
   }
 
   return {
-    trailblaze: propsTrailblaze,
-    reconstruct: propsReconstruct
+    trailblaze: shapeTrailblaze,
+    reconstruct: shapeReconstruct
   };
 
-  function propsTrailblaze(x, walkOpts) {
+  function shapeTrailblaze(x, walkOpts) {
     if (['object', 'function'].indexOf(typeof x === 'undefined' ? 'undefined' : _typeof(x)) < 0) {
       return new Problem(x, spec, [], 'Value is not an object');
     }
@@ -3117,7 +3117,7 @@ function propsWalker(spec, walkFn) {
     }
   }
 
-  function propsReconstruct(_ref, walkOpts) {
+  function shapeReconstruct(_ref, walkOpts) {
     var val = _ref.val,
         singles = _ref.singles,
         groups = _ref.groups;
@@ -3299,7 +3299,7 @@ function _conformNamedOrExpr(x, alts, walkFn, walkOpts) {
   return r;
 }
 
-module.exports = propsWalker;
+module.exports = shapeWalker;
 
 /***/ },
 /* 67 */

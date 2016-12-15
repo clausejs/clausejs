@@ -4,7 +4,7 @@
 
 A powerful & highly flexible JavaScript data validation and conformation library that enables you to:
 
-- Build your data validation rules (specs) with composable, regex-like expressions built from primitives predicates such as `and`, `or`, `any`, `props`, `oneOrMore`, `zeroOrMore`, etc
+- Build your data validation rules (specs) with composable, regex-like expressions built from primitives predicates such as `and`, `or`, `any`, `shape`, `oneOrMore`, `zeroOrMore`, etc
 - Validate and make assertions about your data with these predicate functions
 - Conform your data with parsing
 - Allows you to define the shape and rules of your functions' arguments, return value and the relation between them
@@ -20,7 +20,7 @@ By writing a set of specs for your app *only once*, you can get a lot of leverag
 - Runtime validation for your data and functions
 - Advanced data conformation that simplifies your code for data processing
 - [WIP] Automatically generated documentation (via [specky-docgen](packages/specky-docgen))
-- [WIP] React props validation (via [specky-react](packages/specky-react))
+- [WIP] React shape validation (via [specky-react](packages/specky-react))
 - [Coming soon] Automatically generative test cases for your functions (via [specky-gen](packages/specky-gen))
 - A safety harness with more customizable type and behavior constraints that is even more powerful than typed languages such as TypeScript
 

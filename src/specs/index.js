@@ -1,11 +1,11 @@
-import S, { fspec, cat, or, props, isStr, isBool,
+import S, { fspec, cat, or, shape, isStr, isBool,
   isArray, isFn, and, isNum, isNull, isUndefined, isSpec, isDelayedSpec, isProblem } from '../';
 import { any, ExprSpec, CatFnSpec, OrFnSpec,
   CollOfSpec, collOf,
   ZeroOrMoreFnSpec, OneOrMoreFnSpec, ZeroOrOneFnSpec } from '../core';
 import { AndSpec } from '../core/and';
 import { WallFnSpec } from '../core/wall';
-import { PropsSpec } from '../core/objRelated';
+import { ShapeSpec } from '../core/objRelated';
 import { isNamespacePath, NamespaceFnSpec, NamespaceObjSpec } from './namespace.types';
 
 
@@ -28,7 +28,7 @@ const AnySpec = fspec( {
 } );
 
 const FspecFnSpec = fspec( {
-  args: cat( 'fspecFields', props( {
+  args: cat( 'fspecFields', shape( {
     optional: {
       args: and( isArray, S( 'specky.types/Expression' ) ),
       ret: S( 'specky.types/Expression' ),
@@ -88,7 +88,7 @@ S( 'specky.core/zeroOrOne', ZeroOrOneFnSpec );
 S( 'specky.core/any', AnySpec );
 S( 'specky.core/collOf', CollOfSpec );
 S( 'specky.core/and', AndSpec );
-S( 'specky.core/props', PropsSpec );
+S( 'specky.core/shape', ShapeSpec );
 S( 'specky.core/wall', WallFnSpec );
 S( 'specky.core/fspec', FspecFnSpec );
 

@@ -8,7 +8,7 @@ function isFamily( x ) {
 describe( 'stamp collection example', () => {
   it( 'stampapp', () => {
     var IdSpec = s.isNum;
-    var UserSpec = s.props( {
+    var UserSpec = s.shape( {
       req: {
         id: IdSpec,
         firstName: s.isStr,
@@ -16,13 +16,13 @@ describe( 'stamp collection example', () => {
       },
     } );
 
-    var StampSpec = s.props( {
+    var StampSpec = s.shape( {
       req: {
         year: s.isNum,
         title: s.isStr,
       },
     } );
-    var CollectionSpec = s.props( {
+    var CollectionSpec = s.shape( {
       req: {
         title: s.isStr,
         items: s.oneOrMore( s.and( StampSpec, s.isObj ) ),

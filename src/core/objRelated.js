@@ -11,9 +11,9 @@ function isPropName( x ) {
   return isStr( x );
 }
 
-var TYPE_PROPS = 'PROPS';
+var TYPE_SHAPE = 'SHAPE';
 
-var FieldDefs = propsOp( {
+var FieldDefs = shapeOp( {
   propArgs: {
     optionalFields: {
       opt: {
@@ -46,7 +46,7 @@ var FieldDefs = propsOp( {
 var KeyOnlyArray = zeroOrMore( isPropName );
 var KeyArrayOrFieldDefs = or( 'keyList', KeyOnlyArray, 'fieldDefs', FieldDefs );
 
-var PropArgs = propsOp( {
+var PropArgs = shapeOp( {
   propArgs: {
     optionalFields: {
       opt: {
@@ -79,38 +79,38 @@ var PropArgs = propsOp( {
   }
 } );
 
-var PropsSpec = fspec( {
+var ShapeSpec = fspec( {
   args: cat( 'propArgs', PropArgs ),
   ret: isSpec,
 } );
 
-function propsOp( cargs ) {
+function shapeOp( cargs ) {
   const { propArgs: { requiredFields, optionalFields } } = cargs;
 
   var s = new Spec( {
-    type: TYPE_PROPS,
+    type: TYPE_SHAPE,
     exprs: [ ],
     // TODO: do fragments
     fragments: [ ],
     opts: { conformedArgs: cargs }
   } );
-  s.conform = function propsConform( x ) {
+  s.conform = function shapeConform( x ) {
     return walk( s, x, { conform: true } );
   }
   return s;
 }
 
-var props = PropsSpec.instrumentConformed( propsOp );
+var shape = ShapeSpec.instrumentConformed( shapeOp );
 
 module.exports = {
-  props,
-  keys: props,
-  PropsSpec,
+  shape,
+  keys: shape,
+  ShapeSpec,
 };
 
 // // // // //
 
-// var TestSpec = propsOp({
+// var TestSpec = shapeOp({
 //   propArgs: {
 //     req: {
 //       fieldDefs: {

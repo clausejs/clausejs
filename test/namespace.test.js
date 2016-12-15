@@ -14,7 +14,7 @@ describe( 'namespace', () => {
       s( 'xyz.superapp.item/title', s.isStr );
       s( 'xyz.superapp/item', s.and(
         s.isObj,
-        s.props( {
+        s.shape( {
           required: {
             title: ( s( 'xyz.superapp.item/title' ) ),
             content: s.isStr,
@@ -36,7 +36,7 @@ describe( 'namespace', () => {
           '/items': s.zeroOrMore( s( '../item' ) ),
         },
         '/item':
-          s.props( {
+          s.shape( {
             req: [
               s( 'todoapp.item/title' ),
               s( 'todoapp.item/content' ),

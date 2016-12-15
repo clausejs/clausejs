@@ -2,7 +2,7 @@ var oPath = require( 'object-path' );
 var oAssign = require( 'object-assign' );
 var SpecRef = require( '../models/SpecRef' );
 import { cat, or, fspec } from '../core' ;
-var { props } = require( '../core/objRelated' );
+var { shape } = require( '../core/objRelated' );
 var isSpec = require( '../utils/isSpec' );
 var isPred = require( '../utils/isPred' );
 var isUndefined = require( '../preds/isUndefined' );
@@ -47,7 +47,7 @@ function _slashToDot( p ) {
   return p.replace( /^(.+)(\/)(.+)$/, '$1.$3' ).replace( /^\//, '' );
 }
 
-// var PartialRefMapSpec = props({
+// var PartialRefMapSpec = shape({
 //   req: {
 //     'refDefs': [isNamespacePath, ExprOrPartialRefMapSpec]
 //   }
@@ -92,7 +92,7 @@ function _processVal( prefix, expression ) {
   }
 }
 
-var NameObjSpec = props( {
+var NameObjSpec = shape( {
   req: { '.expr': or( isSpec, isPred ) }
 } );
 

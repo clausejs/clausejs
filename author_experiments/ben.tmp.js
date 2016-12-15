@@ -7,7 +7,7 @@ function shorternThan100( x ) {
 
 S( 'superTwitter/Username', S.and( S.isStr, shorternThan100 ) )
 S( 'superTwitter/Email', S.and( S.isStr, ( x ) => x.indexOf( '@' ) > 0 ) )
-S( 'superTwitter/User', S.props( {
+S( 'superTwitter/User', S.shape( {
   required: {
     username: S( 'superTwitter/Username' ),
     email: S( 'superTwitter/Email' ),

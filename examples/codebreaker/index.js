@@ -48,7 +48,7 @@ ScoreFnSpec = s.fspec({
     s.cat('secret', CodeSpec, 'guess', CodeSpec),
     ({secret, guess}) => secret.length === guess.length
   ),
-  ret: s.props({
+  ret: s.shape({
     req: {
       exactMatches: s.isNatInt,
       looseMatches: s.isNatInt,
@@ -63,7 +63,7 @@ ScoreFnSpec = s.fspec({
     s.cat('secret', CodeSpec, 'guess', CodeSpec),
     ({secret, guess}) => secret.length === guess.length
   ),
-  ret: s.props({
+  ret: s.shape({
     req: {
       exactMatches: s.isNatInt,
       looseMatches: s.isNatInt,
