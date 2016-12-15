@@ -129,7 +129,7 @@ function genForExpression( globalReg, exprName, expr, meta ) {
     docstr = _genSpecRef( globalReg, exprName, path, expr, meta );
   } else if ( expr.type === 'SPEC_REF' ) {
     docstr = _genSpecRef( globalReg, exprName, null, expr, meta );
-  } else if ( expr.type === 'Delayed' ) {
+  } else if ( expr.type === 'DELAYED' ) {
     return genForExpression( globalReg, exprName, expr.get(), meta );
   } else if ( expr.type === 'FSPEC' ) {
     docstr = _genFspec( globalReg, exprName, expr, meta );

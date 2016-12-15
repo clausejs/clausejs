@@ -1,7 +1,7 @@
 const Spec = require( './Spec' );
 
 function DelayedSpec( { getFn } ) {
-  this.type = 'Delayed';
+  this.type = 'DELAYED';
   this.get = getFn;
   var _this = this;
 

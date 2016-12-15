@@ -468,7 +468,7 @@ var walkerMap = {
   'SHAPE': shapeWalker,
   'AND': andWalker,
   'SPEC_REF': specRefWalker,
-  'Delayed': delayedSpecWalker,
+  'DELAYED': delayedSpecWalker,
   'FSPEC': fspecWalker
 };
 
@@ -1210,7 +1210,7 @@ var Spec = __webpack_require__(0);
 function DelayedSpec(_ref) {
   var getFn = _ref.getFn;
 
-  this.type = 'Delayed';
+  this.type = 'DELAYED';
   this.get = getFn;
   var _this = this;
 
@@ -1512,7 +1512,7 @@ function _fragments(expr, interceptor) {
   } else if (expr.type === 'PRED') {
     return _fragments(expr.opts.predicate, interceptor);
   } else if (isSpec(expr)) {
-    if (expr.type === 'Delayed' || expr.type === 'SPEC_REF') {
+    if (expr.type === 'DELAYED' || expr.type === 'SPEC_REF') {
       return _fragments(expr.get(), interceptor);
     } else {
       return [expr.type.toLowerCase(), '('].concat(_processInner(expr, interceptor)).concat([')']);

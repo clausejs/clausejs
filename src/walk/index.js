@@ -46,7 +46,7 @@ const walkerMap = {
   'SHAPE': shapeWalker,
   'AND': andWalker,
   'SPEC_REF': specRefWalker,
-  'Delayed': delayedSpecWalker,
+  'DELAYED': delayedSpecWalker,
   'FSPEC': fspecWalker,
 }
 

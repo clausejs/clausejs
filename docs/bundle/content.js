@@ -468,7 +468,7 @@ var walkerMap = {
   'SHAPE': shapeWalker,
   'AND': andWalker,
   'SPEC_REF': specRefWalker,
-  'Delayed': delayedSpecWalker,
+  'DELAYED': delayedSpecWalker,
   'FSPEC': fspecWalker
 };
 
@@ -1210,7 +1210,7 @@ var Spec = __webpack_require__(0);
 function DelayedSpec(_ref) {
   var getFn = _ref.getFn;
 
-  this.type = 'Delayed';
+  this.type = 'DELAYED';
   this.get = getFn;
   var _this = this;
 
@@ -11737,7 +11737,7 @@ function _fragments(expr, interceptor) {
   } else if (expr.type === 'PRED') {
     return _fragments(expr.opts.predicate, interceptor);
   } else if (isSpec(expr)) {
-    if (expr.type === 'Delayed' || expr.type === 'SPEC_REF') {
+    if (expr.type === 'DELAYED' || expr.type === 'SPEC_REF') {
       return _fragments(expr.get(), interceptor);
     } else {
       return [expr.type.toLowerCase(), '('].concat(_processInner(expr, interceptor)).concat([')']);
@@ -14041,7 +14041,7 @@ function genForExpression(globalReg, exprName, expr, meta) {
     docstr = _genSpecRef(globalReg, exprName, path, expr, meta);
   } else if (expr.type === 'SPEC_REF') {
     docstr = _genSpecRef(globalReg, exprName, null, expr, meta);
-  } else if (expr.type === 'Delayed') {
+  } else if (expr.type === 'DELAYED') {
     return genForExpression(globalReg, exprName, expr.get(), meta);
   } else if (expr.type === 'FSPEC') {
     docstr = _genFspec(globalReg, exprName, expr, meta);

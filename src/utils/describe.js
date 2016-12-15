@@ -20,7 +20,7 @@ function _fragments( expr, interceptor ) {
   } else if ( expr.type === 'PRED' ) {
     return _fragments( expr.opts.predicate, interceptor );
   } else if ( isSpec( expr ) ) {
-    if ( expr.type === 'Delayed' || expr.type === 'SPEC_REF' ) {
+    if ( expr.type === 'DELAYED' || expr.type === 'SPEC_REF' ) {
       return _fragments( expr.get(), interceptor );
     } else {
       return [ expr.type.toLowerCase(), '(', ]
