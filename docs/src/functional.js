@@ -1,11 +1,13 @@
 
 import $ from 'jquery';
 import tether from 'tether';
+import S from '../../src';
 // require( 'bootstrap/dist/css/bootstrap.css' );
 require( 'highlight.js/styles/default.css' );
 const HLJS = require( 'highlight.js' );
 window.$ = window.jQuery = $;
 window.Tether = tether;
+window.S = S;
 require( 'bootstrap' );
 
 $( () => {
