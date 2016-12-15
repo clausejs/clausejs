@@ -45,7 +45,7 @@ const walkerMap = {
   'WALL': wallWalker,
   'SHAPE': shapeWalker,
   'AND': andWalker,
-  'SpecRef': specRefWalker,
+  'SPEC_REF': specRefWalker,
   'Delayed': delayedSpecWalker,
   'FSPEC': fspecWalker,
 }

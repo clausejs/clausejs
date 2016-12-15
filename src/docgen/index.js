@@ -127,7 +127,7 @@ function genForExpression( globalReg, exprName, expr, meta ) {
 
   if ( path && !exprName ) {
     docstr = _genSpecRef( globalReg, exprName, path, expr, meta );
-  } else if ( expr.type === 'SpecRef' ) {
+  } else if ( expr.type === 'SPEC_REF' ) {
     docstr = _genSpecRef( globalReg, exprName, null, expr, meta );
   } else if ( expr.type === 'Delayed' ) {
     return genForExpression( globalReg, exprName, expr.get(), meta );

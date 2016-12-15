@@ -71,7 +71,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 256);
+/******/ 	return __webpack_require__(__webpack_require__.s = 257);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -420,14 +420,15 @@ module.exports = coerceIntoSpec;
 'use strict';
 
 var oAssign = __webpack_require__(4);
-var nfaWalker = __webpack_require__(64);
-var predWalker = __webpack_require__(65);
-var wallWalker = __webpack_require__(68);
+var nfaWalker = __webpack_require__(65);
+var predWalker = __webpack_require__(66);
+var wallWalker = __webpack_require__(69);
 var fspecWalker = __webpack_require__(63);
-var shapeWalker = __webpack_require__(66);
+var shapeWalker = __webpack_require__(67);
 var andWalker = __webpack_require__(60);
 var collOfWalker = __webpack_require__(61);
-var specRefWalker = __webpack_require__(67);
+var mapOfWalker = __webpack_require__(64);
+var specRefWalker = __webpack_require__(68);
 var delayedSpecWalker = __webpack_require__(62);
 var coerceIntoSpec = __webpack_require__(8);
 var isProblem = __webpack_require__(3);
@@ -455,28 +456,28 @@ function walk(spec, x, opts) {
   }
 }
 
+var walkerMap = {
+  'OR': nfaWalker,
+  'CAT': nfaWalker,
+  'COLL_OF': collOfWalker,
+  'Z_OR_M': nfaWalker,
+  'O_OR_M': nfaWalker,
+  'Z_OR_O': nfaWalker,
+  'PRED': predWalker,
+  'WALL': wallWalker,
+  'SHAPE': shapeWalker,
+  'AND': andWalker,
+  'SPEC_REF': specRefWalker,
+  'Delayed': delayedSpecWalker,
+  'FSPEC': fspecWalker
+};
+
 function _getWalker(expr) {
-  var walker;
+
   var spec = coerceIntoSpec(expr);
-  if (['OR', 'CAT', 'Z_OR_M', 'O_OR_M', 'Z_OR_O'].indexOf(spec.type) >= 0) {
-    walker = nfaWalker;
-  } else if (['COLL_OF'].indexOf(spec.type) >= 0) {
-    walker = collOfWalker;
-  } else if (spec.type === 'PRED') {
-    walker = predWalker;
-  } else if (spec.type === 'WALL') {
-    walker = wallWalker;
-  } else if (spec.type === 'SHAPE') {
-    walker = shapeWalker;
-  } else if (spec.type === 'AND') {
-    walker = andWalker;
-  } else if (spec.type === 'SpecRef') {
-    walker = specRefWalker;
-  } else if (spec.type === 'Delayed') {
-    walker = delayedSpecWalker;
-  } else if (spec.type === 'FSPEC') {
-    walker = fspecWalker;
-  } else {
+  var walker = walkerMap[spec.type];
+
+  if (!walker) {
     throw 'unsupported type ' + spec.type;
   }
 
@@ -1247,7 +1248,7 @@ function SpecRef(_ref) {
       getFn = _ref.getFn,
       conformFn = _ref.conformFn;
 
-  this.type = 'SpecRef';
+  this.type = 'SPEC_REF';
   this.get = getFn;
   this.conform = conformFn;
   this.ref = ref;
@@ -11736,7 +11737,7 @@ function _fragments(expr, interceptor) {
   } else if (expr.type === 'PRED') {
     return _fragments(expr.opts.predicate, interceptor);
   } else if (isSpec(expr)) {
-    if (expr.type === 'Delayed' || expr.type === 'SpecRef') {
+    if (expr.type === 'Delayed' || expr.type === 'SPEC_REF') {
       return _fragments(expr.get(), interceptor);
     } else {
       return [expr.type.toLowerCase(), '('].concat(_processInner(expr, interceptor)).concat([')']);
@@ -11797,7 +11798,7 @@ var _utils = __webpack_require__(15);
 
 var _namespace = __webpack_require__(20);
 
-var oPath = __webpack_require__(69);
+var oPath = __webpack_require__(70);
 var oAssign = __webpack_require__(4);
 var SpecRef = __webpack_require__(23);
 
@@ -13143,6 +13144,13 @@ module.exports = fspecWalker;
 
 /***/ },
 /* 64 */
+/***/ function(module, exports) {
+
+"use strict";
+"use strict";
+
+/***/ },
+/* 65 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13193,7 +13201,7 @@ function nfaWalker(spec, walkFn) {
 module.exports = nfaWalker;
 
 /***/ },
-/* 65 */
+/* 66 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13225,7 +13233,7 @@ function predWalker(spec) {
 module.exports = predWalker;
 
 /***/ },
-/* 66 */
+/* 67 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13527,7 +13535,7 @@ function _conformNamedOrExpr(x, alts, walkFn, walkOpts) {
 module.exports = shapeWalker;
 
 /***/ },
-/* 67 */
+/* 68 */
 /***/ function(module, exports) {
 
 "use strict";
@@ -13551,7 +13559,7 @@ function specRefWalker(specRef, walkFn) {
 module.exports = specRefWalker;
 
 /***/ },
-/* 68 */
+/* 69 */
 /***/ function(module, exports) {
 
 "use strict";
@@ -13576,7 +13584,7 @@ function wallWalker(wallSpec, walkFn) {
 module.exports = wallWalker;
 
 /***/ },
-/* 69 */
+/* 70 */
 /***/ function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (root, factory){
@@ -13873,11 +13881,11 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
 /***/ },
-/* 70 */,
 /* 71 */,
 /* 72 */,
 /* 73 */,
-/* 74 */
+/* 74 */,
+/* 75 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13909,7 +13917,7 @@ var _deref = __webpack_require__(35);
 
 var _deref2 = _interopRequireDefault(_deref);
 
-var _namespaceResolver = __webpack_require__(248);
+var _namespaceResolver = __webpack_require__(249);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -14031,7 +14039,7 @@ function genForExpression(globalReg, exprName, expr, meta) {
 
   if (path && !exprName) {
     docstr = _genSpecRef(globalReg, exprName, path, expr, meta);
-  } else if (expr.type === 'SpecRef') {
+  } else if (expr.type === 'SPEC_REF') {
     docstr = _genSpecRef(globalReg, exprName, null, expr, meta);
   } else if (expr.type === 'Delayed') {
     return genForExpression(globalReg, exprName, expr.get(), meta);
@@ -14434,8 +14442,8 @@ module.exports = fns;
 module.exports.default = fns;
 
 /***/ },
-/* 75 */,
-/* 76 */
+/* 76 */,
+/* 77 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14477,7 +14485,7 @@ var _ = __webpack_require__(21);
 });
 
 /***/ },
-/* 77 */
+/* 78 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14619,7 +14627,6 @@ var DelayedFnSpec = (0, _.fspec)({
 exports.default = _2.default.getRegistry();
 
 /***/ },
-/* 78 */,
 /* 79 */,
 /* 80 */,
 /* 81 */,
@@ -14789,7 +14796,8 @@ exports.default = _2.default.getRegistry();
 /* 245 */,
 /* 246 */,
 /* 247 */,
-/* 248 */
+/* 248 */,
+/* 249 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14797,7 +14805,7 @@ exports.default = _2.default.getRegistry();
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
-var _lodash = __webpack_require__(251);
+var _lodash = __webpack_require__(252);
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
@@ -14900,9 +14908,9 @@ module.exports = {
 };
 
 /***/ },
-/* 249 */,
 /* 250 */,
-/* 251 */
+/* 251 */,
+/* 252 */
 /***/ function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -31971,11 +31979,11 @@ module.exports = {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(37), __webpack_require__(253)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(37), __webpack_require__(254)(module)))
 
 /***/ },
-/* 252 */,
-/* 253 */
+/* 253 */,
+/* 254 */
 /***/ function(module, exports) {
 
 module.exports = function(module) {
@@ -32001,19 +32009,19 @@ module.exports = function(module) {
 
 
 /***/ },
-/* 254 */,
 /* 255 */,
-/* 256 */
+/* 256 */,
+/* 257 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 'use strict';
 
-var _docgen = __webpack_require__(74);
+var _docgen = __webpack_require__(75);
 
 var _docgen2 = _interopRequireDefault(_docgen);
 
-__webpack_require__(77);
+__webpack_require__(78);
 
 var _src = __webpack_require__(21);
 
@@ -32026,7 +32034,7 @@ var _jquery2 = _interopRequireDefault(_jquery);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // import '../../author_experiments/ben.tmp';
-__webpack_require__(76);
+__webpack_require__(77);
 var finalDocStr = _docgen2.default.gen(_src2.default.getRegistry());
 var finalCotStr = _docgen2.default.genCot(_src2.default.getRegistry());
 

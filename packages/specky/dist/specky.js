@@ -420,14 +420,15 @@ module.exports = coerceIntoSpec;
 'use strict';
 
 var oAssign = __webpack_require__(4);
-var nfaWalker = __webpack_require__(64);
-var predWalker = __webpack_require__(65);
-var wallWalker = __webpack_require__(68);
+var nfaWalker = __webpack_require__(65);
+var predWalker = __webpack_require__(66);
+var wallWalker = __webpack_require__(69);
 var fspecWalker = __webpack_require__(63);
-var shapeWalker = __webpack_require__(66);
+var shapeWalker = __webpack_require__(67);
 var andWalker = __webpack_require__(60);
 var collOfWalker = __webpack_require__(61);
-var specRefWalker = __webpack_require__(67);
+var mapOfWalker = __webpack_require__(64);
+var specRefWalker = __webpack_require__(68);
 var delayedSpecWalker = __webpack_require__(62);
 var coerceIntoSpec = __webpack_require__(8);
 var isProblem = __webpack_require__(3);
@@ -455,28 +456,28 @@ function walk(spec, x, opts) {
   }
 }
 
+var walkerMap = {
+  'OR': nfaWalker,
+  'CAT': nfaWalker,
+  'COLL_OF': collOfWalker,
+  'Z_OR_M': nfaWalker,
+  'O_OR_M': nfaWalker,
+  'Z_OR_O': nfaWalker,
+  'PRED': predWalker,
+  'WALL': wallWalker,
+  'SHAPE': shapeWalker,
+  'AND': andWalker,
+  'SPEC_REF': specRefWalker,
+  'Delayed': delayedSpecWalker,
+  'FSPEC': fspecWalker
+};
+
 function _getWalker(expr) {
-  var walker;
+
   var spec = coerceIntoSpec(expr);
-  if (['OR', 'CAT', 'Z_OR_M', 'O_OR_M', 'Z_OR_O'].indexOf(spec.type) >= 0) {
-    walker = nfaWalker;
-  } else if (['COLL_OF'].indexOf(spec.type) >= 0) {
-    walker = collOfWalker;
-  } else if (spec.type === 'PRED') {
-    walker = predWalker;
-  } else if (spec.type === 'WALL') {
-    walker = wallWalker;
-  } else if (spec.type === 'SHAPE') {
-    walker = shapeWalker;
-  } else if (spec.type === 'AND') {
-    walker = andWalker;
-  } else if (spec.type === 'SpecRef') {
-    walker = specRefWalker;
-  } else if (spec.type === 'Delayed') {
-    walker = delayedSpecWalker;
-  } else if (spec.type === 'FSPEC') {
-    walker = fspecWalker;
-  } else {
+  var walker = walkerMap[spec.type];
+
+  if (!walker) {
     throw 'unsupported type ' + spec.type;
   }
 
@@ -1247,7 +1248,7 @@ function SpecRef(_ref) {
       getFn = _ref.getFn,
       conformFn = _ref.conformFn;
 
-  this.type = 'SpecRef';
+  this.type = 'SPEC_REF';
   this.get = getFn;
   this.conform = conformFn;
   this.ref = ref;
@@ -1511,7 +1512,7 @@ function _fragments(expr, interceptor) {
   } else if (expr.type === 'PRED') {
     return _fragments(expr.opts.predicate, interceptor);
   } else if (isSpec(expr)) {
-    if (expr.type === 'Delayed' || expr.type === 'SpecRef') {
+    if (expr.type === 'Delayed' || expr.type === 'SPEC_REF') {
       return _fragments(expr.get(), interceptor);
     } else {
       return [expr.type.toLowerCase(), '('].concat(_processInner(expr, interceptor)).concat([')']);
@@ -1572,7 +1573,7 @@ var _utils = __webpack_require__(15);
 
 var _namespace = __webpack_require__(20);
 
-var oPath = __webpack_require__(69);
+var oPath = __webpack_require__(70);
 var oAssign = __webpack_require__(4);
 var SpecRef = __webpack_require__(23);
 
@@ -2918,6 +2919,13 @@ module.exports = fspecWalker;
 
 /***/ },
 /* 64 */
+/***/ function(module, exports) {
+
+"use strict";
+"use strict";
+
+/***/ },
+/* 65 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2968,7 +2976,7 @@ function nfaWalker(spec, walkFn) {
 module.exports = nfaWalker;
 
 /***/ },
-/* 65 */
+/* 66 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3000,7 +3008,7 @@ function predWalker(spec) {
 module.exports = predWalker;
 
 /***/ },
-/* 66 */
+/* 67 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3302,7 +3310,7 @@ function _conformNamedOrExpr(x, alts, walkFn, walkOpts) {
 module.exports = shapeWalker;
 
 /***/ },
-/* 67 */
+/* 68 */
 /***/ function(module, exports) {
 
 "use strict";
@@ -3326,7 +3334,7 @@ function specRefWalker(specRef, walkFn) {
 module.exports = specRefWalker;
 
 /***/ },
-/* 68 */
+/* 69 */
 /***/ function(module, exports) {
 
 "use strict";
@@ -3351,7 +3359,7 @@ function wallWalker(wallSpec, walkFn) {
 module.exports = wallWalker;
 
 /***/ },
-/* 69 */
+/* 70 */
 /***/ function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (root, factory){
