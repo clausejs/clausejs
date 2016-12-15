@@ -26,6 +26,8 @@ By writing a set of specs for your app *only once*, you can get a lot of leverag
 
 [Click here](https://www.youtube.com/watch?v=oyLBGkS5ICk) to watch a good high-level video on the rationale behind clojure.spec (and thus Specky).
 
+Still need [five minutes](https://signalvnoise.com/posts/3124-give-it-five-minutes) to acknowledge its awesomeness? I think not.
+
 ## Quick Example
 
 - TODO

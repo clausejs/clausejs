@@ -32025,6 +32025,7 @@ var _jquery2 = _interopRequireDefault(_jquery);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// import '../../author_experiments/ben.tmp';
 __webpack_require__(76);
 var finalDocStr = _docgen2.default.gen(_src2.default.getRegistry());
 var finalCotStr = _docgen2.default.genCot(_src2.default.getRegistry());
