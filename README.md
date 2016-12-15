@@ -45,7 +45,6 @@ Please refer to the documentation site: http://specky.js.org
 ## Project status
 - Alpha. Subject to constant change and improvement based on [feedback](/../../issues/).
 
-
 ## Try it
 
 - [Try it online](https://jsbin.com/fisiyeh/latest/edit?js,console)
@@ -61,7 +60,7 @@ Or in the `<head>` or `<body>` tag of your HTML:
 <script src="//unpkg.com/specky@latest/dist/specky.js"></script>
 ```
 
-## Examples
+## More Examples
 
 - [Specky in browser](examples/simple.html)
 - [Spec'ing promises](examples/promise/index.js)
@@ -72,9 +71,17 @@ Or in the `<head>` or `<body>` tag of your HTML:
 
 Coming soon.
 
-- `specky-gen`: Generative/Property-based Testing
 - `specky-docgen`: Automatic documentation generation based on function specs
+- `specky-gen`: Generative/Property-based Testing
 - `specky-react`: Specky integration for React. A replacement for `React.PropTypes`
+
+## Why not just use cljs.spec?
+
+Clojure in the author's opinion is a great language. If you love Clojure/ClojureScript, by all means go ahead and try cljs.spec.
+
+I created Specky for developers in the JavaScript community who for one of the many reasons cannot yet fully commit to Clojure/ClojureScript.
+
+Specky API for the most part is kept similar to clojure.spec, except for a few decisions related to usability and due to some convention/feature differences in JavaScript.
 
 ## Run tests
 
