@@ -270,6 +270,28 @@ core[ '?' ] = core.zeroOrOne;
 module.exports = core;
 
 // // //
+
+var isStr = require( '../preds/isStr' );
+var isObj = require( '../preds/isObj' );
+var TestSpec1 = orOp( {
+  withoutLabels: [
+    // {
+    //   spec: catOp( {
+    //     withoutLabels: [
+    //       { pred: isStr },
+    //     ]
+    //   } ),
+    // },
+    {
+      pred: isObj,
+    }
+  ],
+} );
+
+var r = TestSpec1.conform( {} );
+
+console.log( r );
+
 // var TestSpec = orOp( {
 //   withLabels: [
 //     {

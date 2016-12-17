@@ -7,7 +7,6 @@ require( 'highlight.js/styles/default.css' );
 const HLJS = require( 'highlight.js' );
 window.$ = window.jQuery = $;
 window.Tether = tether;
-window.S = S;
 require( 'bootstrap' );
 
 $( () => {
@@ -26,3 +25,7 @@ $( function flashAnchors() {
       .delay( 100 ).fadeIn( 100 ).fadeOut( 100 ).fadeIn( 100 ).fadeOut( 100 ).fadeIn( 100 );
   } );
 } );
+
+// quick hack; to expose variable S to window
+// TODO: separate build file configs in webpack.config
+module.exports = S;

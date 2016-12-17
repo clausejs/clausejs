@@ -13,6 +13,6 @@ var models = {
 };
 
 var r = oAssign( namespaceFn, ops, utils, models, predicates );
-r.default = r;
 
 module.exports = r;
+export default r;

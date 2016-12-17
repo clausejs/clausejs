@@ -21,7 +21,14 @@ function _constructMessage( { subproblems, val, rawMsg }, lvl ) {
   if ( Array.isArray( subproblems ) ) {
     var reasons;
     if ( subproblems.length === 0 ) {
-      return `${rawMsg}; val: ${JSON.stringify( val )}`;
+      return `${rawMsg}; val: ${
+        JSON.stringify( val, ( key, val ) => {
+          if ( typeof val === 'function' ) {
+            return `${val.name}()`; // implicitly `toString` it
+          }
+          return val;
+        } )
+      }`;
     } else {
       reasons = subproblems.map( ( r ) => {
         return `${_open( lvl )}${_constructMessage( r, lvl + 1 )}${_close( lvl )}`;

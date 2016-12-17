@@ -1,5 +1,6 @@
 var oAssign = require( 'object-assign' );
 var nfaWalker = require( './nfaWalker' );
+var anyWalker = require( './anyWalker' );
 var predWalker = require( './predWalker' );
 var wallWalker = require( './wallWalker' );
 var fspecWalker = require( './fspecWalker' );
@@ -15,12 +16,12 @@ var isProblem = require( '../utils/isProblem' );
 function walk( spec, x, opts ) {
   var { phase } = opts;
   var walker = _getWalker( spec );
-
   if ( !phase ) {
     // 2-pass algorithm:
 
     // in Pass 1 we just need to know if x validates to spec, and if so, how
     var intermediate = walker.trailblaze( x, oAssign( { phase: 'trailblaze' }, opts ) );
+
     if ( isProblem( intermediate ) ) {
       return intermediate;
     } else {
@@ -38,6 +39,7 @@ const walkerMap = {
   'OR': nfaWalker,
   'CAT': nfaWalker,
   'COLL_OF': collOfWalker,
+  'ANY': anyWalker,
   'Z_OR_M': nfaWalker,
   'O_OR_M': nfaWalker,
   'Z_OR_O': nfaWalker,

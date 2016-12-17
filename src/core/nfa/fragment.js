@@ -114,11 +114,11 @@ build.CAT = function CAT( frags ) {
 
 build.OR = function OR( frags ) {
   frags = frags.map( ( f ) => {
-    var outState = namedEpsilonState( 'out', f.name, 'OR' );
+    var outState = namedEpsilonState( 'out', f.name, 'OR', null );
     var trans = fragmentTransition( outState, null );
     var nameOutState = fragmentState( [ trans ] );
     patch( f.tails, nameOutState );
-    var transIn = fragmentTransition( namedEpsilonState( 'in', f.name, 'OR' ), f.head );
+    var transIn = fragmentTransition( namedEpsilonState( 'in', f.name, 'OR', null ), f.head );
     var newHead = fragmentState( [ transIn ] );
     var newF = namedFragment( f.name, newHead, [ trans ] );
     return newF;
@@ -132,8 +132,8 @@ build.OR = function OR( frags ) {
   };
 
   var newF = frags.reduce( binaryAlt );
-  newF = frontWithState( namedEpsilonState( 'enter', null, 'OR' ), newF );
-  newF = rearWithState( namedEpsilonState( 'exit', null, 'OR' ), newF );
+  newF = frontWithState( namedEpsilonState( 'enter', null, 'OR', null ), newF );
+  newF = rearWithState( namedEpsilonState( 'exit', null, 'OR', null ), newF );
 
   return newF;
 };

@@ -134,9 +134,12 @@ const meta = MetaFnSpec.instrumentConformed(
 
 _maybeInitRegistry();
 
+const getRegistry = () => reg;
+
 var specedSpeckyNamespace = NamespaceFnSpec.instrumentConformed( speckyNamespace );
 specedSpeckyNamespace.clearRegistry = clearRegistry;
-specedSpeckyNamespace.getRegistry = () => reg;
+specedSpeckyNamespace.getRegistry = getRegistry;
 specedSpeckyNamespace.meta = meta;
 
+export { getRegistry, clearRegistry, meta };
 export default specedSpeckyNamespace;

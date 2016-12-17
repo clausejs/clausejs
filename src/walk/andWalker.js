@@ -24,15 +24,16 @@ function andWalker( spec, walkFn ) {
     }
 
     if ( !problems || problems.length === 0 ) {
-      return r;
+      return data;
     } else {
       return new Problem( data, exprs, problems, 'One or more expressions failed AND test' );
     }
   }
 
-  function andReconstruct( guide ) {
-    //TODO: implement conformed AND
-    return guide;
+  function andReconstruct( data ) {
+    //TODO: implement propagated conform. Perhaps as an option propagateConform
+    // or as a separate spec construct such as "propagate"
+    return data;
   }
 }
 
