@@ -7,13 +7,20 @@ var isSpec = require( '../src/utils/isSpec' );
 var identity = S.identity;
 
 describe( 'fspec', function() {
-  it( 'empty case', () => {
+
+  it( 'empty spec', () => {
+    var EmptyFspec = S.fspec( {} );
+
+    expect( isSpec( EmptyFspec ) ).to.be.true;
+  } );
+
+  it( 'instrument: no args provided', () => {
     var FspecSpec = S.fspec( {
       args: S.cat( isSpec ),
       ret: S.isSpec,
     } );
 
-    expect( FspecSpec.instrument() ).to.be.an.instanceof( Problem );
+    expect( () => FspecSpec.instrument() ).to.throw( Error );
   } );
 
   it( 'should return a function that checks the spec of a given function as its input', function() {

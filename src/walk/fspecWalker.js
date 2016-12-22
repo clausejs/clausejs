@@ -26,7 +26,7 @@ function fspecWalker( spec, walkFn ) {
         return _instrument( fn, walkOpts );
       }
     } else {
-      return new Problem( fn, spec, [], 'function is not specified' );
+      throw new Error( 'A function must be specified for instrumentation.' );
     }
   }
 
@@ -53,7 +53,10 @@ function fspecWalker( spec, walkFn ) {
       var instrumentedRetVal = checkRet( fn, fnName, retVal );
 
       // TODO optimize
-      var conformedArgs = walkFn( argsSpec, args, { conform: true, instrument: true } );
+      var conformedArgs =
+      argsSpec ?
+        walkFn( argsSpec, args, { conform: true, instrument: true } ) :
+        args;
       let conformedRetVal;
       if ( retSpec ) {
         conformedRetVal = walkFn( retSpec, retVal, { conform: true, instrument: true } );
