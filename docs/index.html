@@ -26,6 +26,10 @@
   .row.main .main {
     padding-left: 40px;
   }
+  section {
+    margin-bottom: 30px;
+    margin-top: 30px;
+  }
   @media (min-width: 576px) {
     .row.main .cot {
       height: 100%;
@@ -73,7 +77,10 @@
   <main class="container">
     <div class="row main">
       <div class="col-md-2 col-sm-3 cot">
-        <h5><u>Specky</u></h5>
+        <div class="inline-headers">
+          <h5><u>Specky</u></h5>
+          (<span class="specky-version">0.0.18</span>)
+        </div>
         <ul>
           <li><a href="https://github.com/speckyjs/specky">Github Repository</a></li>
         </ul>
@@ -130,14 +137,14 @@
   </dl></div>
       </div>
       <div class="col-md-10 col-sm-9 offset-md-2 offset-sm-3 main">
-        <h1>Specky Documentation</h1>
+        <h1>Specky</h1>
         <section id="introduction">
           <h3>Introduction</h3>
-          For a short intro on rationale and basic usage, refer to the <a href="https://github.com/speckyjs/specky">README file</a> in the Specky repository.
+          For basic intro, refer to the <a href="https://github.com/speckyjs/specky">README file</a> in the Specky repository.
         </section>
         <section id="conformation">
           <h3>What is &quot;conformation&quot;?</h3>
-          <p>To put plainly, as a developer you expect your data to be of certain &quot;shape&quot;.</p>
+          <p>To put it plainly, as a developer you expect your data to be of certain &quot;shape&quot;.</p>
           <p>You define the shape of the data with specs.</p>
           <p>To &quot;conform&quot; your data with your specs is to shape it in a way that is <em>better organized</em>, making it easier for your code to consume.</p>
 

@@ -17,5 +17,6 @@ let $ = cheerio.load( fs.readFileSync( INDEX_TEMPLATE_FILE_NAME ) );
 // console.log( finalDocStr )
 $( '#cot' ).html( finalCotStr );
 $( '#api' ).html( finalDocStr );
+$( '.specky-version' ).html( S.VERSION );
 
 fs.writeFileSync( INDEX_FILE_NAME, $.html() );
