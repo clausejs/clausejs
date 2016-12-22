@@ -2183,6 +2183,7 @@ var ArrayFragment = function ArrayFragment(val) {
 
 function getMatch(chain, walkFn, walkOpts) {
   var conform = walkOpts.conform;
+  var inputType = chain.inputType;
   // if ( !chain || !chain.forEach ) {
   //
   // }
@@ -2321,9 +2322,14 @@ function getMatch(chain, walkFn, walkOpts) {
   });
   if (valStack.length !== 1) {
     console.error('valStack', valStack);
-    throw '!valStack.length';
+    throw '!';
   }
   r = valStack.pop();
+
+  if (inputType === 'string' && Array.isArray(r)) {
+    r = r.join('');
+  }
+
   return r;
 }
 
@@ -2348,6 +2354,8 @@ module.exports = getMatch;
 "use strict";
 'use strict';
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var isProblem = __webpack_require__(3);
 var isStr = __webpack_require__(4);
 
@@ -2357,6 +2365,8 @@ function simulate(nfa, rawInput, walkFn, walkOpts) {
     matched: false,
     chain: null
   };
+
+  var inputType = typeof rawInput === 'undefined' ? 'undefined' : _typeof(rawInput);
 
   var initial = {
     state: 0,
@@ -2372,7 +2382,7 @@ function simulate(nfa, rawInput, walkFn, walkOpts) {
 
     if (current.state === nfa.finalState && currentOffset === input.length) {
       r.matched = true;
-      r.chain = _getChain(nfa, current, walkFn, walkOpts);
+      r.chain = _getChain(nfa, current, inputType);
       return r;
     }
     for (var nextStateStr in nfa.transitions[current.state]) {
@@ -2474,7 +2484,7 @@ function _getNextMove(nfa, nextState, current, walkFn, walkOpts) {
   }
 }
 
-function _getChain(nfa, finalState) {
+function _getChain(nfa, finalState, inputType) {
   var chain = [];
   var curr = finalState;
   var prev;
@@ -2494,6 +2504,7 @@ function _getChain(nfa, finalState) {
     prev = curr;
     curr = curr.prev;
   }
+  chain.inputType = inputType;
   return chain;
 }
 

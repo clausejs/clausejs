@@ -8,6 +8,8 @@ function simulate( nfa, rawInput, walkFn, walkOpts ) {
     chain: null,
   };
 
+  const inputType = typeof rawInput;
+
   var initial = {
     state: 0,
     offset: 0,
@@ -20,7 +22,7 @@ function simulate( nfa, rawInput, walkFn, walkOpts ) {
     const { offset: currentOffset, input } = current;
     if ( current.state === nfa.finalState && currentOffset === input.length ) {
       r.matched = true;
-      r.chain = _getChain( nfa, current, walkFn, walkOpts );
+      r.chain = _getChain( nfa, current, inputType );
       return r;
     }
     for ( var nextStateStr in nfa.transitions[ current.state ] ) {
@@ -120,7 +122,7 @@ function _getNextMove( nfa, nextState, current, walkFn, walkOpts ) {
   }
 }
 
-function _getChain( nfa, finalState ) {
+function _getChain( nfa, finalState, inputType ) {
   var chain = [];
   var curr = finalState;
   var prev;
@@ -140,6 +142,7 @@ function _getChain( nfa, finalState ) {
     prev = curr;
     curr = curr.prev;
   }
+  chain.inputType = inputType;
   return chain;
 }
 

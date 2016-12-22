@@ -17,6 +17,7 @@ var ArrayFragment = function( val ) {
 
 function getMatch( chain, walkFn, walkOpts ) {
   var { conform } = walkOpts;
+  var { inputType } = chain;
   // if ( !chain || !chain.forEach ) {
   //
   // }
@@ -142,9 +143,14 @@ function getMatch( chain, walkFn, walkOpts ) {
   } );
   if ( valStack.length !== 1 ) {
     console.error( 'valStack', valStack );
-    throw '!valStack.length';
+    throw '!';
   }
   r = valStack.pop();
+
+  if ( inputType === 'string' && Array.isArray( r ) ) {
+    r = r.join( '' );
+  }
+
   return r;
 }
 

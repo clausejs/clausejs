@@ -93,12 +93,20 @@ describe( 'nfa regex', function() {
   } );
 
   describe( 'edge cases', () => {
-    it.skip( 'cat single char string', () => {
+    it( 'cat single char string', () => {
       var data = 'a';
 
       var SingleCatSpec = S.cat( S.isStr );
 
       expect( SingleCatSpec.conform( data ) ).to.equal( data );
+    } );
+
+    it( 'kleene closure on strings', () => {
+      var data = 'abcdefg';
+
+      var KleeneStringSpec = S.zeroOrMore( S.isString );
+
+      expect( KleeneStringSpec.conform( data ) ).to.equal( data );
     } );
   } );
 } );
