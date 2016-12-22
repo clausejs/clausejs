@@ -75,13 +75,13 @@ Coming soon.
 - `specky-gen`: Generative/Property-based Testing
 - `specky-react`: Specky integration for React. A replacement for `React.PropTypes`
 
-## Why not just use cljs.spec?
+## Why not just use ClojureScript + cljs.spec?
 
-Clojure in the author's opinion is a great language. If you love Clojure/ClojureScript, by all means go ahead and try cljs.spec.
+The goal for Specky is to provide JavaScript developers as much the benefit as possible derived from the spec system.
 
-I created Specky for developers in the JavaScript community who for one of the many reasons cannot yet fully commit to Clojure/ClojureScript.
+Specky API for the most part is kept similar to clojure.spec, except for some differences related to usability and JavaScript-specific conventions.
 
-Specky API for the most part is kept similar to clojure.spec, except for a few decisions related to usability and due to some convention/feature differences in JavaScript.
+(Clojure is a wonderful language. If you can use Clojure/ClojureScript, by all means go ahead and try cljs.spec.)
 
 ## Run tests
 
