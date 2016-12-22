@@ -1,9 +1,15 @@
-require("babel-core/register");
+require( 'babel-core/register' );
 
-var s = require('../src');
-var S = s;
+// var s = require( '../src/core/regex' );
+var S = require( '../src' );
+//
+// var NumOrStr = S.or( S.isNum, S.isStr, S.isObj, S.isDate, S.isNatInt );
+// var r = NumOrStr.conform( 's' );
+// console.log( NumOrStr );
 
-console.log(s);
+// S( 'xyz.superapp.item/title', s.isStr );
+
+// console.log( s );
 
 // var AdderFnSpec = s.fspec({
 //   args: s.cat('x', s.isNum),

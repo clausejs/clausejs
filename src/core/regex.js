@@ -273,27 +273,64 @@ module.exports = core;
 
 var isStr = require( '../preds/isStr' );
 var isObj = require( '../preds/isObj' );
+var isNum = require( '../preds/isNum' );
+var isBool = require( '../preds/isBool' );
+var CCSpec = catOp( {
+  withoutLabels: [
+    { pred: isStr },
+    { spec: zeroOrOneOp( {
+      expr: {
+        pred: isStr
+      }
+    } ) }
+  ]
+} );
 var TestSpec1 = orOp( {
   withoutLabels: [
-    // {
-    //   spec: catOp( {
-    //     withoutLabels: [
-    //       { pred: isStr },
-    //     ]
-    //   } ),
-    // },
     {
-      pred: isObj,
+      spec: CCSpec,
+    },
+    {
+      pred: isStr,
     }
   ],
 } );
+var TestSpec2 = orOp( {
+  withoutLabels: [
+    {
+      spec: isNum,
+    },
+    {
+      pred: isBool,
+    },
+    {
+      pred: isStr,
+    },
+  ],
+} );
+var TS3 = orOp( {
+  withLabels: [
+    {
+      name: 'hello',
+      expr: {
+        pred: isStr
+      }
+    },
+    {
+      name: 'zeeExpr',
+      expr: {
+        pred: isPred
+      }
+    }
+  ]
+} );
 
-var r = TestSpec1.conform( {} );
+// console.log( TestSpec2 )
 
-console.log( r );
-
+// var r = TS3.conform( 'hellolllllllllllllllllll' );
+// console.log( r )
 // var TestSpec = orOp( {
-//   withLabels: [
+//   withLabels: [""
 //     {
 //       name: 'withLabels',
 //       expr: {

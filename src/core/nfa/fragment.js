@@ -114,11 +114,11 @@ build.CAT = function CAT( frags ) {
 
 build.OR = function OR( frags ) {
   frags = frags.map( ( f ) => {
-    var outState = namedEpsilonState( 'out', f.name, 'OR', null );
+    var outState = namedEpsilonState( 'out', f.name, 'OR' );
     var trans = fragmentTransition( outState, null );
     var nameOutState = fragmentState( [ trans ] );
     patch( f.tails, nameOutState );
-    var transIn = fragmentTransition( namedEpsilonState( 'in', f.name, 'OR', null ), f.head );
+    var transIn = fragmentTransition( namedEpsilonState( 'in', f.name, 'OR' ), f.head );
     var newHead = fragmentState( [ transIn ] );
     var newF = namedFragment( f.name, newHead, [ trans ] );
     return newF;
@@ -132,8 +132,8 @@ build.OR = function OR( frags ) {
   };
 
   var newF = frags.reduce( binaryAlt );
-  newF = frontWithState( namedEpsilonState( 'enter', null, 'OR', null ), newF );
-  newF = rearWithState( namedEpsilonState( 'exit', null, 'OR', null ), newF );
+  newF = frontWithState( namedEpsilonState( 'enter', null, 'OR', 'para_in' ), newF );
+  newF = rearWithState( namedEpsilonState( 'exit', null, 'OR', 'para_out' ), newF );
 
   return newF;
 };
@@ -182,8 +182,8 @@ build.Z_OR_O = function Z_OR_O( frag ) {
   var tails = frag.tails.concat( [ skipTrans ] );
 
   var newF = fragment( head, tails );
-  newF = frontWithState( namedEpsilonState( 'maybe_single_enter', null, l ), newF );
-  newF = rearWithState( namedEpsilonState( 'maybe_single_exit', null, l ), newF );
+  newF = frontWithState( namedEpsilonState( 'maybe_single_enter', null, l, 'in' ), newF );
+  newF = rearWithState( namedEpsilonState( 'maybe_single_exit', null, l, 'out' ), newF );
 
   return newF;
 };

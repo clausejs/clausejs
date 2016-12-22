@@ -8,6 +8,12 @@ function Problem( val, failsPredicate, subproblems, msg ) {
   }
 
   this.val = val;
+  this.valStringified = JSON.stringify( val, ( key, val ) => {
+    if ( typeof val === 'function' ) {
+      return `${val.name}()`; // implicitly `toString` it
+    }
+    return val;
+  } );
   this.name = 'Problem';
   this.failsPredicate = failsPredicate;
   // this.stack = (new Error()).stack;
@@ -17,18 +23,11 @@ function Problem( val, failsPredicate, subproblems, msg ) {
   this.message = _constructMessage( this, 0 );
 }
 
-function _constructMessage( { subproblems, val, rawMsg }, lvl ) {
+function _constructMessage( { subproblems, val, valStringified, rawMsg }, lvl ) {
   if ( Array.isArray( subproblems ) ) {
     var reasons;
     if ( subproblems.length === 0 ) {
-      return `${rawMsg}; val: ${
-        JSON.stringify( val, ( key, val ) => {
-          if ( typeof val === 'function' ) {
-            return `${val.name}()`; // implicitly `toString` it
-          }
-          return val;
-        } )
-      }`;
+      return `${rawMsg}; val: ${valStringified}`;
     } else {
       reasons = subproblems.map( ( r ) => {
         return `${_open( lvl )}${_constructMessage( r, lvl + 1 )}${_close( lvl )}`;

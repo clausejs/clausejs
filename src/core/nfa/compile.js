@@ -1,5 +1,6 @@
 var fragment = require( './fragment.js' );
 var Spec = require( '../../models/Spec' );
+var deref = require( '../../utils/deref' );
 
 var indexedFragmentStates = function( fragment ) {
   var nextIndex = 0;
@@ -22,6 +23,7 @@ var indexedFragmentStates = function( fragment ) {
 var evalFunctions = {};
 
 function evalSpec( spec ) {
+  spec = deref( spec );
   var evalFn;
 
   if ( spec.type === null ) {
