@@ -6,6 +6,7 @@ import { isStr, isObj } from '../preds';
 import describe from '../utils/describe';
 import deref from '../utils/deref';
 import { resolve, getDefList } from './namespaceResolver';
+const specFromAlts = require( '../utils/specFromAlts' );
 
 function gen( registry ) {
   var conformedReg = NamespaceObjSpec.conform( registry );
@@ -141,6 +142,8 @@ function genForExpression( globalReg, exprName, expr, meta ) {
     docstr = _genPredSpec( globalReg, exprName, expr, meta );
   } else if ( isPred( expr ) || expr.type === 'ANY' ) {
     docstr = _genAnySpec( );
+  } else if ( expr.type === 'AND' ) {
+    docstr = _genAndSpec( globalReg, exprName, path, expr, meta );
   } else {
     docstr = _genUnknownSpec( globalReg, exprName, path, expr, meta );
   }
@@ -205,7 +208,7 @@ function _typeFor( expr ) {
   case 'pred':
     return 'of predicate';
   case 'fspec':
-    return 'of fspec (function type)';
+    return 'of fspec (function)';
   case 'z_or_m':
     return 'zero or more of (*)';
   case 'o_or_m':
@@ -215,7 +218,7 @@ function _typeFor( expr ) {
   case 'coll_of':
     return 'collection of';
   case 'cat':
-    return 'cat (seq) of';
+    return 'cat (concatenation) of';
   case 'or':
     return 'or (alts)';
   default:
@@ -257,6 +260,41 @@ function _genSpecRef( globalReg, exprName, path, expr, meta ) {
 function _specRefLink( p ) {
   return pGenFn =>
     `<a href="#${p}" data-path="${p}">${pGenFn( p )}</a>`;
+}
+
+function _genAndSpec( globalReg, exprName, path, expr, meta ) {
+  const example = meta && meta.example;
+  const altDefs = expr.opts.conformedExprs.map( ( altE, idx ) => {
+    return `
+        <li class="list-group-item card-outline-${_labelFor( expr )}">
+          <div class="row">
+            <div class="col-md-12">
+              <span class="tag tag-default">Part ${idx + 1} </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              ${genForExpression( globalReg, null, specFromAlts( altE ), null )}
+            </div>
+          </div>
+        </li>
+    `;
+  } );
+
+  const r = `
+    <div class="card-block">
+      <p class="card-title">
+        ${_syntax( expr, globalReg, path )}
+      </p>
+      <p class="card-title">
+        Should satisfy <em>all</em> of the following expression:
+      </p>
+    </div>
+    <ol class="list-group list-group-flush list-for-cat">
+      ${altDefs.join( ' ' )}
+    </ol>
+  `;
+  return r;
 }
 
 function _genCatSpec( globalReg, exprName, path, expr, meta ) {
@@ -392,7 +430,7 @@ function synopsisArray( prefixes, suffixes, exprName, spec, globalReg, meta, def
       .concat( suffixes )
       .concat( [ '</em>' ] );
   } else {
-    console.error( spec );
+    console.error( 'Handler still missing for synopsis type ', spec );
     // throw '!';
     return spec.type;
   }
@@ -544,10 +582,10 @@ function _genFspec( globalReg, exprName, spec, meta ) {
   }
   if ( argsSpec ) {
     frags.push( [ 'Synopsis', _synopsis( exprName, spec, globalReg, meta ) ] );
-    frags.push( [ 'Argument list', genForExpression( globalReg, null, argsSpec, meta && meta.args ) ] );
+    frags.push( [ 'Argument spec', genForExpression( globalReg, null, argsSpec, meta && meta.args ) ] );
   }
   if ( retSpec ) {
-    frags.push( [ 'Return value', genForExpression( globalReg, null, retSpec, meta && meta.ret ) ] );
+    frags.push( [ 'Return value spec', genForExpression( globalReg, null, retSpec, meta && meta.ret ) ] );
   } if ( fn ) {
     frags.push( [ 'Argument-return value relation', `<pre>${fnName( fn )}</pre>` ] );
   }

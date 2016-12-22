@@ -3,7 +3,7 @@ var isProblem = require( '../utils/isProblem' );
 var specFromAlts = require( '../utils/specFromAlts' );
 
 function andWalker( spec, walkFn ) {
-  var exprs = spec.exprs.map( specFromAlts );
+  var exprs = spec.opts.conformedExprs.map( specFromAlts );
 
   return {
     trailblaze: andTrailblaze,

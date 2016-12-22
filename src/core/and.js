@@ -12,8 +12,9 @@ var AndSpec = fspec( {
 function andOp( exprs ) {
   var andS = new Spec( {
     type: 'AND',
-    exprs,
+    exprs: [],
     fragments: exprs,
+    opts: { conformedExprs: exprs }
   } );
   andS.conform = function andConform( x ) {
     return walk( andS, x, { conform: true } );
