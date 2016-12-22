@@ -1,4 +1,5 @@
 import S, { fspec, cat, or, shape, isStr, isBool,
+  isFspec,
   isArray, isFn, and, isNum, isNull, isUndefined, isSpec, isDelayedSpec, isProblem } from '../';
 import { any, ExprSpec, CatFnSpec, OrFnSpec,
   CollOfSpec, collOf, SpecSpec, PredSpec, DelayedSpecSpec, SpecRefSpec,
@@ -7,7 +8,6 @@ import { AndSpec } from '../core/and';
 import { WallFnSpec } from '../core/wall';
 import { ShapeFnSpec, MapOfFnSpec } from '../core/objRelated';
 import { isNamespacePath, NamespaceFnSpec, NamespaceObjSpec } from './namespace.types';
-
 
 // TODO
 // const S = Specky.withRegistry(nsObj);
@@ -23,9 +23,12 @@ const SingleArgPredSpec = () => fspec( {
 } );
 
 const AnySpec = fspec( {
-  args: any(),
   ret: SpecSpec,
 } );
+
+const FspecSpec = and(
+  isFspec,
+);
 
 const FspecFnSpec = fspec( {
   args: cat( 'fspecFields', shape( {
@@ -39,23 +42,17 @@ const FspecFnSpec = fspec( {
 
 const InstanceOfFnSpec = fspec( {
   args: cat( 'type', isFn ),
-  ret: fspec( {
-    args: cat( 'x', any() ),
-    ret: isBool,
-  } )
+  ret: SingleArgPredSpec(),
 } );
 
 const EqualsFnSpec = fspec( {
   args: cat( 'valueToCompare', any() ),
-  ret: fspec( {
-    args: cat( 'x', any() ),
-    ret: isBool,
-  } )
+  ret: SingleArgPredSpec(),
 } );
 
 const OneOfFnSpec = fspec( {
   args: cat( 'values', collOf( S( 'specky.types/Primitive' ) ) ),
-  ret: isBool,
+  ret: SingleArgPredSpec(),
 } );
 
 const PrimitiveSpec = or( isStr, isNum, isBool, isNull, isUndefined );
@@ -72,7 +69,6 @@ const ConformFnSpec = fspec( {
 
 const DelayedFnSpec = fspec( {
   args: cat( 'getFn', fspec( {
-    args: any(),
     ret: ExprSpec,
   } ) ),
   ret: DelayedSpecSpec,
@@ -117,6 +113,7 @@ S( 'specky.preds/instanceOf', InstanceOfFnSpec );
 
 S( 'specky.types/Expression', ExprSpec );
 S( 'specky.types/Spec', SpecSpec );
+S( 'specky.types/FSpec', FspecSpec );
 S( 'specky.types/Predicate', PredSpec );
 S( 'specky.types/DelayedSpec', DelayedSpecSpec );
 S( 'specky.types/SpecReference', SpecRefSpec );

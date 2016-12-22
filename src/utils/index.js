@@ -8,6 +8,7 @@ module.exports = {
   enforce: require( './enforce' ),
   isExpr: require( './isExpr' ),
   isSpec: require( './isSpec' ),
+  isFspec: require( './isFspec' ),
   isSpecRef: require( './isSpecRef' ),
   describe: require( './describe' ),
   deref: require( './deref' ),
