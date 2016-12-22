@@ -10,6 +10,7 @@ var collOfWalker = require( './collOfWalker' );
 var mapOfWalker = require( './mapOfWalker' );
 var specRefWalker = require( './specRefWalker' );
 var delayedSpecWalker = require( './delayedSpecWalker' );
+var mapOfWalker = require( './mapOfWalker' );
 var coerceIntoSpec = require( '../utils/coerceIntoSpec' );
 var isProblem = require( '../utils/isProblem' );
 
@@ -50,6 +51,7 @@ const walkerMap = {
   'SPEC_REF': specRefWalker,
   'DELAYED': delayedSpecWalker,
   'FSPEC': fspecWalker,
+  'MAP_OF': mapOfWalker,
 }
 
 function _getWalker( expr ) {

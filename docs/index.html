@@ -103,7 +103,7 @@
     </dt>
     <dd>
       <ul>
-      <li><a href="#specky.core/cat" data-path="specky.core/cat">cat()</a></li><li><a href="#specky.core/or" data-path="specky.core/or">or()</a></li><li><a href="#specky.core/zeroOrMore" data-path="specky.core/zeroOrMore">zeroOrMore()</a></li><li><a href="#specky.core/oneOrMore" data-path="specky.core/oneOrMore">oneOrMore()</a></li><li><a href="#specky.core/zeroOrOne" data-path="specky.core/zeroOrOne">zeroOrOne()</a></li><li><a href="#specky.core/any" data-path="specky.core/any">any()</a></li><li><a href="#specky.core/collOf" data-path="specky.core/collOf">collOf()</a></li><li><a href="#specky.core/and" data-path="specky.core/and">and()</a></li><li><a href="#specky.core/shape" data-path="specky.core/shape">shape()</a></li><li><a href="#specky.core/wall" data-path="specky.core/wall">wall()</a></li><li><a href="#specky.core/fspec" data-path="specky.core/fspec">fspec()</a></li>
+      <li><a href="#specky.core/cat" data-path="specky.core/cat">cat()</a></li><li><a href="#specky.core/or" data-path="specky.core/or">or()</a></li><li><a href="#specky.core/zeroOrMore" data-path="specky.core/zeroOrMore">zeroOrMore()</a></li><li><a href="#specky.core/oneOrMore" data-path="specky.core/oneOrMore">oneOrMore()</a></li><li><a href="#specky.core/zeroOrOne" data-path="specky.core/zeroOrOne">zeroOrOne()</a></li><li><a href="#specky.core/and" data-path="specky.core/and">and()</a></li><li><a href="#specky.core/collOf" data-path="specky.core/collOf">collOf()</a></li><li><a href="#specky.core/mapOf" data-path="specky.core/mapOf">mapOf()</a></li><li><a href="#specky.core/shape" data-path="specky.core/shape">shape()</a></li><li><a href="#specky.core/any" data-path="specky.core/any">any()</a></li><li><a href="#specky.core/wall" data-path="specky.core/wall">wall()</a></li><li><a href="#specky.core/fspec" data-path="specky.core/fspec">fspec()</a></li>
       </ul>
     </dd>
     
@@ -138,6 +138,7 @@
       </div>
       <div class="col-md-10 col-sm-9 offset-md-2 offset-sm-3 main">
         <h1>Specky</h1>
+        (Contribute to this doc by making pull requests to <a href="https://github.com/speckyjs/specky/blob/master/src/specs/index.annotation.js">annotation files in here</a>.)
         <section id="introduction">
           <h3>Introduction</h3>
           For basic intro, refer to the <a href="https://github.com/speckyjs/specky">README file</a> in the Specky repository.
@@ -1778,12 +1779,12 @@
         </div>
       
 
-    <a name="specky.core/any"></a>
+    <a name="specky.core/and"></a>
     
         <div class="card">
           <div class="card-header inline-headers">
             
-      <h6>any()</h6>&#xA0;
+      <h6>and()</h6>&#xA0;
         <span class="tag tag-primary">
           function
         </span>
@@ -1791,16 +1792,33 @@
           </div>
         
     <dl class="card-block">
-    <dt>Synopsis</dt><dd>ANY</dd>
+    <dt>Synopsis</dt><dd>O_OR_M</dd>
 <dt>Argument list</dt><dd>
     
     
     <fieldset class="card card-outline-info">
     <legend class="spec-type">
-      <span class="tag tag-info"><span class="tag tag-info">any</span></span>
+      <span class="tag tag-info">one or more of (+)</span>
     </legend>
     
-    <div class="card-block">Any value.</div>
+    <div class="card-block">
+      
+      
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="spec-type">
+      <span class="tag tag-info">of spec</span>
+    </legend>
+    
+    <div class="card-block">
+      A value that is of
+      <a href="#specky.types/Expression" data-path="specky.types/Expression">specky.types/Expression</a>
+    </div>
+  
+    </fieldset>
+    
+    </div>
   
     </fieldset>
     </dd>
@@ -1968,12 +1986,12 @@
         </div>
       
 
-    <a name="specky.core/and"></a>
+    <a name="specky.core/mapOf"></a>
     
         <div class="card">
           <div class="card-header inline-headers">
             
-      <h6>and()</h6>&#xA0;
+      <h6>mapOf()</h6>&#xA0;
         <span class="tag tag-primary">
           function
         </span>
@@ -1981,18 +1999,38 @@
           </div>
         
     <dl class="card-block">
-    <dt>Synopsis</dt><dd>O_OR_M</dd>
+    <dt>Synopsis</dt><dd><ul><em>mapOf(<a href="#specky.types/Expression" data-path="specky.types/Expression">keySpecAlts</a>, <a href="#specky.types/Expression" data-path="specky.types/Expression">valSpecAlts</a>)</em></ul></dd>
 <dt>Argument list</dt><dd>
     
     
     <fieldset class="card card-outline-info">
     <legend class="spec-type">
-      <span class="tag tag-info">one or more of (+)</span>
+      <span class="tag tag-info">cat (seq) of</span>
     </legend>
     
     <div class="card-block">
+      <p class="card-title">
+        
+      </p>
+      <p class="card-title">
+        Should be <em>an ordered list</em> of the following:
+      </p>
+    </div>
+    <ol class="list-group list-group-flush list-for-cat">
       
-      
+        <li class="list-group-item card-outline-info">
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                <span class="tag tag-default">1st </span>
+                &lt;<span class="lead font-italic text-primary">keySpecAlts</span>&gt;
+                
+                  
+            </p></div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
     
     
     <fieldset class="card card-outline-info">
@@ -2007,7 +2045,42 @@
   
     </fieldset>
     
+            </div>
+          </div>
+        </li>
+     
+        <li class="list-group-item card-outline-info">
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                <span class="tag tag-default">2nd </span>
+                &lt;<span class="lead font-italic text-primary">valSpecAlts</span>&gt;
+                
+                  
+            </p></div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="spec-type">
+      <span class="tag tag-info">of spec</span>
+    </legend>
+    
+    <div class="card-block">
+      A value that is of
+      <a href="#specky.types/Expression" data-path="specky.types/Expression">specky.types/Expression</a>
     </div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </li>
+    
+    </ol>
   
     </fieldset>
     </dd>
@@ -2099,6 +2172,56 @@
         </li>
     
     </ol>
+  
+    </fieldset>
+    </dd>
+<dt>Return value</dt><dd>
+    
+    
+    <fieldset class="card card-outline-primary">
+    <legend class="spec-type">
+      <span class="tag tag-primary">of predicate</span>
+    </legend>
+    
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isSpec()" data-content="&lt;pre&gt;function isSpec(x) {
+  return x instanceof Spec;
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <em>isSpec()</em>
+      </span>
+    </div>
+  
+    </fieldset>
+    </dd>
+    </dl>
+  
+        </div>
+      
+
+    <a name="specky.core/any"></a>
+    
+        <div class="card">
+          <div class="card-header inline-headers">
+            
+      <h6>any()</h6>&#xA0;
+        <span class="tag tag-primary">
+          function
+        </span>
+      
+          </div>
+        
+    <dl class="card-block">
+    <dt>Synopsis</dt><dd>ANY</dd>
+<dt>Argument list</dt><dd>
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="spec-type">
+      <span class="tag tag-info"><span class="tag tag-info">any</span></span>
+    </legend>
+    
+    <div class="card-block">Any value.</div>
   
     </fieldset>
     </dd>

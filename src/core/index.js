@@ -1,6 +1,6 @@
 var oAssign = require( 'object-assign' );
 var regex = require( './regex' );
-var { shape, keys } = require( './objRelated' );
+var { shape, keys, mapOf, } = require( './objRelated' );
 var { and } = require( './and' );
 var { wall } = require( './wall' );
 var other = {
@@ -12,7 +12,7 @@ var other = {
 
 var r = oAssign( {},
   regex,
-  { shape, keys },
+  { shape, keys, mapOf },
   other );
 
 module.exports = r;

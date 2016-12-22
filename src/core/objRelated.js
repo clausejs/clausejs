@@ -2,6 +2,7 @@ var Spec = require( '../models/Spec' );
 var isSpec = require( '../utils/isSpec' );
 var isStr = require( '../preds/isStr' );
 var oneOf = require( '../preds/oneOf' );
+var isProblem = require( '../utils/isProblem' );
 var coerceIntoSpec = require( '../utils/coerceIntoSpec' );
 var { cat, or, zeroOrMore, ExprSpec } = require( './regex' );
 var walk = require( '../walk' );
@@ -12,6 +13,7 @@ function isPropName( x ) {
 }
 
 var TYPE_SHAPE = 'SHAPE';
+var TYPE_MAP_OF = 'MAP_OF';
 
 var FieldDefs = shapeOp( {
   shapeArgs: {
@@ -42,6 +44,7 @@ var FieldDefs = shapeOp( {
     },
   }
 } );
+
 
 var KeyOnlyArray = zeroOrMore( isPropName );
 var KeyArrayOrFieldDefs = or( 'keyList', KeyOnlyArray, 'fieldDefs', FieldDefs );
@@ -79,12 +82,45 @@ var ShapeArgs = shapeOp( {
   }
 } );
 
-var ShapeSpec = fspec( {
+
+var MapOfFnSpec = fspec( {
+  args: cat(
+    'keySpecAlts', ExprSpec,
+    'valSpecAlts', ExprSpec
+  ),
+  ret: isSpec,
+} );
+
+var ShapeFnSpec = fspec( {
   args: cat( 'shapeArgs', ShapeArgs ),
   ret: isSpec,
 } );
 
+function mapOfOp( cargs ) {
+  if ( isProblem( cargs ) ) {
+    throw cargs;
+  }
+  const { keySpecAlts, valSpecAlts } = cargs;
+
+  var s = new Spec( {
+    type: TYPE_MAP_OF,
+    exprs: [],
+    // TODO: do fragments
+    fragments: [],
+    opts: { keySpecAlts, valSpecAlts }
+  } );
+
+  s.conform = function mapOfConform( x ) {
+    return walk( s, x, { conform: true } );
+  }
+
+  return s;
+}
+
 function shapeOp( cargs ) {
+  if ( isProblem( cargs ) ) {
+    throw cargs;
+  }
   const { shapeArgs: { requiredFields, optionalFields } } = cargs;
 
   var s = new Spec( {
@@ -100,12 +136,15 @@ function shapeOp( cargs ) {
   return s;
 }
 
-var shape = ShapeSpec.instrumentConformed( shapeOp );
+var shape = ShapeFnSpec.instrumentConformed( shapeOp );
+var mapOf = MapOfFnSpec.instrumentConformed( mapOfOp );
 
 module.exports = {
   shape,
   keys: shape,
-  ShapeSpec,
+  mapOf,
+  ShapeFnSpec,
+  MapOfFnSpec,
 };
 
 // // // // //

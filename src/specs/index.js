@@ -5,7 +5,7 @@ import { any, ExprSpec, CatFnSpec, OrFnSpec,
   ZeroOrMoreFnSpec, OneOrMoreFnSpec, ZeroOrOneFnSpec } from '../core';
 import { AndSpec } from '../core/and';
 import { WallFnSpec } from '../core/wall';
-import { ShapeSpec } from '../core/objRelated';
+import { ShapeFnSpec, MapOfFnSpec } from '../core/objRelated';
 import { isNamespacePath, NamespaceFnSpec, NamespaceObjSpec } from './namespace.types';
 
 
@@ -85,10 +85,11 @@ S( 'specky.core/or', OrFnSpec );
 S( 'specky.core/zeroOrMore', ZeroOrMoreFnSpec );
 S( 'specky.core/oneOrMore', OneOrMoreFnSpec );
 S( 'specky.core/zeroOrOne', ZeroOrOneFnSpec );
-S( 'specky.core/any', AnySpec );
-S( 'specky.core/collOf', CollOfSpec );
 S( 'specky.core/and', AndSpec );
-S( 'specky.core/shape', ShapeSpec );
+S( 'specky.core/collOf', CollOfSpec );
+S( 'specky.core/mapOf', MapOfFnSpec );
+S( 'specky.core/shape', ShapeFnSpec );
+S( 'specky.core/any', AnySpec );
 S( 'specky.core/wall', WallFnSpec );
 S( 'specky.core/fspec', FspecFnSpec );
 
