@@ -14,7 +14,7 @@ function isPropName( x ) {
 var TYPE_SHAPE = 'SHAPE';
 
 var FieldDefs = shapeOp( {
-  propArgs: {
+  shapeArgs: {
     optionalFields: {
       opt: {
         fieldDefs: {
@@ -46,8 +46,8 @@ var FieldDefs = shapeOp( {
 var KeyOnlyArray = zeroOrMore( isPropName );
 var KeyArrayOrFieldDefs = or( 'keyList', KeyOnlyArray, 'fieldDefs', FieldDefs );
 
-var PropArgs = shapeOp( {
-  propArgs: {
+var ShapeArgs = shapeOp( {
+  shapeArgs: {
     optionalFields: {
       opt: {
         fieldDefs: {
@@ -80,12 +80,12 @@ var PropArgs = shapeOp( {
 } );
 
 var ShapeSpec = fspec( {
-  args: cat( 'propArgs', PropArgs ),
+  args: cat( 'shapeArgs', ShapeArgs ),
   ret: isSpec,
 } );
 
 function shapeOp( cargs ) {
-  const { propArgs: { requiredFields, optionalFields } } = cargs;
+  const { shapeArgs: { requiredFields, optionalFields } } = cargs;
 
   var s = new Spec( {
     type: TYPE_SHAPE,
@@ -111,7 +111,7 @@ module.exports = {
 // // // // //
 
 // var TestSpec = shapeOp({
-//   propArgs: {
+//   shapeArgs: {
 //     req: {
 //       fieldDefs: {
 //         fields: {

@@ -6,7 +6,7 @@ var specFromAlts = require( '../utils/specFromAlts' );
 
 function shapeWalker( spec, walkFn ) {
   var keyConformer;
-  var { requiredFields, optionalFields } = spec.opts.conformedArgs.propArgs;
+  var { requiredFields, optionalFields } = spec.opts.conformedArgs.shapeArgs;
 
   var reqSpecs,
     optSpecs;

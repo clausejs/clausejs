@@ -270,60 +270,60 @@ core[ '?' ] = core.zeroOrOne;
 module.exports = core;
 
 // // //
-
-var isStr = require( '../preds/isStr' );
-var isObj = require( '../preds/isObj' );
-var isNum = require( '../preds/isNum' );
-var isBool = require( '../preds/isBool' );
-var CCSpec = catOp( {
-  withoutLabels: [
-    { pred: isStr },
-    { spec: zeroOrOneOp( {
-      expr: {
-        pred: isStr
-      }
-    } ) }
-  ]
-} );
-var TestSpec1 = orOp( {
-  withoutLabels: [
-    {
-      spec: CCSpec,
-    },
-    {
-      pred: isStr,
-    }
-  ],
-} );
-var TestSpec2 = orOp( {
-  withoutLabels: [
-    {
-      spec: isNum,
-    },
-    {
-      pred: isBool,
-    },
-    {
-      pred: isStr,
-    },
-  ],
-} );
-var TS3 = orOp( {
-  withLabels: [
-    {
-      name: 'hello',
-      expr: {
-        pred: isStr
-      }
-    },
-    {
-      name: 'zeeExpr',
-      expr: {
-        pred: isPred
-      }
-    }
-  ]
-} );
+//
+// var isStr = require( '../preds/isStr' );
+// var isObj = require( '../preds/isObj' );
+// var isNum = require( '../preds/isNum' );
+// var isBool = require( '../preds/isBool' );
+// var CCSpec = catOp( {
+//   withoutLabels: [
+//     { pred: isStr },
+//     { spec: zeroOrOneOp( {
+//       expr: {
+//         pred: isStr
+//       }
+//     } ) }
+//   ]
+// } );
+// var TestSpec1 = orOp( {
+//   withoutLabels: [
+//     {
+//       spec: CCSpec,
+//     },
+//     {
+//       pred: isStr,
+//     }
+//   ],
+// } );
+// var TestSpec2 = orOp( {
+//   withoutLabels: [
+//     {
+//       spec: isNum,
+//     },
+//     {
+//       pred: isBool,
+//     },
+//     {
+//       pred: isStr,
+//     },
+//   ],
+// } );
+// var TS3 = orOp( {
+//   withLabels: [
+//     {
+//       name: 'hello',
+//       expr: {
+//         pred: isStr
+//       }
+//     },
+//     {
+//       name: 'zeeExpr',
+//       expr: {
+//         pred: isPred
+//       }
+//     }
+//   ]
+// } );
 
 // console.log( TestSpec2 )
 
