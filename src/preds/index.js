@@ -24,7 +24,7 @@ var e = {
   isObj, isObject: isObj,
   isStr, isString: isStr,
   isArray, isArr: isArray,
-  equals, equalsTo: equals, eq: equals,
+  equal: equals, equals, equalsTo: equals, eq: equals,
   oneOf,
   isDate,
   instanceOf,
