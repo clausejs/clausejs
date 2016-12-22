@@ -48,10 +48,10 @@ describe( 'cat', () => {
 
     it( 'named, grouped', () => {
       var NamedGroupedSpec = S.cat(
-        [ 'z', 'it\'s a fuuuunction', S.isFn ],
-        [ 'b', S.isObj ],
-        [ 'c', 'another fuuuunction', S.isFn ],
-        [ 'a', S.isObj ]
+         'z', 'it\'s a fuuuunction', S.isFn,
+         'b', S.isObj,
+         'c', 'another fuuuunction', S.isFn,
+         'a', S.isObj
       );
 
       var conformed = NamedGroupedSpec.conform( conformist );
