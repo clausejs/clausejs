@@ -80,18 +80,18 @@ const DelayedFnSpec = fspec( {
 
 S( '/specky', NamespaceFnSpec );
 
-S( 'specky.core/cat', CatFnSpec );
-S( 'specky.core/or', OrFnSpec );
-S( 'specky.core/zeroOrMore', ZeroOrMoreFnSpec );
-S( 'specky.core/oneOrMore', OneOrMoreFnSpec );
-S( 'specky.core/zeroOrOne', ZeroOrOneFnSpec );
-S( 'specky.core/and', AndSpec );
-S( 'specky.core/collOf', CollOfSpec );
-S( 'specky.core/mapOf', MapOfFnSpec );
-S( 'specky.core/shape', ShapeFnSpec );
-S( 'specky.core/any', AnySpec );
-S( 'specky.core/wall', WallFnSpec );
-S( 'specky.core/fspec', FspecFnSpec );
+S( 'specky.compose/cat', CatFnSpec );
+S( 'specky.compose/or', OrFnSpec );
+S( 'specky.compose/zeroOrMore', ZeroOrMoreFnSpec );
+S( 'specky.compose/oneOrMore', OneOrMoreFnSpec );
+S( 'specky.compose/zeroOrOne', ZeroOrOneFnSpec );
+S( 'specky.compose/and', AndSpec );
+S( 'specky.compose/collOf', CollOfSpec );
+S( 'specky.compose/mapOf', MapOfFnSpec );
+S( 'specky.compose/shape', ShapeFnSpec );
+S( 'specky.compose/any', AnySpec );
+S( 'specky.compose/wall', WallFnSpec );
+S( 'specky.compose/fspec', FspecFnSpec );
 
 S( 'specky.utils/enforce', EnforceFnSpec );
 S( 'specky.utils/conform', ConformFnSpec );

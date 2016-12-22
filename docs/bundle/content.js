@@ -14816,18 +14816,18 @@ var DelayedFnSpec = (0, _.fspec)({
 
 (0, _2.default)('/specky', _namespace.NamespaceFnSpec);
 
-(0, _2.default)('specky.core/cat', _core.CatFnSpec);
-(0, _2.default)('specky.core/or', _core.OrFnSpec);
-(0, _2.default)('specky.core/zeroOrMore', _core.ZeroOrMoreFnSpec);
-(0, _2.default)('specky.core/oneOrMore', _core.OneOrMoreFnSpec);
-(0, _2.default)('specky.core/zeroOrOne', _core.ZeroOrOneFnSpec);
-(0, _2.default)('specky.core/and', _and.AndSpec);
-(0, _2.default)('specky.core/collOf', _core.CollOfSpec);
-(0, _2.default)('specky.core/mapOf', _objRelated.MapOfFnSpec);
-(0, _2.default)('specky.core/shape', _objRelated.ShapeFnSpec);
-(0, _2.default)('specky.core/any', AnySpec);
-(0, _2.default)('specky.core/wall', _wall.WallFnSpec);
-(0, _2.default)('specky.core/fspec', FspecFnSpec);
+(0, _2.default)('specky.compose/cat', _core.CatFnSpec);
+(0, _2.default)('specky.compose/or', _core.OrFnSpec);
+(0, _2.default)('specky.compose/zeroOrMore', _core.ZeroOrMoreFnSpec);
+(0, _2.default)('specky.compose/oneOrMore', _core.OneOrMoreFnSpec);
+(0, _2.default)('specky.compose/zeroOrOne', _core.ZeroOrOneFnSpec);
+(0, _2.default)('specky.compose/and', _and.AndSpec);
+(0, _2.default)('specky.compose/collOf', _core.CollOfSpec);
+(0, _2.default)('specky.compose/mapOf', _objRelated.MapOfFnSpec);
+(0, _2.default)('specky.compose/shape', _objRelated.ShapeFnSpec);
+(0, _2.default)('specky.compose/any', AnySpec);
+(0, _2.default)('specky.compose/wall', _wall.WallFnSpec);
+(0, _2.default)('specky.compose/fspec', FspecFnSpec);
 
 (0, _2.default)('specky.utils/enforce', EnforceFnSpec);
 (0, _2.default)('specky.utils/conform', ConformFnSpec);
