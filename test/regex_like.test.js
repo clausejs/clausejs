@@ -91,4 +91,14 @@ describe( 'nfa regex', function() {
       } );
     } );
   } );
+
+  describe( 'edge cases', () => {
+    it.skip( 'cat single char string', () => {
+      var data = 'a';
+
+      var SingleCatSpec = S.cat( S.isStr );
+
+      expect( SingleCatSpec.conform( data ) ).to.equal( data );
+    } );
+  } );
 } );
