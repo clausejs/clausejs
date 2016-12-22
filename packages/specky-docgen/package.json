@@ -1,6 +1,6 @@
 {
   "name": "specky-docgen",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "description": "Anto documentation generator for Specky specs",
   "main": "specky-docgen.js",
   "repository": {
@@ -21,7 +21,7 @@
     "email": "settinghead@gmail.com"
   },
   "peerDependencies": {
-    "specky": "0.0.17"
+    "specky": "0.0.18"
   },
   "license": "MIT",
   "bugs": {

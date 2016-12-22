@@ -1,6 +1,6 @@
 {
   "name": "specky-react",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "description": "Anto documentation generator for Specky specs",
   "main": "index.js",
   "repository": {
@@ -21,7 +21,7 @@
     "email": "settinghead@gmail.com"
   },
   "peerDependencies": {
-    "specky": "0.0.17",
+    "specky": "0.0.18",
     "react": ">=0.14.0"
   },
   "license": "MIT",
@@ -31,6 +31,6 @@
   "homepage": "https://github.com/speckyjs/specky#readme",
   "dependencies": {
     "react": "^15.4.1",
-    "specky": "0.0.17"
+    "specky": "0.0.18"
   }
 }
