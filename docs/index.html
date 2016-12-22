@@ -130,7 +130,7 @@
     </dt>
     <dd>
       <ul>
-      <li><a href="#specky.types/Expression" data-path="specky.types/Expression">Expression</a></li><li><a href="#specky.types/Problem" data-path="specky.types/Problem">Problem</a></li><li><a href="#specky.types/NamespaceObj" data-path="specky.types/NamespaceObj">NamespaceObj</a></li><li><a href="#specky.types/NamespacePath" data-path="specky.types/NamespacePath">NamespacePath</a></li><li><a href="#specky.types/Primitive" data-path="specky.types/Primitive">Primitive</a></li>
+      <li><a href="#specky.types/Expression" data-path="specky.types/Expression">Expression</a></li><li><a href="#specky.types/Spec" data-path="specky.types/Spec">Spec</a></li><li><a href="#specky.types/Predicate" data-path="specky.types/Predicate">Predicate</a></li><li><a href="#specky.types/DelayedSpec" data-path="specky.types/DelayedSpec">DelayedSpec</a></li><li><a href="#specky.types/SpecReference" data-path="specky.types/SpecReference">SpecReference</a></li><li><a href="#specky.types/Problem" data-path="specky.types/Problem">Problem</a></li><li><a href="#specky.types/NamespaceObj" data-path="specky.types/NamespaceObj">NamespaceObj</a></li><li><a href="#specky.types/NamespacePath" data-path="specky.types/NamespacePath">NamespacePath</a></li><li><a href="#specky.types/Primitive" data-path="specky.types/Primitive">Primitive</a></li>
       </ul>
     </dd>
     
@@ -2230,16 +2230,12 @@
     
     <fieldset class="card card-outline-primary">
     <legend class="spec-type">
-      <span class="tag tag-primary">of predicate</span>
+      <span class="tag tag-info">of spec</span>
     </legend>
     
     <div class="card-block">
-      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isSpec()" data-content="&lt;pre&gt;function isSpec(x) {
-  return x instanceof Spec;
-}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
-        A value that satisfies
-        <em>isSpec()</em>
-      </span>
+      A value that is of
+      <a href="#specky.types/Spec" data-path="specky.types/Spec">specky.types/Spec</a>
     </div>
   
     </fieldset>
@@ -2798,6 +2794,21 @@
         </li>
     
     </ol>
+  
+    </fieldset>
+    </dd>
+<dt>Return value</dt><dd>
+    
+    
+    <fieldset class="card card-outline-primary">
+    <legend class="spec-type">
+      <span class="tag tag-info">of spec</span>
+    </legend>
+    
+    <div class="card-block">
+      A value that is of
+      <a href="#specky.types/DelayedSpec" data-path="specky.types/DelayedSpec">specky.types/DelayedSpec</a>
+    </div>
   
     </fieldset>
     </dd>
@@ -4484,7 +4495,7 @@
                 Option 1
               </span>
               
-                  &lt;<span class="lead font-italic text-primary">specRef</span>&gt;
+                  &lt;<span class="lead font-italic text-primary">spec</span>&gt;
               
             
             </div>
@@ -4496,16 +4507,12 @@
     
     <fieldset class="card card-outline-primary">
     <legend class="spec-type">
-      <span class="tag tag-primary">of predicate</span>
+      <span class="tag tag-info">of spec</span>
     </legend>
     
     <div class="card-block">
-      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isSpecRef()" data-content="&lt;pre&gt;function isSpecRef(x) {
-  return x instanceof SpecRef;
-}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
-        A value that satisfies
-        <em>isSpecRef()</em>
-      </span>
+      A value that is of
+      <a href="#specky.types/Spec" data-path="specky.types/Spec">specky.types/Spec</a>
     </div>
   
     </fieldset>
@@ -4533,16 +4540,12 @@
     
     <fieldset class="card card-outline-primary">
     <legend class="spec-type">
-      <span class="tag tag-primary">of predicate</span>
+      <span class="tag tag-info">of spec</span>
     </legend>
     
     <div class="card-block">
-      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isPred()" data-content="&lt;pre&gt;function isPred(x) {
-  return isFn(x);
-}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
-        A value that satisfies
-        <em>isPred()</em>
-      </span>
+      A value that is of
+      <a href="#specky.types/Predicate" data-path="specky.types/Predicate">specky.types/Predicate</a>
     </div>
   
     </fieldset>
@@ -4570,16 +4573,12 @@
     
     <fieldset class="card card-outline-primary">
     <legend class="spec-type">
-      <span class="tag tag-primary">of predicate</span>
+      <span class="tag tag-info">of spec</span>
     </legend>
     
     <div class="card-block">
-      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isDelayedSpec()" data-content="&lt;pre&gt;function isDelayedSpec(x) {
-  return x instanceof DelayedSpec;
-}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
-        A value that satisfies
-        <em>isDelayedSpec()</em>
-      </span>
+      A value that is of
+      <a href="#specky.types/DelayedSpec" data-path="specky.types/DelayedSpec">specky.types/DelayedSpec</a>
     </div>
   
     </fieldset>
@@ -4595,7 +4594,7 @@
                 Option 4
               </span>
               
-                  &lt;<span class="lead font-italic text-primary">spec</span>&gt;
+                  &lt;<span class="lead font-italic text-primary">specRef</span>&gt;
               
             
             </div>
@@ -4607,16 +4606,12 @@
     
     <fieldset class="card card-outline-primary">
     <legend class="spec-type">
-      <span class="tag tag-primary">of predicate</span>
+      <span class="tag tag-info">of spec</span>
     </legend>
     
     <div class="card-block">
-      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isSpec()" data-content="&lt;pre&gt;function isSpec(x) {
-  return x instanceof Spec;
-}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
-        A value that satisfies
-        <em>isSpec()</em>
-      </span>
+      A value that is of
+      <a href="#specky.types/SpecReference" data-path="specky.types/SpecReference">specky.types/SpecReference</a>
     </div>
   
     </fieldset>
@@ -4626,6 +4621,102 @@
         </li>
     
     </ol>
+  
+        </div>
+      
+
+    <a name="specky.types/Spec"></a>
+    
+        <div class="card">
+          <div class="card-header inline-headers">
+            
+      <h6>Spec</h6>&#xA0;
+        <span class="tag tag-primary">
+          predicate
+        </span>
+      
+          </div>
+        
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isSpec()" data-content="&lt;pre&gt;function isSpec(x) {
+  return x instanceof Spec;
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <em>isSpec()</em>
+      </span>
+    </div>
+  
+        </div>
+      
+
+    <a name="specky.types/Predicate"></a>
+    
+        <div class="card">
+          <div class="card-header inline-headers">
+            
+      <h6>Predicate</h6>&#xA0;
+        <span class="tag tag-primary">
+          predicate
+        </span>
+      
+          </div>
+        
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isPred()" data-content="&lt;pre&gt;function isPred(x) {
+  return isFn(x);
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <em>isPred()</em>
+      </span>
+    </div>
+  
+        </div>
+      
+
+    <a name="specky.types/DelayedSpec"></a>
+    
+        <div class="card">
+          <div class="card-header inline-headers">
+            
+      <h6>DelayedSpec</h6>&#xA0;
+        <span class="tag tag-primary">
+          predicate
+        </span>
+      
+          </div>
+        
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isDelayedSpec()" data-content="&lt;pre&gt;function isDelayedSpec(x) {
+  return x instanceof DelayedSpec;
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <em>isDelayedSpec()</em>
+      </span>
+    </div>
+  
+        </div>
+      
+
+    <a name="specky.types/SpecReference"></a>
+    
+        <div class="card">
+          <div class="card-header inline-headers">
+            
+      <h6>SpecReference</h6>&#xA0;
+        <span class="tag tag-primary">
+          predicate
+        </span>
+      
+          </div>
+        
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isSpecRef()" data-content="&lt;pre&gt;function isSpecRef(x) {
+  return x instanceof SpecRef;
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <em>isSpecRef()</em>
+      </span>
+    </div>
   
         </div>
       

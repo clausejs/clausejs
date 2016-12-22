@@ -552,15 +552,20 @@ var oneOrMoreOp = genSingleArgOp(c.O_OR_M);
 var zeroOrOneOp = genSingleArgOp(c.Z_OR_O);
 var collOfOp = genSingleArgOp(c.COLL_OF);
 
+var SpecSpec = coerceIntoSpec(isSpec);
+var SpecRefSpec = coerceIntoSpec(isSpecRef);
+var DelayedSpecSpec = coerceIntoSpec(isDelayedSpec);
+var PredSpec = coerceIntoSpec(isPred);
+
 var ExprSpec = orOp({
-  withLabels: [{ name: 'specRef', expr: {
-      spec: isSpecRef
+  withLabels: [{ name: 'spec', expr: {
+      spec: SpecSpec
     } }, { name: 'pred', expr: {
-      pred: isPred
+      spec: PredSpec
     } }, { name: 'delayedSpec', expr: {
-      spec: isDelayedSpec
-    } }, { name: 'spec', expr: {
-      pred: isSpec
+      spec: DelayedSpecSpec
+    } }, { name: 'specRef', expr: {
+      spec: SpecRefSpec
     } }]
 });
 
@@ -763,7 +768,7 @@ var core = {
   zeroOrMore: ZeroOrMoreFnSpec.instrumentConformed(zeroOrMoreOp),
   zeroOrOne: ZeroOrOneFnSpec.instrumentConformed(zeroOrOneOp),
   oneOrMore: OneOrMoreFnSpec.instrumentConformed(oneOrMoreOp),
-  ExprSpec: ExprSpec,
+  ExprSpec: ExprSpec, SpecSpec: SpecSpec, PredSpec: PredSpec, DelayedSpecSpec: DelayedSpecSpec, SpecRefSpec: SpecRefSpec,
   CatFnSpec: CatFnSpec,
   OrFnSpec: OrFnSpec,
   ZeroOrMoreFnSpec: ZeroOrMoreFnSpec, OneOrMoreFnSpec: OneOrMoreFnSpec, ZeroOrOneFnSpec: ZeroOrOneFnSpec,
@@ -14755,7 +14760,7 @@ var SingleArgPredSpec = function SingleArgPredSpec() {
 
 var AnySpec = (0, _.fspec)({
   args: (0, _core.any)(),
-  ret: _.isSpec
+  ret: _core.SpecSpec
 });
 
 var FspecFnSpec = (0, _.fspec)({
@@ -14806,7 +14811,7 @@ var DelayedFnSpec = (0, _.fspec)({
     args: (0, _core.any)(),
     ret: _core.ExprSpec
   })),
-  ret: _.isDelayedSpec
+  ret: _core.DelayedSpecSpec
 });
 
 (0, _2.default)('/specky', _namespace.NamespaceFnSpec);
@@ -14847,6 +14852,10 @@ var DelayedFnSpec = (0, _.fspec)({
 (0, _2.default)('specky.preds/instanceOf', InstanceOfFnSpec);
 
 (0, _2.default)('specky.types/Expression', _core.ExprSpec);
+(0, _2.default)('specky.types/Spec', _core.SpecSpec);
+(0, _2.default)('specky.types/Predicate', _core.PredSpec);
+(0, _2.default)('specky.types/DelayedSpec', _core.DelayedSpecSpec);
+(0, _2.default)('specky.types/SpecReference', _core.SpecRefSpec);
 (0, _2.default)('specky.types/Problem', _.isProblem);
 (0, _2.default)('specky.types/NamespaceObj', _namespace.NamespaceObjSpec);
 (0, _2.default)('specky.types/NamespacePath', _namespace.isNamespacePath);

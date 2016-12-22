@@ -24,19 +24,24 @@ var oneOrMoreOp = genSingleArgOp( c.O_OR_M );
 var zeroOrOneOp = genSingleArgOp( c.Z_OR_O );
 var collOfOp = genSingleArgOp( c.COLL_OF );
 
+var SpecSpec = coerceIntoSpec( isSpec );
+var SpecRefSpec = coerceIntoSpec( isSpecRef );
+var DelayedSpecSpec = coerceIntoSpec( isDelayedSpec );
+var PredSpec = coerceIntoSpec( isPred );
+
 var ExprSpec = orOp( {
   withLabels: [
-    { name: 'specRef', expr: {
-      spec: isSpecRef,
+    { name: 'spec', expr: {
+      spec: SpecSpec,
     } },
     { name: 'pred', expr: {
-      pred: isPred,
+      spec: PredSpec,
     } },
     { name: 'delayedSpec', expr: {
-      spec: isDelayedSpec,
+      spec: DelayedSpecSpec,
     } },
-    { name: 'spec', expr: {
-      pred: isSpec,
+    { name: 'specRef', expr: {
+      spec: SpecRefSpec,
     } },
   ],
 } );
@@ -254,7 +259,7 @@ var core = {
   zeroOrMore: ZeroOrMoreFnSpec.instrumentConformed( zeroOrMoreOp ),
   zeroOrOne: ZeroOrOneFnSpec.instrumentConformed( zeroOrOneOp ),
   oneOrMore: OneOrMoreFnSpec.instrumentConformed( oneOrMoreOp ),
-  ExprSpec,
+  ExprSpec, SpecSpec, PredSpec, DelayedSpecSpec, SpecRefSpec,
   CatFnSpec,
   OrFnSpec,
   ZeroOrMoreFnSpec, OneOrMoreFnSpec, ZeroOrOneFnSpec,

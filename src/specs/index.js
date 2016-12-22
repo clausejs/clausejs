@@ -1,7 +1,7 @@
 import S, { fspec, cat, or, shape, isStr, isBool,
   isArray, isFn, and, isNum, isNull, isUndefined, isSpec, isDelayedSpec, isProblem } from '../';
 import { any, ExprSpec, CatFnSpec, OrFnSpec,
-  CollOfSpec, collOf,
+  CollOfSpec, collOf, SpecSpec, PredSpec, DelayedSpecSpec, SpecRefSpec,
   ZeroOrMoreFnSpec, OneOrMoreFnSpec, ZeroOrOneFnSpec } from '../core';
 import { AndSpec } from '../core/and';
 import { WallFnSpec } from '../core/wall';
@@ -24,7 +24,7 @@ const SingleArgPredSpec = () => fspec( {
 
 const AnySpec = fspec( {
   args: any(),
-  ret: isSpec,
+  ret: SpecSpec,
 } );
 
 const FspecFnSpec = fspec( {
@@ -75,7 +75,7 @@ const DelayedFnSpec = fspec( {
     args: any(),
     ret: ExprSpec,
   } ) ),
-  ret: isDelayedSpec,
+  ret: DelayedSpecSpec,
 } );
 
 S( '/specky', NamespaceFnSpec );
@@ -116,6 +116,10 @@ S( 'specky.preds/equals', EqualsFnSpec );
 S( 'specky.preds/instanceOf', InstanceOfFnSpec );
 
 S( 'specky.types/Expression', ExprSpec );
+S( 'specky.types/Spec', SpecSpec );
+S( 'specky.types/Predicate', PredSpec );
+S( 'specky.types/DelayedSpec', DelayedSpecSpec );
+S( 'specky.types/SpecReference', SpecRefSpec );
 S( 'specky.types/Problem', isProblem );
 S( 'specky.types/NamespaceObj', NamespaceObjSpec );
 S( 'specky.types/NamespacePath', isNamespacePath );
