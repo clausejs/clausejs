@@ -1,15 +1,15 @@
 {
-  "name": "specky-docgen",
+  "name": "specky-gen",
   "version": "0.0.18",
-  "description": "Auto documentation generator for Specky specs",
-  "main": "specky-docgen.js",
+  "description": "Generators for Specky",
+  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/speckyjs/specky.git"
   },
   "keywords": [
     "babel",
-    "testing",
+    "react",
     "spec",
     "javascript",
     "specky",
@@ -21,7 +21,8 @@
     "email": "settinghead@gmail.com"
   },
   "peerDependencies": {
-    "specky": "0.0.18"
+    "specky": "0.0.18",
+    "react": ">=0.14.0"
   },
   "license": "MIT",
   "bugs": {
@@ -29,6 +30,6 @@
   },
   "homepage": "https://github.com/speckyjs/specky#readme",
   "dependencies": {
-    "lodash": "^4.17.2"
+    "specky": "0.0.18"
   }
 }

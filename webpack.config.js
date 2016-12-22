@@ -25,6 +25,7 @@ if ( PROD ) {
 module.exports = {
   entry: {
     'packages/specky/dist/specky': './src/index.js',
+    'packages/specky-gen/dist/specky-gen': './src/gen/index.js',
     'packages/specky-react/dist/specky-react': './src/react/index.js',
     'docs/bundle/functional': './docs/src/functional.js',
     'docs/bundle/content': './docs/src/content.js',
