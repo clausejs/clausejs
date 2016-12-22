@@ -1083,11 +1083,11 @@ var FieldDefs = shapeOp({
           fields: {
             'fields': {
               keyValExprPair: {
-                keySpecAlts: {
+                keyExpression: {
                   spec: coerceIntoSpec(isStr)
                 },
-                valSpecAlts: {
-                  spec: or('valSpecAltsOnly', ExprSpec, 'keyValExprPair', cat('keySpecAlts', ExprSpec, 'valSpecAlts', ExprSpec))
+                valExpression: {
+                  spec: or('valExpressionOnly', ExprSpec, 'keyValExprPair', cat('keyExpression', ExprSpec, 'valExpression', ExprSpec))
                 }
               }
             }
@@ -1109,20 +1109,20 @@ var ShapeArgs = shapeOp({
           fields: {
             'requiredFields': {
               keyValExprPair: {
-                keySpecAlts: {
+                keyExpression: {
                   pred: oneOf('req', 'required')
                 },
-                valSpecAlts: {
+                valExpression: {
                   spec: KeyArrayOrFieldDefs
                 }
               }
             },
             'optionalFields': {
               keyValExprPair: {
-                keySpecAlts: {
+                keyExpression: {
                   pred: oneOf('opt', 'optional')
                 },
-                valSpecAlts: {
+                valExpression: {
                   spec: KeyArrayOrFieldDefs
                 }
               }
@@ -1135,7 +1135,7 @@ var ShapeArgs = shapeOp({
 });
 
 var MapOfFnSpec = fspec({
-  args: cat('keySpecAlts', ExprSpec, 'valSpecAlts', ExprSpec),
+  args: cat('keyExpression', ExprSpec, 'valExpression', ExprSpec),
   ret: isSpec
 });
 
@@ -1148,8 +1148,8 @@ function mapOfOp(cargs) {
   if (isProblem(cargs)) {
     throw cargs;
   }
-  var keySpecAlts = cargs.keySpecAlts,
-      valSpecAlts = cargs.valSpecAlts;
+  var keyExpression = cargs.keyExpression,
+      valExpression = cargs.valExpression;
 
 
   var s = new Spec({
@@ -1157,7 +1157,7 @@ function mapOfOp(cargs) {
     exprs: [],
     // TODO: do fragments
     fragments: [],
-    opts: { keySpecAlts: keySpecAlts, valSpecAlts: valSpecAlts }
+    opts: { keyExpression: keyExpression, valExpression: valExpression }
   });
 
   s.conform = function mapOfConform(x) {
@@ -1207,7 +1207,7 @@ module.exports = {
 //     req: {
 //       fieldDefs: {
 //         fields: {
-//           'a': { valSpecAltsOnly: { pred: isStr } }
+//           'a': { valExpressionOnly: { pred: isStr } }
 //         }
 //       }
 //     }
@@ -1491,11 +1491,11 @@ var Problem = __webpack_require__(3);
 
 function mapOfWalker(spec, walkFn) {
   var _spec$opts = spec.opts,
-      keySpecAlts = _spec$opts.keySpecAlts,
-      valSpecAlts = _spec$opts.valSpecAlts;
+      keyExpression = _spec$opts.keyExpression,
+      valExpression = _spec$opts.valExpression;
 
-  var keySpec = keySpecAlts && specFromAlts(keySpecAlts);
-  var valSpec = valSpecAlts && specFromAlts(valSpecAlts);
+  var keySpec = keyExpression && specFromAlts(keyExpression);
+  var valSpec = valExpression && specFromAlts(valExpression);
 
   return {
     trailblaze: mapOfTrailblaze,
@@ -3434,7 +3434,7 @@ function _genKeyConformer(reqSpecs, optSpec, walkFn, walkOpts) {
           var found = false;
           keyTrav: for (var kk in x) {
             if (x.hasOwnProperty(kk)) {
-              var rr = _conformNamedOrExpr(kk, fieldDefs.fields[reqName].keyValExprPair.keySpecAlts, walkFn, walkOpts);
+              var rr = _conformNamedOrExpr(kk, fieldDefs.fields[reqName].keyValExprPair.keyExpression, walkFn, walkOpts);
               if (!isProblem(rr)) {
                 //found a match
                 found = true;
@@ -3445,10 +3445,10 @@ function _genKeyConformer(reqSpecs, optSpec, walkFn, walkOpts) {
           if (!found) {
             missingKeys.push(reqName);
           }
-        } else if (fieldDefs && fieldDefs.fields[reqName].valSpecAltsOnly) {
+        } else if (fieldDefs && fieldDefs.fields[reqName].valExpressionOnly) {
           //key spec
           if (x.hasOwnProperty(reqName)) {
-            var rrr = _conformNamedOrExpr(x[reqName], fieldDefs.fields[reqName].valSpecAltsOnly, walkFn, walkOpts);
+            var rrr = _conformNamedOrExpr(x[reqName], fieldDefs.fields[reqName].valExpressionOnly, walkFn, walkOpts);
             if (isProblem(rrr)) {
               //found a match
               missingKeys.push(reqName);
@@ -3481,43 +3481,43 @@ function _deleteKeys(subject, keys) {
 }
 
 function getFieldGuide(x, name, keyValAlts, walkFn, walkOpts) {
-  var valSpecAltsOnly = keyValAlts.valSpecAltsOnly,
+  var valExpressionOnly = keyValAlts.valExpressionOnly,
       keyValExprPair = keyValAlts.keyValExprPair;
 
   if (keyValExprPair) {
     var matchedKeys = [];
 
-    var keySpecAlts = keyValExprPair.keySpecAlts,
-        valSpecAlts = keyValExprPair.valSpecAlts;
+    var keyExpression = keyValExprPair.keyExpression,
+        valExpression = keyValExprPair.valExpression;
 
     keysExamine: for (var k in x) {
       if (x.hasOwnProperty(k)) {
-        var keyResult = _conformNamedOrExpr(k, keySpecAlts, walkFn, walkOpts);
+        var keyResult = _conformNamedOrExpr(k, keyExpression, walkFn, walkOpts);
         if (!isProblem(keyResult)) {
           // single string char case, where name = 0 and x = ''
           if (x === x[k]) {
             continue keysExamine;
           }
-          var valGuide = _conformNamedOrExpr(x[k], valSpecAlts, walkFn, walkOpts);
+          var valGuide = _conformNamedOrExpr(x[k], valExpression, walkFn, walkOpts);
           if (isProblem(valGuide)) {
             //TODO: improve
             return { problem: valGuide };
           } else {
-            matchedKeys.push({ key: k, spec: specFromAlts(valSpecAlts), guide: valGuide });
+            matchedKeys.push({ key: k, spec: specFromAlts(valExpression), guide: valGuide });
           }
         }
       }
     }
     return { groupMatch: { name: name, matchedKeys: matchedKeys } };
-  } else if (valSpecAltsOnly) {
+  } else if (valExpressionOnly) {
     var v = x[name];
     // single string char case, name = 0
     if (!isUndefined(v) && x[name] !== x) {
-      var g = _conformNamedOrExpr(v, valSpecAltsOnly, walkFn, walkOpts);
+      var g = _conformNamedOrExpr(v, valExpressionOnly, walkFn, walkOpts);
       if (isProblem(g)) {
         return { problem: g };
       } else {
-        return { singleMatch: { key: name, spec: specFromAlts(valSpecAltsOnly), guide: g } };
+        return { singleMatch: { key: name, spec: specFromAlts(valExpressionOnly), guide: g } };
       }
     } else {
       return { noop: true };

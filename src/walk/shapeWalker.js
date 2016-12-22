@@ -164,7 +164,7 @@ function _genKeyConformer( reqSpecs, optSpec, walkFn, walkOpts ) {
           var found = false;
           keyTrav: for ( var kk in x ) {
             if ( x.hasOwnProperty( kk ) ) {
-              var rr = _conformNamedOrExpr( kk, fieldDefs.fields[ reqName ].keyValExprPair.keySpecAlts, walkFn, walkOpts );
+              var rr = _conformNamedOrExpr( kk, fieldDefs.fields[ reqName ].keyValExprPair.keyExpression, walkFn, walkOpts );
               if ( !isProblem( rr ) ) {
                 //found a match
                 found = true;
@@ -175,10 +175,10 @@ function _genKeyConformer( reqSpecs, optSpec, walkFn, walkOpts ) {
           if ( !found ) {
             missingKeys.push( reqName );
           }
-        } else if ( fieldDefs && fieldDefs.fields[ reqName ].valSpecAltsOnly ) {
+        } else if ( fieldDefs && fieldDefs.fields[ reqName ].valExpressionOnly ) {
           //key spec
           if ( x.hasOwnProperty( reqName ) ) {
-            var rrr = _conformNamedOrExpr( x[ reqName ], fieldDefs.fields[ reqName ].valSpecAltsOnly, walkFn, walkOpts );
+            var rrr = _conformNamedOrExpr( x[ reqName ], fieldDefs.fields[ reqName ].valExpressionOnly, walkFn, walkOpts );
             if ( isProblem( rrr ) ) {
               //found a match
               missingKeys.push( reqName );
@@ -212,39 +212,39 @@ function _deleteKeys( subject, keys ) {
 }
 
 function getFieldGuide( x, name, keyValAlts, walkFn, walkOpts ) {
-  var { valSpecAltsOnly, keyValExprPair } = keyValAlts;
+  var { valExpressionOnly, keyValExprPair } = keyValAlts;
   if ( keyValExprPair ) {
     var matchedKeys = [];
 
-    var { keySpecAlts, valSpecAlts } = keyValExprPair;
+    var { keyExpression, valExpression } = keyValExprPair;
     keysExamine: for ( var k in x ) {
       if ( x.hasOwnProperty( k ) ) {
-        var keyResult = _conformNamedOrExpr( k, keySpecAlts, walkFn, walkOpts );
+        var keyResult = _conformNamedOrExpr( k, keyExpression, walkFn, walkOpts );
         if ( !isProblem( keyResult ) ) {
           // single string char case, where name = 0 and x = ''
           if ( x === x[ k ] ) {
             continue keysExamine;
           }
-          var valGuide = _conformNamedOrExpr( x[ k ], valSpecAlts, walkFn, walkOpts );
+          var valGuide = _conformNamedOrExpr( x[ k ], valExpression, walkFn, walkOpts );
           if ( isProblem( valGuide ) ) {
             //TODO: improve
             return { problem: valGuide };
           } else {
-            matchedKeys.push( { key: k, spec: specFromAlts( valSpecAlts ), guide: valGuide } );
+            matchedKeys.push( { key: k, spec: specFromAlts( valExpression ), guide: valGuide } );
           }
         }
       }
     }
     return { groupMatch: { name, matchedKeys } };
-  } else if ( valSpecAltsOnly ) {
+  } else if ( valExpressionOnly ) {
     var v = x[ name ];
     // single string char case, name = 0
     if ( !isUndefined( v ) && x[ name ] !== x ) {
-      var g = _conformNamedOrExpr( v, valSpecAltsOnly, walkFn, walkOpts );
+      var g = _conformNamedOrExpr( v, valExpressionOnly, walkFn, walkOpts );
       if ( isProblem( g ) ) {
         return { problem: g };
       } else {
-        return { singleMatch: { key: name, spec: specFromAlts( valSpecAltsOnly ), guide: g } };
+        return { singleMatch: { key: name, spec: specFromAlts( valExpressionOnly ), guide: g } };
       }
     } else {
       return { noop: true };

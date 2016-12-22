@@ -3,9 +3,9 @@ var isProblem = require( '../utils/isProblem' );
 var Problem = require( '../models/Problem' );
 
 function mapOfWalker( spec, walkFn ) {
-  var { keySpecAlts, valSpecAlts } = spec.opts;
-  var keySpec = keySpecAlts && specFromAlts( keySpecAlts );
-  var valSpec = valSpecAlts && specFromAlts( valSpecAlts );
+  var { keyExpression, valExpression } = spec.opts;
+  var keySpec = keyExpression && specFromAlts( keyExpression );
+  var valSpec = valExpression && specFromAlts( valExpression );
 
   return {
     trailblaze: mapOfTrailblaze,

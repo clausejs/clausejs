@@ -24,15 +24,15 @@ var FieldDefs = shapeOp( {
             'fields':
             {
               keyValExprPair: {
-                keySpecAlts: {
+                keyExpression: {
                   spec: coerceIntoSpec( isStr ),
                 },
-                valSpecAlts: {
+                valExpression: {
                   spec: or(
-                    'valSpecAltsOnly', ExprSpec,
+                    'valExpressionOnly', ExprSpec,
                     'keyValExprPair', cat(
-                      'keySpecAlts', ExprSpec,
-                      'valSpecAlts', ExprSpec
+                      'keyExpression', ExprSpec,
+                      'valExpression', ExprSpec
                     )
                   )
                 },
@@ -57,20 +57,20 @@ var ShapeArgs = shapeOp( {
           fields: {
             'requiredFields': {
               keyValExprPair: {
-                keySpecAlts: {
+                keyExpression: {
                   pred: oneOf( 'req', 'required' ),
                 },
-                valSpecAlts: {
+                valExpression: {
                   spec: KeyArrayOrFieldDefs
                 },
               },
             },
             'optionalFields': {
               keyValExprPair: {
-                keySpecAlts: {
+                keyExpression: {
                   pred: oneOf( 'opt', 'optional' ),
                 },
-                valSpecAlts: {
+                valExpression: {
                   spec: KeyArrayOrFieldDefs
                 },
               },
@@ -85,8 +85,8 @@ var ShapeArgs = shapeOp( {
 
 var MapOfFnSpec = fspec( {
   args: cat(
-    'keySpecAlts', ExprSpec,
-    'valSpecAlts', ExprSpec
+    'keyExpression', ExprSpec,
+    'valExpression', ExprSpec
   ),
   ret: isSpec,
 } );
@@ -100,14 +100,14 @@ function mapOfOp( cargs ) {
   if ( isProblem( cargs ) ) {
     throw cargs;
   }
-  const { keySpecAlts, valSpecAlts } = cargs;
+  const { keyExpression, valExpression } = cargs;
 
   var s = new Spec( {
     type: TYPE_MAP_OF,
     exprs: [],
     // TODO: do fragments
     fragments: [],
-    opts: { keySpecAlts, valSpecAlts }
+    opts: { keyExpression, valExpression }
   } );
 
   s.conform = function mapOfConform( x ) {
@@ -154,7 +154,7 @@ module.exports = {
 //     req: {
 //       fieldDefs: {
 //         fields: {
-//           'a': { valSpecAltsOnly: { pred: isStr } }
+//           'a': { valExpressionOnly: { pred: isStr } }
 //         }
 //       }
 //     }
