@@ -6,6 +6,9 @@ var S = require( '../src/' );
 var cat = S.cat;
 var oneOrMore = S.oneOrMore;
 var repeat = require( '../src/utils/repeat' );
+var catS = function( str ) {
+  return S.cat.apply( null, Array.from( str ).map( S.equals ) );
+};
 
 describe( 'nfa regex', function() {
   this.slow( 90000 ); //generative tests take more time
@@ -66,6 +69,43 @@ describe( 'nfa regex', function() {
       var invalidData = [ 2, 3, 4, 5 ];
       expect( S.isValid( expr, validData ) ).to.be.true;
       expect( S.isValid( expr, invalidData ) ).to.be.false;
+    } );
+
+    it( 'string vocab', () => {
+
+      var VocabSpec = S.or.apply( null, [ 'foo', 'bar', 'baz', ' ' ].map( catS ) );
+      var ContentSpec = S.zeroOrMore( VocabSpec );
+
+      var treatise = ' baz foo bar bar';
+      expect( ContentSpec.conform( treatise ) ).to.equal( treatise );
+      expect( ContentSpec.conform( treatise + 'mangled' ) ).to.be.an.instanceof( S.Problem );
+    } );
+
+    it.skip( 'treatise dissection', () => {
+
+      var treatise = `
+        Abstract
+        -----------
+        I am awesome.
+
+        My Points
+        -----------
+        - I make pie
+        - I eat pie
+
+        Conclusion
+        -----------
+        I am truely awesome.
+      `;
+      var TreatiseSpec = S.cat(
+        'spacing', S.zeroOrMore( S.isStr ),
+        'intro', S.cat( catS( 'Abstract' ), S.oneOrMore( S.isStr ) ),
+        'body', S.cat( catS( 'My Points' ), S.oneOrMore( S.isStr ) ),
+        'ending', S.cat( catS( 'Conclusion' ), S.oneOrMore( S.isStr ) )
+      );
+      console.log( TreatiseSpec.conform( treatise ) )
+
+      expect( TreatiseSpec.conform( treatise ).body ).to.contain( 'eat pie' );
     } );
   } );
 

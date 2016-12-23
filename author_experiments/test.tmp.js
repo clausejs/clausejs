@@ -1,7 +1,7 @@
 require( 'babel-core/register' );
 
-// var s = require( '../src/core/regex' );
-var S = require( '../src' );
+var s = require( '../src/core/regex' );
+// var S = require( '../src' );
 //
 // var NumOrStr = S.or( S.isNum, S.isStr, S.isObj, S.isDate, S.isNatInt );
 // var r = NumOrStr.conform( 's' );

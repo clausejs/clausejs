@@ -227,6 +227,7 @@ function genSingleArgOp( type ) {
     } else if ( p.delayedSpec ) {
       expr = p.delayedSpec;
     } else {
+      console.error( p );
       throw 'internal err';
     }
     const sureSpec = coerceIntoSpec( expr );
@@ -276,10 +277,41 @@ module.exports = core;
 
 // // //
 //
-// var isStr = require( '../preds/isStr' );
-// var isObj = require( '../preds/isObj' );
-// var isNum = require( '../preds/isNum' );
-// var isBool = require( '../preds/isBool' );
+var isStr = require( '../preds/isStr' );
+var isObj = require( '../preds/isObj' );
+var isNum = require( '../preds/isNum' );
+var isBool = require( '../preds/isBool' );
+
+var NestedSpec = catOp( {
+  withoutLabels: [
+    { spec: catOp( {
+      withoutLabels: [
+        { pred: isNum },
+        { pred: isBool }
+      ]
+    } ) },
+    { spec: catOp( {
+      withoutLabels: [
+        { spec: zeroOrMoreOp( {
+          expr: {
+            pred: isNum
+          },
+        } ) },
+        { spec: catOp( {
+          withoutLabels: [
+            { pred: isBool }
+          ]
+        } ) }
+      ]
+    } ) }
+  ]
+} );
+
+var data = [ 22, true, 44, 23, false ];
+var r = NestedSpec.conform( data );
+
+console.log( r );
+
 // var CCSpec = catOp( {
 //   withoutLabels: [
 //     { pred: isStr },

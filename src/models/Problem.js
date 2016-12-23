@@ -21,6 +21,7 @@ function Problem( val, failsPredicate, subproblems, msg ) {
   this.subproblems = subproblems;
 
   this.message = _constructMessage( this, 0 );
+  this.toString = this.message;
 }
 
 function _constructMessage( { subproblems, val, valStringified, rawMsg }, lvl ) {
@@ -51,6 +52,6 @@ function _close( lvl ) {
   return PAREN_PAIRS[ PAREN_PAIRS.length - lvl - 1 ];
 }
 
-Problem.prototype = new Error;
+// Problem.prototype = new Error;
 
 module.exports = Problem;

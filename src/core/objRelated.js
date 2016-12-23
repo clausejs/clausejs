@@ -82,7 +82,6 @@ var ShapeArgs = shapeOp( {
   }
 } );
 
-
 var MapOfFnSpec = fspec( {
   args: cat(
     'keyExpression', ExprSpec,
