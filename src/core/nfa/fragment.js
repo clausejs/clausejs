@@ -71,46 +71,6 @@ build.PRED = function PRED( spec ) {
   return f;
 };
 
-build.CAT = function CAT( frags ) {
-
-  var binaryConcat = function( frag1, currFrag ) {
-    patch( frag1.tails, currFrag.head );
-    var head = frag1.head;
-    var tails = currFrag.tails;
-    var newF = fragment( head, tails );
-    return newF;
-  };
-
-  frags = frags.map( function addEpsilonState( f ) {
-    var trans = fragmentTransition(
-      namedEpsilonState( 'out', f.name, 'CAT' ), null );
-    var nameOutState = fragmentState( [ trans ] );
-    patch( f.tails, nameOutState );
-
-    var nameInTranstions = f.head.transitions.map( ( t ) => {
-      var s = fragmentState( [ t ] );
-      var namedInTrans = fragmentTransition(
-        namedEpsilonState( 'in', f.name, 'CAT' ), s );
-      return namedInTrans;
-    } );
-    var newHead = fragmentState( nameInTranstions );
-
-    var newF = namedFragment( f.name, newHead, [ trans ] );
-    return newF;
-  } );
-  var r;
-  if ( frags.length > 0 ) {
-    r = frags.reduce( binaryConcat );
-  } else {
-    var s = epsilonState();
-    var t = fragmentTransition( s, null );
-    var ss = fragmentState( [ t ] );
-    r = fragment( ss, [ t ] );
-  }
-  r = frontWithState( namedEpsilonState( 'multi_enter', null, 'CAT', 'in' ), r );
-  r = rearWithState( namedEpsilonState( 'multi_exit', null, 'CAT', 'out' ), r );
-  return r;
-};
 
 build.OR = function OR( frags ) {
   frags = frags.map( ( f ) => {
@@ -136,6 +96,47 @@ build.OR = function OR( frags ) {
   newF = rearWithState( namedEpsilonState( 'exit', null, 'OR', 'para_out' ), newF );
 
   return newF;
+};
+
+build.CAT = function CAT( frags ) {
+
+  var binaryConcat = function( frag1, currFrag ) {
+    patch( frag1.tails, currFrag.head );
+    var head = frag1.head;
+    var tails = currFrag.tails;
+    var newF = fragment( head, tails );
+    return newF;
+  };
+
+  frags = frags.map( function addEpsilonState( f ) {
+    var trans = fragmentTransition(
+      namedEpsilonState( 'maybe_out', f.name, 'CAT' ), null );
+    var nameOutState = fragmentState( [ trans ] );
+    patch( f.tails, nameOutState );
+
+    var nameInTranstions = f.head.transitions.map( ( t ) => {
+      var s = fragmentState( [ t ] );
+      var namedInTrans = fragmentTransition(
+        namedEpsilonState( 'maybe_in', f.name, 'CAT' ), s );
+      return namedInTrans;
+    } );
+    var newHead = fragmentState( nameInTranstions );
+
+    var newF = namedFragment( f.name, newHead, [ trans ] );
+    return newF;
+  } );
+  var r;
+  if ( frags.length > 0 ) {
+    r = frags.reduce( binaryConcat );
+  } else {
+    var s = epsilonState();
+    var t = fragmentTransition( s, null );
+    var ss = fragmentState( [ t ] );
+    r = fragment( ss, [ t ] );
+  }
+  r = frontWithState( namedEpsilonState( 'maybe_enter', null, 'CAT', 'in' ), r );
+  r = rearWithState( namedEpsilonState( 'maybe_exit', null, 'CAT', 'out' ), r );
+  return r;
 };
 
 build.Z_OR_M = function Z_OR_M( frag ) {

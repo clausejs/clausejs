@@ -8,138 +8,119 @@ var MULTI_ENTER = function() {};
 var MAYBE_ENTER = function() {};
 var MAYBE_SINGLE_ENTER = function() {};
 
-var Name = function( n ) {
-  this.value = n;
-};
-var ArrayFragment = function( val ) {
+function Value( val ) {
   this.value = val;
-};
+}
+
+function Piece( frag ) {
+  this.fragment = frag;
+}
+function GroupedPiece( frag ) {
+  this.fragment = frag;
+}
+function NamedPiece( name, frag ) {
+  this.fragment = frag;
+  this.name = name;
+}
+function GroupedAltPiece( frag ) {
+  this.fragment = frag;
+}
+function NamedAltPiece( name, frag ) {
+  this.fragment = frag;
+  this.name = name;
+}
+function Nothing() {}
+function Empty() {}
+function MaybeEnter() {}
+function GroupName( name ) {
+  this.name = name;
+}
 
 function getMatch( chain, walkFn, walkOpts ) {
+  // console.log( JSON.stringify( chain, null, 2 ) );
   var { conform } = walkOpts;
   var { inputType } = chain;
-  // if ( !chain || !chain.forEach ) {
-  //
-  // }
-  var valStack = [];
+
+  const valStack = [];
   var r;
 
   chain.forEach( function( curr ) {
-    var c,
-      acc;
     if ( curr.move ) {
       switch ( curr.move.dir ) {
-      case 'enter' : {
-        valStack.push( ENTER );
-      } break;
-      case 'multi_enter' : {
-        valStack.push( MULTI_ENTER );
-      } break;
       case 'maybe_enter' : {
-        valStack.push( MAYBE_ENTER );
-      } break;
-      case 'maybe_single_enter' : {
-        valStack.push( MAYBE_SINGLE_ENTER );
-      } break;
-      case 'in': {
-        valStack.push( new Name( curr.move.name ) );
-      } break;
-      case 'loop': {
-        if ( valStack[ valStack.length - 1 ] !== null ) {
-          valStack.push( FOLD );
-        }
-      } break;
-      case 'pred': {
-        var conformed = walkFn( curr.spec, curr.guide, walkOpts );
-        valStack.push( conformed );
-      } break;
-      case 'out': {
-        var val = valStack.pop();
-        if ( !( val instanceof Name ) ) {
-          var name = valStack.pop().value;
-          var newAcc;
-          if ( name === null || name === undefined || !conform ) {
-            newAcc = new ArrayFragment( val );
-          } else {
-            newAcc = {};
-            if ( !isUndefined( val ) ) {
-              newAcc[ name ] = val;
-            }
-          }
-          valStack.push( newAcc );
-        }
-      } break;
-      case 'maybe_single_exit': {
-        c = valStack.pop();
-        acc = null;
-        while ( c !== MAYBE_SINGLE_ENTER ) {
-          if ( c !== FOLD ) {
-            acc = c;
-          }
-          c = valStack.pop();
-        }
-        if ( acc === null ) {
-          acc = undefined;
-        }
-        valStack.push( acc );
+        valStack.push( new MaybeEnter() );
       } break;
       case 'maybe_exit': {
-        c = valStack.pop();
-        acc = null;
-        while ( c !== MAYBE_ENTER ) {
-          if ( c !== FOLD ) {
-            acc = _foldIn( acc, c );
-          }
-          c = valStack.pop();
-        }
-        if ( acc === null ) {
-          acc = [];
+        let c,
+          acc = new Empty( );
+        while ( !( ( c = valStack.pop() ) instanceof MaybeEnter ) ) {
+          acc = _foldLeft( inputType, conform, acc, c );
         }
         valStack.push( acc );
       } break;
-      case 'multi_exit': {
-        c = valStack.pop();
-        acc = null;
-        while ( c !== MULTI_ENTER ) {
-          if ( c instanceof ArrayFragment ) {
-            if ( acc === null ) {
-              acc = [ c.value ];
-            } else {
-              acc = [ c.value ].concat( acc );
-            }
-          } else {
-            acc = oAssign( {}, c, acc );
-          }
-          c = valStack.pop();
-        }
-        if ( acc === null ) {
-          acc = [];
+      case 'maybe_single_enter' : {
+        valStack.push( new MaybeEnter() );
+      } break;
+      case 'maybe_single_exit': {
+        let top = valStack.pop(),
+          acc;
+        if ( top instanceof MaybeEnter ) {
+          acc = new Nothing();
+        } else {
+          acc = top;
+          valStack.pop(); //get rid of MaybeEnter
         }
         valStack.push( acc );
+      } break;
+      case 'enter' : {
       } break;
       case 'exit': {
-        c = valStack.pop();
-        acc = null;
-        while ( c !== ENTER ) {
-          if ( c instanceof ArrayFragment ) {
-            if ( acc === null ) {
-              acc = c.value;
-            } else {
-              acc = [ c.value ].concat( acc );
-            }
-          } else {
-            acc = oAssign( {}, c, acc );
-          }
-          c = valStack.pop();
-        }
-        if ( acc === null ) {
-          acc = [];
+        let c = valStack.pop();
+        let acc;
+        if ( conform && c instanceof NamedAltPiece ) {
+          acc = new GroupedAltPiece(
+            oAssign( {}, { [ c.name ]: c.fragment } )
+          )
+        } else {
+          acc = c;
         }
         valStack.push( acc );
+      } break;
+      case 'maybe_in': {
+        if ( conform && curr.move.name ) {
+          valStack.push( new GroupName( curr.move.name ) );
+        }
+      } break;
+      case 'loop': {
+      } break;
+      case 'maybe_out': {
+        if ( conform && curr.move.name ) {
+          let c = valStack.pop();
+          let gn = valStack.pop();
+          valStack.push( _giveName( gn, c ) );
+        }
+      } break;
+      case 'in': {
+        if ( conform && curr.move.name ) {
+          valStack.push( new GroupName( curr.move.name ) );
+        }
+      } break;
+      case 'out': {
+        if ( conform && curr.move.name ) {
+          let c = valStack.pop();
+          let gn = valStack.pop();
+          valStack.push( _giveAltName( gn, c ) );
+        }
+      } break;
+      case 'spec': {
+        let conformed = walkFn( curr.spec, curr.guide, walkOpts );
+        valStack.push( new Value( conformed ) );
       } break;
       default: console.error( curr ); throw 'FUUU';
       }
     }
+    // console.log( curr.move.dir, `(${curr.move.name || ''})`, curr, [].concat( valStack ) );
+
   } );
   if ( valStack.length !== 1 ) {
     console.error( 'valStack', valStack );
@@ -147,23 +128,137 @@ function getMatch( chain, walkFn, walkOpts ) {
   }
   r = valStack.pop();
 
-  if ( inputType === 'string' && Array.isArray( r ) ) {
-    r = r.join( '' );
+  let retVal;
+
+  if ( r instanceof Piece ) {
+    retVal = r.fragment;
+  } else if ( r instanceof GroupedPiece ) {
+    retVal = r.fragment;
+  } else if ( r instanceof GroupedAltPiece ) {
+    retVal = r.fragment;
+  } else if ( r instanceof Value ) {
+    retVal = r.value;
+  } else if ( r instanceof Empty ) {
+    retVal = _coerceToProperType( inputType, [] );
+  } else {
+    retVal = r;
   }
 
-  return r;
+  if ( !retVal ) {
+    debugger;
+  }
+
+  // console.log( 'r', r );
+  return retVal;
 }
 
-function _foldIn( acc, val ) {
-  var r;
-  if ( acc === null ) {
-    r = [ val ];
-  } else if ( !Array.isArray( acc ) ) {
-    r = [ val, acc ];
+function _giveName( groupName, c ) {
+  if ( c instanceof Nothing ) {
+    return new NamedPiece( groupName.name, undefined );
+  } else if ( c instanceof GroupedPiece ) {
+    return new NamedPiece( groupName.name, c.fragment );
+  } else if ( c instanceof Piece || c instanceof GroupedAltPiece ) {
+    return new NamedPiece( groupName.name, c.fragment );
+  } else if ( c instanceof Value ) {
+    return new NamedPiece( groupName.name, c.value );
+  } else if ( c instanceof Empty ) {
+    return new Value( {} );
   } else {
-    r = [ val ].concat( acc );
+    console.error( c );
+    throw 'c!!!';
   }
-  return r;
+}
+
+function _giveAltName( groupName, c ) {
+  if ( c instanceof Nothing ) {
+    return new NamedAltPiece( groupName.name, undefined );
+  } else if ( c instanceof GroupedAltPiece ) {
+    return new NamedAltPiece( groupName.name, c.fragment );
+  } else if ( c instanceof Piece ) {
+    return new NamedAltPiece( groupName.name, c.fragment );
+  } else if ( c instanceof GroupedPiece ) {
+    return new NamedAltPiece( groupName.name, c.fragment );
+  } else if ( c instanceof Value ) {
+    return new NamedAltPiece( groupName.name, c.value );
+  } else if ( c instanceof Empty ) {
+    return new Value( {} );
+  } else {
+    console.error( c );
+    throw 'c!!!alt';
+  }
+}
+
+function _last( arr ) {
+  return arr[ arr.length - 1 ];
+}
+
+function _foldLeft( inputType, conform, acc, c ) {
+
+  if ( conform && c instanceof NamedPiece ) {
+    let rightArr;
+
+    if ( acc instanceof Nothing ) {
+      rightArr = {};
+    } else if ( !acc ) {
+      rightArr = {};
+    } else if ( acc instanceof Empty ) {
+      rightArr = {};
+    } else if ( acc instanceof GroupedPiece ) {
+      rightArr = acc.fragment;
+    } else if ( acc instanceof GroupedAltPiece ) {
+      rightArr = acc.fragment;
+    } else {
+      console.error( acc, c );
+      throw '!!acc_fl_np';
+    }
+    return new GroupedPiece(
+      oAssign( {}, {
+        [ c.name ]: c.fragment
+      }, rightArr )
+    );
+  } else {
+    let leftArr,
+      rightArr;
+    if ( acc instanceof Nothing ) {
+      rightArr = [];
+    } else if ( !acc ) {
+      rightArr = [];
+    } else if ( acc instanceof Piece ) {
+      rightArr = acc.fragment;
+    } else if ( acc instanceof Empty ) {
+      rightArr = [];
+    } else {
+      console.error( acc );
+      throw '!!acc_fl';
+    }
+
+    if ( c instanceof Value ) {
+      leftArr = [ c.value ];
+    } else if ( c instanceof Piece ) {
+      leftArr = c.fragment;
+    } else if ( c instanceof GroupedPiece ) {
+      leftArr = [ c.fragment ];
+    } else if ( c instanceof GroupedAltPiece ) {
+      leftArr = [ c.fragment ];
+    } else if ( c instanceof Nothing ) {
+      leftArr = [];
+    } else if ( c instanceof Empty ) {
+      leftArr = [];
+    } else {
+      console.error( c );
+      throw 'cc!!';
+    }
+    let p = new Piece( _coerceToProperType( inputType, leftArr.concat( rightArr ) ) );
+    return p;
+  }
+}
+
+function _coerceToProperType( t, arr ) {
+  if ( t === 'string' && Array.isArray( arr ) ) {
+    return arr.join( '' );
+  } else {
+    return arr;
+  }
 }
 
 module.exports = getMatch;

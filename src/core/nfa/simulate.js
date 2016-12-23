@@ -102,7 +102,7 @@ function _getNextMove( nfa, nextState, current, walkFn, walkOpts ) {
               // validateResult = walkFn(transition, observed, walkOpts);
       if ( !isProblem( validateResult ) ) {
         if ( currentOffset < input.length ) {
-          move = { dir: 'pred' };
+          move = { dir: 'spec' };
           next = {
             input, groupCount, arrayed,
             state: nextState,

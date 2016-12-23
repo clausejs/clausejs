@@ -98,6 +98,7 @@ function fspecWalker( spec, walkFn ) {
     if ( retSpec ) {
       var instrumentedRetVal = walkFn( retSpec, retVal, { phase: 'trailblaze' } );
       if ( isProblem( instrumentedRetVal ) ) {
+        debugger;
         var p = new Problem( retVal, spec, [ instrumentedRetVal ], 'Return value ' + retVal + ' for function ' + fnName + ' is not valid.' );
         betterThrow( p );
       } else {

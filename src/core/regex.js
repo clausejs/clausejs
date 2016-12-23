@@ -137,6 +137,9 @@ function genMultiArgOp( type ) {
 
       var coercedExprs = exprs.map( ( p ) => {
         var alts = p.expr;
+        if ( !alts ) {
+          debugger;
+        }
         var s = specFromAlts( alts );
 
         return oAssign( {}, p, {
@@ -208,6 +211,16 @@ function genMultiArgOp( type ) {
         return walk( s, x, { conform: true } );
       };
       return s;
+    } else {
+      // empty case
+      s = new Spec( {
+        type,
+        exprs: [],
+        fragments: [] } );
+      s.conform = function conform( x ) {
+        return walk( s, x, { conform: true } );
+      };
+      return s;
     }
   } );
 }
@@ -227,6 +240,7 @@ function genSingleArgOp( type ) {
     } else if ( p.delayedSpec ) {
       expr = p.delayedSpec;
     } else {
+      console.error( p );
       throw 'internal err';
     }
     const sureSpec = coerceIntoSpec( expr );
@@ -276,10 +290,159 @@ module.exports = core;
 
 // // //
 //
-// var isStr = require( '../preds/isStr' );
-// var isObj = require( '../preds/isObj' );
-// var isNum = require( '../preds/isNum' );
-// var isBool = require( '../preds/isBool' );
+var isStr = require( '../preds/isStr' );
+var isObj = require( '../preds/isObj' );
+var isNum = require( '../preds/isNum' );
+var isBool = require( '../preds/isBool' );
+
+// var NestedSpec = catOp( {
+//   withoutLabels: [
+//     { spec: catOp( {
+//       withoutLabels: [
+//         { pred: isNum },
+//         { pred: isBool }
+//       ]
+//     } ) },
+//     { spec: catOp( {
+//       withoutLabels: [
+//         { spec: zeroOrMoreOp( {
+//           expr: {
+//             pred: isNum
+//           },
+//         } ) },
+//         { spec: catOp( {
+//           withoutLabels: [
+//             { pred: isBool }
+//           ]
+//         } ) },
+//         { spec: oneOrMoreOp( {
+//           expr: {
+//             pred: isNum
+//           },
+//         } ) },
+//         { spec: zeroOrOneOp( {
+//           expr: {
+//             pred: isObj
+//           },
+//         } ) },
+//       ]
+//     } ) }
+//   ]
+// } );
+
+
+// var NestedSpec = catOp( {
+//   withoutLabels: [
+//     { spec: catOp( {
+//       withoutLabels: [
+//         { pred: isNum },
+//         { pred: isBool }
+//       ]
+//     } ) },
+//     { spec: orOp( {
+//       withoutLabels: [
+//         { spec: zeroOrMoreOp( {
+//           expr: {
+//             pred: isNum
+//           },
+//         } ) },
+//         { spec: catOp( {
+//           withoutLabels: [
+//             { pred: isBool }
+//           ]
+//         } ) },
+//         { spec: oneOrMoreOp( {
+//           expr: {
+//             pred: isStr
+//           },
+//         } ) },
+//         { spec: zeroOrOneOp( {
+//           expr: {
+//             pred: isObj
+//           },
+//         } ) },
+//       ]
+//     } ) }
+//   ]
+// } );
+
+var NestedSpec = catOp( {
+  withLabels: [
+    { name: 'first',
+      expr: { spec: catOp( {
+        withoutLabels: [
+        { pred: isNum },
+        { pred: isBool }
+        ]
+      } ) }
+    },
+    { name: 'second',
+      expr: { spec: orOp( {
+        withLabels: [
+          { name: 'second1', expr: { pred: isStr } },
+          { name: 'second2', expr: { pred: isBool } }
+        ]
+      } ) }
+    },
+  ]
+} );
+
+// var NestedSpec = catOp( {
+//   withLabels: [
+//     { name: 'first',
+//       expr: { spec: catOp( {
+//         withoutLabels: [
+//         { pred: isNum },
+//         { pred: isBool }
+//         ]
+//       } ) }
+//     },
+//     { name: 'second',
+//       expr: { spec: catOp( {
+//         withoutLabels: [
+//         { pred: isStr },
+//         { pred: isBool }
+//         ]
+//       } ) }
+//     },
+//     // {
+//     //   name: 'sepody',
+//     //   expr: { spec: orOp( {
+//     //     withoutLabels: [
+//     //       { spec: zeroOrMoreOp( {
+//     //         expr: {
+//     //           pred: isNum
+//     //         },
+//     //       } ) },
+//     //       { spec: catOp( {
+//     //         withoutLabels: [
+//     //           { pred: isBool }
+//     //         ]
+//     //       } ) },
+//     //       { spec: oneOrMoreOp( {
+//     //         expr: {
+//     //           pred: isStr
+//     //         },
+//     //       } ) },
+//     //       { spec: zeroOrOneOp( {
+//     //         expr: {
+//     //           pred: isObj
+//     //         },
+//     //       } ) },
+//     //     ]
+//     //   } ) }
+//     // }
+//   ]
+// } );
+
+var data = [ 22, true,
+  'ss',
+  // { sss: 1 }
+];
+var r = NestedSpec.conform( data );
+
+// console.log( r );
+
 // var CCSpec = catOp( {
 //   withoutLabels: [
 //     { pred: isStr },
