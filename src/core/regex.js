@@ -282,6 +282,42 @@ var isObj = require( '../preds/isObj' );
 var isNum = require( '../preds/isNum' );
 var isBool = require( '../preds/isBool' );
 
+// var NestedSpec = catOp( {
+//   withoutLabels: [
+//     { spec: catOp( {
+//       withoutLabels: [
+//         { pred: isNum },
+//         { pred: isBool }
+//       ]
+//     } ) },
+//     { spec: catOp( {
+//       withoutLabels: [
+//         { spec: zeroOrMoreOp( {
+//           expr: {
+//             pred: isNum
+//           },
+//         } ) },
+//         { spec: catOp( {
+//           withoutLabels: [
+//             { pred: isBool }
+//           ]
+//         } ) },
+//         { spec: oneOrMoreOp( {
+//           expr: {
+//             pred: isNum
+//           },
+//         } ) },
+//         { spec: zeroOrOneOp( {
+//           expr: {
+//             pred: isObj
+//           },
+//         } ) },
+//       ]
+//     } ) }
+//   ]
+// } );
+
+
 var NestedSpec = catOp( {
   withoutLabels: [
     { spec: catOp( {
@@ -290,7 +326,7 @@ var NestedSpec = catOp( {
         { pred: isBool }
       ]
     } ) },
-    { spec: catOp( {
+    { spec: orOp( {
       withoutLabels: [
         { spec: zeroOrMoreOp( {
           expr: {
@@ -304,7 +340,7 @@ var NestedSpec = catOp( {
         } ) },
         { spec: oneOrMoreOp( {
           expr: {
-            pred: isNum
+            pred: isStr
           },
         } ) },
         { spec: zeroOrOneOp( {
@@ -317,7 +353,7 @@ var NestedSpec = catOp( {
   ]
 } );
 
-var data = [ 22, true, 44, 23, false, 23, ];
+var data = [ 22, true, {} ];
 var r = NestedSpec.conform( data );
 
 console.log( r );

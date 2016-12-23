@@ -54,6 +54,10 @@ function getMatch( chain, walkFn, walkOpts ) {
       } break;
       case 'maybe_out': {
       } break;
+      case 'in': {
+      } break;
+      case 'out': {
+      } break;
       case 'spec': {
         let conformed = walkFn( curr.spec, curr.guide, walkOpts );
         valStack.push( new Value( conformed ) );
@@ -82,23 +86,23 @@ function getMatch( chain, walkFn, walkOpts ) {
 }
 
 function _foldLeft( acc, c ) {
-  var leftArr;
+  var rightArr;
   if ( acc instanceof ArrayFragment ) {
-    leftArr = acc.fragment;
+    rightArr = acc.fragment;
   } else if ( acc instanceof Nothing ) {
-    leftArr = [];
+    rightArr = [];
   } else if ( !acc ) {
-    leftArr = [];
+    rightArr = [];
   } else {
     throw '!!acc';
   }
-  var rightArr;
+  var leftArr;
   if ( c instanceof Value ) {
-    rightArr = [ c.value ];
+    leftArr = [ c.value ];
   } else if ( c instanceof ArrayFragment ) {
-    rightArr = c.fragment;
+    leftArr = c.fragment;
   } else if ( c instanceof Nothing ) {
-    rightArr = [];
+    leftArr = [];
   } else {
     throw '!!';
   }
