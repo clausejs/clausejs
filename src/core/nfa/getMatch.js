@@ -16,6 +16,10 @@ function ArrayFragment( frag ) {
   this.fragment = frag;
 }
 
+function Nothing() {
+
+}
+
 function MaybeEnter() {}
 
 function getMatch( chain, walkFn, walkOpts ) {
@@ -34,7 +38,7 @@ function getMatch( chain, walkFn, walkOpts ) {
       } break;
       case 'maybe_exit': {
         let c,
-          acc;
+          acc = new Nothing();
         while ( !( ( c = valStack.pop() ) instanceof MaybeEnter ) ) {
           acc = _foldLeft( acc, c );
         }
@@ -81,6 +85,8 @@ function _foldLeft( acc, c ) {
   var leftArr;
   if ( acc instanceof ArrayFragment ) {
     leftArr = acc.fragment;
+  } else if ( acc instanceof Nothing ) {
+    leftArr = [];
   } else if ( !acc ) {
     leftArr = [];
   } else {
@@ -91,6 +97,8 @@ function _foldLeft( acc, c ) {
     rightArr = [ c.value ];
   } else if ( c instanceof ArrayFragment ) {
     rightArr = c.fragment;
+  } else if ( c instanceof Nothing ) {
+    rightArr = [];
   } else {
     throw '!!';
   }

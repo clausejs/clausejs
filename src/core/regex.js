@@ -301,13 +301,23 @@ var NestedSpec = catOp( {
           withoutLabels: [
             { pred: isBool }
           ]
-        } ) }
+        } ) },
+        { spec: oneOrMoreOp( {
+          expr: {
+            pred: isNum
+          },
+        } ) },
+        { spec: zeroOrOneOp( {
+          expr: {
+            pred: isObj
+          },
+        } ) },
       ]
     } ) }
   ]
 } );
 
-var data = [ 22, true, 44, 23, false ];
+var data = [ 22, true, 44, 23, false, 23, ];
 var r = NestedSpec.conform( data );
 
 console.log( r );
