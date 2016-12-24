@@ -137,9 +137,6 @@ function genMultiArgOp( type ) {
 
       var coercedExprs = exprs.map( ( p ) => {
         var alts = p.expr;
-        if ( !alts ) {
-          debugger;
-        }
         var s = specFromAlts( alts );
 
         return oAssign( {}, p, {

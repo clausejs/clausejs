@@ -682,9 +682,6 @@ function genMultiArgOp(type) {
 
       var coercedExprs = exprs.map(function (p) {
         var alts = p.expr;
-        if (!alts) {
-          debugger;
-        }
         var s = specFromAlts(alts);
 
         return oAssign({}, p, {
@@ -2083,7 +2080,7 @@ module.exports = g;
 "use strict";
 'use strict';
 
-module.exports = '0.0.18';
+module.exports = '0.0.19';
 
 /***/ },
 /* 41 */
@@ -2601,10 +2598,6 @@ function getMatch(chain, walkFn, walkOpts) {
     retVal = _coerceToProperType(inputType, []);
   } else {
     retVal = r;
-  }
-
-  if (!retVal) {
-    debugger;
   }
 
   // console.log( 'r', r );
@@ -3386,7 +3379,6 @@ function fspecWalker(spec, walkFn) {
     if (retSpec) {
       var instrumentedRetVal = walkFn(retSpec, retVal, { phase: 'trailblaze' });
       if (isProblem(instrumentedRetVal)) {
-        debugger;
         var p = new Problem(retVal, spec, [instrumentedRetVal], 'Return value ' + retVal + ' for function ' + fnName + ' is not valid.');
         betterThrow(p);
       } else {

@@ -144,10 +144,6 @@ function getMatch( chain, walkFn, walkOpts ) {
     retVal = r;
   }
 
-  if ( !retVal ) {
-    debugger;
-  }
-
   // console.log( 'r', r );
   return retVal;
 }
