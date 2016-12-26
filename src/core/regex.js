@@ -102,8 +102,47 @@ var MultipleArgSpec = orOp( {
   ],
 } );
 
+function andOp( exprs ) {
+  var andS = new Spec( {
+    type: 'AND',
+    exprs: [],
+    fragments: exprs,
+    opts: { conformedExprs: exprs }
+  } );
+  andS.conform = function andConform( x ) {
+    return walk( andS, x, { conform: true } );
+  }
+  return andS;
+}
+
+var multipleArgNoDupeSpec = andOp(
+  [ { spec: MultipleArgSpec },
+    { pred: noDupelicateLabels } ]
+);
+
+function noDupelicateLabels( { withLabels } ) {
+  if ( withLabels ) {
+    let byFar = [];
+    for ( let i = 0; i < withLabels.length; i += 1 ) {
+      let lbl = withLabels[ i ].name;
+      if ( byFar.indexOf( lbl ) >= 0 ) {
+        throw new Error( `Duplicate label detected: ${lbl}` );
+      }
+      byFar.push( lbl );
+    }
+  }
+  return true;
+}
+
+var AndFnSpec = fspec( {
+  args: oneOrMoreOp( { expr:
+    { spec: ExprSpec }
+  } ),
+  ret: isSpec,
+} );
+
 var multipleArgOpSpec = {
-  args: MultipleArgSpec,
+  args: multipleArgNoDupeSpec,
   ret: specSpec,
 };
 
@@ -263,6 +302,7 @@ var OrFnSpec = fspec( multipleArgOpSpec );
 var ZeroOrMoreFnSpec = fspec( singleArgOpSpecFn( { pred: isObj } ) );
 var OneOrMoreFnSpec = fspec( singleArgOpSpecFn( { pred: isObj } ) );
 var ZeroOrOneFnSpec = fspec( singleArgOpSpecFn( { pred: isObj } ) );
+var and = AndFnSpec.instrumentConformed( andOp );
 
 var core = {
   cat: CatFnSpec.instrumentConformed( catOp ),
@@ -272,10 +312,12 @@ var core = {
   oneOrMore: OneOrMoreFnSpec.instrumentConformed( oneOrMoreOp ),
   ExprSpec, SpecSpec, PredSpec, DelayedSpecSpec, SpecRefSpec,
   CatFnSpec,
+  AndFnSpec,
   OrFnSpec,
   ZeroOrMoreFnSpec, OneOrMoreFnSpec, ZeroOrOneFnSpec,
   CollOfSpec,
   collOf,
+  and,
 };
 
 core[ 'alt' ] = core.or;

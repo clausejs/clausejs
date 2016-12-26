@@ -45,13 +45,18 @@ describe( 'cat', () => {
       expect( r ).to.deep.equal( data );
     } );
 
-    it( 'named', () => {
+    it( 'labelled', () => {
       var NamedCommentedSpec = S.cat( 'z', 'it\'s a fuuuunction', S.isFn, 'b', S.isObj, 'c', 'another fuuuunction', S.isFn, 'a', S.isObj );
 
       var conformed = NamedCommentedSpec.conform( conformist );
       expect( conformed ).to.deep.equal( { z: fn, b: {}, c: fn, a: { a: 1 } } );
       var nonconformed = NamedCommentedSpec.conform( nonconformist );
       expect( nonconformed instanceof Problem ).to.be.true;
+    } );
+
+    it( 'no dupe labels', () => {
+      let createDupe = () => S.cat( 'z', 'it\'s a fuuuunction', S.isFn, 'b', S.isObj, 'z', 'another fuuuunction', S.isFn, 'a', S.isObj );
+      expect( createDupe ).to.throw( Error );
     } );
 
     it( 'named, grouped', () => {

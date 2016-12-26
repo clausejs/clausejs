@@ -1,10 +1,9 @@
 import S, { fspec, cat, or, shape, isStr, isBool,
   isFspec,
   isArray, isFn, and, isNum, isNull, isUndefined, isProblem } from '../';
-import { any, ExprSpec, CatFnSpec, OrFnSpec,
+import { any, ExprSpec, CatFnSpec, OrFnSpec, AndFnSpec,
   CollOfSpec, collOf, SpecSpec, PredSpec, DelayedSpecSpec, SpecRefSpec,
   ZeroOrMoreFnSpec, OneOrMoreFnSpec, ZeroOrOneFnSpec } from '../core';
-import { AndSpec } from '../core/and';
 import { WallFnSpec } from '../core/wall';
 import { ShapeFnSpec, MapOfFnSpec } from '../core/objRelated';
 import { isNamespacePath, NamespaceFnSpec, NamespaceObjSpec } from './namespace.types';
@@ -81,7 +80,7 @@ S( 'specky.compose/or', OrFnSpec );
 S( 'specky.compose/zeroOrMore', ZeroOrMoreFnSpec );
 S( 'specky.compose/oneOrMore', OneOrMoreFnSpec );
 S( 'specky.compose/zeroOrOne', ZeroOrOneFnSpec );
-S( 'specky.compose/and', AndSpec );
+S( 'specky.compose/and', AndFnSpec );
 S( 'specky.compose/collOf', CollOfSpec );
 S( 'specky.compose/mapOf', MapOfFnSpec );
 S( 'specky.compose/shape', ShapeFnSpec );
