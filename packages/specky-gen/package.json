@@ -1,6 +1,6 @@
 {
   "name": "specky-gen",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "description": "Generators for Specky",
   "main": "index.js",
   "repository": {
@@ -21,7 +21,7 @@
     "email": "settinghead@gmail.com"
   },
   "peerDependencies": {
-    "specky": "0.0.19",
+    "specky": "0.0.20",
     "react": ">=0.14.0"
   },
   "license": "MIT",
@@ -30,6 +30,6 @@
   },
   "homepage": "https://github.com/speckyjs/specky#readme",
   "dependencies": {
-    "specky": "0.0.19"
+    "specky": "0.0.20"
   }
 }
