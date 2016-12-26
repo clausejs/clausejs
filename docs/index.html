@@ -142,7 +142,8 @@
       </div>
       <div class="col-md-10 col-sm-9 offset-md-2 offset-sm-3 main">
         <h1>Specky</h1>
-        (Contribute to this doc by making pull requests to <a href="https://github.com/speckyjs/specky/blob/master/src/specs/index.annotation.js">annotation files in here</a>.)
+        <hr>
+        (To contribute to API notes &amp; examples, make a pull request to <a href="https://github.com/speckyjs/specky/blob/master/src/specs/index.annotation.js">annotation source files here</a>.)
         <section id="introduction">
           <h3>Introduction</h3>
           Refer to <a href="https://github.com/speckyjs/specky#specky-">README</a> file for basic intro.
@@ -164,28 +165,28 @@
           For example, both of the following spec definitions are valid:
           <pre>
             <code class="js">
-var ArraySpec = S.cat(&apos;foos&apos;, S.oneOrMore(S.equal(&apos;foo&apos;)), 
+var ArraySpec = S.cat(&apos;foos&apos;, S.oneOrMore(S.equal(&apos;foo&apos;)),
                     &apos;bars&apos;, S.oneOrMore(S.equal(&apos;bar&apos;)));
 
-S.conform(ArraySpec, [&apos;foo&apos;, &apos;foo&apos;, &apos;foo&apos;, &apos;bar&apos;, &apos;bar&apos;]); 
+S.conform(ArraySpec, [&apos;foo&apos;, &apos;foo&apos;, &apos;foo&apos;, &apos;bar&apos;, &apos;bar&apos;]);
 // returns { foos: [&apos;foo&apos;, &apos;foo&apos;, &apos;foo&apos;], bars: [&apos;bar&apos;, &apos;bar&apos;] };
 
-var StrSpec = S.cat(&apos;foos&apos;, S.oneOrMore(S.sEqual(&apos;foo&apos;)), 
+var StrSpec = S.cat(&apos;foos&apos;, S.oneOrMore(S.sEqual(&apos;foo&apos;)),
                     &apos;bars&apos;, S.oneOrMore(S.sEqual(&apos;bar&apos;)));
 
-S.conform(StrSpec, &apos;foofoofoobarbar&apos;); 
+S.conform(StrSpec, &apos;foofoofoobarbar&apos;);
 // returns { foos: &apos;foofoofoo&apos;, bars: &apos;barbarbar&apos; };
             </code>
           </pre>
           <p>
           Notice that in the first spec, we use S.equals() to treat the string as a single entity,
           whereas in the second, we use S.sEqual() to suggest that each character in the string is
-          part of a collection that we run regex ops on. 
+          part of a collection that we run regex ops on.
           </p>
         </section>
         <h3>API</h3>
         <p><em>Work in progress. </em></p>
-  <p>Below is a set of auto-generated API reference by 
+  <p>Below is a set of auto-generated API reference by
         <a href="https://github.com/speckyjs/specky/tree/master/packages/specky-docgen">
         specky-docgen</a> based on <a href="https://github.com/speckyjs/specky/blob/master/src/specs/index.js">spec declarations</a> and their corrosponding <a href="https://github.com/speckyjs/specky/blob/master/src/specs/index.annotation.js">annotations</a>.
         <section id="api">
@@ -5428,7 +5429,7 @@ S.conform(StrSpec, &apos;foofoofoobarbar&apos;);
   </main>
   <!-- TODO get rid of this temporary hack -->
   <!-- <script src="docs/bundle/content.js"></script> -->
-  <script src="bundle/functional.min.js"></script> 
+  <script src="bundle/functional.min.js"></script>
   <script src="docs/bundle/functional.js"></script>
 </body>
 </html>
