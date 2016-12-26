@@ -79,13 +79,17 @@
       <div class="col-md-2 col-sm-3 cot">
         <div class="inline-headers">
           <h5><u>Specky</u></h5>
-          (<span class="specky-version">0.0.19</span>)
+          (<span class="specky-version">0.0.20</span>)
         </div>
         <ul>
           <li><a href="https://github.com/speckyjs/specky">Github Repository</a></li>
         </ul>
         <a href="#introduction"><h6>Introduction</h6></a>
-        <a href="#conformation"><h6>What&apos;s Conformation?</h6></a>
+        <h6>Concepts</h6>
+        <ul>
+          <li><a href="#conformation">Conformation?</a></li>
+          <li><a href="#regex">Regex Ops &amp; Iterables</a></li>
+        </ul>
         <h6>API</h6>
         <div id="cot"><dl>
     
@@ -144,25 +148,46 @@
           For basic intro, refer to the <a href="https://github.com/speckyjs/specky">README file</a> in the Specky repository.
         </section>
         <section id="conformation">
-          <h3>What is &quot;conformation&quot;?</h3>
+          <h4>What is &quot;conformation&quot;?</h4>
           <p>To put it plainly, as a developer you expect your data to be of certain &quot;shape&quot;.</p>
           <p>You define the shape of the data with specs.</p>
           <p>To &quot;conform&quot; your data with your specs is to shape it in a way that is <em>better organized</em>, making it easier for your code to consume.</p>
 
           [TODO: more write-up]
         </section>
+        <section id="regex">
+          <h4>Regex-like Operations on Iterables</h4>
+          <p>
+            Both array and string are treated as iterables in Specky,
+            which means both types can be the subject of regex-like operations.
+          </p>
+          For example, both of the following spec definitions are valid:
+          <pre>
+            <code>
+var ArraySpec = S.cat(&apos;foos&apos;, S.oneOrMore(S.equal(&apos;foo&apos;)), 
+                    &apos;bars&apos;, S.oneOrMore(S.equal(&apos;bar&apos;)));
+
+S.conform(ArraySpec, [&apos;foo&apos;, &apos;foo&apos;, &apos;foo&apos;, &apos;bar&apos;, &apos;bar&apos;]); 
+// returns { foos: [&apos;foo&apos;, &apos;foo&apos;, &apos;foo&apos;], bars: [&apos;bar&apos;, &apos;bar&apos;] };
+
+var StrSpec = S.cat(&apos;foos&apos;, S.oneOrMore(S.sEqual(&apos;foo&apos;)), 
+                    &apos;bars&apos;, S.oneOrMore(S.sEqual(&apos;bar&apos;)));
+
+S.conform(StrSpec, &apos;foofoofoobarbar&apos;); 
+// returns { foos: &apos;foofoofoo&apos;, bars: &apos;barbarbar&apos; };
+            </code>
+          </pre>
+          <p>
+          Notice that in the first spec, we use S.equals() to treat the string as a single entity,
+          whereas in the second, we use S.sEqual() to suggest that each character in the string is
+          part of the collection. 
+          </p>
+        </section>
         <h3>API</h3>
-        <blockquote class="blockquote">
-          <em>
-            The API reference you see here are auto generated from <a href="https://github.com/speckyjs/specky/blob/master/src/specs/index.js">a set of</a> Specky specs.<br>
-            Some of these specs, are used by Specky as internal validators and conformers.<br>
-            These specs, btw, are also <a href="https://github.com/speckyjs/specky/blob/master/src/core/regex.js">generated</a> with Specky itself.<br>
-            How meta is that? <br>
-            Awestruck yet?
-          </em>
-        </blockquote>
         <p><em>Work in progress. </em></p>
-        <p>Below is an auto-generated API reference based on <a href="https://github.com/speckyjs/specky/blob/master/src/specs/index.js">spec declarations</a> and their corrosponding <a href="https://github.com/speckyjs/specky/blob/master/src/specs/index.annotation.js">annotations</a>.
+  <p>Below is a set of auto-generated API reference by 
+        <a href="https://github.com/speckyjs/specky/tree/master/packages/specky-docgen">
+        specky-docgen</a> based on <a href="https://github.com/speckyjs/specky/blob/master/src/specs/index.js">spec declarations</a> and their corrosponding <a href="https://github.com/speckyjs/specky/blob/master/src/specs/index.annotation.js">annotations</a>.
         <section id="api">
     <a name="/specky"></a>
     
