@@ -1,6 +1,6 @@
 import S, { fspec, cat, or, shape, isStr, isBool,
   isFspec,
-  isArray, isFn, and, isNum, isNull, isUndefined, isSpec, isDelayedSpec, isProblem } from '../';
+  isArray, isFn, and, isNum, isNull, isUndefined, isProblem } from '../';
 import { any, ExprSpec, CatFnSpec, OrFnSpec,
   CollOfSpec, collOf, SpecSpec, PredSpec, DelayedSpecSpec, SpecRefSpec,
   ZeroOrMoreFnSpec, OneOrMoreFnSpec, ZeroOrOneFnSpec } from '../core';
@@ -27,7 +27,7 @@ const AnySpec = fspec( {
 } );
 
 const FspecSpec = and(
-  isFspec,
+  isFspec
 );
 
 const FspecFnSpec = fspec( {

@@ -1,4 +1,3 @@
-var fspec = require( '../core/fspec' );
 var isPred = require( '../utils/isPred' );
 var isSpec = require( '../utils/isSpec' );
 var fnName = require( '../utils/fnName' );

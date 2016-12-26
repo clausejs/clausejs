@@ -1,12 +1,6 @@
 var oAssign = require( 'object-assign' );
-var isUndefined = require( '../../preds/isUndefined' );
 
 /*eslint func-names: 0*/
-var FOLD = function() {};
-var ENTER = function() {};
-var MULTI_ENTER = function() {};
-var MAYBE_ENTER = function() {};
-var MAYBE_SINGLE_ENTER = function() {};
 
 function Value( val ) {
   this.value = val;
@@ -68,7 +62,8 @@ function getMatch( chain, walkFn, walkOpts ) {
           acc = new Nothing();
         } else {
           acc = top;
-          valStack.pop(); //get rid of MaybeEnter
+          //get rid of MaybeEnter
+          valStack.pop();
         }
         valStack.push( acc );
       } break;
@@ -182,10 +177,6 @@ function _giveAltName( groupName, c ) {
     console.error( c );
     throw 'c!!!alt';
   }
-}
-
-function _last( arr ) {
-  return arr[ arr.length - 1 ];
 }
 
 function _foldLeft( inputType, conform, acc, c ) {

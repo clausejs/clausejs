@@ -33,7 +33,7 @@ function mapOfWalker( spec, walkFn ) {
     return { val: x };
   }
 
-  function mapOfReconstruct( { val }, walkOpts ) {
+  function mapOfReconstruct( { val } ) {
     return val;
   }
 

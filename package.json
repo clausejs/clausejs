@@ -4,7 +4,7 @@
   "description": "A powerful & flexible validation and conformation library for your JavaScript data and functions.",
   "main": "packages/specky/dist/specky.js",
   "scripts": {
-    "dev": "yarn run test:watch",
+    "dev": "npm run test:watch",
     "dev-docsite": "webpack-dev-server --content-base ./docs --inline --host 0.0.0.0",
     "test": "mocha --compilers js:babel-register",
     "test:watch": "mocha --compilers js:babel-register --watch",

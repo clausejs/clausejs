@@ -1,4 +1,4 @@
-function anyWalker( spec ) {
+function anyWalker( ) {
   return {
     trailblaze: walkThroughAny,
     reconstruct: walkThroughAny,

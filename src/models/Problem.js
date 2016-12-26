@@ -10,7 +10,8 @@ function Problem( val, failsPredicate, subproblems, msg ) {
   this.val = val;
   this.valStringified = JSON.stringify( val, ( key, val ) => {
     if ( typeof val === 'function' ) {
-      return `${val.name}()`; // implicitly `toString` it
+      // implicitly `toString` it
+      return `${val.name}()`;
     }
     return val;
   } );

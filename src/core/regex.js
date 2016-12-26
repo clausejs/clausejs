@@ -287,10 +287,10 @@ module.exports = core;
 
 // // //
 //
-var isStr = require( '../preds/isStr' );
-var isObj = require( '../preds/isObj' );
-var isNum = require( '../preds/isNum' );
-var isBool = require( '../preds/isBool' );
+// var isStr = require( '../preds/isStr' );
+// var isObj = require( '../preds/isObj' );
+// var isNum = require( '../preds/isNum' );
+// var isBool = require( '../preds/isBool' );
 
 // var NestedSpec = catOp( {
 //   withoutLabels: [
@@ -363,26 +363,26 @@ var isBool = require( '../preds/isBool' );
 //   ]
 // } );
 
-var NestedSpec = catOp( {
-  withLabels: [
-    { name: 'first',
-      expr: { spec: catOp( {
-        withoutLabels: [
-        { pred: isNum },
-        { pred: isBool }
-        ]
-      } ) }
-    },
-    { name: 'second',
-      expr: { spec: orOp( {
-        withLabels: [
-          { name: 'second1', expr: { pred: isStr } },
-          { name: 'second2', expr: { pred: isBool } }
-        ]
-      } ) }
-    },
-  ]
-} );
+// var NestedSpec = catOp( {
+//   withLabels: [
+//     { name: 'first',
+//       expr: { spec: catOp( {
+//         withoutLabels: [
+//         { pred: isNum },
+//         { pred: isBool }
+//         ]
+//       } ) }
+//     },
+//     { name: 'second',
+//       expr: { spec: orOp( {
+//         withLabels: [
+//           { name: 'second1', expr: { pred: isStr } },
+//           { name: 'second2', expr: { pred: isBool } }
+//         ]
+//       } ) }
+//     },
+//   ]
+// } );
 
 // var NestedSpec = catOp( {
 //   withLabels: [
@@ -432,11 +432,11 @@ var NestedSpec = catOp( {
 //   ]
 // } );
 
-var data = [ 22, true,
-  'ss',
-  // { sss: 1 }
-];
-var r = NestedSpec.conform( data );
+// var data = [ 22, true,
+//   'ss',
+//   // { sss: 1 }
+// ];
+// var r = NestedSpec.conform( data );
 
 // console.log( r );
 

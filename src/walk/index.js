@@ -10,7 +10,6 @@ var collOfWalker = require( './collOfWalker' );
 var mapOfWalker = require( './mapOfWalker' );
 var specRefWalker = require( './specRefWalker' );
 var delayedSpecWalker = require( './delayedSpecWalker' );
-var mapOfWalker = require( './mapOfWalker' );
 var coerceIntoSpec = require( '../utils/coerceIntoSpec' );
 var isProblem = require( '../utils/isProblem' );
 

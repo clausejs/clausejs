@@ -27,8 +27,10 @@ describe( 'collOf', () => {
     var conformed = [ 1, 2, 3 ];
     expect( CollOfStrsSpec.conform( conformed ) ).to.deep.equal( conformed );
 
-    var unconformed1 = [ 1 ]; //too few
-    var unconformed2 = [ 1, 2, 3, 4, 5, 6 ]; //too many
+     //too few
+    var unconformed1 = [ 1 ];
+    //too many
+    var unconformed2 = [ 1, 2, 3, 4, 5, 6 ];
     expect( CollOfStrsSpec.conform( unconformed1 ) ).to.be.an.instanceof( Problem );
     expect( CollOfStrsSpec.conform( unconformed2 ) ).to.be.an.instanceof( Problem );
   } );

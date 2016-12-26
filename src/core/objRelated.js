@@ -120,7 +120,7 @@ function shapeOp( cargs ) {
   if ( isProblem( cargs ) ) {
     throw cargs;
   }
-  const { shapeArgs: { requiredFields, optionalFields } } = cargs;
+  // const { shapeArgs: { requiredFields, optionalFields } } = cargs;
 
   var s = new Spec( {
     type: TYPE_SHAPE,
