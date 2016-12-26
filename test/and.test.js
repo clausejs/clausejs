@@ -1,11 +1,30 @@
-var s = require( '../src/' );
+var S = require( '../src/' );
 var expect = require( 'chai' ).expect;
-var Problem = s.Problem;
 
 describe( 'and', () => {
   it( 'simple case', () => {
-    var UsernameSpec = s.and( s.isStr, ( n ) => n.length < 5 );
+    var UsernameSpec = S.and( S.isStr, ( n ) => n.length < 5 );
     var conformed1 = UsernameSpec.conform( 'he' );
     expect( conformed1 ).to.equal( 'he' );
+  } );
+
+  it( 'propagate conformation', () => {
+    var PropagatedAndSpec = S.and(
+      S.isArray,
+      S.cat(
+        'firstPart', S.oneOrMore( S.isNum ),
+        'secondPart', S.isBool,
+        'thirdPart', S.oneOrMore( S.isNum ) ),
+      function firstThirdPartEqualLen( cargs ) {
+        const { firstPart, thirdPart } = cargs;
+        return firstPart.length === thirdPart.length;
+      }
+    );
+
+    var conformed1 = [ 1, 2, 3, 4, true, 5, 6, 7, 8 ];
+    var unconformed = conformed1.concat( [ 4 ] );
+    expect( PropagatedAndSpec.conform( conformed1 ).firstPart ).to.deep.equal( [ 1, 2, 3, 4 ] );
+    expect( PropagatedAndSpec.conform( unconformed ) ).to.be.instanceOf( S.Problem );
+
   } );
 } );
