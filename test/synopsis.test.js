@@ -6,6 +6,5 @@ describe.skip( 'synopsis', () => {
     var SampleSpec = cat( 'first', oneOrMore( cat( isStr, isBool ) ),
                       'second', or( isObj, cat( isNum, isBool ) ) );
 
-
   } );
 } );
