@@ -15080,6 +15080,14 @@ var FspecFnSpec = (0, _.fspec)({
   }))
 });
 
+var NullableFnSpec = (0, _.fspec)({
+  args: (0, _.cat)(_core.ExprSpec)
+});
+
+var UndefinableFnSpec = (0, _.fspec)({
+  args: (0, _.cat)(_core.ExprSpec)
+});
+
 var InstanceOfFnSpec = (0, _.fspec)({
   args: (0, _.cat)('type', _.isFn),
   ret: SingleArgPredSpec()
@@ -15128,6 +15136,8 @@ var DelayedFnSpec = (0, _.fspec)({
 (0, _2.default)('specky.compose/any', AnySpec);
 (0, _2.default)('specky.compose/wall', _wall.WallFnSpec);
 (0, _2.default)('specky.compose/fspec', FspecFnSpec);
+(0, _2.default)('specky.compose/nullable', NullableFnSpec);
+(0, _2.default)('specky.compose/undefinable', UndefinableFnSpec);
 
 (0, _2.default)('specky.utils/enforce', EnforceFnSpec);
 (0, _2.default)('specky.utils/conform', ConformFnSpec);

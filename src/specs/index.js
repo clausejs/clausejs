@@ -39,6 +39,14 @@ const FspecFnSpec = fspec( {
   } ) ),
 } );
 
+const NullableFnSpec = fspec( {
+  args: cat( ExprSpec ),
+} );
+
+const UndefinableFnSpec = fspec( {
+  args: cat( ExprSpec ),
+} );
+
 const InstanceOfFnSpec = fspec( {
   args: cat( 'type', isFn ),
   ret: SingleArgPredSpec(),
@@ -87,6 +95,8 @@ S( 'specky.compose/shape', ShapeFnSpec );
 S( 'specky.compose/any', AnySpec );
 S( 'specky.compose/wall', WallFnSpec );
 S( 'specky.compose/fspec', FspecFnSpec );
+S( 'specky.compose/nullable', NullableFnSpec );
+S( 'specky.compose/undefinable', UndefinableFnSpec );
 
 S( 'specky.utils/enforce', EnforceFnSpec );
 S( 'specky.utils/conform', ConformFnSpec );
