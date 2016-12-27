@@ -3,6 +3,7 @@ var Problem = require( '../models/Problem' );
 var functionName = require( '../utils/fnName' );
 var namedFn = require( '../utils/namedFn' );
 var betterThrow = require( '../utils/betterThrow' );
+var arrayFrom = require('array.from');
 
 function fspecWalker( spec, walkFn ) {
   var { args: argsSpec, ret: retSpec, fn: validateFn } = spec.opts;
@@ -47,7 +48,7 @@ function fspecWalker( spec, walkFn ) {
 
   function getInstrumentedFn( fnName, fn ) {
     return function __instrumented() {
-      var args = Array.from( arguments );
+      var args = arrayFrom( arguments );
       var instrumentedArgs = checkArgs( fn, fnName, args );
       var retVal = fn.apply( this, instrumentedArgs );
       var instrumentedRetVal = checkRet( fn, fnName, retVal );
@@ -111,7 +112,7 @@ function fspecWalker( spec, walkFn ) {
 
   function getArgConformedInstrumentedFn( fnName, fn ) {
     return function __instrumentConformed() {
-      var args = Array.from( arguments );
+      var args = arrayFrom( arguments );
 
       var conformedArgs = walkFn( argsSpec, args, { conform: true, instrument: true } );
       if ( isProblem( conformedArgs ) ) {

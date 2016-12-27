@@ -3,6 +3,9 @@
   "version": "0.0.21",
   "description": "A powerful & flexible validation and conformation library for your JavaScript data and functions.",
   "main": "packages/specky/dist/specky.js",
+  "engines": {
+    "node": ">=0.10.0"
+  },
   "scripts": {
     "dev": "npm run test:watch",
     "dev-docsite": "webpack-dev-server --content-base ./docs --inline --host 0.0.0.0",
@@ -35,6 +38,7 @@
   },
   "homepage": "https://github.com/speckyjs/specky#readme",
   "dependencies": {
+    "array.from": "^1.0.3",
     "lodash": "^4.17.2",
     "object-assign": "^4.1.0",
     "object-path": "^0.11.2"
@@ -57,6 +61,7 @@
     "raw-loader": "^0.5.1",
     "showdown": "^1.5.4",
     "style-loader": "^0.13.1",
-    "webpack": "2.2.0-rc.2"
+    "webpack": "2.2.0-rc.2",
+    "bootstrap": "4.0.0-alpha.5"
   }
 }

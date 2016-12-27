@@ -1,13 +1,20 @@
 var expect = require( 'chai' ).expect;
 var gen = require( 'mocha-testcheck' ).gen;
 var check = require( 'mocha-testcheck' ).check;
+var arrayFrom = require('array.from');
 
 var S = require( '../src/' );
 var cat = S.cat;
 var oneOrMore = S.oneOrMore;
 var repeat = require( '../src/utils/repeat' );
 var catS = function( str ) {
-  return S.cat.apply( null, Array.from( str ).map( S.equals ) );
+  return S.cat.apply( null, arrayFrom( str ).map( S.equals ) );
+};
+
+function isInteger(value) {
+  return typeof value === "number" &&
+    isFinite(value) &&
+    Math.floor(value) === value;
 };
 
 describe( 'nfa regex', function() {
@@ -18,7 +25,7 @@ describe( 'nfa regex', function() {
     check.it( 'accepts zero or more int\'s',
       { times: 20 },
       [ gen.array( gen.int ) ], function( ints ) {
-        var ZeroOrMoreIntegers = S.zeroOrMore( Number.isInteger );
+        var ZeroOrMoreIntegers = S.zeroOrMore( isInteger );
         expect( S.isValid( ZeroOrMoreIntegers, ints ) ).to.be.true;
         expect( S.isValid( ZeroOrMoreIntegers, [] ) ).to.be.true;
       } );
@@ -27,7 +34,7 @@ describe( 'nfa regex', function() {
       { times: 20 },
       [ gen.array( gen.int ), gen.notEmpty( gen.array( gen.string ) ) ],
       function( ints, strs ) {
-        var ZeroOrMoreIntegers = S.zeroOrMore( Number.isInteger );
+        var ZeroOrMoreIntegers = S.zeroOrMore( isInteger );
         expect( S.isValid( ZeroOrMoreIntegers, ints.concat( strs ) ) ).to.be.false;
         expect( S.isValid( ZeroOrMoreIntegers, strs ) ).to.be.false;
       } );
@@ -55,8 +62,8 @@ describe( 'nfa regex', function() {
 
     it( 'use in conjunction with cat', function() {
       var ZeroOrMoreStrings = S[ '*' ]( S.isStr );
-      var ZeroOrMoreIntegers = S[ '*' ]( Number.isInteger );
-      var oneOrMoreIntegers = S[ '+' ]( Number.isInteger );
+      var ZeroOrMoreIntegers = S[ '*' ]( isInteger );
+      var oneOrMoreIntegers = S[ '+' ]( isInteger );
       var expr = S.cat(
         ZeroOrMoreStrings,
         ZeroOrMoreIntegers,

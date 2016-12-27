@@ -1,6 +1,7 @@
 var Problem = require( '../models/Problem' );
 var isProblem = require( '../utils/isProblem' );
 var specFromAlts = require( '../utils/specFromAlts' );
+var oAssign = require('object-assign');
 
 function andWalker( spec, walkFn ) {
   var exprs = spec.opts.conformedExprs.map( specFromAlts );
@@ -22,7 +23,7 @@ function andWalker( spec, walkFn ) {
         problems.push( r );
         break;
       } else {
-        var conformedR = walkFn( exprs[ i ], r, Object.assign( {}, walkOpts, { phase: 'reconstruct' } ) );
+        var conformedR = walkFn( exprs[ i ], r, oAssign( {}, walkOpts, { phase: 'reconstruct' } ) );
         conforms.push( conformedR );
       }
     }

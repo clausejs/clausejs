@@ -1,5 +1,6 @@
 require( 'babel-core/register' );
 
+
 var S = require( '../src' );
 
 var catS = function( str ) {

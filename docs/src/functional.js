@@ -8,8 +8,8 @@ const HLJS = require( 'highlight.js/lib/highlight' );
 HLJS.registerLanguage( 'javascript', require( 'highlight.js/lib/languages/javascript' ) );
 window.$ = window.jQuery = $;
 window.Tether = tether;
-require( 'bootstrap/js/tooltip' );
-require( 'bootstrap/js/popover' );
+require( 'bootstrap/js/dist/tooltip' );
+require( 'bootstrap/js/dist/popover' );
 
 $( () => {
 
