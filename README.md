@@ -13,7 +13,7 @@ Specky is a powerful & flexible JavaScript data validation, conformation, runtim
 
 ## Why Specky
 
-Specky's goal is to provide the defining contract/protocol for your JS app. By writing a set of specs for your app *once*, Specky helps you squeeze a lot of leverage out your effort, including
+Specky's goal is to provide the defining contract/protocol for your JS app. By writing a set of specs for your app *once*, you can get a lot of leverage out your effort, including
 
 - Clearly-defined expectations for your app's functions and data structures
 - **Runtime validation** for your data and functions (compile-time analysis may be possible in the future)
