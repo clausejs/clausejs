@@ -4,8 +4,6 @@
 
 ## What is Specky?
 
-*For the impatient, I recommend jumping straight to [Quick Examples](#quick-examples).*
-
 Specky is a powerful & flexible library for JavaScript data validation, conformation, runtime-checking & property testing.
 
 Specky enables you to:
