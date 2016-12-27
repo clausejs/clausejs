@@ -2,21 +2,17 @@
 import cheerio from 'cheerio';
 var path = require( 'path' );
 var fs = require( 'fs' );
-var S = require( '../src' );
-var docgen = require( '../src/docgen' );
-import '../src/specs';
-require( '../src/specs/index.annotation.js' );
-
-const finalDocStr = docgen.gen( S.getRegistry() );
-const finalCotStr = docgen.genCot( S.getRegistry() );
+var populateContent = require( '../docs/src/populateContent' );
 
 const INDEX_TEMPLATE_FILE_NAME = path.join( __dirname, '..', 'docs', 'index.template.html' );
 const INDEX_FILE_NAME = path.join( __dirname, '..', 'docs', 'index.html' );
 
 let $ = cheerio.load( fs.readFileSync( INDEX_TEMPLATE_FILE_NAME ) );
 
-$( '#cot' ).html( finalCotStr );
-$( '#api' ).html( finalDocStr );
-$( '.specky-version' ).html( S.VERSION );
+populateContent( $, loadMd );
+
+function loadMd(fileName) {
+  return fs.readFileSync(path.join(__dirname, '../', 'docs', fileName), "utf8");
+}
 
 fs.writeFileSync( INDEX_FILE_NAME, $.html() );

@@ -148,10 +148,27 @@
           <h3>Introduction</h3>
           Refer to <a href="https://github.com/speckyjs/specky#specky-">README</a> file for basic intro.
         </section>
-        <section id="conformation" class="markdown-article" markdown-path="conformation.md">
-        </section>
-        <section id="iterable" class="markdown-article" markdown-path="iterable.md">
-        </section>
+        <section id="conformation" class="markdown-article" markdown-path="conformation.md"><h4 id="whatisconformation">What is Conformation?</h4>
+<p>To put it plainly, as a developer you expect your data to be of certain &quot;shape&quot;.</p>
+<p>You define the shape of the data with specs.</p>
+<p>To &quot;conform&quot; your data with your specs is to shape it in a way that is <em>better organized</em>, making it easier for your code to consume.</p>
+<p>[TODO: more write-up]</p></section>
+        <section id="iterable" class="markdown-article" markdown-path="iterable.md"><h4 id="regexlikeoperationsoniterables">Regex-like Operations on Iterables</h4>
+<p>Both array and string are treated as iterables in Specky, which means both types can be the subject of regex-like operations.</p>
+<p>For example, both of the following spec definitions are valid:</p>
+<pre><code class="js language-js">var ArraySpec = S.cat(&apos;foos&apos;, S.oneOrMore(S.equal(&apos;foo&apos;)),
+                    &apos;bars&apos;, S.oneOrMore(S.equal(&apos;bar&apos;)));
+
+S.conform(ArraySpec, [&apos;foo&apos;, &apos;foo&apos;, &apos;foo&apos;, &apos;bar&apos;, &apos;bar&apos;]);
+// returns { foos: [&apos;foo&apos;, &apos;foo&apos;, &apos;foo&apos;], bars: [&apos;bar&apos;, &apos;bar&apos;] };
+
+var StrSpec = S.cat(&apos;foos&apos;, S.oneOrMore(S.sEqual(&apos;foo&apos;)),
+                    &apos;bars&apos;, S.oneOrMore(S.sEqual(&apos;bar&apos;)));
+
+S.conform(StrSpec, &apos;foofoofoobarbar&apos;);
+// returns { foos: &apos;foofoofoo&apos;, bars: &apos;barbarbar&apos; };
+</code></pre>
+<p>Notice that in the first spec, we use S.equals() to treat the string as a single entity, whereas in the second, we use S.sEqual() to suggest that each character in the string is part of a collection that we run regex ops on.</p></section>
         <h3>API</h3>
         <p><em>Work in progress. </em></p>
   <p>Below is a set of auto-generated API reference by
@@ -163,7 +180,7 @@
         <div class="card">
           <div class="card-header inline-headers">
             
-      <h6>S()</h6>&#xA0;
+      <h6>specky()</h6>&#xA0;
         <span class="tag tag-primary">
           function
         </span>
@@ -171,8 +188,7 @@
           </div>
         
     <dl class="card-block">
-    <dd>Registers or retrieves a spec from global spec regitry by path.</dd>
-<dt>Synopsis</dt><dd><ul><li>&lt;register&gt;:<div><ul><em>S(nsPath, expression)</em></ul></div></li><li>&lt;retrieve&gt;:<div><ul><em>S(nsPath)</em></ul></div></li></ul></dd>
+    <dt>Synopsis</dt><dd><ul><li>&lt;register&gt;:<div><ul><em>specky(nsPath, expression)</em></ul></div></li><li>&lt;retrieve&gt;:<div><ul><em>specky(nsPath)</em></ul></div></li></ul></dd>
 <dt>Argument spec</dt><dd>
     
     
@@ -199,7 +215,7 @@
               </span>
               
                   &lt;<span class="lead font-italic text-primary">register</span>&gt;
-              : <span>Put the given expression onto the given path in the global spec registry.</span>
+              
             
             </div>
           </div>
@@ -305,7 +321,7 @@
               </span>
               
                   &lt;<span class="lead font-italic text-primary">retrieve</span>&gt;
-              : <span>Retrieves an expression from the given namespace path, or returns null if not found.</span>
+              
             
             </div>
           </div>
@@ -3097,7 +3113,7 @@
         <div class="card">
           <div class="card-header inline-headers">
             
-      <h6>S.describe()</h6>&#xA0;
+      <h6>describe()</h6>&#xA0;
         <span class="tag tag-primary">
           function
         </span>
@@ -3105,8 +3121,7 @@
           </div>
         
     <dl class="card-block">
-    <dd>Returns an abbreviated description of the spec as a simple tree structure.</dd>
-<dt>Synopsis</dt><dd><ul><em>S.describe()</em></ul></dd>
+    <dt>Synopsis</dt><dd><ul><em>describe()</em></ul></dd>
 <dt>Argument spec</dt><dd>
     
     

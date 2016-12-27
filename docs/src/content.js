@@ -5,6 +5,9 @@ var populateContent = require( './populateContent' );
 require( '../../src/specs/index.annotation.js' );
 
 $( () => {
-  populateContent( $ );
-
+  populateContent( $, loadMd );
 } );
+
+function loadMd(path) {
+  return require('raw!../' + path);
+}

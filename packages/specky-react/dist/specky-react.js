@@ -7,7 +7,7 @@
 		exports["S"] = factory(require("react"), require("specky"));
 	else
 		root["S"] = factory(root["React"], root["S"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_267__, __WEBPACK_EXTERNAL_MODULE_268__) {
+})(this, function(__WEBPACK_EXTERNAL_MODULE_278__, __WEBPACK_EXTERNAL_MODULE_279__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -71,32 +71,32 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 272);
+/******/ 	return __webpack_require__(__webpack_require__.s = 283);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 267:
+/***/ 278:
 /***/ function(module, exports) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE_267__;
+module.exports = __WEBPACK_EXTERNAL_MODULE_278__;
 
 /***/ },
 
-/***/ 268:
+/***/ 279:
 /***/ function(module, exports) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE_268__;
+module.exports = __WEBPACK_EXTERNAL_MODULE_279__;
 
 /***/ },
 
-/***/ 272:
+/***/ 283:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 'use strict';
 
-var _SpeckyComponent = __webpack_require__(83);
+var _SpeckyComponent = __webpack_require__(91);
 
 var _SpeckyComponent2 = _interopRequireDefault(_SpeckyComponent);
 
@@ -125,7 +125,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var S = __webpack_require__(268);
+var S = __webpack_require__(279);
 
 function fromBaseClass(baseClass) {
   var SpeckyComponent = function (_baseClass) {
@@ -177,7 +177,7 @@ module.exports.default = fromBaseClass;
 
 /***/ },
 
-/***/ 83:
+/***/ 91:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -189,7 +189,7 @@ var _fromBaseClass2 = _interopRequireDefault(_fromBaseClass);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var React = __webpack_require__(267);
+var React = __webpack_require__(278);
 
 
 var SpeckyComponent = (0, _fromBaseClass2.default)(React.Component);

@@ -10,7 +10,7 @@ const finalDocStr = docgen.gen( getRegistry() );
 const finalCotStr = docgen.genCot( getRegistry() );
 
 
-function populateContent( $ ) {
+function populateContent( $, requireFn ) {
   $( '#cot' ).html( finalCotStr );
   $( '#api' ).html( finalDocStr );
   $( '.specky-version' ).html( VERSION );
@@ -19,7 +19,7 @@ function populateContent( $ ) {
 
   markdownElems.each( ( idx, elem ) => {
     const $elem = $( elem );
-    const rawMd = require( 'raw!./' + $elem.attr( 'markdown-path' ) );
+    const rawMd = requireFn( $elem.attr( 'markdown-path' ) );
     const html = converter.makeHtml( rawMd );
     $elem.html( html );
   } );
