@@ -104,8 +104,6 @@ function mapOfOp( cargs ) {
   var s = new Spec( {
     type: TYPE_MAP_OF,
     exprs: [],
-    // TODO: do fragments
-    fragments: [],
     opts: { keyExpression, valExpression }
   } );
 

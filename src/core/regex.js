@@ -184,19 +184,12 @@ function genMultiArgOp( type ) {
           specRef: undefined, delayedSpec: undefined } );
       } );
 
-      var fragments = coercedExprs.reduce(
-        ( curr, { name, expr }, idx ) =>
-          curr
-            .concat( [ `"${name}"`, ', ', expr, ] )
-            .concat( idx < coercedExprs.length - 1 ? [ ', ' ] : [] )
-          , [] );
       let opts = {
         named: true,
       };
       var s = new Spec( {
         type,
         exprs: coercedExprs,
-        fragments,
         opts,
       } );
 
@@ -235,12 +228,6 @@ function genMultiArgOp( type ) {
         type,
         exprs: coercedExprs,
         opts,
-        fragments: coercedExprs.reduce(
-          ( curr, { expr }, idx ) =>
-            curr
-              .concat( [ expr ] )
-              .concat( idx < coercedExprs.length - 1 ? [ ', ' ] : [] ),
-            [] )
       } );
 
       s.conform = function conform( x ) {
@@ -251,8 +238,7 @@ function genMultiArgOp( type ) {
       // empty case
       s = new Spec( {
         type,
-        exprs: [],
-        fragments: [] } );
+        exprs: [] } );
       s.conform = function conform( x ) {
         return walk( s, x, { conform: true } );
       };
@@ -283,8 +269,7 @@ function genSingleArgOp( type ) {
     var s = new Spec( {
       type,
       exprs: [ sureSpec ],
-      fragments: [ sureSpec ],
-      opts,
+      opts: oAssign( {}, opts, { enclosedSpec: sureSpec } ),
     } );
 
     s.conform = function conform( x ) {

@@ -41,7 +41,7 @@ describe( 'fspec', function() {
 
     expect( () => {
       specedFspec( new Spec( {
-        type: 'cat', exprs: [ S.isBool ], fragments: [], conformFn: identity,
+        type: 'catt', exprs: [ S.isBool ], conformFn: identity,
       } ), { extra: 'param' } );
     } ).to.throw( Problem );
     expect( () => {

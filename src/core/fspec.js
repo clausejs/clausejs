@@ -8,11 +8,6 @@ function fspec( fnSpec ) {
     type: 'FSPEC',
     exprs: [],
     opts: fnSpec,
-    // TODO: fix comma
-    fragments:
-      [].concat( args ? [ 'args: ', args ] : [] )
-        .concat( ret ? [ 'ret: ', ret ] : [] )
-        .concat( fn ? [ 'fn: ', fnName( fn ), '()' ] : [] ),
   } );
   spec.instrumentConformed = function instrumentConformed( fn ) {
     return walk( spec, fn, { conform: true, instrument: true } );

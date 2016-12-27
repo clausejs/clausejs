@@ -76,7 +76,6 @@ function wrapRoot( expr ) {
   return new Spec( {
     type: 'ROOT',
     exprs: [ expr ],
-    fragments: [],
   } );
 }
 

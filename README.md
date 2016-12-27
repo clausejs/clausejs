@@ -4,7 +4,11 @@
 
 ## What is Specky?
 
-Specky is a powerful & flexible JavaScript data validation, conformation, runtime-checking & testing library that enables you to:
+*For the impatient, I recommend jumping straight to [Quick Examples](#quick-examples).*
+
+Specky is a powerful & flexible library for JavaScript data validation, conformation, runtime-checking & property testing.
+
+Specky enables you to:
 
 - Build your data validation rules (specs) with simple predicate functions and composable logical expressions such as `and`, `any`, `shape`, `collOf`, `mapOf` as well as regex-like spec-composing operators such as concatenation(`cat`), `or`(`|`), `oneOrMore`(`+`), `zeroOrMore`(`*`), `zeroOrOne`(`?`), etc
 - Validate and make assertions about your data with your specs
@@ -24,7 +28,7 @@ Specky's goal is to provide the defining contract/protocol for your JS app. By w
 
 
 ## Project status
-- Alpha. API are subject to change and improvement based on [feedback](/../../issues/).
+- Alpha. API's are subject to change and improvement based on [feedback](/../../issues/).
 
 ## Quick Examples
 

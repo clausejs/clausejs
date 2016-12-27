@@ -104,12 +104,11 @@ function Spec(_ref) {
     this.generate = generateFn;
   }
 
-  if (!exprs || !fragments) {
-    throw new Error('Expressions and fragments are required when constructing a spec.');
+  if (!exprs) {
+    throw new Error('Expressions are required when constructing a spec.');
   }
 
   this.exprs = exprs;
-  this.fragments = fragments;
 }
 
 module.exports = Spec;
@@ -586,18 +585,12 @@ function genMultiArgOp(type) {
           specRef: undefined, delayedSpec: undefined });
       });
 
-      var fragments = coercedExprs.reduce(function (curr, _ref2, idx) {
-        var name = _ref2.name,
-            expr = _ref2.expr;
-        return curr.concat(['"' + name + '"', ', ', expr]).concat(idx < coercedExprs.length - 1 ? [', '] : []);
-      }, []);
       var opts = {
         named: true
       };
       var s = new Spec({
         type: type,
         exprs: coercedExprs,
-        fragments: fragments,
         opts: opts
       });
 
@@ -635,11 +628,7 @@ function genMultiArgOp(type) {
       s = new Spec({
         type: type,
         exprs: coercedExprs,
-        opts: _opts,
-        fragments: coercedExprs.reduce(function (curr, _ref3, idx) {
-          var expr = _ref3.expr;
-          return curr.concat([expr]).concat(idx < coercedExprs.length - 1 ? [', '] : []);
-        }, [])
+        opts: _opts
       });
 
       s.conform = function conform(x) {
@@ -650,8 +639,7 @@ function genMultiArgOp(type) {
       // empty case
       s = new Spec({
         type: type,
-        exprs: [],
-        fragments: [] });
+        exprs: [] });
       s.conform = function conform(x) {
         return walk(s, x, { conform: true });
       };
@@ -682,8 +670,7 @@ function genSingleArgOp(type) {
     var s = new Spec({
       type: type,
       exprs: [sureSpec],
-      fragments: [sureSpec],
-      opts: opts
+      opts: oAssign({}, opts, { enclosedSpec: sureSpec })
     });
 
     s.conform = function conform(x) {
@@ -1098,9 +1085,7 @@ function fspec(fnSpec) {
   var spec = new Spec({
     type: 'FSPEC',
     exprs: [],
-    opts: fnSpec,
-    // TODO: fix comma
-    fragments: [].concat(args ? ['args: ', args] : []).concat(ret ? ['ret: ', ret] : []).concat(fn ? ['fn: ', fnName(fn), '()'] : [])
+    opts: fnSpec
   });
   spec.instrumentConformed = function instrumentConformed(fn) {
     return walk(spec, fn, { conform: true, instrument: true });
@@ -1366,8 +1351,6 @@ function mapOfOp(cargs) {
   var s = new Spec({
     type: TYPE_MAP_OF,
     exprs: [],
-    // TODO: do fragments
-    fragments: [],
     opts: { keyExpression: keyExpression, valExpression: valExpression }
   });
 
@@ -1937,7 +1920,7 @@ function wallOp(expr) {
   var wallS = new Spec({
     type: 'WALL',
     exprs: [spec],
-    fragments: [spec]
+    opts: { enclosedSpec: spec }
   });
   wallS.conform = function andConform(x) {
     return walk(wallS, x, { conform: true });
@@ -1963,11 +1946,77 @@ var isSpec = __webpack_require__(2);
 var fnName = __webpack_require__(8);
 var isStr = __webpack_require__(5);
 
+var multipleArgFragmenter = function multipleArgFragmenter(_ref) {
+  var named = _ref.opts.named,
+      exprs = _ref.exprs;
+
+  if (exprs.length === 0) {
+    //empty case
+    return [];
+  } else if (named) {
+    return exprs.reduce(function (curr, _ref2, idx) {
+      var name = _ref2.name,
+          expr = _ref2.expr;
+      return curr.concat(['"' + name + '"', ', ', expr]).concat(idx < exprs.length - 1 ? [', '] : []);
+    }, []);
+  } else {
+    return exprs.reduce(function (curr, _ref3, idx) {
+      var expr = _ref3.expr;
+      return curr.concat([expr]).concat(idx < exprs.length - 1 ? [', '] : []);
+    }, []);
+  }
+};
+
+var singleArgFragmenter = function singleArgFragmenter(_ref4) {
+  var enclosedSpec = _ref4.opts.enclosedSpec;
+  return [enclosedSpec];
+};
+
+var Fragmenters = {
+  'PRED': function PRED(_ref5) {
+    var predicate = _ref5.opts.predicate;
+    return [pred];
+  },
+  'WALL': function WALL(_ref6) {
+    var enclosedSpec = _ref6.opts.enclosedSpec;
+    return [enclosedSpec];
+  },
+  // TODO
+  'AND': function AND(_ref7) {
+    var exprs = _ref7.exprs;
+    return exprs;
+  },
+  'CAT': multipleArgFragmenter,
+  'OR': multipleArgFragmenter,
+  'Z_OR_M': singleArgFragmenter,
+  'O_OR_M': singleArgFragmenter,
+  'Z_OR_O': singleArgFragmenter,
+  'ANY': function ANY() {
+    return [];
+  },
+  // TODO
+  'MAP_OF': function MAP_OF() {
+    return [];
+  },
+  // TODO
+  'SHAPE': function SHAPE() {
+    return [];
+  },
+  // TODO: fix comma
+  'FSPEC': function FSPEC(_ref8) {
+    var args = _ref8.args,
+        ret = _ref8.ret,
+        fn = _ref8.fn;
+    return [].concat(args ? ['args: ', args] : []).concat(ret ? ['ret: ', ret] : []).concat(fn ? ['fn: ', fnName(fn), '()'] : []);
+  }
+
+};
+
 function describe(expr, interceptor) {
-  return _fragments(expr, interceptor).join('');
+  return _strFragments(expr, interceptor).join('');
 }
 
-function _fragments(expr, interceptor) {
+function _strFragments(expr, interceptor) {
   if (interceptor) {
     var interceptR = interceptor(expr);
     if (interceptR) {
@@ -1977,10 +2026,10 @@ function _fragments(expr, interceptor) {
   if (isPred(expr)) {
     return [fnName(expr), '()'];
   } else if (expr.type === 'PRED') {
-    return _fragments(expr.opts.predicate, interceptor);
+    return _strFragments(expr.opts.predicate, interceptor);
   } else if (isSpec(expr)) {
     if (expr.type === 'DELAYED' || expr.type === 'SPEC_REF') {
-      return _fragments(expr.get(), interceptor);
+      return _strFragments(expr.get(), interceptor);
     } else {
       return [expr.type.toLowerCase(), '('].concat(_processInner(expr, interceptor)).concat([')']);
     }
@@ -1991,8 +2040,10 @@ function _fragments(expr, interceptor) {
 }
 
 function _processInner(spec, interceptor) {
-  return spec.fragments.reduce(function (acc, piece) {
-    return isStr(piece) ? acc.concat(piece) : acc.concat(_fragments(piece, interceptor));
+  // TODO: remove first part
+  var fragments = Fragmenters[spec.type](spec);
+  return fragments.reduce(function (acc, piece) {
+    return isStr(piece) ? acc.concat(piece) : acc.concat(_strFragments(piece, interceptor));
   }, []);
 }
 
@@ -2047,7 +2098,6 @@ function any() {
   return new Spec({
     type: SPEC_TYPE_ANY,
     exprs: [],
-    fragments: [],
     conformFn: identity
   });
 }
@@ -2150,8 +2200,7 @@ evalFunctions.PRED = function (x) {
 function wrapRoot(expr) {
   return new Spec({
     type: 'ROOT',
-    exprs: [expr],
-    fragments: []
+    exprs: [expr]
   });
 }
 

@@ -10,7 +10,7 @@ describe( 'pretty print', function() {
       S.cat( S.isNum, S.isNum, S.isStr, S.zeroOrMore( S.isObj ) ),
       S.or( S.isNum, S.cat( S.isNum, S.isBool, function isHello() {} ) ) );
     var out = specPrettyPrint( complexSpec );
-    expect( out.match( /\n/g ).length ).to.be.greaterThan( 900 );
+    expect( out.match( /\n/g ).length ).to.be.greaterThan( 200 );
     expect( out ).to.include( 'isHello()' );
   } );
 } );
