@@ -8,8 +8,9 @@ const HLJS = require( 'highlight.js/lib/highlight' );
 HLJS.registerLanguage( 'javascript', require( 'highlight.js/lib/languages/javascript' ) );
 window.$ = window.jQuery = $;
 window.Tether = tether;
-require( 'bootstrap/js/dist/tooltip' );
-require( 'bootstrap/js/dist/popover' );
+window.Util = require( 'exports-loader?Util!bootstrap/js/dist/util' );
+window.Tooltip = require( 'exports-loader?Tooltip!bootstrap/js/dist/tooltip' );
+window.Popover = require( 'exports-loader?Popover!bootstrap/js/dist/popover' );
 
 $( () => {
 
