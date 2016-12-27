@@ -180,7 +180,7 @@ S.conform(StrSpec, &apos;foofoofoobarbar&apos;);
         <div class="card">
           <div class="card-header inline-headers">
             
-      <h6>specky()</h6>&#xA0;
+      <h6>S()</h6>&#xA0;
         <span class="tag tag-primary">
           function
         </span>
@@ -188,7 +188,8 @@ S.conform(StrSpec, &apos;foofoofoobarbar&apos;);
           </div>
         
     <dl class="card-block">
-    <dt>Synopsis</dt><dd><ul><li>&lt;register&gt;:<div><ul><em>specky(nsPath, expression)</em></ul></div></li><li>&lt;retrieve&gt;:<div><ul><em>specky(nsPath)</em></ul></div></li></ul></dd>
+    <dd>Registers or retrieves a spec from global spec regitry by path.</dd>
+<dt>Synopsis</dt><dd><ul><li>&lt;register&gt;:<div><ul><em>S(nsPath, expression)</em></ul></div></li><li>&lt;retrieve&gt;:<div><ul><em>S(nsPath)</em></ul></div></li></ul></dd>
 <dt>Argument spec</dt><dd>
     
     
@@ -215,7 +216,7 @@ S.conform(StrSpec, &apos;foofoofoobarbar&apos;);
               </span>
               
                   &lt;<span class="lead font-italic text-primary">register</span>&gt;
-              
+              : <span>Put the given expression onto the given path in the global spec registry.</span>
             
             </div>
           </div>
@@ -321,7 +322,7 @@ S.conform(StrSpec, &apos;foofoofoobarbar&apos;);
               </span>
               
                   &lt;<span class="lead font-italic text-primary">retrieve</span>&gt;
-              
+              : <span>Retrieves an expression from the given namespace path, or returns null if not found.</span>
             
             </div>
           </div>
@@ -3113,7 +3114,7 @@ S.conform(StrSpec, &apos;foofoofoobarbar&apos;);
         <div class="card">
           <div class="card-header inline-headers">
             
-      <h6>describe()</h6>&#xA0;
+      <h6>S.describe()</h6>&#xA0;
         <span class="tag tag-primary">
           function
         </span>
@@ -3121,7 +3122,8 @@ S.conform(StrSpec, &apos;foofoofoobarbar&apos;);
           </div>
         
     <dl class="card-block">
-    <dt>Synopsis</dt><dd><ul><em>describe()</em></ul></dd>
+    <dd>Returns an abbreviated description of the spec as a simple tree structure.</dd>
+<dt>Synopsis</dt><dd><ul><em>S.describe()</em></ul></dd>
 <dt>Argument spec</dt><dd>
     
     

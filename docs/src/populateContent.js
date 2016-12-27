@@ -1,10 +1,10 @@
 import '../../src/specs';
+import '../../src/specs/index.annotation';
 import docgen from '../../src/docgen';
 import VERSION from '../../package_version';
 import { getRegistry } from '../../src/namespace';
 import showdown from 'showdown';
 const converter = new showdown.Converter();
-
 
 const finalDocStr = docgen.gen( getRegistry() );
 const finalCotStr = docgen.genCot( getRegistry() );

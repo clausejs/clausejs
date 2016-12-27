@@ -4,10 +4,12 @@ import tether from 'tether';
 import S from '../../src';
 // require( 'bootstrap/dist/css/bootstrap.css' );
 require( 'highlight.js/styles/default.css' );
-const HLJS = require( 'highlight.js' );
+const HLJS = require( 'highlight.js/lib/highlight' );
+HLJS.registerLanguage( 'javascript', require( 'highlight.js/lib/languages/javascript' ) );
 window.$ = window.jQuery = $;
 window.Tether = tether;
-require( 'bootstrap' );
+require( 'bootstrap/js/tooltip' );
+require( 'bootstrap/js/popover' );
 
 $( () => {
 
