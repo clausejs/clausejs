@@ -12,7 +12,7 @@ let $ = cheerio.load( fs.readFileSync( INDEX_TEMPLATE_FILE_NAME ) );
 populateContent( $, loadMd );
 
 function loadMd(fileName) {
-  return fs.readFileSync(path.join(__dirname, '../', 'docs', fileName), "utf8");
+  return fs.readFileSync(path.join(__dirname, '../', 'docs', 'articles', fileName), "utf8");
 }
 
 fs.writeFileSync( INDEX_FILE_NAME, $.html() );

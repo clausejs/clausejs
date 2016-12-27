@@ -9,5 +9,5 @@ $( () => {
 } );
 
 function loadMd(path) {
-  return require('raw!../' + path);
+  return require('raw!../articles/' + path);
 }
