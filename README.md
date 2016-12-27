@@ -36,7 +36,7 @@ Specky's goal is to provide the defining contract/protocol for your JS app. By w
 var MySpec = S.cat( S.oneOrMore(S.isNum), S.zeroOrOne( S.isObj ) );
 S.isValid(MySpec, [ 1, 2, 3, { a: 1 } ]); // true
 S.isValid(MySpec,  [ 1, 2, 3 ]); // true
-S.isValid(MySpec,  [ 1, 2, 3, null ]); // false; the trailing element does not satisfy our spec
+S.isValid(MySpec,  [ 1, 2, 3, null ]); // false: the trailing element does not satisfy our spec
 S.isValid(MySpec,  [ 1, 2, 3, { a: 1 }, { } ]); // false: extra trailing element
 S.conform(MySpec, [ 1, 2, 3, null ]);
 // returns a "Problem" object with detailed explanation why validation failed
@@ -100,34 +100,39 @@ var MyFnSpec = S.fspec({
   ret: S.isBool,
 });
 
-// Next define our test function.
-function __myFunction() {
+// Next we write our function.
+function __myFunction(num1, num2, num3, myObj) {
+  // doesn't do much; just returns true for now.
   return true;
 };
 
-// Then instrument the function with our function spec.
+// Then "instrument"(wrap/protect) this function with our function spec.
 var myProtectedFn = MyFnSpec.instrument(__myFunction);
 
-// Now try our new function
-myProtectedFn(1, 2, 3, { a: true }); // return true
-myProtectedFn(1, 2, 3); // Throws a "Problem" due to missing argument per our fspec defintion.
+// We can now try our new protected function.
+myProtectedFn(1, 2, 3, { a: true }); // returns true
+myProtectedFn(1, 2, 3); // Throws a "Problem" due to missing argument per our fspec definition.
 
 // Finally, let's build a function that checks if the sum of all numbers are odd
-// by taking advantage of argument conformation as illustrated above.
-// Step 1: we write a "barebone" function that consumes the conformed arguments.
+// by taking advantage of Specky's function argument conformation.
+
+// Step 1: we write a "barebone" function with our core logic,
+// which consumes the conformed arguments as a single object.
 function __sumIsOdd( conformedArgs ) {
-  // here "conformedArgs" stores the value of the conformed object
-  // as was explained above.
+  // (Here "conformedArgs" stores the value of the conformed object
+  // as we illustrated above.)
   var myNumbers = conformedArgs.myNumbers; // e.g. [ 1, 2, 3 ]
-  var myObject = conformedArgs.myObject;
-  // (or simply { myNumbers, myObject } If you can use ES6 destructring)
+  var myObject = conformedArgs.myObject; // e.g. { a: 1 }
+  // (or simply { myNumbers, myObject } with ES6 destructring)
 
   // Get the sum
   var sum = myNumbers.reduce( function(c,s) { return s + c; }, 0 );
+
+  // Returns whether the sum is odd
   return sum % 2 === 1;
 }
 
-// Step 2: wrap the barebone function with instrumentConformed()
+// Step 2: wrap the barebone function with S.instrumentConformed()
 var sumIsOdd = MyFnSpec.instrumentConformed(__sumIsOdd);
 
 // Let's try our new super function!
@@ -138,10 +143,10 @@ sumIsOdd( 2, 2, 2, null ); // throws a "Problem" because arguments do not confor
 sumIsOdd( 2, 2, 2, {}, {} ); // same as above
 ```
 
-For more advanced features, refer to [documentation site](https://specky.js.org).
+For more advanced features and concepts, refer to [documentation site](https://specky.js.org).
 
 
-## Try it
+## Try It Yourself
 
 - [Try it online](https://jsbin.com/fisiyeh/latest/edit?js,console)
 
