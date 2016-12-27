@@ -38,7 +38,7 @@ describe( 'cat', () => {
     } );
 
     it( 'nested case', () => {
-      var ss = S.cat( S.cat( S.isInt, S.isBool ), S.cat( S.isInt, S.cat( S.isBool ) ) );
+      var ss = S.cat( S.cat( S.cat( S.isInt, S.isBool ), S.cat( S.isInt, S.cat( S.isBool ) ) ) );
       var data = [ 22, true, 23, false ];
       var r = ss.conform( data );
 

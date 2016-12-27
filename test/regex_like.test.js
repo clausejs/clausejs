@@ -1,14 +1,13 @@
 var expect = require( 'chai' ).expect;
 var gen = require( 'mocha-testcheck' ).gen;
 var check = require( 'mocha-testcheck' ).check;
-var arrayFrom = require('array.from');
 
 var S = require( '../src/' );
 var cat = S.cat;
 var oneOrMore = S.oneOrMore;
 var repeat = require( '../src/utils/repeat' );
 var catS = function( str ) {
-  return S.cat.apply( null, arrayFrom( str ).map( S.equals ) );
+  return S.cat.apply( null, Array.prototype.slice.call( str ).map( S.equals ) );
 };
 
 function isInteger(value) {

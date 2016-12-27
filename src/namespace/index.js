@@ -1,4 +1,3 @@
-var oPath = require( 'object-path' );
 var oAssign = require( 'object-assign' );
 var SpecRef = require( '../models/SpecRef' );
 import { cat, or, fspec } from '../core' ;
@@ -8,6 +7,7 @@ var isPred = require( '../utils/isPred' );
 var isUndefined = require( '../preds/isUndefined' );
 var walk = require( '../walk' );
 var coerceIntoSpec = require( '../utils/coerceIntoSpec' );
+var oPath = require('./simpleObjectPath');
 
 import { isNamespacePath, isSpecRef } from '../utils';
 import { NamespaceFnSpec, MetaFnSpec } from '../specs/namespace.types';

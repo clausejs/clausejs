@@ -38,12 +38,10 @@
   },
   "homepage": "https://github.com/speckyjs/specky#readme",
   "dependencies": {
-    "array.from": "^1.0.3",
-    "lodash": "^4.17.2",
-    "object-assign": "^4.1.0",
-    "object-path": "^0.11.2"
+    "object-assign": "^4.1.0"
   },
   "devDependencies": {
+    "lodash": "^4.17.2",
     "babel-core": "^6.13.2",
     "babel-eslint": "^7.1.1",
     "babel-loader": "6.2.10",

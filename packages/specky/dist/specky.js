@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 46);
+/******/ 	return __webpack_require__(__webpack_require__.s = 35);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -332,7 +332,7 @@ module.exports = isString;
 "use strict";
 
 
-var isFn = __webpack_require__(28);
+var isFn = __webpack_require__(23);
 
 function isPred(x) {
   return isFn(x);
@@ -350,7 +350,7 @@ module.exports = isPred;
 var isPred = __webpack_require__(6);
 var isSpec = __webpack_require__(2);
 var isSpecRef = __webpack_require__(14);
-var isDelayedSpec = __webpack_require__(36);
+var isDelayedSpec = __webpack_require__(31);
 var Spec = __webpack_require__(0);
 var Problem = __webpack_require__(3);
 var fnName = __webpack_require__(8);
@@ -425,13 +425,13 @@ var Spec = __webpack_require__(0);
 var isSpec = __webpack_require__(2);
 var isPred = __webpack_require__(6);
 var specFromAlts = __webpack_require__(11);
-var isObj = __webpack_require__(32);
+var isObj = __webpack_require__(27);
 var isStr = __webpack_require__(5);
-var isSpecName = __webpack_require__(72);
-var namedFn = __webpack_require__(37);
+var isSpecName = __webpack_require__(61);
+var namedFn = __webpack_require__(32);
 var isSpecRef = __webpack_require__(14);
-var isDelayedSpec = __webpack_require__(36);
-var c = __webpack_require__(52);
+var isDelayedSpec = __webpack_require__(31);
+var c = __webpack_require__(40);
 var coerceIntoSpec = __webpack_require__(7);
 var fspec = __webpack_require__(12);
 var walk = __webpack_require__(10);
@@ -970,17 +970,17 @@ module.exports = core;
 
 
 var oAssign = __webpack_require__(4);
-var nfaWalker = __webpack_require__(80);
-var anyWalker = __webpack_require__(75);
-var predWalker = __webpack_require__(81);
-var wallWalker = __webpack_require__(84);
-var fspecWalker = __webpack_require__(78);
-var shapeWalker = __webpack_require__(82);
-var andWalker = __webpack_require__(74);
-var collOfWalker = __webpack_require__(76);
-var mapOfWalker = __webpack_require__(79);
-var specRefWalker = __webpack_require__(83);
-var delayedSpecWalker = __webpack_require__(77);
+var nfaWalker = __webpack_require__(69);
+var anyWalker = __webpack_require__(64);
+var predWalker = __webpack_require__(70);
+var wallWalker = __webpack_require__(73);
+var fspecWalker = __webpack_require__(67);
+var shapeWalker = __webpack_require__(71);
+var andWalker = __webpack_require__(63);
+var collOfWalker = __webpack_require__(65);
+var mapOfWalker = __webpack_require__(68);
+var specRefWalker = __webpack_require__(72);
+var delayedSpecWalker = __webpack_require__(66);
 var coerceIntoSpec = __webpack_require__(7);
 var isProblem = __webpack_require__(1);
 
@@ -1119,7 +1119,7 @@ module.exports = function isUndefined(x) {
 "use strict";
 
 
-var SpecRef = __webpack_require__(27);
+var SpecRef = __webpack_require__(22);
 // TODO
 function isSpecRef(x) {
   return x instanceof SpecRef;
@@ -1136,19 +1136,19 @@ module.exports = isSpecRef;
 var oAssign = __webpack_require__(4);
 var regex = __webpack_require__(9);
 
-var _require = __webpack_require__(21),
+var _require = __webpack_require__(19),
     shape = _require.shape,
     keys = _require.keys,
     mapOf = _require.mapOf;
 
-var nullable = __webpack_require__(57);
-var undefinable = __webpack_require__(58);
+var nullable = __webpack_require__(45);
+var undefinable = __webpack_require__(46);
 
-var _require2 = __webpack_require__(47),
+var _require2 = __webpack_require__(36),
     wall = _require2.wall;
 
 var other = {
-  any: __webpack_require__(51),
+  any: __webpack_require__(39),
   fspec: __webpack_require__(12),
   wall: wall, spec: wall,
   nullable: nullable, undefinable: undefinable
@@ -1166,18 +1166,18 @@ module.exports = r;
 
 module.exports = {
   conform: __webpack_require__(17),
-  isValid: __webpack_require__(73),
-  isNamespacePath: __webpack_require__(71),
-  identity: __webpack_require__(35),
+  isValid: __webpack_require__(62),
+  isNamespacePath: __webpack_require__(60),
+  identity: __webpack_require__(30),
   isProblem: __webpack_require__(1),
-  delayed: __webpack_require__(67),
-  enforce: __webpack_require__(68),
-  isExpr: __webpack_require__(69),
+  delayed: __webpack_require__(56),
+  enforce: __webpack_require__(57),
+  isExpr: __webpack_require__(58),
   isSpec: __webpack_require__(2),
-  isFspec: __webpack_require__(70),
+  isFspec: __webpack_require__(59),
   isSpecRef: __webpack_require__(14),
-  describe: __webpack_require__(48),
-  deref: __webpack_require__(22)
+  describe: __webpack_require__(37),
+  deref: __webpack_require__(20)
 };
 
 /***/ },
@@ -1207,133 +1207,24 @@ module.exports = conform;
 "use strict";
 
 
-var keys = __webpack_require__(96);
-var foreach = __webpack_require__(90);
-var hasSymbols = typeof Symbol === 'function' && typeof Symbol() === 'symbol';
-
-var toStr = Object.prototype.toString;
-
-var isFunction = function (fn) {
-	return typeof fn === 'function' && toStr.call(fn) === '[object Function]';
-};
-
-var arePropertyDescriptorsSupported = function () {
-	var obj = {};
-	try {
-		Object.defineProperty(obj, 'x', { enumerable: false, value: obj });
-        /* eslint-disable no-unused-vars, no-restricted-syntax */
-        for (var _ in obj) { return false; }
-        /* eslint-enable no-unused-vars, no-restricted-syntax */
-		return obj.x === obj;
-	} catch (e) { /* this is IE 8. */
-		return false;
-	}
-};
-var supportsDescriptors = Object.defineProperty && arePropertyDescriptorsSupported();
-
-var defineProperty = function (object, name, value, predicate) {
-	if (name in object && (!isFunction(predicate) || !predicate())) {
-		return;
-	}
-	if (supportsDescriptors) {
-		Object.defineProperty(object, name, {
-			configurable: true,
-			enumerable: false,
-			value: value,
-			writable: true
-		});
-	} else {
-		object[name] = value;
-	}
-};
-
-var defineProperties = function (object, map) {
-	var predicates = arguments.length > 2 ? arguments[2] : {};
-	var props = keys(map);
-	if (hasSymbols) {
-		props = props.concat(Object.getOwnPropertySymbols(map));
-	}
-	foreach(props, function (name) {
-		defineProperty(object, name, map[name], predicates[name]);
-	});
-};
-
-defineProperties.supportsDescriptors = !!supportsDescriptors;
-
-module.exports = defineProperties;
-
-
-/***/ },
-/* 19 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var fnToStr = Function.prototype.toString;
-
-var constructorRegex = /^\s*class /;
-var isES6ClassFn = function isES6ClassFn(value) {
-	try {
-		var fnStr = fnToStr.call(value);
-		var singleStripped = fnStr.replace(/\/\/.*\n/g, '');
-		var multiStripped = singleStripped.replace(/\/\*[.\s\S]*\*\//g, '');
-		var spaceStripped = multiStripped.replace(/\n/mg, ' ').replace(/ {2}/g, ' ');
-		return constructorRegex.test(spaceStripped);
-	} catch (e) {
-		return false; // not a function
-	}
-};
-
-var tryFunctionObject = function tryFunctionObject(value) {
-	try {
-		if (isES6ClassFn(value)) { return false; }
-		fnToStr.call(value);
-		return true;
-	} catch (e) {
-		return false;
-	}
-};
-var toStr = Object.prototype.toString;
-var fnClass = '[object Function]';
-var genClass = '[object GeneratorFunction]';
-var hasToStringTag = typeof Symbol === 'function' && typeof Symbol.toStringTag === 'symbol';
-
-module.exports = function isCallable(value) {
-	if (!value) { return false; }
-	if (typeof value !== 'function' && typeof value !== 'object') { return false; }
-	if (hasToStringTag) { return tryFunctionObject(value); }
-	if (isES6ClassFn(value)) { return false; }
-	var strClass = toStr.call(value);
-	return strClass === fnClass || strClass === genClass;
-};
-
-
-/***/ },
-/* 20 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var isNum = __webpack_require__(31);
-var isNatInt = __webpack_require__(63);
-var isInt = __webpack_require__(29);
-var isBool = __webpack_require__(61);
-var isFn = __webpack_require__(28);
-var isObj = __webpack_require__(32);
-var equals = __webpack_require__(59);
-var oneOf = __webpack_require__(33);
+var isNum = __webpack_require__(26);
+var isNatInt = __webpack_require__(52);
+var isInt = __webpack_require__(24);
+var isBool = __webpack_require__(50);
+var isFn = __webpack_require__(23);
+var isObj = __webpack_require__(27);
+var equals = __webpack_require__(48);
+var oneOf = __webpack_require__(28);
 var isStr = __webpack_require__(5);
-var isDate = __webpack_require__(62);
-var instanceOf = __webpack_require__(60);
-var isUuid = __webpack_require__(64);
+var isDate = __webpack_require__(51);
+var instanceOf = __webpack_require__(49);
+var isUuid = __webpack_require__(53);
 var isArray = Array.isArray;
 
 var e = {
-  isNull: __webpack_require__(30),
+  isNull: __webpack_require__(25),
   isUndefined: __webpack_require__(13),
-  notEmpty: __webpack_require__(65),
+  notEmpty: __webpack_require__(54),
   isBool: isBool, isBoolean: isBool,
   isFn: isFn, isFunction: isFn,
   isNum: isNum, isNumber: isNum,
@@ -1353,7 +1244,7 @@ e.default = e;
 module.exports = e;
 
 /***/ },
-/* 21 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1362,7 +1253,7 @@ module.exports = e;
 var Spec = __webpack_require__(0);
 var isSpec = __webpack_require__(2);
 var isStr = __webpack_require__(5);
-var oneOf = __webpack_require__(33);
+var oneOf = __webpack_require__(28);
 var isProblem = __webpack_require__(1);
 var coerceIntoSpec = __webpack_require__(7);
 
@@ -1520,7 +1411,7 @@ module.exports = {
 // console.log(r);
 
 /***/ },
-/* 22 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1536,118 +1427,7 @@ module.exports = function deref(spec) {
 };
 
 /***/ },
-/* 23 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var ES = __webpack_require__(38);
-var supportsDescriptors = __webpack_require__(18).supportsDescriptors;
-
-/*! https://mths.be/array-from v0.2.0 by @mathias */
-module.exports = function from(arrayLike) {
-	var defineProperty = supportsDescriptors ? Object.defineProperty : function put(object, key, descriptor) {
-		object[key] = descriptor.value;
-	};
-	var C = this;
-	if (arrayLike === null || typeof arrayLike === 'undefined') {
-		throw new TypeError('`Array.from` requires an array-like object, not `null` or `undefined`');
-	}
-	var items = ES.ToObject(arrayLike);
-
-	var mapFn, T;
-	if (typeof arguments[1] !== 'undefined') {
-		mapFn = arguments[1];
-		if (!ES.IsCallable(mapFn)) {
-			throw new TypeError('When provided, the second argument to `Array.from` must be a function');
-		}
-		if (arguments.length > 2) {
-			T = arguments[2];
-		}
-	}
-
-	var len = ES.ToLength(items.length);
-	var A = ES.IsCallable(C) ? ES.ToObject(new C(len)) : new Array(len);
-	var k = 0;
-	var kValue, mappedValue;
-	while (k < len) {
-		kValue = items[k];
-		if (mapFn) {
-			mappedValue = typeof T === 'undefined' ? mapFn(kValue, k) : ES.Call(mapFn, T, [kValue, k]);
-		} else {
-			mappedValue = kValue;
-		}
-		defineProperty(A, k, {
-			'configurable': true,
-			'enumerable': true,
-			'value': mappedValue,
-			'writable': true
-		});
-		k += 1;
-	}
-	A.length = len;
-	return A;
-};
-
-
-/***/ },
-/* 24 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var define = __webpack_require__(18);
-
-var implementation = __webpack_require__(23);
-var getPolyfill = __webpack_require__(25);
-var shim = __webpack_require__(50);
-
-// eslint-disable-next-line no-unused-vars
-var boundFromShim = function from(array) {
-    // eslint-disable-next-line no-invalid-this
-	return implementation.apply(this || Array, arguments);
-};
-
-define(boundFromShim, {
-	'getPolyfill': getPolyfill,
-	'implementation': implementation,
-	'shim': shim
-});
-
-module.exports = boundFromShim;
-
-
-/***/ },
-/* 25 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var ES = __webpack_require__(38);
-var implementation = __webpack_require__(23);
-
-var tryCall = function (fn) {
-	try {
-		fn();
-		return true;
-	} catch (e) {
-		return false;
-	}
-};
-
-module.exports = function getPolyfill() {
-	var implemented = ES.IsCallable(Array.from)
-		&& tryCall(function () { Array.from({ 'length': -Infinity }); })
-		&& !tryCall(function () { Array.from([], undefined); });
-
-	return implemented ? Array.from : implementation;
-};
-
-
-/***/ },
-/* 26 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1683,7 +1463,7 @@ DelayedSpec.prototype = Object.create(Spec.prototype);
 module.exports = DelayedSpec;
 
 /***/ },
-/* 27 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1707,7 +1487,7 @@ SpecRef.prototype = Object.create(Spec.prototype);
 module.exports = SpecRef;
 
 /***/ },
-/* 28 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1722,7 +1502,7 @@ function isFunction(x) {
 module.exports = isFunction;
 
 /***/ },
-/* 29 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1739,7 +1519,7 @@ function isInt(x) {
 module.exports = isInt;
 
 /***/ },
-/* 30 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1752,7 +1532,7 @@ function isNull(x) {
 module.exports = isNull;
 
 /***/ },
-/* 31 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1765,7 +1545,7 @@ function isNum(x) {
 module.exports = isNum;
 
 /***/ },
-/* 32 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1780,13 +1560,11 @@ function isObject(x) {
 module.exports = isObject;
 
 /***/ },
-/* 33 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 
-
-var arrayFrom = __webpack_require__(24);
 
 module.exports = function oneOf() {
   var items;
@@ -1794,7 +1572,7 @@ module.exports = function oneOf() {
   if (arguments.length === 1 && Array.isArray(arguments[0])) {
     items = arguments[0];
   } else if (arguments.length > 0) {
-    items = arrayFrom(arguments);
+    items = Array.prototype.slice.call(arguments);
   } else {
     throw new Error('Items list is required.');
   }
@@ -1804,7 +1582,7 @@ module.exports = function oneOf() {
 };
 
 /***/ },
-/* 34 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1819,7 +1597,7 @@ var _core = __webpack_require__(15);
 
 var _utils = __webpack_require__(16);
 
-var _preds = __webpack_require__(20);
+var _preds = __webpack_require__(18);
 
 var ExprOrPartialRefMapSpec =
 // or(
@@ -1861,7 +1639,7 @@ exports.MetaFnSpec = MetaFnSpec;
 exports.NamespaceObjSpec = NamespaceObjSpec;
 
 /***/ },
-/* 35 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1874,13 +1652,13 @@ function identity(x) {
 module.exports = identity;
 
 /***/ },
-/* 36 */
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var DelayedSpec = __webpack_require__(26);
+var DelayedSpec = __webpack_require__(21);
 
 //TODO
 module.exports = function isDelayedSpec(x) {
@@ -1888,7 +1666,7 @@ module.exports = function isDelayedSpec(x) {
 };
 
 /***/ },
-/* 37 */
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1905,321 +1683,7 @@ function getNamedFn(fnName, fn, suffix) {
 module.exports = getNamedFn;
 
 /***/ },
-/* 38 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var toStr = Object.prototype.toString;
-var hasSymbols = typeof Symbol === 'function' && typeof Symbol.iterator === 'symbol';
-var symbolToStr = hasSymbols ? Symbol.prototype.toString : toStr;
-
-var $isNaN = __webpack_require__(40);
-var $isFinite = __webpack_require__(39);
-var MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER || Math.pow(2, 53) - 1;
-
-var assign = __webpack_require__(86);
-var sign = __webpack_require__(42);
-var mod = __webpack_require__(41);
-var isPrimitive = __webpack_require__(87);
-var toPrimitive = __webpack_require__(89);
-var parseInteger = parseInt;
-var bind = __webpack_require__(92);
-var strSlice = bind.call(Function.call, String.prototype.slice);
-var isBinary = bind.call(Function.call, RegExp.prototype.test, /^0b[01]+$/i);
-var isOctal = bind.call(Function.call, RegExp.prototype.test, /^0o[0-7]+$/i);
-var nonWS = ['\u0085', '\u200b', '\ufffe'].join('');
-var nonWSregex = new RegExp('[' + nonWS + ']', 'g');
-var hasNonWS = bind.call(Function.call, RegExp.prototype.test, nonWSregex);
-var invalidHexLiteral = /^[\-\+]0x[0-9a-f]+$/i;
-var isInvalidHexLiteral = bind.call(Function.call, RegExp.prototype.test, invalidHexLiteral);
-
-// whitespace from: http://es5.github.io/#x15.5.4.20
-// implementation from https://github.com/es-shims/es5-shim/blob/v3.4.0/es5-shim.js#L1304-L1324
-var ws = [
-	'\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u180E\u2000\u2001\u2002\u2003',
-	'\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028',
-	'\u2029\uFEFF'
-].join('');
-var trimRegex = new RegExp('(^[' + ws + ']+)|([' + ws + ']+$)', 'g');
-var replace = bind.call(Function.call, String.prototype.replace);
-var trim = function (value) {
-	return replace(value, trimRegex, '');
-};
-
-var ES5 = __webpack_require__(85);
-
-var hasRegExpMatcher = __webpack_require__(94);
-
-// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-abstract-operations
-var ES6 = assign(assign({}, ES5), {
-
-	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-call-f-v-args
-	Call: function Call(F, V) {
-		var args = arguments.length > 2 ? arguments[2] : [];
-		if (!this.IsCallable(F)) {
-			throw new TypeError(F + ' is not a function');
-		}
-		return F.apply(V, args);
-	},
-
-	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-toprimitive
-	ToPrimitive: toPrimitive,
-
-	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-toboolean
-	// ToBoolean: ES5.ToBoolean,
-
-	// http://www.ecma-international.org/ecma-262/6.0/#sec-tonumber
-	ToNumber: function ToNumber(argument) {
-		var value = isPrimitive(argument) ? argument : toPrimitive(argument, 'number');
-		if (typeof value === 'symbol') {
-			throw new TypeError('Cannot convert a Symbol value to a number');
-		}
-		if (typeof value === 'string') {
-			if (isBinary(value)) {
-				return this.ToNumber(parseInteger(strSlice(value, 2), 2));
-			} else if (isOctal(value)) {
-				return this.ToNumber(parseInteger(strSlice(value, 2), 8));
-			} else if (hasNonWS(value) || isInvalidHexLiteral(value)) {
-				return NaN;
-			} else {
-				var trimmed = trim(value);
-				if (trimmed !== value) {
-					return this.ToNumber(trimmed);
-				}
-			}
-		}
-		return Number(value);
-	},
-
-	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-tointeger
-	// ToInteger: ES5.ToNumber,
-
-	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-toint32
-	// ToInt32: ES5.ToInt32,
-
-	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-touint32
-	// ToUint32: ES5.ToUint32,
-
-	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-toint16
-	ToInt16: function ToInt16(argument) {
-		var int16bit = this.ToUint16(argument);
-		return int16bit >= 0x8000 ? int16bit - 0x10000 : int16bit;
-	},
-
-	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-touint16
-	// ToUint16: ES5.ToUint16,
-
-	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-toint8
-	ToInt8: function ToInt8(argument) {
-		var int8bit = this.ToUint8(argument);
-		return int8bit >= 0x80 ? int8bit - 0x100 : int8bit;
-	},
-
-	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-touint8
-	ToUint8: function ToUint8(argument) {
-		var number = this.ToNumber(argument);
-		if ($isNaN(number) || number === 0 || !$isFinite(number)) { return 0; }
-		var posInt = sign(number) * Math.floor(Math.abs(number));
-		return mod(posInt, 0x100);
-	},
-
-	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-touint8clamp
-	ToUint8Clamp: function ToUint8Clamp(argument) {
-		var number = this.ToNumber(argument);
-		if ($isNaN(number) || number <= 0) { return 0; }
-		if (number >= 0xFF) { return 0xFF; }
-		var f = Math.floor(argument);
-		if (f + 0.5 < number) { return f + 1; }
-		if (number < f + 0.5) { return f; }
-		if (f % 2 !== 0) { return f + 1; }
-		return f;
-	},
-
-	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-tostring
-	ToString: function ToString(argument) {
-		if (typeof argument === 'symbol') {
-			throw new TypeError('Cannot convert a Symbol value to a string');
-		}
-		return String(argument);
-	},
-
-	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-toobject
-	ToObject: function ToObject(value) {
-		this.RequireObjectCoercible(value);
-		return Object(value);
-	},
-
-	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-topropertykey
-	ToPropertyKey: function ToPropertyKey(argument) {
-		var key = this.ToPrimitive(argument, String);
-		return typeof key === 'symbol' ? symbolToStr.call(key) : this.ToString(key);
-	},
-
-	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-tolength
-	ToLength: function ToLength(argument) {
-		var len = this.ToInteger(argument);
-		if (len <= 0) { return 0; } // includes converting -0 to +0
-		if (len > MAX_SAFE_INTEGER) { return MAX_SAFE_INTEGER; }
-		return len;
-	},
-
-	// http://www.ecma-international.org/ecma-262/6.0/#sec-canonicalnumericindexstring
-	CanonicalNumericIndexString: function CanonicalNumericIndexString(argument) {
-		if (toStr.call(argument) !== '[object String]') {
-			throw new TypeError('must be a string');
-		}
-		if (argument === '-0') { return -0; }
-		var n = this.ToNumber(argument);
-		if (this.SameValue(this.ToString(n), argument)) { return n; }
-		return void 0;
-	},
-
-	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-requireobjectcoercible
-	RequireObjectCoercible: ES5.CheckObjectCoercible,
-
-	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-isarray
-	IsArray: Array.isArray || function IsArray(argument) {
-		return toStr.call(argument) === '[object Array]';
-	},
-
-	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-iscallable
-	// IsCallable: ES5.IsCallable,
-
-	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-isconstructor
-	IsConstructor: function IsConstructor(argument) {
-		return typeof argument === 'function' && !!argument.prototype; // unfortunately there's no way to truly check this without try/catch `new argument`
-	},
-
-	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-isextensible-o
-	IsExtensible: function IsExtensible(obj) {
-		if (!Object.preventExtensions) { return true; }
-		if (isPrimitive(obj)) {
-			return false;
-		}
-		return Object.isExtensible(obj);
-	},
-
-	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-isinteger
-	IsInteger: function IsInteger(argument) {
-		if (typeof argument !== 'number' || $isNaN(argument) || !$isFinite(argument)) {
-			return false;
-		}
-		var abs = Math.abs(argument);
-		return Math.floor(abs) === abs;
-	},
-
-	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-ispropertykey
-	IsPropertyKey: function IsPropertyKey(argument) {
-		return typeof argument === 'string' || typeof argument === 'symbol';
-	},
-
-	// http://www.ecma-international.org/ecma-262/6.0/#sec-isregexp
-	IsRegExp: function IsRegExp(argument) {
-		if (!argument || typeof argument !== 'object') {
-			return false;
-		}
-		if (hasSymbols) {
-			var isRegExp = argument[Symbol.match];
-			if (typeof isRegExp !== 'undefined') {
-				return ES5.ToBoolean(isRegExp);
-			}
-		}
-		return hasRegExpMatcher(argument);
-	},
-
-	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-samevalue
-	// SameValue: ES5.SameValue,
-
-	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-samevaluezero
-	SameValueZero: function SameValueZero(x, y) {
-		return (x === y) || ($isNaN(x) && $isNaN(y));
-	},
-
-	Type: function Type(x) {
-		if (typeof x === 'symbol') {
-			return 'Symbol';
-		}
-		return ES5.Type(x);
-	},
-
-	// http://www.ecma-international.org/ecma-262/6.0/#sec-speciesconstructor
-	SpeciesConstructor: function SpeciesConstructor(O, defaultConstructor) {
-		if (this.Type(O) !== 'Object') {
-			throw new TypeError('Assertion failed: Type(O) is not Object');
-		}
-		var C = O.constructor;
-		if (typeof C === 'undefined') {
-			return defaultConstructor;
-		}
-		if (this.Type(C) !== 'Object') {
-			throw new TypeError('O.constructor is not an Object');
-		}
-		var S = hasSymbols && Symbol.species ? C[Symbol.species] : undefined;
-		if (S == null) {
-			return defaultConstructor;
-		}
-		if (this.IsConstructor(S)) {
-			return S;
-		}
-		throw new TypeError('no constructor found');
-	}
-});
-
-delete ES6.CheckObjectCoercible; // renamed in ES6 to RequireObjectCoercible
-
-module.exports = ES6;
-
-
-/***/ },
-/* 39 */
-/***/ function(module, exports) {
-
-var $isNaN = Number.isNaN || function (a) { return a !== a; };
-
-module.exports = Number.isFinite || function (x) { return typeof x === 'number' && !$isNaN(x) && x !== Infinity && x !== -Infinity; };
-
-
-/***/ },
-/* 40 */
-/***/ function(module, exports) {
-
-module.exports = Number.isNaN || function isNaN(a) {
-	return a !== a;
-};
-
-
-/***/ },
-/* 41 */
-/***/ function(module, exports) {
-
-module.exports = function mod(number, modulo) {
-	var remain = number % modulo;
-	return Math.floor(remain >= 0 ? remain : remain + modulo);
-};
-
-
-/***/ },
-/* 42 */
-/***/ function(module, exports) {
-
-module.exports = function sign(number) {
-	return number >= 0 ? 1 : -1;
-};
-
-
-/***/ },
-/* 43 */
-/***/ function(module, exports) {
-
-module.exports = function isPrimitive(value) {
-	return value === null || (typeof value !== 'function' && typeof value !== 'object');
-};
-
-
-/***/ },
-/* 44 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2228,7 +1692,7 @@ module.exports = function isPrimitive(value) {
 module.exports = '0.0.21';
 
 /***/ },
-/* 45 */
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2243,13 +1707,12 @@ var _core = __webpack_require__(15);
 
 var _utils = __webpack_require__(16);
 
-var _namespace = __webpack_require__(34);
+var _namespace = __webpack_require__(29);
 
-var oPath = __webpack_require__(98);
 var oAssign = __webpack_require__(4);
-var SpecRef = __webpack_require__(27);
+var SpecRef = __webpack_require__(22);
 
-var _require = __webpack_require__(21),
+var _require = __webpack_require__(19),
     shape = _require.shape;
 
 var isSpec = __webpack_require__(2);
@@ -2257,6 +1720,7 @@ var isPred = __webpack_require__(6);
 var isUndefined = __webpack_require__(13);
 var walk = __webpack_require__(10);
 var coerceIntoSpec = __webpack_require__(7);
+var oPath = __webpack_require__(47);
 
 var reg;
 
@@ -2401,10 +1865,10 @@ exports.getRegistry = getRegistry;
 exports.clearRegistry = clearRegistry;
 exports.meta = meta;
 exports.default = specedSpeckyNamespace;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(49)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(38)))
 
 /***/ },
-/* 46 */
+/* 35 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2414,7 +1878,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _namespace = __webpack_require__(45);
+var _namespace = __webpack_require__(34);
 
 var _namespace2 = _interopRequireDefault(_namespace);
 
@@ -2426,7 +1890,7 @@ var oAssign = __webpack_require__(4);
 var ops = __webpack_require__(15);
 var utils = __webpack_require__(16);
 
-var predicates = __webpack_require__(20);
+var predicates = __webpack_require__(18);
 
 var models = {
   Problem: __webpack_require__(3),
@@ -2435,13 +1899,13 @@ var models = {
 
 var r = oAssign(_namespace2.default, ops, utils, models, predicates);
 
-r.VERSION = __webpack_require__(44);
+r.VERSION = __webpack_require__(33);
 
 module.exports = r;
 exports.default = r;
 
 /***/ },
-/* 47 */
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2482,7 +1946,7 @@ module.exports = {
 };
 
 /***/ },
-/* 48 */
+/* 37 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2597,7 +2061,7 @@ function _processInner(spec, interceptor) {
 module.exports = describe;
 
 /***/ },
-/* 49 */
+/* 38 */
 /***/ function(module, exports) {
 
 var g;
@@ -2622,37 +2086,14 @@ module.exports = g;
 
 
 /***/ },
-/* 50 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var define = __webpack_require__(18);
-var getPolyfill = __webpack_require__(25);
-
-module.exports = function shimArrayFrom() {
-	var polyfill = getPolyfill();
-
-	define(Array, { 'from': polyfill }, {
-		'from': function () {
-			return Array.from !== polyfill;
-		}
-	});
-
-	return polyfill;
-};
-
-
-/***/ },
-/* 51 */
+/* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var Spec = __webpack_require__(0);
-var identity = __webpack_require__(35);
+var identity = __webpack_require__(30);
 var SPEC_TYPE_ANY = 'ANY';
 
 function any() {
@@ -2666,7 +2107,7 @@ function any() {
 module.exports = any;
 
 /***/ },
-/* 52 */
+/* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2683,15 +2124,15 @@ module.exports = {
 };
 
 /***/ },
-/* 53 */
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var fragment = __webpack_require__(54);
+var fragment = __webpack_require__(42);
 var Spec = __webpack_require__(0);
-var deref = __webpack_require__(22);
+var deref = __webpack_require__(20);
 
 var indexedFragmentStates = function indexedFragmentStates(fragment) {
   var nextIndex = 0;
@@ -2794,7 +2235,7 @@ var compile = function compile(expr) {
 module.exports = compile;
 
 /***/ },
-/* 54 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2997,7 +2438,7 @@ build.ROOT = function ROOT(frag) {
 module.exports = build;
 
 /***/ },
-/* 55 */
+/* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3263,7 +2704,7 @@ function _coerceToProperType(t, arr) {
 module.exports = getMatch;
 
 /***/ },
-/* 56 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3426,7 +2867,7 @@ function _getChain(nfa, finalState, inputType) {
 module.exports = simulate;
 
 /***/ },
-/* 57 */
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3435,7 +2876,7 @@ module.exports = simulate;
 var _require = __webpack_require__(9),
     or = _require.or;
 
-var isNull = __webpack_require__(30);
+var isNull = __webpack_require__(25);
 
 function nullable(spec) {
   return or(isNull, spec);
@@ -3444,7 +2885,7 @@ function nullable(spec) {
 module.exports = nullable;
 
 /***/ },
-/* 58 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3462,7 +2903,80 @@ function undefinable(spec) {
 module.exports = undefinable;
 
 /***/ },
-/* 59 */
+/* 47 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function get(obj, path, defaultValue) {
+  if (typeof path === 'number') {
+    path = [path];
+  }
+  if (!path || path.length === 0) {
+    return obj;
+  }
+  if (obj == null) {
+    return defaultValue;
+  }
+  if (typeof path === 'string') {
+    return get(obj, path.split('.'), defaultValue);
+  }
+
+  var currentPath = getKey(path[0]);
+  var nextObj = obj[currentPath];
+  if (nextObj === void 0) {
+    return defaultValue;
+  }
+
+  if (path.length === 1) {
+    return nextObj;
+  }
+
+  return get(obj[currentPath], path.slice(1), defaultValue);
+}
+
+function set(obj, path, value) {
+  if (typeof path === 'number') {
+    path = [path];
+  }
+  if (!path || path.length === 0) {
+    return obj;
+  }
+  if (typeof path === 'string') {
+    return set(obj, path.split('.').map(getKey), value);
+  }
+  var currentPath = path[0];
+  var currentValue = obj[currentPath];
+  if (path.length === 1) {
+    obj[currentPath] = value;
+    return currentValue;
+  }
+
+  if (currentValue === void 0) {
+    //check if we assume an array
+    if (typeof path[1] === 'number') {
+      obj[currentPath] = [];
+    } else {
+      obj[currentPath] = {};
+    }
+  }
+
+  return set(obj[currentPath], path.slice(1), value);
+}
+
+function getKey(key) {
+  var intKey = parseInt(key);
+  if (intKey.toString() === key) {
+    return intKey;
+  }
+  return key;
+}
+
+module.exports = { get: get, set: set };
+
+/***/ },
+/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3475,7 +2989,7 @@ module.exports = function equals(test) {
 };
 
 /***/ },
-/* 60 */
+/* 49 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3488,7 +3002,7 @@ module.exports = function instanceOf(t) {
 };
 
 /***/ },
-/* 61 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3501,7 +3015,7 @@ function isBool(x) {
 module.exports = isBool;
 
 /***/ },
-/* 62 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3512,13 +3026,13 @@ module.exports = function isDate(date) {
 };
 
 /***/ },
-/* 63 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var isInt = __webpack_require__(29);
+var isInt = __webpack_require__(24);
 
 function isNatInt(x) {
   return isInt(x) && x >= 0.0;
@@ -3527,7 +3041,7 @@ function isNatInt(x) {
 module.exports = isNatInt;
 
 /***/ },
-/* 64 */
+/* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3538,7 +3052,7 @@ module.exports = function isUuid(x) {
 };
 
 /***/ },
-/* 65 */
+/* 54 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3555,7 +3069,7 @@ module.exports = function notEmpty(x) {
 };
 
 /***/ },
-/* 66 */
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3571,13 +3085,13 @@ function betterThrow(problem) {
 module.exports = betterThrow;
 
 /***/ },
-/* 67 */
+/* 56 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var DelayedSpec = __webpack_require__(26);
+var DelayedSpec = __webpack_require__(21);
 
 function delayed(getFn) {
   return new DelayedSpec({ getFn: getFn });
@@ -3586,7 +3100,7 @@ function delayed(getFn) {
 module.exports = delayed;
 
 /***/ },
-/* 68 */
+/* 57 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3605,7 +3119,7 @@ module.exports = function enforce(spec, x) {
 };
 
 /***/ },
-/* 69 */
+/* 58 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3622,7 +3136,7 @@ function isExpr(x) {
 module.exports = isExpr;
 
 /***/ },
-/* 70 */
+/* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3637,7 +3151,7 @@ function isFspec(x) {
 module.exports = isFspec;
 
 /***/ },
-/* 71 */
+/* 60 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3652,7 +3166,7 @@ function isNamespacePath(x) {
 module.exports = isNamespacePath;
 
 /***/ },
-/* 72 */
+/* 61 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3666,7 +3180,7 @@ module.exports = function isSpecName(x) {
 };
 
 /***/ },
-/* 73 */
+/* 62 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3692,7 +3206,7 @@ function isValid(pred, x) {
 module.exports = isValid;
 
 /***/ },
-/* 74 */
+/* 63 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3747,7 +3261,7 @@ function andWalker(spec, walkFn) {
 module.exports = andWalker;
 
 /***/ },
-/* 75 */
+/* 64 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3767,7 +3281,7 @@ function walkThroughAny(x) {
 module.exports = anyWalker;
 
 /***/ },
-/* 76 */
+/* 65 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3775,7 +3289,7 @@ module.exports = anyWalker;
 
 var Problem = __webpack_require__(3);
 var isProblem = __webpack_require__(1);
-var isNum = __webpack_require__(31);
+var isNum = __webpack_require__(26);
 
 function collOfWalker(spec, walkFn) {
   var expr = spec.exprs[0];
@@ -3842,7 +3356,7 @@ function collOfWalker(spec, walkFn) {
 module.exports = collOfWalker;
 
 /***/ },
-/* 77 */
+/* 66 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3865,7 +3379,7 @@ function delayedSpecWalker(delayedSpec, walkFn) {
 module.exports = delayedSpecWalker;
 
 /***/ },
-/* 78 */
+/* 67 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3874,9 +3388,8 @@ module.exports = delayedSpecWalker;
 var isProblem = __webpack_require__(1);
 var Problem = __webpack_require__(3);
 var functionName = __webpack_require__(8);
-var namedFn = __webpack_require__(37);
-var betterThrow = __webpack_require__(66);
-var arrayFrom = __webpack_require__(24);
+var namedFn = __webpack_require__(32);
+var betterThrow = __webpack_require__(55);
 
 function fspecWalker(spec, walkFn) {
   var _spec$opts = spec.opts,
@@ -3927,7 +3440,7 @@ function fspecWalker(spec, walkFn) {
 
   function getInstrumentedFn(fnName, fn) {
     return function __instrumented() {
-      var args = arrayFrom(arguments);
+      var args = Array.prototype.slice.call(arguments);
       var instrumentedArgs = checkArgs(fn, fnName, args);
       var retVal = fn.apply(this, instrumentedArgs);
       var instrumentedRetVal = checkRet(fn, fnName, retVal);
@@ -3987,7 +3500,7 @@ function fspecWalker(spec, walkFn) {
 
   function getArgConformedInstrumentedFn(fnName, fn) {
     return function __instrumentConformed() {
-      var args = arrayFrom(arguments);
+      var args = Array.prototype.slice.call(arguments);
 
       var conformedArgs = walkFn(argsSpec, args, { conform: true, instrument: true });
       if (isProblem(conformedArgs)) {
@@ -4007,7 +3520,7 @@ function fspecWalker(spec, walkFn) {
 module.exports = fspecWalker;
 
 /***/ },
-/* 79 */
+/* 68 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4062,15 +3575,15 @@ function mapOfWalker(spec, walkFn) {
 module.exports = mapOfWalker;
 
 /***/ },
-/* 80 */
+/* 69 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var simulate = __webpack_require__(56);
-var getMatch = __webpack_require__(55);
-var compile = __webpack_require__(53);
+var simulate = __webpack_require__(44);
+var getMatch = __webpack_require__(43);
+var compile = __webpack_require__(41);
 var Problem = __webpack_require__(3);
 
 function nfaWalker(spec, walkFn) {
@@ -4113,7 +3626,7 @@ function nfaWalker(spec, walkFn) {
 module.exports = nfaWalker;
 
 /***/ },
-/* 81 */
+/* 70 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4145,7 +3658,7 @@ function predWalker(spec) {
 module.exports = predWalker;
 
 /***/ },
-/* 82 */
+/* 71 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4447,7 +3960,7 @@ function _conformNamedOrExpr(x, alts, walkFn, walkOpts) {
 module.exports = shapeWalker;
 
 /***/ },
-/* 83 */
+/* 72 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4471,7 +3984,7 @@ function specRefWalker(specRef, walkFn) {
 module.exports = specRefWalker;
 
 /***/ },
-/* 84 */
+/* 73 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4494,894 +4007,6 @@ function wallWalker(wallSpec, walkFn) {
 }
 
 module.exports = wallWalker;
-
-/***/ },
-/* 85 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var $isNaN = __webpack_require__(40);
-var $isFinite = __webpack_require__(39);
-
-var sign = __webpack_require__(42);
-var mod = __webpack_require__(41);
-
-var IsCallable = __webpack_require__(19);
-var toPrimitive = __webpack_require__(88);
-
-// https://es5.github.io/#x9
-var ES5 = {
-	ToPrimitive: toPrimitive,
-
-	ToBoolean: function ToBoolean(value) {
-		return Boolean(value);
-	},
-	ToNumber: function ToNumber(value) {
-		return Number(value);
-	},
-	ToInteger: function ToInteger(value) {
-		var number = this.ToNumber(value);
-		if ($isNaN(number)) { return 0; }
-		if (number === 0 || !$isFinite(number)) { return number; }
-		return sign(number) * Math.floor(Math.abs(number));
-	},
-	ToInt32: function ToInt32(x) {
-		return this.ToNumber(x) >> 0;
-	},
-	ToUint32: function ToUint32(x) {
-		return this.ToNumber(x) >>> 0;
-	},
-	ToUint16: function ToUint16(value) {
-		var number = this.ToNumber(value);
-		if ($isNaN(number) || number === 0 || !$isFinite(number)) { return 0; }
-		var posInt = sign(number) * Math.floor(Math.abs(number));
-		return mod(posInt, 0x10000);
-	},
-	ToString: function ToString(value) {
-		return String(value);
-	},
-	ToObject: function ToObject(value) {
-		this.CheckObjectCoercible(value);
-		return Object(value);
-	},
-	CheckObjectCoercible: function CheckObjectCoercible(value, optMessage) {
-		/* jshint eqnull:true */
-		if (value == null) {
-			throw new TypeError(optMessage || 'Cannot call method on ' + value);
-		}
-		return value;
-	},
-	IsCallable: IsCallable,
-	SameValue: function SameValue(x, y) {
-		if (x === y) { // 0 === -0, but they are not identical.
-			if (x === 0) { return 1 / x === 1 / y; }
-			return true;
-		}
-		return $isNaN(x) && $isNaN(y);
-	},
-
-	// http://www.ecma-international.org/ecma-262/5.1/#sec-8
-	Type: function Type(x) {
-		if (x === null) {
-			return 'Null';
-		}
-		if (typeof x === 'undefined') {
-			return 'Undefined';
-		}
-		if (typeof x === 'function' || typeof x === 'object') {
-			return 'Object';
-		}
-		if (typeof x === 'number') {
-			return 'Number';
-		}
-		if (typeof x === 'boolean') {
-			return 'Boolean';
-		}
-		if (typeof x === 'string') {
-			return 'String';
-		}
-	}
-};
-
-module.exports = ES5;
-
-
-/***/ },
-/* 86 */
-/***/ function(module, exports) {
-
-var has = Object.prototype.hasOwnProperty;
-module.exports = Object.assign || function assign(target, source) {
-	for (var key in source) {
-		if (has.call(source, key)) {
-			target[key] = source[key];
-		}
-	}
-	return target;
-};
-
-
-/***/ },
-/* 87 */
-/***/ function(module, exports) {
-
-module.exports = function isPrimitive(value) {
-	return value === null || (typeof value !== 'function' && typeof value !== 'object');
-};
-
-
-/***/ },
-/* 88 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var toStr = Object.prototype.toString;
-
-var isPrimitive = __webpack_require__(43);
-
-var isCallable = __webpack_require__(19);
-
-// https://es5.github.io/#x8.12
-var ES5internalSlots = {
-	'[[DefaultValue]]': function (O, hint) {
-		var actualHint = hint || (toStr.call(O) === '[object Date]' ? String : Number);
-
-		if (actualHint === String || actualHint === Number) {
-			var methods = actualHint === String ? ['toString', 'valueOf'] : ['valueOf', 'toString'];
-			var value, i;
-			for (i = 0; i < methods.length; ++i) {
-				if (isCallable(O[methods[i]])) {
-					value = O[methods[i]]();
-					if (isPrimitive(value)) {
-						return value;
-					}
-				}
-			}
-			throw new TypeError('No default value');
-		}
-		throw new TypeError('invalid [[DefaultValue]] hint supplied');
-	}
-};
-
-// https://es5.github.io/#x9
-module.exports = function ToPrimitive(input, PreferredType) {
-	if (isPrimitive(input)) {
-		return input;
-	}
-	return ES5internalSlots['[[DefaultValue]]'](input, PreferredType);
-};
-
-
-/***/ },
-/* 89 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var hasSymbols = typeof Symbol === 'function' && typeof Symbol.iterator === 'symbol';
-
-var isPrimitive = __webpack_require__(43);
-var isCallable = __webpack_require__(19);
-var isDate = __webpack_require__(93);
-var isSymbol = __webpack_require__(95);
-
-var ordinaryToPrimitive = function OrdinaryToPrimitive(O, hint) {
-	if (typeof O === 'undefined' || O === null) {
-		throw new TypeError('Cannot call method on ' + O);
-	}
-	if (typeof hint !== 'string' || (hint !== 'number' && hint !== 'string')) {
-		throw new TypeError('hint must be "string" or "number"');
-	}
-	var methodNames = hint === 'string' ? ['toString', 'valueOf'] : ['valueOf', 'toString'];
-	var method, result, i;
-	for (i = 0; i < methodNames.length; ++i) {
-		method = O[methodNames[i]];
-		if (isCallable(method)) {
-			result = method.call(O);
-			if (isPrimitive(result)) {
-				return result;
-			}
-		}
-	}
-	throw new TypeError('No default value');
-};
-
-var GetMethod = function GetMethod(O, P) {
-	var func = O[P];
-	if (func !== null && typeof func !== 'undefined') {
-		if (!isCallable(func)) {
-			throw new TypeError(func + ' returned for property ' + P + ' of object ' + O + ' is not a function');
-		}
-		return func;
-	}
-};
-
-// http://www.ecma-international.org/ecma-262/6.0/#sec-toprimitive
-module.exports = function ToPrimitive(input, PreferredType) {
-	if (isPrimitive(input)) {
-		return input;
-	}
-	var hint = 'default';
-	if (arguments.length > 1) {
-		if (PreferredType === String) {
-			hint = 'string';
-		} else if (PreferredType === Number) {
-			hint = 'number';
-		}
-	}
-
-	var exoticToPrim;
-	if (hasSymbols) {
-		if (Symbol.toPrimitive) {
-			exoticToPrim = GetMethod(input, Symbol.toPrimitive);
-		} else if (isSymbol(input)) {
-			exoticToPrim = Symbol.prototype.valueOf;
-		}
-	}
-	if (typeof exoticToPrim !== 'undefined') {
-		var result = exoticToPrim.call(input, hint);
-		if (isPrimitive(result)) {
-			return result;
-		}
-		throw new TypeError('unable to convert exotic object to primitive');
-	}
-	if (hint === 'default' && (isDate(input) || isSymbol(input))) {
-		hint = 'string';
-	}
-	return ordinaryToPrimitive(input, hint === 'default' ? 'number' : hint);
-};
-
-
-/***/ },
-/* 90 */
-/***/ function(module, exports) {
-
-
-var hasOwn = Object.prototype.hasOwnProperty;
-var toString = Object.prototype.toString;
-
-module.exports = function forEach (obj, fn, ctx) {
-    if (toString.call(fn) !== '[object Function]') {
-        throw new TypeError('iterator must be a function');
-    }
-    var l = obj.length;
-    if (l === +l) {
-        for (var i = 0; i < l; i++) {
-            fn.call(ctx, obj[i], i, obj);
-        }
-    } else {
-        for (var k in obj) {
-            if (hasOwn.call(obj, k)) {
-                fn.call(ctx, obj[k], k, obj);
-            }
-        }
-    }
-};
-
-
-
-/***/ },
-/* 91 */
-/***/ function(module, exports) {
-
-var ERROR_MESSAGE = 'Function.prototype.bind called on incompatible ';
-var slice = Array.prototype.slice;
-var toStr = Object.prototype.toString;
-var funcType = '[object Function]';
-
-module.exports = function bind(that) {
-    var target = this;
-    if (typeof target !== 'function' || toStr.call(target) !== funcType) {
-        throw new TypeError(ERROR_MESSAGE + target);
-    }
-    var args = slice.call(arguments, 1);
-
-    var bound;
-    var binder = function () {
-        if (this instanceof bound) {
-            var result = target.apply(
-                this,
-                args.concat(slice.call(arguments))
-            );
-            if (Object(result) === result) {
-                return result;
-            }
-            return this;
-        } else {
-            return target.apply(
-                that,
-                args.concat(slice.call(arguments))
-            );
-        }
-    };
-
-    var boundLength = Math.max(0, target.length - args.length);
-    var boundArgs = [];
-    for (var i = 0; i < boundLength; i++) {
-        boundArgs.push('$' + i);
-    }
-
-    bound = Function('binder', 'return function (' + boundArgs.join(',') + '){ return binder.apply(this,arguments); }')(binder);
-
-    if (target.prototype) {
-        var Empty = function Empty() {};
-        Empty.prototype = target.prototype;
-        bound.prototype = new Empty();
-        Empty.prototype = null;
-    }
-
-    return bound;
-};
-
-
-/***/ },
-/* 92 */
-/***/ function(module, exports, __webpack_require__) {
-
-var implementation = __webpack_require__(91);
-
-module.exports = Function.prototype.bind || implementation;
-
-
-/***/ },
-/* 93 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var getDay = Date.prototype.getDay;
-var tryDateObject = function tryDateObject(value) {
-	try {
-		getDay.call(value);
-		return true;
-	} catch (e) {
-		return false;
-	}
-};
-
-var toStr = Object.prototype.toString;
-var dateClass = '[object Date]';
-var hasToStringTag = typeof Symbol === 'function' && typeof Symbol.toStringTag === 'symbol';
-
-module.exports = function isDateObject(value) {
-	if (typeof value !== 'object' || value === null) { return false; }
-	return hasToStringTag ? tryDateObject(value) : toStr.call(value) === dateClass;
-};
-
-
-/***/ },
-/* 94 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var regexExec = RegExp.prototype.exec;
-var tryRegexExec = function tryRegexExec(value) {
-	try {
-		regexExec.call(value);
-		return true;
-	} catch (e) {
-		return false;
-	}
-};
-var toStr = Object.prototype.toString;
-var regexClass = '[object RegExp]';
-var hasToStringTag = typeof Symbol === 'function' && typeof Symbol.toStringTag === 'symbol';
-
-module.exports = function isRegex(value) {
-	if (typeof value !== 'object') { return false; }
-	return hasToStringTag ? tryRegexExec(value) : toStr.call(value) === regexClass;
-};
-
-
-/***/ },
-/* 95 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var toStr = Object.prototype.toString;
-var hasSymbols = typeof Symbol === 'function' && typeof Symbol() === 'symbol';
-
-if (hasSymbols) {
-	var symToStr = Symbol.prototype.toString;
-	var symStringRegex = /^Symbol\(.*\)$/;
-	var isSymbolObject = function isSymbolObject(value) {
-		if (typeof value.valueOf() !== 'symbol') { return false; }
-		return symStringRegex.test(symToStr.call(value));
-	};
-	module.exports = function isSymbol(value) {
-		if (typeof value === 'symbol') { return true; }
-		if (toStr.call(value) !== '[object Symbol]') { return false; }
-		try {
-			return isSymbolObject(value);
-		} catch (e) {
-			return false;
-		}
-	};
-} else {
-	module.exports = function isSymbol(value) {
-		// this environment does not support Symbols.
-		return false;
-	};
-}
-
-
-/***/ },
-/* 96 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-// modified from https://github.com/es-shims/es5-shim
-var has = Object.prototype.hasOwnProperty;
-var toStr = Object.prototype.toString;
-var slice = Array.prototype.slice;
-var isArgs = __webpack_require__(97);
-var isEnumerable = Object.prototype.propertyIsEnumerable;
-var hasDontEnumBug = !isEnumerable.call({ toString: null }, 'toString');
-var hasProtoEnumBug = isEnumerable.call(function () {}, 'prototype');
-var dontEnums = [
-	'toString',
-	'toLocaleString',
-	'valueOf',
-	'hasOwnProperty',
-	'isPrototypeOf',
-	'propertyIsEnumerable',
-	'constructor'
-];
-var equalsConstructorPrototype = function (o) {
-	var ctor = o.constructor;
-	return ctor && ctor.prototype === o;
-};
-var excludedKeys = {
-	$console: true,
-	$external: true,
-	$frame: true,
-	$frameElement: true,
-	$frames: true,
-	$innerHeight: true,
-	$innerWidth: true,
-	$outerHeight: true,
-	$outerWidth: true,
-	$pageXOffset: true,
-	$pageYOffset: true,
-	$parent: true,
-	$scrollLeft: true,
-	$scrollTop: true,
-	$scrollX: true,
-	$scrollY: true,
-	$self: true,
-	$webkitIndexedDB: true,
-	$webkitStorageInfo: true,
-	$window: true
-};
-var hasAutomationEqualityBug = (function () {
-	/* global window */
-	if (typeof window === 'undefined') { return false; }
-	for (var k in window) {
-		try {
-			if (!excludedKeys['$' + k] && has.call(window, k) && window[k] !== null && typeof window[k] === 'object') {
-				try {
-					equalsConstructorPrototype(window[k]);
-				} catch (e) {
-					return true;
-				}
-			}
-		} catch (e) {
-			return true;
-		}
-	}
-	return false;
-}());
-var equalsConstructorPrototypeIfNotBuggy = function (o) {
-	/* global window */
-	if (typeof window === 'undefined' || !hasAutomationEqualityBug) {
-		return equalsConstructorPrototype(o);
-	}
-	try {
-		return equalsConstructorPrototype(o);
-	} catch (e) {
-		return false;
-	}
-};
-
-var keysShim = function keys(object) {
-	var isObject = object !== null && typeof object === 'object';
-	var isFunction = toStr.call(object) === '[object Function]';
-	var isArguments = isArgs(object);
-	var isString = isObject && toStr.call(object) === '[object String]';
-	var theKeys = [];
-
-	if (!isObject && !isFunction && !isArguments) {
-		throw new TypeError('Object.keys called on a non-object');
-	}
-
-	var skipProto = hasProtoEnumBug && isFunction;
-	if (isString && object.length > 0 && !has.call(object, 0)) {
-		for (var i = 0; i < object.length; ++i) {
-			theKeys.push(String(i));
-		}
-	}
-
-	if (isArguments && object.length > 0) {
-		for (var j = 0; j < object.length; ++j) {
-			theKeys.push(String(j));
-		}
-	} else {
-		for (var name in object) {
-			if (!(skipProto && name === 'prototype') && has.call(object, name)) {
-				theKeys.push(String(name));
-			}
-		}
-	}
-
-	if (hasDontEnumBug) {
-		var skipConstructor = equalsConstructorPrototypeIfNotBuggy(object);
-
-		for (var k = 0; k < dontEnums.length; ++k) {
-			if (!(skipConstructor && dontEnums[k] === 'constructor') && has.call(object, dontEnums[k])) {
-				theKeys.push(dontEnums[k]);
-			}
-		}
-	}
-	return theKeys;
-};
-
-keysShim.shim = function shimObjectKeys() {
-	if (Object.keys) {
-		var keysWorksWithArguments = (function () {
-			// Safari 5.0 bug
-			return (Object.keys(arguments) || '').length === 2;
-		}(1, 2));
-		if (!keysWorksWithArguments) {
-			var originalKeys = Object.keys;
-			Object.keys = function keys(object) {
-				if (isArgs(object)) {
-					return originalKeys(slice.call(object));
-				} else {
-					return originalKeys(object);
-				}
-			};
-		}
-	} else {
-		Object.keys = keysShim;
-	}
-	return Object.keys || keysShim;
-};
-
-module.exports = keysShim;
-
-
-/***/ },
-/* 97 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var toStr = Object.prototype.toString;
-
-module.exports = function isArguments(value) {
-	var str = toStr.call(value);
-	var isArgs = str === '[object Arguments]';
-	if (!isArgs) {
-		isArgs = str !== '[object Array]' &&
-			value !== null &&
-			typeof value === 'object' &&
-			typeof value.length === 'number' &&
-			value.length >= 0 &&
-			toStr.call(value.callee) === '[object Function]';
-	}
-	return isArgs;
-};
-
-
-/***/ },
-/* 98 */
-/***/ function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (root, factory){
-  'use strict';
-
-  /*istanbul ignore next:cant test*/
-  if (typeof module === 'object' && typeof module.exports === 'object') {
-    module.exports = factory();
-  } else if (true) {
-    // AMD. Register as an anonymous module.
-    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-  } else {
-    // Browser globals
-    root.objectPath = factory();
-  }
-})(this, function(){
-  'use strict';
-
-  var toStr = Object.prototype.toString;
-  function hasOwnProperty(obj, prop) {
-    if(obj == null) {
-      return false
-    }
-    //to handle objects with null prototypes (too edge case?)
-    return Object.prototype.hasOwnProperty.call(obj, prop)
-  }
-
-  function isEmpty(value){
-    if (!value) {
-      return true;
-    }
-    if (isArray(value) && value.length === 0) {
-        return true;
-    } else if (typeof value !== 'string') {
-        for (var i in value) {
-            if (hasOwnProperty(value, i)) {
-                return false;
-            }
-        }
-        return true;
-    }
-    return false;
-  }
-
-  function toString(type){
-    return toStr.call(type);
-  }
-
-  function isObject(obj){
-    return typeof obj === 'object' && toString(obj) === "[object Object]";
-  }
-
-  var isArray = Array.isArray || function(obj){
-    /*istanbul ignore next:cant test*/
-    return toStr.call(obj) === '[object Array]';
-  }
-
-  function isBoolean(obj){
-    return typeof obj === 'boolean' || toString(obj) === '[object Boolean]';
-  }
-
-  function getKey(key){
-    var intKey = parseInt(key);
-    if (intKey.toString() === key) {
-      return intKey;
-    }
-    return key;
-  }
-
-  function factory(options) {
-    options = options || {}
-
-    var objectPath = function(obj) {
-      return Object.keys(objectPath).reduce(function(proxy, prop) {
-        if(prop === 'create') {
-          return proxy;
-        }
-
-        /*istanbul ignore else*/
-        if (typeof objectPath[prop] === 'function') {
-          proxy[prop] = objectPath[prop].bind(objectPath, obj);
-        }
-
-        return proxy;
-      }, {});
-    };
-
-    function getShallowProperty(obj, prop) {
-      if (options.includeInheritedProps || (typeof prop === 'number' && Array.isArray(obj)) || hasOwnProperty(obj, prop)) {
-        return obj[prop];
-      }
-    }
-
-    function set(obj, path, value, doNotReplace){
-      if (typeof path === 'number') {
-        path = [path];
-      }
-      if (!path || path.length === 0) {
-        return obj;
-      }
-      if (typeof path === 'string') {
-        return set(obj, path.split('.').map(getKey), value, doNotReplace);
-      }
-      var currentPath = path[0];
-      var currentValue = getShallowProperty(obj, currentPath);
-      if (path.length === 1) {
-        if (currentValue === void 0 || !doNotReplace) {
-          obj[currentPath] = value;
-        }
-        return currentValue;
-      }
-
-      if (currentValue === void 0) {
-        //check if we assume an array
-        if(typeof path[1] === 'number') {
-          obj[currentPath] = [];
-        } else {
-          obj[currentPath] = {};
-        }
-      }
-
-      return set(obj[currentPath], path.slice(1), value, doNotReplace);
-    }
-
-    objectPath.has = function (obj, path) {
-      if (typeof path === 'number') {
-        path = [path];
-      } else if (typeof path === 'string') {
-        path = path.split('.');
-      }
-
-      if (!path || path.length === 0) {
-        return !!obj;
-      }
-
-      for (var i = 0; i < path.length; i++) {
-        var j = getKey(path[i]);
-
-        if((typeof j === 'number' && isArray(obj) && j < obj.length) ||
-          (options.includeInheritedProps ? (j in Object(obj)) : hasOwnProperty(obj, j))) {
-          obj = obj[j];
-        } else {
-          return false;
-        }
-      }
-
-      return true;
-    };
-
-    objectPath.ensureExists = function (obj, path, value){
-      return set(obj, path, value, true);
-    };
-
-    objectPath.set = function (obj, path, value, doNotReplace){
-      return set(obj, path, value, doNotReplace);
-    };
-
-    objectPath.insert = function (obj, path, value, at){
-      var arr = objectPath.get(obj, path);
-      at = ~~at;
-      if (!isArray(arr)) {
-        arr = [];
-        objectPath.set(obj, path, arr);
-      }
-      arr.splice(at, 0, value);
-    };
-
-    objectPath.empty = function(obj, path) {
-      if (isEmpty(path)) {
-        return void 0;
-      }
-      if (obj == null) {
-        return void 0;
-      }
-
-      var value, i;
-      if (!(value = objectPath.get(obj, path))) {
-        return void 0;
-      }
-
-      if (typeof value === 'string') {
-        return objectPath.set(obj, path, '');
-      } else if (isBoolean(value)) {
-        return objectPath.set(obj, path, false);
-      } else if (typeof value === 'number') {
-        return objectPath.set(obj, path, 0);
-      } else if (isArray(value)) {
-        value.length = 0;
-      } else if (isObject(value)) {
-        for (i in value) {
-          if (hasOwnProperty(value, i)) {
-            delete value[i];
-          }
-        }
-      } else {
-        return objectPath.set(obj, path, null);
-      }
-    };
-
-    objectPath.push = function (obj, path /*, values */){
-      var arr = objectPath.get(obj, path);
-      if (!isArray(arr)) {
-        arr = [];
-        objectPath.set(obj, path, arr);
-      }
-
-      arr.push.apply(arr, Array.prototype.slice.call(arguments, 2));
-    };
-
-    objectPath.coalesce = function (obj, paths, defaultValue) {
-      var value;
-
-      for (var i = 0, len = paths.length; i < len; i++) {
-        if ((value = objectPath.get(obj, paths[i])) !== void 0) {
-          return value;
-        }
-      }
-
-      return defaultValue;
-    };
-
-    objectPath.get = function (obj, path, defaultValue){
-      if (typeof path === 'number') {
-        path = [path];
-      }
-      if (!path || path.length === 0) {
-        return obj;
-      }
-      if (obj == null) {
-        return defaultValue;
-      }
-      if (typeof path === 'string') {
-        return objectPath.get(obj, path.split('.'), defaultValue);
-      }
-
-      var currentPath = getKey(path[0]);
-      var nextObj = getShallowProperty(obj, currentPath)
-      if (nextObj === void 0) {
-        return defaultValue;
-      }
-
-      if (path.length === 1) {
-        return nextObj;
-      }
-
-      return objectPath.get(obj[currentPath], path.slice(1), defaultValue);
-    };
-
-    objectPath.del = function del(obj, path) {
-      if (typeof path === 'number') {
-        path = [path];
-      }
-
-      if (obj == null) {
-        return obj;
-      }
-
-      if (isEmpty(path)) {
-        return obj;
-      }
-      if(typeof path === 'string') {
-        return objectPath.del(obj, path.split('.'));
-      }
-
-      var currentPath = getKey(path[0]);
-      var currentVal = getShallowProperty(obj, currentPath);
-      if(currentVal == null) {
-        return currentVal;
-      }
-
-      if(path.length === 1) {
-        if (isArray(obj)) {
-          obj.splice(currentPath, 1);
-        } else {
-          delete obj[currentPath];
-        }
-      } else {
-        if (obj[currentPath] !== void 0) {
-          return objectPath.del(obj[currentPath], path.slice(1));
-        }
-      }
-
-      return obj;
-    }
-
-    return objectPath;
-  }
-
-  var mod = factory();
-  mod.create = factory;
-  mod.withInheritedProps = factory({includeInheritedProps: true})
-  return mod;
-});
-
 
 /***/ }
 /******/ ]);

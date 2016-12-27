@@ -68,7 +68,7 @@ S("myApp/myLabelledSpec"); // returns the same spec above (MyLabelledSpec)
 // Before we continue: let's first define a predicate function
 // (which is just a function that returns either true or false).
 function startsWithBar( str ) {
-  return str.indexOf(bar) === 0;
+  return str.indexOf("bar") === 0;
 }
 
 // Now let's specify a "shape" for our objects.
@@ -98,7 +98,7 @@ S.conform( MyObjSpec, { foo: true, bar1: 1, bar2: 2, bar3: 3 });
 ```js
 // Now onward to function specs.
 var MyFnSpec = S.fspec({
-  args: S.cat( MySpec ), // reusing MySpec from above
+  args: MyLabelledSpec , // reusing MySpec from above
   ret: S.isBool,
 });
 
@@ -113,7 +113,7 @@ var myProtectedFn = MyFnSpec.instrument(__myFunction);
 
 // We can now try our new protected function.
 myProtectedFn(1, 2, 3, { a: true }); // returns true
-myProtectedFn(1, 2, 3); // Throws a "Problem" due to missing argument per our fspec definition.
+myProtectedFn(1, 2, 3, 'hello'); // Throws a "Problem" due to mismatched argument per our fspec definition.
 
 // Finally, let's build a function that checks if the sum of all numbers are odd
 // by taking advantage of Specky's function argument conformation.
@@ -178,16 +178,17 @@ Documentation website: http://specky.js.org
 
 ## Detailed Examples
 
-- [Specky in browser](examples/simple.html)
-- [Spec'ing promises](examples/promise/index.js)
-- [Codebreaker game](examples/codebreaker/index.js)
-- In addition, there are plenty of examples in test files under [`/test`](test/).
+- [Simple example in browser](examples/simple.html)
+- [Experiment Spec'ing promises](examples/promise/index.js)
+- [Codebreaker game example](examples/codebreaker/index.js)
 
-## Performance
+In addition, there are plenty of examples in test files under [`/test`](test/).
+
+## Performance & Reliability
 
 - [![Size Minified](http://img.badgesize.io/speckyjs/specky/master/packages/specky/dist/specky.min.js?label=min)](packages/specky/dist) [![Size Gzipped](http://img.badgesize.io/speckyjs/specky/master/packages/specky/dist/specky.min.js?compression=gzip&label=min%2Bgzipped)](packages/specky/dist)
-- Uses fast Thompson NFA algorithm in handling regex-like Specs
-- In general, fast.
+- Specky uses Thompson NFA algorithm in handling complex regex operations.
+- Specky's implementation is optimizated against running into a long chains of recursive function calls in path searching and making redundant path visits wherever possible.
 
 ## Subprojects
 
