@@ -88,7 +88,7 @@
         <h6>Concepts</h6>
         <ul>
           <li><a href="#conformation">Conformation?</a></li>
-          <li><a href="#regex">Regex Ops & Iterables</a></li>
+          <li><a href="#iterable">Regex Ops & Iterables</a></li>
         </ul>
         <h6>API</h6>
         <div id="cot"></div>
@@ -101,41 +101,9 @@
           <h3>Introduction</h3>
           Refer to <a href="https://github.com/speckyjs/specky#specky-">README</a> file for basic intro.
         </section>
-        <section id="conformation">
-          <h4>What is "conformation"?</h4>
-          <p>To put it plainly, as a developer you expect your data to be of certain "shape".</p>
-          <p>You define the shape of the data with specs.</p>
-          <p>To "conform" your data with your specs is to shape it in a way that is <em>better organized</em>, making it easier for your code to consume.</p>
-
-          [TODO: more write-up]
+        <section id="conformation" class="markdown-article" markdown-path="conformation.md">
         </section>
-        <section id="regex">
-          <h4>Regex-like Operations on Iterables</h4>
-          <p>
-            Both array and string are treated as iterables in Specky,
-            which means both types can be the subject of regex-like operations.
-          </p>
-          For example, both of the following spec definitions are valid:
-          <pre>
-            <code class="js">
-var ArraySpec = S.cat('foos', S.oneOrMore(S.equal('foo')),
-                    'bars', S.oneOrMore(S.equal('bar')));
-
-S.conform(ArraySpec, ['foo', 'foo', 'foo', 'bar', 'bar']);
-// returns { foos: ['foo', 'foo', 'foo'], bars: ['bar', 'bar'] };
-
-var StrSpec = S.cat('foos', S.oneOrMore(S.sEqual('foo')),
-                    'bars', S.oneOrMore(S.sEqual('bar')));
-
-S.conform(StrSpec, 'foofoofoobarbar');
-// returns { foos: 'foofoofoo', bars: 'barbarbar' };
-            </code>
-          </pre>
-          <p>
-          Notice that in the first spec, we use S.equals() to treat the string as a single entity,
-          whereas in the second, we use S.sEqual() to suggest that each character in the string is
-          part of a collection that we run regex ops on.
-          </p>
+        <section id="iterable" class="markdown-article" markdown-path="iterable.md">
         </section>
         <h3>API</h3>
         <p><em>Work in progress. </em></p>
@@ -149,14 +117,13 @@ S.conform(StrSpec, 'foofoofoobarbar');
       <p>A project by <a href="https://github.com/settinghead">settinghead</a>.</p>
       <p>
         Domain name provided by
-        <a href="https://js.org" target="_blank" title="JS.ORG | JavaScript Community">
-        <img src="https://logo.js.org/dark_horz.png" width="102" alt="JS.ORG Logo"/></a>.
+        <a href="https://js.org" target="_blank" title="JS.ORG | JavaScript Community">JS.ORG</a>.
         <!-- alternatives [bright|dark]_[horz|vert|tiny].png (width[horz:102,vert:50,tiny:77]) -->
       </p>
     </footer>
   </main>
   <!-- TODO get rid of this temporary hack -->
-  <!-- <script src="docs/bundle/content.js"></script> -->
+   <script src="docs/bundle/content.js"></script>
   <script src="bundle/functional.min.js"></script>
   <script src="docs/bundle/functional.js"></script>
 </body>

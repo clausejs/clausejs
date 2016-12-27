@@ -79,7 +79,7 @@
       <div class="col-md-2 col-sm-3 cot">
         <div class="inline-headers">
           <h5><u>Specky</u></h5>
-          (<span class="specky-version">0.0.20</span>)
+          (<span class="specky-version">0.0.21</span>)
         </div>
         <ul>
           <li><a href="https://github.com/speckyjs/specky">Github Repository</a></li>
@@ -88,7 +88,7 @@
         <h6>Concepts</h6>
         <ul>
           <li><a href="#conformation">Conformation?</a></li>
-          <li><a href="#regex">Regex Ops &amp; Iterables</a></li>
+          <li><a href="#iterable">Regex Ops &amp; Iterables</a></li>
         </ul>
         <h6>API</h6>
         <div id="cot"><dl>
@@ -148,41 +148,9 @@
           <h3>Introduction</h3>
           Refer to <a href="https://github.com/speckyjs/specky#specky-">README</a> file for basic intro.
         </section>
-        <section id="conformation">
-          <h4>What is &quot;conformation&quot;?</h4>
-          <p>To put it plainly, as a developer you expect your data to be of certain &quot;shape&quot;.</p>
-          <p>You define the shape of the data with specs.</p>
-          <p>To &quot;conform&quot; your data with your specs is to shape it in a way that is <em>better organized</em>, making it easier for your code to consume.</p>
-
-          [TODO: more write-up]
+        <section id="conformation" class="markdown-article" markdown-path="conformation.md">
         </section>
-        <section id="regex">
-          <h4>Regex-like Operations on Iterables</h4>
-          <p>
-            Both array and string are treated as iterables in Specky,
-            which means both types can be the subject of regex-like operations.
-          </p>
-          For example, both of the following spec definitions are valid:
-          <pre>
-            <code class="js">
-var ArraySpec = S.cat(&apos;foos&apos;, S.oneOrMore(S.equal(&apos;foo&apos;)),
-                    &apos;bars&apos;, S.oneOrMore(S.equal(&apos;bar&apos;)));
-
-S.conform(ArraySpec, [&apos;foo&apos;, &apos;foo&apos;, &apos;foo&apos;, &apos;bar&apos;, &apos;bar&apos;]);
-// returns { foos: [&apos;foo&apos;, &apos;foo&apos;, &apos;foo&apos;], bars: [&apos;bar&apos;, &apos;bar&apos;] };
-
-var StrSpec = S.cat(&apos;foos&apos;, S.oneOrMore(S.sEqual(&apos;foo&apos;)),
-                    &apos;bars&apos;, S.oneOrMore(S.sEqual(&apos;bar&apos;)));
-
-S.conform(StrSpec, &apos;foofoofoobarbar&apos;);
-// returns { foos: &apos;foofoofoo&apos;, bars: &apos;barbarbar&apos; };
-            </code>
-          </pre>
-          <p>
-          Notice that in the first spec, we use S.equals() to treat the string as a single entity,
-          whereas in the second, we use S.sEqual() to suggest that each character in the string is
-          part of a collection that we run regex ops on.
-          </p>
+        <section id="iterable" class="markdown-article" markdown-path="iterable.md">
         </section>
         <h3>API</h3>
         <p><em>Work in progress. </em></p>
@@ -5421,14 +5389,13 @@ S.conform(StrSpec, &apos;foofoofoobarbar&apos;);
       <p>A project by <a href="https://github.com/settinghead">settinghead</a>.</p>
       <p>
         Domain name provided by
-        <a href="https://js.org" target="_blank" title="JS.ORG | JavaScript Community">
-        <img src="https://logo.js.org/dark_horz.png" width="102" alt="JS.ORG Logo"></a>.
+        <a href="https://js.org" target="_blank" title="JS.ORG | JavaScript Community">JS.ORG</a>.
         <!-- alternatives [bright|dark]_[horz|vert|tiny].png (width[horz:102,vert:50,tiny:77]) -->
       </p>
     </footer>
   </main>
   <!-- TODO get rid of this temporary hack -->
-  <!-- <script src="docs/bundle/content.js"></script> -->
+   <script src="docs/bundle/content.js"></script>
   <script src="bundle/functional.min.js"></script>
   <script src="docs/bundle/functional.js"></script>
 </body>
