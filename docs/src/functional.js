@@ -10,19 +10,19 @@ window.Tether = tether;
 require( 'bootstrap' );
 
 $( () => {
-  $( '[data-toggle="popover"]' ).popover();
 
   //highlight source code
   $( 'pre code' ).each( ( i, block ) => {
-
     HLJS.highlightBlock( block );
   } );
-} );
 
-$( function flashAnchors() {
-  $( 'a[href*="#"]' ).click( function( e ) {
-    $( `div[data-path="${$( e.target ).data( 'path' )}"]` )
-      .delay( 100 ).fadeIn( 100 ).fadeOut( 100 ).fadeIn( 100 ).fadeOut( 100 ).fadeIn( 100 );
+  $( '[data-toggle="popover"]' ).popover();
+
+  $( function flashAnchors() {
+    $( 'a[href*="#"]' ).click( function( e ) {
+      $( `div[data-path="${$( e.target ).data( 'path' )}"]` )
+        .delay( 100 ).fadeIn( 100 ).fadeOut( 100 ).fadeIn( 100 ).fadeOut( 100 ).fadeIn( 100 );
+    } );
   } );
 } );
 
