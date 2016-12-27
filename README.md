@@ -28,7 +28,100 @@ Specky's goal is to provide the defining contract/protocol for your JS app. By w
 
 ## Quick Example
 
-- TODO
+```js
+
+// Let's start with some regex op compositions
+var MySpec = S.cat( S.oneOrMore(S.isNum), S.zeroOrOne( S.isObj ) );
+S.isValid(MySpec, [ 1, 2, 3, { a: 1 } ]); // true
+S.isValid(MySpec,  [ 1, 2, 3 ]); // true
+S.isValid(MySpec,  [ 1, 2, 3, null ]); // false; the trailing element does not satisfy our spec
+S.isValid(MySpec,  [ 1, 2, 3, { a: 1 }, { } ]); // false: extra trailing element
+S.conform(MySpec, [ 1, 2, 3, null ]); // returns a "Problem" object with detailed explanation why validation failed
+
+// Next, we redefine the above concatenation spec, with a label for each part.
+var MyLabelledSpec = S.cat(
+    "myNumbers", S.oneOrMore(S.isNum),
+    "myObject", S.isObj
+  );
+// Now let's try conformation.
+MyLabelledSpec.conform( [ 1, 2, 3, { a: 1 } ] );
+// returns { myNumbers: [ 1, 2, 3 ], myObject: { a: 1 } }
+
+// Specky comes with an application-wide global spec registry.
+S("myApp/myLabelledSpec", MyLabelledSpec); // defines a spec in the registry
+S("myApp/myLabelledSpec"); // returns the same spec above (MyLabelledSpec)
+
+// One thing before we continue: let's define a predicate function (which is just a function that returns either true or false).
+function startsWithBar( str ) {
+  return str.indexOf(bar) === 0;
+}
+
+// Now let's specify a "shape" for our objects.
+var MyObjSpec = S.shape({
+    // alternatively, you can simply provide an array of strings
+    // as required keys e.g. [ "propertyA", "propertyB",... ]
+    required: {
+      // define a single key with value spec
+      foo: S.isBool,
+      // ...or define a group of properties whose keys satisfy the first spec (e.g. startsWithBar),
+      // and whose value satisfies the second (e.g. S.any)
+      bars: [ startsWithBar, S.any ]
+    },
+    optional: {
+        // you can also arbitrarily compose new specs from registered specs
+        myObj: S("myApp/myLabelledSpec")
+    }
+});
+
+// With the above spec defined, now let's try shape conformation.
+S.conform( MyObjSpec, { foo: true, bar1: 1, bar2: 2, bar3: 3 });
+// returns { foo: true, bars: { bar1: 1, bar2: 2, bar3: 3 } }
+// (Notice how all object keys that begin with "bar" are now grouped under a single value "bars").
+
+// Now onward to function specs.
+var MyFnSpec = S.fspec({
+  args: S.cat( MySpec ), // reusing MySpec from above
+  ret: S.isBool,
+});
+
+// Next define our test function.
+function __myFunction() {
+  return true;
+};
+
+// Then instrument the function with our function spec.
+var myProtectedFn = MyFnSpec.instrument(__myFunction);
+
+// Now try our new function
+myProtectedFn(1, 2, 3, { a: true }); // return true
+myProtectedFn(1, 2, 3); // Throws a "Problem" due to missing argument per our fspec defintion.
+
+// Finally, let's build a function that checks if the sum of all numbers are odd, by taking advantage of argument conformation as illustrated above.
+// Step 1: we write a "barebone" function that consumes the conformed arguments.
+function __sumIsOdd( conformedArgs ) {
+  // here "conformedArgs" stores the value of the conformed object
+  // as was explained above.
+  var myNumbers = conformedArgs.myNumbers; // e.g. [ 1, 2, 3 ]
+  var myObject = conformedArgs.myObject;
+  // (or simply { myNumbers, myObject } If you can use ES6 destructring)
+
+  // Get the sum
+  var sum = myNumbers.reduce( function(c,s) { return s + c; }, 0 );
+  return sum % 2 === 1;
+}
+
+// Step 2: wrap the barebone function with instrumentConformed()
+var sumIsOdd = MyFnSpec.instrumentConformed(__sumIsOdd);
+
+// Let's try our new super function!
+sumIsOdd( 1, 1, 1 ); // true: sum is odd
+sumIsOdd( 2, 2, 2 ); // false: sum is even
+sumIsOdd( 1, 1, 1, {} ); // true (remember the optional trailing isObj we defined above?)
+sumIsOdd( 2, 2, 2, null ); // throws a "Problem" because arguments do not conform
+sumIsOdd( 2, 2, 2, {}, {} ); // same as above
+```
+
+For more advanced features, refer to [documentation site](https://specky.js.org).
 
 
 ## Try it
