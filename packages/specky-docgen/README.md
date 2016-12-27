@@ -1,6 +1,6 @@
 # specky-docgen
 
-The goal of this subproject is to provide necessary tools that automatically generates API documentation based on a a set of specs and some additional notes and usage examples.
+The goal for this subproject is to provide necessary tools that automatically generate API documentation based on a a set of specs and some additional notes and usage examples provided by app developers.
 
 This is currently a work in progress and is subject to heavy change.
 
