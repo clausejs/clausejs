@@ -26,7 +26,9 @@ Specky's goal is to provide the defining contract/protocol for your JS app. By w
 ## Project status
 - Alpha. API are subject to change and improvement based on [feedback](/../../issues/).
 
-## Quick Example
+## Quick Examples
+
+#### Regex Ops
 
 ```js
 
@@ -36,7 +38,8 @@ S.isValid(MySpec, [ 1, 2, 3, { a: 1 } ]); // true
 S.isValid(MySpec,  [ 1, 2, 3 ]); // true
 S.isValid(MySpec,  [ 1, 2, 3, null ]); // false; the trailing element does not satisfy our spec
 S.isValid(MySpec,  [ 1, 2, 3, { a: 1 }, { } ]); // false: extra trailing element
-S.conform(MySpec, [ 1, 2, 3, null ]); // returns a "Problem" object with detailed explanation why validation failed
+S.conform(MySpec, [ 1, 2, 3, null ]);
+// returns a "Problem" object with detailed explanation why validation failed
 
 // Next, we redefine the above concatenation spec, with a label for each part.
 var MyLabelledSpec = S.cat(
@@ -47,11 +50,21 @@ var MyLabelledSpec = S.cat(
 MyLabelledSpec.conform( [ 1, 2, 3, { a: 1 } ] );
 // returns { myNumbers: [ 1, 2, 3 ], myObject: { a: 1 } }
 
+```
+
+#### Spec Registry
+
+```js
 // Specky comes with an application-wide global spec registry.
 S("myApp/myLabelledSpec", MyLabelledSpec); // defines a spec in the registry
 S("myApp/myLabelledSpec"); // returns the same spec above (MyLabelledSpec)
+```
 
-// One thing before we continue: let's define a predicate function (which is just a function that returns either true or false).
+#### Object Shapes
+
+```js
+// Before we continue: let's first define a predicate function
+// (which is just a function that returns either true or false).
 function startsWithBar( str ) {
   return str.indexOf(bar) === 0;
 }
@@ -77,7 +90,10 @@ var MyObjSpec = S.shape({
 S.conform( MyObjSpec, { foo: true, bar1: 1, bar2: 2, bar3: 3 });
 // returns { foo: true, bars: { bar1: 1, bar2: 2, bar3: 3 } }
 // (Notice how all object keys that begin with "bar" are now grouped under a single value "bars").
+```
+#### Function Specs
 
+```js
 // Now onward to function specs.
 var MyFnSpec = S.fspec({
   args: S.cat( MySpec ), // reusing MySpec from above
@@ -96,7 +112,8 @@ var myProtectedFn = MyFnSpec.instrument(__myFunction);
 myProtectedFn(1, 2, 3, { a: true }); // return true
 myProtectedFn(1, 2, 3); // Throws a "Problem" due to missing argument per our fspec defintion.
 
-// Finally, let's build a function that checks if the sum of all numbers are odd, by taking advantage of argument conformation as illustrated above.
+// Finally, let's build a function that checks if the sum of all numbers are odd
+// by taking advantage of argument conformation as illustrated above.
 // Step 1: we write a "barebone" function that consumes the conformed arguments.
 function __sumIsOdd( conformedArgs ) {
   // here "conformedArgs" stores the value of the conformed object
