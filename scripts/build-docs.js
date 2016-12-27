@@ -14,7 +14,7 @@ const INDEX_TEMPLATE_FILE_NAME = path.join( __dirname, '..', 'docs', 'index.temp
 const INDEX_FILE_NAME = path.join( __dirname, '..', 'docs', 'index.html' );
 
 let $ = cheerio.load( fs.readFileSync( INDEX_TEMPLATE_FILE_NAME ) );
-// console.log( finalDocStr )
+
 $( '#cot' ).html( finalCotStr );
 $( '#api' ).html( finalDocStr );
 $( '.specky-version' ).html( S.VERSION );

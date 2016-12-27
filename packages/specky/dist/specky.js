@@ -71,7 +71,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 34);
+/******/ 	return __webpack_require__(__webpack_require__.s = 35);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1142,7 +1142,7 @@ var _require = __webpack_require__(19),
 var nullable = __webpack_require__(45);
 var undefinable = __webpack_require__(46);
 
-var _require2 = __webpack_require__(35),
+var _require2 = __webpack_require__(36),
     wall = _require2.wall;
 
 var other = {
@@ -1174,7 +1174,7 @@ module.exports = {
   isSpec: __webpack_require__(2),
   isFspec: __webpack_require__(58),
   isSpecRef: __webpack_require__(14),
-  describe: __webpack_require__(36),
+  describe: __webpack_require__(37),
   deref: __webpack_require__(20)
 };
 
@@ -1682,6 +1682,15 @@ module.exports = getNamedFn;
 
 /***/ },
 /* 33 */
+/***/ function(module, exports) {
+
+"use strict";
+'use strict';
+
+module.exports = '0.0.21';
+
+/***/ },
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1854,10 +1863,10 @@ exports.getRegistry = getRegistry;
 exports.clearRegistry = clearRegistry;
 exports.meta = meta;
 exports.default = specedSpeckyNamespace;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(37)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(38)))
 
 /***/ },
-/* 34 */
+/* 35 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1867,7 +1876,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _namespace = __webpack_require__(33);
+var _namespace = __webpack_require__(34);
 
 var _namespace2 = _interopRequireDefault(_namespace);
 
@@ -1888,13 +1897,13 @@ var models = {
 
 var r = oAssign(_namespace2.default, ops, utils, models, predicates);
 
-r.VERSION = __webpack_require__(38);
+r.VERSION = __webpack_require__(33);
 
 module.exports = r;
 exports.default = r;
 
 /***/ },
-/* 35 */
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1935,7 +1944,7 @@ module.exports = {
 };
 
 /***/ },
-/* 36 */
+/* 37 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2050,7 +2059,7 @@ function _processInner(spec, interceptor) {
 module.exports = describe;
 
 /***/ },
-/* 37 */
+/* 38 */
 /***/ function(module, exports) {
 
 var g;
@@ -2073,15 +2082,6 @@ try {
 
 module.exports = g;
 
-
-/***/ },
-/* 38 */
-/***/ function(module, exports) {
-
-"use strict";
-'use strict';
-
-module.exports = '0.0.21';
 
 /***/ },
 /* 39 */
