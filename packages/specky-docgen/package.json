@@ -1,6 +1,6 @@
 {
   "name": "specky-docgen",
-  "version": "0.0.20",
+  "version": "0.0.21",
   "description": "Auto documentation generator for Specky specs",
   "main": "specky-docgen.js",
   "repository": {
@@ -21,7 +21,7 @@
     "email": "settinghead@gmail.com"
   },
   "peerDependencies": {
-    "specky": "0.0.20"
+    "specky": "0.0.21"
   },
   "license": "MIT",
   "bugs": {
