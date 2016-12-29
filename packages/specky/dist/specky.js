@@ -1964,7 +1964,7 @@ module.exports = isUndefined;
 "use strict";
 
 
-module.exports = '0.0.21';
+module.exports = '0.0.22';
 
 /***/ },
 /* 37 */
