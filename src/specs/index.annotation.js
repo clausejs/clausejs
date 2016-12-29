@@ -18,6 +18,14 @@ M( '/specky', {
   },
 } );
 
+M( '/specky/get', {
+  'name': 'S.get'
+} );
+
+M( '/specky/set', {
+  'name': 'S.set'
+} );
+
 M( 'specky.types/NamespacePath', {
   'comment': 'Represents a namespace path.',
   'example': '"com.xyz.awesomeApp/User"',
