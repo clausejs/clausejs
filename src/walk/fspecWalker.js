@@ -3,6 +3,7 @@ var Problem = require( '../models/Problem' );
 var functionName = require( '../utils/fnName' );
 var namedFn = require( '../utils/namedFn' );
 var betterThrow = require( '../utils/betterThrow' );
+var stringifyWithFnName = require( '../utils/stringifyWithFnName' );
 
 function fspecWalker( spec, walkFn ) {
   var { args: argsSpec, ret: retSpec, fn: validateFn } = spec.opts;
@@ -84,7 +85,7 @@ function fspecWalker( spec, walkFn ) {
     if ( argsSpec ) {
       var instrumentedArgs = walkFn( argsSpec, args, { phase: 'trailblaze' } );
       if ( isProblem( instrumentedArgs ) ) {
-        var p = new Problem( args, spec, [ instrumentedArgs ], `Arguments ${JSON.stringify( args )} for function ${fnName} failed validation` );
+        var p = new Problem( args, spec, [ instrumentedArgs ], `Arguments ${stringifyWithFnName( args )} for function ${fnName} failed validation` );
         betterThrow( p );
       } else {
         return walkFn( argsSpec, instrumentedArgs, { phase: 'reconstruct', conform: false, instrument: true } );
@@ -115,7 +116,7 @@ function fspecWalker( spec, walkFn ) {
 
       var conformedArgs = walkFn( argsSpec, args, { conform: true, instrument: true } );
       if ( isProblem( conformedArgs ) ) {
-        var p = new Problem( args, argsSpec, [ conformedArgs ], `Arguments ${JSON.stringify( args )} for function ${fnName} is not valid` );
+        var p = new Problem( args, argsSpec, [ conformedArgs ], `Arguments ${stringifyWithFnName( args )} for function ${fnName} is not valid` );
         betterThrow( p );
       }
 
