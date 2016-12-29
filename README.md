@@ -33,8 +33,6 @@ Specky's goal is to provide the defining contract/protocol for your JS app. By w
 #### Regex Ops
 
 ```js
-
-// Let's start with some regex op compositions
 var MySpec = S.cat( S.oneOrMore(S.isNum), S.zeroOrOne( S.isObj ) );
 S.isValid(MySpec, [ 1, 2, 3, { a: 1 } ]); // true
 S.isValid(MySpec,  [ 1, 2, 3 ]); // true
@@ -46,9 +44,9 @@ S.conform(MySpec, [ 1, 2, 3, null ]);
 // Next, we redefine the above concatenation spec, with a label for each part.
 var MyLabelledSpec = S.cat(
     "myNumbers", S.oneOrMore(S.isNum),
-    "myObject", S.isObj
+    "myObject", S.zeroOrOne( S.isObj )
   );
-// Now let's try conformation.
+S
 MyLabelledSpec.conform( [ 1, 2, 3, { a: 1 } ] );
 // returns { myNumbers: [ 1, 2, 3 ], myObject: { a: 1 } }
 
@@ -58,7 +56,7 @@ MyLabelledSpec.conform( [ 1, 2, 3, { a: 1 } ] );
 
 ```js
 // Specky comes with an application-wide global spec registry.
-S("myApp/myLabelledSpec", MyLabelledSpec); // defines a spec in the registry
+S.set("myApp/myLabelledSpec", MyLabelledSpec); // defines a spec in the registry
 S("myApp/myLabelledSpec"); // returns the same spec above (MyLabelledSpec)
 ```
 
@@ -174,7 +172,6 @@ The variable `S` will be exposed in the global environment.
 ## Documentation
 
 Documentation website: http://specky.js.org
-
 
 ## Detailed Examples
 

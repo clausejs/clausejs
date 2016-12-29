@@ -1,6 +1,7 @@
 function getNamedFn( fnName, fn, suffix ) {
   if ( fnName ) {
-    return new Function( 'action', 'return function ' + fnName + ( suffix || '' ) + '(){ return action.apply(this, arguments); };' )( fn );
+    let inner = 'return function ' + fnName + ( suffix || '' ) + '(){ return action.apply(this, arguments); };';
+    return new Function( 'action', inner )( fn );
   } else {
     return fn;
   }

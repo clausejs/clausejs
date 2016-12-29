@@ -120,9 +120,21 @@ function fspecWalker( spec, walkFn ) {
       }
 
       var retVal = fn.call( this, conformedArgs );
-      var conformedRetVal = walkFn( retSpec, retVal, { conform: true, instrument: true } );
+      if ( retSpec ) {
+
+      }
       checkRet( fn, fnName, retVal );
-      checkFnRelation( fnName, fn, validateFn, conformedArgs, conformedRetVal );
+
+      if ( validateFn ) {
+        var conformedRetVal;
+        if ( retSpec ) {
+          conformedRetVal = walkFn( retSpec, retVal, { conform: true, instrument: true } );
+        } else {
+          conformedRetVal = retVal;
+        }
+        checkFnRelation( fnName, fn, validateFn, conformedArgs, conformedRetVal );
+      }
+
       return retVal;
     };
   }

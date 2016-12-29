@@ -68,8 +68,7 @@ describe( 'fspec', function() {
     } ).to.throw( Problem );
   } );
 
-  it( 'fn validation', () => {
-
+  describe( 'fn validation', () => {
     var __goodSampler = function( n, min, max ) {
       var r = [];
       for ( var i = 0; i < n; i++ ) {
@@ -88,22 +87,58 @@ describe( 'fspec', function() {
       return r;
     }
 
-    var SampleFspec = S.fspec( {
-      args: S.cat( 'n', S.isNatInt, 'min', S.isNum, 'max', S.isNum ),
-      ret: S.isArray,
-      fn: ( { n, min, max }, ret ) => {
-        var wackies = ret.filter( ( x ) => x >= max || x < min );
-        return wackies.length === 0;
-      }
+    it( 'without return spec', () => {
+      var SampleFspec = S.fspec( {
+        args: S.cat( 'n', S.isNatInt, 'min', S.isNum, 'max', S.isNum ),
+        fn: ( { n, min, max }, ret ) => {
+          var wackies = ret.filter( ( x ) => x >= max || x < min );
+          return wackies.length === 0;
+        }
+      } );
+
+      var goodSampler = SampleFspec.instrument( __goodSampler );
+      var badSampler = SampleFspec.instrument( __badSampler );
+
+      expect( goodSampler( 10, 2, 3 ).length ).to.equal( 10 );
+      expect( () => badSampler( 10, 2, 3 ).length ).to.throw( Problem );
     } );
 
-    var goodSampler = SampleFspec.instrument( __goodSampler );
-    var badSampler = SampleFspec.instrument( __badSampler );
+    it( 'without return val conformation', () => {
+      var SampleFspec = S.fspec( {
+        args: S.cat( 'n', S.isNatInt, 'min', S.isNum, 'max', S.isNum ),
+        ret: S.isArray,
+        fn: ( { n, min, max }, ret ) => {
+          var wackies = ret.filter( ( x ) => x >= max || x < min );
+          return wackies.length === 0;
+        }
+      } );
 
-    expect( goodSampler( 10, 2, 3 ).length ).to.equal( 10 );
-    expect( () => badSampler( 10, 2, 3 ).length ).to.throw( Problem );
+      var goodSampler = SampleFspec.instrument( __goodSampler );
+      var badSampler = SampleFspec.instrument( __badSampler );
 
-  } );
+      expect( goodSampler( 10, 2, 3 ).length ).to.equal( 10 );
+      expect( () => badSampler( 10, 2, 3 ).length ).to.throw( Problem );
+
+    } );
+
+    it( 'with return val conformation', () => {
+      var SampleFspec = S.fspec( {
+        args: S.cat( 'n', S.isNatInt, 'min', S.isNum, 'max', S.isNum ),
+        ret: S.cat( 'numbers', S.zeroOrMore( S.isNatInt ) ),
+        fn: ( { n, min, max }, { numbers: ret } ) => {
+          var wackies = ret.filter( ( x ) => x >= max || x < min );
+          return wackies.length === 0;
+        }
+      } );
+
+      var goodSampler = SampleFspec.instrument( __goodSampler );
+      var badSampler = SampleFspec.instrument( __badSampler );
+
+      expect( goodSampler( 10, 2, 3 ).length ).to.equal( 10 );
+      expect( () => badSampler( 10, 2, 3 ).length ).to.throw( Problem );
+
+    } );
+  } )
 
   it( 'higher order functions', () => {
     var AdderFnSpec = s.fspec( {

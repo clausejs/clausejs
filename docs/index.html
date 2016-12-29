@@ -103,6 +103,15 @@
     </dd>
     
     <dt>
+      specky
+    </dt>
+    <dd>
+      <ul>
+      <li><a href="#specky/set" data-path="specky/set">set()</a></li><li><a href="#specky/get" data-path="specky/get">get()</a></li>
+      </ul>
+    </dd>
+    
+    <dt>
       specky.compose
     </dt>
     <dd>
@@ -262,7 +271,7 @@ S.conform(StrSpec, &apos;foofoofoobarbar&apos;);
     
     <div class="card-block">
       <span data-toggle="popover" data-trigger="hover" data-html="true" title="isNamespacePath()" data-content="&lt;pre&gt;function isNamespacePath(x) {
-  return isStr(x) &amp;&amp; /^[a-zA-Z0-9\-_\.]*\/([a-zA-Z0-9\-_]+)$/.test(x);
+  return isStr(x) &amp;&amp; /^\/?[a-zA-Z0-9\-_\.]*\/([a-zA-Z0-9\-_]+)$/.test(x);
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         A value that satisfies
         <em>isNamespacePath()</em>
@@ -368,7 +377,7 @@ S.conform(StrSpec, &apos;foofoofoobarbar&apos;);
     
     <div class="card-block">
       <span data-toggle="popover" data-trigger="hover" data-html="true" title="isNamespacePath()" data-content="&lt;pre&gt;function isNamespacePath(x) {
-  return isStr(x) &amp;&amp; /^[a-zA-Z0-9\-_\.]*\/([a-zA-Z0-9\-_]+)$/.test(x);
+  return isStr(x) &amp;&amp; /^\/?[a-zA-Z0-9\-_\.]*\/([a-zA-Z0-9\-_]+)$/.test(x);
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         A value that satisfies
         <em>isNamespacePath()</em>
@@ -382,6 +391,207 @@ S.conform(StrSpec, &apos;foofoofoobarbar&apos;);
         </li>
     
     </ol>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </li>
+    
+    </ol>
+  
+    </fieldset>
+    </dd>
+    </dl>
+  
+        </div>
+      <h3>specky/</h3><hr>
+    <a name="specky/set"></a>
+    
+        <div class="card">
+          <div class="card-header inline-headers">
+            
+      <h6>set()</h6>&#xA0;
+        <span class="tag tag-primary">
+          function
+        </span>
+      
+          </div>
+        
+    <dl class="card-block">
+    <dt>Synopsis</dt><dd><ul><em>set(nsPath, expression)</em></ul></dd>
+<dt>Argument spec</dt><dd>
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="spec-type">
+      <span class="tag tag-info">cat (concatenation) of</span>
+    </legend>
+    
+    <div class="card-block">
+      <p class="card-title">
+        
+      </p>
+      <p class="card-title">
+        Should be <em>an ordered list</em> of the following:
+      </p>
+    </div>
+    <ol class="list-group list-group-flush list-for-cat">
+      
+        <li class="list-group-item card-outline-info">
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                <span class="tag tag-default">1st </span>
+                &lt;<span class="lead font-italic text-primary">nsPath</span>&gt;
+                
+                  
+            </p></div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    
+    
+    <fieldset class="card card-outline-primary">
+    <legend class="spec-type">
+      <span class="tag tag-primary">of predicate</span>
+    </legend>
+    
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isNamespacePath()" data-content="&lt;pre&gt;function isNamespacePath(x) {
+  return isStr(x) &amp;&amp; /^\/?[a-zA-Z0-9\-_\.]*\/([a-zA-Z0-9\-_]+)$/.test(x);
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <em>isNamespacePath()</em>
+      </span>
+    </div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </li>
+     
+        <li class="list-group-item card-outline-info">
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                <span class="tag tag-default">2nd </span>
+                &lt;<span class="lead font-italic text-primary">expression</span>&gt;
+                
+                  
+            </p></div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="spec-type">
+      <span class="tag tag-info">of spec</span>
+    </legend>
+    
+    <div class="card-block">
+      A value that is of
+      <a href="#specky.types/Expression" data-path="specky.types/Expression">specky.types/Expression</a>
+    </div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </li>
+    
+    </ol>
+  
+    </fieldset>
+    </dd>
+<dt>Return value spec</dt><dd>
+    
+    
+    <fieldset class="card card-outline-primary">
+    <legend class="spec-type">
+      <span class="tag tag-primary">of predicate</span>
+    </legend>
+    
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isUndefined()" data-content="&lt;pre&gt;function isUndefined(x) {
+  return x === undefined;
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <em>isUndefined()</em>
+      </span>
+    </div>
+  
+    </fieldset>
+    </dd>
+    </dl>
+  
+        </div>
+      
+
+    <a name="specky/get"></a>
+    
+        <div class="card">
+          <div class="card-header inline-headers">
+            
+      <h6>get()</h6>&#xA0;
+        <span class="tag tag-primary">
+          function
+        </span>
+      
+          </div>
+        
+    <dl class="card-block">
+    <dt>Synopsis</dt><dd><ul><em>get(nsPath)</em></ul></dd>
+<dt>Argument spec</dt><dd>
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="spec-type">
+      <span class="tag tag-info">cat (concatenation) of</span>
+    </legend>
+    
+    <div class="card-block">
+      <p class="card-title">
+        
+      </p>
+      <p class="card-title">
+        Should be <em>an ordered list</em> of the following:
+      </p>
+    </div>
+    <ol class="list-group list-group-flush list-for-cat">
+      
+        <li class="list-group-item card-outline-info">
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                <span class="tag tag-default">1st </span>
+                &lt;<span class="lead font-italic text-primary">nsPath</span>&gt;
+                
+                  
+            </p></div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    
+    
+    <fieldset class="card card-outline-primary">
+    <legend class="spec-type">
+      <span class="tag tag-primary">of predicate</span>
+    </legend>
+    
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isNamespacePath()" data-content="&lt;pre&gt;function isNamespacePath(x) {
+  return isStr(x) &amp;&amp; /^\/?[a-zA-Z0-9\-_\.]*\/([a-zA-Z0-9\-_]+)$/.test(x);
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <em>isNamespacePath()</em>
+      </span>
+    </div>
   
     </fieldset>
     
@@ -411,7 +621,8 @@ S.conform(StrSpec, &apos;foofoofoobarbar&apos;);
     </dl>
   
         </div>
-      <h3>specky.compose/</h3><hr>
+      
+<h3>specky.compose/</h3><hr>
     <a name="specky.compose/cat"></a>
     
         <div class="card">
@@ -5195,7 +5406,7 @@ S.conform(StrSpec, &apos;foofoofoobarbar&apos;);
         
     <div class="card-block">
       <span data-toggle="popover" data-trigger="hover" data-html="true" title="isNamespacePath()" data-content="&lt;pre&gt;function isNamespacePath(x) {
-  return isStr(x) &amp;&amp; /^[a-zA-Z0-9\-_\.]*\/([a-zA-Z0-9\-_]+)$/.test(x);
+  return isStr(x) &amp;&amp; /^\/?[a-zA-Z0-9\-_\.]*\/([a-zA-Z0-9\-_]+)$/.test(x);
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         A value that satisfies
         <em>isNamespacePath()</em>

@@ -1,6 +1,6 @@
 import { or, cat, fspec, shape, ExprSpec } from '../core';
 import { delayed, isNamespacePath, isExpr, isSpecRef } from '../utils';
-import { isObj } from '../preds';
+import { isObj, isUndefined } from '../preds';
 
 var ExprOrPartialRefMapSpec =
  // or(
@@ -11,14 +11,27 @@ var ExprOrPartialRefMapSpec =
   } );
 // );
 
+const GetArgSpec = cat( 'nsPath', isNamespacePath );
+
+const GetNSFnSpec = fspec( {
+  args: GetArgSpec,
+  ret: ExprSpec,
+} );
+
+const SetArgSpec = cat(
+  'nsPath', isNamespacePath,
+  'expression', ExprOrPartialRefMapSpec );
+
+const SetNSFnSpec = fspec( {
+  args: SetArgSpec,
+  ret: isUndefined,
+} );
+
 const NamespaceFnSpec = fspec( {
   args: or(
-    'register', cat(
-      'nsPath', isNamespacePath,
-      'expression', ExprOrPartialRefMapSpec ),
-    'retrieve', cat( 'nsPath', isNamespacePath )
-  ),
-  ret: ExprSpec,
+      'register', SetArgSpec,
+      'retrieve', GetArgSpec
+    ),
 } );
 
 const MetaFnSpec = fspec( {
@@ -46,7 +59,8 @@ const NamespaceObjSpec = shape( {
 } );
 
 export {
-  isSpecRef, NamespaceFnSpec,
+  isSpecRef, SetNSFnSpec, GetNSFnSpec,
+  NamespaceFnSpec,
   isNamespacePath, MetaFnSpec,
   NamespaceObjSpec
 };

@@ -7,10 +7,10 @@ var isPred = require( '../utils/isPred' );
 var isUndefined = require( '../preds/isUndefined' );
 var walk = require( '../walk' );
 var coerceIntoSpec = require( '../utils/coerceIntoSpec' );
-var oPath = require('./simpleObjectPath');
+var oPath = require( './simpleObjectPath' );
 
 import { isNamespacePath, isSpecRef } from '../utils';
-import { NamespaceFnSpec, MetaFnSpec } from '../specs/namespace.types';
+import { GetNSFnSpec, SetNSFnSpec, NamespaceFnSpec, MetaFnSpec } from '../specs/namespace.types';
 var reg;
 
 var _get = fspec( {
@@ -53,19 +53,17 @@ function _slashToDot( p ) {
 //   }
 // });
 
-function speckyNamespace( cargs ) {
+function getNamespacePath( { nsPath } ) {
   var retVal;
 
-  if ( cargs[ 'register' ] ) {
-    const { nsPath, expression } = cargs[ 'register' ];
-    retVal = _processVal( nsPath, expression );
-  } else if ( cargs[ 'retrieve' ] ) {
-    const { nsPath } = cargs[ 'retrieve' ];
-    var nameObj = _get( nsPath );
-    retVal = nameObj;
-  }
+  var nameObj = _get( nsPath );
+  retVal = nameObj;
 
   return retVal;
+}
+
+function setNamespacePath( { nsPath, expression } ) {
+  _processVal( nsPath, expression );
 }
 
 function _processVal( prefix, expression ) {
@@ -136,10 +134,21 @@ _maybeInitRegistry();
 
 const getRegistry = () => reg;
 
-var specedSpeckyNamespace = NamespaceFnSpec.instrumentConformed( speckyNamespace );
-specedSpeckyNamespace.clearRegistry = clearRegistry;
-specedSpeckyNamespace.getRegistry = getRegistry;
-specedSpeckyNamespace.meta = meta;
+var namespaceGetOrSet = NamespaceFnSpec.instrumentConformed(
+  function namespaceGetOrSet( { register, retrieve } ) {
+    if ( register ) {
+      return setNamespacePath( register );
+    } else if ( retrieve ) {
+      return getNamespacePath( retrieve );
+    }
+  }
+)
+
+namespaceGetOrSet.get = GetNSFnSpec.instrumentConformed( getNamespacePath );
+namespaceGetOrSet.set = SetNSFnSpec.instrumentConformed( setNamespacePath );
+namespaceGetOrSet.clearRegistry = clearRegistry;
+namespaceGetOrSet.getRegistry = getRegistry;
+namespaceGetOrSet.meta = meta;
 
 export { getRegistry, clearRegistry, meta };
-export default specedSpeckyNamespace;
+export default namespaceGetOrSet;

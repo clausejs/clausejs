@@ -6,7 +6,7 @@ import { any, ExprSpec, CatFnSpec, OrFnSpec, AndFnSpec,
   ZeroOrMoreFnSpec, OneOrMoreFnSpec, ZeroOrOneFnSpec } from '../core';
 import { WallFnSpec } from '../core/wall';
 import { ShapeFnSpec, MapOfFnSpec } from '../core/objRelated';
-import { isNamespacePath, NamespaceFnSpec, NamespaceObjSpec } from './namespace.types';
+import { isNamespacePath, GetNSFnSpec, NamespaceFnSpec, SetNSFnSpec, NamespaceObjSpec } from './namespace.types';
 
 // TODO
 // const S = Specky.withRegistry(nsObj);
@@ -82,6 +82,8 @@ const DelayedFnSpec = fspec( {
 } );
 
 S( '/specky', NamespaceFnSpec );
+S( '/specky/set', SetNSFnSpec );
+S( '/specky/get', GetNSFnSpec );
 
 S( 'specky.compose/cat', CatFnSpec );
 S( 'specky.compose/or', OrFnSpec );
