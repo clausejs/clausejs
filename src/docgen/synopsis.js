@@ -1,6 +1,6 @@
 const { cat, or, zeroOrMore, oneOrMore, fspec, any, and, ExprSpec } = require( '../core' );
 const { isStr, isNum, isObj, isBool } = require( '../preds' );
-const { conform, isSpec } = require( '../utils' );
+const { conform, isSpec, deref } = require( '../utils' );
 
 var SampleSpec = cat( 'first', oneOrMore( cat( isStr, isBool ) ),
                       'second', or( 'objOpt', isObj, 'showNum', cat( isNum, isBool ) ) );
@@ -28,7 +28,7 @@ function Label( spec ) {
   this.spec = spec;
 }
 
-var OrSpec = and( isSpec, ( s ) => s.type === 'OR' );
+var OrSpec = and( isSpec, function isOrSpec(s) { return deref(s).type === 'OR' } );
 
 var expand1 = fspec( {
   args: cat( ExprSpec, OrSpec )
@@ -39,7 +39,7 @@ var expand1 = fspec( {
 } );
 
 function _expandWalk( spec, pivotSpec ) {
-
+  
 }
 
 function synopsis( spec, interceptor ) {
