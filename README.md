@@ -184,8 +184,9 @@ In addition, there are plenty of examples in test files under [`/test`](test/).
 ## Performance & Reliability
 
 - [![Size Minified](http://img.badgesize.io/speckyjs/specky/master/packages/specky/dist/specky.min.js?label=min)](packages/specky/dist) [![Size Gzipped](http://img.badgesize.io/speckyjs/specky/master/packages/specky/dist/specky.min.js?compression=gzip&label=min%2Bgzipped)](packages/specky/dist)
-- Specky uses Thompson NFA algorithm in handling complex regex operations.
-- Specky's implementation is optimizated against running into a long chains of recursive function calls in path searching and making redundant path visits wherever possible.
+- Specky is mostly self-contained and has very few external dependencies.
+- Specky uses NFA algorithm for regex parsing, which means it's generally pretty fast in handling complex regex operations.
+- Specky's current implementation is optimizated in such a way that it avoids running into long chains of recursive function calls for path searching or making redundant path visits.
 
 ## Subprojects
 
