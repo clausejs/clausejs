@@ -1,4 +1,5 @@
 const PAREN_PAIRS = '❰❮❬❨❪﹙₍₎﹚❫❩❭❯❱';
+const stringifyWithFnName = require( '../utils/stringifyWithFnName' );
 
 function Problem( val, failsPredicate, subproblems, msg ) {
   this.isProblem = true;
@@ -22,7 +23,7 @@ function _constructMessage( { subproblems, val, shortMessage }, lvl ) {
   if ( Array.isArray( subproblems ) ) {
     var reasons;
     if ( subproblems.length === 0 ) {
-      return `${shortMessage}; val: ${_valStringified( val )}`;
+      return `${shortMessage}; val: ${stringifyWithFnName( val, null, 2 )}`;
     } else {
       reasons = subproblems.map( ( r ) => {
         return `${_open( lvl )}${_constructMessage( r, lvl + 1 )}${_close( lvl )}`;
@@ -36,16 +37,6 @@ function _constructMessage( { subproblems, val, shortMessage }, lvl ) {
     }
     return `${shortMessage}, because ${reasons.join( ', ' )}`;
   }
-}
-
-function _valStringified( val ) {
-  return JSON.stringify( val, ( key, val ) => {
-    if ( typeof val === 'function' ) {
-      // implicitly `toString` it
-      return `${val.name}()`;
-    }
-    return val;
-  } );
 }
 
 function _open( lvl ) {

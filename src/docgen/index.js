@@ -502,18 +502,6 @@ function _genUnknownSpec( globalReg, exprName, path, expr, meta ) {
   return r;
 }
 
-function _stringifyWithFn( objWithFunction ) {
-  if ( !objWithFunction ) {
-    return '';
-  }
-  return JSON.stringify( objWithFunction, function( key, val ) {
-    if ( typeof val === 'function' ) {
-      return `${val.name}()`; // implicitly `toString` it
-    }
-    return val;
-  }, 2 );
-}
-
 function _genOrSpec( globalReg, exprName, path, expr, meta ) {
   const example = meta && meta.example;
   const altDefs = expr.exprs.map( ( { name, expr: altE }, idx ) => {

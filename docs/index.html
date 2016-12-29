@@ -4927,11 +4927,16 @@ S.conform(StrSpec, &apos;foofoofoobarbar&apos;);
     </legend>
     
     <div class="card-block">
-      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isFunction()" data-content="&lt;pre&gt;function isFunction(x) {
-  var getType = {};
-  // (x || false) guarantees returning of boolean type
-  return (x || false) &amp;&amp; getType.toString.call(x) === &apos;[object Function]&apos;;
-}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isFunction()" data-content="&lt;pre&gt;function isFunction(value) {
+    if (isPrimitive(value)) {
+      return false;
+    }
+    if (hasToStringTag) {
+      return tryFunctionObject(value);
+    }
+    var strTag = toStringTag(value);
+    return strTag === funcTag || strTag === genTag;
+  }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         A value that satisfies
         <em>isFunction()</em>
       </span>
