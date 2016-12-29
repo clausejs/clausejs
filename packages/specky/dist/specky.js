@@ -166,17 +166,10 @@ function Problem(val, failsPredicate, subproblems, msg) {
   }
 
   this.val = val;
-  this.valStringified = JSON.stringify(val, function (key, val) {
-    if (typeof val === 'function') {
-      // implicitly `toString` it
-      return val.name + '()';
-    }
-    return val;
-  });
   this.name = 'Problem';
   this.failsPredicate = failsPredicate;
   // this.stack = (new Error()).stack;
-  this.rawMsg = msg;
+  this.shortMessage = msg;
   this.subproblems = subproblems;
 
   this.message = _constructMessage(this, 0);
@@ -188,26 +181,35 @@ function Problem(val, failsPredicate, subproblems, msg) {
 function _constructMessage(_ref, lvl) {
   var subproblems = _ref.subproblems,
       val = _ref.val,
-      valStringified = _ref.valStringified,
-      rawMsg = _ref.rawMsg;
+      shortMessage = _ref.shortMessage;
 
   if (Array.isArray(subproblems)) {
     var reasons;
     if (subproblems.length === 0) {
-      return rawMsg + '; val: ' + valStringified;
+      return shortMessage + '; val: ' + _valStringified(val);
     } else {
       reasons = subproblems.map(function (r) {
         return '' + _open(lvl) + _constructMessage(r, lvl + 1) + _close(lvl);
       });
-      return rawMsg + ', because ' + reasons.join(', ');
+      return shortMessage + ', because ' + reasons.join(', ');
     }
   } else if ((typeof subproblems === 'undefined' ? 'undefined' : _typeof(subproblems)) === 'object') {
     reasons = [];
     for (var name in subproblems) {
       reasons.push('' + _open(lvl) + name + ': ' + _constructMessage(subproblems[name], lvl + 1) + _close(lvl));
     }
-    return rawMsg + ', because ' + reasons.join(', ');
+    return shortMessage + ', because ' + reasons.join(', ');
   }
+}
+
+function _valStringified(val) {
+  return JSON.stringify(val, function (key, val) {
+    if (typeof val === 'function') {
+      // implicitly `toString` it
+      return val.name + '()';
+    }
+    return val;
+  });
 }
 
 function _open(lvl) {
