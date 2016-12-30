@@ -39,7 +39,6 @@
   "homepage": "https://github.com/speckyjs/specky#readme",
   "dependencies": {
     "get-function-name-x": "^1.0.11",
-    "is-function-x": "^1.0.6",
     "object-assign": "^4.1.0"
   },
   "devDependencies": {
