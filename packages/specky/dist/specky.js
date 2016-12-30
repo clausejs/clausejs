@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 39);
+/******/ 	return __webpack_require__(__webpack_require__.s = 38);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -325,19 +325,37 @@ module.exports = isString;
 "use strict";
 
 
-var getFunctionName = __webpack_require__(80);
+// stolen from https://github.com/Xotic750/get-function-name-x/blob/master/index.js
 
-//extrapolates the name of a function
-// function functionName( fun ) {
-//   // ES6 fn name
-//   if ( fun && fun.name ) {
-//     return fun.name;
-//   }
-//   var ret = fun.toString();
-//   ret = ret.substr( 'function '.length );
-//   ret = ret.substr( 0, ret.indexOf( '(' ) );
-//   return ret;
-// }
+var isFunction = __webpack_require__(13);
+var _getFnName;
+
+if (function test() {}.name !== 'test') {
+  var STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
+  var fToString = Function.prototype.toString;
+  var pMatch = String.prototype.match;
+  var pReplace = String.prototype.replace;
+  var s = __webpack_require__(84).ws;
+  var reName = new RegExp('^[' + s + ']*(?:function|class)[' + s + ']*\\*?[' + s + ']+([\\w\\$]+)[' + s + ']*', 'i');
+  _getFnName = function getName(fn) {
+    var name = pMatch.call(pReplace.call(fToString.call(fn), STRIP_COMMENTS, ' '), reName);
+    return name && name[1] !== 'anonymous' ? name[1] : '';
+  };
+} else {
+  /*jshint evil:true */
+  if (new Function().name === 'anonymous') {
+    _getFnName = function getName(fn) {
+      return fn.name && fn.name !== 'anonymous' ? fn.name : '';
+    };
+  }
+}
+
+function getFunctionName(fn) {
+  if (!isFunction(fn)) {
+    return null;
+  }
+  return _getFnName ? _getFnName(fn) : fn.name;
+}
 
 module.exports = getFunctionName;
 
@@ -348,7 +366,7 @@ module.exports = getFunctionName;
 "use strict";
 
 
-var isFn = __webpack_require__(17);
+var isFn = __webpack_require__(13);
 
 function isPred(x) {
   return isFn(x);
@@ -365,7 +383,7 @@ module.exports = isPred;
 
 var isPred = __webpack_require__(7);
 var isSpec = __webpack_require__(2);
-var isSpecRef = __webpack_require__(14);
+var isSpecRef = __webpack_require__(15);
 var isDelayedSpec = __webpack_require__(31);
 var Spec = __webpack_require__(0);
 var Problem = __webpack_require__(3);
@@ -423,11 +441,11 @@ var isPred = __webpack_require__(7);
 var specFromAlts = __webpack_require__(11);
 var isObj = __webpack_require__(27);
 var isStr = __webpack_require__(5);
-var isSpecName = __webpack_require__(66);
+var isSpecName = __webpack_require__(65);
 var namedFn = __webpack_require__(32);
-var isSpecRef = __webpack_require__(14);
+var isSpecRef = __webpack_require__(15);
 var isDelayedSpec = __webpack_require__(31);
-var c = __webpack_require__(44);
+var c = __webpack_require__(43);
 var coerceIntoSpec = __webpack_require__(8);
 var fspec = __webpack_require__(12);
 var walk = __webpack_require__(10);
@@ -966,17 +984,17 @@ module.exports = core;
 
 
 var oAssign = __webpack_require__(4);
-var nfaWalker = __webpack_require__(74);
-var anyWalker = __webpack_require__(69);
-var predWalker = __webpack_require__(75);
-var wallWalker = __webpack_require__(78);
-var fspecWalker = __webpack_require__(72);
-var shapeWalker = __webpack_require__(76);
-var andWalker = __webpack_require__(68);
-var collOfWalker = __webpack_require__(70);
-var mapOfWalker = __webpack_require__(73);
-var specRefWalker = __webpack_require__(77);
-var delayedSpecWalker = __webpack_require__(71);
+var nfaWalker = __webpack_require__(73);
+var anyWalker = __webpack_require__(68);
+var predWalker = __webpack_require__(74);
+var wallWalker = __webpack_require__(77);
+var fspecWalker = __webpack_require__(71);
+var shapeWalker = __webpack_require__(75);
+var andWalker = __webpack_require__(67);
+var collOfWalker = __webpack_require__(69);
+var mapOfWalker = __webpack_require__(72);
+var specRefWalker = __webpack_require__(76);
+var delayedSpecWalker = __webpack_require__(70);
 var coerceIntoSpec = __webpack_require__(8);
 var isProblem = __webpack_require__(1);
 
@@ -1104,12 +1122,27 @@ module.exports = fspec;
 "use strict";
 
 
+function isFunction(x) {
+  var getType = {};
+  // (x || false) guarantees returning of boolean type
+  return (x || false) && ['[object Function]', '[object GeneratorFunction]'].indexOf(getType.toString.call(x)) >= 0;
+}
+
+module.exports = isFunction;
+
+/***/ },
+/* 14 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 module.exports = function isUndefined(x) {
   return x === undefined;
 };
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1123,7 +1156,7 @@ function isSpecRef(x) {
 module.exports = isSpecRef;
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1137,14 +1170,14 @@ var _require = __webpack_require__(20),
     keys = _require.keys,
     mapOf = _require.mapOf;
 
-var nullable = __webpack_require__(49);
-var undefinable = __webpack_require__(50);
+var nullable = __webpack_require__(48);
+var undefinable = __webpack_require__(49);
 
-var _require2 = __webpack_require__(40),
+var _require2 = __webpack_require__(39),
     wall = _require2.wall;
 
 var other = {
-  any: __webpack_require__(43),
+  any: __webpack_require__(42),
   fspec: __webpack_require__(12),
   wall: wall, spec: wall,
   nullable: nullable, undefinable: undefinable
@@ -1154,7 +1187,7 @@ var r = oAssign({}, regex, { shape: shape, keys: keys, mapOf: mapOf }, other);
 module.exports = r;
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1162,34 +1195,19 @@ module.exports = r;
 
 module.exports = {
   conform: __webpack_require__(18),
-  isValid: __webpack_require__(67),
-  isNamespacePath: __webpack_require__(65),
+  isValid: __webpack_require__(66),
+  isNamespacePath: __webpack_require__(64),
   identity: __webpack_require__(30),
   isProblem: __webpack_require__(1),
-  delayed: __webpack_require__(60),
-  enforce: __webpack_require__(61),
-  isExpr: __webpack_require__(63),
+  delayed: __webpack_require__(59),
+  enforce: __webpack_require__(60),
+  isExpr: __webpack_require__(62),
   isSpec: __webpack_require__(2),
-  isFspec: __webpack_require__(64),
-  isSpecRef: __webpack_require__(14),
-  describe: __webpack_require__(41),
+  isFspec: __webpack_require__(63),
+  isSpecRef: __webpack_require__(15),
+  describe: __webpack_require__(40),
   deref: __webpack_require__(21)
 };
-
-/***/ },
-/* 17 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-function isFunction(x) {
-  var getType = {};
-  // (x || false) guarantees returning of boolean type
-  return (x || false) && ['[object Function]', '[object GeneratorFunction]'].indexOf(getType.toString.call(x)) >= 0;
-}
-
-module.exports = isFunction;
 
 /***/ },
 /* 18 */
@@ -1219,23 +1237,23 @@ module.exports = conform;
 
 
 var isNum = __webpack_require__(26);
-var isNatInt = __webpack_require__(56);
+var isNatInt = __webpack_require__(55);
 var isInt = __webpack_require__(24);
-var isBool = __webpack_require__(54);
-var isFn = __webpack_require__(17);
+var isBool = __webpack_require__(53);
+var isFn = __webpack_require__(13);
 var isObj = __webpack_require__(27);
-var equals = __webpack_require__(52);
+var equals = __webpack_require__(51);
 var oneOf = __webpack_require__(28);
 var isStr = __webpack_require__(5);
-var isDate = __webpack_require__(55);
-var instanceOf = __webpack_require__(53);
-var isUuid = __webpack_require__(57);
+var isDate = __webpack_require__(54);
+var instanceOf = __webpack_require__(52);
+var isUuid = __webpack_require__(56);
 var isArray = Array.isArray;
 
 var e = {
   isNull: __webpack_require__(25),
-  isUndefined: __webpack_require__(13),
-  notEmpty: __webpack_require__(58),
+  isUndefined: __webpack_require__(14),
+  notEmpty: __webpack_require__(57),
   isBool: isBool, isBoolean: isBool,
   isFn: isFn, isFunction: isFn,
   isNum: isNum, isNumber: isNum,
@@ -1589,9 +1607,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.NamespaceObjSpec = exports.MetaFnSpec = exports.isNamespacePath = exports.NamespaceFnSpec = exports.GetNSFnSpec = exports.SetNSFnSpec = exports.isSpecRef = undefined;
 
-var _core = __webpack_require__(15);
+var _core = __webpack_require__(16);
 
-var _utils = __webpack_require__(16);
+var _utils = __webpack_require__(17);
 
 var _preds = __webpack_require__(19);
 
@@ -1701,7 +1719,7 @@ module.exports = getNamedFn;
 "use strict";
 
 
-var isFn = __webpack_require__(17);
+var isFn = __webpack_require__(13);
 var fnName = __webpack_require__(6);
 
 function stringifyWithFnName(subject, currTransform) {
@@ -1815,130 +1833,6 @@ module.exports = stringifyWithFnName;
 /* 35 */
 /***/ function(module, exports, __webpack_require__) {
 
-/**
- * @file
- * <a href="https://travis-ci.org/Xotic750/is-function-x"
- * title="Travis status">
- * <img
- * src="https://travis-ci.org/Xotic750/is-function-x.svg?branch=master"
- * alt="Travis status" height="18">
- * </a>
- * <a href="https://david-dm.org/Xotic750/is-function-x"
- * title="Dependency status">
- * <img src="https://david-dm.org/Xotic750/is-function-x.svg"
- * alt="Dependency status" height="18"/>
- * </a>
- * <a
- * href="https://david-dm.org/Xotic750/is-function-x#info=devDependencies"
- * title="devDependency status">
- * <img src="https://david-dm.org/Xotic750/is-function-x/dev-status.svg"
- * alt="devDependency status" height="18"/>
- * </a>
- * <a href="https://badge.fury.io/js/is-function-x" title="npm version">
- * <img src="https://badge.fury.io/js/is-function-x.svg"
- * alt="npm version" height="18">
- * </a>
- *
- * isFunction module. Determine whether a given value is a function object.
- *
- * <h2>ECMAScript compatibility shims for legacy JavaScript engines</h2>
- * `es5-shim.js` monkey-patches a JavaScript context to contain all EcmaScript 5
- * methods that can be faithfully emulated with a legacy JavaScript engine.
- *
- * `es5-sham.js` monkey-patches other ES5 methods as closely as possible.
- * For these methods, as closely as possible to ES5 is not very close.
- * Many of these shams are intended only to allow code to be written to ES5
- * without causing run-time errors in older engines. In many cases,
- * this means that these shams cause many ES5 methods to silently fail.
- * Decide carefully whether this is what you want. Note: es5-sham.js requires
- * es5-shim.js to be able to work properly.
- *
- * `json3.js` monkey-patches the EcmaScript 5 JSON implimentation faithfully.
- *
- * `es6.shim.js` provides compatibility shims so that legacy JavaScript engines
- * behave as closely as possible to ECMAScript 6 (Harmony).
- *
- * @version 1.0.6
- * @author Xotic750 <Xotic750@gmail.com>
- * @copyright  Xotic750
- * @license {@link <https://opensource.org/licenses/MIT> MIT}
- * @module is-function-x
- */
-
-/*jslint maxlen:80, es6:false, white:true */
-
-/*jshint bitwise:true, camelcase:true, curly:true, eqeqeq:true, forin:true,
-  freeze:true, futurehostile:true, latedef:true, newcap:true, nocomma:true,
-  nonbsp:true, singleGroups:true, strict:true, undef:true, unused:true,
-  es3:true, esnext:false, plusplus:true, maxparams:1, maxdepth:1,
-  maxstatements:8, maxcomplexity:4 */
-
-/*global module */
-
-;(function () {
-  'use strict';
-
-  var fToString = Function.prototype.toString;
-  var toStringTag = __webpack_require__(84);
-  var hasToStringTag = __webpack_require__(81);
-  var isPrimitive = __webpack_require__(82);
-  var funcTag = '[object Function]';
-  var genTag = '[object GeneratorFunction]';
-
-  /**
-   * Checks if `value` is classified as a `Function` object.
-   *
-   * @private
-   * @param {*} value The value to check.
-   * @return {boolean} Returns `true` if `value` is correctly classified,
-   * else `false`.
-   */
-  function tryFunctionObject(value) {
-    try {
-      fToString.call(value);
-      return true;
-    } catch (ignore) {}
-    return false;
-  }
-
-  /**
-   * Checks if `value` is classified as a `Function` object.
-   *
-   * @param {*} value The value to check.
-   * @return {boolean} Returns `true` if `value` is correctly classified,
-   * else `false`.
-   * @example
-   * var isFunction = require('is-function-x');
-   *
-   * isFunction(); // false
-   * isFunction(Number.MIN_VALUE); // false
-   * isFunction('abc'); // false
-   * isFunction(true); // false
-   * isFunction({ name: 'abc' }); // false
-   * isFunction(function () {}); // true
-   * isFunction(new Function ()); // true
-   * isFunction(function* test1() {}); // true
-   * isFunction(function test2(a, b) {}); // true
-   * isFunction(class Test {}); // true
-   * isFunction((x, y) => {return this;}); // true
-   */
-  module.exports = function isFunction(value) {
-    if (isPrimitive(value)) {
-      return false;
-    }
-    if (hasToStringTag) {
-      return tryFunctionObject(value);
-    }
-    var strTag = toStringTag(value);
-    return strTag === funcTag || strTag === genTag;
-  };
-}());
-
-
-/***/ },
-/* 36 */
-/***/ function(module, exports, __webpack_require__) {
-
 "use strict";
 /**
 *
@@ -1988,7 +1882,7 @@ module.exports = isUndefined;
 
 
 /***/ },
-/* 37 */
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1997,7 +1891,7 @@ module.exports = isUndefined;
 module.exports = '0.0.22';
 
 /***/ },
-/* 38 */
+/* 37 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2008,9 +1902,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.meta = exports.clearRegistry = exports.getRegistry = undefined;
 
-var _core = __webpack_require__(15);
+var _core = __webpack_require__(16);
 
-var _utils = __webpack_require__(16);
+var _utils = __webpack_require__(17);
 
 var _namespace = __webpack_require__(29);
 
@@ -2022,10 +1916,10 @@ var _require = __webpack_require__(20),
 
 var isSpec = __webpack_require__(2);
 var isPred = __webpack_require__(7);
-var isUndefined = __webpack_require__(13);
+var isUndefined = __webpack_require__(14);
 var walk = __webpack_require__(10);
 var coerceIntoSpec = __webpack_require__(8);
-var oPath = __webpack_require__(51);
+var oPath = __webpack_require__(50);
 
 var reg;
 
@@ -2181,10 +2075,10 @@ exports.getRegistry = getRegistry;
 exports.clearRegistry = clearRegistry;
 exports.meta = meta;
 exports.default = namespaceGetOrSet;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(42)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(41)))
 
 /***/ },
-/* 39 */
+/* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2194,7 +2088,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _namespace = __webpack_require__(38);
+var _namespace = __webpack_require__(37);
 
 var _namespace2 = _interopRequireDefault(_namespace);
 
@@ -2203,8 +2097,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var oAssign = __webpack_require__(4);
 
 
-var ops = __webpack_require__(15);
-var utils = __webpack_require__(16);
+var ops = __webpack_require__(16);
+var utils = __webpack_require__(17);
 
 var predicates = __webpack_require__(19);
 
@@ -2215,13 +2109,13 @@ var models = {
 
 var r = oAssign(_namespace2.default, ops, utils, models, predicates);
 
-r.VERSION = __webpack_require__(37);
+r.VERSION = __webpack_require__(36);
 
 module.exports = r;
 exports.default = r;
 
 /***/ },
-/* 40 */
+/* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2262,13 +2156,13 @@ module.exports = {
 };
 
 /***/ },
-/* 41 */
+/* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var getFragments = __webpack_require__(62);
+var getFragments = __webpack_require__(61);
 var isPred = __webpack_require__(7);
 var isSpec = __webpack_require__(2);
 var isStr = __webpack_require__(5);
@@ -2307,7 +2201,7 @@ function _processInner(spec, interceptor) {
 module.exports = describe;
 
 /***/ },
-/* 42 */
+/* 41 */
 /***/ function(module, exports) {
 
 var g;
@@ -2332,7 +2226,7 @@ module.exports = g;
 
 
 /***/ },
-/* 43 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2353,7 +2247,7 @@ function any() {
 module.exports = any;
 
 /***/ },
-/* 44 */
+/* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2370,13 +2264,13 @@ module.exports = {
 };
 
 /***/ },
-/* 45 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var fragment = __webpack_require__(46);
+var fragment = __webpack_require__(45);
 var Spec = __webpack_require__(0);
 var deref = __webpack_require__(21);
 
@@ -2481,7 +2375,7 @@ var compile = function compile(expr) {
 module.exports = compile;
 
 /***/ },
-/* 46 */
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2684,7 +2578,7 @@ build.ROOT = function ROOT(frag) {
 module.exports = build;
 
 /***/ },
-/* 47 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2950,7 +2844,7 @@ function _coerceToProperType(t, arr) {
 module.exports = getMatch;
 
 /***/ },
-/* 48 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3113,7 +3007,7 @@ function _getChain(nfa, finalState, inputType) {
 module.exports = simulate;
 
 /***/ },
-/* 49 */
+/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3131,7 +3025,7 @@ function nullable(spec) {
 module.exports = nullable;
 
 /***/ },
-/* 50 */
+/* 49 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3140,7 +3034,7 @@ module.exports = nullable;
 var _require = __webpack_require__(9),
     or = _require.or;
 
-var isUndefined = __webpack_require__(13);
+var isUndefined = __webpack_require__(14);
 
 function undefinable(spec) {
   return or(isUndefined, spec);
@@ -3149,7 +3043,7 @@ function undefinable(spec) {
 module.exports = undefinable;
 
 /***/ },
-/* 51 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3222,7 +3116,7 @@ function getKey(key) {
 module.exports = { get: get, set: set };
 
 /***/ },
-/* 52 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3235,7 +3129,7 @@ module.exports = function equals(test) {
 };
 
 /***/ },
-/* 53 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3248,7 +3142,7 @@ module.exports = function instanceOf(t) {
 };
 
 /***/ },
-/* 54 */
+/* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3261,7 +3155,7 @@ function isBool(x) {
 module.exports = isBool;
 
 /***/ },
-/* 55 */
+/* 54 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3272,7 +3166,7 @@ module.exports = function isDate(date) {
 };
 
 /***/ },
-/* 56 */
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3287,7 +3181,7 @@ function isNatInt(x) {
 module.exports = isNatInt;
 
 /***/ },
-/* 57 */
+/* 56 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3298,7 +3192,7 @@ module.exports = function isUuid(x) {
 };
 
 /***/ },
-/* 58 */
+/* 57 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3315,7 +3209,7 @@ module.exports = function notEmpty(x) {
 };
 
 /***/ },
-/* 59 */
+/* 58 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3331,7 +3225,7 @@ function betterThrow(problem) {
 module.exports = betterThrow;
 
 /***/ },
-/* 60 */
+/* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3346,7 +3240,7 @@ function delayed(getFn) {
 module.exports = delayed;
 
 /***/ },
-/* 61 */
+/* 60 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3365,7 +3259,7 @@ module.exports = function enforce(spec, x) {
 };
 
 /***/ },
-/* 62 */
+/* 61 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3450,7 +3344,7 @@ function getFragments(spec, interceptor) {
 module.exports = getFragments;
 
 /***/ },
-/* 63 */
+/* 62 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3458,7 +3352,7 @@ module.exports = getFragments;
 
 var isPred = __webpack_require__(7);
 var isSpec = __webpack_require__(2);
-var isSpecRef = __webpack_require__(14);
+var isSpecRef = __webpack_require__(15);
 
 function isExpr(x) {
   return isPred(x) || isSpec(x) || isSpecRef(x);
@@ -3467,7 +3361,7 @@ function isExpr(x) {
 module.exports = isExpr;
 
 /***/ },
-/* 64 */
+/* 63 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3482,7 +3376,7 @@ function isFspec(x) {
 module.exports = isFspec;
 
 /***/ },
-/* 65 */
+/* 64 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3497,7 +3391,7 @@ function isNamespacePath(x) {
 module.exports = isNamespacePath;
 
 /***/ },
-/* 66 */
+/* 65 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3511,7 +3405,7 @@ module.exports = function isSpecName(x) {
 };
 
 /***/ },
-/* 67 */
+/* 66 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3537,7 +3431,7 @@ function isValid(pred, x) {
 module.exports = isValid;
 
 /***/ },
-/* 68 */
+/* 67 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3592,7 +3486,7 @@ function andWalker(spec, walkFn) {
 module.exports = andWalker;
 
 /***/ },
-/* 69 */
+/* 68 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3612,7 +3506,7 @@ function walkThroughAny(x) {
 module.exports = anyWalker;
 
 /***/ },
-/* 70 */
+/* 69 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3687,7 +3581,7 @@ function collOfWalker(spec, walkFn) {
 module.exports = collOfWalker;
 
 /***/ },
-/* 71 */
+/* 70 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3710,7 +3604,7 @@ function delayedSpecWalker(delayedSpec, walkFn) {
 module.exports = delayedSpecWalker;
 
 /***/ },
-/* 72 */
+/* 71 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3720,7 +3614,7 @@ var isProblem = __webpack_require__(1);
 var Problem = __webpack_require__(3);
 var functionName = __webpack_require__(6);
 var namedFn = __webpack_require__(32);
-var betterThrow = __webpack_require__(59);
+var betterThrow = __webpack_require__(58);
 var stringifyWithFnName = __webpack_require__(33);
 
 function fspecWalker(spec, walkFn) {
@@ -3862,7 +3756,7 @@ function fspecWalker(spec, walkFn) {
 module.exports = fspecWalker;
 
 /***/ },
-/* 73 */
+/* 72 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3917,15 +3811,15 @@ function mapOfWalker(spec, walkFn) {
 module.exports = mapOfWalker;
 
 /***/ },
-/* 74 */
+/* 73 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var simulate = __webpack_require__(48);
-var getMatch = __webpack_require__(47);
-var compile = __webpack_require__(45);
+var simulate = __webpack_require__(47);
+var getMatch = __webpack_require__(46);
+var compile = __webpack_require__(44);
 var Problem = __webpack_require__(3);
 
 function nfaWalker(spec, walkFn) {
@@ -3968,7 +3862,7 @@ function nfaWalker(spec, walkFn) {
 module.exports = nfaWalker;
 
 /***/ },
-/* 75 */
+/* 74 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4000,7 +3894,7 @@ function predWalker(spec) {
 module.exports = predWalker;
 
 /***/ },
-/* 76 */
+/* 75 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4011,7 +3905,7 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var isProblem = __webpack_require__(1);
-var isUndefined = __webpack_require__(13);
+var isUndefined = __webpack_require__(14);
 var oAssign = __webpack_require__(4);
 var Problem = __webpack_require__(3);
 var specFromAlts = __webpack_require__(11);
@@ -4302,7 +4196,7 @@ function _conformNamedOrExpr(x, alts, walkFn, walkOpts) {
 module.exports = shapeWalker;
 
 /***/ },
-/* 77 */
+/* 76 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4326,7 +4220,7 @@ function specRefWalker(specRef, walkFn) {
 module.exports = specRefWalker;
 
 /***/ },
-/* 78 */
+/* 77 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4351,7 +4245,7 @@ function wallWalker(wallSpec, walkFn) {
 module.exports = wallWalker;
 
 /***/ },
-/* 79 */
+/* 78 */
 /***/ function(module, exports, __webpack_require__) {
 
 /**
@@ -4419,8 +4313,8 @@ module.exports = wallWalker;
   'use strict';
 
   var hasSymbols = __webpack_require__(34);
-  var isFunction = __webpack_require__(35);
-  var isUndefined = __webpack_require__(36);
+  var isFunction = __webpack_require__(80);
+  var isUndefined = __webpack_require__(35);
   var pConcat = Array.prototype.concat;
   var pForEach = Array.prototype.forEach;
   var $keys = Object.keys;
@@ -4551,132 +4445,7 @@ module.exports = wallWalker;
 
 
 /***/ },
-/* 80 */
-/***/ function(module, exports, __webpack_require__) {
-
-/**
- * @file
- * <a href="https://travis-ci.org/Xotic750/get-function-name-x"
- * title="Travis status">
- * <img
- * src="https://travis-ci.org/Xotic750/get-function-name-x.svg?branch=master"
- * alt="Travis status" height="18">
- * </a>
- * <a href="https://david-dm.org/Xotic750/get-function-name-x"
- * title="Dependency status">
- * <img src="https://david-dm.org/Xotic750/get-function-name-x.svg"
- * alt="Dependency status" height="18"/>
- * </a>
- * <a
- * href="https://david-dm.org/Xotic750/get-function-name-x#info=devDependencies"
- * title="devDependency status">
- * <img src="https://david-dm.org/Xotic750/get-function-name-x/dev-status.svg"
- * alt="devDependency status" height="18"/>
- * </a>
- * <a href="https://badge.fury.io/js/get-function-name-x" title="npm version">
- * <img src="https://badge.fury.io/js/get-function-name-x.svg"
- * alt="npm version" height="18">
- * </a>
- *
- * getFunctionName module. Returns the name of the function.
- *
- * <h2>ECMAScript compatibility shims for legacy JavaScript engines</h2>
- * `es5-shim.js` monkey-patches a JavaScript context to contain all EcmaScript 5
- * methods that can be faithfully emulated with a legacy JavaScript engine.
- *
- * `es5-sham.js` monkey-patches other ES5 methods as closely as possible.
- * For these methods, as closely as possible to ES5 is not very close.
- * Many of these shams are intended only to allow code to be written to ES5
- * without causing run-time errors in older engines. In many cases,
- * this means that these shams cause many ES5 methods to silently fail.
- * Decide carefully whether this is what you want. Note: es5-sham.js requires
- * es5-shim.js to be able to work properly.
- *
- * `json3.js` monkey-patches the EcmaScript 5 JSON implimentation faithfully.
- *
- * `es6.shim.js` provides compatibility shims so that legacy JavaScript engines
- * behave as closely as possible to ECMAScript 6 (Harmony).
- *
- * @version 1.0.11
- * @author Xotic750 <Xotic750@gmail.com>
- * @copyright  Xotic750
- * @license {@link <https://opensource.org/licenses/MIT> MIT}
- * @module get-function-name-x
- */
-
-/*jslint maxlen:80, es6:false, white:true */
-
-/*jshint bitwise:true, camelcase:true, curly:true, eqeqeq:true, forin:true,
-  freeze:true, futurehostile:true, latedef:true, newcap:true, nocomma:true,
-  nonbsp:true, singleGroups:true, strict:true, undef:true, unused:true,
-  es3:true, esnext:false, plusplus:true, maxparams:1, maxdepth:2,
-  maxstatements:13, maxcomplexity:4 */
-
-/*global module */
-
-;(function () {
-  'use strict';
-
-  var isFunction = __webpack_require__(35);
-  var getFnName;
-
-  if ((function test() {}).name !== 'test') {
-    var STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
-    var fToString = Function.prototype.toString;
-    var pMatch = String.prototype.match;
-    var pReplace = String.prototype.replace;
-    var s = __webpack_require__(85).ws;
-    var reName = new RegExp(
-      '^[' + s + ']*(?:function|class)[' + s + ']*\\*?[' + s + ']+([\\w\\$]+)[' + s + ']*',
-      'i'
-    );
-    getFnName = function getName(fn) {
-      var name = pMatch.call(
-        pReplace.call(fToString.call(fn), STRIP_COMMENTS, ' '),
-        reName
-      );
-      return name && name[1] !== 'anonymous' ? name[1] : '';
-    };
-  } else {
-    /*jshint evil:true */
-    if ((new Function()).name === 'anonymous') {
-      getFnName = function getName(fn) {
-        return fn.name && fn.name !== 'anonymous' ? fn.name : '';
-      };
-    }
-  }
-  /**
-   * This method returns the name of the function, or `undefined` if not
-   * a function.
-   *
-   * @param {Function} fn The function to get the name of.
-   * @return {undefined|string} The name of the function,  or `undefined` if
-   *  not a function.
-   * @example
-   * var getFunctionName = require('get-function-name-x');
-   *
-   * getFunctionName(); // undefined
-   * getFunctionName(Number.MIN_VALUE); // undefined
-   * getFunctionName('abc'); // undefined
-   * getFunctionName(true); // undefined
-   * getFunctionName({ name: 'abc' }); // undefined
-   * getFunctionName(function () {}); // ''
-   * getFunctionName(new Function ()); // ''
-   * getFunctionName(function test1() {}); // 'test1'
-   * getFunctionName(function* test2() {}); // 'test2'
-   * getFunctionName(class Test {}); // 'Test'
-   */
-  module.exports = function getFunctionName(fn) {
-    if (!isFunction(fn)) {
-      return;
-    }
-    return getFnName ? getFnName(fn) : fn.name;
-  };
-}());
-
-
-/***/ },
-/* 81 */
+/* 79 */
 /***/ function(module, exports, __webpack_require__) {
 
 /**
@@ -4754,7 +4523,131 @@ module.exports = wallWalker;
 
 
 /***/ },
-/* 82 */
+/* 80 */
+/***/ function(module, exports, __webpack_require__) {
+
+/**
+ * @file
+ * <a href="https://travis-ci.org/Xotic750/is-function-x"
+ * title="Travis status">
+ * <img
+ * src="https://travis-ci.org/Xotic750/is-function-x.svg?branch=master"
+ * alt="Travis status" height="18">
+ * </a>
+ * <a href="https://david-dm.org/Xotic750/is-function-x"
+ * title="Dependency status">
+ * <img src="https://david-dm.org/Xotic750/is-function-x.svg"
+ * alt="Dependency status" height="18"/>
+ * </a>
+ * <a
+ * href="https://david-dm.org/Xotic750/is-function-x#info=devDependencies"
+ * title="devDependency status">
+ * <img src="https://david-dm.org/Xotic750/is-function-x/dev-status.svg"
+ * alt="devDependency status" height="18"/>
+ * </a>
+ * <a href="https://badge.fury.io/js/is-function-x" title="npm version">
+ * <img src="https://badge.fury.io/js/is-function-x.svg"
+ * alt="npm version" height="18">
+ * </a>
+ *
+ * isFunction module. Determine whether a given value is a function object.
+ *
+ * <h2>ECMAScript compatibility shims for legacy JavaScript engines</h2>
+ * `es5-shim.js` monkey-patches a JavaScript context to contain all EcmaScript 5
+ * methods that can be faithfully emulated with a legacy JavaScript engine.
+ *
+ * `es5-sham.js` monkey-patches other ES5 methods as closely as possible.
+ * For these methods, as closely as possible to ES5 is not very close.
+ * Many of these shams are intended only to allow code to be written to ES5
+ * without causing run-time errors in older engines. In many cases,
+ * this means that these shams cause many ES5 methods to silently fail.
+ * Decide carefully whether this is what you want. Note: es5-sham.js requires
+ * es5-shim.js to be able to work properly.
+ *
+ * `json3.js` monkey-patches the EcmaScript 5 JSON implimentation faithfully.
+ *
+ * `es6.shim.js` provides compatibility shims so that legacy JavaScript engines
+ * behave as closely as possible to ECMAScript 6 (Harmony).
+ *
+ * @version 1.0.6
+ * @author Xotic750 <Xotic750@gmail.com>
+ * @copyright  Xotic750
+ * @license {@link <https://opensource.org/licenses/MIT> MIT}
+ * @module is-function-x
+ */
+
+/*jslint maxlen:80, es6:false, white:true */
+
+/*jshint bitwise:true, camelcase:true, curly:true, eqeqeq:true, forin:true,
+  freeze:true, futurehostile:true, latedef:true, newcap:true, nocomma:true,
+  nonbsp:true, singleGroups:true, strict:true, undef:true, unused:true,
+  es3:true, esnext:false, plusplus:true, maxparams:1, maxdepth:1,
+  maxstatements:8, maxcomplexity:4 */
+
+/*global module */
+
+;(function () {
+  'use strict';
+
+  var fToString = Function.prototype.toString;
+  var toStringTag = __webpack_require__(83);
+  var hasToStringTag = __webpack_require__(79);
+  var isPrimitive = __webpack_require__(81);
+  var funcTag = '[object Function]';
+  var genTag = '[object GeneratorFunction]';
+
+  /**
+   * Checks if `value` is classified as a `Function` object.
+   *
+   * @private
+   * @param {*} value The value to check.
+   * @return {boolean} Returns `true` if `value` is correctly classified,
+   * else `false`.
+   */
+  function tryFunctionObject(value) {
+    try {
+      fToString.call(value);
+      return true;
+    } catch (ignore) {}
+    return false;
+  }
+
+  /**
+   * Checks if `value` is classified as a `Function` object.
+   *
+   * @param {*} value The value to check.
+   * @return {boolean} Returns `true` if `value` is correctly classified,
+   * else `false`.
+   * @example
+   * var isFunction = require('is-function-x');
+   *
+   * isFunction(); // false
+   * isFunction(Number.MIN_VALUE); // false
+   * isFunction('abc'); // false
+   * isFunction(true); // false
+   * isFunction({ name: 'abc' }); // false
+   * isFunction(function () {}); // true
+   * isFunction(new Function ()); // true
+   * isFunction(function* test1() {}); // true
+   * isFunction(function test2(a, b) {}); // true
+   * isFunction(class Test {}); // true
+   * isFunction((x, y) => {return this;}); // true
+   */
+  module.exports = function isFunction(value) {
+    if (isPrimitive(value)) {
+      return false;
+    }
+    if (hasToStringTag) {
+      return tryFunctionObject(value);
+    }
+    var strTag = toStringTag(value);
+    return strTag === funcTag || strTag === genTag;
+  };
+}());
+
+
+/***/ },
+/* 81 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4774,7 +4667,7 @@ module.exports = function isPrimitive(value) {
 
 
 /***/ },
-/* 83 */
+/* 82 */
 /***/ function(module, exports) {
 
 /**
@@ -4810,7 +4703,7 @@ module.exports = isNull;
 
 
 /***/ },
-/* 84 */
+/* 83 */
 /***/ function(module, exports, __webpack_require__) {
 
 /**
@@ -4888,8 +4781,8 @@ module.exports = isNull;
   'use strict';
 
   var pToString = Object.prototype.toString;
-  var isNull = __webpack_require__(83);
-  var isUndefined = __webpack_require__(36);
+  var isNull = __webpack_require__(82);
+  var isUndefined = __webpack_require__(35);
   var nullTag = '[object Null]';
   var undefTag = '[object Undefined]';
 
@@ -4917,7 +4810,7 @@ module.exports = isNull;
 
 
 /***/ },
-/* 85 */
+/* 84 */
 /***/ function(module, exports, __webpack_require__) {
 
 /**
@@ -4981,7 +4874,7 @@ module.exports = isNull;
 ;(function () {
   'use strict';
 
-  var define = __webpack_require__(79);
+  var define = __webpack_require__(78);
 
   /**
    * An array of the whitespace char codes.
