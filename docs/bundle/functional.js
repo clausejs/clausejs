@@ -3735,7 +3735,7 @@ function fspecWalker(spec, walkFn) {
       }
 
       var retVal = fn.call(this, conformedArgs);
-      if (retSpec) {}
+
       checkRet(fn, fnName, retVal);
 
       if (validateFn) {
