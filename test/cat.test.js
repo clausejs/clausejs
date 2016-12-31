@@ -1,6 +1,6 @@
-var S = require( '../src/' );
+var C = require( '../src/' );
 var expect = require( 'chai' ).expect;
-var Problem = S.Problem;
+var Problem = C.Problem;
 
 describe( 'cat', () => {
   var fn = function() {};
@@ -14,9 +14,9 @@ describe( 'cat', () => {
     NamedCommentedSpec;
 
   function init() {
-    NamedSpec = S.cat( 'z', S.isFn, 'b', S.isObj, 'c', S.isFn, 'a', S.isObj );
-    NamedCommentedSpec = S.cat( 'z', 'very zeeee', S.isFn, 'b', S.isObj, 'c', 'c for da win, man', S.isFn, 'a', S.isObj );
-    UnnamedSpec = S.cat( S.isFn, S.isObj, S.isFn, S.isObj );
+    NamedSpec = C.cat( 'z', C.isFn, 'b', C.isObj, 'c', C.isFn, 'a', C.isObj );
+    NamedCommentedSpec = C.cat( 'z', 'very zeeee', C.isFn, 'b', C.isObj, 'c', 'c for da win, man', C.isFn, 'a', C.isObj );
+    UnnamedSpec = C.cat( C.isFn, C.isObj, C.isFn, C.isObj );
   }
 
   describe( 'conform', () => {
@@ -24,7 +24,7 @@ describe( 'cat', () => {
     beforeEach( init );
 
     it( 'empty case', () => {
-      var EmptySpec = S.cat();
+      var EmptySpec = C.cat();
       var conformed = EmptySpec.conform( [] );
       var unconformed = EmptySpec.conform( [ 1 ] );
       expect( conformed ).to.deep.equal( [] );
@@ -32,13 +32,13 @@ describe( 'cat', () => {
     } );
 
     it( 'single val case', () => {
-      var ss = S.cat( S.isInt );
+      var ss = C.cat( C.isInt );
       var r = ss.conform( [ 44 ] );
       expect( r ).to.deep.equal( [ 44 ] );
     } );
 
     it( 'nested case', () => {
-      var ss = S.cat( S.cat( S.cat( S.isInt, S.isBool ), S.cat( S.isInt, S.cat( S.isBool ) ) ) );
+      var ss = C.cat( C.cat( C.cat( C.isInt, C.isBool ), C.cat( C.isInt, C.cat( C.isBool ) ) ) );
       var data = [ 22, true, 23, false ];
       var r = ss.conform( data );
 
@@ -46,7 +46,7 @@ describe( 'cat', () => {
     } );
 
     it( 'labelled', () => {
-      var NamedCommentedSpec = S.cat( 'z', 'it\'s a fuuuunction', S.isFn, 'b', S.isObj, 'c', 'another fuuuunction', S.isFn, 'a', S.isObj );
+      var NamedCommentedSpec = C.cat( 'z', 'it\'s a fuuuunction', C.isFn, 'b', C.isObj, 'c', 'another fuuuunction', C.isFn, 'a', C.isObj );
 
       var conformed = NamedCommentedSpec.conform( conformist );
       expect( conformed ).to.deep.equal( { z: fn, b: {}, c: fn, a: { a: 1 } } );
@@ -55,16 +55,16 @@ describe( 'cat', () => {
     } );
 
     it( 'no dupe labels', () => {
-      let createDupe = () => S.cat( 'z', 'it\'s a fuuuunction', S.isFn, 'b', S.isObj, 'z', 'another fuuuunction', S.isFn, 'a', S.isObj );
+      let createDupe = () => C.cat( 'z', 'it\'s a fuuuunction', C.isFn, 'b', C.isObj, 'z', 'another fuuuunction', C.isFn, 'a', C.isObj );
       expect( createDupe ).to.throw( Error );
     } );
 
     it( 'labelled, grouped', () => {
-      var NamedGroupedSpec = S.cat(
-         'z', 'it\'s a fuuuunction', S.isFn,
-         'b', S.isObj,
-         'c', 'another fuuuunction', S.isFn,
-         'a', S.isObj
+      var NamedGroupedSpec = C.cat(
+         'z', 'it\'s a fuuuunction', C.isFn,
+         'b', C.isObj,
+         'c', 'another fuuuunction', C.isFn,
+         'a', C.isObj
       );
 
       var conformed = NamedGroupedSpec.conform( conformist );
@@ -101,14 +101,14 @@ describe( 'cat', () => {
          it( name, () => {
            const spec = getSpec();
 
-        //invalid case: more elems than specs
-           expect( S.isValid( spec, extendedCase ) ).to.be.false;
+        //invalid case: more elems than clauses
+           expect( C.isValid( spec, extendedCase ) ).to.be.false;
 
         //empty case
-           expect( S.isValid( spec, emptyCase ) ).to.be.false;
+           expect( C.isValid( spec, emptyCase ) ).to.be.false;
 
         //invalid case: less elem than spec
-           expect( S.isValid( spec, lesserCase ) ).to.be.false;
+           expect( C.isValid( spec, lesserCase ) ).to.be.false;
          } );
        } );
   } );

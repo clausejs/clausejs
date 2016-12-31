@@ -2,19 +2,19 @@ var expect = require( 'chai' ).expect;
 var gen = require( 'mocha-testcheck' ).gen;
 var check = require( 'mocha-testcheck' ).check;
 
-var S = require( '../src/' );
-var cat = S.cat;
-var oneOrMore = S.oneOrMore;
+var C = require( '../src/' );
+var cat = C.cat;
+var oneOrMore = C.oneOrMore;
 var repeat = require( '../src/utils/repeat' );
 var catS = function( str ) {
-  return S.cat.apply( null, Array.prototype.slice.call( str ).map( S.equals ) );
+  return C.cat.apply( null, Array.prototype.slice.call( str ).map( C.equals ) );
 };
 
-function isInteger(value) {
-  return typeof value === "number" &&
-    isFinite(value) &&
-    Math.floor(value) === value;
-};
+function isInteger( value ) {
+  return typeof value === 'number' &&
+    isFinite( value ) &&
+    Math.floor( value ) === value;
+}
 
 describe( 'nfa regex', function() {
   this.slow( 90000 ); //generative tests take more time
@@ -24,18 +24,18 @@ describe( 'nfa regex', function() {
     check.it( 'accepts zero or more int\'s',
       { times: 20 },
       [ gen.array( gen.int ) ], function( ints ) {
-        var ZeroOrMoreIntegers = S.zeroOrMore( isInteger );
-        expect( S.isValid( ZeroOrMoreIntegers, ints ) ).to.be.true;
-        expect( S.isValid( ZeroOrMoreIntegers, [] ) ).to.be.true;
+        var ZeroOrMoreIntegers = C.zeroOrMore( isInteger );
+        expect( C.isValid( ZeroOrMoreIntegers, ints ) ).to.be.true;
+        expect( C.isValid( ZeroOrMoreIntegers, [] ) ).to.be.true;
       } );
 
     check.it( 'rejects mixtures',
       { times: 20 },
       [ gen.array( gen.int ), gen.notEmpty( gen.array( gen.string ) ) ],
       function( ints, strs ) {
-        var ZeroOrMoreIntegers = S.zeroOrMore( isInteger );
-        expect( S.isValid( ZeroOrMoreIntegers, ints.concat( strs ) ) ).to.be.false;
-        expect( S.isValid( ZeroOrMoreIntegers, strs ) ).to.be.false;
+        var ZeroOrMoreIntegers = C.zeroOrMore( isInteger );
+        expect( C.isValid( ZeroOrMoreIntegers, ints.concat( strs ) ) ).to.be.false;
+        expect( C.isValid( ZeroOrMoreIntegers, strs ) ).to.be.false;
       } );
 
     check.it( 'more complex expressions',
@@ -44,9 +44,9 @@ describe( 'nfa regex', function() {
       function( a, b, n ) {
         //imitates regex a(bb+)a
 
-        var expr = cat( S.isNum, oneOrMore( cat( S.isStr, S.isStr ) ), S.isNum );
+        var expr = cat( C.isNum, oneOrMore( cat( C.isStr, C.isStr ) ), C.isNum );
         var val = [ a ].concat( repeat( n * 2, b ) ).concat( [ a ] );
-        expect( S.isValid( expr, val ) ).to.be.true;
+        expect( C.isValid( expr, val ) ).to.be.true;
 
       } );
 
@@ -54,37 +54,37 @@ describe( 'nfa regex', function() {
     { times: 20 },
     [ gen.strictPosInt, gen.strictPosInt ],
     ( m, n ) => {
-      var expr = cat( oneOrMore( S.equals( 'a' ) ), S.equals( 'b' ), oneOrMore( S.equals( 'c' ) ) );
+      var expr = cat( oneOrMore( C.equals( 'a' ) ), C.equals( 'b' ), oneOrMore( C.equals( 'c' ) ) );
       var val = `${repeat( m, 'a' ).join( '' )}b${repeat( n, 'c' ).join( '' )}`;
-      expect( S.isValid( expr, val ) ).to.be.true;
+      expect( C.isValid( expr, val ) ).to.be.true;
     } );
 
     it( 'use in conjunction with cat', function() {
-      var ZeroOrMoreStrings = S[ '*' ]( S.isStr );
-      var ZeroOrMoreIntegers = S[ '*' ]( isInteger );
-      var oneOrMoreIntegers = S[ '+' ]( isInteger );
-      var expr = S.cat(
+      var ZeroOrMoreStrings = C[ '*' ]( C.isStr );
+      var ZeroOrMoreIntegers = C[ '*' ]( isInteger );
+      var oneOrMoreIntegers = C[ '+' ]( isInteger );
+      var expr = C.cat(
         ZeroOrMoreStrings,
         ZeroOrMoreIntegers,
         ZeroOrMoreStrings,
-        S.isBool,
+        C.isBool,
         oneOrMoreIntegers,
         oneOrMoreIntegers,
         ZeroOrMoreStrings );
       var validData = [ 'a', 'b', 1, 2, 3, true, 2, 3, 4 ];
       var invalidData = [ 2, 3, 4, 5 ];
-      expect( S.isValid( expr, validData ) ).to.be.true;
-      expect( S.isValid( expr, invalidData ) ).to.be.false;
+      expect( C.isValid( expr, validData ) ).to.be.true;
+      expect( C.isValid( expr, invalidData ) ).to.be.false;
     } );
 
     it( 'string vocab', () => {
 
-      var VocabSpec = S.or.apply( null, [ 'foo', 'bar', 'baz', ' ' ].map( catS ) );
-      var ContentSpec = S.zeroOrMore( VocabSpec );
+      var VocabSpec = C.or.apply( null, [ 'foo', 'bar', 'baz', ' ' ].map( catS ) );
+      var ContentSpec = C.zeroOrMore( VocabSpec );
 
       var treatise = ' baz foo bar bar';
       expect( ContentSpec.conform( treatise ) ).to.equal( treatise );
-      expect( ContentSpec.conform( treatise + 'mangled' ) ).to.be.an.instanceof( S.Problem );
+      expect( ContentSpec.conform( treatise + 'mangled' ) ).to.be.an.instanceof( C.Problem );
     } );
 
     it( 'treatise dissection', () => {
@@ -103,11 +103,11 @@ describe( 'nfa regex', function() {
         -----------
         I am truely awesome.
       `;
-      var TreatiseSpec = S.cat(
-        'spacing', S.zeroOrMore( S.isStr ),
-        'intro', S.cat( catS( 'Abstract' ), S.oneOrMore( S.isStr ) ),
-        'body', S.cat( catS( 'My Points' ), S.oneOrMore( S.isStr ) ),
-        'ending', S.cat( catS( 'Conclusion' ), S.oneOrMore( S.isStr ) )
+      var TreatiseSpec = C.cat(
+        'spacing', C.zeroOrMore( C.isStr ),
+        'intro', C.cat( catS( 'Abstract' ), C.oneOrMore( C.isStr ) ),
+        'body', C.cat( catS( 'My Points' ), C.oneOrMore( C.isStr ) ),
+        'ending', C.cat( catS( 'Conclusion' ), C.oneOrMore( C.isStr ) )
       );
 
       expect( TreatiseSpec.conform( treatise ).body ).to.contain( 'eat pie' );
@@ -120,13 +120,13 @@ describe( 'nfa regex', function() {
       var nested = [ [ 'a', 1, true ], [ 'b', 2, false ], [ 'c', 3, true ] ];
       var moreNested = [ [ [ 'a', 1, true ] ], [ [ 'b', 2, false ] ], [ [ 'c', 3, true ] ] ];
 
-      var FlatSpec = S.oneOrMore( S.cat( S.isStr, S.isNum, S.isBool ) );
-      var NestedSpec = S.oneOrMore( S.wall( S.cat( S.isStr, S.isNum, S.isBool ) ) );
-      var NestedNestedSpec = S.oneOrMore( S.wall( S.cat( S.wall( S.cat( S.isStr, S.isNum, S.isBool ) ) ) ) );
+      var FlatSpec = C.oneOrMore( C.cat( C.isStr, C.isNum, C.isBool ) );
+      var NestedSpec = C.oneOrMore( C.wall( C.cat( C.isStr, C.isNum, C.isBool ) ) );
+      var NestedNestedSpec = C.oneOrMore( C.wall( C.cat( C.wall( C.cat( C.isStr, C.isNum, C.isBool ) ) ) ) );
 
       [ flat, nested, moreNested ].forEach( ( d, i ) => {
         [ FlatSpec, NestedSpec, NestedNestedSpec ].forEach( ( spec, j ) => {
-          let r = S.isValid( spec, d );
+          let r = C.isValid( spec, d );
           if ( i === j ) {
             expect( r ).to.be.true;
           } else {
@@ -141,7 +141,7 @@ describe( 'nfa regex', function() {
     it( 'cat single char string', () => {
       var data = 'a';
 
-      var SingleCatSpec = S.cat( S.isStr );
+      var SingleCatSpec = C.cat( C.isStr );
 
       expect( SingleCatSpec.conform( data ) ).to.equal( data );
     } );
@@ -149,7 +149,7 @@ describe( 'nfa regex', function() {
     it( 'kleene closure on strings', () => {
       var data = 'abcdefg';
 
-      var KleeneStringSpec = S.zeroOrMore( S.isString );
+      var KleeneStringSpec = C.zeroOrMore( C.isString );
 
       expect( KleeneStringSpec.conform( data ) ).to.equal( data );
     } );

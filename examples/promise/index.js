@@ -1,32 +1,32 @@
-var S = require('../../src');
+var C = require('../../src');
 var Q = require('q');
 
-var PromiseSpec = S.shape({
+var PromiseSpec = C.shape({
   req: {
-    then: S.fspec({
-      args: S.cat(
-        S.or(
-          S.isNull, S.isUndefined,
-          S.fspec({
-            args: S.cat('message', S.isStr),
-            ret: S.isUndefined,
+    then: C.fspec({
+      args: C.cat(
+        C.or(
+          C.isNull, C.isUndefined,
+          C.fspec({
+            args: C.cat('message', C.isStr),
+            ret: C.isUndefined,
           })
         ),
-        S.zeroOrOne(
-          S.or(
-            S.isNull, S.isUndefined,
-            S.fspec({
-              args: S.cat('rejError', S.any),
+        C.zeroOrOne(
+          C.or(
+            C.isNull, C.isUndefined,
+            C.fspec({
+              args: C.cat('rejError', C.any),
             }))
           )
         ),
-      ret: S.delayed(() => PromiseSpec), //recursive
+      ret: C.delayed(() => PromiseSpec), //recursive
     }),
   },
 });
 
-var GetHelloSpec = S.fspec({
-  args: S.cat(),
+var GetHelloSpec = C.fspec({
+  args: C.cat(),
   ret: PromiseSpec,
 });
 

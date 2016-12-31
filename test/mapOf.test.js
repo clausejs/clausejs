@@ -1,4 +1,4 @@
-const S = require( '../src' );
+const C = require( '../src' );
 var expect = require( 'chai' ).expect;
 
 function beginsWith( prefix ) {
@@ -7,12 +7,12 @@ function beginsWith( prefix ) {
 
 describe( 'mapOf', () => {
   it( 'empty spec args', () => {
-    expect( () => S.mapOf() ).to.throw( S.Problem );
+    expect( () => C.mapOf() ).to.throw( C.Problem );
   } );
 
   it( 'basic case', () => {
-    var MapOfSpec = S.mapOf(
-      beginsWith( 'me' ), S.isNatInt
+    var MapOfSpec = C.mapOf(
+      beginsWith( 'me' ), C.isNatInt
     );
 
     var data = {
@@ -31,7 +31,7 @@ describe( 'mapOf', () => {
     };
 
     expect( MapOfSpec.conform( data ) ).to.deep.equal( data );
-    expect( MapOfSpec.conform( unconformed1 ) ).to.be.an.instanceOf( S.Problem );
-    expect( MapOfSpec.conform( unconformed2 ) ).to.be.an.instanceOf( S.Problem );
+    expect( MapOfSpec.conform( unconformed1 ) ).to.be.an.instanceOf( C.Problem );
+    expect( MapOfSpec.conform( unconformed2 ) ).to.be.an.instanceOf( C.Problem );
   } );
 } );

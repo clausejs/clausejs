@@ -1,6 +1,6 @@
 import _ from 'lodash';
 const resolvedMaps = [];
-import { NamespaceObjSpec } from '../specs/namespace.types';
+import { NamespaceObjSpec } from '../clauses/namespace.types';
 
 function resolve( registry, specRef ) {
   let map = _findFirst( resolvedMaps, ( [ registryRef, m ] ) => {

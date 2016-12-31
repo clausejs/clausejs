@@ -1,4 +1,4 @@
-var s = require( '../src' );
+var C = require( '../src' );
 var expect = require( 'chai' ).expect;
 
 var isSpec = require( '../src/utils/isSpec' );
@@ -6,67 +6,67 @@ var isPred = require( '../src/utils/isPred' );
 
 describe( 'namespace', () => {
 
-  beforeEach( s.clearRegistry );
-  afterEach( s.clearRegistry );
+  beforeEach( C.clearRegistry );
+  afterEach( C.clearRegistry );
 
   describe( 'simple defs and gets', () => {
     it( 'should def and get', () => {
-      s( 'xyz.superapp.item/title', s.isStr );
-      s( 'xyz.superapp/item', s.and(
-        s.isObj,
-        s.shape( {
+      C( 'xyz.superapp.item/title', C.isStr );
+      C( 'xyz.superapp/item', C.and(
+        C.isObj,
+        C.shape( {
           required: {
-            title: ( s( 'xyz.superapp.item/title' ) ),
-            content: s.isStr,
+            title: ( C( 'xyz.superapp.item/title' ) ),
+            content: C.isStr,
           }
         } ) ) );
 
-      expect( isSpec( s( 'xyz.superapp/item' ).get() ) ).to.be.true;
-      expect( isPred( s( 'xyz.superapp.item/title' ).get() ) ).to.be.true;
-      expect( s.isUndefined( s( 'xyz.superapp.item/doesnotexist' ).get() ) ).to.be.true;
+      expect( isSpec( C( 'xyz.superapp/item' ).get() ) ).to.be.true;
+      expect( isPred( C( 'xyz.superapp.item/title' ).get() ) ).to.be.true;
+      expect( C.isUndefined( C( 'xyz.superapp.item/doesnotexist' ).get() ) ).to.be.true;
     } );
   } );
 
   describe.skip( 'complex struct', function() {
     it( 'should register and retrieve', function() {
-      s( 'todoapp', {
-        '/headline': s.isStr,
+      C( 'todoapp', {
+        '/headline': C.isStr,
         'list': {
-          '/title': s( '../headline' ),
-          '/items': s.zeroOrMore( s( '../item' ) ),
+          '/title': C( '../headline' ),
+          '/items': C.zeroOrMore( C( '../item' ) ),
         },
         '/item':
-          s.shape( {
+          C.shape( {
             req: [
-              s( 'todoapp.item/title' ),
-              s( 'todoapp.item/content' ),
-              s( 'todoapp.item/date' ),
-              s( 'todoapp.item/isDone' ),
+              C( 'todoapp.item/title' ),
+              C( 'todoapp.item/content' ),
+              C( 'todoapp.item/date' ),
+              C( 'todoapp.item/isDone' ),
             ],
             opt: [
-              s( 'todoapp.item/reminder' ),
+              C( 'todoapp.item/reminder' ),
             ],
           } ),
         'item': {
-          '/title': s( 'todoapp/headline' ),
-          '/content': s.and( s.isStr, s.notEmpty ),
-          '/date': s.isDate,
-          '/isDone': s.isBool,
-          '/reminder': s.isDate,
+          '/title': C( 'todoapp/headline' ),
+          '/content': C.and( C.isStr, C.notEmpty ),
+          '/date': C.isDate,
+          '/isDone': C.isBool,
+          '/reminder': C.isDate,
         }
       } );
 
-      var ListSpec = s( 'todoapp/list' );
-      var ItemSpec = s( 'todoapp/item' );
-      var ContentSpec = s( 'todoapp.item/content' );
+      var ListSpec = C( 'todoapp/list' );
+      var ItemSpec = C( 'todoapp/item' );
+      var ContentSpec = C( 'todoapp.item/content' );
 
       expect( ListSpec ).to.be.ok;
       expect( isSpec( ListSpec ) ).to.be.true;
       expect( isSpec( ItemSpec ) ).to.be.true;
       expect( isSpec( ContentSpec ) ).to.be.true;
 
-      expect( s.isValid( ListSpec, [] ) ).to.be.true;
-      expect( s.isValid( ItemSpec, [] ) ).to.be.false;
+      expect( C.isValid( ListSpec, [] ) ).to.be.true;
+      expect( C.isValid( ItemSpec, [] ) ).to.be.false;
     } );
   } );
 } );

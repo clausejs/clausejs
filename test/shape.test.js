@@ -22,7 +22,7 @@ describe( 'shape', function() {
     expect( ObjSpec.conform( unconformed1 ) ).to.be.an.instanceof( Problem );
   } );
 
-  it( 'single val specs', () => {
+  it( 'single val clauses', () => {
     var ObjSpec = shape( {
       required: {
         a: s.isStr,

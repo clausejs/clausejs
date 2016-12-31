@@ -1,4 +1,4 @@
-const SPECKY_EXTERN = 'S';
+const CLAUSEJS_EXTERN = 'C';
 
 var webpack = require( 'webpack' );
 // var ClosureCompilerPlugin = require('webpack-closure-compiler');
@@ -24,14 +24,14 @@ if ( PROD ) {
 
 module.exports = {
   entry: {
-    'packages/specky/dist/specky': './src/index.js',
-    'packages/specky-gen/dist/specky-gen': './src/gen/index.js',
-    'packages/specky-react/dist/specky-react': './src/react/index.js',
+    'packages/clausejs/dist/clausejs': './src/index.js',
+    'packages/clausejs-gen/dist/clausejs-gen': './src/gen/index.js',
+    'packages/clausejs-react/dist/clausejs-react': './src/react/index.js',
     'docs/bundle/functional': './docs/src/functional.js',
     'docs/bundle/content': './docs/src/content.js',
   },
   output: {
-    library: [ SPECKY_EXTERN ],
+    library: [ CLAUSEJS_EXTERN ],
     libraryTarget: 'umd',
     path: './',
     filename: PROD ? '[name].min.js' : '[name].js',
@@ -45,11 +45,11 @@ module.exports = {
       commonjs: 'react',
       amd: 'react',
     },
-    'specky': {
-      root: SPECKY_EXTERN,
-      commonjs2: 'specky',
-      commonjs: 'specky',
-      amd: 'specky',
+    'clausejs': {
+      root: CLAUSEJS_EXTERN,
+      commonjs2: 'clausejs',
+      commonjs: 'clausejs',
+      amd: 'clausejs',
     },
   },
   module: {

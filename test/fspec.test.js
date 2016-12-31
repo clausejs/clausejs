@@ -1,36 +1,36 @@
 var expect = require( 'chai' ).expect;
-var S = require( '../src/' );
-var s = S;
-var Problem = S.Problem;
+var C = require( '../src/' );
+var s = C;
+var Problem = C.Problem;
 var Spec = require( '../src/models/Spec' );
 var isSpec = require( '../src/utils/isSpec' );
-var identity = S.identity;
+var identity = C.identity;
 
 describe( 'fspec', function() {
 
   it( 'empty spec', () => {
-    var EmptyFspec = S.fspec( {} );
+    var EmptyFspec = C.fspec( {} );
 
     expect( isSpec( EmptyFspec ) ).to.be.true;
   } );
 
   it( 'instrument: no args provided', () => {
-    var FspecSpec = S.fspec( {
-      args: S.cat( isSpec ),
-      ret: S.isSpec,
+    var FspecSpec = C.fspec( {
+      args: C.cat( isSpec ),
+      ret: C.isSpec,
     } );
 
     expect( () => FspecSpec.instrument() ).to.throw( Error );
   } );
 
   it( 'should return a function that checks the spec of a given function as its input', function() {
-    var FspecSpec = S.fspec( {
-      args: S.cat( isSpec ),
-      ret: S.isSpec,
+    var FspecSpec = C.fspec( {
+      args: C.cat( isSpec ),
+      ret: C.isSpec,
     } );
 
-    var specedFspec = FspecSpec.instrument( S.fspec ); //meta-ly apply checking to self
-    expect( S.isFn( specedFspec ) ).to.be.true;
+    var specedFspec = FspecSpec.instrument( C.fspec ); //meta-ly apply checking to self
+    expect( C.isFn( specedFspec ) ).to.be.true;
 
     expect( () => {
       specedFspec( 'spec should not be a string' );
@@ -41,7 +41,7 @@ describe( 'fspec', function() {
 
     expect( () => {
       specedFspec( new Spec( {
-        type: 'catt', exprs: [ S.isBool ], conformFn: identity,
+        type: 'catt', exprs: [ C.isBool ], conformFn: identity,
       } ), { extra: 'param' } );
     } ).to.throw( Problem );
     expect( () => {
@@ -50,9 +50,9 @@ describe( 'fspec', function() {
   } );
 
   it( 'test on sheep counting fn', function() {
-    var sheepCounterSpec = S.fspec( {
-      args: S.cat( S.isNum ),
-      ret: S.isStr,
+    var sheepCounterSpec = C.fspec( {
+      args: C.cat( C.isNum ),
+      ret: C.isStr,
       fn: ( cargs, ret ) => {
         return true;
       }
@@ -88,8 +88,8 @@ describe( 'fspec', function() {
     }
 
     it( 'without return spec', () => {
-      var SampleFspec = S.fspec( {
-        args: S.cat( 'n', S.isNatInt, 'min', S.isNum, 'max', S.isNum ),
+      var SampleFspec = C.fspec( {
+        args: C.cat( 'n', C.isNatInt, 'min', C.isNum, 'max', C.isNum ),
         fn: ( { n, min, max }, ret ) => {
           var wackies = ret.filter( ( x ) => x >= max || x < min );
           return wackies.length === 0;
@@ -104,9 +104,9 @@ describe( 'fspec', function() {
     } );
 
     it( 'without return val conformation', () => {
-      var SampleFspec = S.fspec( {
-        args: S.cat( 'n', S.isNatInt, 'min', S.isNum, 'max', S.isNum ),
-        ret: S.isArray,
+      var SampleFspec = C.fspec( {
+        args: C.cat( 'n', C.isNatInt, 'min', C.isNum, 'max', C.isNum ),
+        ret: C.isArray,
         fn: ( { n, min, max }, ret ) => {
           var wackies = ret.filter( ( x ) => x >= max || x < min );
           return wackies.length === 0;
@@ -122,9 +122,9 @@ describe( 'fspec', function() {
     } );
 
     it( 'with return val conformation', () => {
-      var SampleFspec = S.fspec( {
-        args: S.cat( 'n', S.isNatInt, 'min', S.isNum, 'max', S.isNum ),
-        ret: S.cat( 'numbers', S.zeroOrMore( S.isNatInt ) ),
+      var SampleFspec = C.fspec( {
+        args: C.cat( 'n', C.isNatInt, 'min', C.isNum, 'max', C.isNum ),
+        ret: C.cat( 'numbers', C.zeroOrMore( C.isNatInt ) ),
         fn: ( { n, min, max }, { numbers: ret } ) => {
           var wackies = ret.filter( ( x ) => x >= max || x < min );
           return wackies.length === 0;

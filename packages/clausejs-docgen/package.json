@@ -1,18 +1,18 @@
 {
-  "name": "specky-docgen",
+  "name": "clausejs-docgen",
   "version": "0.0.22",
-  "description": "Auto documentation generator for Specky specs",
-  "main": "specky-docgen.js",
+  "description": "Auto documentation generator for Clause clauses",
+  "main": "clausejs-docgen.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/speckyjs/specky.git"
+    "url": "git+https://github.com/clausejs/clausejs.git"
   },
   "keywords": [
     "babel",
     "testing",
     "spec",
     "javascript",
-    "specky",
+    "clausejs",
     "validation",
     "schema"
   ],
@@ -21,13 +21,13 @@
     "email": "settinghead@gmail.com"
   },
   "peerDependencies": {
-    "specky": "0.0.22"
+    "clausejs": "0.0.22"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/speckyjs/specky/issues"
+    "url": "https://github.com/clausejs/clausejs/issues"
   },
-  "homepage": "https://github.com/speckyjs/specky#readme",
+  "homepage": "https://github.com/clausejs/clausejs#readme",
   "dependencies": {
     "lodash": "^4.17.2"
   }

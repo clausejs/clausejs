@@ -2,7 +2,7 @@
 import $ from 'jquery';
 var populateContent = require( './populateContent' );
 
-require( '../../src/specs/index.annotation.js' );
+require( '../../src/clauses/index.annotation.js' );
 
 $( () => {
   populateContent( $, loadMd );

@@ -1,12 +1,12 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("react"), require("specky"));
+		module.exports = factory(require("clausejs"), require("react"));
 	else if(typeof define === 'function' && define.amd)
-		define(["react", "specky"], factory);
+		define(["clausejs", "react"], factory);
 	else if(typeof exports === 'object')
-		exports["S"] = factory(require("react"), require("specky"));
+		exports["C"] = factory(require("clausejs"), require("react"));
 	else
-		root["S"] = factory(root["React"], root["S"]);
+		root["C"] = factory(root["C"], root["React"]);
 })(this, function(__WEBPACK_EXTERNAL_MODULE_112__, __WEBPACK_EXTERNAL_MODULE_113__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -98,24 +98,24 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_113__;
 "use strict";
 
 
-var _SpeckyComponent = __webpack_require__(94);
+var _ClauseComponent = __webpack_require__(94);
 
-var _SpeckyComponent2 = _interopRequireDefault(_SpeckyComponent);
+var _ClauseComponent2 = _interopRequireDefault(_ClauseComponent);
 
-var _fromBaseClass = __webpack_require__(87);
+var _fromBaseClass = __webpack_require__(88);
 
 var _fromBaseClass2 = _interopRequireDefault(_fromBaseClass);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 module.exports = {
-  SpeckyComponent: _SpeckyComponent2.default,
+  ClauseComponent: _ClauseComponent2.default,
   fromBaseClass: _fromBaseClass2.default
 };
 
 /***/ },
 
-/***/ 87:
+/***/ 88:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -127,28 +127,28 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var S = __webpack_require__(113);
+var C = __webpack_require__(112);
 
 function fromBaseClass(baseClass) {
-  var SpeckyComponent = function (_baseClass) {
-    _inherits(SpeckyComponent, _baseClass);
+  var ClauseComponent = function (_baseClass) {
+    _inherits(ClauseComponent, _baseClass);
 
-    function SpeckyComponent() {
+    function ClauseComponent() {
       var _arguments = arguments;
 
-      _classCallCheck(this, SpeckyComponent);
+      _classCallCheck(this, ClauseComponent);
 
-      var _this = _possibleConstructorReturn(this, (SpeckyComponent.__proto__ || Object.getPrototypeOf(SpeckyComponent)).call(this));
+      var _this = _possibleConstructorReturn(this, (ClauseComponent.__proto__ || Object.getPrototypeOf(ClauseComponent)).call(this));
 
       var propSpecs = _this.constructor.propSpecs;
 
       if (propSpecs) {
         (function () {
-          var nullablePropSpecs = S.or(propSpecs, S.isUndefined, S.isNull);
+          var nullablePropSpecs = C.or(propSpecs, C.isUndefined, C.isNull);
 
           var currWillUpdateFn = _this.componentWillUpdate;
           _this.componentWillUpdate = function (nextShape) {
-            S.enforce(nullablePropSpecs, nextShape);
+            C.enforce(nullablePropSpecs, nextShape);
             if (currWillUpdateFn) {
               return currWillUpdateFn.apply(_this, _arguments);
             }
@@ -157,7 +157,7 @@ function fromBaseClass(baseClass) {
 
           var currWillMountFn = _this.componentWillMount;
           _this.componentWillMount = function () {
-            S.enforce(nullablePropSpecs, _this.shape);
+            C.enforce(nullablePropSpecs, _this.shape);
             if (currWillMountFn) {
               return currWillMountFn.apply(_this, _arguments);
             }
@@ -168,10 +168,10 @@ function fromBaseClass(baseClass) {
       return _this;
     }
 
-    return SpeckyComponent;
+    return ClauseComponent;
   }(baseClass);
 
-  return SpeckyComponent;
+  return ClauseComponent;
 }
 
 module.exports = fromBaseClass;
@@ -185,19 +185,19 @@ module.exports.default = fromBaseClass;
 "use strict";
 
 
-var _fromBaseClass = __webpack_require__(87);
+var _fromBaseClass = __webpack_require__(88);
 
 var _fromBaseClass2 = _interopRequireDefault(_fromBaseClass);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var React = __webpack_require__(112);
+var React = __webpack_require__(113);
 
 
-var SpeckyComponent = (0, _fromBaseClass2.default)(React.Component);
+var ClauseComponent = (0, _fromBaseClass2.default)(React.Component);
 
-module.exports = SpeckyComponent;
-module.exports.default = SpeckyComponent;
+module.exports = ClauseComponent;
+module.exports.default = ClauseComponent;
 
 /***/ }
 

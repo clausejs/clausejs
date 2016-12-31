@@ -1,16 +1,16 @@
-const S = require( 'specky' );
+const C = require( 'clausejs' );
 
 function fromBaseClass( baseClass ) {
-  class SpeckyComponent extends baseClass {
+  class ClauseComponent extends baseClass {
     constructor() {
       super();
       const { propSpecs } = this.constructor;
       if ( propSpecs ) {
-        const nullablePropSpecs = S.or( propSpecs, S.isUndefined, S.isNull );
+        const nullablePropSpecs = C.or( propSpecs, C.isUndefined, C.isNull );
 
         const currWillUpdateFn = this.componentWillUpdate;
         this.componentWillUpdate = ( nextShape ) => {
-          S.enforce( nullablePropSpecs, nextShape );
+          C.enforce( nullablePropSpecs, nextShape );
           if ( currWillUpdateFn ) {
             return currWillUpdateFn.apply( this, arguments );
           }
@@ -19,7 +19,7 @@ function fromBaseClass( baseClass ) {
 
         const currWillMountFn = this.componentWillMount;
         this.componentWillMount = () => {
-          S.enforce( nullablePropSpecs, this.shape );
+          C.enforce( nullablePropSpecs, this.shape );
           if ( currWillMountFn ) {
             return currWillMountFn.apply( this, arguments );
           }
@@ -29,7 +29,7 @@ function fromBaseClass( baseClass ) {
     }
   }
 
-  return SpeckyComponent;
+  return ClauseComponent;
 }
 
 module.exports = fromBaseClass;

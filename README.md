@@ -1,29 +1,29 @@
-# Specky 👓
+# Clause 👓
 
- [![Build Status](https://travis-ci.org/speckyjs/specky.svg?branch=master)](https://travis-ci.org/speckyjs/specky) [![npm version](https://badge.fury.io/js/specky.svg)](https://badge.fury.io/js/specky)  [![Size Gzipped](http://img.badgesize.io/speckyjs/specky/master/packages/specky/dist/specky.min.js?compression=gzip&label=min%2Bgzipped)](packages/specky/dist) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
+ [![Build Status](https://travis-ci.org/clausejs/clausejs.svg?branch=master)](https://travis-ci.org/clausejs/clausejs) [![npm version](https://badge.fury.io/js/clausejs.svg)](https://badge.fury.io/js/clausejs)  [![Size Gzipped](http://img.badgesize.io/clausejs/clausejs/master/packages/clausejs/dist/clausejs.min.js?compression=gzip&label=min%2Bgzipped)](packages/clausejs/dist) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 
-## What is Specky?
+## What is Clause?
 
-Specky is a powerful & flexible library for JavaScript data validation, conformation, runtime-checking & property testing.
+Clause is a powerful & flexible library for JavaScript data validation, conformation, runtime-checking & property testing.
 
-Specky enables you to:
+Clause enables you to:
 
 - Build your data validation rules (specs) with simple predicate functions and composable logical expressions such as `and`, `any`, `shape`, `collOf`, `mapOf` as well as regex-like spec-composing operators such as concatenation(`cat`), `or`(`|`), `oneOrMore`(`+`), `zeroOrMore`(`*`), `zeroOrOne`(`?`), etc
 - Validate and make assertions about your data with your specs
 - Define complex specs for your functions' arguments, return value and the relation between them
 - Conform (parse) your data/arguments for writing simpler code
 
-## Why Specky
+## Why Clause
 
-Specky can do a lot more than just data validation and function signature checking.
+Clause can do a lot more than just data validation and function signature checking.
 
-Specky's goal is to provide the defining contract for your JS app. By asking you to write some specs for your project *once*, Specky strives at getting as much leverage out your effort as possible, including
+Clause's goal is to provide the defining contract for your JS app. By asking you to write some specs for your project *once*, Clause strives at getting as much leverage out your effort as possible, including
 
 - Design by Contract Clearly-defined expectations for your app's functions and data structures
 - **Runtime validation** for your data and functions (compile-time analysis may be possible in the future)
 - Advanced **data conformation** (parsing) that simplifies your data processing code
-- **Automatic generation of API documentation** for your app (via [specky-docgen](packages/specky-docgen), WIP)
-- **Automatic generation of property-based test cases** for your functions (via [specky-gen](packages/specky-gen), WIP)
+- **Automatic generation of API documentation** for your app (via [clausejs-docgen](packages/clausejs-docgen), WIP)
+- **Automatic generation of property-based test cases** for your functions (via [clausejs-gen](packages/clausejs-gen), WIP)
 - A safety harness with highly flexible **type and behavior constraints**, which is even more powerful than typed languages such as TypeScript
 
 
@@ -31,7 +31,7 @@ Specky's goal is to provide the defining contract for your JS app. By asking you
 
 Alpha.
 
-- Most core methods of Specky have gone through many iterations and testing.
+- Most core methods of Clause have gone through many iterations and testing.
 - Some aspects of the API's are subject to change and improvement based on [developer feedback](/../../issues/).
 
 ## Quick Examples
@@ -39,18 +39,18 @@ Alpha.
 #### Regex Ops
 
 ```js
-var MySpec = S.cat( S.oneOrMore(S.isNum), S.zeroOrOne( S.isObj ) );
-S.isValid(MySpec, [ 1, 2, 3, { a: 1 } ]); // true
-S.isValid(MySpec,  [ 1, 2, 3 ]); // true
-S.isValid(MySpec,  [ 1, 2, 3, null ]); // false: the trailing element does not satisfy our spec
-S.isValid(MySpec,  [ 1, 2, 3, { a: 1 }, { } ]); // false: extra trailing element
-S.conform(MySpec, [ 1, 2, 3, null ]);
+var MySpec = C.cat( C.oneOrMore(C.isNum), C.zeroOrOne( C.isObj ) );
+C.isValid(MySpec, [ 1, 2, 3, { a: 1 } ]); // true
+C.isValid(MySpec,  [ 1, 2, 3 ]); // true
+C.isValid(MySpec,  [ 1, 2, 3, null ]); // false: the trailing element does not satisfy our spec
+C.isValid(MySpec,  [ 1, 2, 3, { a: 1 }, { } ]); // false: extra trailing element
+C.conform(MySpec, [ 1, 2, 3, null ]);
 // returns a "Problem" object with detailed explanation why validation failed
 
 // Next, we redefine the above concatenation spec, with a label for each part.
-var MyLabelledSpec = S.cat(
-    "myNumbers", S.oneOrMore(S.isNum),
-    "myObject", S.zeroOrOne( S.isObj )
+var MyLabelledSpec = C.cat(
+    "myNumbers", C.oneOrMore(C.isNum),
+    "myObject", C.zeroOrOne( C.isObj )
   );
 S
 MyLabelledSpec.conform( [ 1, 2, 3, { a: 1 } ] );
@@ -61,8 +61,8 @@ MyLabelledSpec.conform( [ 1, 2, 3, { a: 1 } ] );
 #### Spec Registry
 
 ```js
-// Specky comes with an application-wide global spec registry.
-S.set("myApp/myLabelledSpec", MyLabelledSpec); // defines a spec in the registry
+// Clause comes with an application-wide global spec registry.
+C.set("myApp/myLabelledSpec", MyLabelledSpec); // defines a spec in the registry
 S("myApp/myLabelledSpec"); // returns the same spec above (MyLabelledSpec)
 ```
 
@@ -76,15 +76,15 @@ function startsWithBar( str ) {
 }
 
 // Now let's specify a "shape" for our objects.
-var MyObjSpec = S.shape({
+var MyObjSpec = C.shape({
     // alternatively, you can simply provide an array of strings
     // as required keys e.g. [ "propertyA", "propertyB",... ]
     required: {
       // define a single key with value spec
-      foo: S.isBool,
+      foo: C.isBool,
       // ...or define a group of properties whose keys satisfy the first spec (e.g. startsWithBar),
-      // and whose value satisfies the second (e.g. S.any)
-      bars: [ startsWithBar, S.any ]
+      // and whose value satisfies the second (e.g. C.any)
+      bars: [ startsWithBar, C.any ]
     },
     optional: {
         // you can also arbitrarily compose new specs from registered specs
@@ -93,7 +93,7 @@ var MyObjSpec = S.shape({
 });
 
 // With the above spec defined, now let's try shape conformation.
-S.conform( MyObjSpec, { foo: true, bar1: 1, bar2: 2, bar3: 3 });
+C.conform( MyObjSpec, { foo: true, bar1: 1, bar2: 2, bar3: 3 });
 // returns { foo: true, bars: { bar1: 1, bar2: 2, bar3: 3 } }
 // (Notice how all object keys that begin with "bar" are now grouped under a single value "bars").
 ```
@@ -101,9 +101,9 @@ S.conform( MyObjSpec, { foo: true, bar1: 1, bar2: 2, bar3: 3 });
 
 ```js
 // Now onward to function specs.
-var MyFnSpec = S.fspec({
+var MyFnSpec = C.fspec({
   args: MyLabelledSpec , // reusing MySpec from above
-  ret: S.isBool,
+  ret: C.isBool,
 });
 
 // Next we write our function.
@@ -120,7 +120,7 @@ myProtectedFn(1, 2, 3, { a: true }); // returns true
 myProtectedFn(1, 2, 3, 'hello'); // Throws a "Problem" due to mismatched argument per our fspec definition.
 
 // Finally, let's build a function that checks if the sum of all numbers are odd
-// by taking advantage of Specky's function argument conformation.
+// by taking advantage of Clause's function argument conformation.
 
 // Step 1: we write a "barebone" function with our core logic,
 // which consumes the conformed arguments as a single object.
@@ -138,7 +138,7 @@ function __sumIsOdd( conformedArgs ) {
   return sum % 2 === 1;
 }
 
-// Step 2: wrap the barebone function with S.instrumentConformed()
+// Step 2: wrap the barebone function with C.instrumentConformed()
 var sumIsOdd = MyFnSpec.instrumentConformed(__sumIsOdd);
 
 // Let's try our new super function!
@@ -149,7 +149,7 @@ sumIsOdd( 2, 2, 2, null ); // throws a "Problem" because arguments do not confor
 sumIsOdd( 2, 2, 2, {}, {} ); // same as above
 ```
 
-For more advanced features and concepts, refer to [documentation site](https://specky.js.org).
+For more advanced features and concepts, refer to [documentation site](https://clausejs.js.org).
 
 
 ## Try It Yourself
@@ -162,22 +162,22 @@ For more advanced features and concepts, refer to [documentation site](https://s
 For Node.js/browserify/webpack:
 
 ```bash
-npm install specky
+npm install clausejs
 ```
 
 For browser:
 
-Include Specky script tag in `<head>` or `<body>` tag of your HTML:
+Include Clause script tag in `<head>` or `<body>` tag of your HTML:
 
 ```html
-<script src="//unpkg.com/specky@latest/dist/specky.js"></script>
+<script src="//unpkg.com/clausejs@latest/dist/clausejs.js"></script>
 ```
 
 The variable `S` will be exposed in the global environment.
 
 ## Documentation
 
-Documentation website: http://specky.js.org
+Documentation website: http://clausejs.js.org
 
 ## Detailed Examples
 
@@ -189,16 +189,16 @@ In addition, there are plenty of examples in test files under [`/test`](test/).
 
 ## Performance & Reliability
 
-- [![Size Minified](http://img.badgesize.io/speckyjs/specky/master/packages/specky/dist/specky.min.js?label=min)](packages/specky/dist) [![Size Gzipped](http://img.badgesize.io/speckyjs/specky/master/packages/specky/dist/specky.min.js?compression=gzip&label=min%2Bgzipped)](packages/specky/dist)
-- Specky is mostly self-contained and has very few external dependencies.
-- Specky uses NFA algorithm for regex parsing, which means it's generally pretty fast in handling complex regex operations.
-- Specky's current implementation is optimizated in such a way that it avoids running into long chains of recursive function calls for path searching or making redundant path visits.
+- [![Size Minified](http://img.badgesize.io/clausejs/clausejs/master/packages/clausejs/dist/clausejs.min.js?label=min)](packages/clausejs/dist) [![Size Gzipped](http://img.badgesize.io/clausejs/clausejs/master/packages/clausejs/dist/clausejs.min.js?compression=gzip&label=min%2Bgzipped)](packages/clausejs/dist)
+- Clause is mostly self-contained and has very few external dependencies.
+- Clause uses NFA algorithm for regex parsing, which means it's generally pretty fast in handling complex regex operations.
+- Clause's current implementation is optimizated in such a way that it avoids running into long chains of recursive function calls for path searching or making redundant path visits.
 
 ## Subprojects
 
-- [`specky-docgen`](packages/specky-docgen): Automatic documentation generation based on function specs
-- [`specky-gen`](packages/specky-gen): Generative/Property-based Testing
-- [`specky-react`](packages/specky-react): More robust props validation for your React apps. A replacement for `React.PropTypes`
+- [`clausejs-docgen`](packages/clausejs-docgen): Automatic documentation generation based on function specs
+- [`clausejs-gen`](packages/clausejs-gen): Generative/Property-based Testing
+- [`clausejs-react`](packages/clausejs-react): More robust props validation for your React apps. A replacement for `React.PropTypes`
 
 ## Run tests
 
@@ -215,9 +215,9 @@ npm run test
 
 ## Why not just use ClojureScript + cljs.spec?
 
-The goal for Specky is to provide JavaScript developers as much the benefit as possible derived from the spec system.
+The goal for Clause is to provide JavaScript developers as much the benefit as possible derived from the spec system.
 
-Specky API for the most part is kept similar to clojure.spec, except for some differences related to usability and JavaScript-specific conventions.
+Clause API for the most part is kept similar to clojure.spec, except for some differences related to usability and JavaScript-specific conventions.
 
 (Clojure is a wonderful language. If you can use Clojure/ClojureScript, by all means go ahead and try cljs.spec.)
 

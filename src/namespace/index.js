@@ -10,7 +10,7 @@ var coerceIntoSpec = require( '../utils/coerceIntoSpec' );
 var oPath = require( './simpleObjectPath' );
 
 import { isNamespacePath, isSpecRef } from '../utils';
-import { GetNSFnSpec, SetNSFnSpec, NamespaceFnSpec, MetaFnSpec } from '../specs/namespace.types';
+import { GetNSFnSpec, SetNSFnSpec, NamespaceFnSpec, MetaFnSpec } from '../clauses/namespace.types';
 var reg;
 
 var _get = fspec( {
@@ -103,7 +103,7 @@ var _set = fspec( {
   oPath.set( reg, _slashToDot( n ), oAssign( {}, existing, nObj ) );
 } );
 
-var K = '___SPECKY_REGISTRY';
+var K = '___CLAUSEJS_REGISTRY';
 
 function _maybeInitRegistry() {
   if ( !reg ) {

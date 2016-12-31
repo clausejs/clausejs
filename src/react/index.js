@@ -1,7 +1,7 @@
-import SpeckyComponent from './SpeckyComponent';
+import ClauseComponent from './ClauseComponent';
 import fromBaseClass from './fromBaseClass';
 
 module.exports = {
-  SpeckyComponent,
+  ClauseComponent,
   fromBaseClass,
 };

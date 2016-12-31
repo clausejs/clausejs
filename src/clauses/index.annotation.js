@@ -1,7 +1,7 @@
 import { meta as M } from '../';
 
-M( '/specky', {
-  'name': 'S',
+M( '/clausejs', {
+  'name': 'C',
   'comment': 'Registers or retrieves a spec from global spec regitry by path.',
   'args': {
     'register': {
@@ -18,25 +18,25 @@ M( '/specky', {
   },
 } );
 
-M( '/specky/get', {
-  'name': 'S.get'
+M( '/clausejs/get', {
+  'name': 'C.get'
 } );
 
-M( '/specky/set', {
-  'name': 'S.set'
+M( '/clausejs/set', {
+  'name': 'C.set'
 } );
 
-M( 'specky.types/NamespacePath', {
+M( 'clausejs.types/NamespacePath', {
   'comment': 'Represents a namespace path.',
   'example': '"com.xyz.awesomeApp/User"',
 } );
 
-M( 'specky.types/Expression', {
-  'comment': 'Represents an Specky expression.',
-  'example': 'isPositiveNumber(x); S.cat(...)',
+M( 'clausejs.types/Expression', {
+  'comment': 'Represents an Clause expression.',
+  'example': 'isPositiveNumber(x); C.cat(...)',
 } );
 
-M( 'specky.utils/describe', {
-  'name': 'S.describe',
+M( 'clausejs.utils/describe', {
+  'name': 'C.describe',
   'comment': 'Returns an abbreviated description of the spec as a simple tree structure.',
 } );

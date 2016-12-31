@@ -1,18 +1,18 @@
 {
-  "name": "specky-gen",
+  "name": "clausejs-gen",
   "version": "0.0.22",
-  "description": "Generators for Specky",
+  "description": "Generators for Clause",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/speckyjs/specky.git"
+    "url": "git+https://github.com/clausejs/clausejs.git"
   },
   "keywords": [
     "babel",
     "react",
     "spec",
     "javascript",
-    "specky",
+    "clausejs",
     "validation",
     "schema"
   ],
@@ -21,15 +21,15 @@
     "email": "settinghead@gmail.com"
   },
   "peerDependencies": {
-    "specky": "0.0.22",
+    "clausejs": "0.0.22",
     "react": ">=0.14.0"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/speckyjs/specky/issues"
+    "url": "https://github.com/clausejs/clausejs/issues"
   },
-  "homepage": "https://github.com/speckyjs/specky#readme",
+  "homepage": "https://github.com/clausejs/clausejs#readme",
   "dependencies": {
-    "specky": "0.0.22"
+    "clausejs": "0.0.22"
   }
 }

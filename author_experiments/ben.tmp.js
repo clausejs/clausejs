@@ -1,21 +1,21 @@
 require( 'babel-core/register' );
-const S = require( '../src' );
+const C = require( '../src' );
 
 function shorternThan100( x ) {
   return x.length < 100;
 }
 
-S( 'superTwitter/Username', S.and( S.isStr, shorternThan100 ) )
-S( 'superTwitter/Email', S.and( S.isStr, ( x ) => x.indexOf( '@' ) > 0 ) )
-S( 'superTwitter/User', S.shape( {
+C( 'superTwitter/Username', C.and( C.isStr, shorternThan100 ) )
+C( 'superTwitter/Email', C.and( C.isStr, ( x ) => x.indexOf( '@' ) > 0 ) )
+C( 'superTwitter/User', C.shape( {
   required: {
-    username: S( 'superTwitter/Username' ),
-    email: S( 'superTwitter/Email' ),
-    firstName: S.isStr,
-    lastName: S.isStr,
+    username: C( 'superTwitter/Username' ),
+    email: C( 'superTwitter/Email' ),
+    firstName: C.isStr,
+    lastName: C.isStr,
   },
   optional: {
-    bio: S.isStr,
+    bio: C.isStr,
   }
 } ) );
 
@@ -27,23 +27,23 @@ var user1 = {
 };
 
 const arr = [ 1, 2, 3, 4, 6, 'a', 3, 'b', 'c', 4, 5 ];
-const ArrSpec = S.cat(
-  'firstNumbers', S.oneOrMore( S.isNum ),
-  'nextStrings', S.oneOrMore( S.isStr ),
-  'finalNumbers', S.oneOrMore( S.isNum )
+const ArrSpec = C.cat(
+  'firstNumbers', C.oneOrMore( C.isNum ),
+  'nextStrings', C.oneOrMore( C.isStr ),
+  'finalNumbers', C.oneOrMore( C.isNum )
 );
 
-var GetUserSpec = S.fspec( {
-  args: S.or(
-    'byEmail', S.cat( S( 'superTwitter/Email' ) ),
-    'byId', S.cat( S.isNum ),
-    'byFirstLastName', S.cat( S.isStr, ( x ) => /[a-zA-Z\']/.test( x ) ),
-    'byPhoneNumber', S.cat( ( x ) => /[0-9\-\(\)]/.test( x ) )
+var GetUserSpec = C.fspec( {
+  args: C.or(
+    'byEmail', C.cat( C( 'superTwitter/Email' ) ),
+    'byId', C.cat( C.isNum ),
+    'byFirstLastName', C.cat( C.isStr, ( x ) => /[a-zA-Z\']/.test( x ) ),
+    'byPhoneNumber', C.cat( ( x ) => /[0-9\-\(\)]/.test( x ) )
   ),
-  ret: S.isString,
+  ret: C.isString,
 } );
 
-S( 'superTwitter/getUser', GetUserSpec );
+C( 'superTwitter/getUser', GetUserSpec );
 
 function getUserConformed( { byEmail, byId, byFirstLastName, byPhoneNumber } ) {
   if ( byEmail ) {
@@ -65,4 +65,4 @@ console.log( getUser( 'dasd@dasd.com' ) )
 
 // console.log( ArrSpec.conform( arr ) );
 
-// console.log( S( 'tt.User' ).conform( user1 ) )
+// console.log( C( 'tt.User' ).conform( user1 ) )

@@ -1,17 +1,17 @@
 require( 'babel-core/register' );
 
 // var s = require( '../src/core/regex' );
-var S = require( '../src' );
+var C = require( '../src' );
 
-var mySpec = S.cat( 'a', S.isStr, {} );
+var mySpec = C.cat( 'a', C.isStr, {} );
 
 
-// var PropagatedAndSpec = S.and(
-//   S.isArray,
-//   S.cat(
-//     'firstPart', S.oneOrMore( S.isNum ),
-//     'secondPart', S.isBool,
-//     'thirdPart', S.oneOrMore( S.isNum ) ),
+// var PropagatedAndSpec = C.and(
+//   C.isArray,
+//   C.cat(
+//     'firstPart', C.oneOrMore( C.isNum ),
+//     'secondPart', C.isBool,
+//     'thirdPart', C.oneOrMore( C.isNum ) ),
 //   function firstThirdPartEqualLen( cargs ) {
 //     const { firstPart, thirdPart } = cargs;
 //     console.log( cargs );
@@ -23,11 +23,11 @@ var mySpec = S.cat( 'a', S.isStr, {} );
 // console.log( PropagatedAndSpec.conform( conformed1 ) );
 
 
-// var NumOrStr = S.or( S.isNum, S.isStr, S.isObj, S.isDate, S.isNatInt );
+// var NumOrStr = C.or( C.isNum, C.isStr, C.isObj, C.isDate, C.isNatInt );
 // var r = NumOrStr.conform( 's' );
 // console.log( NumOrStr );
 
-// S( 'xyz.superapp.item/title', s.isStr );
+// C( 'xyz.superapp.item/title', s.isStr );
 
 // console.log( s );
 
@@ -48,11 +48,11 @@ var mySpec = S.cat( 'a', S.isStr, {} );
 // var brokenAdderFn = AdderFnSpec.instrument(() => (y) => 'z');
 // console.log(adderFn(1)(2))
 
-// var NamedGroupedSpec = S.cat(
-//   ['z', 'it\'s a fuuuunction', S.isFn],
-//   ['b', S.isObj],
-//   ['c', 'another fuuuunction', S.isFn],
-//   ['a', S.isObj]
+// var NamedGroupedSpec = C.cat(
+//   ['z', 'it\'s a fuuuunction', C.isFn],
+//   ['b', C.isObj],
+//   ['c', 'another fuuuunction', C.isFn],
+//   ['a', C.isObj]
 // );
 //
 // var conformed = NamedGroupedSpec.conform(conformist);
@@ -61,14 +61,14 @@ var mySpec = S.cat( 'a', S.isStr, {} );
 //   return key.indexOf('oo') === 0;
 // }
 //
-// var ObjSpec = S.shape({
+// var ObjSpec = C.shape({
 //   req: {
 //     'title': s.isStr,
 //     'userId': s.isNum,
 //   },
 //   opt: {
 //     'content': s.isStr,
-//     'ooShape': [startWithOo, S.shape({
+//     'ooShape': [startWithOo, C.shape({
 //       req: {
 //         'val': s.isNum,
 //       },
@@ -93,16 +93,16 @@ var mySpec = S.cat( 'a', S.isStr, {} );
 
 // var fnList = ['shape', 'isValid', 'conform', 'fspec', 'isObj', 'isFn'];
 
-// var SpecObj = S.keys({req: fnList});
-// var InsaneSpecObj = S.keys({req: fnList.concat(['voodooooooooo'])});
-// console.log(S.isValid(SpecObj, S));
-// console.log(S.isValid(InsaneSpecObj, S));
+// var SpecObj = C.keys({req: fnList});
+// var InsaneSpecObj = C.keys({req: fnList.concat(['voodooooooooo'])});
+// console.log(C.isValid(SpecObj, S));
+// console.log(C.isValid(InsaneSpecObj, S));
 
-// var NamedGroupedSpec = S.cat(
-//   ['z', 'it\'s a fuuuunction', S.isFn],
-//   ['b', S.isObj],
-//   ['c', 'another fuuuunction', S.isFn],
-//   ['a', S.isObj]
+// var NamedGroupedSpec = C.cat(
+//   ['z', 'it\'s a fuuuunction', C.isFn],
+//   ['b', C.isObj],
+//   ['c', 'another fuuuunction', C.isFn],
+//   ['a', C.isObj]
 // );
 //
 // var conformist = [function(){}, {}, function() {}, {}];
@@ -142,8 +142,8 @@ var mySpec = S.cat( 'a', S.isStr, {} );
 // console.log(r);
 
 
-// var sheepCounterSpec = S.fspec({
-//   args: S.cat(S.isNum),
+// var sheepCounterSpec = C.fspec({
+//   args: C.cat(C.isNum),
 //   ret: s.isStr,
 // });
 //
@@ -161,7 +161,7 @@ var mySpec = S.cat( 'a', S.isStr, {} );
 
 
 // var NamedSpec = s.cat('z', s.isFn, 'b', s.isObj, 'c', s.isFn, 'a', s.isObj);
-// // var UnnamedSpec = S.cat(S.isFn, S.isObj,S.isFn, S.isObj);
+// // var UnnamedSpec = C.cat(C.isFn, C.isObj,C.isFn, C.isObj);
 //
 // var EmptySpec = s.cat();
 //

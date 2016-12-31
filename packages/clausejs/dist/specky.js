@@ -4,9 +4,9 @@
 	else if(typeof define === 'function' && define.amd)
 		define([], factory);
 	else if(typeof exports === 'object')
-		exports["S"] = factory();
+		exports["C"] = factory();
 	else
-		root["S"] = factory();
+		root["C"] = factory();
 })(this, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -1858,7 +1858,7 @@ var _set = (0, _core.fspec)({
   oPath.set(reg, _slashToDot(n), oAssign({}, existing, nObj));
 });
 
-var K = '___SPECKY_REGISTRY';
+var K = '___CLAUSEJS_REGISTRY';
 
 function _maybeInitRegistry() {
   if (!reg) {

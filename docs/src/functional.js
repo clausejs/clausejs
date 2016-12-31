@@ -1,7 +1,7 @@
 
 import $ from 'jquery';
 import tether from 'tether';
-import S from '../../src';
+import C from '../../src';
 // require( 'bootstrap/dist/css/bootstrap.css' );
 require( 'highlight.js/styles/default.css' );
 const HLJS = require( 'highlight.js/lib/highlight' );
@@ -31,4 +31,4 @@ $( () => {
 
 // quick hack; to expose variable S to window
 // TODO: separate build file configs in webpack.config
-module.exports = S;
+module.exports = C;

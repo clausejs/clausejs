@@ -28,7 +28,7 @@ fs.readdir( path.join( __dirname, 'packages' ), ( err, files ) => {
 function updateDeps_mut( deps ) {
   if ( deps ) {
     for ( var depName in deps ) {
-      if ( deps.hasOwnProperty( depName ) && /^specky/.test( depName ) ) {
+      if ( deps.hasOwnProperty( depName ) && /^clausejs/.test( depName ) ) {
         deps[ depName ] = VERSION;
       }
     }

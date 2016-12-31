@@ -1,8 +1,8 @@
 {
-  "name": "specky-src",
+  "name": "clausejs-src",
   "version": "0.0.22",
   "description": "A powerful & flexible validation and conformation library for your JavaScript data and functions.",
-  "main": "packages/specky/dist/specky.js",
+  "main": "packages/clausejs/dist/clausejs.js",
   "engines": {
     "node": ">=0.10.0"
   },
@@ -17,14 +17,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/speckyjs/specky.git"
+    "url": "git+https://github.com/clausejs/clausejs.git"
   },
   "keywords": [
     "babel",
     "testing",
     "spec",
     "javascript",
-    "specky",
+    "clausejs",
     "validation",
     "schema"
   ],
@@ -34,9 +34,9 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/speckyjs/specky/issues"
+    "url": "https://github.com/clausejs/clausejs/issues"
   },
-  "homepage": "https://github.com/speckyjs/specky#readme",
+  "homepage": "https://github.com/clausejs/clausejs#readme",
   "dependencies": {
     "object-assign": "4.1.0"
   },

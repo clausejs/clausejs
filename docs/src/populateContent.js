@@ -1,5 +1,5 @@
-import '../../src/specs';
-import '../../src/specs/index.annotation';
+import '../../src/clauses';
+import '../../src/clauses/index.annotation';
 import docgen from '../../src/docgen';
 import VERSION from '../../package_version';
 import { getRegistry } from '../../src/namespace';
@@ -13,7 +13,7 @@ const finalCotStr = docgen.genCot( getRegistry() );
 function populateContent( $, requireFn ) {
   $( '#cot' ).html( finalCotStr );
   $( '#api' ).html( finalDocStr );
-  $( '.specky-version' ).html( VERSION );
+  $( '.clausejs-version' ).html( VERSION );
 
   var markdownElems = $( '.markdown-article' );
 

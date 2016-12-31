@@ -1,14 +1,14 @@
 require( 'babel-core/register' );
 
 
-var S = require( '../src' );
+var C = require( '../src' );
 
 var catS = function( str ) {
-  return S.cat.apply( null, Array.from( str ).map( S.equals ) );
+  return C.cat.apply( null, Array.from( str ).map( C.equals ) );
 };
 
-var VocabSpec = S.or.apply( null, [ 'foo', 'bar', 'baz', ' ' ].map( catS ) );
-var ContentSpec = S.zeroOrMore( VocabSpec );
+var VocabSpec = C.or.apply( null, [ 'foo', 'bar', 'baz', ' ' ].map( catS ) );
+var ContentSpec = C.zeroOrMore( VocabSpec );
 
 var r = ContentSpec.conform( ' baz foo bar bar' );
 
