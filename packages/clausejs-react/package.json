@@ -1,6 +1,6 @@
 {
   "name": "clausejs-react",
-  "version": "0.0.22",
+  "version": "0.0.23",
   "description": "Anto documentation generator for Clause clauses",
   "main": "index.js",
   "repository": {
@@ -21,7 +21,7 @@
     "email": "settinghead@gmail.com"
   },
   "peerDependencies": {
-    "clausejs": "0.0.22",
+    "clausejs": "0.0.23",
     "react": ">=0.14.0"
   },
   "license": "MIT",
@@ -31,6 +31,6 @@
   "homepage": "https://github.com/clausejs/clausejs#readme",
   "dependencies": {
     "react": "^15.4.1",
-    "clausejs": "0.0.22"
+    "clausejs": "0.0.23"
   }
 }
