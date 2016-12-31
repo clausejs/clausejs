@@ -221,7 +221,7 @@ Specky API for the most part is kept similar to clojure.spec, except for some di
 
 (Clojure is a wonderful language. If you can use Clojure/ClojureScript, by all means go ahead and try cljs.spec.)
 
-## Credit
+## Credit & Prior work
 - Both origin of the idea and API are heavily inspired by Rich Hickey's [clojure.spec](http://clojure.org/about/spec)
 - Some aspects of the design are drawn by Scheme's [contract system](https://docs.racket-lang.org/guide/contracts.html)
 - NFA spec matching inspired by Thompson NFA regex matching algorithm, and is based on [afader's implementation](https://github.com/afader/thompson-regex-js)

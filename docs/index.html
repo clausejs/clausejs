@@ -103,15 +103,6 @@
     </dd>
     
     <dt>
-      specky
-    </dt>
-    <dd>
-      <ul>
-      <li><a href="#specky/set" data-path="specky/set">set()</a></li><li><a href="#specky/get" data-path="specky/get">get()</a></li>
-      </ul>
-    </dd>
-    
-    <dt>
       specky.compose
     </dt>
     <dd>
@@ -135,6 +126,15 @@
     <dd>
       <ul>
       <li><a href="#specky.preds/not" data-path="specky.preds/not">not()</a></li><li><a href="#specky.preds/isObj" data-path="specky.preds/isObj">isObj()</a></li><li><a href="#specky.preds/isStr" data-path="specky.preds/isStr">isStr()</a></li><li><a href="#specky.preds/isArray" data-path="specky.preds/isArray">isArray()</a></li><li><a href="#specky.preds/isDate" data-path="specky.preds/isDate">isDate()</a></li><li><a href="#specky.preds/isNull" data-path="specky.preds/isNull">isNull()</a></li><li><a href="#specky.preds/isUndefined" data-path="specky.preds/isUndefined">isUndefined()</a></li><li><a href="#specky.preds/notEmpty" data-path="specky.preds/notEmpty">notEmpty()</a></li><li><a href="#specky.preds/isBool" data-path="specky.preds/isBool">isBool()</a></li><li><a href="#specky.preds/isFn" data-path="specky.preds/isFn">isFn()</a></li><li><a href="#specky.preds/isNum" data-path="specky.preds/isNum">isNum()</a></li><li><a href="#specky.preds/isInt" data-path="specky.preds/isInt">isInt()</a></li><li><a href="#specky.preds/isNatInt" data-path="specky.preds/isNatInt">isNatInt()</a></li><li><a href="#specky.preds/isUuid" data-path="specky.preds/isUuid">isUuid()</a></li><li><a href="#specky.preds/oneOf" data-path="specky.preds/oneOf">oneOf()</a></li><li><a href="#specky.preds/equals" data-path="specky.preds/equals">equals()</a></li><li><a href="#specky.preds/instanceOf" data-path="specky.preds/instanceOf">instanceOf()</a></li>
+      </ul>
+    </dd>
+    
+    <dt>
+      specky.namespace
+    </dt>
+    <dd>
+      <ul>
+      <li><a href="#specky.namespace/set" data-path="specky.namespace/set">set()</a></li><li><a href="#specky.namespace/get" data-path="specky.namespace/get">get()</a></li><li><a href="#specky.namespace/meta" data-path="specky.namespace/meta">meta()</a></li>
       </ul>
     </dd>
     
@@ -405,224 +405,7 @@ S.conform(StrSpec, &apos;foofoofoobarbar&apos;);
     </dl>
   
         </div>
-      <h3>specky/</h3><hr>
-    <a name="specky/set"></a>
-    
-        <div class="card">
-          <div class="card-header inline-headers">
-            
-      <h6>S.set()</h6>&#xA0;
-        <span class="tag tag-primary">
-          function
-        </span>
-      
-          </div>
-        
-    <dl class="card-block">
-    <dt>Synopsis</dt><dd><ul><em>S.set(nsPath, expression)</em></ul></dd>
-<dt>Argument spec</dt><dd>
-    
-    
-    <fieldset class="card card-outline-info">
-    <legend class="spec-type">
-      <span class="tag tag-info">cat (concatenation) of</span>
-    </legend>
-    
-    <div class="card-block">
-      <p class="card-title">
-        
-      </p>
-      <p class="card-title">
-        Should be <em>an ordered list</em> of the following:
-      </p>
-    </div>
-    <ol class="list-group list-group-flush list-for-cat">
-      
-        <li class="list-group-item card-outline-info">
-          <div class="row">
-            <div class="col-md-12">
-              <p>
-                <span class="tag tag-default">1st </span>
-                &lt;<span class="lead font-italic text-primary">nsPath</span>&gt;
-                
-                  
-            </p></div>
-          </div>
-          <div class="row">
-            <div class="col-md-11 offset-md-1">
-              
-    
-    
-    <fieldset class="card card-outline-primary">
-    <legend class="spec-type">
-      <span class="tag tag-primary">of predicate</span>
-    </legend>
-    
-    <div class="card-block">
-      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isNamespacePath()" data-content="&lt;pre&gt;function isNamespacePath(x) {
-  return isStr(x) &amp;&amp; /^\/?[a-zA-Z0-9\-_\.]*\/([a-zA-Z0-9\-_]+)$/.test(x);
-}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
-        A value that satisfies
-        <em>isNamespacePath()</em>
-      </span>
-    </div>
-  
-    </fieldset>
-    
-            </div>
-          </div>
-        </li>
-     
-        <li class="list-group-item card-outline-info">
-          <div class="row">
-            <div class="col-md-12">
-              <p>
-                <span class="tag tag-default">2nd </span>
-                &lt;<span class="lead font-italic text-primary">expression</span>&gt;
-                
-                  
-            </p></div>
-          </div>
-          <div class="row">
-            <div class="col-md-11 offset-md-1">
-              
-    
-    
-    <fieldset class="card card-outline-info">
-    <legend class="spec-type">
-      <span class="tag tag-info">of spec</span>
-    </legend>
-    
-    <div class="card-block">
-      A value that is of
-      <a href="#specky.types/Expression" data-path="specky.types/Expression">specky.types/Expression</a>
-    </div>
-  
-    </fieldset>
-    
-            </div>
-          </div>
-        </li>
-    
-    </ol>
-  
-    </fieldset>
-    </dd>
-<dt>Return value spec</dt><dd>
-    
-    
-    <fieldset class="card card-outline-primary">
-    <legend class="spec-type">
-      <span class="tag tag-primary">of predicate</span>
-    </legend>
-    
-    <div class="card-block">
-      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isUndefined()" data-content="&lt;pre&gt;function isUndefined(x) {
-  return x === undefined;
-}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
-        A value that satisfies
-        <em>isUndefined()</em>
-      </span>
-    </div>
-  
-    </fieldset>
-    </dd>
-    </dl>
-  
-        </div>
-      
-
-    <a name="specky/get"></a>
-    
-        <div class="card">
-          <div class="card-header inline-headers">
-            
-      <h6>S.get()</h6>&#xA0;
-        <span class="tag tag-primary">
-          function
-        </span>
-      
-          </div>
-        
-    <dl class="card-block">
-    <dt>Synopsis</dt><dd><ul><em>S.get(nsPath)</em></ul></dd>
-<dt>Argument spec</dt><dd>
-    
-    
-    <fieldset class="card card-outline-info">
-    <legend class="spec-type">
-      <span class="tag tag-info">cat (concatenation) of</span>
-    </legend>
-    
-    <div class="card-block">
-      <p class="card-title">
-        
-      </p>
-      <p class="card-title">
-        Should be <em>an ordered list</em> of the following:
-      </p>
-    </div>
-    <ol class="list-group list-group-flush list-for-cat">
-      
-        <li class="list-group-item card-outline-info">
-          <div class="row">
-            <div class="col-md-12">
-              <p>
-                <span class="tag tag-default">1st </span>
-                &lt;<span class="lead font-italic text-primary">nsPath</span>&gt;
-                
-                  
-            </p></div>
-          </div>
-          <div class="row">
-            <div class="col-md-11 offset-md-1">
-              
-    
-    
-    <fieldset class="card card-outline-primary">
-    <legend class="spec-type">
-      <span class="tag tag-primary">of predicate</span>
-    </legend>
-    
-    <div class="card-block">
-      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isNamespacePath()" data-content="&lt;pre&gt;function isNamespacePath(x) {
-  return isStr(x) &amp;&amp; /^\/?[a-zA-Z0-9\-_\.]*\/([a-zA-Z0-9\-_]+)$/.test(x);
-}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
-        A value that satisfies
-        <em>isNamespacePath()</em>
-      </span>
-    </div>
-  
-    </fieldset>
-    
-            </div>
-          </div>
-        </li>
-    
-    </ol>
-  
-    </fieldset>
-    </dd>
-<dt>Return value spec</dt><dd>
-    
-    
-    <fieldset class="card card-outline-info">
-    <legend class="spec-type">
-      <span class="tag tag-info">of spec</span>
-    </legend>
-    
-    <div class="card-block">
-      A value that is of
-      <a href="#specky.types/Expression" data-path="specky.types/Expression">specky.types/Expression</a>
-    </div>
-  
-    </fieldset>
-    </dd>
-    </dl>
-  
-        </div>
-      
-<h3>specky.compose/</h3><hr>
+      <h3>specky.compose/</h3><hr>
     <a name="specky.compose/cat"></a>
     
         <div class="card">
@@ -834,7 +617,7 @@ S.conform(StrSpec, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-info">
     <legend class="spec-type">
-      <span class="tag tag-info">zero or one of (?)</span>
+      <span class="tag tag-info">optional (?)</span>
     </legend>
     
     <div class="card-block">
@@ -1002,7 +785,7 @@ S.conform(StrSpec, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-info">
     <legend class="spec-type">
-      <span class="tag tag-info">zero or one of (?)</span>
+      <span class="tag tag-info">optional (?)</span>
     </legend>
     
     <div class="card-block">
@@ -1160,7 +943,7 @@ S.conform(StrSpec, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-info">
     <legend class="spec-type">
-      <span class="tag tag-info">zero or one of (?)</span>
+      <span class="tag tag-info">optional (?)</span>
     </legend>
     
     <div class="card-block">
@@ -1546,7 +1329,7 @@ S.conform(StrSpec, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-info">
     <legend class="spec-type">
-      <span class="tag tag-info">zero or one of (?)</span>
+      <span class="tag tag-info">optional (?)</span>
     </legend>
     
     <div class="card-block">
@@ -1714,7 +1497,7 @@ S.conform(StrSpec, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-info">
     <legend class="spec-type">
-      <span class="tag tag-info">zero or one of (?)</span>
+      <span class="tag tag-info">optional (?)</span>
     </legend>
     
     <div class="card-block">
@@ -1872,7 +1655,7 @@ S.conform(StrSpec, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-info">
     <legend class="spec-type">
-      <span class="tag tag-info">zero or one of (?)</span>
+      <span class="tag tag-info">optional (?)</span>
     </legend>
     
     <div class="card-block">
@@ -2127,7 +1910,7 @@ S.conform(StrSpec, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-info">
     <legend class="spec-type">
-      <span class="tag tag-info">zero or one of (?)</span>
+      <span class="tag tag-info">optional (?)</span>
     </legend>
     
     <div class="card-block">
@@ -2268,7 +2051,7 @@ S.conform(StrSpec, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-info">
     <legend class="spec-type">
-      <span class="tag tag-info">zero or one of (?)</span>
+      <span class="tag tag-info">optional (?)</span>
     </legend>
     
     <div class="card-block">
@@ -2409,7 +2192,7 @@ S.conform(StrSpec, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-info">
     <legend class="spec-type">
-      <span class="tag tag-info">zero or one of (?)</span>
+      <span class="tag tag-info">optional (?)</span>
     </legend>
     
     <div class="card-block">
@@ -2618,7 +2401,7 @@ S.conform(StrSpec, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-info">
     <legend class="spec-type">
-      <span class="tag tag-info">zero or one of (?)</span>
+      <span class="tag tag-info">optional (?)</span>
     </legend>
     
     <div class="card-block">
@@ -3723,7 +3506,7 @@ S.conform(StrSpec, &apos;foofoofoobarbar&apos;);
           </div>
         
     <dl class="card-block">
-    <dt>Synopsis</dt><dd><ul><em>not(type)</em></ul></dd>
+    <dt>Synopsis</dt><dd><ul><em>not(predicateToNegate)</em></ul></dd>
 <dt>Argument spec</dt><dd>
     
     
@@ -3747,7 +3530,7 @@ S.conform(StrSpec, &apos;foofoofoobarbar&apos;);
             <div class="col-md-12">
               <p>
                 <span class="tag tag-default">1st </span>
-                &lt;<span class="lead font-italic text-primary">type</span>&gt;
+                &lt;<span class="lead font-italic text-primary">predicateToNegate</span>&gt;
                 
                   
             </p></div>
@@ -5022,7 +4805,7 @@ S.conform(StrSpec, &apos;foofoofoobarbar&apos;);
           </div>
         
     <dl class="card-block">
-    <dt>Synopsis</dt><dd><ul><em>oneOf(values)</em></ul></dd>
+    <dt>Synopsis</dt><dd><ul><em>oneOf(valueOptions)</em></ul></dd>
 <dt>Argument spec</dt><dd>
     
     
@@ -5046,7 +4829,7 @@ S.conform(StrSpec, &apos;foofoofoobarbar&apos;);
             <div class="col-md-12">
               <p>
                 <span class="tag tag-default">1st </span>
-                &lt;<span class="lead font-italic text-primary">values</span>&gt;
+                &lt;<span class="lead font-italic text-primary">valueOptions</span>&gt;
                 
                   
             </p></div>
@@ -5192,7 +4975,7 @@ S.conform(StrSpec, &apos;foofoofoobarbar&apos;);
           </div>
         
     <dl class="card-block">
-    <dt>Synopsis</dt><dd><ul><em>equals(valueToCompare)</em></ul></dd>
+    <dt>Synopsis</dt><dd><ul><em>equals(valueToCompareWith)</em></ul></dd>
 <dt>Argument spec</dt><dd>
     
     
@@ -5216,7 +4999,7 @@ S.conform(StrSpec, &apos;foofoofoobarbar&apos;);
             <div class="col-md-12">
               <p>
                 <span class="tag tag-default">1st </span>
-                &lt;<span class="lead font-italic text-primary">valueToCompare</span>&gt;
+                &lt;<span class="lead font-italic text-primary">valueToCompareWith</span>&gt;
                 
                   
             </p></div>
@@ -5344,7 +5127,7 @@ S.conform(StrSpec, &apos;foofoofoobarbar&apos;);
           </div>
         
     <dl class="card-block">
-    <dt>Synopsis</dt><dd><ul><em>instanceOf(type)</em></ul></dd>
+    <dt>Synopsis</dt><dd><ul><em>instanceOf(instanceType)</em></ul></dd>
 <dt>Argument spec</dt><dd>
     
     
@@ -5368,7 +5151,7 @@ S.conform(StrSpec, &apos;foofoofoobarbar&apos;);
             <div class="col-md-12">
               <p>
                 <span class="tag tag-default">1st </span>
-                &lt;<span class="lead font-italic text-primary">type</span>&gt;
+                &lt;<span class="lead font-italic text-primary">instanceType</span>&gt;
                 
                   
             </p></div>
@@ -5484,6 +5267,430 @@ S.conform(StrSpec, &apos;foofoofoobarbar&apos;);
     </fieldset>
     </dd>
     </dl>
+  
+    </fieldset>
+    </dd>
+    </dl>
+  
+        </div>
+      
+<h3>specky.namespace/</h3><hr>
+    <a name="specky.namespace/set"></a>
+    
+        <div class="card">
+          <div class="card-header inline-headers">
+            
+      <h6>set()</h6>&#xA0;
+        <span class="tag tag-primary">
+          function
+        </span>
+      
+          </div>
+        
+    <dl class="card-block">
+    <dt>Synopsis</dt><dd><ul><em>set(nsPath, expression)</em></ul></dd>
+<dt>Argument spec</dt><dd>
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="spec-type">
+      <span class="tag tag-info">cat (concatenation) of</span>
+    </legend>
+    
+    <div class="card-block">
+      <p class="card-title">
+        
+      </p>
+      <p class="card-title">
+        Should be <em>an ordered list</em> of the following:
+      </p>
+    </div>
+    <ol class="list-group list-group-flush list-for-cat">
+      
+        <li class="list-group-item card-outline-info">
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                <span class="tag tag-default">1st </span>
+                &lt;<span class="lead font-italic text-primary">nsPath</span>&gt;
+                
+                  
+            </p></div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    
+    
+    <fieldset class="card card-outline-primary">
+    <legend class="spec-type">
+      <span class="tag tag-primary">of predicate</span>
+    </legend>
+    
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isNamespacePath()" data-content="&lt;pre&gt;function isNamespacePath(x) {
+  return isStr(x) &amp;&amp; /^\/?[a-zA-Z0-9\-_\.]*\/([a-zA-Z0-9\-_]+)$/.test(x);
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <em>isNamespacePath()</em>
+      </span>
+    </div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </li>
+     
+        <li class="list-group-item card-outline-info">
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                <span class="tag tag-default">2nd </span>
+                &lt;<span class="lead font-italic text-primary">expression</span>&gt;
+                
+                  
+            </p></div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="spec-type">
+      <span class="tag tag-info">of spec</span>
+    </legend>
+    
+    <div class="card-block">
+      A value that is of
+      <a href="#specky.types/Expression" data-path="specky.types/Expression">specky.types/Expression</a>
+    </div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </li>
+    
+    </ol>
+  
+    </fieldset>
+    </dd>
+<dt>Return value spec</dt><dd>
+    
+    
+    <fieldset class="card card-outline-primary">
+    <legend class="spec-type">
+      <span class="tag tag-primary">of predicate</span>
+    </legend>
+    
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isUndefined()" data-content="&lt;pre&gt;function isUndefined(x) {
+  return x === undefined;
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <em>isUndefined()</em>
+      </span>
+    </div>
+  
+    </fieldset>
+    </dd>
+    </dl>
+  
+        </div>
+      
+
+    <a name="specky.namespace/get"></a>
+    
+        <div class="card">
+          <div class="card-header inline-headers">
+            
+      <h6>get()</h6>&#xA0;
+        <span class="tag tag-primary">
+          function
+        </span>
+      
+          </div>
+        
+    <dl class="card-block">
+    <dt>Synopsis</dt><dd><ul><em>get(nsPath)</em></ul></dd>
+<dt>Argument spec</dt><dd>
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="spec-type">
+      <span class="tag tag-info">cat (concatenation) of</span>
+    </legend>
+    
+    <div class="card-block">
+      <p class="card-title">
+        
+      </p>
+      <p class="card-title">
+        Should be <em>an ordered list</em> of the following:
+      </p>
+    </div>
+    <ol class="list-group list-group-flush list-for-cat">
+      
+        <li class="list-group-item card-outline-info">
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                <span class="tag tag-default">1st </span>
+                &lt;<span class="lead font-italic text-primary">nsPath</span>&gt;
+                
+                  
+            </p></div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    
+    
+    <fieldset class="card card-outline-primary">
+    <legend class="spec-type">
+      <span class="tag tag-primary">of predicate</span>
+    </legend>
+    
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isNamespacePath()" data-content="&lt;pre&gt;function isNamespacePath(x) {
+  return isStr(x) &amp;&amp; /^\/?[a-zA-Z0-9\-_\.]*\/([a-zA-Z0-9\-_]+)$/.test(x);
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <em>isNamespacePath()</em>
+      </span>
+    </div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </li>
+    
+    </ol>
+  
+    </fieldset>
+    </dd>
+<dt>Return value spec</dt><dd>
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="spec-type">
+      <span class="tag tag-info">of spec</span>
+    </legend>
+    
+    <div class="card-block">
+      A value that is of
+      <a href="#specky.types/Expression" data-path="specky.types/Expression">specky.types/Expression</a>
+    </div>
+  
+    </fieldset>
+    </dd>
+    </dl>
+  
+        </div>
+      
+
+    <a name="specky.namespace/meta"></a>
+    
+        <div class="card">
+          <div class="card-header inline-headers">
+            
+      <h6>meta()</h6>&#xA0;
+        <span class="tag tag-primary">
+          function
+        </span>
+      
+          </div>
+        
+    <dl class="card-block">
+    <dt>Synopsis</dt><dd><ul><em>meta(source, metaObj)</em></ul></dd>
+<dt>Argument spec</dt><dd>
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="spec-type">
+      <span class="tag tag-info">cat (concatenation) of</span>
+    </legend>
+    
+    <div class="card-block">
+      <p class="card-title">
+        
+      </p>
+      <p class="card-title">
+        Should be <em>an ordered list</em> of the following:
+      </p>
+    </div>
+    <ol class="list-group list-group-flush list-for-cat">
+      
+        <li class="list-group-item card-outline-info">
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                <span class="tag tag-default">1st </span>
+                &lt;<span class="lead font-italic text-primary">source</span>&gt;
+                
+                  
+            </p></div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="spec-type">
+      <span class="tag tag-info">or (alts)</span>
+    </legend>
+    
+    <div class="card-block">
+      
+      <p class="card-title">
+      
+      
+        Should be <em>one of</em> the following:
+      </p>
+    </div>
+    <ol class="list-group list-group-flush list-for-or">
+      
+        <li class="list-group-item card-outline-info">
+          <div class="row">
+            <div class="col-md-12">
+              <span class="tag tag-default">
+                Option 1
+              </span>
+              
+                  &lt;<span class="lead font-italic text-primary">namespacePath</span>&gt;
+              
+            
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    
+    
+    <fieldset class="card card-outline-primary">
+    <legend class="spec-type">
+      <span class="tag tag-primary">of predicate</span>
+    </legend>
+    
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isNamespacePath()" data-content="&lt;pre&gt;function isNamespacePath(x) {
+  return isStr(x) &amp;&amp; /^\/?[a-zA-Z0-9\-_\.]*\/([a-zA-Z0-9\-_]+)$/.test(x);
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <em>isNamespacePath()</em>
+      </span>
+    </div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </li>
+    
+        <li class="list-group-item card-outline-info">
+          <div class="row">
+            <div class="col-md-12">
+              <span class="tag tag-default">
+                Option 2
+              </span>
+              
+                  &lt;<span class="lead font-italic text-primary">expression</span>&gt;
+              
+            
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    
+    
+    <fieldset class="card card-outline-primary">
+    <legend class="spec-type">
+      <span class="tag tag-primary">of predicate</span>
+    </legend>
+    
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isExpr()" data-content="&lt;pre&gt;function isExpr(x) {
+  return isPred(x) || isSpec(x) || isSpecRef(x) || isDelayedSpec(x);
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <em>isExpr()</em>
+      </span>
+    </div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </li>
+    
+    </ol>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </li>
+     
+        <li class="list-group-item card-outline-info">
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                <span class="tag tag-default">2nd </span>
+                &lt;<span class="lead font-italic text-primary">metaObj</span>&gt;
+                
+                  
+            </p></div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    
+    
+    <fieldset class="card card-outline-primary">
+    <legend class="spec-type">
+      <span class="tag tag-primary">of predicate</span>
+    </legend>
+    
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isObject()" data-content="&lt;pre&gt;function isObject(x) {
+  return (typeof x === &apos;undefined&apos; ? &apos;undefined&apos; : _typeof(x)) === &apos;object&apos; &amp;&amp; x !== null;
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <em>isObject()</em>
+      </span>
+    </div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </li>
+    
+    </ol>
+  
+    </fieldset>
+    </dd>
+<dt>Return value spec</dt><dd>
+    
+    
+    <fieldset class="card card-outline-primary">
+    <legend class="spec-type">
+      <span class="tag tag-primary">of predicate</span>
+    </legend>
+    
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isExpr()" data-content="&lt;pre&gt;function isExpr(x) {
+  return isPred(x) || isSpec(x) || isSpecRef(x) || isDelayedSpec(x);
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <em>isExpr()</em>
+      </span>
+    </div>
   
     </fieldset>
     </dd>
@@ -6067,7 +6274,9 @@ S.conform(StrSpec, &apos;foofoofoobarbar&apos;);
     </ol>
   
         </div>
-      </section>
+      
+
+</section>
       </p></div>
     </div>
     <footer class="text-sm-center">

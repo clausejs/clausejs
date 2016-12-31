@@ -6,7 +6,7 @@ import { any, ExprSpec, CatFnSpec, OrFnSpec, AndFnSpec,
   ZeroOrMoreFnSpec, OneOrMoreFnSpec, ZeroOrOneFnSpec } from '../core';
 import { WallFnSpec } from '../core/wall';
 import { ShapeFnSpec, MapOfFnSpec } from '../core/objRelated';
-import { isNamespacePath, GetNSFnSpec, NamespaceFnSpec, SetNSFnSpec, NamespaceObjSpec } from './namespace.types';
+import { isNamespacePath, GetNSFnSpec, NamespaceFnSpec, MetaFnSpec, SetNSFnSpec, NamespaceObjSpec } from './namespace.types';
 
 // TODO
 // const S = Specky.withRegistry(nsObj);
@@ -48,22 +48,22 @@ const UndefinableFnSpec = fspec( {
 } );
 
 const InstanceOfFnSpec = fspec( {
-  args: cat( 'type', isFn ),
+  args: cat( 'instanceType', isFn ),
   ret: SingleArgPredSpec(),
 } );
 
 const NotFnSpec = fspec( {
-  args: cat( 'type', S( 'specky.types/Predicate' ) ),
+  args: cat( 'predicateToNegate', S( 'specky.types/Predicate' ) ),
   ret: SingleArgPredSpec(),
 } );
 
 const EqualsFnSpec = fspec( {
-  args: cat( 'valueToCompare', any() ),
+  args: cat( 'valueToCompareWith', any() ),
   ret: SingleArgPredSpec(),
 } );
 
 const OneOfFnSpec = fspec( {
-  args: cat( 'values', collOf( S( 'specky.types/Primitive' ) ) ),
+  args: cat( 'valueOptions', collOf( S( 'specky.types/Primitive' ) ) ),
   ret: SingleArgPredSpec(),
 } );
 
@@ -87,8 +87,6 @@ const DelayedFnSpec = fspec( {
 } );
 
 S( '/specky', NamespaceFnSpec );
-S( '/specky/set', SetNSFnSpec );
-S( '/specky/get', GetNSFnSpec );
 
 S( 'specky.compose/cat', CatFnSpec );
 S( 'specky.compose/or', OrFnSpec );
@@ -127,6 +125,10 @@ S( 'specky.preds/isUuid', SingleArgPredSpec() );
 S( 'specky.preds/oneOf', OneOfFnSpec );
 S( 'specky.preds/equals', EqualsFnSpec );
 S( 'specky.preds/instanceOf', InstanceOfFnSpec );
+
+S( '/specky.namespace/set', SetNSFnSpec );
+S( '/specky.namespace/get', GetNSFnSpec );
+S( '/specky.namespace/meta', MetaFnSpec );
 
 S( 'specky.types/Expression', ExprSpec );
 S( 'specky.types/Spec', SpecSpec );
