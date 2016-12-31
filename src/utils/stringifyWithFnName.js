@@ -3,29 +3,25 @@ const fnName = require( './fnName' );
 
 function stringifyWithFnName( subject, currTransform ) {
 
-  if ( !subject ) {
-    return '';
-  } else {
-    var newArgs = Array.prototype.slice.call( arguments );
+  var newArgs = Array.prototype.slice.call( arguments );
 
-    newArgs[ 1 ] = ( key, val ) => {
-      var r;
-      if ( isFn( val ) ) {
-        // implicitly `toString` it
-        var n = fnName( val );
-        if ( n ) {
-          r = `${n}()`;
-        } else {
-          r = val.toString();
-        }
+  newArgs[ 1 ] = ( key, val ) => {
+    var r;
+    if ( isFn( val ) ) {
+      // implicitly `toString` it
+      var n = fnName( val );
+      if ( n ) {
+        r = `${n}()`;
       } else {
-        r = val;
+        r = val.toString();
       }
-      return currTransform ? currTransform( r ) : r;
-    };
+    } else {
+      r = val;
+    }
+    return currTransform ? currTransform( r ) : r;
+  };
 
-    return JSON.stringify.apply( this, newArgs );
-  }
+  return JSON.stringify.apply( this, newArgs );
 
 }
 
