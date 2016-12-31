@@ -1,4 +1,4 @@
-<img src="https://cdn.rawgit.com/clausejs/clausejs/master/media/clausejs.svg"
+<img src="https://cdn.rawgit.com/clausejs/clausejs/9dcafe2261b28ff027d0a59abd30899f5c6552a8/media/clausejs.svg"
      width="190" height="190" align="right" hspace="10" />
 
 # Clause
