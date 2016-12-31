@@ -389,7 +389,7 @@ var Clause = __webpack_require__(0);
 var Problem = __webpack_require__(3);
 var fnName = __webpack_require__(5);
 
-var SPEC_TYPE_PRED = 'PRED';
+var CLAUSE_TYPE_PRED = 'PRED';
 
 function coerceIntoClause(expr) {
   if (isClause(expr) || isClauseRef(expr) || isDelayedClause(expr)) {
@@ -405,7 +405,7 @@ function coerceIntoClause(expr) {
 
 function _wrap(pred) {
   return new Clause({
-    type: SPEC_TYPE_PRED,
+    type: CLAUSE_TYPE_PRED,
     exprs: [pred],
     opts: {
       predicate: pred
@@ -827,9 +827,9 @@ var walkerMap = {
   'WALL': wallWalker,
   'SHAPE': shapeWalker,
   'AND': andWalker,
-  'SPEC_REF': clauseRefWalker,
+  'CLAUSE_REF': clauseRefWalker,
   'DELAYED': delayedClauseWalker,
-  'FSPEC': fclauseWalker,
+  'FCLAUSE': fclauseWalker,
   'MAP_OF': mapOfWalker
 };
 
@@ -893,7 +893,7 @@ function fclause(fnClause) {
       fn = fnClause.fn;
 
   var clause = new Clause({
-    type: 'FSPEC',
+    type: 'FCLAUSE',
     exprs: [],
     opts: fnClause
   });
@@ -1369,7 +1369,7 @@ function ClauseRef(_ref) {
       getFn = _ref.getFn,
       conformFn = _ref.conformFn;
 
-  this.type = 'SPEC_REF';
+  this.type = 'CLAUSE_REF';
   this.get = getFn;
   this.conform = conformFn;
   this.ref = ref;
@@ -2015,7 +2015,7 @@ function _strFragments(expr, interceptor) {
   } else if (expr.type === 'PRED') {
     return _strFragments(expr.opts.predicate, interceptor);
   } else if (isClause(expr)) {
-    if (expr.type === 'DELAYED' || expr.type === 'SPEC_REF') {
+    if (expr.type === 'DELAYED' || expr.type === 'CLAUSE_REF') {
       return _strFragments(expr.get(), interceptor);
     } else {
       return [expr.type.toLowerCase(), '('].concat(_processInner(expr, interceptor)).concat([')']);
@@ -2070,11 +2070,11 @@ module.exports = g;
 
 var Clause = __webpack_require__(0);
 var identity = __webpack_require__(33);
-var SPEC_TYPE_ANY = 'ANY';
+var CLAUSE_TYPE_ANY = 'ANY';
 
 function any() {
   return new Clause({
-    type: SPEC_TYPE_ANY,
+    type: CLAUSE_TYPE_ANY,
     exprs: [],
     conformFn: identity
   });
@@ -3158,7 +3158,7 @@ var Fragmenters = {
     return [];
   },
   // TODO: fix comma
-  'FSPEC': function FSPEC(_ref8) {
+  'FCLAUSE': function FCLAUSE(_ref8) {
     var args = _ref8.args,
         ret = _ref8.ret,
         fn = _ref8.fn;
@@ -3203,7 +3203,7 @@ module.exports = function isClauseName(x) {
 var isClause = __webpack_require__(2);
 
 function isFclause(x) {
-  return isClause(x) && x.type === 'FSPEC';
+  return isClause(x) && x.type === 'FCLAUSE';
 }
 
 module.exports = isFclause;

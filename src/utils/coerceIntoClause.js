@@ -6,7 +6,7 @@ var Clause = require( '../models/Clause' );
 var Problem = require( '../models/Problem' );
 var fnName = require( './fnName' );
 
-var SPEC_TYPE_PRED = 'PRED';
+var CLAUSE_TYPE_PRED = 'PRED';
 
 function coerceIntoClause( expr ) {
   if ( isClause( expr ) || isClauseRef( expr ) || isDelayedClause( expr ) ) {
@@ -22,7 +22,7 @@ function coerceIntoClause( expr ) {
 
 function _wrap( pred ) {
   return new Clause( {
-    type: SPEC_TYPE_PRED,
+    type: CLAUSE_TYPE_PRED,
     exprs: [ pred ],
     opts: {
       predicate: pred,

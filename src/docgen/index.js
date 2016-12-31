@@ -101,13 +101,13 @@ function _exprMeta( globalReg, exprName, expr, meta ) {
 }
 
 const typeTable = {
-  'FSPEC': 'function',
+  'FCLAUSE': 'function',
   'PRED': 'predicate',
   'CAT': 'cat sequence',
 }
 
 function _stylizeName( expr, name ) {
-  if ( expr.type === 'FSPEC' ) {
+  if ( expr.type === 'FCLAUSE' ) {
     return `${name}()`;
   } else {
     return name;
@@ -128,11 +128,11 @@ function genForExpression( globalReg, exprName, expr, meta ) {
 
   if ( path && !exprName ) {
     docstr = _genClauseRef( globalReg, exprName, path, expr, meta );
-  } else if ( expr.type === 'SPEC_REF' ) {
+  } else if ( expr.type === 'CLAUSE_REF' ) {
     docstr = _genClauseRef( globalReg, exprName, null, expr, meta );
   } else if ( expr.type === 'DELAYED' ) {
     return genForExpression( globalReg, exprName, expr.get(), meta );
-  } else if ( expr.type === 'FSPEC' ) {
+  } else if ( expr.type === 'FCLAUSE' ) {
     docstr = _genFclause( globalReg, exprName, expr, meta );
   } else if ( expr.type === 'OR' ) {
     docstr = _genOrClause( globalReg, exprName, path, expr, meta );
@@ -379,7 +379,7 @@ function _synopsisToHtml( arr ) {
 function synopsisArray( prefixes, suffixes, exprName, clause, globalReg, meta, defs ) {
   if ( !clause ) {
     return prefixes.concat( suffixes );
-  } else if ( clause.type == 'FSPEC' ) {
+  } else if ( clause.type == 'FCLAUSE' ) {
     let fnName = meta && meta.name || exprName;
 
     return synopsisArray( [ fnName, '(' ], [ ')' ], null, clause.opts.args, globalReg, meta && meta.args, defs );

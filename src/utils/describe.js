@@ -15,7 +15,7 @@ function _strFragments( expr, interceptor ) {
   } else if ( expr.type === 'PRED' ) {
     return _strFragments( expr.opts.predicate, interceptor );
   } else if ( isClause( expr ) ) {
-    if ( expr.type === 'DELAYED' || expr.type === 'SPEC_REF' ) {
+    if ( expr.type === 'DELAYED' || expr.type === 'CLAUSE_REF' ) {
       return _strFragments( expr.get(), interceptor );
     } else {
       return [ expr.type.toLowerCase(), '(', ]

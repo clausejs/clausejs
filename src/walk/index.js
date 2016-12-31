@@ -47,9 +47,9 @@ const walkerMap = {
   'WALL': wallWalker,
   'SHAPE': shapeWalker,
   'AND': andWalker,
-  'SPEC_REF': clauseRefWalker,
+  'CLAUSE_REF': clauseRefWalker,
   'DELAYED': delayedClauseWalker,
-  'FSPEC': fclauseWalker,
+  'FCLAUSE': fclauseWalker,
   'MAP_OF': mapOfWalker,
 }
 

@@ -37,7 +37,7 @@ var Fragmenters = {
   // TODO
   'SHAPE': () => [],
   // TODO: fix comma
-  'FSPEC': ( { args, ret, fn } ) => [].concat( args ? [ 'args: ', args ] : [] )
+  'FCLAUSE': ( { args, ret, fn } ) => [].concat( args ? [ 'args: ', args ] : [] )
     .concat( ret ? [ 'ret: ', ret ] : [] )
     .concat( fn ? [ 'fn: ', fnName( fn ), '()' ] : [] ),
 };

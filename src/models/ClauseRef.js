@@ -1,7 +1,7 @@
 const Clause = require( './Clause' );
 
 function ClauseRef( { ref, getFn, conformFn } ) {
-  this.type = 'SPEC_REF';
+  this.type = 'CLAUSE_REF';
   this.get = getFn;
   this.conform = conformFn;
   this.ref = ref;

@@ -5,7 +5,7 @@ var fnName = require( '../utils/fnName' );
 function fclause( fnClause ) {
   const { args, ret, fn } = fnClause;
   var clause = new Clause( {
-    type: 'FSPEC',
+    type: 'FCLAUSE',
     exprs: [],
     opts: fnClause,
   } );
