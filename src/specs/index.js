@@ -52,6 +52,11 @@ const InstanceOfFnSpec = fspec( {
   ret: SingleArgPredSpec(),
 } );
 
+const NotFnSpec = fspec( {
+  args: cat( 'type', S( 'specky.types/Predicate' ) ),
+  ret: SingleArgPredSpec(),
+} );
+
 const EqualsFnSpec = fspec( {
   args: cat( 'valueToCompare', any() ),
   ret: SingleArgPredSpec(),
@@ -105,6 +110,7 @@ S( 'specky.utils/conform', ConformFnSpec );
 S( 'specky.utils/delayed', DelayedFnSpec );
 S( 'specky.utils/describe', DescribeFnSpec );
 
+S( 'specky.preds/not', NotFnSpec );
 S( 'specky.preds/isObj', SingleArgPredSpec() );
 S( 'specky.preds/isStr', SingleArgPredSpec() );
 S( 'specky.preds/isArray', SingleArgPredSpec() );

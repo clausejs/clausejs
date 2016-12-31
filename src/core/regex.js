@@ -3,6 +3,8 @@ var oAssign = require( 'object-assign' );
 var Spec = require( '../models/Spec' );
 var isSpec = require( '../utils/isSpec' );
 var isPred = require( '../utils/isPred' );
+var isExpr = require( '../utils/isExpr' );
+var not = require( '../preds/not' );
 var specFromAlts = require( '../utils/specFromAlts' );
 var isObj = require( '../preds/isObj' );
 var isStr = require( '../preds/isStr' );
@@ -30,76 +32,107 @@ var DelayedSpecSpec = coerceIntoSpec( isDelayedSpec );
 var PredSpec = coerceIntoSpec( isPred );
 
 var ExprSpec = orOp( {
-  withLabels: [
-    { name: 'spec', expr: {
-      spec: SpecSpec,
-    } },
-    { name: 'pred', expr: {
-      spec: PredSpec,
-    } },
-    { name: 'delayedSpec', expr: {
-      spec: DelayedSpecSpec,
-    } },
-    { name: 'specRef', expr: {
-      spec: SpecRefSpec,
-    } },
-  ],
+  expressions: {
+    withLabels: [
+      { name: 'spec', expr: {
+        spec: SpecSpec,
+      } },
+      { name: 'pred', expr: {
+        spec: PredSpec,
+      } },
+      { name: 'delayedSpec', expr: {
+        spec: DelayedSpecSpec,
+      } },
+      { name: 'specRef', expr: {
+        spec: SpecRefSpec,
+      } },
+    ],
+  }
 } );
 
 var NameExprOptionalComment = catOp( {
-  withLabels: [
-    { name: 'name', expr: {
-      spec: nameSpec,
-    } },
-    { name: 'comment', expr: {
-      spec: zeroOrOneOp( {
-        expr: {
-          pred: isStr,
-        }
-      } ),
-    } },
-    { name: 'expr', expr: {
-      spec: ExprSpec,
-    } },
-  ],
+  expressions: {
+    withLabels: [
+      { name: 'name', expr: {
+        spec: nameSpec,
+      } },
+      { name: 'comment', expr: {
+        spec: zeroOrOneOp( {
+          expr: {
+            pred: isStr,
+          }
+        } ),
+      } },
+      { name: 'expr', expr: {
+        spec: ExprSpec,
+      } },
+    ],
+  }
 } );
 
-var MultipleArgSpec = orOp( {
-  withLabels: [
-    {
-      name: 'withLabels',
-      expr: {
-        spec: orOp( {
-          withoutLabels: [
-            {
-              spec: zeroOrMoreOp( {
-                expr: {
-                  spec: NameExprOptionalComment,
+var MultipleArgSpec = catOp( {
+  expressions: {
+    withLabels: [
+      { name: 'expressions',
+        expr: {
+          spec: orOp( {
+            expressions: {
+              withLabels: [
+                {
+                  name: 'withLabels',
+                  expr: {
+                    spec: orOp( {
+                      expressions: {
+                        withoutLabels: [
+                          {
+                            spec: zeroOrMoreOp( {
+                              expr: {
+                                spec: NameExprOptionalComment,
+                              },
+                            } )
+                          },
+                          {
+                            spec: collOfOp( {
+                              expr: {
+                                spec: NameExprOptionalComment,
+                              },
+                            } )
+                          },
+                        ]
+                      }
+                    } ),
+                  },
                 },
-              } )
-            },
-            {
-              spec: collOfOp( {
-                expr: {
-                  spec: NameExprOptionalComment,
+                {
+                  name: 'withoutLabels',
+                  expr: {
+                    spec: zeroOrMoreOp( {
+                      expr: {
+                        spec: ExprSpec,
+                      },
+                    } ),
+                  },
                 },
-              } )
-            },
-          ]
-        } ),
+              ],
+            }
+          } )
+        }
       },
-    },
-    {
-      name: 'withoutLabels',
-      expr: {
-        spec: zeroOrMoreOp( {
-          expr: {
-            spec: ExprSpec,
-          },
-        } ),
-      },
-    },
-  ],
+      {
+        name: 'options',
+        expr: {
+          spec: zeroOrOneOp( {
+            expr: {
+              spec: andOp( [
+                 { pred: isObj },
+                 { pred: not( isExpr ) }
+              ] )
+            }
+          } )
+        }
+      }
+    ]
+  }
 } );
 
 function andOp( exprs ) {
@@ -120,7 +153,7 @@ var multipleArgNoDupeSpec = andOp(
     { pred: noDupelicateLabels } ]
 );
 
-function noDupelicateLabels( { withLabels } ) {
+function noDupelicateLabels( { expressions: { withLabels } } ) {
   if ( withLabels ) {
     let byFar = [];
     for ( let i = 0; i < withLabels.length; i += 1 ) {
@@ -148,31 +181,33 @@ var multipleArgOpSpec = {
 
 var singleArgOpSpecFn = ( optSpec ) => ( {
   args: catOp( {
-    withLabels: [
-      {
-        name: 'expr',
-        expr: {
-          spec: ExprSpec,
-        }
-      },
-      {
-        name: 'opts',
-        expr: {
-          spec: zeroOrOneOp( {
-            expr: optSpec
-          } ),
-        }
-      },
-    ],
+    expressions: {
+      withLabels: [
+        {
+          name: 'expr',
+          expr: {
+            spec: ExprSpec,
+          }
+        },
+        {
+          name: 'opts',
+          expr: {
+            spec: zeroOrOneOp( {
+              expr: optSpec
+            } ),
+          }
+        },
+      ],
+    }
   } ),
   ret: specSpec,
 } );
 
 function genMultiArgOp( type ) {
-  return namedFn( type, function _( conformedArgs ) {
+  return namedFn( type, function _( { expressions: { withLabels, withoutLabels }, options } ) {
     var exprs;
-    if ( conformedArgs.withLabels ) {
-      exprs = conformedArgs.withLabels;
+    if ( withLabels ) {
+      exprs = withLabels;
 
       var coercedExprs = exprs.map( ( p ) => {
         var alts = p.expr;
@@ -184,9 +219,9 @@ function genMultiArgOp( type ) {
           specRef: undefined, delayedSpec: undefined } );
       } );
 
-      let opts = {
+      let opts = oAssign( {}, options, {
         named: true,
-      };
+      } );
       var s = new Spec( {
         type,
         exprs: coercedExprs,
@@ -197,8 +232,8 @@ function genMultiArgOp( type ) {
         return walk( s, x, { conform: true } );
       };
       return s;
-    } else if ( conformedArgs.withoutLabels ) {
-      exprs = conformedArgs.withoutLabels;
+    } else if ( withoutLabels ) {
+      exprs = withoutLabels;
 
       coercedExprs = exprs.map( ( p ) => {
         var s;
@@ -220,9 +255,9 @@ function genMultiArgOp( type ) {
         }
       } );
 
-      let opts = {
+      let opts = oAssign( {}, options, {
         named: false,
-      };
+      } );
 
       s = new Spec( {
         type,
@@ -318,243 +353,3 @@ module.exports = core;
 // var isObj = require( '../preds/isObj' );
 // var isNum = require( '../preds/isNum' );
 // var isBool = require( '../preds/isBool' );
-
-// var NestedSpec = catOp( {
-//   withoutLabels: [
-//     { spec: catOp( {
-//       withoutLabels: [
-//         { pred: isNum },
-//         { pred: isBool }
-//       ]
-//     } ) },
-//     { spec: catOp( {
-//       withoutLabels: [
-//         { spec: zeroOrMoreOp( {
-//           expr: {
-//             pred: isNum
-//           },
-//         } ) },
-//         { spec: catOp( {
-//           withoutLabels: [
-//             { pred: isBool }
-//           ]
-//         } ) },
-//         { spec: oneOrMoreOp( {
-//           expr: {
-//             pred: isNum
-//           },
-//         } ) },
-//         { spec: zeroOrOneOp( {
-//           expr: {
-//             pred: isObj
-//           },
-//         } ) },
-//       ]
-//     } ) }
-//   ]
-// } );
-
-
-// var NestedSpec = catOp( {
-//   withoutLabels: [
-//     { spec: catOp( {
-//       withoutLabels: [
-//         { pred: isNum },
-//         { pred: isBool }
-//       ]
-//     } ) },
-//     { spec: orOp( {
-//       withoutLabels: [
-//         { spec: zeroOrMoreOp( {
-//           expr: {
-//             pred: isNum
-//           },
-//         } ) },
-//         { spec: catOp( {
-//           withoutLabels: [
-//             { pred: isBool }
-//           ]
-//         } ) },
-//         { spec: oneOrMoreOp( {
-//           expr: {
-//             pred: isStr
-//           },
-//         } ) },
-//         { spec: zeroOrOneOp( {
-//           expr: {
-//             pred: isObj
-//           },
-//         } ) },
-//       ]
-//     } ) }
-//   ]
-// } );
-
-// var NestedSpec = catOp( {
-//   withLabels: [
-//     { name: 'first',
-//       expr: { spec: catOp( {
-//         withoutLabels: [
-//         { pred: isNum },
-//         { pred: isBool }
-//         ]
-//       } ) }
-//     },
-//     { name: 'second',
-//       expr: { spec: orOp( {
-//         withLabels: [
-//           { name: 'second1', expr: { pred: isStr } },
-//           { name: 'second2', expr: { pred: isBool } }
-//         ]
-//       } ) }
-//     },
-//   ]
-// } );
-
-// var NestedSpec = catOp( {
-//   withLabels: [
-//     { name: 'first',
-//       expr: { spec: catOp( {
-//         withoutLabels: [
-//         { pred: isNum },
-//         { pred: isBool }
-//         ]
-//       } ) }
-//     },
-//     { name: 'second',
-//       expr: { spec: catOp( {
-//         withoutLabels: [
-//         { pred: isStr },
-//         { pred: isBool }
-//         ]
-//       } ) }
-//     },
-//     // {
-//     //   name: 'sepody',
-//     //   expr: { spec: orOp( {
-//     //     withoutLabels: [
-//     //       { spec: zeroOrMoreOp( {
-//     //         expr: {
-//     //           pred: isNum
-//     //         },
-//     //       } ) },
-//     //       { spec: catOp( {
-//     //         withoutLabels: [
-//     //           { pred: isBool }
-//     //         ]
-//     //       } ) },
-//     //       { spec: oneOrMoreOp( {
-//     //         expr: {
-//     //           pred: isStr
-//     //         },
-//     //       } ) },
-//     //       { spec: zeroOrOneOp( {
-//     //         expr: {
-//     //           pred: isObj
-//     //         },
-//     //       } ) },
-//     //     ]
-//     //   } ) }
-//     // }
-//   ]
-// } );
-
-// var data = [ 22, true,
-//   'ss',
-//   // { sss: 1 }
-// ];
-// var r = NestedSpec.conform( data );
-
-// console.log( r );
-
-// var CCSpec = catOp( {
-//   withoutLabels: [
-//     { pred: isStr },
-//     { spec: zeroOrOneOp( {
-//       expr: {
-//         pred: isStr
-//       }
-//     } ) }
-//   ]
-// } );
-// var TestSpec1 = orOp( {
-//   withoutLabels: [
-//     {
-//       spec: CCSpec,
-//     },
-//     {
-//       pred: isStr,
-//     }
-//   ],
-// } );
-// var TestSpec2 = orOp( {
-//   withoutLabels: [
-//     {
-//       spec: isNum,
-//     },
-//     {
-//       pred: isBool,
-//     },
-//     {
-//       pred: isStr,
-//     },
-//   ],
-// } );
-// var TS3 = orOp( {
-//   withLabels: [
-//     {
-//       name: 'hello',
-//       expr: {
-//         pred: isStr
-//       }
-//     },
-//     {
-//       name: 'zeeExpr',
-//       expr: {
-//         pred: isPred
-//       }
-//     }
-//   ]
-// } );
-
-// console.log( TestSpec2 )
-
-// var r = TS3.conform( 'hellolllllllllllllllllll' );
-// console.log( r )
-// var TestSpec = orOp( {
-//   withLabels: [""
-//     {
-//       name: 'withLabels',
-//       expr: {
-//         spec: orOp( {
-//           withoutLabels: [
-//             {
-//               spec: zeroOrMoreOp( {
-//                 expr: {
-//                   spec: NameExprOptionalComment,
-//                 },
-//               } )
-//             },
-//             {
-//               spec: collOfOp( {
-//                 expr: {
-//                   spec: NameExprOptionalComment,
-//                 },
-//               } )
-//             },
-//           ]
-//         } ),
-//       },
-//     },
-//     {
-//       name: 'withoutLabels',
-//       expr: {
-//         spec: zeroOrMoreOp( {
-//           expr: {
-//             spec: ExprSpec,
-//           },
-//         } ),
-//       },
-//     },
-//   ],
-// } );

@@ -1,7 +1,7 @@
-#### Regex-like Operations on Iterables
-          
+### Regex-like Operations on Iterables
+
 Both array and string are treated as iterables in Specky, which means both types can be the subject of regex-like operations.
-          
+
 For example, both of the following spec definitions are valid:
 
 ```js

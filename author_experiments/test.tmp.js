@@ -2,21 +2,25 @@ require( 'babel-core/register' );
 
 // var s = require( '../src/core/regex' );
 var S = require( '../src' );
-var PropagatedAndSpec = S.and(
-  S.isArray,
-  S.cat(
-    'firstPart', S.oneOrMore( S.isNum ),
-    'secondPart', S.isBool,
-    'thirdPart', S.oneOrMore( S.isNum ) ),
-  function firstThirdPartEqualLen( cargs ) {
-    const { firstPart, thirdPart } = cargs;
-    console.log( cargs );
-    return firstPart.length === thirdPart.length;
-  }
-);
 
-var conformed1 = [ 1, 2, 3, 4, true, 5, 6, 7, 8 ];
-console.log( PropagatedAndSpec.conform( conformed1 ) );
+var mySpec = S.cat( 'a', S.isStr, {} );
+
+
+// var PropagatedAndSpec = S.and(
+//   S.isArray,
+//   S.cat(
+//     'firstPart', S.oneOrMore( S.isNum ),
+//     'secondPart', S.isBool,
+//     'thirdPart', S.oneOrMore( S.isNum ) ),
+//   function firstThirdPartEqualLen( cargs ) {
+//     const { firstPart, thirdPart } = cargs;
+//     console.log( cargs );
+//     return firstPart.length === thirdPart.length;
+//   }
+// );
+//
+// var conformed1 = [ 1, 2, 3, 4, true, 5, 6, 7, 8 ];
+// console.log( PropagatedAndSpec.conform( conformed1 ) );
 
 
 // var NumOrStr = S.or( S.isNum, S.isStr, S.isObj, S.isDate, S.isNatInt );

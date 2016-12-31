@@ -8,6 +8,7 @@ var equals = require( './equals' );
 var oneOf = require( './oneOf' );
 var isStr = require( './isStr' );
 var isDate = require( './isDate' );
+var not = require( './not' );
 var instanceOf = require( './instanceOf' );
 var isUuid = require( './isUuid' );
 var isArray = Array.isArray;
@@ -26,6 +27,7 @@ var e = {
   isArray, isArr: isArray,
   equal: equals, equals, equalsTo: equals, eq: equals,
   oneOf,
+  not,
   isDate,
   instanceOf,
   isUuid, isUUID: isUuid,

@@ -59,7 +59,7 @@ describe( 'cat', () => {
       expect( createDupe ).to.throw( Error );
     } );
 
-    it( 'named, grouped', () => {
+    it( 'labelled, grouped', () => {
       var NamedGroupedSpec = S.cat(
          'z', 'it\'s a fuuuunction', S.isFn,
          'b', S.isObj,
@@ -83,7 +83,7 @@ describe( 'cat', () => {
       expect( NamedCommentedSpec.exprs[ 2 ].comment ).to.contain( 'man' );
     } );
 
-    it( 'withoutLabels', () => {
+    it( 'without labels', () => {
       var conformed = UnnamedSpec.conform( conformist );
       expect( conformed ).to.deep.equal( conformist );
       var nonconformed = UnnamedSpec.conform( nonconformist );
@@ -95,20 +95,21 @@ describe( 'cat', () => {
 
     beforeEach( init );
 
-    [ [ () => NamedSpec, 'named' ], [ () => UnnamedSpec, 'withoutLabels' ] ].forEach( ( p ) => {
-      var name = p[ 1 ];
-      it( name, () => {
-        var Spec = p[ 0 ]();
+    [ [ () => NamedSpec, 'labelled' ], [ () => UnnamedSpec, 'without labels' ] ].forEach(
+       ( [ getSpec, name ] ) => {
+
+         it( name, () => {
+           const spec = getSpec();
 
         //invalid case: more elems than specs
-        expect( S.isValid( Spec, extendedCase ) ).to.be.false;
+           expect( S.isValid( spec, extendedCase ) ).to.be.false;
 
         //empty case
-        expect( S.isValid( Spec, emptyCase ) ).to.be.false;
+           expect( S.isValid( spec, emptyCase ) ).to.be.false;
 
         //invalid case: less elem than spec
-        expect( S.isValid( Spec, lesserCase ) ).to.be.false;
-      } );
-    } );
+           expect( S.isValid( spec, lesserCase ) ).to.be.false;
+         } );
+       } );
   } );
 } );

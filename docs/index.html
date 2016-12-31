@@ -134,7 +134,7 @@
     </dt>
     <dd>
       <ul>
-      <li><a href="#specky.preds/isObj" data-path="specky.preds/isObj">isObj()</a></li><li><a href="#specky.preds/isStr" data-path="specky.preds/isStr">isStr()</a></li><li><a href="#specky.preds/isArray" data-path="specky.preds/isArray">isArray()</a></li><li><a href="#specky.preds/isDate" data-path="specky.preds/isDate">isDate()</a></li><li><a href="#specky.preds/isNull" data-path="specky.preds/isNull">isNull()</a></li><li><a href="#specky.preds/isUndefined" data-path="specky.preds/isUndefined">isUndefined()</a></li><li><a href="#specky.preds/notEmpty" data-path="specky.preds/notEmpty">notEmpty()</a></li><li><a href="#specky.preds/isBool" data-path="specky.preds/isBool">isBool()</a></li><li><a href="#specky.preds/isFn" data-path="specky.preds/isFn">isFn()</a></li><li><a href="#specky.preds/isNum" data-path="specky.preds/isNum">isNum()</a></li><li><a href="#specky.preds/isInt" data-path="specky.preds/isInt">isInt()</a></li><li><a href="#specky.preds/isNatInt" data-path="specky.preds/isNatInt">isNatInt()</a></li><li><a href="#specky.preds/isUuid" data-path="specky.preds/isUuid">isUuid()</a></li><li><a href="#specky.preds/oneOf" data-path="specky.preds/oneOf">oneOf()</a></li><li><a href="#specky.preds/equals" data-path="specky.preds/equals">equals()</a></li><li><a href="#specky.preds/instanceOf" data-path="specky.preds/instanceOf">instanceOf()</a></li>
+      <li><a href="#specky.preds/not" data-path="specky.preds/not">not()</a></li><li><a href="#specky.preds/isObj" data-path="specky.preds/isObj">isObj()</a></li><li><a href="#specky.preds/isStr" data-path="specky.preds/isStr">isStr()</a></li><li><a href="#specky.preds/isArray" data-path="specky.preds/isArray">isArray()</a></li><li><a href="#specky.preds/isDate" data-path="specky.preds/isDate">isDate()</a></li><li><a href="#specky.preds/isNull" data-path="specky.preds/isNull">isNull()</a></li><li><a href="#specky.preds/isUndefined" data-path="specky.preds/isUndefined">isUndefined()</a></li><li><a href="#specky.preds/notEmpty" data-path="specky.preds/notEmpty">notEmpty()</a></li><li><a href="#specky.preds/isBool" data-path="specky.preds/isBool">isBool()</a></li><li><a href="#specky.preds/isFn" data-path="specky.preds/isFn">isFn()</a></li><li><a href="#specky.preds/isNum" data-path="specky.preds/isNum">isNum()</a></li><li><a href="#specky.preds/isInt" data-path="specky.preds/isInt">isInt()</a></li><li><a href="#specky.preds/isNatInt" data-path="specky.preds/isNatInt">isNatInt()</a></li><li><a href="#specky.preds/isUuid" data-path="specky.preds/isUuid">isUuid()</a></li><li><a href="#specky.preds/oneOf" data-path="specky.preds/oneOf">oneOf()</a></li><li><a href="#specky.preds/equals" data-path="specky.preds/equals">equals()</a></li><li><a href="#specky.preds/instanceOf" data-path="specky.preds/instanceOf">instanceOf()</a></li>
       </ul>
     </dd>
     
@@ -157,12 +157,12 @@
           <h3>Introduction</h3>
           Refer to <a href="https://github.com/speckyjs/specky#specky-">README</a> file for basic intro.
         </section>
-        <section id="conformation" class="markdown-article" markdown-path="conformation.md"><h4 id="whatisconformation">What is Conformation?</h4>
+        <section id="conformation" class="markdown-article" markdown-path="conformation.md"><h3 id="whatisconformation">What is Conformation?</h3>
 <p>To put it plainly, as a developer you expect your data to be of certain &quot;shape&quot;.</p>
 <p>You define the shape of the data with specs.</p>
 <p>To &quot;conform&quot; your data with your specs is to shape it in a way that is <em>better organized</em>, making it easier for your code to consume.</p>
 <p>[TODO: more write-up]</p></section>
-        <section id="iterable" class="markdown-article" markdown-path="iterable.md"><h4 id="regexlikeoperationsoniterables">Regex-like Operations on Iterables</h4>
+        <section id="iterable" class="markdown-article" markdown-path="iterable.md"><h3 id="regexlikeoperationsoniterables">Regex-like Operations on Iterables</h3>
 <p>Both array and string are treated as iterables in Specky, which means both types can be the subject of regex-like operations.</p>
 <p>For example, both of the following spec definitions are valid:</p>
 <pre><code class="js language-js">var ArraySpec = S.cat(&apos;foos&apos;, S.oneOrMore(S.equal(&apos;foo&apos;)),
@@ -668,6 +668,36 @@ S.conform(StrSpec, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-info">
     <legend class="spec-type">
+      <span class="tag tag-info">cat (concatenation) of</span>
+    </legend>
+    
+    <div class="card-block">
+      <p class="card-title">
+        
+      </p>
+      <p class="card-title">
+        Should be <em>an ordered list</em> of the following:
+      </p>
+    </div>
+    <ol class="list-group list-group-flush list-for-cat">
+      
+        <li class="list-group-item card-outline-info">
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                <span class="tag tag-default">1st </span>
+                &lt;<span class="lead font-italic text-primary">expressions</span>&gt;
+                
+                  
+            </p></div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="spec-type">
       <span class="tag tag-info">or (alts)</span>
     </legend>
     
@@ -1116,6 +1146,127 @@ S.conform(StrSpec, &apos;foofoofoobarbar&apos;);
         <li class="list-group-item card-outline-info">
           <div class="row">
             <div class="col-md-12">
+              <p>
+                <span class="tag tag-default">2nd </span>
+                &lt;<span class="lead font-italic text-primary">options</span>&gt;
+                
+                  
+            </p></div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="spec-type">
+      <span class="tag tag-info">zero or one of (?)</span>
+    </legend>
+    
+    <div class="card-block">
+      
+      
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="spec-type">
+      <span class="tag tag-info"><span class="tag tag-info">and</span></span>
+    </legend>
+    
+    <div class="card-block">
+      <p class="card-title">
+        
+      </p>
+      <p class="card-title">
+        Should satisfy <em>all</em> of the following expression:
+      </p>
+    </div>
+    <ol class="list-group list-group-flush list-for-cat">
+      
+        <li class="list-group-item card-outline-info">
+          <div class="row">
+            <div class="col-md-12">
+              <span class="tag tag-default">Part 1 </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    
+    
+    <fieldset class="card card-outline-primary">
+    <legend class="spec-type">
+      <span class="tag tag-primary">of predicate</span>
+    </legend>
+    
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isObject()" data-content="&lt;pre&gt;function isObject(x) {
+  return (typeof x === &apos;undefined&apos; ? &apos;undefined&apos; : _typeof(x)) === &apos;object&apos; &amp;&amp; x !== null;
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <em>isObject()</em>
+      </span>
+    </div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </li>
+     
+        <li class="list-group-item card-outline-info">
+          <div class="row">
+            <div class="col-md-12">
+              <span class="tag tag-default">Part 2 </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    
+    
+    <fieldset class="card card-outline-primary">
+    <legend class="spec-type">
+      <span class="tag tag-primary">of predicate</span>
+    </legend>
+    
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="not_isExpr()" data-content="&lt;pre&gt;function not_isExpr(){ return action.apply(this, arguments); }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <em>not_isExpr()</em>
+      </span>
+    </div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </li>
+    
+    </ol>
+  
+    </fieldset>
+    
+      TODO
+    </div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </li>
+    
+    </ol>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </li>
+     
+        <li class="list-group-item card-outline-info">
+          <div class="row">
+            <div class="col-md-12">
               <span class="tag tag-default">Part 2 </span>
             </div>
           </div>
@@ -1131,7 +1282,7 @@ S.conform(StrSpec, &apos;foofoofoobarbar&apos;);
     
     <div class="card-block">
       <span data-toggle="popover" data-trigger="hover" data-html="true" title="noDupelicateLabels()" data-content="&lt;pre&gt;function noDupelicateLabels(_ref) {
-  var withLabels = _ref.withLabels;
+  var withLabels = _ref.expressions.withLabels;
 
   if (withLabels) {
     var byFar = [];
@@ -1229,6 +1380,36 @@ S.conform(StrSpec, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-info">
     <legend class="spec-type">
+      <span class="tag tag-info">cat (concatenation) of</span>
+    </legend>
+    
+    <div class="card-block">
+      <p class="card-title">
+        
+      </p>
+      <p class="card-title">
+        Should be <em>an ordered list</em> of the following:
+      </p>
+    </div>
+    <ol class="list-group list-group-flush list-for-cat">
+      
+        <li class="list-group-item card-outline-info">
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                <span class="tag tag-default">1st </span>
+                &lt;<span class="lead font-italic text-primary">expressions</span>&gt;
+                
+                  
+            </p></div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="spec-type">
       <span class="tag tag-info">or (alts)</span>
     </legend>
     
@@ -1677,6 +1858,127 @@ S.conform(StrSpec, &apos;foofoofoobarbar&apos;);
         <li class="list-group-item card-outline-info">
           <div class="row">
             <div class="col-md-12">
+              <p>
+                <span class="tag tag-default">2nd </span>
+                &lt;<span class="lead font-italic text-primary">options</span>&gt;
+                
+                  
+            </p></div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="spec-type">
+      <span class="tag tag-info">zero or one of (?)</span>
+    </legend>
+    
+    <div class="card-block">
+      
+      
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="spec-type">
+      <span class="tag tag-info"><span class="tag tag-info">and</span></span>
+    </legend>
+    
+    <div class="card-block">
+      <p class="card-title">
+        
+      </p>
+      <p class="card-title">
+        Should satisfy <em>all</em> of the following expression:
+      </p>
+    </div>
+    <ol class="list-group list-group-flush list-for-cat">
+      
+        <li class="list-group-item card-outline-info">
+          <div class="row">
+            <div class="col-md-12">
+              <span class="tag tag-default">Part 1 </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    
+    
+    <fieldset class="card card-outline-primary">
+    <legend class="spec-type">
+      <span class="tag tag-primary">of predicate</span>
+    </legend>
+    
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isObject()" data-content="&lt;pre&gt;function isObject(x) {
+  return (typeof x === &apos;undefined&apos; ? &apos;undefined&apos; : _typeof(x)) === &apos;object&apos; &amp;&amp; x !== null;
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <em>isObject()</em>
+      </span>
+    </div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </li>
+     
+        <li class="list-group-item card-outline-info">
+          <div class="row">
+            <div class="col-md-12">
+              <span class="tag tag-default">Part 2 </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    
+    
+    <fieldset class="card card-outline-primary">
+    <legend class="spec-type">
+      <span class="tag tag-primary">of predicate</span>
+    </legend>
+    
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="not_isExpr()" data-content="&lt;pre&gt;function not_isExpr(){ return action.apply(this, arguments); }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <em>not_isExpr()</em>
+      </span>
+    </div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </li>
+    
+    </ol>
+  
+    </fieldset>
+    
+      TODO
+    </div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </li>
+    
+    </ol>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </li>
+     
+        <li class="list-group-item card-outline-info">
+          <div class="row">
+            <div class="col-md-12">
               <span class="tag tag-default">Part 2 </span>
             </div>
           </div>
@@ -1692,7 +1994,7 @@ S.conform(StrSpec, &apos;foofoofoobarbar&apos;);
     
     <div class="card-block">
       <span data-toggle="popover" data-trigger="hover" data-html="true" title="noDupelicateLabels()" data-content="&lt;pre&gt;function noDupelicateLabels(_ref) {
-  var withLabels = _ref.withLabels;
+  var withLabels = _ref.expressions.withLabels;
 
   if (withLabels) {
     var byFar = [];
@@ -3408,6 +3710,161 @@ S.conform(StrSpec, &apos;foofoofoobarbar&apos;);
         </div>
       
 <h3>specky.preds/</h3><hr>
+    <a name="specky.preds/not"></a>
+    
+        <div class="card">
+          <div class="card-header inline-headers">
+            
+      <h6>not()</h6>&#xA0;
+        <span class="tag tag-primary">
+          function
+        </span>
+      
+          </div>
+        
+    <dl class="card-block">
+    <dt>Synopsis</dt><dd><ul><em>not(type)</em></ul></dd>
+<dt>Argument spec</dt><dd>
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="spec-type">
+      <span class="tag tag-info">cat (concatenation) of</span>
+    </legend>
+    
+    <div class="card-block">
+      <p class="card-title">
+        
+      </p>
+      <p class="card-title">
+        Should be <em>an ordered list</em> of the following:
+      </p>
+    </div>
+    <ol class="list-group list-group-flush list-for-cat">
+      
+        <li class="list-group-item card-outline-info">
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                <span class="tag tag-default">1st </span>
+                &lt;<span class="lead font-italic text-primary">type</span>&gt;
+                
+                  
+            </p></div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    
+    
+    <fieldset class="card card-outline-primary">
+    <legend class="spec-type">
+      <span class="tag tag-primary">of predicate</span>
+    </legend>
+    
+    <div class="card-block">
+      A value that is of
+      <a href="#specky.types/Predicate" data-path="specky.types/Predicate">specky.types/Predicate</a>
+    </div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </li>
+    
+    </ol>
+  
+    </fieldset>
+    </dd>
+<dt>Return value spec</dt><dd>
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="spec-type">
+      <span class="tag tag-info">of fspec (function)</span>
+    </legend>
+    
+    <dl class="card-block">
+    <dt>Synopsis</dt><dd><ul><em>(x)</em></ul></dd>
+<dt>Argument spec</dt><dd>
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="spec-type">
+      <span class="tag tag-info">cat (concatenation) of</span>
+    </legend>
+    
+    <div class="card-block">
+      <p class="card-title">
+        
+      </p>
+      <p class="card-title">
+        Should be <em>an ordered list</em> of the following:
+      </p>
+    </div>
+    <ol class="list-group list-group-flush list-for-cat">
+      
+        <li class="list-group-item card-outline-info">
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                <span class="tag tag-default">1st </span>
+                &lt;<span class="lead font-italic text-primary">x</span>&gt;
+                
+                  
+            </p></div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="spec-type">
+      <span class="tag tag-info"><span class="tag tag-info">any</span></span>
+    </legend>
+    
+    <div class="card-block">Any value.</div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </li>
+    
+    </ol>
+  
+    </fieldset>
+    </dd>
+<dt>Return value spec</dt><dd>
+    
+    
+    <fieldset class="card card-outline-primary">
+    <legend class="spec-type">
+      <span class="tag tag-primary">of predicate</span>
+    </legend>
+    
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isBool()" data-content="&lt;pre&gt;function isBool(x) {
+  return typeof x === &apos;boolean&apos;;
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <em>isBool()</em>
+      </span>
+    </div>
+  
+    </fieldset>
+    </dd>
+    </dl>
+  
+    </fieldset>
+    </dd>
+    </dl>
+  
+        </div>
+      
+
     <a name="specky.preds/isObj"></a>
     
         <div class="card">

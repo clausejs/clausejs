@@ -214,7 +214,7 @@ function _typeFor( expr ) {
   case 'o_or_m':
     return 'one or more of (+)';
   case 'z_or_o':
-    return 'zero or one of (?)';
+    return 'optional (?)';
   case 'coll_of':
     return 'collection of';
   case 'cat':

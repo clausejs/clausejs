@@ -1,4 +1,4 @@
-#### What is Conformation?
+### What is Conformation?
 
 To put it plainly, as a developer you expect your data to be of certain "shape".
 

@@ -15,9 +15,11 @@ Specky enables you to:
 
 ## Why Specky
 
-Specky's goal is to provide the defining contract/protocol for your JS app. By writing a set of specs for your app *once*, you can get a lot of leverage out your effort, including
+Specky can do a lot more than just data validation and function signature checking.
 
-- Clearly-defined expectations for your app's functions and data structures
+Specky's goal is to provide the defining contract for your JS app. By asking you to write some specs for your project *once*, Specky strives at getting as much leverage out your effort as possible, including
+
+- Design by Contract Clearly-defined expectations for your app's functions and data structures
 - **Runtime validation** for your data and functions (compile-time analysis may be possible in the future)
 - Advanced **data conformation** (parsing) that simplifies your data processing code
 - **Automatic generation of API documentation** for your app (via [specky-docgen](packages/specky-docgen), WIP)
@@ -26,7 +28,11 @@ Specky's goal is to provide the defining contract/protocol for your JS app. By w
 
 
 ## Project status
-- Alpha. API's are subject to change and improvement based on [feedback](/../../issues/).
+
+Alpha.
+
+- Most core methods of Specky have gone through many iterations and testing.
+- Some aspects of the API's are subject to change and improvement based on [developer feedback](/../../issues/).
 
 ## Quick Examples
 
@@ -207,7 +213,6 @@ npm run dev
 npm run test
 ```
 
-
 ## Why not just use ClojureScript + cljs.spec?
 
 The goal for Specky is to provide JavaScript developers as much the benefit as possible derived from the spec system.
@@ -218,4 +223,5 @@ Specky API for the most part is kept similar to clojure.spec, except for some di
 
 ## Credit
 - Both origin of the idea and API are heavily inspired by Rich Hickey's [clojure.spec](http://clojure.org/about/spec)
+- Some aspects of the design are drawn by Scheme's [contract system](https://docs.racket-lang.org/guide/contracts.html)
 - NFA spec matching inspired by Thompson NFA regex matching algorithm, and is based on [afader's implementation](https://github.com/afader/thompson-regex-js)
