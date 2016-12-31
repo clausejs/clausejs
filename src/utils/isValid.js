@@ -1,12 +1,12 @@
 var isProblem = require( './isProblem' );
 var isPred = require( './isPred' );
-var isSpec = require( './isSpec' );
+var isClause = require( './isClause' );
 var conform = require( './conform' );
 
 function isValid( pred, x ) {
   if ( !pred ) {
-    throw new Error( 'Spec is required' );
-  } else if ( isSpec( pred ) ) {
+    throw new Error( 'Clause is required' );
+  } else if ( isClause( pred ) ) {
     return !( isProblem( conform( pred, x ) ) );
   } else if ( isPred( pred ) ) {
     return pred( x );

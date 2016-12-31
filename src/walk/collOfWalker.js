@@ -2,9 +2,9 @@ var Problem = require( '../models/Problem' );
 var isProblem = require( '../utils/isProblem' );
 var isNum = require( '../preds/isNum' );
 
-function collOfWalker( spec, walkFn ) {
-  var expr = spec.exprs[ 0 ];
-  var opts = spec.opts;
+function collOfWalker( clause, walkFn ) {
+  var expr = clause.exprs[ 0 ];
+  var opts = clause.opts;
 
   return {
     trailblaze: collOfTrailblaze,
@@ -13,20 +13,20 @@ function collOfWalker( spec, walkFn ) {
 
   function collOfTrailblaze( x, walkOpts ) {
     if ( !Array.isArray( x ) ) {
-      return new Problem( x, spec, [], 'collOf expects an array' );
+      return new Problem( x, clause, [], 'collOf expects an array' );
     } else {
 
       if ( opts ) {
         var { maxCount, minCount } = opts;
 
         if ( isNum( maxCount ) && x.length > maxCount ) {
-          return new Problem( x, spec, problems,
+          return new Problem( x, clause, problems,
             `collOf: collection size ${x.length} exceeds maxCount ${maxCount}.`
           );
         }
 
         if ( isNum( minCount ) && x.length < minCount ) {
-          return new Problem( x, spec, problems,
+          return new Problem( x, clause, problems,
             `collOf: collection size ${x.length} is less than minCount ${minCount}.`
           );
         }
@@ -47,7 +47,7 @@ function collOfWalker( spec, walkFn ) {
       }
 
       if ( problems.length > 0 ) {
-        return new Problem( x, spec, problems, 'One or more elements failed collOf test' );
+        return new Problem( x, clause, problems, 'One or more elements failed collOf test' );
       } else {
         return guides;
       }

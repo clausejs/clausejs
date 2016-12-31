@@ -1,12 +1,12 @@
-function wallWalker( wallSpec, walkFn ) {
+function wallWalker( wallClause, walkFn ) {
   return {
     trailblaze: wallWalk,
     reconstruct: wallWalk,
   }
 
   function wallWalk( x, opts ) {
-    var [ spec ] = wallSpec.exprs;
-    return walkFn( spec, x, opts );
+    var [ clause ] = wallClause.exprs;
+    return walkFn( clause, x, opts );
   }
 }
 

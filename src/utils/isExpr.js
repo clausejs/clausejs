@@ -1,10 +1,10 @@
 var isPred = require( './isPred' );
-var isSpec = require( './isSpec' );
-var isSpecRef = require( './isSpecRef' );
-var isDelayedSpec = require( './isDelayedSpec' );
+var isClause = require( './isClause' );
+var isClauseRef = require( './isClauseRef' );
+var isDelayedClause = require( './isDelayedClause' );
 
 function isExpr( x ) {
-  return isPred( x ) || isSpec( x ) || isSpecRef( x ) || isDelayedSpec( x );
+  return isPred( x ) || isClause( x ) || isClauseRef( x ) || isDelayedClause( x );
 }
 
 module.exports = isExpr;

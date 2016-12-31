@@ -1,11 +1,11 @@
-var specFromAlts = require( '../utils/specFromAlts' );
+var clauseFromAlts = require( '../utils/clauseFromAlts' );
 var isProblem = require( '../utils/isProblem' );
 var Problem = require( '../models/Problem' );
 
-function mapOfWalker( spec, walkFn ) {
-  var { keyExpression, valExpression } = spec.opts;
-  var keySpec = keyExpression && specFromAlts( keyExpression );
-  var valSpec = valExpression && specFromAlts( valExpression );
+function mapOfWalker( clause, walkFn ) {
+  var { keyExpression, valExpression } = clause.opts;
+  var keyClause = keyExpression && clauseFromAlts( keyExpression );
+  var valClause = valExpression && clauseFromAlts( valExpression );
 
   return {
     trailblaze: mapOfTrailblaze,
@@ -15,17 +15,17 @@ function mapOfWalker( spec, walkFn ) {
   function mapOfTrailblaze( x, walkOpts ) {
     for ( let key in x ) {
       if ( x.hasOwnProperty( key ) ) {
-        if ( keySpec ) {
-          let keyR = walkFn( keySpec, key, walkOpts );
+        if ( keyClause ) {
+          let keyR = walkFn( keyClause, key, walkOpts );
           if ( isProblem( keyR ) ) {
-            return new Problem( x, spec, { [ key ]: keyR }, `mapOf: key ${key} failed validation` );
+            return new Problem( x, clause, { [ key ]: keyR }, `mapOf: key ${key} failed validation` );
           }
         }
 
-        if ( valSpec ) {
-          let valR = walkFn( valSpec, x[ key ], walkOpts );
+        if ( valClause ) {
+          let valR = walkFn( valClause, x[ key ], walkOpts );
           if ( isProblem( valR ) ) {
-            return new Problem( x, spec, { [ key ]: valR }, `mapOf: value for key ${key} failed validation` );
+            return new Problem( x, clause, { [ key ]: valR }, `mapOf: value for key ${key} failed validation` );
           }
         }
       }

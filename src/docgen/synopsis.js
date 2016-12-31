@@ -1,14 +1,14 @@
-const { cat, or, zeroOrMore, oneOrMore, fspec, any, and, ExprSpec } = require( '../core' );
+const { cat, or, zeroOrMore, oneOrMore, fclause, any, and, ExprClause } = require( '../core' );
 const { isStr, isNum, isObj, isBool } = require( '../preds' );
-const { conform, isSpec, deref } = require( '../utils' );
+const { conform, isClause, deref } = require( '../utils' );
 
-var SampleSpec = cat( 'first', oneOrMore( cat( isStr, isBool ) ),
+var SampleClause = cat( 'first', oneOrMore( cat( isStr, isBool ) ),
                       'second', or( 'objOpt', isObj, 'showNum', cat( isNum, isBool ) ) );
 
 const getFragments = require( '../utils/fragmenter' );
 
-var SampleFnSpec = fspec( {
-  args: SampleSpec,
+var SampleFnClause = fclause( {
+  args: SampleClause,
 } );
 //     ----'first'-----  --------'second'---------
 // fn( (isStr, isBool)+, (isObj | (isNum, isBool)) )
@@ -26,9 +26,9 @@ var SampleFnSpec = fspec( {
 
 // console.log( conform( sample, [ 'hello', true, 'abc', false, 32, false ] ) );
 
-function Case( name, spec ) {
+function Case( name, clause ) {
   this.name = name;
-  this.spec = spec;
+  this.clause = clause;
 }
 
 function Alternative( { name, fragments } ) {
@@ -41,31 +41,31 @@ function ConcatItem( { name, fragments } ) {
   this.fragments = fragments;
 }
 
-var OrSpec = and( isSpec, function isOrSpec( s ) {
+var OrClause = and( isClause, function isOrClause( s ) {
   return deref( s ).type === 'OR'
 } );
 
-var RepeatSpec = cat( isStr, isObj, isStr );
-var OptionsSpec = or(
+var RepeatClause = cat( isStr, isObj, isStr );
+var OptionsClause = or(
    'opt1', isStr,
-   'opt2', RepeatSpec
+   'opt2', RepeatClause
  );
 
-var SampleSpec = cat(
- 'first', zeroOrMore( OptionsSpec ),
+var SampleClause = cat(
+ 'first', zeroOrMore( OptionsClause ),
  'second', oneOrMore( cat( isBool, isNum ) )
 );
 
-var expand1 = fspec( {
-  args: cat( ExprSpec, OrSpec )
-} ).instrument( ( spec, pivotSpec ) => {
-  var frags = _expandWalk( spec, pivotSpec );
+var expand1 = fclause( {
+  args: cat( ExprClause, OrClause )
+} ).instrument( ( clause, pivotClause ) => {
+  var frags = _expandWalk( clause, pivotClause );
 
-  var pivotIndex = frags.indexOf( pivotSpec );
-  var cases = _getCases( pivotSpec );
-  return cases.map( ( { name, spec } ) => {
+  var pivotIndex = frags.indexOf( pivotClause );
+  var cases = _getCases( pivotClause );
+  return cases.map( ( { name, clause } ) => {
     var replaced = [].concat( frags );
-    var fragments = _expandWalk( spec );
+    var fragments = _expandWalk( clause );
     replaced[ pivotIndex ] = new Alternative( { name, fragments } );
     return {
       name,
@@ -82,18 +82,18 @@ function _getCases( { exprs, opts: { named } } ) {
     )
 }
 
-function _expandWalk( expr, pivotSpec ) {
-  // TODO: handle delayed and SpecRef case
-  if ( expr === pivotSpec ) {
+function _expandWalk( expr, pivotClause ) {
+  // TODO: handle delayed and ClauseRef case
+  if ( expr === pivotClause ) {
     return [ expr ];
   } else {
-    var spec = expr;
-    var fragments = getFragments( spec );
-    var paddedFragments = _pad( fragments, spec );
+    var clause = expr;
+    var fragments = getFragments( clause );
+    var paddedFragments = _pad( fragments, clause );
 
     var expandedPieces = paddedFragments.reduce( ( acc, f ) => {
-      if ( isSpec( f ) ) {
-        return acc.concat( _expandWalk( f, pivotSpec ) );
+      if ( isClause( f ) ) {
+        return acc.concat( _expandWalk( f, pivotClause ) );
       } else {
         return acc.concat( [ f ] );
       }
@@ -103,17 +103,17 @@ function _expandWalk( expr, pivotSpec ) {
   }
 }
 
-function _pad( fragments, spec ) {
+function _pad( fragments, clause ) {
   return fragments;
 }
 
-function synopsis( spec, interceptor ) {
+function synopsis( clause, interceptor ) {
   // TODO
 
 }
 
-// console.log( synopsis( SampleSpec, null ) );
-console.log( expand1( SampleSpec, OptionsSpec ) );
+// console.log( synopsis( SampleClause, null ) );
+console.log( expand1( SampleClause, OptionsClause ) );
 
 module.exports = {
   synopsis,

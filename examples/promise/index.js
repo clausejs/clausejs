@@ -1,13 +1,13 @@
 var C = require('../../src');
 var Q = require('q');
 
-var PromiseSpec = C.shape({
+var PromiseClause = C.shape({
   req: {
-    then: C.fspec({
+    then: C.fclause({
       args: C.cat(
         C.or(
           C.isNull, C.isUndefined,
-          C.fspec({
+          C.fclause({
             args: C.cat('message', C.isStr),
             ret: C.isUndefined,
           })
@@ -15,28 +15,28 @@ var PromiseSpec = C.shape({
         C.zeroOrOne(
           C.or(
             C.isNull, C.isUndefined,
-            C.fspec({
+            C.fclause({
               args: C.cat('rejError', C.any),
             }))
           )
         ),
-      ret: C.delayed(() => PromiseSpec), //recursive
+      ret: C.delayed(() => PromiseClause), //recursive
     }),
   },
 });
 
-var GetHelloSpec = C.fspec({
+var GetHelloClause = C.fclause({
   args: C.cat(),
-  ret: PromiseSpec,
+  ret: PromiseClause,
 });
 
-var getHello = GetHelloSpec.instrument(__getHello);
+var getHello = GetHelloClause.instrument(__getHello);
 
 getHello().then(function(m) {
   console.log(m);
 });
 
-var getHelloBad = GetHelloSpec.instrument(__getHelloBad);
+var getHelloBad = GetHelloClause.instrument(__getHelloBad);
 
 // TODO: fix this
 // this will throw an error

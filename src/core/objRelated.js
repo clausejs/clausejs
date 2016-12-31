@@ -1,12 +1,12 @@
-var Spec = require( '../models/Spec' );
-var isSpec = require( '../utils/isSpec' );
+var Clause = require( '../models/Clause' );
+var isClause = require( '../utils/isClause' );
 var isStr = require( '../preds/isStr' );
 var oneOf = require( '../preds/oneOf' );
 var isProblem = require( '../utils/isProblem' );
-var coerceIntoSpec = require( '../utils/coerceIntoSpec' );
-var { cat, or, zeroOrMore, ExprSpec } = require( './regex' );
+var coerceIntoClause = require( '../utils/coerceIntoClause' );
+var { cat, or, zeroOrMore, ExprClause } = require( './regex' );
 var walk = require( '../walk' );
-var fspec = require( './fspec' );
+var fclause = require( './fclause' );
 
 function isPropName( x ) {
   return isStr( x );
@@ -25,14 +25,14 @@ var FieldDefs = shapeOp( {
             {
               keyValExprPair: {
                 keyExpression: {
-                  spec: coerceIntoSpec( isStr ),
+                  clause: coerceIntoClause( isStr ),
                 },
                 valExpression: {
-                  spec: or(
-                    'valExpressionOnly', ExprSpec,
+                  clause: or(
+                    'valExpressionOnly', ExprClause,
                     'keyValExprPair', cat(
-                      'keyExpression', ExprSpec,
-                      'valExpression', ExprSpec
+                      'keyExpression', ExprClause,
+                      'valExpression', ExprClause
                     )
                   )
                 },
@@ -61,7 +61,7 @@ var ShapeArgs = shapeOp( {
                   pred: oneOf( 'req', 'required' ),
                 },
                 valExpression: {
-                  spec: KeyArrayOrFieldDefs
+                  clause: KeyArrayOrFieldDefs
                 },
               },
             },
@@ -71,7 +71,7 @@ var ShapeArgs = shapeOp( {
                   pred: oneOf( 'opt', 'optional' ),
                 },
                 valExpression: {
-                  spec: KeyArrayOrFieldDefs
+                  clause: KeyArrayOrFieldDefs
                 },
               },
             },
@@ -82,17 +82,17 @@ var ShapeArgs = shapeOp( {
   }
 } );
 
-var MapOfFnSpec = fspec( {
+var MapOfFnClause = fclause( {
   args: cat(
-    'keyExpression', ExprSpec,
-    'valExpression', ExprSpec
+    'keyExpression', ExprClause,
+    'valExpression', ExprClause
   ),
-  ret: isSpec,
+  ret: isClause,
 } );
 
-var ShapeFnSpec = fspec( {
+var ShapeFnClause = fclause( {
   args: cat( 'shapeArgs', ShapeArgs ),
-  ret: isSpec,
+  ret: isClause,
 } );
 
 function mapOfOp( cargs ) {
@@ -101,7 +101,7 @@ function mapOfOp( cargs ) {
   }
   const { keyExpression, valExpression } = cargs;
 
-  var s = new Spec( {
+  var s = new Clause( {
     type: TYPE_MAP_OF,
     exprs: [],
     opts: { keyExpression, valExpression }
@@ -120,7 +120,7 @@ function shapeOp( cargs ) {
   }
   // const { shapeArgs: { requiredFields, optionalFields } } = cargs;
 
-  var s = new Spec( {
+  var s = new Clause( {
     type: TYPE_SHAPE,
     exprs: [ ],
     // TODO: do fragments
@@ -133,20 +133,20 @@ function shapeOp( cargs ) {
   return s;
 }
 
-var shape = ShapeFnSpec.instrumentConformed( shapeOp );
-var mapOf = MapOfFnSpec.instrumentConformed( mapOfOp );
+var shape = ShapeFnClause.instrumentConformed( shapeOp );
+var mapOf = MapOfFnClause.instrumentConformed( mapOfOp );
 
 module.exports = {
   shape,
   keys: shape,
   mapOf,
-  ShapeFnSpec,
-  MapOfFnSpec,
+  ShapeFnClause,
+  MapOfFnClause,
 };
 
 // // // // //
 
-// var TestSpec = shapeOp({
+// var TestClause = shapeOp({
 //   shapeArgs: {
 //     req: {
 //       fieldDefs: {
@@ -158,5 +158,5 @@ module.exports = {
 //   }
 // });
 // //
-// var r = TestSpec.conform({a: 's'});
+// var r = TestClause.conform({a: 's'});
 // console.log(r);

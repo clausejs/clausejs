@@ -1,4 +1,4 @@
-function Spec( { type, exprs, opts, fragments, conformFn, generateFn } ) {
+function Clause( { type, exprs, opts, fragments, conformFn, generateFn } ) {
 
   this.type = type;
 
@@ -15,11 +15,11 @@ function Spec( { type, exprs, opts, fragments, conformFn, generateFn } ) {
   }
 
   if ( !exprs ) {
-    throw new Error( 'Expressions are required when constructing a spec.' );
+    throw new Error( 'Expressions are required when constructing a clause.' );
   }
 
   this.exprs = exprs;
 }
 
 
-module.exports = Spec;
+module.exports = Clause;

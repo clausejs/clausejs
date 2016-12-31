@@ -1,6 +1,6 @@
 var getFragments = require( './fragmenter' );
 var isPred = require( '../utils/isPred' );
-var isSpec = require( '../utils/isSpec' );
+var isClause = require( '../utils/isClause' );
 var isStr = require( '../preds/isStr' );
 var fnName = require( '../utils/fnName' );
 
@@ -14,7 +14,7 @@ function _strFragments( expr, interceptor ) {
     return [ fnName( expr ), '()' ];
   } else if ( expr.type === 'PRED' ) {
     return _strFragments( expr.opts.predicate, interceptor );
-  } else if ( isSpec( expr ) ) {
+  } else if ( isClause( expr ) ) {
     if ( expr.type === 'DELAYED' || expr.type === 'SPEC_REF' ) {
       return _strFragments( expr.get(), interceptor );
     } else {
@@ -28,9 +28,9 @@ function _strFragments( expr, interceptor ) {
   }
 }
 
-function _processInner( spec, interceptor ) {
+function _processInner( clause, interceptor ) {
   // TODO: remove first part
-  var fragments = getFragments( spec, interceptor );
+  var fragments = getFragments( clause, interceptor );
   return fragments.reduce(
     ( acc, piece ) =>
       isStr( piece ) ? acc.concat( piece ) :

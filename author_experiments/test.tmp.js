@@ -3,10 +3,10 @@ require( 'babel-core/register' );
 // var s = require( '../src/core/regex' );
 var C = require( '../src' );
 
-var mySpec = C.cat( 'a', C.isStr, {} );
+var myClause = C.cat( 'a', C.isStr, {} );
 
 
-// var PropagatedAndSpec = C.and(
+// var PropagatedAndClause = C.and(
 //   C.isArray,
 //   C.cat(
 //     'firstPart', C.oneOrMore( C.isNum ),
@@ -20,7 +20,7 @@ var mySpec = C.cat( 'a', C.isStr, {} );
 // );
 //
 // var conformed1 = [ 1, 2, 3, 4, true, 5, 6, 7, 8 ];
-// console.log( PropagatedAndSpec.conform( conformed1 ) );
+// console.log( PropagatedAndClause.conform( conformed1 ) );
 
 
 // var NumOrStr = C.or( C.isNum, C.isStr, C.isObj, C.isDate, C.isNatInt );
@@ -31,37 +31,37 @@ var mySpec = C.cat( 'a', C.isStr, {} );
 
 // console.log( s );
 
-// var AdderFnSpec = s.fspec({
+// var AdderFnClause = s.fclause({
 //   args: s.cat('x', s.isNum),
-//   ret: s.fspec({
+//   ret: s.fclause({
 //     args: s.cat('y', s.isNum),
 //     ret: s.isNum
 //   }),
 // });
 //
-// var adderFn = AdderFnSpec.instrument(function (x) {
+// var adderFn = AdderFnClause.instrument(function (x) {
 //   return function (y) {
 //     console.log(x, y);
 //     return x + y;
 //   };
 // });
-// var brokenAdderFn = AdderFnSpec.instrument(() => (y) => 'z');
+// var brokenAdderFn = AdderFnClause.instrument(() => (y) => 'z');
 // console.log(adderFn(1)(2))
 
-// var NamedGroupedSpec = C.cat(
+// var NamedGroupedClause = C.cat(
 //   ['z', 'it\'s a fuuuunction', C.isFn],
 //   ['b', C.isObj],
 //   ['c', 'another fuuuunction', C.isFn],
 //   ['a', C.isObj]
 // );
 //
-// var conformed = NamedGroupedSpec.conform(conformist);
+// var conformed = NamedGroupedClause.conform(conformist);
 
 // function startWithOo(key) {
 //   return key.indexOf('oo') === 0;
 // }
 //
-// var ObjSpec = C.shape({
+// var ObjClause = C.shape({
 //   req: {
 //     'title': s.isStr,
 //     'userId': s.isNum,
@@ -83,22 +83,22 @@ var mySpec = C.cat( 'a', C.isStr, {} );
 // var unconformed3 = { title:  1234, content: null, userId: 2 };
 // var unconformed4 = { title: 'Do it', content: false, userId: 'wrong', unknownField: 2 };
 //
-// ObjSpec.conform(conformed1);
-// ObjSpec.conform(unconformed1);
-// console.log(ObjSpec.conform(conformed2));
+// ObjClause.conform(conformed1);
+// ObjClause.conform(unconformed1);
+// console.log(ObjClause.conform(conformed2));
 //
-// ObjSpec.conform(unconformed2);
-// ObjSpec.conform(unconformed3);
-// ObjSpec.conform(unconformed4);
+// ObjClause.conform(unconformed2);
+// ObjClause.conform(unconformed3);
+// ObjClause.conform(unconformed4);
 
-// var fnList = ['shape', 'isValid', 'conform', 'fspec', 'isObj', 'isFn'];
+// var fnList = ['shape', 'isValid', 'conform', 'fclause', 'isObj', 'isFn'];
 
-// var SpecObj = C.keys({req: fnList});
-// var InsaneSpecObj = C.keys({req: fnList.concat(['voodooooooooo'])});
-// console.log(C.isValid(SpecObj, S));
-// console.log(C.isValid(InsaneSpecObj, S));
+// var ClauseObj = C.keys({req: fnList});
+// var InsaneClauseObj = C.keys({req: fnList.concat(['voodooooooooo'])});
+// console.log(C.isValid(ClauseObj, S));
+// console.log(C.isValid(InsaneClauseObj, S));
 
-// var NamedGroupedSpec = C.cat(
+// var NamedGroupedClause = C.cat(
 //   ['z', 'it\'s a fuuuunction', C.isFn],
 //   ['b', C.isObj],
 //   ['c', 'another fuuuunction', C.isFn],
@@ -107,25 +107,25 @@ var mySpec = C.cat( 'a', C.isStr, {} );
 //
 // var conformist = [function(){}, {}, function() {}, {}];
 //
-// var conformed = NamedGroupedSpec.conform(conformist);
+// var conformed = NamedGroupedClause.conform(conformist);
 //
 // console.log(conformed);
 
-// var Spec = s.cat('a', s.isNum, 'b', s.isStr);
+// var Clause = s.cat('a', s.isNum, 'b', s.isStr);
 
-// var Spec = s.or(
+// var Clause = s.or(
 //   // s.zeroOrMore(s.cat(s.isStr, s.isNum)),
 //   s.collOf(s.cat(s.isStr, s.isNum))
 // );
 
-// var r = Spec.conform([1, '2']);
+// var r = Clause.conform([1, '2']);
 
 // console.log(r);
 
 //
-// var AdderFnSpec = s.fspec({
+// var AdderFnClause = s.fclause({
 //   args: s.cat('x', s.isNum),
-//   ret: s.fspec({
+//   ret: s.fclause({
 //     args: s.cat('y', s.isNum),
 //     ret: s.isNum,
 //   }),
@@ -136,18 +136,18 @@ var mySpec = C.cat( 'a', C.isStr, {} );
 //     return x + y;
 //   }
 // };
-// var adderFn = AdderFnSpec.instrument(adderFn);
-// var brokenAdderFn = AdderFnSpec.instrument((x) => (y) => 'z');
+// var adderFn = AdderFnClause.instrument(adderFn);
+// var brokenAdderFn = AdderFnClause.instrument((x) => (y) => 'z');
 // var r = brokenAdderFn(1)(3);
 // console.log(r);
 
 
-// var sheepCounterSpec = C.fspec({
+// var sheepCounterClause = C.fclause({
 //   args: C.cat(C.isNum),
 //   ret: s.isStr,
 // });
 //
-// var sheepCounter = sheepCounterSpec.instrument(function(c) {
+// var sheepCounter = sheepCounterClause.instrument(function(c) {
 //   return c + ' sheep and counting.';
 // });
 //
@@ -160,31 +160,31 @@ var mySpec = C.cat( 'a', C.isStr, {} );
 
 
 
-// var NamedSpec = s.cat('z', s.isFn, 'b', s.isObj, 'c', s.isFn, 'a', s.isObj);
-// // var UnnamedSpec = C.cat(C.isFn, C.isObj,C.isFn, C.isObj);
+// var NamedClause = s.cat('z', s.isFn, 'b', s.isObj, 'c', s.isFn, 'a', s.isObj);
+// // var UnnamedClause = C.cat(C.isFn, C.isObj,C.isFn, C.isObj);
 //
-// var EmptySpec = s.cat();
+// var EmptyClause = s.cat();
 //
-// var conformed = EmptySpec.conform([]);
-// var unconformed = EmptySpec.conform([1]);
+// var conformed = EmptyClause.conform([]);
+// var unconformed = EmptyClause.conform([1]);
 
 // console.log('c', conformed, unconformed);
 // expect(conformed).to.deep.equal({ z: fn, b: {}, c: fn, a: { a: 1 } });
-// var nonconformed = NamedSpec.conform(nonconformist);
+// var nonconformed = NamedClause.conform(nonconformist);
 
-// var AmpliferSpec = s.fspec({
+// var AmpliferClause = s.fclause({
 //   args: s.cat(s.isNum),
 //   ret: s.isNum,
 // });
 //
-// var AdderFnSpec = s.fspec({
-//   args: s.cat('amplifier', AmpliferSpec, 'x', s.isNum),
-//   ret: s.fspec({
+// var AdderFnClause = s.fclause({
+//   args: s.cat('amplifier', AmpliferClause, 'x', s.isNum),
+//   ret: s.fclause({
 //     args: s.cat('y', s.isNum),
 //     ret: s.isNum,
 //   }),
 // });
-// var adderFn = AdderFnSpec.instrument((amp, x) => (y) => amp(x) + y);
+// var adderFn = AdderFnClause.instrument((amp, x) => (y) => amp(x) + y);
 // var r = adderFn((x) => x * 2, 1)(2);
 
 // var SS = s.or('a', s.shape({
@@ -238,9 +238,9 @@ var mySpec = C.cat( 'a', C.isStr, {} );
 // });
 //
 //
-// var ListSpec = s('todoapp.list');
-// // var ItemSpec = s('todoapp.item');
-// // var contentSpec = s('todoapp.item.content');
+// var ListClause = s('todoapp.list');
+// // var ItemClause = s('todoapp.item');
+// // var contentClause = s('todoapp.item.content');
 // //
-// var r = ListSpec.conform({ title: 'hello', items: [] });
+// var r = ListClause.conform({ title: 'hello', items: [] });
 // console.log(r);

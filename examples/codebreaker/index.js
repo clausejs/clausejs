@@ -1,4 +1,4 @@
-// Tutorial derived from http://blog.cognitect.com/blog/2016/10/5/interactive-development-with-clojurespec
+// Tutorial derived from http://blog.cognitect.com/blog/2016/10/5/interactive-development-with-clojureclause
 
 /*
 
@@ -26,26 +26,26 @@ var isPeg = function(x) {
   return ['r', 'y', 'c', 'g'].indexOf(x) >= 0;
 }
 
-var CodeSpec = s.collOf(isPeg, { minCount: 4, maxCount: 6 });
-var ScoreFnSpec = s.fspec({
-  args: s.cat('secret', CodeSpec, 'guess', CodeSpec),
+var CodeClause = s.collOf(isPeg, { minCount: 4, maxCount: 6 });
+var ScoreFnClause = s.fclause({
+  args: s.cat('secret', CodeClause, 'guess', CodeClause),
 });
 
 // TODO: implement
-// ScoreFnSpec.args.exercise()
+// ScoreFnClause.args.exercise()
 
-ScoreFnSpec = s.fspec({
+ScoreFnClause = s.fclause({
   args: s.and(
-    s.cat('secret', CodeSpec, 'guess', CodeSpec),
+    s.cat('secret', CodeClause, 'guess', CodeClause),
     ({secret, guess}) => secret.length === guess.length
   )
 });
 
-// ScoreFnSpec.args.exercise()
+// ScoreFnClause.args.exercise()
 
-ScoreFnSpec = s.fspec({
+ScoreFnClause = s.fclause({
   args: s.and(
-    s.cat('secret', CodeSpec, 'guess', CodeSpec),
+    s.cat('secret', CodeClause, 'guess', CodeClause),
     ({secret, guess}) => secret.length === guess.length
   ),
   ret: s.shape({
@@ -56,11 +56,11 @@ ScoreFnSpec = s.fspec({
   }),
 });
 
-// ScoreFnSpec.ret.exercise()
+// ScoreFnClause.ret.exercise()
 
-ScoreFnSpec = s.fspec({
+ScoreFnClause = s.fclause({
   args: s.and(
-    s.cat('secret', CodeSpec, 'guess', CodeSpec),
+    s.cat('secret', CodeClause, 'guess', CodeClause),
     ({secret, guess}) => secret.length === guess.length
   ),
   ret: s.shape({

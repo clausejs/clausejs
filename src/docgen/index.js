@@ -1,15 +1,15 @@
-import { NamespaceObjSpec } from '../clauses/namespace.types';
+import { NamespaceObjClause } from '../clauses/namespace.types';
 import fnName from '../utils/fnName';
 import isPred from '../utils/isPred';
-import isSpec from '../utils/isSpec';
+import isClause from '../utils/isClause';
 import { isStr, isObj } from '../preds';
 import describe from '../utils/describe';
 import deref from '../utils/deref';
 import { resolve, getDefList } from './namespaceResolver';
-const specFromAlts = require( '../utils/specFromAlts' );
+const clauseFromAlts = require( '../utils/clauseFromAlts' );
 
 function gen( registry ) {
-  var conformedReg = NamespaceObjSpec.conform( registry );
+  var conformedReg = NamespaceObjClause.conform( registry );
   var docstr = _walk( registry, null, null, conformedReg );
   return docstr;
 }
@@ -26,7 +26,7 @@ function genCot( registry ) {
       <ul>
       ${r[ p ]
         .map( ( [ p, n, ref ] ) =>
-          `<li>${_specRefLink( `${p}/${n}` )( ( p ) => _stylizeName( deref( ref ), _unanbiguousName( p ) ) )}</li>` )
+          `<li>${_clauseRefLink( `${p}/${n}` )( ( p ) => _stylizeName( deref( ref ), _unanbiguousName( p ) ) )}</li>` )
         .join( '' )}
       </ul>
     </dd>
@@ -115,7 +115,7 @@ function _stylizeName( expr, name ) {
 }
 
 function _type( expr ) {
-  if ( isSpec( expr ) ) {
+  if ( isClause( expr ) ) {
     return typeTable[ expr.type ] || expr.type.toLowerCase();
   } else if ( isPred( expr ) ) {
     return 'predicate';
@@ -127,25 +127,25 @@ function genForExpression( globalReg, exprName, expr, meta ) {
   let path = resolve( globalReg, expr );
 
   if ( path && !exprName ) {
-    docstr = _genSpecRef( globalReg, exprName, path, expr, meta );
+    docstr = _genClauseRef( globalReg, exprName, path, expr, meta );
   } else if ( expr.type === 'SPEC_REF' ) {
-    docstr = _genSpecRef( globalReg, exprName, null, expr, meta );
+    docstr = _genClauseRef( globalReg, exprName, null, expr, meta );
   } else if ( expr.type === 'DELAYED' ) {
     return genForExpression( globalReg, exprName, expr.get(), meta );
   } else if ( expr.type === 'FSPEC' ) {
-    docstr = _genFspec( globalReg, exprName, expr, meta );
+    docstr = _genFclause( globalReg, exprName, expr, meta );
   } else if ( expr.type === 'OR' ) {
-    docstr = _genOrSpec( globalReg, exprName, path, expr, meta );
+    docstr = _genOrClause( globalReg, exprName, path, expr, meta );
   } else if ( expr.type === 'CAT' ) {
-    docstr = _genCatSpec( globalReg, exprName, path, expr, meta );
+    docstr = _genCatClause( globalReg, exprName, path, expr, meta );
   } else if ( isPred( expr ) || expr.type === 'PRED' ) {
-    docstr = _genPredSpec( globalReg, exprName, expr, meta );
+    docstr = _genPredClause( globalReg, exprName, expr, meta );
   } else if ( isPred( expr ) || expr.type === 'ANY' ) {
-    docstr = _genAnySpec( );
+    docstr = _genAnyClause( );
   } else if ( expr.type === 'AND' ) {
-    docstr = _genAndSpec( globalReg, exprName, path, expr, meta );
+    docstr = _genAndClause( globalReg, exprName, path, expr, meta );
   } else {
-    docstr = _genUnknownSpec( globalReg, exprName, path, expr, meta );
+    docstr = _genUnknownClause( globalReg, exprName, path, expr, meta );
   }
 
   const name = meta && meta[ 'name' ] || exprName;
@@ -159,7 +159,7 @@ function genForExpression( globalReg, exprName, expr, meta ) {
           ${_type( expr )}
         </span>
       ` : null,
-      legend: !path ? _tagFor( expr ) : '<span class="tag tag-info">of spec</span>',
+      legend: !path ? _tagFor( expr ) : '<span class="tag tag-info">of clause</span>',
       borderlabel: _labelFor( expr )
     } )( docstr )}`;
 }
@@ -178,7 +178,7 @@ function _wrapCard( { header, legend, borderlabel } ) {
   } else if ( legend ) {
     return ( body ) => `
     <fieldset class="card card-outline-${borderlabel || 'default'}">
-    <legend class="spec-type">
+    <legend class="clause-type">
       ${legend}
     </legend>
     ${body}
@@ -207,8 +207,8 @@ function _typeFor( expr ) {
   switch ( lowerT ) {
   case 'pred':
     return 'of predicate';
-  case 'fspec':
-    return 'of fspec (function)';
+  case 'fclause':
+    return 'of fclause (function)';
   case 'z_or_m':
     return 'zero or more of (*)';
   case 'o_or_m':
@@ -232,7 +232,7 @@ function _labelFor( expr ) {
   switch ( lowerT ) {
   case 'pred':
     return 'primary';
-  case 'fspec':
+  case 'fclause':
     return 'info';
   case 'cat': case 'or':
     return 'info';
@@ -241,28 +241,28 @@ function _labelFor( expr ) {
   }
 }
 
-function _genAnySpec() {
+function _genAnyClause() {
   return `
     <div class="card-block">Any value.</div>
   `
 }
 
-function _genSpecRef( globalReg, exprName, path, expr, meta ) {
+function _genClauseRef( globalReg, exprName, path, expr, meta ) {
   const p = path || expr.ref;
   return `
     <div class="card-block">
       A value that is of
-      ${_specRefLink( p )( ( p ) => p )}
+      ${_clauseRefLink( p )( ( p ) => p )}
     </div>
   `;
 }
 
-function _specRefLink( p ) {
+function _clauseRefLink( p ) {
   return pGenFn =>
     `<a href="#${p}" data-path="${p}">${pGenFn( p )}</a>`;
 }
 
-function _genAndSpec( globalReg, exprName, path, expr, meta ) {
+function _genAndClause( globalReg, exprName, path, expr, meta ) {
   const example = meta && meta.example;
   const altDefs = expr.opts.conformedExprs.map( ( altE, idx ) => {
     return `
@@ -274,7 +274,7 @@ function _genAndSpec( globalReg, exprName, path, expr, meta ) {
           </div>
           <div class="row">
             <div class="col-md-11 offset-md-1">
-              ${genForExpression( globalReg, null, specFromAlts( altE ), null )}
+              ${genForExpression( globalReg, null, clauseFromAlts( altE ), null )}
             </div>
           </div>
         </li>
@@ -297,7 +297,7 @@ function _genAndSpec( globalReg, exprName, path, expr, meta ) {
   return r;
 }
 
-function _genCatSpec( globalReg, exprName, path, expr, meta ) {
+function _genCatClause( globalReg, exprName, path, expr, meta ) {
   const example = meta && meta.example;
   const altDefs = expr.exprs.map( ( { name, expr: altE }, idx ) => {
     const comment = meta && meta[ name ] && meta[ name ].comment;
@@ -345,8 +345,8 @@ function _codeExample( code ) {
   return r;
 }
 
-function _synopsis( exprName, fspec, globalReg, meta ) {
-  var r = synopsisArray( [], [], exprName, fspec, globalReg, meta, [] );
+function _synopsis( exprName, fclause, globalReg, meta ) {
+  var r = synopsisArray( [], [], exprName, fclause, globalReg, meta, [] );
   var h = _synopsisToHtml( r );
   return h;
 }
@@ -376,13 +376,13 @@ function _synopsisToHtml( arr ) {
 
 }
 
-function synopsisArray( prefixes, suffixes, exprName, spec, globalReg, meta, defs ) {
-  if ( !spec ) {
+function synopsisArray( prefixes, suffixes, exprName, clause, globalReg, meta, defs ) {
+  if ( !clause ) {
     return prefixes.concat( suffixes );
-  } else if ( spec.type == 'FSPEC' ) {
+  } else if ( clause.type == 'FSPEC' ) {
     let fnName = meta && meta.name || exprName;
 
-    return synopsisArray( [ fnName, '(' ], [ ')' ], null, spec.opts.args, globalReg, meta && meta.args, defs );
+    return synopsisArray( [ fnName, '(' ], [ ')' ], null, clause.opts.args, globalReg, meta && meta.args, defs );
     // return {
     //   register: [
     //     'S(', 'nsPath', ', ', 'expression', ')'
@@ -391,35 +391,35 @@ function synopsisArray( prefixes, suffixes, exprName, spec, globalReg, meta, def
     //     'var ', 'expression', ' = ', 'S(', 'nsPath', ', ', 'expression', ')'
     //   ],
     // };
-  } else if ( spec.type === 'OR' ) {
-    var { named } = spec.opts;
+  } else if ( clause.type === 'OR' ) {
+    var { named } = clause.opts;
     let obj;
     if ( named ) {
       obj = {};
-      for ( let eAlt of spec.exprs ) {
+      for ( let eAlt of clause.exprs ) {
         obj[ eAlt.name ] = synopsisArray( prefixes, suffixes, null, eAlt.expr, globalReg, meta && meta[ eAlt.name ], defs );
       }
     } else {
       obj = [];
-      for ( let eAlt of spec.exprs ) {
+      for ( let eAlt of clause.exprs ) {
         obj.push( synopsisArray( prefixes, suffixes, null, eAlt.expr, globalReg, meta && meta[ eAlt.name ], defs ) );
       }
     }
     return obj;
-  } else if ( spec.type === 'CAT' ) {
-    var { named } = spec.opts;
+  } else if ( clause.type === 'CAT' ) {
+    var { named } = clause.opts;
     let obj = [];
-    for ( let i = 0; i < spec.exprs.length; i++ ) {
-      let eAlt = spec.exprs[ i ];
+    for ( let i = 0; i < clause.exprs.length; i++ ) {
+      let eAlt = clause.exprs[ i ];
       let path = resolve( globalReg, eAlt.expr );
       if ( named ) {
-        obj.push( path ? _specRefLink( path )( () => eAlt.name ) : eAlt.name );
+        obj.push( path ? _clauseRefLink( path )( () => eAlt.name ) : eAlt.name );
       } else {
         if ( path ) {
-          obj.push( _specRefLink( path )( _unanbiguousName ) );
+          obj.push( _clauseRefLink( path )( _unanbiguousName ) );
         }
       }
-      if ( i < spec.exprs.length - 1 ) {
+      if ( i < clause.exprs.length - 1 ) {
         obj.push( ', ' );
       }
     }
@@ -430,9 +430,9 @@ function synopsisArray( prefixes, suffixes, exprName, spec, globalReg, meta, def
       .concat( suffixes )
       .concat( [ '</em>' ] );
   } else {
-    console.error( 'Handler still missing for synopsis type ', spec );
+    console.error( 'Handler still missing for synopsis type ', clause );
     // throw '!';
-    return spec.type;
+    return clause.type;
   }
 
 }
@@ -448,7 +448,7 @@ function _refExprFn( reg, currPath ) {
   return ( expr ) => {
     let path = resolve( reg, expr );
     if ( path && path !== currPath ) {
-      return [ _specRefLink( path )( _unanbiguousName ) ];
+      return [ _clauseRefLink( path )( _unanbiguousName ) ];
     }
   }
 }
@@ -459,7 +459,7 @@ function _unanbiguousName( path ) {
   return name;
 }
 
-function _genPredSpec( globalReg, exprName, expr, meta ) {
+function _genPredClause( globalReg, exprName, expr, meta ) {
   let pred = expr.exprs ? expr.exprs[ 0 ] : expr;
   const name = meta && meta[ 'name' ] || exprName;
   const predName = fnName( pred );
@@ -484,7 +484,7 @@ function _genPredSpec( globalReg, exprName, expr, meta ) {
 }
 
 
-function _genUnknownSpec( globalReg, exprName, path, expr, meta ) {
+function _genUnknownClause( globalReg, exprName, path, expr, meta ) {
   const r = `
     <div class="card-block">
       ${_syntax( expr, globalReg, path )}
@@ -502,7 +502,7 @@ function _genUnknownSpec( globalReg, exprName, path, expr, meta ) {
   return r;
 }
 
-function _genOrSpec( globalReg, exprName, path, expr, meta ) {
+function _genOrClause( globalReg, exprName, path, expr, meta ) {
   const example = meta && meta.example;
   const altDefs = expr.exprs.map( ( { name, expr: altE }, idx ) => {
     const comment = meta && meta[ name ] && meta[ name ].comment;
@@ -560,20 +560,20 @@ function toOrdinal( i ) {
 }
 
 // NOTE: meta param is omitted at the end
-function _genFspec( globalReg, exprName, spec, meta ) {
+function _genFclause( globalReg, exprName, clause, meta ) {
   var frags = [ ];
   const name = meta && meta[ 'name' ] || exprName;
   const comment = meta && meta[ 'comment' ];
-  const { args: argsSpec, ret: retSpec, fn } = spec.opts;
+  const { args: argsClause, ret: retClause, fn } = clause.opts;
   if ( comment ) {
     frags.push( [ null, comment ] );
   }
-  if ( argsSpec ) {
-    frags.push( [ 'Synopsis', _synopsis( exprName, spec, globalReg, meta ) ] );
-    frags.push( [ 'Argument spec', genForExpression( globalReg, null, argsSpec, meta && meta.args ) ] );
+  if ( argsClause ) {
+    frags.push( [ 'Synopsis', _synopsis( exprName, clause, globalReg, meta ) ] );
+    frags.push( [ 'Argument clause', genForExpression( globalReg, null, argsClause, meta && meta.args ) ] );
   }
-  if ( retSpec ) {
-    frags.push( [ 'Return value spec', genForExpression( globalReg, null, retSpec, meta && meta.ret ) ] );
+  if ( retClause ) {
+    frags.push( [ 'Return value clause', genForExpression( globalReg, null, retClause, meta && meta.ret ) ] );
   } if ( fn ) {
     frags.push( [ 'Argument-return value relation', `<pre>${fnName( fn )}</pre>` ] );
   }

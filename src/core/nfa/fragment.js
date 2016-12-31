@@ -5,9 +5,9 @@ function fragmentState( transitions, index ) {
   };
 }
 
-function fragmentTransition( spec, target ) {
+function fragmentTransition( clause, target ) {
   return {
-    spec: spec,
+    clause: clause,
     target: target,
   };
 }
@@ -63,8 +63,8 @@ function rearWithState( state, f ) {
 
 var build = {};
 
-build.PRED = function PRED( spec ) {
-  var trans = fragmentTransition( spec, null );
+build.PRED = function PRED( clause ) {
+  var trans = fragmentTransition( clause, null );
   var head = fragmentState( [ trans ], null );
   var tails = [ trans ];
   var f = fragment( head, tails );

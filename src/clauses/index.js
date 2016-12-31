@@ -1,36 +1,36 @@
-import C, { fspec, cat, or, shape, isStr, isBool,
-  isFspec,
+import C, { fclause, cat, or, shape, isStr, isBool,
+  isFclause,
   isArray, isFn, and, isNum, isNull, isUndefined, isProblem } from '../';
-import { any, ExprSpec, CatFnSpec, OrFnSpec, AndFnSpec,
-  CollOfSpec, collOf, SpecSpec, PredSpec, DelayedSpecSpec, SpecRefSpec,
-  ZeroOrMoreFnSpec, OneOrMoreFnSpec, ZeroOrOneFnSpec } from '../core';
-import { WallFnSpec } from '../core/wall';
-import { ShapeFnSpec, MapOfFnSpec } from '../core/objRelated';
-import { isNamespacePath, GetNSFnSpec, NamespaceFnSpec, MetaFnSpec, SetNSFnSpec, NamespaceObjSpec } from './namespace.types';
+import { any, ExprClause, CatFnClause, OrFnClause, AndFnClause,
+  CollOfClause, collOf, ClauseClause, PredClause, DelayedClauseClause, ClauseRefClause,
+  ZeroOrMoreFnClause, OneOrMoreFnClause, ZeroOrOneFnClause } from '../core';
+import { WallFnClause } from '../core/wall';
+import { ShapeFnClause, MapOfFnClause } from '../core/objRelated';
+import { isNamespacePath, GetNSFnClause, NamespaceFnClause, MetaFnClause, SetNSFnClause, NamespaceObjClause } from './namespace.types';
 
 // TODO
 // const C = Clause.withRegistry(nsObj);
 
-const DescribeFnSpec = fspec( {
+const DescribeFnClause = fclause( {
   args: cat( C( 'clausejs.types/Expression' ) ),
   ret: isStr,
 } );
 
-const SingleArgPredSpec = () => fspec( {
+const SingleArgPredClause = () => fclause( {
   args: cat( 'x', any() ),
   ret: isBool,
 } );
 
-const AnySpec = fspec( {
-  ret: SpecSpec,
+const AnyClause = fclause( {
+  ret: ClauseClause,
 } );
 
-const FspecSpec = and(
-  isFspec
+const FclauseClause = and(
+  isFclause
 );
 
-const FspecFnSpec = fspec( {
-  args: cat( 'fspecFields', shape( {
+const FclauseFnClause = fclause( {
+  args: cat( 'fclauseFields', shape( {
     optional: {
       args: and( isArray, C( 'clausejs.types/Expression' ) ),
       ret: C( 'clausejs.types/Expression' ),
@@ -39,106 +39,106 @@ const FspecFnSpec = fspec( {
   } ) ),
 } );
 
-const NullableFnSpec = fspec( {
-  args: cat( ExprSpec ),
+const NullableFnClause = fclause( {
+  args: cat( ExprClause ),
 } );
 
-const UndefinableFnSpec = fspec( {
-  args: cat( ExprSpec ),
+const UndefinableFnClause = fclause( {
+  args: cat( ExprClause ),
 } );
 
-const InstanceOfFnSpec = fspec( {
+const InstanceOfFnClause = fclause( {
   args: cat( 'instanceType', isFn ),
-  ret: SingleArgPredSpec(),
+  ret: SingleArgPredClause(),
 } );
 
-const NotFnSpec = fspec( {
+const NotFnClause = fclause( {
   args: cat( 'predicateToNegate', C( 'clausejs.types/Predicate' ) ),
-  ret: SingleArgPredSpec(),
+  ret: SingleArgPredClause(),
 } );
 
-const EqualsFnSpec = fspec( {
+const EqualsFnClause = fclause( {
   args: cat( 'valueToCompareWith', any() ),
-  ret: SingleArgPredSpec(),
+  ret: SingleArgPredClause(),
 } );
 
-const OneOfFnSpec = fspec( {
+const OneOfFnClause = fclause( {
   args: cat( 'valueOptions', collOf( C( 'clausejs.types/Primitive' ) ) ),
-  ret: SingleArgPredSpec(),
+  ret: SingleArgPredClause(),
 } );
 
-const PrimitiveSpec = or( isStr, isNum, isBool, isNull, isUndefined );
+const PrimitiveClause = or( isStr, isNum, isBool, isNull, isUndefined );
 
-const EnforceFnSpec = fspec( {
-  args: cat( 'expression', ExprSpec, 'valueToCheck', any() ),
+const EnforceFnClause = fclause( {
+  args: cat( 'expression', ExprClause, 'valueToCheck', any() ),
   ret: isUndefined
 } );
 
-const ConformFnSpec = fspec( {
-  args: cat( 'expression', ExprSpec, 'valueToConform', any() ),
+const ConformFnClause = fclause( {
+  args: cat( 'expression', ExprClause, 'valueToConform', any() ),
   ret: or( 'conformedValue', any(), 'problem', C( 'clausejs.types/Problem' ) ),
 } );
 
-const DelayedFnSpec = fspec( {
-  args: cat( 'getFn', fspec( {
-    ret: ExprSpec,
+const DelayedFnClause = fclause( {
+  args: cat( 'getFn', fclause( {
+    ret: ExprClause,
   } ) ),
-  ret: DelayedSpecSpec,
+  ret: DelayedClauseClause,
 } );
 
-C( '/clausejs', NamespaceFnSpec );
+C( '/clausejs', NamespaceFnClause );
 
-C( 'clausejs.compose/cat', CatFnSpec );
-C( 'clausejs.compose/or', OrFnSpec );
-C( 'clausejs.compose/zeroOrMore', ZeroOrMoreFnSpec );
-C( 'clausejs.compose/oneOrMore', OneOrMoreFnSpec );
-C( 'clausejs.compose/zeroOrOne', ZeroOrOneFnSpec );
-C( 'clausejs.compose/and', AndFnSpec );
-C( 'clausejs.compose/collOf', CollOfSpec );
-C( 'clausejs.compose/mapOf', MapOfFnSpec );
-C( 'clausejs.compose/shape', ShapeFnSpec );
-C( 'clausejs.compose/any', AnySpec );
-C( 'clausejs.compose/wall', WallFnSpec );
-C( 'clausejs.compose/fspec', FspecFnSpec );
-C( 'clausejs.compose/nullable', NullableFnSpec );
-C( 'clausejs.compose/undefinable', UndefinableFnSpec );
+C( 'clausejs.compose/cat', CatFnClause );
+C( 'clausejs.compose/or', OrFnClause );
+C( 'clausejs.compose/zeroOrMore', ZeroOrMoreFnClause );
+C( 'clausejs.compose/oneOrMore', OneOrMoreFnClause );
+C( 'clausejs.compose/zeroOrOne', ZeroOrOneFnClause );
+C( 'clausejs.compose/and', AndFnClause );
+C( 'clausejs.compose/collOf', CollOfClause );
+C( 'clausejs.compose/mapOf', MapOfFnClause );
+C( 'clausejs.compose/shape', ShapeFnClause );
+C( 'clausejs.compose/any', AnyClause );
+C( 'clausejs.compose/wall', WallFnClause );
+C( 'clausejs.compose/fclause', FclauseFnClause );
+C( 'clausejs.compose/nullable', NullableFnClause );
+C( 'clausejs.compose/undefinable', UndefinableFnClause );
 
-C( 'clausejs.utils/enforce', EnforceFnSpec );
-C( 'clausejs.utils/conform', ConformFnSpec );
-C( 'clausejs.utils/delayed', DelayedFnSpec );
-C( 'clausejs.utils/describe', DescribeFnSpec );
+C( 'clausejs.utils/enforce', EnforceFnClause );
+C( 'clausejs.utils/conform', ConformFnClause );
+C( 'clausejs.utils/delayed', DelayedFnClause );
+C( 'clausejs.utils/describe', DescribeFnClause );
 
-C( 'clausejs.preds/not', NotFnSpec );
-C( 'clausejs.preds/isObj', SingleArgPredSpec() );
-C( 'clausejs.preds/isStr', SingleArgPredSpec() );
-C( 'clausejs.preds/isArray', SingleArgPredSpec() );
-C( 'clausejs.preds/isDate', SingleArgPredSpec() );
-C( 'clausejs.preds/isNull', SingleArgPredSpec() );
-C( 'clausejs.preds/isUndefined', SingleArgPredSpec() );
-C( 'clausejs.preds/notEmpty', SingleArgPredSpec() );
-C( 'clausejs.preds/isBool', SingleArgPredSpec() );
-C( 'clausejs.preds/isFn', SingleArgPredSpec() );
-C( 'clausejs.preds/isNum', SingleArgPredSpec() );
-C( 'clausejs.preds/isInt', SingleArgPredSpec() );
-C( 'clausejs.preds/isNatInt', SingleArgPredSpec() );
-C( 'clausejs.preds/isUuid', SingleArgPredSpec() );
-C( 'clausejs.preds/oneOf', OneOfFnSpec );
-C( 'clausejs.preds/equals', EqualsFnSpec );
-C( 'clausejs.preds/instanceOf', InstanceOfFnSpec );
+C( 'clausejs.preds/not', NotFnClause );
+C( 'clausejs.preds/isObj', SingleArgPredClause() );
+C( 'clausejs.preds/isStr', SingleArgPredClause() );
+C( 'clausejs.preds/isArray', SingleArgPredClause() );
+C( 'clausejs.preds/isDate', SingleArgPredClause() );
+C( 'clausejs.preds/isNull', SingleArgPredClause() );
+C( 'clausejs.preds/isUndefined', SingleArgPredClause() );
+C( 'clausejs.preds/notEmpty', SingleArgPredClause() );
+C( 'clausejs.preds/isBool', SingleArgPredClause() );
+C( 'clausejs.preds/isFn', SingleArgPredClause() );
+C( 'clausejs.preds/isNum', SingleArgPredClause() );
+C( 'clausejs.preds/isInt', SingleArgPredClause() );
+C( 'clausejs.preds/isNatInt', SingleArgPredClause() );
+C( 'clausejs.preds/isUuid', SingleArgPredClause() );
+C( 'clausejs.preds/oneOf', OneOfFnClause );
+C( 'clausejs.preds/equals', EqualsFnClause );
+C( 'clausejs.preds/instanceOf', InstanceOfFnClause );
 
-C( '/clausejs.namespace/set', SetNSFnSpec );
-C( '/clausejs.namespace/get', GetNSFnSpec );
-C( '/clausejs.namespace/meta', MetaFnSpec );
+C( '/clausejs.namespace/set', SetNSFnClause );
+C( '/clausejs.namespace/get', GetNSFnClause );
+C( '/clausejs.namespace/meta', MetaFnClause );
 
-C( 'clausejs.types/Expression', ExprSpec );
-C( 'clausejs.types/Spec', SpecSpec );
-C( 'clausejs.types/FSpec', FspecSpec );
-C( 'clausejs.types/Predicate', PredSpec );
-C( 'clausejs.types/DelayedSpec', DelayedSpecSpec );
-C( 'clausejs.types/SpecReference', SpecRefSpec );
+C( 'clausejs.types/Expression', ExprClause );
+C( 'clausejs.types/Clause', ClauseClause );
+C( 'clausejs.types/FClause', FclauseClause );
+C( 'clausejs.types/Predicate', PredClause );
+C( 'clausejs.types/DelayedClause', DelayedClauseClause );
+C( 'clausejs.types/ClauseReference', ClauseRefClause );
 C( 'clausejs.types/Problem', isProblem );
-C( 'clausejs.types/NamespaceObj', NamespaceObjSpec );
+C( 'clausejs.types/NamespaceObj', NamespaceObjClause );
 C( 'clausejs.types/NamespacePath', isNamespacePath );
-C( 'clausejs.types/Primitive', PrimitiveSpec );
+C( 'clausejs.types/Primitive', PrimitiveClause );
 
 export default C.getRegistry();

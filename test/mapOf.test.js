@@ -6,12 +6,12 @@ function beginsWith( prefix ) {
 }
 
 describe( 'mapOf', () => {
-  it( 'empty spec args', () => {
+  it( 'empty clause args', () => {
     expect( () => C.mapOf() ).to.throw( C.Problem );
   } );
 
   it( 'basic case', () => {
-    var MapOfSpec = C.mapOf(
+    var MapOfClause = C.mapOf(
       beginsWith( 'me' ), C.isNatInt
     );
 
@@ -30,8 +30,8 @@ describe( 'mapOf', () => {
       melol: 3444
     };
 
-    expect( MapOfSpec.conform( data ) ).to.deep.equal( data );
-    expect( MapOfSpec.conform( unconformed1 ) ).to.be.an.instanceOf( C.Problem );
-    expect( MapOfSpec.conform( unconformed2 ) ).to.be.an.instanceOf( C.Problem );
+    expect( MapOfClause.conform( data ) ).to.deep.equal( data );
+    expect( MapOfClause.conform( unconformed1 ) ).to.be.an.instanceOf( C.Problem );
+    expect( MapOfClause.conform( unconformed2 ) ).to.be.an.instanceOf( C.Problem );
   } );
 } );

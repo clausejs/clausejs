@@ -1,21 +1,21 @@
 var oAssign = require( 'object-assign' );
-var SpecRef = require( '../models/SpecRef' );
-import { cat, or, fspec } from '../core' ;
+var ClauseRef = require( '../models/ClauseRef' );
+import { cat, or, fclause } from '../core' ;
 var { shape } = require( '../core/objRelated' );
-var isSpec = require( '../utils/isSpec' );
+var isClause = require( '../utils/isClause' );
 var isPred = require( '../utils/isPred' );
 var isUndefined = require( '../preds/isUndefined' );
 var walk = require( '../walk' );
-var coerceIntoSpec = require( '../utils/coerceIntoSpec' );
+var coerceIntoClause = require( '../utils/coerceIntoClause' );
 var oPath = require( './simpleObjectPath' );
 
-import { isNamespacePath, isSpecRef } from '../utils';
-import { GetNSFnSpec, SetNSFnSpec, NamespaceFnSpec, MetaFnSpec } from '../clauses/namespace.types';
+import { isNamespacePath, isClauseRef } from '../utils';
+import { GetNSFnClause, SetNSFnClause, NamespaceFnClause, MetaFnClause } from '../clauses/namespace.types';
 var reg;
 
-var _get = fspec( {
+var _get = fclause( {
   args: cat( isNamespacePath ),
-  ret: isSpecRef,
+  ret: isClauseRef,
 } ).instrument( _getUnchecked );
 
 function _getUnchecked( ref ) {
@@ -35,8 +35,8 @@ function _getUnchecked( ref ) {
     }
   };
 
-  var sr = new SpecRef( { ref, getFn, conformFn: null } );
-  sr.conform = function specRefConform( x ) {
+  var sr = new ClauseRef( { ref, getFn, conformFn: null } );
+  sr.conform = function clauseRefConform( x ) {
     var ss = getFn();
     return walk( ss, x, { conform: true } );
   }
@@ -47,9 +47,9 @@ function _slashToDot( p ) {
   return p.replace( /^(.+)(\/)(.+)$/, '$1.$3' ).replace( /^\//, '' );
 }
 
-// var PartialRefMapSpec = shape({
+// var PartialRefMapClause = shape({
 //   req: {
-//     'refDefs': [isNamespacePath, ExprOrPartialRefMapSpec]
+//     'refDefs': [isNamespacePath, ExprOrPartialRefMapClause]
 //   }
 // });
 
@@ -68,8 +68,8 @@ function setNamespacePath( { nsPath, expression } ) {
 
 function _processVal( prefix, expression ) {
   if ( expression ) {
-    if ( expression.spec || expression.pred ) {
-      var expr = expression.spec || expression.pred;
+    if ( expression.clause || expression.pred ) {
+      var expr = expression.clause || expression.pred;
       _set( prefix, { '.expr': expr } );
       return expr;
     } else {
@@ -90,12 +90,12 @@ function _processVal( prefix, expression ) {
   }
 }
 
-var NameObjSpec = shape( {
-  req: { '.expr': or( isSpec, isPred ) }
+var NameObjClause = shape( {
+  req: { '.expr': or( isClause, isPred ) }
 } );
 
-var _set = fspec( {
-  args: cat( isNamespacePath, NameObjSpec ),
+var _set = fclause( {
+  args: cat( isNamespacePath, NameObjClause ),
   ret: isUndefined,
 } ).instrument( function _set( n, nObj ) {
   _maybeInitRegistry();
@@ -116,7 +116,7 @@ function clearRegistry() {
   reg = global[ K ] = {};
 }
 
-const meta = MetaFnSpec.instrumentConformed(
+const meta = MetaFnClause.instrumentConformed(
   function meta( { source: { namespacePath, expression }, metaObj } ) {
     if ( namespacePath ) {
       var nObj = oPath.get( reg, _slashToDot( namespacePath ) );
@@ -124,8 +124,8 @@ const meta = MetaFnSpec.instrumentConformed(
       oPath.set( reg, _slashToDot( namespacePath ), oAssign( {}, nObj, { '.meta': oAssign( {}, currMeta, metaObj ) } ) );
       return _get( namespacePath );
     } else if ( expression ) {
-      const spec = coerceIntoSpec( expression );
-      spec.meta = oAssign( spec.meta, metaObj );
+      const clause = coerceIntoClause( expression );
+      clause.meta = oAssign( clause.meta, metaObj );
     }
   }
 );
@@ -134,7 +134,7 @@ _maybeInitRegistry();
 
 const getRegistry = () => reg;
 
-var namespaceGetOrSet = NamespaceFnSpec.instrumentConformed(
+var namespaceGetOrSet = NamespaceFnClause.instrumentConformed(
   function namespaceGetOrSet( { register, retrieve } ) {
     if ( register ) {
       return setNamespacePath( register );
@@ -144,8 +144,8 @@ var namespaceGetOrSet = NamespaceFnSpec.instrumentConformed(
   }
 )
 
-namespaceGetOrSet.get = GetNSFnSpec.instrumentConformed( getNamespacePath );
-namespaceGetOrSet.set = SetNSFnSpec.instrumentConformed( setNamespacePath );
+namespaceGetOrSet.get = GetNSFnClause.instrumentConformed( getNamespacePath );
+namespaceGetOrSet.set = SetNSFnClause.instrumentConformed( setNamespacePath );
 namespaceGetOrSet.clearRegistry = clearRegistry;
 namespaceGetOrSet.getRegistry = getRegistry;
 namespaceGetOrSet.meta = meta;

@@ -1,16 +1,16 @@
 var fnName = require( '../utils/fnName' );
 var Problem = require( '../models/Problem' );
 
-function predWalker( spec ) {
+function predWalker( clause ) {
   return {
     trailblaze: predTraiblaze,
     reconstruct: predReconstruct,
   }
 
   function predTraiblaze( x ) {
-    var predFn = spec.exprs[ 0 ];
+    var predFn = clause.exprs[ 0 ];
     if ( !predFn( x ) ) {
-      return new Problem( x, spec, [], 'Predicate ' + fnName( predFn ) + '() returns false' );
+      return new Problem( x, clause, [], 'Predicate ' + fnName( predFn ) + '() returns false' );
     } else {
       return x;
     }

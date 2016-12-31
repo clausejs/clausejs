@@ -19,11 +19,11 @@ var multipleArgFragmenter = ( { opts: { named }, exprs } ) => {
   }
 };
 
-var singleArgFragmenter = ( { opts: { enclosedSpec } } ) => [ enclosedSpec ];
+var singleArgFragmenter = ( { opts: { enclosedClause } } ) => [ enclosedClause ];
 
 var Fragmenters = {
   'PRED': ( { opts: { predicate } } ) => [ predicate ],
-  'WALL': ( { opts: { enclosedSpec } } ) => [ enclosedSpec ],
+  'WALL': ( { opts: { enclosedClause } } ) => [ enclosedClause ],
   // TODO
   'AND': ( { exprs } ) => exprs,
   'CAT': multipleArgFragmenter,
@@ -42,14 +42,14 @@ var Fragmenters = {
     .concat( fn ? [ 'fn: ', fnName( fn ), '()' ] : [] ),
 };
 
-function getFragments( spec, interceptor ) {
+function getFragments( clause, interceptor ) {
   if ( interceptor ) {
-    let interceptR = interceptor( spec );
+    let interceptR = interceptor( clause );
     if ( interceptR ) {
       return interceptR;
     }
   } else {
-    return Fragmenters[ spec.type ]( spec );
+    return Fragmenters[ clause.type ]( clause );
   }
 }
 

@@ -4,13 +4,13 @@ function fromBaseClass( baseClass ) {
   class ClauseComponent extends baseClass {
     constructor() {
       super();
-      const { propSpecs } = this.constructor;
-      if ( propSpecs ) {
-        const nullablePropSpecs = C.or( propSpecs, C.isUndefined, C.isNull );
+      const { propClauses } = this.constructor;
+      if ( propClauses ) {
+        const nullablePropClauses = C.or( propClauses, C.isUndefined, C.isNull );
 
         const currWillUpdateFn = this.componentWillUpdate;
         this.componentWillUpdate = ( nextShape ) => {
-          C.enforce( nullablePropSpecs, nextShape );
+          C.enforce( nullablePropClauses, nextShape );
           if ( currWillUpdateFn ) {
             return currWillUpdateFn.apply( this, arguments );
           }
@@ -19,7 +19,7 @@ function fromBaseClass( baseClass ) {
 
         const currWillMountFn = this.componentWillMount;
         this.componentWillMount = () => {
-          C.enforce( nullablePropSpecs, this.shape );
+          C.enforce( nullablePropClauses, this.shape );
           if ( currWillMountFn ) {
             return currWillMountFn.apply( this, arguments );
           }

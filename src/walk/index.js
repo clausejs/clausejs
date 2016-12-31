@@ -3,23 +3,23 @@ var nfaWalker = require( './nfaWalker' );
 var anyWalker = require( './anyWalker' );
 var predWalker = require( './predWalker' );
 var wallWalker = require( './wallWalker' );
-var fspecWalker = require( './fspecWalker' );
+var fclauseWalker = require( './fclauseWalker' );
 var shapeWalker = require( './shapeWalker' );
 var andWalker = require( './andWalker' );
 var collOfWalker = require( './collOfWalker' );
 var mapOfWalker = require( './mapOfWalker' );
-var specRefWalker = require( './specRefWalker' );
-var delayedSpecWalker = require( './delayedSpecWalker' );
-var coerceIntoSpec = require( '../utils/coerceIntoSpec' );
+var clauseRefWalker = require( './clauseRefWalker' );
+var delayedClauseWalker = require( './delayedClauseWalker' );
+var coerceIntoClause = require( '../utils/coerceIntoClause' );
 var isProblem = require( '../utils/isProblem' );
 
-function walk( spec, x, opts ) {
+function walk( clause, x, opts ) {
   var { phase } = opts;
-  var walker = _getWalker( spec );
+  var walker = _getWalker( clause );
   if ( !phase ) {
     // 2-pass algorithm:
 
-    // in Pass 1 we just need to know if x validates to spec, and if so, how
+    // in Pass 1 we just need to know if x validates to clause, and if so, how
     var intermediate = walker.trailblaze( x, oAssign( { phase: 'trailblaze' }, opts ) );
 
     if ( isProblem( intermediate ) ) {
@@ -47,22 +47,22 @@ const walkerMap = {
   'WALL': wallWalker,
   'SHAPE': shapeWalker,
   'AND': andWalker,
-  'SPEC_REF': specRefWalker,
-  'DELAYED': delayedSpecWalker,
-  'FSPEC': fspecWalker,
+  'SPEC_REF': clauseRefWalker,
+  'DELAYED': delayedClauseWalker,
+  'FSPEC': fclauseWalker,
   'MAP_OF': mapOfWalker,
 }
 
 function _getWalker( expr ) {
 
-  var spec = coerceIntoSpec( expr );
-  var walker = walkerMap[ spec.type ];
+  var clause = coerceIntoClause( expr );
+  var walker = walkerMap[ clause.type ];
 
   if ( !walker ) {
-    throw 'unsupported type ' + spec.type;
+    throw 'unsupported type ' + clause.type;
   }
 
-  var r = walker( spec, walk );
+  var r = walker( clause, walk );
   return r;
 }
 

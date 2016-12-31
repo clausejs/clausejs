@@ -1,5 +1,5 @@
-module.exports = function deref( spec ) {
-  let result = spec;
+module.exports = function deref( clause ) {
+  let result = clause;
   while ( result.get ) {
     result = result.get();
   }

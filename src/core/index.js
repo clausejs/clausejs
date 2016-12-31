@@ -7,8 +7,8 @@ var { wall } = require( './wall' );
 
 var other = {
   any: require( './any' ),
-  fspec: require( './fspec' ),
-  wall, spec: wall,
+  fclause: require( './fclause' ),
+  wall, clause: wall,
   nullable, undefinable,
 };
 

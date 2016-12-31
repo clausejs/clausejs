@@ -1,8 +1,8 @@
 var { or } = require( './regex' );
 var isNull = require( '../preds/isNull' );
 
-function nullable( spec ) {
-  return or( isNull, spec );
+function nullable( clause ) {
+  return or( isNull, clause );
 }
 
 module.exports = nullable;

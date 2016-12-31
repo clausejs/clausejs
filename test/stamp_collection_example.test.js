@@ -7,26 +7,26 @@ function isFamily( x ) {
 
 describe( 'stamp collection example', () => {
   it( 'stampapp', () => {
-    var IdSpec = s.isNum;
-    var UserSpec = s.shape( {
+    var IdClause = s.isNum;
+    var UserClause = s.shape( {
       req: {
-        id: IdSpec,
+        id: IdClause,
         firstName: s.isStr,
         lastName: s.isStr,
       },
     } );
 
-    var StampSpec = s.shape( {
+    var StampClause = s.shape( {
       req: {
         year: s.isNum,
         title: s.isStr,
       },
     } );
-    var CollectionSpec = s.shape( {
+    var CollectionClause = s.shape( {
       req: {
         title: s.isStr,
-        items: s.oneOrMore( s.and( StampSpec, s.isObj ) ),
-        owner: s.and( UserSpec, isFamily )
+        items: s.oneOrMore( s.and( StampClause, s.isObj ) ),
+        owner: s.and( UserClause, isFamily )
       },
       opt: {
         vendor: s.isStr,
@@ -45,7 +45,7 @@ describe( 'stamp collection example', () => {
       owner: u,
     };
 
-    var r = CollectionSpec.conform( coll1 );
+    var r = CollectionClause.conform( coll1 );
     expect( r ).to.deep.equal( coll1 );
   } );
 } );

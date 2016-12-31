@@ -2,55 +2,55 @@ var expect = require( 'chai' ).expect;
 var C = require( '../src/' );
 var s = C;
 var Problem = C.Problem;
-var Spec = require( '../src/models/Spec' );
-var isSpec = require( '../src/utils/isSpec' );
+var Clause = require( '../src/models/Clause' );
+var isClause = require( '../src/utils/isClause' );
 var identity = C.identity;
 
-describe( 'fspec', function() {
+describe( 'fclause', function() {
 
-  it( 'empty spec', () => {
-    var EmptyFspec = C.fspec( {} );
+  it( 'empty clause', () => {
+    var EmptyFclause = C.fclause( {} );
 
-    expect( isSpec( EmptyFspec ) ).to.be.true;
+    expect( isClause( EmptyFclause ) ).to.be.true;
   } );
 
   it( 'instrument: no args provided', () => {
-    var FspecSpec = C.fspec( {
-      args: C.cat( isSpec ),
-      ret: C.isSpec,
+    var FclauseClause = C.fclause( {
+      args: C.cat( isClause ),
+      ret: C.isClause,
     } );
 
-    expect( () => FspecSpec.instrument() ).to.throw( Error );
+    expect( () => FclauseClause.instrument() ).to.throw( Error );
   } );
 
-  it( 'should return a function that checks the spec of a given function as its input', function() {
-    var FspecSpec = C.fspec( {
-      args: C.cat( isSpec ),
-      ret: C.isSpec,
+  it( 'should return a function that checks the clause of a given function as its input', function() {
+    var FclauseClause = C.fclause( {
+      args: C.cat( isClause ),
+      ret: C.isClause,
     } );
 
-    var specedFspec = FspecSpec.instrument( C.fspec ); //meta-ly apply checking to self
-    expect( C.isFn( specedFspec ) ).to.be.true;
+    var clauseedFclause = FclauseClause.instrument( C.fclause ); //meta-ly apply checking to self
+    expect( C.isFn( clauseedFclause ) ).to.be.true;
 
     expect( () => {
-      specedFspec( 'spec should not be a string' );
+      clauseedFclause( 'clause should not be a string' );
     } ).to.throw( Problem );
     expect( () => {
-      specedFspec( { spec: 'should not be simple obj either' } )
+      clauseedFclause( { clause: 'should not be simple obj either' } )
     } ).to.throw();
 
     expect( () => {
-      specedFspec( new Spec( {
+      clauseedFclause( new Clause( {
         type: 'catt', exprs: [ C.isBool ], conformFn: identity,
       } ), { extra: 'param' } );
     } ).to.throw( Problem );
     expect( () => {
-      specedFspec();
+      clauseedFclause();
     } ).to.throw( Problem );
   } );
 
   it( 'test on sheep counting fn', function() {
-    var sheepCounterSpec = C.fspec( {
+    var sheepCounterClause = C.fclause( {
       args: C.cat( C.isNum ),
       ret: C.isStr,
       fn: ( cargs, ret ) => {
@@ -58,7 +58,7 @@ describe( 'fspec', function() {
       }
     } );
 
-    var sheepCounter = sheepCounterSpec.instrument( function( c ) {
+    var sheepCounter = sheepCounterClause.instrument( function( c ) {
       return c + ' sheep and counting.';
     } );
 
@@ -87,8 +87,8 @@ describe( 'fspec', function() {
       return r;
     }
 
-    it( 'without return spec', () => {
-      var SampleFspec = C.fspec( {
+    it( 'without return clause', () => {
+      var SampleFclause = C.fclause( {
         args: C.cat( 'n', C.isNatInt, 'min', C.isNum, 'max', C.isNum ),
         fn: ( { n, min, max }, ret ) => {
           var wackies = ret.filter( ( x ) => x >= max || x < min );
@@ -96,15 +96,15 @@ describe( 'fspec', function() {
         }
       } );
 
-      var goodSampler = SampleFspec.instrument( __goodSampler );
-      var badSampler = SampleFspec.instrument( __badSampler );
+      var goodSampler = SampleFclause.instrument( __goodSampler );
+      var badSampler = SampleFclause.instrument( __badSampler );
 
       expect( goodSampler( 10, 2, 3 ).length ).to.equal( 10 );
       expect( () => badSampler( 10, 2, 3 ).length ).to.throw( Problem );
     } );
 
     it( 'without return val conformation', () => {
-      var SampleFspec = C.fspec( {
+      var SampleFclause = C.fclause( {
         args: C.cat( 'n', C.isNatInt, 'min', C.isNum, 'max', C.isNum ),
         ret: C.isArray,
         fn: ( { n, min, max }, ret ) => {
@@ -113,8 +113,8 @@ describe( 'fspec', function() {
         }
       } );
 
-      var goodSampler = SampleFspec.instrument( __goodSampler );
-      var badSampler = SampleFspec.instrument( __badSampler );
+      var goodSampler = SampleFclause.instrument( __goodSampler );
+      var badSampler = SampleFclause.instrument( __badSampler );
 
       expect( goodSampler( 10, 2, 3 ).length ).to.equal( 10 );
       expect( () => badSampler( 10, 2, 3 ).length ).to.throw( Problem );
@@ -122,7 +122,7 @@ describe( 'fspec', function() {
     } );
 
     it( 'with return val conformation', () => {
-      var SampleFspec = C.fspec( {
+      var SampleFclause = C.fclause( {
         args: C.cat( 'n', C.isNatInt, 'min', C.isNum, 'max', C.isNum ),
         ret: C.cat( 'numbers', C.zeroOrMore( C.isNatInt ) ),
         fn: ( { n, min, max }, { numbers: ret } ) => {
@@ -131,8 +131,8 @@ describe( 'fspec', function() {
         }
       } );
 
-      var goodSampler = SampleFspec.instrument( __goodSampler );
-      var badSampler = SampleFspec.instrument( __badSampler );
+      var goodSampler = SampleFclause.instrument( __goodSampler );
+      var badSampler = SampleFclause.instrument( __badSampler );
 
       expect( goodSampler( 10, 2, 3 ).length ).to.equal( 10 );
       expect( () => badSampler( 10, 2, 3 ).length ).to.throw( Problem );
@@ -141,16 +141,16 @@ describe( 'fspec', function() {
   } )
 
   it( 'higher order functions', () => {
-    var AdderFnSpec = s.fspec( {
+    var AdderFnClause = s.fclause( {
       args: s.cat( 'x', s.isNum ),
-      ret: s.fspec( {
+      ret: s.fclause( {
         args: s.cat( 'y', s.isNum ),
         ret: s.isNum
       } ),
     } );
 
-    var adderFn = AdderFnSpec.instrument( ( x ) => ( y ) => x + y );
-    var brokenAdderFn = AdderFnSpec.instrument( () => ( y ) => 'z' );
+    var adderFn = AdderFnClause.instrument( ( x ) => ( y ) => x + y );
+    var brokenAdderFn = AdderFnClause.instrument( () => ( y ) => 'z' );
     expect( adderFn( 1 )( 2 ) ).to.equal( 3 );
     expect( () => adderFn( 'a' )( 2 ) ).to.throw( Problem );
     expect( () => adderFn( 1 )( 'z' ) ).to.throw( Problem );

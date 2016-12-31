@@ -1,27 +1,27 @@
 var isPred = require( './isPred' );
-var isSpec = require( './isSpec' );
-var isSpecRef = require( './isSpecRef' );
-var isDelayedSpec = require( './isDelayedSpec' );
-var Spec = require( '../models/Spec' );
+var isClause = require( './isClause' );
+var isClauseRef = require( './isClauseRef' );
+var isDelayedClause = require( './isDelayedClause' );
+var Clause = require( '../models/Clause' );
 var Problem = require( '../models/Problem' );
 var fnName = require( './fnName' );
 
 var SPEC_TYPE_PRED = 'PRED';
 
-function coerceIntoSpec( expr ) {
-  if ( isSpec( expr ) || isSpecRef( expr ) || isDelayedSpec( expr ) ) {
+function coerceIntoClause( expr ) {
+  if ( isClause( expr ) || isClauseRef( expr ) || isDelayedClause( expr ) ) {
     return expr;
   } else if ( isPred( expr ) ) {
     return _wrap( expr );
   } else {
     debugger;
     console.error( expr );
-    throw new Error( 'Expression must either be a Spec object or a predication function that returns true or false. ' );
+    throw new Error( 'Expression must either be a Clause object or a predication function that returns true or false. ' );
   }
 }
 
 function _wrap( pred ) {
-  return new Spec( {
+  return new Clause( {
     type: SPEC_TYPE_PRED,
     exprs: [ pred ],
     opts: {
@@ -41,4 +41,4 @@ function predConformer( pred ) {
   }
 }
 
-module.exports = coerceIntoSpec;
+module.exports = coerceIntoClause;

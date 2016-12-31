@@ -1,40 +1,40 @@
-import { or, cat, fspec, shape, ExprSpec } from '../core';
-import { delayed, isNamespacePath, isExpr, isSpecRef } from '../utils';
+import { or, cat, fclause, shape, ExprClause } from '../core';
+import { delayed, isNamespacePath, isExpr, isClauseRef } from '../utils';
 import { isObj, isUndefined } from '../preds';
 
-var ExprOrPartialRefMapSpec =
+var ExprOrPartialRefMapClause =
  // or(
  //  'expression',
   delayed( () => {
     //TODO
-    return ExprSpec;
+    return ExprClause;
   } );
 // );
 
-const GetArgSpec = cat( 'nsPath', isNamespacePath );
+const GetArgClause = cat( 'nsPath', isNamespacePath );
 
-const GetNSFnSpec = fspec( {
-  args: GetArgSpec,
-  ret: ExprSpec,
+const GetNSFnClause = fclause( {
+  args: GetArgClause,
+  ret: ExprClause,
 } );
 
-const SetArgSpec = cat(
+const SetArgClause = cat(
   'nsPath', isNamespacePath,
-  'expression', ExprOrPartialRefMapSpec );
+  'expression', ExprOrPartialRefMapClause );
 
-const SetNSFnSpec = fspec( {
-  args: SetArgSpec,
+const SetNSFnClause = fclause( {
+  args: SetArgClause,
   ret: isUndefined,
 } );
 
-const NamespaceFnSpec = fspec( {
+const NamespaceFnClause = fclause( {
   args: or(
-      'register', SetArgSpec,
-      'retrieve', GetArgSpec
+      'register', SetArgClause,
+      'retrieve', GetArgClause
     ),
 } );
 
-const MetaFnSpec = fspec( {
+const MetaFnClause = fclause( {
   args: cat( 'source',
             or(
               'namespacePath', isNamespacePath,
@@ -48,10 +48,10 @@ function isNamespaceFragment( x ) {
   return !!/^[^.@%\&\*#]+/.test( x );
 }
 
-const NamespaceObjSpec = shape( {
+const NamespaceObjClause = shape( {
   optional: {
     subNamespaces: [ isNamespaceFragment, delayed( () => {
-      return NamespaceObjSpec;
+      return NamespaceObjClause;
     } ) ],
     '.meta': isObj,
     '.expr': isExpr,
@@ -59,8 +59,8 @@ const NamespaceObjSpec = shape( {
 } );
 
 export {
-  isSpecRef, SetNSFnSpec, GetNSFnSpec,
-  NamespaceFnSpec,
-  isNamespacePath, MetaFnSpec,
-  NamespaceObjSpec
+  isClauseRef, SetNSFnClause, GetNSFnClause,
+  NamespaceFnClause,
+  isNamespacePath, MetaFnClause,
+  NamespaceObjClause
 };

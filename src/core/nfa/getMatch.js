@@ -107,8 +107,8 @@ function getMatch( chain, walkFn, walkOpts ) {
           valStack.push( _giveAltName( gn, c ) );
         }
       } break;
-      case 'spec': {
-        let conformed = walkFn( curr.spec, curr.guide, walkOpts );
+      case 'clause': {
+        let conformed = walkFn( curr.clause, curr.guide, walkOpts );
         valStack.push( new Value( conformed ) );
       } break;
       default: console.error( curr ); throw 'FUUU';

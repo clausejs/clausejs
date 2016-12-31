@@ -92,7 +92,7 @@ function _getNextMove( nfa, nextState, current, walkFn, walkOpts ) {
         state: nextState,
         offset: nextOffset,
         move: move,
-        spec: transition,
+        clause: transition,
         prev: current,
         isEpsilon: true,
       };
@@ -102,7 +102,7 @@ function _getNextMove( nfa, nextState, current, walkFn, walkOpts ) {
               // validateResult = walkFn(transition, observed, walkOpts);
       if ( !isProblem( validateResult ) ) {
         if ( currentOffset < input.length ) {
-          move = { dir: 'spec' };
+          move = { dir: 'clause' };
           next = {
             input, groupCount, arrayed,
             state: nextState,
@@ -110,7 +110,7 @@ function _getNextMove( nfa, nextState, current, walkFn, walkOpts ) {
             move: move,
             prev: current,
             isEpsilon: false,
-            spec: transition,
+            clause: transition,
             guide: validateResult,
           };
           return next;
@@ -135,7 +135,7 @@ function _getChain( nfa, finalState, inputType ) {
       };
       if ( !curr.isEpsilon ) {
         o.guide = curr.guide;
-        o.spec = curr.spec;
+        o.clause = curr.clause;
       }
       chain.unshift( o );
     }

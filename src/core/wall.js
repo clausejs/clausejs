@@ -1,20 +1,20 @@
-var Spec = require( '../models/Spec' );
-var coerceIntoSpec = require( '../utils/coerceIntoSpec' );
-var { cat, ExprSpec } = require( './regex' );
-var fspec = require( './fspec' );
+var Clause = require( '../models/Clause' );
+var coerceIntoClause = require( '../utils/coerceIntoClause' );
+var { cat, ExprClause } = require( './regex' );
+var fclause = require( './fclause' );
 var walk = require( '../walk' );
 
-var WallFnSpec = fspec( {
-  args: cat( ExprSpec ),
-  ret: ExprSpec,
+var WallFnClause = fclause( {
+  args: cat( ExprClause ),
+  ret: ExprClause,
 } );
 
 function wallOp( expr ) {
-  var spec = coerceIntoSpec( expr );
-  var wallS = new Spec( {
+  var clause = coerceIntoClause( expr );
+  var wallS = new Clause( {
     type: 'WALL',
-    exprs: [ spec ],
-    opts: { enclosedSpec: spec },
+    exprs: [ clause ],
+    opts: { enclosedClause: clause },
   } );
   wallS.conform = function andConform( x ) {
     return walk( wallS, x, { conform: true } );
@@ -22,8 +22,8 @@ function wallOp( expr ) {
   return wallS;
 }
 
-var wall = WallFnSpec.instrument( wallOp );
+var wall = WallFnClause.instrument( wallOp );
 
 module.exports = {
-  WallFnSpec, wall,
+  WallFnClause, wall,
 };

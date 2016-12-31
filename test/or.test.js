@@ -1,7 +1,7 @@
 var C = require( '../src/' );
 var expect = require( 'chai' ).expect;
 var Problem = C.Problem;
-var Spec = require( '../src/models/Spec' );
+var Clause = require( '../src/models/Clause' );
 var identity = C.identity;
 
 describe( 'or', function() {
@@ -18,10 +18,10 @@ describe( 'or', function() {
   } );
 
   it( 'combined with cat and zeroOrMore', function() {
-    var Spec = C.or( C.cat( C.isNatInt, C.isStr ), C.cat( C.isStr, C.isNatInt ), C.isNatInt );
-    expect( Spec.conform( '' ) ).to.be.an.instanceOf( Problem );
-    expect( Spec.conform( 1 ) ).not.to.be.an.instanceOf( Problem );
-    expect( Spec.conform( [ 1, '2' ] ) ).not.to.be.an.instanceOf( Problem );
-    expect( Spec.conform( [ '1', 2 ] ) ).not.to.be.an.instanceOf( Problem );
+    var Clause = C.or( C.cat( C.isNatInt, C.isStr ), C.cat( C.isStr, C.isNatInt ), C.isNatInt );
+    expect( Clause.conform( '' ) ).to.be.an.instanceOf( Problem );
+    expect( Clause.conform( 1 ) ).not.to.be.an.instanceOf( Problem );
+    expect( Clause.conform( [ 1, '2' ] ) ).not.to.be.an.instanceOf( Problem );
+    expect( Clause.conform( [ '1', 2 ] ) ).not.to.be.an.instanceOf( Problem );
   } );
 } );

@@ -9,14 +9,14 @@ describe( 'cat', () => {
   var extendedCase = conformist.concat( [ { extra: 'elements' }, 2 ] );
   var emptyCase = [];
   var lesserCase = conformist.slice( 0, -1 );
-  var NamedSpec,
-    UnnamedSpec,
-    NamedCommentedSpec;
+  var NamedClause,
+    UnnamedClause,
+    NamedCommentedClause;
 
   function init() {
-    NamedSpec = C.cat( 'z', C.isFn, 'b', C.isObj, 'c', C.isFn, 'a', C.isObj );
-    NamedCommentedSpec = C.cat( 'z', 'very zeeee', C.isFn, 'b', C.isObj, 'c', 'c for da win, man', C.isFn, 'a', C.isObj );
-    UnnamedSpec = C.cat( C.isFn, C.isObj, C.isFn, C.isObj );
+    NamedClause = C.cat( 'z', C.isFn, 'b', C.isObj, 'c', C.isFn, 'a', C.isObj );
+    NamedCommentedClause = C.cat( 'z', 'very zeeee', C.isFn, 'b', C.isObj, 'c', 'c for da win, man', C.isFn, 'a', C.isObj );
+    UnnamedClause = C.cat( C.isFn, C.isObj, C.isFn, C.isObj );
   }
 
   describe( 'conform', () => {
@@ -24,9 +24,9 @@ describe( 'cat', () => {
     beforeEach( init );
 
     it( 'empty case', () => {
-      var EmptySpec = C.cat();
-      var conformed = EmptySpec.conform( [] );
-      var unconformed = EmptySpec.conform( [ 1 ] );
+      var EmptyClause = C.cat();
+      var conformed = EmptyClause.conform( [] );
+      var unconformed = EmptyClause.conform( [ 1 ] );
       expect( conformed ).to.deep.equal( [] );
       expect( unconformed instanceof Problem ).to.be.true;
     } );
@@ -46,11 +46,11 @@ describe( 'cat', () => {
     } );
 
     it( 'labelled', () => {
-      var NamedCommentedSpec = C.cat( 'z', 'it\'s a fuuuunction', C.isFn, 'b', C.isObj, 'c', 'another fuuuunction', C.isFn, 'a', C.isObj );
+      var NamedCommentedClause = C.cat( 'z', 'it\'s a fuuuunction', C.isFn, 'b', C.isObj, 'c', 'another fuuuunction', C.isFn, 'a', C.isObj );
 
-      var conformed = NamedCommentedSpec.conform( conformist );
+      var conformed = NamedCommentedClause.conform( conformist );
       expect( conformed ).to.deep.equal( { z: fn, b: {}, c: fn, a: { a: 1 } } );
-      var nonconformed = NamedCommentedSpec.conform( nonconformist );
+      var nonconformed = NamedCommentedClause.conform( nonconformist );
       expect( nonconformed instanceof Problem ).to.be.true;
     } );
 
@@ -60,33 +60,33 @@ describe( 'cat', () => {
     } );
 
     it( 'labelled, grouped', () => {
-      var NamedGroupedSpec = C.cat(
+      var NamedGroupedClause = C.cat(
          'z', 'it\'s a fuuuunction', C.isFn,
          'b', C.isObj,
          'c', 'another fuuuunction', C.isFn,
          'a', C.isObj
       );
 
-      var conformed = NamedGroupedSpec.conform( conformist );
+      var conformed = NamedGroupedClause.conform( conformist );
       expect( conformed ).not.to.be.an.instanceOf( Problem );
       expect( conformed ).to.deep.equal( { z: fn, b: {}, c: fn, a: { a: 1 } } );
-      var nonconformed = NamedGroupedSpec.conform( nonconformist );
+      var nonconformed = NamedGroupedClause.conform( nonconformist );
       expect( nonconformed instanceof Problem ).to.be.true;
     } );
 
     it( 'named with some comments', () => {
-      var conformed = NamedCommentedSpec.conform( conformist );
+      var conformed = NamedCommentedClause.conform( conformist );
       expect( conformed ).to.deep.equal( { z: fn, b: {}, c: fn, a: { a: 1 } } );
-      var nonconformed = NamedCommentedSpec.conform( nonconformist );
+      var nonconformed = NamedCommentedClause.conform( nonconformist );
       expect( nonconformed instanceof Problem ).to.be.true;
-      expect( NamedCommentedSpec.exprs[ 0 ].comment ).to.contain( 'zee' );
-      expect( NamedCommentedSpec.exprs[ 2 ].comment ).to.contain( 'man' );
+      expect( NamedCommentedClause.exprs[ 0 ].comment ).to.contain( 'zee' );
+      expect( NamedCommentedClause.exprs[ 2 ].comment ).to.contain( 'man' );
     } );
 
     it( 'without labels', () => {
-      var conformed = UnnamedSpec.conform( conformist );
+      var conformed = UnnamedClause.conform( conformist );
       expect( conformed ).to.deep.equal( conformist );
-      var nonconformed = UnnamedSpec.conform( nonconformist );
+      var nonconformed = UnnamedClause.conform( nonconformist );
       expect( nonconformed instanceof Problem ).to.be.true;
     } );
   } );
@@ -95,20 +95,20 @@ describe( 'cat', () => {
 
     beforeEach( init );
 
-    [ [ () => NamedSpec, 'labelled' ], [ () => UnnamedSpec, 'without labels' ] ].forEach(
-       ( [ getSpec, name ] ) => {
+    [ [ () => NamedClause, 'labelled' ], [ () => UnnamedClause, 'without labels' ] ].forEach(
+       ( [ getClause, name ] ) => {
 
          it( name, () => {
-           const spec = getSpec();
+           const clause = getClause();
 
         //invalid case: more elems than clauses
-           expect( C.isValid( spec, extendedCase ) ).to.be.false;
+           expect( C.isValid( clause, extendedCase ) ).to.be.false;
 
         //empty case
-           expect( C.isValid( spec, emptyCase ) ).to.be.false;
+           expect( C.isValid( clause, emptyCase ) ).to.be.false;
 
-        //invalid case: less elem than spec
-           expect( C.isValid( spec, lesserCase ) ).to.be.false;
+        //invalid case: less elem than clause
+           expect( C.isValid( clause, lesserCase ) ).to.be.false;
          } );
        } );
   } );

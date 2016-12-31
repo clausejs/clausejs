@@ -9,7 +9,7 @@ var predicates = require( './preds' );
 
 var models = {
   Problem: require( './models/Problem' ),
-  Spec: require( './models/Spec' ),
+  Clause: require( './models/Clause' ),
 };
 
 var r = oAssign( namespaceFn, ops, utils, models, predicates );

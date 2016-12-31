@@ -2,11 +2,11 @@ import { meta as M } from '../';
 
 M( '/clausejs', {
   'name': 'C',
-  'comment': 'Registers or retrieves a spec from global spec regitry by path.',
+  'comment': 'Registers or retrieves a clause from global clause regitry by path.',
   'args': {
     'register': {
-      'comment': 'Put the given expression onto the given path in the global spec registry.',
-      'example': 'S("awesomeapp/TodoItem", todoItemSpec)',
+      'comment': 'Put the given expression onto the given path in the global clause registry.',
+      'example': 'S("awesomeapp/TodoItem", todoItemClause)',
     },
     'retrieve': {
       'comment': 'Retrieves an expression from the given namespace path, or returns null if not found.',
@@ -14,7 +14,7 @@ M( '/clausejs', {
     }
   },
   'ret': {
-    'comment': 'Note: The returned Spec is of type SpecRef and is not immediately resolved until one calls its get() method.',
+    'comment': 'Note: The returned Clause is of type ClauseRef and is not immediately resolved until one calls its get() method.',
   },
 } );
 
@@ -38,5 +38,5 @@ M( 'clausejs.types/Expression', {
 
 M( 'clausejs.utils/describe', {
   'name': 'C.describe',
-  'comment': 'Returns an abbreviated description of the spec as a simple tree structure.',
+  'comment': 'Returns an abbreviated description of the clause as a simple tree structure.',
 } );

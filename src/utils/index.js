@@ -7,9 +7,9 @@ module.exports = {
   delayed: require( './delayed' ),
   enforce: require( './enforce' ),
   isExpr: require( './isExpr' ),
-  isSpec: require( './isSpec' ),
-  isFspec: require( './isFspec' ),
-  isSpecRef: require( './isSpecRef' ),
+  isClause: require( './isClause' ),
+  isFclause: require( './isFclause' ),
+  isClauseRef: require( './isClauseRef' ),
   describe: require( './describe' ),
   deref: require( './deref' ),
 };

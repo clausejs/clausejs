@@ -27,13 +27,13 @@ var user1 = {
 };
 
 const arr = [ 1, 2, 3, 4, 6, 'a', 3, 'b', 'c', 4, 5 ];
-const ArrSpec = C.cat(
+const ArrClause = C.cat(
   'firstNumbers', C.oneOrMore( C.isNum ),
   'nextStrings', C.oneOrMore( C.isStr ),
   'finalNumbers', C.oneOrMore( C.isNum )
 );
 
-var GetUserSpec = C.fspec( {
+var GetUserClause = C.fclause( {
   args: C.or(
     'byEmail', C.cat( C( 'superTwitter/Email' ) ),
     'byId', C.cat( C.isNum ),
@@ -43,7 +43,7 @@ var GetUserSpec = C.fspec( {
   ret: C.isString,
 } );
 
-C( 'superTwitter/getUser', GetUserSpec );
+C( 'superTwitter/getUser', GetUserClause );
 
 function getUserConformed( { byEmail, byId, byFirstLastName, byPhoneNumber } ) {
   if ( byEmail ) {
@@ -57,12 +57,12 @@ function getUserConformed( { byEmail, byId, byFirstLastName, byPhoneNumber } ) {
   }
   return;
 }
-const getUser = GetUserSpec.instrumentConformed( getUserConformed );
+const getUser = GetUserClause.instrumentConformed( getUserConformed );
 
 // console.log( getUser( 'Ben', 'Johnson' ) )
 console.log( getUser( 'dasd@dasd.com' ) )
 
 
-// console.log( ArrSpec.conform( arr ) );
+// console.log( ArrClause.conform( arr ) );
 
 // console.log( C( 'tt.User' ).conform( user1 ) )

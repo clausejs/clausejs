@@ -1,10 +1,10 @@
 var Problem = require( '../models/Problem' );
 var isProblem = require( '../utils/isProblem' );
-var specFromAlts = require( '../utils/specFromAlts' );
+var clauseFromAlts = require( '../utils/clauseFromAlts' );
 var oAssign = require('object-assign');
 
-function andWalker( spec, walkFn ) {
-  var exprs = spec.opts.conformedExprs.map( specFromAlts );
+function andWalker( clause, walkFn ) {
+  var exprs = clause.opts.conformedExprs.map( clauseFromAlts );
 
   return {
     trailblaze: andTrailblaze,
@@ -37,7 +37,7 @@ function andWalker( spec, walkFn ) {
 
   function andReconstruct( { conforms } ) {
     //TODO: implement propagated conform. Perhaps as an option propagateConform
-    // or as a separate spec construct such as "propagate"
+    // or as a separate clause construct such as "propagate"
     return conforms[ exprs.length - 1 ];
   }
 }

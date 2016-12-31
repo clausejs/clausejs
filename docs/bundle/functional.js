@@ -83,7 +83,7 @@ return /******/ (function(modules) { // webpackBootstrap
 "use strict";
 
 
-function Spec(_ref) {
+function Clause(_ref) {
   var type = _ref.type,
       exprs = _ref.exprs,
       opts = _ref.opts,
@@ -107,13 +107,13 @@ function Spec(_ref) {
   }
 
   if (!exprs) {
-    throw new Error('Expressions are required when constructing a spec.');
+    throw new Error('Expressions are required when constructing a clause.');
   }
 
   this.exprs = exprs;
 }
 
-module.exports = Spec;
+module.exports = Clause;
 
 /***/ },
 /* 1 */
@@ -137,13 +137,13 @@ module.exports = isProblem;
 "use strict";
 
 
-var Spec = __webpack_require__(0);
+var Clause = __webpack_require__(0);
 
-function isSpec(x) {
-  return x instanceof Spec;
+function isClause(x) {
+  return x instanceof Clause;
 }
 
-module.exports = isSpec;
+module.exports = isClause;
 
 /***/ },
 /* 3 */
@@ -382,29 +382,29 @@ module.exports = isPred;
 
 
 var isPred = __webpack_require__(7);
-var isSpec = __webpack_require__(2);
-var isSpecRef = __webpack_require__(15);
-var isDelayedSpec = __webpack_require__(19);
-var Spec = __webpack_require__(0);
+var isClause = __webpack_require__(2);
+var isClauseRef = __webpack_require__(15);
+var isDelayedClause = __webpack_require__(19);
+var Clause = __webpack_require__(0);
 var Problem = __webpack_require__(3);
 var fnName = __webpack_require__(5);
 
 var SPEC_TYPE_PRED = 'PRED';
 
-function coerceIntoSpec(expr) {
-  if (isSpec(expr) || isSpecRef(expr) || isDelayedSpec(expr)) {
+function coerceIntoClause(expr) {
+  if (isClause(expr) || isClauseRef(expr) || isDelayedClause(expr)) {
     return expr;
   } else if (isPred(expr)) {
     return _wrap(expr);
   } else {
     debugger;
     console.error(expr);
-    throw new Error('Expression must either be a Spec object or a predication function that returns true or false. ');
+    throw new Error('Expression must either be a Clause object or a predication function that returns true or false. ');
   }
 }
 
 function _wrap(pred) {
-  return new Spec({
+  return new Clause({
     type: SPEC_TYPE_PRED,
     exprs: [pred],
     opts: {
@@ -424,7 +424,7 @@ function predConformer(pred) {
   };
 }
 
-module.exports = coerceIntoSpec;
+module.exports = coerceIntoClause;
 
 /***/ },
 /* 9 */
@@ -435,24 +435,24 @@ module.exports = coerceIntoSpec;
 
 var oAssign = __webpack_require__(4);
 
-var Spec = __webpack_require__(0);
-var isSpec = __webpack_require__(2);
+var Clause = __webpack_require__(0);
+var isClause = __webpack_require__(2);
 var isPred = __webpack_require__(7);
 var isExpr = __webpack_require__(34);
 var not = __webpack_require__(31);
-var specFromAlts = __webpack_require__(11);
+var clauseFromAlts = __webpack_require__(11);
 var isObj = __webpack_require__(30);
 var isStr = __webpack_require__(6);
-var isSpecName = __webpack_require__(66);
+var isClauseName = __webpack_require__(64);
 var namedFn = __webpack_require__(20);
-var isSpecRef = __webpack_require__(15);
-var isDelayedSpec = __webpack_require__(19);
+var isClauseRef = __webpack_require__(15);
+var isDelayedClause = __webpack_require__(19);
 var c = __webpack_require__(45);
-var coerceIntoSpec = __webpack_require__(8);
-var fspec = __webpack_require__(12);
+var coerceIntoClause = __webpack_require__(8);
+var fclause = __webpack_require__(12);
 var walk = __webpack_require__(10);
-var specSpec = coerceIntoSpec(isSpec);
-var nameSpec = coerceIntoSpec(isSpecName);
+var clauseClause = coerceIntoClause(isClause);
+var nameClause = coerceIntoClause(isClauseName);
 
 var catOp = genMultiArgOp(c.CAT);
 var orOp = genMultiArgOp(c.OR);
@@ -461,21 +461,21 @@ var oneOrMoreOp = genSingleArgOp(c.O_OR_M);
 var zeroOrOneOp = genSingleArgOp(c.Z_OR_O);
 var collOfOp = genSingleArgOp(c.COLL_OF);
 
-var SpecSpec = coerceIntoSpec(isSpec);
-var SpecRefSpec = coerceIntoSpec(isSpecRef);
-var DelayedSpecSpec = coerceIntoSpec(isDelayedSpec);
-var PredSpec = coerceIntoSpec(isPred);
+var ClauseClause = coerceIntoClause(isClause);
+var ClauseRefClause = coerceIntoClause(isClauseRef);
+var DelayedClauseClause = coerceIntoClause(isDelayedClause);
+var PredClause = coerceIntoClause(isPred);
 
-var ExprSpec = orOp({
+var ExprClause = orOp({
   expressions: {
-    withLabels: [{ name: 'spec', expr: {
-        spec: SpecSpec
+    withLabels: [{ name: 'clause', expr: {
+        clause: ClauseClause
       } }, { name: 'pred', expr: {
-        spec: PredSpec
-      } }, { name: 'delayedSpec', expr: {
-        spec: DelayedSpecSpec
-      } }, { name: 'specRef', expr: {
-        spec: SpecRefSpec
+        clause: PredClause
+      } }, { name: 'delayedClause', expr: {
+        clause: DelayedClauseClause
+      } }, { name: 'clauseRef', expr: {
+        clause: ClauseRefClause
       } }]
   }
 });
@@ -483,40 +483,40 @@ var ExprSpec = orOp({
 var NameExprOptionalComment = catOp({
   expressions: {
     withLabels: [{ name: 'name', expr: {
-        spec: nameSpec
+        clause: nameClause
       } }, { name: 'comment', expr: {
-        spec: zeroOrOneOp({
+        clause: zeroOrOneOp({
           expr: {
             pred: isStr
           }
         })
       } }, { name: 'expr', expr: {
-        spec: ExprSpec
+        clause: ExprClause
       } }]
   }
 });
 
-var MultipleArgSpec = catOp({
+var MultipleArgClause = catOp({
   expressions: {
     withLabels: [{ name: 'expressions',
       expr: {
-        spec: orOp({
+        clause: orOp({
           expressions: {
             withLabels: [{
               name: 'withLabels',
               expr: {
-                spec: orOp({
+                clause: orOp({
                   expressions: {
                     withoutLabels: [{
-                      spec: zeroOrMoreOp({
+                      clause: zeroOrMoreOp({
                         expr: {
-                          spec: NameExprOptionalComment
+                          clause: NameExprOptionalComment
                         }
                       })
                     }, {
-                      spec: collOfOp({
+                      clause: collOfOp({
                         expr: {
-                          spec: NameExprOptionalComment
+                          clause: NameExprOptionalComment
                         }
                       })
                     }]
@@ -526,9 +526,9 @@ var MultipleArgSpec = catOp({
             }, {
               name: 'withoutLabels',
               expr: {
-                spec: zeroOrMoreOp({
+                clause: zeroOrMoreOp({
                   expr: {
-                    spec: ExprSpec
+                    clause: ExprClause
                   }
                 })
               }
@@ -539,9 +539,9 @@ var MultipleArgSpec = catOp({
     }, {
       name: 'options',
       expr: {
-        spec: zeroOrOneOp({
+        clause: zeroOrOneOp({
           expr: {
-            spec: andOp([{ pred: isObj }, { pred: not(isExpr) }])
+            clause: andOp([{ pred: isObj }, { pred: not(isExpr) }])
           }
         })
       }
@@ -550,7 +550,7 @@ var MultipleArgSpec = catOp({
 });
 
 function andOp(exprs) {
-  var andS = new Spec({
+  var andS = new Clause({
     type: 'AND',
     exprs: [],
     fragments: exprs,
@@ -562,7 +562,7 @@ function andOp(exprs) {
   return andS;
 }
 
-var multipleArgNoDupeSpec = andOp([{ spec: MultipleArgSpec }, { pred: noDupelicateLabels }]);
+var multipleArgNoDupeClause = andOp([{ clause: MultipleArgClause }, { pred: noDupelicateLabels }]);
 
 function noDupelicateLabels(_ref) {
   var withLabels = _ref.expressions.withLabels;
@@ -580,37 +580,37 @@ function noDupelicateLabels(_ref) {
   return true;
 }
 
-var AndFnSpec = fspec({
-  args: oneOrMoreOp({ expr: { spec: ExprSpec }
+var AndFnClause = fclause({
+  args: oneOrMoreOp({ expr: { clause: ExprClause }
   }),
-  ret: isSpec
+  ret: isClause
 });
 
-var multipleArgOpSpec = {
-  args: multipleArgNoDupeSpec,
-  ret: specSpec
+var multipleArgOpClause = {
+  args: multipleArgNoDupeClause,
+  ret: clauseClause
 };
 
-var singleArgOpSpecFn = function singleArgOpSpecFn(optSpec) {
+var singleArgOpClauseFn = function singleArgOpClauseFn(optClause) {
   return {
     args: catOp({
       expressions: {
         withLabels: [{
           name: 'expr',
           expr: {
-            spec: ExprSpec
+            clause: ExprClause
           }
         }, {
           name: 'opts',
           expr: {
-            spec: zeroOrOneOp({
-              expr: optSpec
+            clause: zeroOrOneOp({
+              expr: optClause
             })
           }
         }]
       }
     }),
-    ret: specSpec
+    ret: clauseClause
   };
 };
 
@@ -627,18 +627,18 @@ function genMultiArgOp(type) {
 
       var coercedExprs = exprs.map(function (p) {
         var alts = p.expr;
-        var s = specFromAlts(alts);
+        var s = clauseFromAlts(alts);
 
         return oAssign({}, p, {
           expr: s,
-          spec: undefined, pred: undefined,
-          specRef: undefined, delayedSpec: undefined });
+          clause: undefined, pred: undefined,
+          clauseRef: undefined, delayedClause: undefined });
       });
 
       var opts = oAssign({}, options, {
         named: true
       });
-      var s = new Spec({
+      var s = new Clause({
         type: type,
         exprs: coercedExprs,
         opts: opts
@@ -653,18 +653,18 @@ function genMultiArgOp(type) {
 
       coercedExprs = exprs.map(function (p) {
         var s;
-        if (p.spec) {
-          s = p.spec;
-          return oAssign({}, p, { expr: s, spec: undefined });
+        if (p.clause) {
+          s = p.clause;
+          return oAssign({}, p, { expr: s, clause: undefined });
         } else if (p.pred) {
-          s = coerceIntoSpec(p.pred);
+          s = coerceIntoClause(p.pred);
           return oAssign({}, p, { expr: s, pred: undefined });
-        } else if (p.specRef) {
-          s = p.specRef;
-          return oAssign({}, p, { expr: s, specRef: undefined });
-        } else if (p.delayedSpec) {
-          s = p.delayedSpec;
-          return oAssign({}, p, { expr: s, delayedSpec: undefined });
+        } else if (p.clauseRef) {
+          s = p.clauseRef;
+          return oAssign({}, p, { expr: s, clauseRef: undefined });
+        } else if (p.delayedClause) {
+          s = p.delayedClause;
+          return oAssign({}, p, { expr: s, delayedClause: undefined });
         } else {
           console.error(p);
           throw '!';
@@ -675,7 +675,7 @@ function genMultiArgOp(type) {
         named: false
       });
 
-      s = new Spec({
+      s = new Clause({
         type: type,
         exprs: coercedExprs,
         opts: _opts
@@ -687,7 +687,7 @@ function genMultiArgOp(type) {
       return s;
     } else {
       // empty case
-      s = new Spec({
+      s = new Clause({
         type: type,
         exprs: [] });
       s.conform = function conform(x) {
@@ -704,23 +704,23 @@ function genSingleArgOp(type) {
     var opts = conformedArgs.opts;
     var expr;
 
-    if (p.spec) {
-      expr = p.spec;
+    if (p.clause) {
+      expr = p.clause;
     } else if (p.pred) {
-      expr = coerceIntoSpec(p.pred);
-    } else if (p.specRef) {
-      expr = p.specRef;
-    } else if (p.delayedSpec) {
-      expr = p.delayedSpec;
+      expr = coerceIntoClause(p.pred);
+    } else if (p.clauseRef) {
+      expr = p.clauseRef;
+    } else if (p.delayedClause) {
+      expr = p.delayedClause;
     } else {
       console.error(p);
       throw 'internal err';
     }
-    var sureSpec = coerceIntoSpec(expr);
-    var s = new Spec({
+    var sureClause = coerceIntoClause(expr);
+    var s = new Clause({
       type: type,
-      exprs: [sureSpec],
-      opts: oAssign({}, opts, { enclosedSpec: sureSpec })
+      exprs: [sureClause],
+      opts: oAssign({}, opts, { enclosedClause: sureClause })
     });
 
     s.conform = function conform(x) {
@@ -730,28 +730,28 @@ function genSingleArgOp(type) {
   });
 }
 
-var CollOfSpec = fspec(singleArgOpSpecFn({ pred: isObj }));
-var collOf = CollOfSpec.instrumentConformed(collOfOp);
+var CollOfClause = fclause(singleArgOpClauseFn({ pred: isObj }));
+var collOf = CollOfClause.instrumentConformed(collOfOp);
 
-var CatFnSpec = fspec(multipleArgOpSpec);
-var OrFnSpec = fspec(multipleArgOpSpec);
-var ZeroOrMoreFnSpec = fspec(singleArgOpSpecFn({ pred: isObj }));
-var OneOrMoreFnSpec = fspec(singleArgOpSpecFn({ pred: isObj }));
-var ZeroOrOneFnSpec = fspec(singleArgOpSpecFn({ pred: isObj }));
-var and = AndFnSpec.instrumentConformed(andOp);
+var CatFnClause = fclause(multipleArgOpClause);
+var OrFnClause = fclause(multipleArgOpClause);
+var ZeroOrMoreFnClause = fclause(singleArgOpClauseFn({ pred: isObj }));
+var OneOrMoreFnClause = fclause(singleArgOpClauseFn({ pred: isObj }));
+var ZeroOrOneFnClause = fclause(singleArgOpClauseFn({ pred: isObj }));
+var and = AndFnClause.instrumentConformed(andOp);
 
 var core = {
-  cat: CatFnSpec.instrumentConformed(catOp),
-  or: OrFnSpec.instrumentConformed(orOp),
-  zeroOrMore: ZeroOrMoreFnSpec.instrumentConformed(zeroOrMoreOp),
-  zeroOrOne: ZeroOrOneFnSpec.instrumentConformed(zeroOrOneOp),
-  oneOrMore: OneOrMoreFnSpec.instrumentConformed(oneOrMoreOp),
-  ExprSpec: ExprSpec, SpecSpec: SpecSpec, PredSpec: PredSpec, DelayedSpecSpec: DelayedSpecSpec, SpecRefSpec: SpecRefSpec,
-  CatFnSpec: CatFnSpec,
-  AndFnSpec: AndFnSpec,
-  OrFnSpec: OrFnSpec,
-  ZeroOrMoreFnSpec: ZeroOrMoreFnSpec, OneOrMoreFnSpec: OneOrMoreFnSpec, ZeroOrOneFnSpec: ZeroOrOneFnSpec,
-  CollOfSpec: CollOfSpec,
+  cat: CatFnClause.instrumentConformed(catOp),
+  or: OrFnClause.instrumentConformed(orOp),
+  zeroOrMore: ZeroOrMoreFnClause.instrumentConformed(zeroOrMoreOp),
+  zeroOrOne: ZeroOrOneFnClause.instrumentConformed(zeroOrOneOp),
+  oneOrMore: OneOrMoreFnClause.instrumentConformed(oneOrMoreOp),
+  ExprClause: ExprClause, ClauseClause: ClauseClause, PredClause: PredClause, DelayedClauseClause: DelayedClauseClause, ClauseRefClause: ClauseRefClause,
+  CatFnClause: CatFnClause,
+  AndFnClause: AndFnClause,
+  OrFnClause: OrFnClause,
+  ZeroOrMoreFnClause: ZeroOrMoreFnClause, OneOrMoreFnClause: OneOrMoreFnClause, ZeroOrOneFnClause: ZeroOrOneFnClause,
+  CollOfClause: CollOfClause,
   collOf: collOf,
   and: and
 };
@@ -778,28 +778,28 @@ module.exports = core;
 
 
 var oAssign = __webpack_require__(4);
-var nfaWalker = __webpack_require__(74);
+var nfaWalker = __webpack_require__(75);
 var anyWalker = __webpack_require__(69);
-var predWalker = __webpack_require__(75);
+var predWalker = __webpack_require__(76);
 var wallWalker = __webpack_require__(78);
-var fspecWalker = __webpack_require__(72);
-var shapeWalker = __webpack_require__(76);
+var fclauseWalker = __webpack_require__(73);
+var shapeWalker = __webpack_require__(77);
 var andWalker = __webpack_require__(68);
-var collOfWalker = __webpack_require__(70);
-var mapOfWalker = __webpack_require__(73);
-var specRefWalker = __webpack_require__(77);
-var delayedSpecWalker = __webpack_require__(71);
-var coerceIntoSpec = __webpack_require__(8);
+var collOfWalker = __webpack_require__(71);
+var mapOfWalker = __webpack_require__(74);
+var clauseRefWalker = __webpack_require__(70);
+var delayedClauseWalker = __webpack_require__(72);
+var coerceIntoClause = __webpack_require__(8);
 var isProblem = __webpack_require__(1);
 
-function walk(spec, x, opts) {
+function walk(clause, x, opts) {
   var phase = opts.phase;
 
-  var walker = _getWalker(spec);
+  var walker = _getWalker(clause);
   if (!phase) {
     // 2-pass algorithm:
 
-    // in Pass 1 we just need to know if x validates to spec, and if so, how
+    // in Pass 1 we just need to know if x validates to clause, and if so, how
     var intermediate = walker.trailblaze(x, oAssign({ phase: 'trailblaze' }, opts));
 
     if (isProblem(intermediate)) {
@@ -827,22 +827,22 @@ var walkerMap = {
   'WALL': wallWalker,
   'SHAPE': shapeWalker,
   'AND': andWalker,
-  'SPEC_REF': specRefWalker,
-  'DELAYED': delayedSpecWalker,
-  'FSPEC': fspecWalker,
+  'SPEC_REF': clauseRefWalker,
+  'DELAYED': delayedClauseWalker,
+  'FSPEC': fclauseWalker,
   'MAP_OF': mapOfWalker
 };
 
 function _getWalker(expr) {
 
-  var spec = coerceIntoSpec(expr);
-  var walker = walkerMap[spec.type];
+  var clause = coerceIntoClause(expr);
+  var walker = walkerMap[clause.type];
 
   if (!walker) {
-    throw 'unsupported type ' + spec.type;
+    throw 'unsupported type ' + clause.type;
   }
 
-  var r = walker(spec, walk);
+  var r = walker(clause, walk);
   return r;
 }
 
@@ -855,21 +855,21 @@ module.exports = walk;
 "use strict";
 
 
-var coerceIntoSpec = __webpack_require__(8);
+var coerceIntoClause = __webpack_require__(8);
 
-module.exports = function specFromAlts(alts) {
+module.exports = function clauseFromAlts(alts) {
   if (!alts) {
     console.error(alts);
     throw '!';
   }
-  if (alts.spec) {
-    return alts.spec;
+  if (alts.clause) {
+    return alts.clause;
   } else if (alts.pred) {
-    return coerceIntoSpec(alts.pred);
-  } else if (alts.specRef) {
-    return alts.specRef;
-  } else if (alts.delayedSpec) {
-    return alts.delayedSpec;
+    return coerceIntoClause(alts.pred);
+  } else if (alts.clauseRef) {
+    return alts.clauseRef;
+  } else if (alts.delayedClause) {
+    return alts.delayedClause;
   } else {
     console.error('unsupported:', alts);
     throw 'Not implemented';
@@ -883,31 +883,31 @@ module.exports = function specFromAlts(alts) {
 "use strict";
 
 
-var Spec = __webpack_require__(0);
+var Clause = __webpack_require__(0);
 var walk = __webpack_require__(10);
 var fnName = __webpack_require__(5);
 
-function fspec(fnSpec) {
-  var args = fnSpec.args,
-      ret = fnSpec.ret,
-      fn = fnSpec.fn;
+function fclause(fnClause) {
+  var args = fnClause.args,
+      ret = fnClause.ret,
+      fn = fnClause.fn;
 
-  var spec = new Spec({
+  var clause = new Clause({
     type: 'FSPEC',
     exprs: [],
-    opts: fnSpec
+    opts: fnClause
   });
-  spec.instrumentConformed = function instrumentConformed(fn) {
-    return walk(spec, fn, { conform: true, instrument: true });
+  clause.instrumentConformed = function instrumentConformed(fn) {
+    return walk(clause, fn, { conform: true, instrument: true });
   };
-  spec.instrument = function instrument(fn) {
-    return walk(spec, fn, { conform: false, instrument: true });
+  clause.instrument = function instrument(fn) {
+    return walk(clause, fn, { conform: false, instrument: true });
   };
 
-  return spec;
+  return clause;
 }
 
-module.exports = fspec;
+module.exports = fclause;
 
 /***/ },
 /* 13 */
@@ -942,12 +942,12 @@ module.exports = function isUndefined(x) {
 "use strict";
 
 
-var SpecRef = __webpack_require__(26);
+var ClauseRef = __webpack_require__(25);
 // TODO
-function isSpecRef(x) {
-  return x instanceof SpecRef;
+function isClauseRef(x) {
+  return x instanceof ClauseRef;
 }
-module.exports = isSpecRef;
+module.exports = isClauseRef;
 
 /***/ },
 /* 16 */
@@ -972,8 +972,8 @@ var _require2 = __webpack_require__(41),
 
 var other = {
   any: __webpack_require__(44),
-  fspec: __webpack_require__(12),
-  wall: wall, spec: wall,
+  fclause: __webpack_require__(12),
+  wall: wall, clause: wall,
   nullable: nullable, undefinable: undefinable
 };
 
@@ -990,15 +990,15 @@ module.exports = r;
 module.exports = {
   conform: __webpack_require__(18),
   isValid: __webpack_require__(67),
-  isNamespacePath: __webpack_require__(65),
+  isNamespacePath: __webpack_require__(66),
   identity: __webpack_require__(33),
   isProblem: __webpack_require__(1),
   delayed: __webpack_require__(61),
   enforce: __webpack_require__(62),
   isExpr: __webpack_require__(34),
-  isSpec: __webpack_require__(2),
-  isFspec: __webpack_require__(64),
-  isSpecRef: __webpack_require__(15),
+  isClause: __webpack_require__(2),
+  isFclause: __webpack_require__(65),
+  isClauseRef: __webpack_require__(15),
   describe: __webpack_require__(42),
   deref: __webpack_require__(23)
 };
@@ -1010,14 +1010,14 @@ module.exports = {
 "use strict";
 
 
-var isSpec = __webpack_require__(2);
+var isClause = __webpack_require__(2);
 
-function conform(spec, x) {
-  if (spec && isSpec(spec)) {
-    var r = spec.conform(x);
+function conform(clause, x) {
+  if (clause && isClause(clause)) {
+    var r = clause.conform(x);
     return r;
   } else {
-    throw new Error('Expression needs to be of type Spec. expression: ' + spec + ', offending value: ' + x);
+    throw new Error('Expression needs to be of type Clause. expression: ' + clause + ', offending value: ' + x);
   }
 }
 
@@ -1030,11 +1030,11 @@ module.exports = conform;
 "use strict";
 
 
-var DelayedSpec = __webpack_require__(25);
+var DelayedClause = __webpack_require__(26);
 
 //TODO
-module.exports = function isDelayedSpec(x) {
-  return x instanceof DelayedSpec;
+module.exports = function isDelayedClause(x) {
+  return x instanceof DelayedClause;
 };
 
 /***/ },
@@ -1107,21 +1107,21 @@ module.exports = e;
 "use strict";
 
 
-var Spec = __webpack_require__(0);
-var isSpec = __webpack_require__(2);
+var Clause = __webpack_require__(0);
+var isClause = __webpack_require__(2);
 var isStr = __webpack_require__(6);
 var oneOf = __webpack_require__(32);
 var isProblem = __webpack_require__(1);
-var coerceIntoSpec = __webpack_require__(8);
+var coerceIntoClause = __webpack_require__(8);
 
 var _require = __webpack_require__(9),
     cat = _require.cat,
     or = _require.or,
     zeroOrMore = _require.zeroOrMore,
-    ExprSpec = _require.ExprSpec;
+    ExprClause = _require.ExprClause;
 
 var walk = __webpack_require__(10);
-var fspec = __webpack_require__(12);
+var fclause = __webpack_require__(12);
 
 function isPropName(x) {
   return isStr(x);
@@ -1139,10 +1139,10 @@ var FieldDefs = shapeOp({
             'fields': {
               keyValExprPair: {
                 keyExpression: {
-                  spec: coerceIntoSpec(isStr)
+                  clause: coerceIntoClause(isStr)
                 },
                 valExpression: {
-                  spec: or('valExpressionOnly', ExprSpec, 'keyValExprPair', cat('keyExpression', ExprSpec, 'valExpression', ExprSpec))
+                  clause: or('valExpressionOnly', ExprClause, 'keyValExprPair', cat('keyExpression', ExprClause, 'valExpression', ExprClause))
                 }
               }
             }
@@ -1168,7 +1168,7 @@ var ShapeArgs = shapeOp({
                   pred: oneOf('req', 'required')
                 },
                 valExpression: {
-                  spec: KeyArrayOrFieldDefs
+                  clause: KeyArrayOrFieldDefs
                 }
               }
             },
@@ -1178,7 +1178,7 @@ var ShapeArgs = shapeOp({
                   pred: oneOf('opt', 'optional')
                 },
                 valExpression: {
-                  spec: KeyArrayOrFieldDefs
+                  clause: KeyArrayOrFieldDefs
                 }
               }
             }
@@ -1189,14 +1189,14 @@ var ShapeArgs = shapeOp({
   }
 });
 
-var MapOfFnSpec = fspec({
-  args: cat('keyExpression', ExprSpec, 'valExpression', ExprSpec),
-  ret: isSpec
+var MapOfFnClause = fclause({
+  args: cat('keyExpression', ExprClause, 'valExpression', ExprClause),
+  ret: isClause
 });
 
-var ShapeFnSpec = fspec({
+var ShapeFnClause = fclause({
   args: cat('shapeArgs', ShapeArgs),
-  ret: isSpec
+  ret: isClause
 });
 
 function mapOfOp(cargs) {
@@ -1207,7 +1207,7 @@ function mapOfOp(cargs) {
       valExpression = cargs.valExpression;
 
 
-  var s = new Spec({
+  var s = new Clause({
     type: TYPE_MAP_OF,
     exprs: [],
     opts: { keyExpression: keyExpression, valExpression: valExpression }
@@ -1226,7 +1226,7 @@ function shapeOp(cargs) {
   }
   // const { shapeArgs: { requiredFields, optionalFields } } = cargs;
 
-  var s = new Spec({
+  var s = new Clause({
     type: TYPE_SHAPE,
     exprs: [],
     // TODO: do fragments
@@ -1239,20 +1239,20 @@ function shapeOp(cargs) {
   return s;
 }
 
-var shape = ShapeFnSpec.instrumentConformed(shapeOp);
-var mapOf = MapOfFnSpec.instrumentConformed(mapOfOp);
+var shape = ShapeFnClause.instrumentConformed(shapeOp);
+var mapOf = MapOfFnClause.instrumentConformed(mapOfOp);
 
 module.exports = {
   shape: shape,
   keys: shape,
   mapOf: mapOf,
-  ShapeFnSpec: ShapeFnSpec,
-  MapOfFnSpec: MapOfFnSpec
+  ShapeFnClause: ShapeFnClause,
+  MapOfFnClause: MapOfFnClause
 };
 
 // // // // //
 
-// var TestSpec = shapeOp({
+// var TestClause = shapeOp({
 //   shapeArgs: {
 //     req: {
 //       fieldDefs: {
@@ -1264,7 +1264,7 @@ module.exports = {
 //   }
 // });
 // //
-// var r = TestSpec.conform({a: 's'});
+// var r = TestClause.conform({a: 's'});
 // console.log(r);
 
 /***/ },
@@ -1274,8 +1274,8 @@ module.exports = {
 "use strict";
 
 
-module.exports = function deref(spec) {
-  var result = spec;
+module.exports = function deref(clause) {
+  var result = clause;
   while (result.get) {
     result = result.get();
   }
@@ -1293,7 +1293,7 @@ module.exports = function deref(spec) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.NamespaceObjSpec = exports.MetaFnSpec = exports.isNamespacePath = exports.NamespaceFnSpec = exports.GetNSFnSpec = exports.SetNSFnSpec = exports.isSpecRef = undefined;
+exports.NamespaceObjClause = exports.MetaFnClause = exports.isNamespacePath = exports.NamespaceFnClause = exports.GetNSFnClause = exports.SetNSFnClause = exports.isClauseRef = undefined;
 
 var _core = __webpack_require__(16);
 
@@ -1301,34 +1301,34 @@ var _utils = __webpack_require__(17);
 
 var _preds = __webpack_require__(21);
 
-var ExprOrPartialRefMapSpec =
+var ExprOrPartialRefMapClause =
 // or(
 //  'expression',
 (0, _utils.delayed)(function () {
   //TODO
-  return _core.ExprSpec;
+  return _core.ExprClause;
 });
 // );
 
-var GetArgSpec = (0, _core.cat)('nsPath', _utils.isNamespacePath);
+var GetArgClause = (0, _core.cat)('nsPath', _utils.isNamespacePath);
 
-var GetNSFnSpec = (0, _core.fspec)({
-  args: GetArgSpec,
-  ret: _core.ExprSpec
+var GetNSFnClause = (0, _core.fclause)({
+  args: GetArgClause,
+  ret: _core.ExprClause
 });
 
-var SetArgSpec = (0, _core.cat)('nsPath', _utils.isNamespacePath, 'expression', ExprOrPartialRefMapSpec);
+var SetArgClause = (0, _core.cat)('nsPath', _utils.isNamespacePath, 'expression', ExprOrPartialRefMapClause);
 
-var SetNSFnSpec = (0, _core.fspec)({
-  args: SetArgSpec,
+var SetNSFnClause = (0, _core.fclause)({
+  args: SetArgClause,
   ret: _preds.isUndefined
 });
 
-var NamespaceFnSpec = (0, _core.fspec)({
-  args: (0, _core.or)('register', SetArgSpec, 'retrieve', GetArgSpec)
+var NamespaceFnClause = (0, _core.fclause)({
+  args: (0, _core.or)('register', SetArgClause, 'retrieve', GetArgClause)
 });
 
-var MetaFnSpec = (0, _core.fspec)({
+var MetaFnClause = (0, _core.fclause)({
   args: (0, _core.cat)('source', (0, _core.or)('namespacePath', _utils.isNamespacePath, 'expression', _utils.isExpr), 'metaObj', _preds.isObj),
   ret: _utils.isExpr
 });
@@ -1337,23 +1337,23 @@ function isNamespaceFragment(x) {
   return !!/^[^.@%\&\*#]+/.test(x);
 }
 
-var NamespaceObjSpec = (0, _core.shape)({
+var NamespaceObjClause = (0, _core.shape)({
   optional: {
     subNamespaces: [isNamespaceFragment, (0, _utils.delayed)(function () {
-      return NamespaceObjSpec;
+      return NamespaceObjClause;
     })],
     '.meta': _preds.isObj,
     '.expr': _utils.isExpr
   }
 });
 
-exports.isSpecRef = _utils.isSpecRef;
-exports.SetNSFnSpec = SetNSFnSpec;
-exports.GetNSFnSpec = GetNSFnSpec;
-exports.NamespaceFnSpec = NamespaceFnSpec;
+exports.isClauseRef = _utils.isClauseRef;
+exports.SetNSFnClause = SetNSFnClause;
+exports.GetNSFnClause = GetNSFnClause;
+exports.NamespaceFnClause = NamespaceFnClause;
 exports.isNamespacePath = _utils.isNamespacePath;
-exports.MetaFnSpec = MetaFnSpec;
-exports.NamespaceObjSpec = NamespaceObjSpec;
+exports.MetaFnClause = MetaFnClause;
+exports.NamespaceObjClause = NamespaceObjClause;
 
 /***/ },
 /* 25 */
@@ -1362,45 +1362,9 @@ exports.NamespaceObjSpec = NamespaceObjSpec;
 "use strict";
 
 
-var Spec = __webpack_require__(0);
+var Clause = __webpack_require__(0);
 
-function DelayedSpec(_ref) {
-  var getFn = _ref.getFn;
-
-  this.type = 'DELAYED';
-  this.get = getFn;
-  var _this = this;
-
-  _this.instrument = function instrumentDelayed(x) {
-    var Spec = getFn();
-    return Spec.instrument(x);
-  };
-
-  _this.instrumentConformed = function instrumentConformedDelayed(x) {
-    var Spec = getFn();
-    return Spec.instrumentConformed(x);
-  };
-
-  _this.conform = function conformDelayed(x) {
-    var Spec = getFn();
-    return Spec.conform(x);
-  };
-}
-
-DelayedSpec.prototype = Object.create(Spec.prototype);
-
-module.exports = DelayedSpec;
-
-/***/ },
-/* 26 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var Spec = __webpack_require__(0);
-
-function SpecRef(_ref) {
+function ClauseRef(_ref) {
   var ref = _ref.ref,
       getFn = _ref.getFn,
       conformFn = _ref.conformFn;
@@ -1411,9 +1375,45 @@ function SpecRef(_ref) {
   this.ref = ref;
 }
 
-SpecRef.prototype = Object.create(Spec.prototype);
+ClauseRef.prototype = Object.create(Clause.prototype);
 
-module.exports = SpecRef;
+module.exports = ClauseRef;
+
+/***/ },
+/* 26 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var Clause = __webpack_require__(0);
+
+function DelayedClause(_ref) {
+  var getFn = _ref.getFn;
+
+  this.type = 'DELAYED';
+  this.get = getFn;
+  var _this = this;
+
+  _this.instrument = function instrumentDelayed(x) {
+    var Clause = getFn();
+    return Clause.instrument(x);
+  };
+
+  _this.instrumentConformed = function instrumentConformedDelayed(x) {
+    var Clause = getFn();
+    return Clause.instrumentConformed(x);
+  };
+
+  _this.conform = function conformDelayed(x) {
+    var Clause = getFn();
+    return Clause.conform(x);
+  };
+}
+
+DelayedClause.prototype = Object.create(Clause.prototype);
+
+module.exports = DelayedClause;
 
 /***/ },
 /* 27 */
@@ -1542,12 +1542,12 @@ module.exports = identity;
 
 
 var isPred = __webpack_require__(7);
-var isSpec = __webpack_require__(2);
-var isSpecRef = __webpack_require__(15);
-var isDelayedSpec = __webpack_require__(19);
+var isClause = __webpack_require__(2);
+var isClauseRef = __webpack_require__(15);
+var isDelayedClause = __webpack_require__(19);
 
 function isExpr(x) {
-  return isPred(x) || isSpec(x) || isSpecRef(x) || isDelayedSpec(x);
+  return isPred(x) || isClause(x) || isClauseRef(x) || isDelayedClause(x);
 }
 
 module.exports = isExpr;
@@ -1745,23 +1745,23 @@ var _utils = __webpack_require__(17);
 var _namespace = __webpack_require__(24);
 
 var oAssign = __webpack_require__(4);
-var SpecRef = __webpack_require__(26);
+var ClauseRef = __webpack_require__(25);
 
 var _require = __webpack_require__(22),
     shape = _require.shape;
 
-var isSpec = __webpack_require__(2);
+var isClause = __webpack_require__(2);
 var isPred = __webpack_require__(7);
 var isUndefined = __webpack_require__(14);
 var walk = __webpack_require__(10);
-var coerceIntoSpec = __webpack_require__(8);
+var coerceIntoClause = __webpack_require__(8);
 var oPath = __webpack_require__(52);
 
 var reg;
 
-var _get = (0, _core.fspec)({
+var _get = (0, _core.fclause)({
   args: (0, _core.cat)(_utils.isNamespacePath),
-  ret: _utils.isSpecRef
+  ret: _utils.isClauseRef
 }).instrument(_getUnchecked);
 
 function _getUnchecked(ref) {
@@ -1781,8 +1781,8 @@ function _getUnchecked(ref) {
     }
   };
 
-  var sr = new SpecRef({ ref: ref, getFn: getFn, conformFn: null });
-  sr.conform = function specRefConform(x) {
+  var sr = new ClauseRef({ ref: ref, getFn: getFn, conformFn: null });
+  sr.conform = function clauseRefConform(x) {
     var ss = getFn();
     return walk(ss, x, { conform: true });
   };
@@ -1793,9 +1793,9 @@ function _slashToDot(p) {
   return p.replace(/^(.+)(\/)(.+)$/, '$1.$3').replace(/^\//, '');
 }
 
-// var PartialRefMapSpec = shape({
+// var PartialRefMapClause = shape({
 //   req: {
-//     'refDefs': [isNamespacePath, ExprOrPartialRefMapSpec]
+//     'refDefs': [isNamespacePath, ExprOrPartialRefMapClause]
 //   }
 // });
 
@@ -1819,8 +1819,8 @@ function setNamespacePath(_ref2) {
 
 function _processVal(prefix, expression) {
   if (expression) {
-    if (expression.spec || expression.pred) {
-      var expr = expression.spec || expression.pred;
+    if (expression.clause || expression.pred) {
+      var expr = expression.clause || expression.pred;
       _set(prefix, { '.expr': expr });
       return expr;
     } else {
@@ -1841,12 +1841,12 @@ function _processVal(prefix, expression) {
   }
 }
 
-var NameObjSpec = shape({
-  req: { '.expr': (0, _core.or)(isSpec, isPred) }
+var NameObjClause = shape({
+  req: { '.expr': (0, _core.or)(isClause, isPred) }
 });
 
-var _set = (0, _core.fspec)({
-  args: (0, _core.cat)(_utils.isNamespacePath, NameObjSpec),
+var _set = (0, _core.fclause)({
+  args: (0, _core.cat)(_utils.isNamespacePath, NameObjClause),
   ret: isUndefined
 }).instrument(function _set(n, nObj) {
   _maybeInitRegistry();
@@ -1867,7 +1867,7 @@ function clearRegistry() {
   reg = global[K] = {};
 }
 
-var meta = _namespace.MetaFnSpec.instrumentConformed(function meta(_ref3) {
+var meta = _namespace.MetaFnClause.instrumentConformed(function meta(_ref3) {
   var _ref3$source = _ref3.source,
       namespacePath = _ref3$source.namespacePath,
       expression = _ref3$source.expression,
@@ -1879,8 +1879,8 @@ var meta = _namespace.MetaFnSpec.instrumentConformed(function meta(_ref3) {
     oPath.set(reg, _slashToDot(namespacePath), oAssign({}, nObj, { '.meta': oAssign({}, currMeta, metaObj) }));
     return _get(namespacePath);
   } else if (expression) {
-    var spec = coerceIntoSpec(expression);
-    spec.meta = oAssign(spec.meta, metaObj);
+    var clause = coerceIntoClause(expression);
+    clause.meta = oAssign(clause.meta, metaObj);
   }
 });
 
@@ -1890,7 +1890,7 @@ var getRegistry = function getRegistry() {
   return reg;
 };
 
-var namespaceGetOrSet = _namespace.NamespaceFnSpec.instrumentConformed(function namespaceGetOrSet(_ref4) {
+var namespaceGetOrSet = _namespace.NamespaceFnClause.instrumentConformed(function namespaceGetOrSet(_ref4) {
   var register = _ref4.register,
       retrieve = _ref4.retrieve;
 
@@ -1901,8 +1901,8 @@ var namespaceGetOrSet = _namespace.NamespaceFnSpec.instrumentConformed(function 
   }
 });
 
-namespaceGetOrSet.get = _namespace.GetNSFnSpec.instrumentConformed(getNamespacePath);
-namespaceGetOrSet.set = _namespace.SetNSFnSpec.instrumentConformed(setNamespacePath);
+namespaceGetOrSet.get = _namespace.GetNSFnClause.instrumentConformed(getNamespacePath);
+namespaceGetOrSet.set = _namespace.SetNSFnClause.instrumentConformed(setNamespacePath);
 namespaceGetOrSet.clearRegistry = clearRegistry;
 namespaceGetOrSet.getRegistry = getRegistry;
 namespaceGetOrSet.meta = meta;
@@ -1940,7 +1940,7 @@ var predicates = __webpack_require__(21);
 
 var models = {
   Problem: __webpack_require__(3),
-  Spec: __webpack_require__(0)
+  Clause: __webpack_require__(0)
 };
 
 var r = oAssign(_namespace2.default, ops, utils, models, predicates);
@@ -1957,27 +1957,27 @@ exports.default = r;
 "use strict";
 
 
-var Spec = __webpack_require__(0);
-var coerceIntoSpec = __webpack_require__(8);
+var Clause = __webpack_require__(0);
+var coerceIntoClause = __webpack_require__(8);
 
 var _require = __webpack_require__(9),
     cat = _require.cat,
-    ExprSpec = _require.ExprSpec;
+    ExprClause = _require.ExprClause;
 
-var fspec = __webpack_require__(12);
+var fclause = __webpack_require__(12);
 var walk = __webpack_require__(10);
 
-var WallFnSpec = fspec({
-  args: cat(ExprSpec),
-  ret: ExprSpec
+var WallFnClause = fclause({
+  args: cat(ExprClause),
+  ret: ExprClause
 });
 
 function wallOp(expr) {
-  var spec = coerceIntoSpec(expr);
-  var wallS = new Spec({
+  var clause = coerceIntoClause(expr);
+  var wallS = new Clause({
     type: 'WALL',
-    exprs: [spec],
-    opts: { enclosedSpec: spec }
+    exprs: [clause],
+    opts: { enclosedClause: clause }
   });
   wallS.conform = function andConform(x) {
     return walk(wallS, x, { conform: true });
@@ -1985,10 +1985,10 @@ function wallOp(expr) {
   return wallS;
 }
 
-var wall = WallFnSpec.instrument(wallOp);
+var wall = WallFnClause.instrument(wallOp);
 
 module.exports = {
-  WallFnSpec: WallFnSpec, wall: wall
+  WallFnClause: WallFnClause, wall: wall
 };
 
 /***/ },
@@ -2000,7 +2000,7 @@ module.exports = {
 
 var getFragments = __webpack_require__(63);
 var isPred = __webpack_require__(7);
-var isSpec = __webpack_require__(2);
+var isClause = __webpack_require__(2);
 var isStr = __webpack_require__(6);
 var fnName = __webpack_require__(5);
 
@@ -2014,7 +2014,7 @@ function _strFragments(expr, interceptor) {
     return [fnName(expr), '()'];
   } else if (expr.type === 'PRED') {
     return _strFragments(expr.opts.predicate, interceptor);
-  } else if (isSpec(expr)) {
+  } else if (isClause(expr)) {
     if (expr.type === 'DELAYED' || expr.type === 'SPEC_REF') {
       return _strFragments(expr.get(), interceptor);
     } else {
@@ -2026,9 +2026,9 @@ function _strFragments(expr, interceptor) {
   }
 }
 
-function _processInner(spec, interceptor) {
+function _processInner(clause, interceptor) {
   // TODO: remove first part
-  var fragments = getFragments(spec, interceptor);
+  var fragments = getFragments(clause, interceptor);
   return fragments.reduce(function (acc, piece) {
     return isStr(piece) ? acc.concat(piece) : acc.concat(_strFragments(piece, interceptor));
   }, []);
@@ -2068,12 +2068,12 @@ module.exports = g;
 "use strict";
 
 
-var Spec = __webpack_require__(0);
+var Clause = __webpack_require__(0);
 var identity = __webpack_require__(33);
 var SPEC_TYPE_ANY = 'ANY';
 
 function any() {
-  return new Spec({
+  return new Clause({
     type: SPEC_TYPE_ANY,
     exprs: [],
     conformFn: identity
@@ -2107,7 +2107,7 @@ module.exports = {
 
 
 var fragment = __webpack_require__(47);
-var Spec = __webpack_require__(0);
+var Clause = __webpack_require__(0);
 var deref = __webpack_require__(23);
 
 var indexedFragmentStates = function indexedFragmentStates(fragment) {
@@ -2130,32 +2130,32 @@ var indexedFragmentStates = function indexedFragmentStates(fragment) {
 
 var evalFunctions = {};
 
-function evalSpec(spec) {
-  spec = deref(spec);
+function evalClause(clause) {
+  clause = deref(clause);
   var evalFn;
 
-  if (spec.type === null) {
-    throw 'Spec has no type: ' + spec;
-  } else if (!(spec.type in evalFunctions)) {
+  if (clause.type === null) {
+    throw 'Clause has no type: ' + clause;
+  } else if (!(clause.type in evalFunctions)) {
     evalFn = evalFunctions.PRED;
   } else {
-    evalFn = evalFunctions[spec.type];
+    evalFn = evalFunctions[clause.type];
   }
-  var r = evalFn(spec);
+  var r = evalFn(clause);
   return r;
 }
 
 var evalChildThen = function evalChildThen(wrapper) {
-  return function evalChildThenWrapped(spec) {
-    var childFrag = evalSpec(spec.exprs[0]);
+  return function evalChildThenWrapped(clause) {
+    var childFrag = evalClause(clause.exprs[0]);
     return wrapper(childFrag);
   };
 };
 
 var evalChildrenThen = function evalChildrenThen(wrapper) {
-  return function evalChildrenThenWrapped(spec) {
-    var childFrags = spec.exprs.map(function (child) {
-      var s = evalSpec(child.expr);
+  return function evalChildrenThenWrapped(clause) {
+    var childFrags = clause.exprs.map(function (child) {
+      var s = evalClause(child.expr);
       s.name = child.name;
       return s;
     });
@@ -2176,7 +2176,7 @@ evalFunctions.PRED = function (x) {
 };
 
 function wrapRoot(expr) {
-  return new Spec({
+  return new Clause({
     type: 'ROOT',
     exprs: [expr]
   });
@@ -2184,7 +2184,7 @@ function wrapRoot(expr) {
 
 var compile = function compile(expr) {
   var rootedExpr = wrapRoot(expr);
-  var fragment = evalSpec(rootedExpr);
+  var fragment = evalClause(rootedExpr);
   var states = indexedFragmentStates(fragment);
   var numStates = states.length;
   var nfaTransitions = {};
@@ -2195,7 +2195,7 @@ var compile = function compile(expr) {
     }
     var outTrans = {};
     state.transitions.forEach(function (fragTrans) {
-      outTrans[fragTrans.target.index] = fragTrans.spec;
+      outTrans[fragTrans.target.index] = fragTrans.clause;
     });
     nfaTransitions[state.index.toString()] = outTrans;
   });
@@ -2224,9 +2224,9 @@ function fragmentState(transitions, index) {
   };
 }
 
-function fragmentTransition(spec, target) {
+function fragmentTransition(clause, target) {
   return {
-    spec: spec,
+    clause: clause,
     target: target
   };
 }
@@ -2282,8 +2282,8 @@ function rearWithState(state, f) {
 
 var build = {};
 
-build.PRED = function PRED(spec) {
-  var trans = fragmentTransition(spec, null);
+build.PRED = function PRED(clause) {
+  var trans = fragmentTransition(clause, null);
   var head = fragmentState([trans], null);
   var tails = [trans];
   var f = fragment(head, tails);
@@ -2539,9 +2539,9 @@ function getMatch(chain, walkFn, walkOpts) {
               valStack.push(_giveAltName(_gn, _c3));
             }
           }break;
-        case 'spec':
+        case 'clause':
           {
-            var conformed = walkFn(curr.spec, curr.guide, walkOpts);
+            var conformed = walkFn(curr.clause, curr.guide, walkOpts);
             valStack.push(new Value(conformed));
           }break;
         default:
@@ -2786,7 +2786,7 @@ function _getNextMove(nfa, nextState, current, walkFn, walkOpts) {
         state: nextState,
         offset: nextOffset,
         move: move,
-        spec: transition,
+        clause: transition,
         prev: current,
         isEpsilon: true
       };
@@ -2796,7 +2796,7 @@ function _getNextMove(nfa, nextState, current, walkFn, walkOpts) {
       // validateResult = walkFn(transition, observed, walkOpts);
       if (!isProblem(validateResult)) {
         if (currentOffset < input.length) {
-          move = { dir: 'spec' };
+          move = { dir: 'clause' };
           next = {
             input: input, groupCount: groupCount, arrayed: arrayed,
             state: nextState,
@@ -2804,7 +2804,7 @@ function _getNextMove(nfa, nextState, current, walkFn, walkOpts) {
             move: move,
             prev: current,
             isEpsilon: false,
-            spec: transition,
+            clause: transition,
             guide: validateResult
           };
           return next;
@@ -2829,7 +2829,7 @@ function _getChain(nfa, finalState, inputType) {
       };
       if (!curr.isEpsilon) {
         o.guide = curr.guide;
-        o.spec = curr.spec;
+        o.clause = curr.clause;
       }
       chain.unshift(o);
     }
@@ -2854,8 +2854,8 @@ var _require = __webpack_require__(9),
 
 var isNull = __webpack_require__(28);
 
-function nullable(spec) {
-  return or(isNull, spec);
+function nullable(clause) {
+  return or(isNull, clause);
 }
 
 module.exports = nullable;
@@ -2872,8 +2872,8 @@ var _require = __webpack_require__(9),
 
 var isUndefined = __webpack_require__(14);
 
-function undefinable(spec) {
-  return or(isUndefined, spec);
+function undefinable(clause) {
+  return or(isUndefined, clause);
 }
 
 module.exports = undefinable;
@@ -3067,10 +3067,10 @@ module.exports = betterThrow;
 "use strict";
 
 
-var DelayedSpec = __webpack_require__(25);
+var DelayedClause = __webpack_require__(26);
 
 function delayed(getFn) {
-  return new DelayedSpec({ getFn: getFn });
+  return new DelayedClause({ getFn: getFn });
 }
 
 module.exports = delayed;
@@ -3086,8 +3086,8 @@ var isProblem = __webpack_require__(1);
 // TODO : replace with checkProblem
 var conform = __webpack_require__(18);
 
-module.exports = function enforce(spec, x) {
-  var r = conform(spec, x);
+module.exports = function enforce(clause, x) {
+  var r = conform(clause, x);
   if (isProblem(r)) {
     throw r;
   }
@@ -3123,8 +3123,8 @@ var multipleArgFragmenter = function multipleArgFragmenter(_ref) {
 };
 
 var singleArgFragmenter = function singleArgFragmenter(_ref4) {
-  var enclosedSpec = _ref4.opts.enclosedSpec;
-  return [enclosedSpec];
+  var enclosedClause = _ref4.opts.enclosedClause;
+  return [enclosedClause];
 };
 
 var Fragmenters = {
@@ -3133,8 +3133,8 @@ var Fragmenters = {
     return [predicate];
   },
   'WALL': function WALL(_ref6) {
-    var enclosedSpec = _ref6.opts.enclosedSpec;
-    return [enclosedSpec];
+    var enclosedClause = _ref6.opts.enclosedClause;
+    return [enclosedClause];
   },
   // TODO
   'AND': function AND(_ref7) {
@@ -3166,14 +3166,14 @@ var Fragmenters = {
   }
 };
 
-function getFragments(spec, interceptor) {
+function getFragments(clause, interceptor) {
   if (interceptor) {
-    var interceptR = interceptor(spec);
+    var interceptR = interceptor(clause);
     if (interceptR) {
       return interceptR;
     }
   } else {
-    return Fragmenters[spec.type](spec);
+    return Fragmenters[clause.type](clause);
   }
 }
 
@@ -3186,16 +3186,30 @@ module.exports = getFragments;
 "use strict";
 
 
-var isSpec = __webpack_require__(2);
+var isStr = __webpack_require__(6);
 
-function isFspec(x) {
-  return isSpec(x) && x.type === 'FSPEC';
-}
-
-module.exports = isFspec;
+//TODO
+module.exports = function isClauseName(x) {
+  return isStr(x);
+};
 
 /***/ },
 /* 65 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var isClause = __webpack_require__(2);
+
+function isFclause(x) {
+  return isClause(x) && x.type === 'FSPEC';
+}
+
+module.exports = isFclause;
+
+/***/ },
+/* 66 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3210,20 +3224,6 @@ function isNamespacePath(x) {
 module.exports = isNamespacePath;
 
 /***/ },
-/* 66 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var isStr = __webpack_require__(6);
-
-//TODO
-module.exports = function isSpecName(x) {
-  return isStr(x);
-};
-
-/***/ },
 /* 67 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -3232,13 +3232,13 @@ module.exports = function isSpecName(x) {
 
 var isProblem = __webpack_require__(1);
 var isPred = __webpack_require__(7);
-var isSpec = __webpack_require__(2);
+var isClause = __webpack_require__(2);
 var conform = __webpack_require__(18);
 
 function isValid(pred, x) {
   if (!pred) {
-    throw new Error('Spec is required');
-  } else if (isSpec(pred)) {
+    throw new Error('Clause is required');
+  } else if (isClause(pred)) {
     return !isProblem(conform(pred, x));
   } else if (isPred(pred)) {
     return pred(x);
@@ -3258,11 +3258,11 @@ module.exports = isValid;
 
 var Problem = __webpack_require__(3);
 var isProblem = __webpack_require__(1);
-var specFromAlts = __webpack_require__(11);
+var clauseFromAlts = __webpack_require__(11);
 var oAssign = __webpack_require__(4);
 
-function andWalker(spec, walkFn) {
-  var exprs = spec.opts.conformedExprs.map(specFromAlts);
+function andWalker(clause, walkFn) {
+  var exprs = clause.opts.conformedExprs.map(clauseFromAlts);
 
   return {
     trailblaze: andTrailblaze,
@@ -3297,7 +3297,7 @@ function andWalker(spec, walkFn) {
     var conforms = _ref.conforms;
 
     //TODO: implement propagated conform. Perhaps as an option propagateConform
-    // or as a separate spec construct such as "propagate"
+    // or as a separate clause construct such as "propagate"
     return conforms[exprs.length - 1];
   }
 }
@@ -3331,13 +3331,37 @@ module.exports = anyWalker;
 "use strict";
 
 
+function clauseRefWalker(clauseRef, walkFn) {
+
+  return {
+    trailblaze: walkClauseRef,
+    reconstruct: walkClauseRef
+  };
+
+  function walkClauseRef(x, walkOpts) {
+    var s = clauseRef.get();
+    if (s) {
+      return walkFn(s, x, walkOpts);
+    }
+  }
+}
+
+module.exports = clauseRefWalker;
+
+/***/ },
+/* 71 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 var Problem = __webpack_require__(3);
 var isProblem = __webpack_require__(1);
 var isNum = __webpack_require__(29);
 
-function collOfWalker(spec, walkFn) {
-  var expr = spec.exprs[0];
-  var opts = spec.opts;
+function collOfWalker(clause, walkFn) {
+  var expr = clause.exprs[0];
+  var opts = clause.opts;
 
   return {
     trailblaze: collOfTrailblaze,
@@ -3346,7 +3370,7 @@ function collOfWalker(spec, walkFn) {
 
   function collOfTrailblaze(x, walkOpts) {
     if (!Array.isArray(x)) {
-      return new Problem(x, spec, [], 'collOf expects an array');
+      return new Problem(x, clause, [], 'collOf expects an array');
     } else {
 
       if (opts) {
@@ -3355,11 +3379,11 @@ function collOfWalker(spec, walkFn) {
 
 
         if (isNum(maxCount) && x.length > maxCount) {
-          return new Problem(x, spec, problems, 'collOf: collection size ' + x.length + ' exceeds maxCount ' + maxCount + '.');
+          return new Problem(x, clause, problems, 'collOf: collection size ' + x.length + ' exceeds maxCount ' + maxCount + '.');
         }
 
         if (isNum(minCount) && x.length < minCount) {
-          return new Problem(x, spec, problems, 'collOf: collection size ' + x.length + ' is less than minCount ' + minCount + '.');
+          return new Problem(x, clause, problems, 'collOf: collection size ' + x.length + ' is less than minCount ' + minCount + '.');
         }
       }
 
@@ -3378,7 +3402,7 @@ function collOfWalker(spec, walkFn) {
       }
 
       if (problems.length > 0) {
-        return new Problem(x, spec, problems, 'One or more elements failed collOf test');
+        return new Problem(x, clause, problems, 'One or more elements failed collOf test');
       } else {
         return guides;
       }
@@ -3400,30 +3424,30 @@ function collOfWalker(spec, walkFn) {
 module.exports = collOfWalker;
 
 /***/ },
-/* 71 */
+/* 72 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-function delayedSpecWalker(delayedSpec, walkFn) {
+function delayedClauseWalker(delayedClause, walkFn) {
   return {
-    trailblaze: walkDelayedSpec,
-    reconstruct: walkDelayedSpec
+    trailblaze: walkDelayedClause,
+    reconstruct: walkDelayedClause
   };
 
-  function walkDelayedSpec(x, walkOpts) {
-    var s = delayedSpec.get();
+  function walkDelayedClause(x, walkOpts) {
+    var s = delayedClause.get();
     if (s) {
       return walkFn(s, x, walkOpts);
     }
   }
 }
 
-module.exports = delayedSpecWalker;
+module.exports = delayedClauseWalker;
 
 /***/ },
-/* 72 */
+/* 73 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3436,23 +3460,23 @@ var namedFn = __webpack_require__(20);
 var betterThrow = __webpack_require__(60);
 var stringifyWithFnName = __webpack_require__(35);
 
-function fspecWalker(spec, walkFn) {
-  var _spec$opts = spec.opts,
-      argsSpec = _spec$opts.args,
-      retSpec = _spec$opts.ret,
-      validateFn = _spec$opts.fn;
+function fclauseWalker(clause, walkFn) {
+  var _clause$opts = clause.opts,
+      argsClause = _clause$opts.args,
+      retClause = _clause$opts.ret,
+      validateFn = _clause$opts.fn;
 
 
   return {
-    trailblaze: fspecTrailblaze,
-    reconstruct: fspecReconstruct
+    trailblaze: fclauseTrailblaze,
+    reconstruct: fclauseReconstruct
   };
 
-  function fspecTrailblaze(fn) {
+  function fclauseTrailblaze(fn) {
     return fn;
   }
 
-  function fspecReconstruct(fn, walkOpts) {
+  function fclauseReconstruct(fn, walkOpts) {
     if (fn) {
       var conform = walkOpts.conform,
           instrument = walkOpts.instrument;
@@ -3464,15 +3488,15 @@ function fspecWalker(spec, walkFn) {
         return _instrument(fn, walkOpts);
       }
     } else {
-      throw new Error('A function must be specified for instrumentation.');
+      throw new Error('A function must be clauseified for instrumentation.');
     }
   }
 
   function _instrument(fn, walkOpts) {
     var fnName = functionName(fn);
     var instrumentedFn = getInstrumentedFn(fnName, fn, walkOpts);
-    var namedSpecedFn = namedFn(fnName, instrumentedFn, '__instrumented');
-    return namedSpecedFn;
+    var namedClauseedFn = namedFn(fnName, instrumentedFn, '__instrumented');
+    return namedClauseedFn;
   }
 
   function instrumentConformed(fn, walkOpts) {
@@ -3491,10 +3515,10 @@ function fspecWalker(spec, walkFn) {
       var instrumentedRetVal = checkRet(fn, fnName, retVal);
 
       // TODO optimize
-      var conformedArgs = argsSpec ? walkFn(argsSpec, args, { conform: true, instrument: true }) : args;
+      var conformedArgs = argsClause ? walkFn(argsClause, args, { conform: true, instrument: true }) : args;
       var conformedRetVal = void 0;
-      if (retSpec) {
-        conformedRetVal = walkFn(retSpec, retVal, { conform: true, instrument: true });
+      if (retClause) {
+        conformedRetVal = walkFn(retClause, retVal, { conform: true, instrument: true });
       } else {
         conformedRetVal = retVal;
       }
@@ -3508,20 +3532,20 @@ function fspecWalker(spec, walkFn) {
     if (validateFn) {
       var r = validateFn.call(null, conformedArgs, retVal);
       if (!r) {
-        var p = new Problem(fn, spec, [], 'Function ' + fnName + ' failed valiation on argument-return value relation');
+        var p = new Problem(fn, clause, [], 'Function ' + fnName + ' failed valiation on argument-return value relation');
         betterThrow(p);
       }
     }
   }
 
   function checkArgs(fn, fnName, args) {
-    if (argsSpec) {
-      var instrumentedArgs = walkFn(argsSpec, args, { phase: 'trailblaze' });
+    if (argsClause) {
+      var instrumentedArgs = walkFn(argsClause, args, { phase: 'trailblaze' });
       if (isProblem(instrumentedArgs)) {
-        var p = new Problem(args, spec, [instrumentedArgs], 'Arguments ' + stringifyWithFnName(args) + ' for function ' + fnName + ' failed validation');
+        var p = new Problem(args, clause, [instrumentedArgs], 'Arguments ' + stringifyWithFnName(args) + ' for function ' + fnName + ' failed validation');
         betterThrow(p);
       } else {
-        return walkFn(argsSpec, instrumentedArgs, { phase: 'reconstruct', conform: false, instrument: true });
+        return walkFn(argsClause, instrumentedArgs, { phase: 'reconstruct', conform: false, instrument: true });
       }
     } else {
       return args;
@@ -3529,13 +3553,13 @@ function fspecWalker(spec, walkFn) {
   }
 
   function checkRet(fn, fnName, retVal) {
-    if (retSpec) {
-      var instrumentedRetVal = walkFn(retSpec, retVal, { phase: 'trailblaze' });
+    if (retClause) {
+      var instrumentedRetVal = walkFn(retClause, retVal, { phase: 'trailblaze' });
       if (isProblem(instrumentedRetVal)) {
-        var p = new Problem(retVal, spec, [instrumentedRetVal], 'Return value ' + retVal + ' for function ' + fnName + ' is not valid.');
+        var p = new Problem(retVal, clause, [instrumentedRetVal], 'Return value ' + retVal + ' for function ' + fnName + ' is not valid.');
         betterThrow(p);
       } else {
-        var r = walkFn(retSpec, instrumentedRetVal, { phase: 'reconstruct', instrument: true, conform: false });
+        var r = walkFn(retClause, instrumentedRetVal, { phase: 'reconstruct', instrument: true, conform: false });
         return r;
       }
     } else {
@@ -3547,9 +3571,9 @@ function fspecWalker(spec, walkFn) {
     return function __instrumentConformed() {
       var args = Array.prototype.slice.call(arguments);
 
-      var conformedArgs = walkFn(argsSpec, args, { conform: true, instrument: true });
+      var conformedArgs = walkFn(argsClause, args, { conform: true, instrument: true });
       if (isProblem(conformedArgs)) {
-        var p = new Problem(args, argsSpec, [conformedArgs], 'Arguments ' + stringifyWithFnName(args) + ' for function ' + fnName + ' is not valid');
+        var p = new Problem(args, argsClause, [conformedArgs], 'Arguments ' + stringifyWithFnName(args) + ' for function ' + fnName + ' is not valid');
         betterThrow(p);
       }
 
@@ -3559,8 +3583,8 @@ function fspecWalker(spec, walkFn) {
 
       if (validateFn) {
         var conformedRetVal;
-        if (retSpec) {
-          conformedRetVal = walkFn(retSpec, retVal, { conform: true, instrument: true });
+        if (retClause) {
+          conformedRetVal = walkFn(retClause, retVal, { conform: true, instrument: true });
         } else {
           conformedRetVal = retVal;
         }
@@ -3572,10 +3596,10 @@ function fspecWalker(spec, walkFn) {
   }
 }
 
-module.exports = fspecWalker;
+module.exports = fclauseWalker;
 
 /***/ },
-/* 73 */
+/* 74 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3583,17 +3607,17 @@ module.exports = fspecWalker;
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var specFromAlts = __webpack_require__(11);
+var clauseFromAlts = __webpack_require__(11);
 var isProblem = __webpack_require__(1);
 var Problem = __webpack_require__(3);
 
-function mapOfWalker(spec, walkFn) {
-  var _spec$opts = spec.opts,
-      keyExpression = _spec$opts.keyExpression,
-      valExpression = _spec$opts.valExpression;
+function mapOfWalker(clause, walkFn) {
+  var _clause$opts = clause.opts,
+      keyExpression = _clause$opts.keyExpression,
+      valExpression = _clause$opts.valExpression;
 
-  var keySpec = keyExpression && specFromAlts(keyExpression);
-  var valSpec = valExpression && specFromAlts(valExpression);
+  var keyClause = keyExpression && clauseFromAlts(keyExpression);
+  var valClause = valExpression && clauseFromAlts(valExpression);
 
   return {
     trailblaze: mapOfTrailblaze,
@@ -3603,17 +3627,17 @@ function mapOfWalker(spec, walkFn) {
   function mapOfTrailblaze(x, walkOpts) {
     for (var key in x) {
       if (x.hasOwnProperty(key)) {
-        if (keySpec) {
-          var keyR = walkFn(keySpec, key, walkOpts);
+        if (keyClause) {
+          var keyR = walkFn(keyClause, key, walkOpts);
           if (isProblem(keyR)) {
-            return new Problem(x, spec, _defineProperty({}, key, keyR), 'mapOf: key ' + key + ' failed validation');
+            return new Problem(x, clause, _defineProperty({}, key, keyR), 'mapOf: key ' + key + ' failed validation');
           }
         }
 
-        if (valSpec) {
-          var valR = walkFn(valSpec, x[key], walkOpts);
+        if (valClause) {
+          var valR = walkFn(valClause, x[key], walkOpts);
           if (isProblem(valR)) {
-            return new Problem(x, spec, _defineProperty({}, key, valR), 'mapOf: value for key ' + key + ' failed validation');
+            return new Problem(x, clause, _defineProperty({}, key, valR), 'mapOf: value for key ' + key + ' failed validation');
           }
         }
       }
@@ -3630,7 +3654,7 @@ function mapOfWalker(spec, walkFn) {
 module.exports = mapOfWalker;
 
 /***/ },
-/* 74 */
+/* 75 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3641,7 +3665,7 @@ var getMatch = __webpack_require__(48);
 var compile = __webpack_require__(46);
 var Problem = __webpack_require__(3);
 
-function nfaWalker(spec, walkFn) {
+function nfaWalker(clause, walkFn) {
   var nfa;
 
   return {
@@ -3653,7 +3677,7 @@ function nfaWalker(spec, walkFn) {
 
     if (!nfa) {
       //lazy
-      nfa = compile(spec);
+      nfa = compile(clause);
     }
 
     var _simulate = simulate(nfa, x, walkFn, walkOpts),
@@ -3668,7 +3692,7 @@ function nfaWalker(spec, walkFn) {
       if (lastProblem) {
         subproblems.push(lastProblem);
       }
-      return new Problem(x, spec, subproblems, 'Spec ' + spec.type + ' did not match value');
+      return new Problem(x, clause, subproblems, 'Clause ' + clause.type + ' did not match value');
     }
   }
 
@@ -3681,7 +3705,7 @@ function nfaWalker(spec, walkFn) {
 module.exports = nfaWalker;
 
 /***/ },
-/* 75 */
+/* 76 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3690,16 +3714,16 @@ module.exports = nfaWalker;
 var fnName = __webpack_require__(5);
 var Problem = __webpack_require__(3);
 
-function predWalker(spec) {
+function predWalker(clause) {
   return {
     trailblaze: predTraiblaze,
     reconstruct: predReconstruct
   };
 
   function predTraiblaze(x) {
-    var predFn = spec.exprs[0];
+    var predFn = clause.exprs[0];
     if (!predFn(x)) {
-      return new Problem(x, spec, [], 'Predicate ' + fnName(predFn) + '() returns false');
+      return new Problem(x, clause, [], 'Predicate ' + fnName(predFn) + '() returns false');
     } else {
       return x;
     }
@@ -3713,7 +3737,7 @@ function predWalker(spec) {
 module.exports = predWalker;
 
 /***/ },
-/* 76 */
+/* 77 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3727,21 +3751,21 @@ var isProblem = __webpack_require__(1);
 var isUndefined = __webpack_require__(14);
 var oAssign = __webpack_require__(4);
 var Problem = __webpack_require__(3);
-var specFromAlts = __webpack_require__(11);
+var clauseFromAlts = __webpack_require__(11);
 
-function shapeWalker(spec, walkFn) {
+function shapeWalker(clause, walkFn) {
   var keyConformer;
-  var _spec$opts$conformedA = spec.opts.conformedArgs.shapeArgs,
-      requiredFields = _spec$opts$conformedA.requiredFields,
-      optionalFields = _spec$opts$conformedA.optionalFields;
+  var _clause$opts$conforme = clause.opts.conformedArgs.shapeArgs,
+      requiredFields = _clause$opts$conforme.requiredFields,
+      optionalFields = _clause$opts$conforme.optionalFields;
 
 
-  var reqSpecs, optSpecs;
+  var reqClauses, optClauses;
   if (requiredFields) {
-    reqSpecs = requiredFields.req || requiredFields.required;
+    reqClauses = requiredFields.req || requiredFields.required;
   }
   if (optionalFields) {
-    optSpecs = optionalFields.opt || optionalFields.optional;
+    optClauses = optionalFields.opt || optionalFields.optional;
   }
 
   return {
@@ -3751,12 +3775,12 @@ function shapeWalker(spec, walkFn) {
 
   function shapeTrailblaze(x, walkOpts) {
     if (['object', 'function'].indexOf(typeof x === 'undefined' ? 'undefined' : _typeof(x)) < 0) {
-      return new Problem(x, spec, [], 'Value is not an object');
+      return new Problem(x, clause, [], 'Value is not an object');
     }
 
     if (!keyConformer) {
       // lazy
-      keyConformer = _genKeyConformer(reqSpecs, optSpecs, walkFn, walkOpts);
+      keyConformer = _genKeyConformer(reqClauses, optClauses, walkFn, walkOpts);
     }
     var keyConformedR = keyConformer(x);
 
@@ -3768,8 +3792,8 @@ function shapeWalker(spec, walkFn) {
     var guide = { val: x, groups: [], singles: [] };
 
     var reqFieldDefs;
-    if (reqSpecs) {
-      reqFieldDefs = reqSpecs.fieldDefs;
+    if (reqClauses) {
+      reqFieldDefs = reqClauses.fieldDefs;
     }
 
     if (reqFieldDefs) {
@@ -3777,8 +3801,8 @@ function shapeWalker(spec, walkFn) {
     }
 
     var optFieldDefs;
-    if (optSpecs) {
-      optFieldDefs = optSpecs.fieldDefs;
+    if (optClauses) {
+      optFieldDefs = optClauses.fieldDefs;
     }
     if (optFieldDefs) {
       processFieldDefs_mut(optFieldDefs, true);
@@ -3795,7 +3819,7 @@ function shapeWalker(spec, walkFn) {
         failedNames.push(n);
         problemMap[n] = p;
       }
-      var newP = new Problem(x, spec, problemMap, 'At least one property failed validation: ' + failedNames.join(', '));
+      var newP = new Problem(x, clause, problemMap, 'At least one property failed validation: ' + failedNames.join(', '));
       return newP;
     } else {
       return guide;
@@ -3878,18 +3902,18 @@ function shapeWalker(spec, walkFn) {
 
 function restoreField_mut(x, _ref3, walkFn, walkOpts) {
   var key = _ref3.key,
-      spec = _ref3.spec,
+      clause = _ref3.clause,
       guide = _ref3.guide;
 
-  x[key] = walkFn(spec, guide, walkOpts);
+  x[key] = walkFn(clause, guide, walkOpts);
 }
 
-function _genKeyConformer(reqSpecs, optSpec, walkFn, walkOpts) {
+function _genKeyConformer(reqClauses, optClause, walkFn, walkOpts) {
   return function tryConformKeys(x) {
-    if (reqSpecs) {
+    if (reqClauses) {
       var missingKeys = [];
-      var fieldDefs = reqSpecs.fieldDefs,
-          keyList = reqSpecs.keyList;
+      var fieldDefs = reqClauses.fieldDefs,
+          keyList = reqClauses.keyList;
 
       var reqNames;
 
@@ -3908,7 +3932,7 @@ function _genKeyConformer(reqSpecs, optSpec, walkFn, walkOpts) {
 
       for (var i = 0; i < reqNames.length; i++) {
         var reqName = reqNames[i];
-        //key spec
+        //key clause
         if (fieldDefs && fieldDefs.fields[reqName].keyValExprPair) {
           var found = false;
           keyTrav: for (var kk in x) {
@@ -3925,7 +3949,7 @@ function _genKeyConformer(reqSpecs, optSpec, walkFn, walkOpts) {
             missingKeys.push(reqName);
           }
         } else if (fieldDefs && fieldDefs.fields[reqName].valExpressionOnly) {
-          //key spec
+          //key clause
           if (x.hasOwnProperty(reqName)) {
             var rrr = _conformNamedOrExpr(x[reqName], fieldDefs.fields[reqName].valExpressionOnly, walkFn, walkOpts);
             if (isProblem(rrr)) {
@@ -3945,7 +3969,7 @@ function _genKeyConformer(reqSpecs, optSpec, walkFn, walkOpts) {
         }
       }
       if (missingKeys.length > 0) {
-        return new Problem(x, reqSpecs, [], 'req: keys required: ' + missingKeys.join(', '));
+        return new Problem(x, reqClauses, [], 'req: keys required: ' + missingKeys.join(', '));
       }
     }
 
@@ -3982,7 +4006,7 @@ function getFieldGuide(x, name, keyValAlts, walkFn, walkOpts) {
             //TODO: improve
             return { problem: valGuide };
           } else {
-            matchedKeys.push({ key: k, spec: specFromAlts(valExpression), guide: valGuide });
+            matchedKeys.push({ key: k, clause: clauseFromAlts(valExpression), guide: valGuide });
           }
         }
       }
@@ -3996,7 +4020,7 @@ function getFieldGuide(x, name, keyValAlts, walkFn, walkOpts) {
       if (isProblem(g)) {
         return { problem: g };
       } else {
-        return { singleMatch: { key: name, spec: specFromAlts(valExpressionOnly), guide: g } };
+        return { singleMatch: { key: name, clause: clauseFromAlts(valExpressionOnly), guide: g } };
       }
     } else {
       return { noop: true };
@@ -4007,36 +4031,12 @@ function getFieldGuide(x, name, keyValAlts, walkFn, walkOpts) {
 }
 
 function _conformNamedOrExpr(x, alts, walkFn, walkOpts) {
-  var s = specFromAlts(alts);
+  var s = clauseFromAlts(alts);
   var r = walkFn(s, x, walkOpts);
   return r;
 }
 
 module.exports = shapeWalker;
-
-/***/ },
-/* 77 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-function specRefWalker(specRef, walkFn) {
-
-  return {
-    trailblaze: walkSpecRef,
-    reconstruct: walkSpecRef
-  };
-
-  function walkSpecRef(x, walkOpts) {
-    var s = specRef.get();
-    if (s) {
-      return walkFn(s, x, walkOpts);
-    }
-  }
-}
-
-module.exports = specRefWalker;
 
 /***/ },
 /* 78 */
@@ -4047,17 +4047,17 @@ module.exports = specRefWalker;
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
-function wallWalker(wallSpec, walkFn) {
+function wallWalker(wallClause, walkFn) {
   return {
     trailblaze: wallWalk,
     reconstruct: wallWalk
   };
 
   function wallWalk(x, opts) {
-    var _wallSpec$exprs = _slicedToArray(wallSpec.exprs, 1),
-        spec = _wallSpec$exprs[0];
+    var _wallClause$exprs = _slicedToArray(wallClause.exprs, 1),
+        clause = _wallClause$exprs[0];
 
-    return walkFn(spec, x, opts);
+    return walkFn(clause, x, opts);
   }
 }
 

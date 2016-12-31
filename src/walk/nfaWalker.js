@@ -3,7 +3,7 @@ var getMatch = require( '../core/nfa/getMatch' )
 var compile = require( '../core/nfa/compile' );
 var Problem = require( '../models/Problem' );
 
-function nfaWalker( spec, walkFn ) {
+function nfaWalker( clause, walkFn ) {
   var nfa;
 
   return {
@@ -15,7 +15,7 @@ function nfaWalker( spec, walkFn ) {
 
     if ( !nfa ) {
       //lazy
-      nfa = compile( spec );
+      nfa = compile( clause );
     }
     var { chain, matched, lastProblem } = simulate( nfa, x, walkFn, walkOpts );
     if ( matched === true ) {
@@ -25,7 +25,7 @@ function nfaWalker( spec, walkFn ) {
       if ( lastProblem ) {
         subproblems.push( lastProblem );
       }
-      return new Problem( x, spec, subproblems, 'Spec ' + spec.type + ' did not match value' );
+      return new Problem( x, clause, subproblems, 'Clause ' + clause.type + ' did not match value' );
     }
   }
 

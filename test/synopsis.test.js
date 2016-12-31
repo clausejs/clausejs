@@ -3,7 +3,7 @@ const { cat, or, zeroOrMore, oneOrMore, isStr, isNum, isObj, isBool, conform } =
 
 describe.skip( 'synopsis', () => {
   it( 'simple case', () => {
-    var SampleSpec = cat( 'first', oneOrMore( cat( isStr, isBool ) ),
+    var SampleClause = cat( 'first', oneOrMore( cat( isStr, isBool ) ),
                       'second', or( isObj, cat( isNum, isBool ) ) );
 
   } );

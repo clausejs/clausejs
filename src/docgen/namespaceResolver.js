@@ -1,8 +1,8 @@
 import _ from 'lodash';
 const resolvedMaps = [];
-import { NamespaceObjSpec } from '../clauses/namespace.types';
+import { NamespaceObjClause } from '../clauses/namespace.types';
 
-function resolve( registry, specRef ) {
+function resolve( registry, clauseRef ) {
   let map = _findFirst( resolvedMaps, ( [ registryRef, m ] ) => {
     if ( registryRef === registry ) {
       return m;
@@ -14,7 +14,7 @@ function resolve( registry, specRef ) {
     resolvedMaps.push( [ registry, map ] );
   }
 
-  return _resolveWithMap( map, specRef );
+  return _resolveWithMap( map, clauseRef );
 }
 
 function getDefList( registry ) {
@@ -25,7 +25,7 @@ function getDefList( registry ) {
 
 function _createResolveMap( registry ) {
   const r = [];
-  var conformedReg = NamespaceObjSpec.conform( registry );
+  var conformedReg = NamespaceObjClause.conform( registry );
   _walk( null, null, conformedReg, r );
   return r;
 }
@@ -55,9 +55,9 @@ function _walk( prefix, currN, creg, r ) {
   }
 }
 
-function _resolveWithMap( map, specRef ) {
+function _resolveWithMap( map, clauseRef ) {
   const path = _findFirst( map, ( [ p, n, r ] ) => {
-    if ( r === specRef ) {
+    if ( r === clauseRef ) {
       return `${p}/${n}`;
     }
   } );

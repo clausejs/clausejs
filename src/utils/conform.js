@@ -1,11 +1,11 @@
-var isSpec = require( '../utils/isSpec' );
+var isClause = require( '../utils/isClause' );
 
-function conform( spec, x ) {
-  if ( spec && isSpec( spec ) ) {
-    var r = spec.conform( x );
+function conform( clause, x ) {
+  if ( clause && isClause( clause ) ) {
+    var r = clause.conform( x );
     return r;
   } else {
-    throw new Error( 'Expression needs to be of type Spec. expression: ' + spec + ', offending value: ' + x );
+    throw new Error( 'Expression needs to be of type Clause. expression: ' + clause + ', offending value: ' + x );
   }
 }
 

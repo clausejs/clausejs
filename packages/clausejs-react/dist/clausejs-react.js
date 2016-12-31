@@ -140,15 +140,15 @@ function fromBaseClass(baseClass) {
 
       var _this = _possibleConstructorReturn(this, (ClauseComponent.__proto__ || Object.getPrototypeOf(ClauseComponent)).call(this));
 
-      var propSpecs = _this.constructor.propSpecs;
+      var propClauses = _this.constructor.propClauses;
 
-      if (propSpecs) {
+      if (propClauses) {
         (function () {
-          var nullablePropSpecs = C.or(propSpecs, C.isUndefined, C.isNull);
+          var nullablePropClauses = C.or(propClauses, C.isUndefined, C.isNull);
 
           var currWillUpdateFn = _this.componentWillUpdate;
           _this.componentWillUpdate = function (nextShape) {
-            C.enforce(nullablePropSpecs, nextShape);
+            C.enforce(nullablePropClauses, nextShape);
             if (currWillUpdateFn) {
               return currWillUpdateFn.apply(_this, _arguments);
             }
@@ -157,7 +157,7 @@ function fromBaseClass(baseClass) {
 
           var currWillMountFn = _this.componentWillMount;
           _this.componentWillMount = function () {
-            C.enforce(nullablePropSpecs, _this.shape);
+            C.enforce(nullablePropClauses, _this.shape);
             if (currWillMountFn) {
               return currWillMountFn.apply(_this, _arguments);
             }

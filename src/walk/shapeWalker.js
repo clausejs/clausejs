@@ -2,19 +2,19 @@ var isProblem = require( '../utils/isProblem' );
 var isUndefined = require( '../preds/isUndefined' );
 var oAssign = require( 'object-assign' );
 var Problem = require( '../models/Problem' );
-var specFromAlts = require( '../utils/specFromAlts' );
+var clauseFromAlts = require( '../utils/clauseFromAlts' );
 
-function shapeWalker( spec, walkFn ) {
+function shapeWalker( clause, walkFn ) {
   var keyConformer;
-  var { requiredFields, optionalFields } = spec.opts.conformedArgs.shapeArgs;
+  var { requiredFields, optionalFields } = clause.opts.conformedArgs.shapeArgs;
 
-  var reqSpecs,
-    optSpecs;
+  var reqClauses,
+    optClauses;
   if ( requiredFields ) {
-    reqSpecs = requiredFields.req || requiredFields.required;
+    reqClauses = requiredFields.req || requiredFields.required;
   }
   if ( optionalFields ) {
-    optSpecs = optionalFields.opt || optionalFields.optional;
+    optClauses = optionalFields.opt || optionalFields.optional;
   }
 
   return {
@@ -24,12 +24,12 @@ function shapeWalker( spec, walkFn ) {
 
   function shapeTrailblaze( x, walkOpts ) {
     if ( [ 'object', 'function' ].indexOf( typeof x ) < 0 ) {
-      return new Problem( x, spec, [], 'Value is not an object' );
+      return new Problem( x, clause, [], 'Value is not an object' );
     }
 
     if ( !keyConformer ) {
        // lazy
-      keyConformer = _genKeyConformer( reqSpecs, optSpecs, walkFn, walkOpts );
+      keyConformer = _genKeyConformer( reqClauses, optClauses, walkFn, walkOpts );
     }
     var keyConformedR = keyConformer( x );
 
@@ -42,8 +42,8 @@ function shapeWalker( spec, walkFn ) {
     var guide = { val: x, groups: [], singles: [] };
 
     var reqFieldDefs;
-    if ( reqSpecs ) {
-      reqFieldDefs = reqSpecs.fieldDefs;
+    if ( reqClauses ) {
+      reqFieldDefs = reqClauses.fieldDefs;
     }
 
     if ( reqFieldDefs ) {
@@ -51,8 +51,8 @@ function shapeWalker( spec, walkFn ) {
     }
 
     var optFieldDefs;
-    if ( optSpecs ) {
-      optFieldDefs = optSpecs.fieldDefs;
+    if ( optClauses ) {
+      optFieldDefs = optClauses.fieldDefs;
     }
     if ( optFieldDefs ) {
       processFieldDefs_mut( optFieldDefs, true );
@@ -66,7 +66,7 @@ function shapeWalker( spec, walkFn ) {
         failedNames.push( n );
         problemMap[ n ] = p;
       }
-      var newP = new Problem( x, spec, problemMap, 'At least one property failed validation: ' + failedNames.join( ', ' ) );
+      var newP = new Problem( x, clause, problemMap, 'At least one property failed validation: ' + failedNames.join( ', ' ) );
       return newP;
     } else {
       return guide;
@@ -133,15 +133,15 @@ function shapeWalker( spec, walkFn ) {
   }
 }
 
-function restoreField_mut( x, { key, spec, guide }, walkFn, walkOpts ) {
-  x[ key ] = walkFn( spec, guide, walkOpts );
+function restoreField_mut( x, { key, clause, guide }, walkFn, walkOpts ) {
+  x[ key ] = walkFn( clause, guide, walkOpts );
 }
 
-function _genKeyConformer( reqSpecs, optSpec, walkFn, walkOpts ) {
+function _genKeyConformer( reqClauses, optClause, walkFn, walkOpts ) {
   return function tryConformKeys( x ) {
-    if ( reqSpecs ) {
+    if ( reqClauses ) {
       let missingKeys = [];
-      var { fieldDefs, keyList } = reqSpecs;
+      var { fieldDefs, keyList } = reqClauses;
       var reqNames;
 
       if ( fieldDefs ) {
@@ -159,7 +159,7 @@ function _genKeyConformer( reqSpecs, optSpec, walkFn, walkOpts ) {
 
       for ( var i = 0; i < reqNames.length; i++ ) {
         var reqName = reqNames[ i ];
-        //key spec
+        //key clause
         if ( fieldDefs && fieldDefs.fields[ reqName ].keyValExprPair ) {
           var found = false;
           keyTrav: for ( var kk in x ) {
@@ -176,7 +176,7 @@ function _genKeyConformer( reqSpecs, optSpec, walkFn, walkOpts ) {
             missingKeys.push( reqName );
           }
         } else if ( fieldDefs && fieldDefs.fields[ reqName ].valExpressionOnly ) {
-          //key spec
+          //key clause
           if ( x.hasOwnProperty( reqName ) ) {
             var rrr = _conformNamedOrExpr( x[ reqName ], fieldDefs.fields[ reqName ].valExpressionOnly, walkFn, walkOpts );
             if ( isProblem( rrr ) ) {
@@ -196,7 +196,7 @@ function _genKeyConformer( reqSpecs, optSpec, walkFn, walkOpts ) {
         }
       }
       if ( missingKeys.length > 0 ) {
-        return new Problem( x, reqSpecs, [], 'req: keys required: ' + missingKeys.join( ', ' ) );
+        return new Problem( x, reqClauses, [], 'req: keys required: ' + missingKeys.join( ', ' ) );
       }
     }
 
@@ -230,7 +230,7 @@ function getFieldGuide( x, name, keyValAlts, walkFn, walkOpts ) {
             //TODO: improve
             return { problem: valGuide };
           } else {
-            matchedKeys.push( { key: k, spec: specFromAlts( valExpression ), guide: valGuide } );
+            matchedKeys.push( { key: k, clause: clauseFromAlts( valExpression ), guide: valGuide } );
           }
         }
       }
@@ -244,7 +244,7 @@ function getFieldGuide( x, name, keyValAlts, walkFn, walkOpts ) {
       if ( isProblem( g ) ) {
         return { problem: g };
       } else {
-        return { singleMatch: { key: name, spec: specFromAlts( valExpressionOnly ), guide: g } };
+        return { singleMatch: { key: name, clause: clauseFromAlts( valExpressionOnly ), guide: g } };
       }
     } else {
       return { noop: true };
@@ -255,7 +255,7 @@ function getFieldGuide( x, name, keyValAlts, walkFn, walkOpts ) {
 }
 
 function _conformNamedOrExpr( x, alts, walkFn, walkOpts ) {
-  var s = specFromAlts( alts );
+  var s = clauseFromAlts( alts );
   var r = walkFn( s, x, walkOpts );
   return r;
 }

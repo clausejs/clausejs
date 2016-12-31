@@ -2,8 +2,8 @@ var isProblem = require( './isProblem' );
 // TODO : replace with checkProblem
 var conform = require( './conform' );
 
-module.exports = function enforce( spec, x ) {
-  const r = conform( spec, x );
+module.exports = function enforce( clause, x ) {
+  const r = conform( clause, x );
   if ( isProblem( r ) ) {
     throw r;
   }

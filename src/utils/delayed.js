@@ -1,7 +1,7 @@
-var DelayedSpec = require( '../models/DelayedSpec' );
+var DelayedClause = require( '../models/DelayedClause' );
 
 function delayed( getFn ) {
-  return new DelayedSpec( { getFn } );
+  return new DelayedClause( { getFn } );
 }
 
 module.exports = delayed;

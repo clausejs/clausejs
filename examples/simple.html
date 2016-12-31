@@ -8,7 +8,7 @@
   // I'm just lazy holding the 'shift' key every single time
   var s = C;
 
-  var ItemSpec = s.shape({
+  var ItemClause = s.shape({
     req: {
       title: s.isStr,
       content: s.isStr,
@@ -17,11 +17,11 @@
 
   var correctItem = { title: 'hi', content: 'lol' };
 
-  // null content not accepted per Spec above
+  // null content not accepted per Clause above
   var incorrectItem = { title: 'hi', content: null };
 
-  var r1 = ItemSpec.conform(correctItem);
-  var r2 = ItemSpec.conform(incorrectItem);
+  var r1 = ItemClause.conform(correctItem);
+  var r2 = ItemClause.conform(incorrectItem);
 
 
   console.log(r1);

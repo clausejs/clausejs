@@ -5,19 +5,19 @@ var namedFn = require( '../utils/namedFn' );
 var betterThrow = require( '../utils/betterThrow' );
 var stringifyWithFnName = require( '../utils/stringifyWithFnName' );
 
-function fspecWalker( spec, walkFn ) {
-  var { args: argsSpec, ret: retSpec, fn: validateFn } = spec.opts;
+function fclauseWalker( clause, walkFn ) {
+  var { args: argsClause, ret: retClause, fn: validateFn } = clause.opts;
 
   return {
-    trailblaze: fspecTrailblaze,
-    reconstruct: fspecReconstruct,
+    trailblaze: fclauseTrailblaze,
+    reconstruct: fclauseReconstruct,
   };
 
-  function fspecTrailblaze( fn ) {
+  function fclauseTrailblaze( fn ) {
     return fn;
   }
 
-  function fspecReconstruct( fn, walkOpts ) {
+  function fclauseReconstruct( fn, walkOpts ) {
     if ( fn ) {
       var { conform, instrument } = walkOpts;
 
@@ -27,15 +27,15 @@ function fspecWalker( spec, walkFn ) {
         return _instrument( fn, walkOpts );
       }
     } else {
-      throw new Error( 'A function must be specified for instrumentation.' );
+      throw new Error( 'A function must be clauseified for instrumentation.' );
     }
   }
 
   function _instrument( fn, walkOpts ) {
     var fnName = functionName( fn );
     var instrumentedFn = getInstrumentedFn( fnName, fn, walkOpts );
-    var namedSpecedFn = namedFn( fnName, instrumentedFn, '__instrumented' );
-    return namedSpecedFn;
+    var namedClauseedFn = namedFn( fnName, instrumentedFn, '__instrumented' );
+    return namedClauseedFn;
   }
 
   function instrumentConformed( fn, walkOpts ) {
@@ -55,12 +55,12 @@ function fspecWalker( spec, walkFn ) {
 
       // TODO optimize
       var conformedArgs =
-      argsSpec ?
-        walkFn( argsSpec, args, { conform: true, instrument: true } ) :
+      argsClause ?
+        walkFn( argsClause, args, { conform: true, instrument: true } ) :
         args;
       let conformedRetVal;
-      if ( retSpec ) {
-        conformedRetVal = walkFn( retSpec, retVal, { conform: true, instrument: true } );
+      if ( retClause ) {
+        conformedRetVal = walkFn( retClause, retVal, { conform: true, instrument: true } );
       } else {
         conformedRetVal = retVal;
       }
@@ -74,7 +74,7 @@ function fspecWalker( spec, walkFn ) {
     if ( validateFn ) {
       var r = validateFn.call( null, conformedArgs, retVal );
       if ( !r ) {
-        var p = new Problem( fn, spec, [],
+        var p = new Problem( fn, clause, [],
           `Function ${fnName} failed valiation on argument-return value relation` );
         betterThrow( p );
       }
@@ -82,13 +82,13 @@ function fspecWalker( spec, walkFn ) {
   }
 
   function checkArgs( fn, fnName, args ) {
-    if ( argsSpec ) {
-      var instrumentedArgs = walkFn( argsSpec, args, { phase: 'trailblaze' } );
+    if ( argsClause ) {
+      var instrumentedArgs = walkFn( argsClause, args, { phase: 'trailblaze' } );
       if ( isProblem( instrumentedArgs ) ) {
-        var p = new Problem( args, spec, [ instrumentedArgs ], `Arguments ${stringifyWithFnName( args )} for function ${fnName} failed validation` );
+        var p = new Problem( args, clause, [ instrumentedArgs ], `Arguments ${stringifyWithFnName( args )} for function ${fnName} failed validation` );
         betterThrow( p );
       } else {
-        return walkFn( argsSpec, instrumentedArgs, { phase: 'reconstruct', conform: false, instrument: true } );
+        return walkFn( argsClause, instrumentedArgs, { phase: 'reconstruct', conform: false, instrument: true } );
       }
     } else {
       return args;
@@ -96,13 +96,13 @@ function fspecWalker( spec, walkFn ) {
   }
 
   function checkRet( fn, fnName, retVal ) {
-    if ( retSpec ) {
-      var instrumentedRetVal = walkFn( retSpec, retVal, { phase: 'trailblaze' } );
+    if ( retClause ) {
+      var instrumentedRetVal = walkFn( retClause, retVal, { phase: 'trailblaze' } );
       if ( isProblem( instrumentedRetVal ) ) {
-        var p = new Problem( retVal, spec, [ instrumentedRetVal ], 'Return value ' + retVal + ' for function ' + fnName + ' is not valid.' );
+        var p = new Problem( retVal, clause, [ instrumentedRetVal ], 'Return value ' + retVal + ' for function ' + fnName + ' is not valid.' );
         betterThrow( p );
       } else {
-        var r = walkFn( retSpec, instrumentedRetVal, { phase: 'reconstruct', instrument: true, conform: false } );
+        var r = walkFn( retClause, instrumentedRetVal, { phase: 'reconstruct', instrument: true, conform: false } );
         return r;
       }
     } else {
@@ -114,9 +114,9 @@ function fspecWalker( spec, walkFn ) {
     return function __instrumentConformed() {
       var args = Array.prototype.slice.call( arguments );
 
-      var conformedArgs = walkFn( argsSpec, args, { conform: true, instrument: true } );
+      var conformedArgs = walkFn( argsClause, args, { conform: true, instrument: true } );
       if ( isProblem( conformedArgs ) ) {
-        var p = new Problem( args, argsSpec, [ conformedArgs ], `Arguments ${stringifyWithFnName( args )} for function ${fnName} is not valid` );
+        var p = new Problem( args, argsClause, [ conformedArgs ], `Arguments ${stringifyWithFnName( args )} for function ${fnName} is not valid` );
         betterThrow( p );
       }
 
@@ -126,8 +126,8 @@ function fspecWalker( spec, walkFn ) {
 
       if ( validateFn ) {
         var conformedRetVal;
-        if ( retSpec ) {
-          conformedRetVal = walkFn( retSpec, retVal, { conform: true, instrument: true } );
+        if ( retClause ) {
+          conformedRetVal = walkFn( retClause, retVal, { conform: true, instrument: true } );
         } else {
           conformedRetVal = retVal;
         }
@@ -140,4 +140,4 @@ function fspecWalker( spec, walkFn ) {
 
 }
 
-module.exports = fspecWalker;
+module.exports = fclauseWalker;

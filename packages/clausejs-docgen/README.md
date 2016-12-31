@@ -6,6 +6,6 @@ This is currently a work in progress and is subject to heavy change.
 
 Projects that use clausejs-docgen:
 
-- Clause (http://clausejs.js.org)
+- Clause (http://clause.js.org)
 
 Please [open an issue](https://github.com/clausejs/clausejs/issues/new) to give feedback and suggestions.

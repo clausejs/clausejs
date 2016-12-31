@@ -79,12 +79,12 @@ describe( 'nfa regex', function() {
 
     it( 'string vocab', () => {
 
-      var VocabSpec = C.or.apply( null, [ 'foo', 'bar', 'baz', ' ' ].map( catS ) );
-      var ContentSpec = C.zeroOrMore( VocabSpec );
+      var VocabClause = C.or.apply( null, [ 'foo', 'bar', 'baz', ' ' ].map( catS ) );
+      var ContentClause = C.zeroOrMore( VocabClause );
 
       var treatise = ' baz foo bar bar';
-      expect( ContentSpec.conform( treatise ) ).to.equal( treatise );
-      expect( ContentSpec.conform( treatise + 'mangled' ) ).to.be.an.instanceof( C.Problem );
+      expect( ContentClause.conform( treatise ) ).to.equal( treatise );
+      expect( ContentClause.conform( treatise + 'mangled' ) ).to.be.an.instanceof( C.Problem );
     } );
 
     it( 'treatise dissection', () => {
@@ -103,14 +103,14 @@ describe( 'nfa regex', function() {
         -----------
         I am truely awesome.
       `;
-      var TreatiseSpec = C.cat(
+      var TreatiseClause = C.cat(
         'spacing', C.zeroOrMore( C.isStr ),
         'intro', C.cat( catS( 'Abstract' ), C.oneOrMore( C.isStr ) ),
         'body', C.cat( catS( 'My Points' ), C.oneOrMore( C.isStr ) ),
         'ending', C.cat( catS( 'Conclusion' ), C.oneOrMore( C.isStr ) )
       );
 
-      expect( TreatiseSpec.conform( treatise ).body ).to.contain( 'eat pie' );
+      expect( TreatiseClause.conform( treatise ).body ).to.contain( 'eat pie' );
     } );
   } );
 
@@ -120,13 +120,13 @@ describe( 'nfa regex', function() {
       var nested = [ [ 'a', 1, true ], [ 'b', 2, false ], [ 'c', 3, true ] ];
       var moreNested = [ [ [ 'a', 1, true ] ], [ [ 'b', 2, false ] ], [ [ 'c', 3, true ] ] ];
 
-      var FlatSpec = C.oneOrMore( C.cat( C.isStr, C.isNum, C.isBool ) );
-      var NestedSpec = C.oneOrMore( C.wall( C.cat( C.isStr, C.isNum, C.isBool ) ) );
-      var NestedNestedSpec = C.oneOrMore( C.wall( C.cat( C.wall( C.cat( C.isStr, C.isNum, C.isBool ) ) ) ) );
+      var FlatClause = C.oneOrMore( C.cat( C.isStr, C.isNum, C.isBool ) );
+      var NestedClause = C.oneOrMore( C.wall( C.cat( C.isStr, C.isNum, C.isBool ) ) );
+      var NestedNestedClause = C.oneOrMore( C.wall( C.cat( C.wall( C.cat( C.isStr, C.isNum, C.isBool ) ) ) ) );
 
       [ flat, nested, moreNested ].forEach( ( d, i ) => {
-        [ FlatSpec, NestedSpec, NestedNestedSpec ].forEach( ( spec, j ) => {
-          let r = C.isValid( spec, d );
+        [ FlatClause, NestedClause, NestedNestedClause ].forEach( ( clause, j ) => {
+          let r = C.isValid( clause, d );
           if ( i === j ) {
             expect( r ).to.be.true;
           } else {
@@ -141,17 +141,17 @@ describe( 'nfa regex', function() {
     it( 'cat single char string', () => {
       var data = 'a';
 
-      var SingleCatSpec = C.cat( C.isStr );
+      var SingleCatClause = C.cat( C.isStr );
 
-      expect( SingleCatSpec.conform( data ) ).to.equal( data );
+      expect( SingleCatClause.conform( data ) ).to.equal( data );
     } );
 
     it( 'kleene closure on strings', () => {
       var data = 'abcdefg';
 
-      var KleeneStringSpec = C.zeroOrMore( C.isString );
+      var KleeneStringClause = C.zeroOrMore( C.isString );
 
-      expect( KleeneStringSpec.conform( data ) ).to.equal( data );
+      expect( KleeneStringClause.conform( data ) ).to.equal( data );
     } );
   } );
 } );

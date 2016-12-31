@@ -1,23 +1,23 @@
 var oAssign = require( 'object-assign' );
 
-var Spec = require( '../models/Spec' );
-var isSpec = require( '../utils/isSpec' );
+var Clause = require( '../models/Clause' );
+var isClause = require( '../utils/isClause' );
 var isPred = require( '../utils/isPred' );
 var isExpr = require( '../utils/isExpr' );
 var not = require( '../preds/not' );
-var specFromAlts = require( '../utils/specFromAlts' );
+var clauseFromAlts = require( '../utils/clauseFromAlts' );
 var isObj = require( '../preds/isObj' );
 var isStr = require( '../preds/isStr' );
-var isSpecName = require( '../utils/isSpecName' );
+var isClauseName = require( '../utils/isClauseName' );
 var namedFn = require( '../utils/namedFn' );
-var isSpecRef = require( '../utils/isSpecRef' );
-var isDelayedSpec = require( '../utils/isDelayedSpec' );
+var isClauseRef = require( '../utils/isClauseRef' );
+var isDelayedClause = require( '../utils/isDelayedClause' );
 var c = require( '../core/constants' );
-var coerceIntoSpec = require( '../utils/coerceIntoSpec' );
-var fspec = require( './fspec' );
+var coerceIntoClause = require( '../utils/coerceIntoClause' );
+var fclause = require( './fclause' );
 var walk = require( '../walk' );
-var specSpec = coerceIntoSpec( isSpec );
-var nameSpec = coerceIntoSpec( isSpecName );
+var clauseClause = coerceIntoClause( isClause );
+var nameClause = coerceIntoClause( isClauseName );
 
 var catOp = genMultiArgOp( c.CAT );
 var orOp = genMultiArgOp( c.OR );
@@ -26,25 +26,25 @@ var oneOrMoreOp = genSingleArgOp( c.O_OR_M );
 var zeroOrOneOp = genSingleArgOp( c.Z_OR_O );
 var collOfOp = genSingleArgOp( c.COLL_OF );
 
-var SpecSpec = coerceIntoSpec( isSpec );
-var SpecRefSpec = coerceIntoSpec( isSpecRef );
-var DelayedSpecSpec = coerceIntoSpec( isDelayedSpec );
-var PredSpec = coerceIntoSpec( isPred );
+var ClauseClause = coerceIntoClause( isClause );
+var ClauseRefClause = coerceIntoClause( isClauseRef );
+var DelayedClauseClause = coerceIntoClause( isDelayedClause );
+var PredClause = coerceIntoClause( isPred );
 
-var ExprSpec = orOp( {
+var ExprClause = orOp( {
   expressions: {
     withLabels: [
-      { name: 'spec', expr: {
-        spec: SpecSpec,
+      { name: 'clause', expr: {
+        clause: ClauseClause,
       } },
       { name: 'pred', expr: {
-        spec: PredSpec,
+        clause: PredClause,
       } },
-      { name: 'delayedSpec', expr: {
-        spec: DelayedSpecSpec,
+      { name: 'delayedClause', expr: {
+        clause: DelayedClauseClause,
       } },
-      { name: 'specRef', expr: {
-        spec: SpecRefSpec,
+      { name: 'clauseRef', expr: {
+        clause: ClauseRefClause,
       } },
     ],
   }
@@ -54,47 +54,47 @@ var NameExprOptionalComment = catOp( {
   expressions: {
     withLabels: [
       { name: 'name', expr: {
-        spec: nameSpec,
+        clause: nameClause,
       } },
       { name: 'comment', expr: {
-        spec: zeroOrOneOp( {
+        clause: zeroOrOneOp( {
           expr: {
             pred: isStr,
           }
         } ),
       } },
       { name: 'expr', expr: {
-        spec: ExprSpec,
+        clause: ExprClause,
       } },
     ],
   }
 } );
 
-var MultipleArgSpec = catOp( {
+var MultipleArgClause = catOp( {
   expressions: {
     withLabels: [
       { name: 'expressions',
         expr: {
-          spec: orOp( {
+          clause: orOp( {
             expressions: {
               withLabels: [
                 {
                   name: 'withLabels',
                   expr: {
-                    spec: orOp( {
+                    clause: orOp( {
                       expressions: {
                         withoutLabels: [
                           {
-                            spec: zeroOrMoreOp( {
+                            clause: zeroOrMoreOp( {
                               expr: {
-                                spec: NameExprOptionalComment,
+                                clause: NameExprOptionalComment,
                               },
                             } )
                           },
                           {
-                            spec: collOfOp( {
+                            clause: collOfOp( {
                               expr: {
-                                spec: NameExprOptionalComment,
+                                clause: NameExprOptionalComment,
                               },
                             } )
                           },
@@ -106,9 +106,9 @@ var MultipleArgSpec = catOp( {
                 {
                   name: 'withoutLabels',
                   expr: {
-                    spec: zeroOrMoreOp( {
+                    clause: zeroOrMoreOp( {
                       expr: {
-                        spec: ExprSpec,
+                        clause: ExprClause,
                       },
                     } ),
                   },
@@ -121,9 +121,9 @@ var MultipleArgSpec = catOp( {
       {
         name: 'options',
         expr: {
-          spec: zeroOrOneOp( {
+          clause: zeroOrOneOp( {
             expr: {
-              spec: andOp( [
+              clause: andOp( [
                  { pred: isObj },
                  { pred: not( isExpr ) }
               ] )
@@ -136,7 +136,7 @@ var MultipleArgSpec = catOp( {
 } );
 
 function andOp( exprs ) {
-  var andS = new Spec( {
+  var andS = new Clause( {
     type: 'AND',
     exprs: [],
     fragments: exprs,
@@ -148,8 +148,8 @@ function andOp( exprs ) {
   return andS;
 }
 
-var multipleArgNoDupeSpec = andOp(
-  [ { spec: MultipleArgSpec },
+var multipleArgNoDupeClause = andOp(
+  [ { clause: MultipleArgClause },
     { pred: noDupelicateLabels } ]
 );
 
@@ -167,40 +167,40 @@ function noDupelicateLabels( { expressions: { withLabels } } ) {
   return true;
 }
 
-var AndFnSpec = fspec( {
+var AndFnClause = fclause( {
   args: oneOrMoreOp( { expr:
-    { spec: ExprSpec }
+    { clause: ExprClause }
   } ),
-  ret: isSpec,
+  ret: isClause,
 } );
 
-var multipleArgOpSpec = {
-  args: multipleArgNoDupeSpec,
-  ret: specSpec,
+var multipleArgOpClause = {
+  args: multipleArgNoDupeClause,
+  ret: clauseClause,
 };
 
-var singleArgOpSpecFn = ( optSpec ) => ( {
+var singleArgOpClauseFn = ( optClause ) => ( {
   args: catOp( {
     expressions: {
       withLabels: [
         {
           name: 'expr',
           expr: {
-            spec: ExprSpec,
+            clause: ExprClause,
           }
         },
         {
           name: 'opts',
           expr: {
-            spec: zeroOrOneOp( {
-              expr: optSpec
+            clause: zeroOrOneOp( {
+              expr: optClause
             } ),
           }
         },
       ],
     }
   } ),
-  ret: specSpec,
+  ret: clauseClause,
 } );
 
 function genMultiArgOp( type ) {
@@ -211,18 +211,18 @@ function genMultiArgOp( type ) {
 
       var coercedExprs = exprs.map( ( p ) => {
         var alts = p.expr;
-        var s = specFromAlts( alts );
+        var s = clauseFromAlts( alts );
 
         return oAssign( {}, p, {
           expr: s,
-          spec: undefined, pred: undefined,
-          specRef: undefined, delayedSpec: undefined } );
+          clause: undefined, pred: undefined,
+          clauseRef: undefined, delayedClause: undefined } );
       } );
 
       let opts = oAssign( {}, options, {
         named: true,
       } );
-      var s = new Spec( {
+      var s = new Clause( {
         type,
         exprs: coercedExprs,
         opts,
@@ -237,18 +237,18 @@ function genMultiArgOp( type ) {
 
       coercedExprs = exprs.map( ( p ) => {
         var s;
-        if ( p.spec ) {
-          s = p.spec;
-          return oAssign( {}, p, { expr: s, spec: undefined } );
+        if ( p.clause ) {
+          s = p.clause;
+          return oAssign( {}, p, { expr: s, clause: undefined } );
         } else if ( p.pred ) {
-          s = coerceIntoSpec( p.pred );
+          s = coerceIntoClause( p.pred );
           return oAssign( {}, p, { expr: s, pred: undefined } );
-        } else if ( p.specRef ) {
-          s = p.specRef;
-          return oAssign( {}, p, { expr: s, specRef: undefined } );
-        } else if ( p.delayedSpec ) {
-          s = p.delayedSpec;
-          return oAssign( {}, p, { expr: s, delayedSpec: undefined } );
+        } else if ( p.clauseRef ) {
+          s = p.clauseRef;
+          return oAssign( {}, p, { expr: s, clauseRef: undefined } );
+        } else if ( p.delayedClause ) {
+          s = p.delayedClause;
+          return oAssign( {}, p, { expr: s, delayedClause: undefined } );
         } else {
           console.error( p );
           throw '!';
@@ -259,7 +259,7 @@ function genMultiArgOp( type ) {
         named: false,
       } );
 
-      s = new Spec( {
+      s = new Clause( {
         type,
         exprs: coercedExprs,
         opts,
@@ -271,7 +271,7 @@ function genMultiArgOp( type ) {
       return s;
     } else {
       // empty case
-      s = new Spec( {
+      s = new Clause( {
         type,
         exprs: [] } );
       s.conform = function conform( x ) {
@@ -288,23 +288,23 @@ function genSingleArgOp( type ) {
     var opts = conformedArgs.opts;
     var expr;
 
-    if ( p.spec ) {
-      expr = p.spec;
+    if ( p.clause ) {
+      expr = p.clause;
     } else if ( p.pred ) {
-      expr = coerceIntoSpec( p.pred );
-    } else if ( p.specRef ) {
-      expr = p.specRef;
-    } else if ( p.delayedSpec ) {
-      expr = p.delayedSpec;
+      expr = coerceIntoClause( p.pred );
+    } else if ( p.clauseRef ) {
+      expr = p.clauseRef;
+    } else if ( p.delayedClause ) {
+      expr = p.delayedClause;
     } else {
       console.error( p );
       throw 'internal err';
     }
-    const sureSpec = coerceIntoSpec( expr );
-    var s = new Spec( {
+    const sureClause = coerceIntoClause( expr );
+    var s = new Clause( {
       type,
-      exprs: [ sureSpec ],
-      opts: oAssign( {}, opts, { enclosedSpec: sureSpec } ),
+      exprs: [ sureClause ],
+      opts: oAssign( {}, opts, { enclosedClause: sureClause } ),
     } );
 
     s.conform = function conform( x ) {
@@ -314,28 +314,28 @@ function genSingleArgOp( type ) {
   } );
 }
 
-var CollOfSpec = fspec( singleArgOpSpecFn( { pred: isObj } ) );
-var collOf = CollOfSpec.instrumentConformed( collOfOp );
+var CollOfClause = fclause( singleArgOpClauseFn( { pred: isObj } ) );
+var collOf = CollOfClause.instrumentConformed( collOfOp );
 
-var CatFnSpec = fspec( multipleArgOpSpec );
-var OrFnSpec = fspec( multipleArgOpSpec );
-var ZeroOrMoreFnSpec = fspec( singleArgOpSpecFn( { pred: isObj } ) );
-var OneOrMoreFnSpec = fspec( singleArgOpSpecFn( { pred: isObj } ) );
-var ZeroOrOneFnSpec = fspec( singleArgOpSpecFn( { pred: isObj } ) );
-var and = AndFnSpec.instrumentConformed( andOp );
+var CatFnClause = fclause( multipleArgOpClause );
+var OrFnClause = fclause( multipleArgOpClause );
+var ZeroOrMoreFnClause = fclause( singleArgOpClauseFn( { pred: isObj } ) );
+var OneOrMoreFnClause = fclause( singleArgOpClauseFn( { pred: isObj } ) );
+var ZeroOrOneFnClause = fclause( singleArgOpClauseFn( { pred: isObj } ) );
+var and = AndFnClause.instrumentConformed( andOp );
 
 var core = {
-  cat: CatFnSpec.instrumentConformed( catOp ),
-  or: OrFnSpec.instrumentConformed( orOp ),
-  zeroOrMore: ZeroOrMoreFnSpec.instrumentConformed( zeroOrMoreOp ),
-  zeroOrOne: ZeroOrOneFnSpec.instrumentConformed( zeroOrOneOp ),
-  oneOrMore: OneOrMoreFnSpec.instrumentConformed( oneOrMoreOp ),
-  ExprSpec, SpecSpec, PredSpec, DelayedSpecSpec, SpecRefSpec,
-  CatFnSpec,
-  AndFnSpec,
-  OrFnSpec,
-  ZeroOrMoreFnSpec, OneOrMoreFnSpec, ZeroOrOneFnSpec,
-  CollOfSpec,
+  cat: CatFnClause.instrumentConformed( catOp ),
+  or: OrFnClause.instrumentConformed( orOp ),
+  zeroOrMore: ZeroOrMoreFnClause.instrumentConformed( zeroOrMoreOp ),
+  zeroOrOne: ZeroOrOneFnClause.instrumentConformed( zeroOrOneOp ),
+  oneOrMore: OneOrMoreFnClause.instrumentConformed( oneOrMoreOp ),
+  ExprClause, ClauseClause, PredClause, DelayedClauseClause, ClauseRefClause,
+  CatFnClause,
+  AndFnClause,
+  OrFnClause,
+  ZeroOrMoreFnClause, OneOrMoreFnClause, ZeroOrOneFnClause,
+  CollOfClause,
   collOf,
   and,
 };

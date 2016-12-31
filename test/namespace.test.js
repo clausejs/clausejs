@@ -1,7 +1,7 @@
 var C = require( '../src' );
 var expect = require( 'chai' ).expect;
 
-var isSpec = require( '../src/utils/isSpec' );
+var isClause = require( '../src/utils/isClause' );
 var isPred = require( '../src/utils/isPred' );
 
 describe( 'namespace', () => {
@@ -21,7 +21,7 @@ describe( 'namespace', () => {
           }
         } ) ) );
 
-      expect( isSpec( C( 'xyz.superapp/item' ).get() ) ).to.be.true;
+      expect( isClause( C( 'xyz.superapp/item' ).get() ) ).to.be.true;
       expect( isPred( C( 'xyz.superapp.item/title' ).get() ) ).to.be.true;
       expect( C.isUndefined( C( 'xyz.superapp.item/doesnotexist' ).get() ) ).to.be.true;
     } );
@@ -56,17 +56,17 @@ describe( 'namespace', () => {
         }
       } );
 
-      var ListSpec = C( 'todoapp/list' );
-      var ItemSpec = C( 'todoapp/item' );
-      var ContentSpec = C( 'todoapp.item/content' );
+      var ListClause = C( 'todoapp/list' );
+      var ItemClause = C( 'todoapp/item' );
+      var ContentClause = C( 'todoapp.item/content' );
 
-      expect( ListSpec ).to.be.ok;
-      expect( isSpec( ListSpec ) ).to.be.true;
-      expect( isSpec( ItemSpec ) ).to.be.true;
-      expect( isSpec( ContentSpec ) ).to.be.true;
+      expect( ListClause ).to.be.ok;
+      expect( isClause( ListClause ) ).to.be.true;
+      expect( isClause( ItemClause ) ).to.be.true;
+      expect( isClause( ContentClause ) ).to.be.true;
 
-      expect( C.isValid( ListSpec, [] ) ).to.be.true;
-      expect( C.isValid( ItemSpec, [] ) ).to.be.false;
+      expect( C.isValid( ListClause, [] ) ).to.be.true;
+      expect( C.isValid( ItemClause, [] ) ).to.be.false;
     } );
   } );
 } );

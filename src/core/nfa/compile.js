@@ -1,5 +1,5 @@
 var fragment = require( './fragment.js' );
-var Spec = require( '../../models/Spec' );
+var Clause = require( '../../models/Clause' );
 var deref = require( '../../utils/deref' );
 
 var indexedFragmentStates = function( fragment ) {
@@ -22,33 +22,33 @@ var indexedFragmentStates = function( fragment ) {
 
 var evalFunctions = {};
 
-function evalSpec( spec ) {
-  spec = deref( spec );
+function evalClause( clause ) {
+  clause = deref( clause );
   var evalFn;
 
-  if ( spec.type === null ) {
-    throw 'Spec has no type: ' + spec;
-  } else if ( !( spec.type in evalFunctions ) ) {
+  if ( clause.type === null ) {
+    throw 'Clause has no type: ' + clause;
+  } else if ( !( clause.type in evalFunctions ) ) {
     evalFn = evalFunctions.PRED;
   } else {
-    evalFn = evalFunctions[ spec.type ];
+    evalFn = evalFunctions[ clause.type ];
   }
-  var r = evalFn( spec );
+  var r = evalFn( clause );
   return r;
 }
 
 
 var evalChildThen = function( wrapper ) {
-  return function evalChildThenWrapped( spec ) {
-    var childFrag = evalSpec( spec.exprs[ 0 ] );
+  return function evalChildThenWrapped( clause ) {
+    var childFrag = evalClause( clause.exprs[ 0 ] );
     return wrapper( childFrag );
   };
 };
 
 var evalChildrenThen = function( wrapper ) {
-  return function evalChildrenThenWrapped( spec ) {
-    var childFrags = spec.exprs.map( ( child ) => {
-      var s = evalSpec( child.expr );
+  return function evalChildrenThenWrapped( clause ) {
+    var childFrags = clause.exprs.map( ( child ) => {
+      var s = evalClause( child.expr );
       s.name = child.name;
       return s;
     } );
@@ -73,7 +73,7 @@ evalFunctions.PRED = ( x ) => {
 };
 
 function wrapRoot( expr ) {
-  return new Spec( {
+  return new Clause( {
     type: 'ROOT',
     exprs: [ expr ],
   } );
@@ -81,7 +81,7 @@ function wrapRoot( expr ) {
 
 var compile = function( expr ) {
   var rootedExpr = wrapRoot( expr );
-  var fragment = evalSpec( rootedExpr );
+  var fragment = evalClause( rootedExpr );
   var states = indexedFragmentStates( fragment );
   var numStates = states.length;
   var nfaTransitions = {};
@@ -92,7 +92,7 @@ var compile = function( expr ) {
     }
     var outTrans = {};
     state.transitions.forEach( ( fragTrans ) => {
-      outTrans[ fragTrans.target.index ] = fragTrans.spec;
+      outTrans[ fragTrans.target.index ] = fragTrans.clause;
     } );
     nfaTransitions[ state.index.toString() ] = outTrans;
   } );
