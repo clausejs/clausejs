@@ -2,7 +2,7 @@ import { meta as M } from '../';
 
 M( '/clausejs', {
   'name': 'C',
-  'comment': 'Registers or retrieves a clause from global clause regitry by path.',
+  'comment': 'Convenient method that combines C.get() and C.set() into one function to get or set clauses from the global registry.',
   'args': {
     'register': {
       'comment': 'Put the given expression onto the given path in the global clause registry.',

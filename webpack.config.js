@@ -26,6 +26,7 @@ module.exports = {
   entry: {
     'packages/clausejs/dist/clausejs': './src/index.js',
     'packages/clausejs-gen/dist/clausejs-gen': './src/gen/index.js',
+    'packages/clausejs-docgen/dist/clausejs-docgen': './src/docgen/index.js',
     'packages/clausejs-react/dist/clausejs-react': './src/react/index.js',
     'docs/bundle/functional': './docs/src/functional.js',
     'docs/bundle/content': './docs/src/content.js',

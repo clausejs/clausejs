@@ -79,7 +79,7 @@
       <div class="col-md-2 col-sm-3 cot">
         <div class="inline-headers">
           <h5><u>Clause</u></h5>
-          (<span class="clausejs-version">0.0.22</span>)
+          (<span class="clausejs-version">0.0.23</span>)
         </div>
         <ul>
           <li><a href="https://github.com/clausejs/clausejs">Github Repository</a></li>
@@ -150,12 +150,16 @@
   </dl></div>
       </div>
       <div class="col-md-10 col-sm-9 offset-md-2 offset-sm-3 main">
-        <h1>Clause</h1>
+        <h1>Clause (js)</h1>
         <hr>
-        (To contribute to API notes &amp; examples, make a pull request to <a href="https://github.com/clausejs/clausejs/blob/master/src/clauses/index.annotation.js">annotation source files here</a>.)
+        <p>(
+          API docs and the index table are auto-generated with <a href="https://github.com/clausejs/clausejs/tree/master/packages/clausejs-docgen">spec-docgen</a>.
+        <br>
+          To contribute to API notes &amp; examples, make a pull request to <a href="https://github.com/clausejs/clausejs/blob/master/src/clauses/index.annotation.js">annotation source files here</a>.)
+        </p>
         <section id="introduction">
           <h3>Introduction</h3>
-          Refer to <a href="https://github.com/clausejs/clausejs#clausejs-">README</a> file for basic intro.
+          Refer to <a href="https://github.com/clausejs/clausejs#clause-js">README</a> file for basic intro.
         </section>
         <section id="conformation" class="markdown-article" markdown-path="conformation.md"><h3 id="whatisconformation">What is Conformation?</h3>
 <p>To put it plainly, as a developer you expect your data to be of certain &quot;shape&quot;.</p>
@@ -197,7 +201,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
           </div>
         
     <dl class="card-block">
-    <dd>Registers or retrieves a clause from global clause regitry by path.</dd>
+    <dd>Convenient method that combines C.get() and C.set() into one function to get or set clauses from the global registry.</dd>
 <dt>Synopsis</dt><dd><ul><li>&lt;register&gt;:<div><ul><em>C(nsPath, expression)</em></ul></div></li><li>&lt;retrieve&gt;:<div><ul><em>C(nsPath)</em></ul></div></li></ul></dd>
 <dt>Argument clause</dt><dd>
     

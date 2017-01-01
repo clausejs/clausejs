@@ -1,15 +1,15 @@
 var expect = require( 'chai' ).expect;
 
-var s = require( '../src' );
-var Problem = s.Problem;
-var shape = s.shape;
+var C = require( '../src' );
+var Problem = C.Problem;
+var shape = C.shape;
 
 function startWithOo( key ) {
   return key.indexOf( 'oo' ) === 0;
 }
 
-describe( 'shape', function() {
-  it( 'simple key set', function() {
+describe( 'shape', () => {
+  it( 'simple key set', () => {
     var ObjClause = shape( {
       req: [ 'a', 'b', 'c' ],
     } );
@@ -25,9 +25,9 @@ describe( 'shape', function() {
   it( 'single val clauses', () => {
     var ObjClause = shape( {
       required: {
-        a: s.isStr,
-        b: s.any,
-        c: s.isNum,
+        a: C.isStr,
+        b: C.any,
+        c: C.isNum,
       },
     } );
     var conformed1 = { a: '', b: null, c: 2 };
@@ -39,17 +39,17 @@ describe( 'shape', function() {
     expect( ObjClause.conform( unconformed1 ) ).to.be.an.instanceof( Problem );
   } );
 
-  it( 'key val verify', function() {
+  it( 'key val verify', () => {
     var ObjClause1 = shape( {
       req: {
-        'title': s.isStr,
-        'userId': s.isNum,
+        'title': C.isStr,
+        'userId': C.isNum,
       },
       opt: {
-        'content': s.isStr,
+        'content': C.isStr,
         'ooShape': [ startWithOo, shape( {
           req: {
-            'val': s.isNum,
+            'val': C.isNum,
           },
         } ) ],
       },
@@ -58,14 +58,14 @@ describe( 'shape', function() {
     //alternative spelling
     var ObjClause2 = shape( {
       required: {
-        'title': s.isStr,
-        'userId': s.isNum,
+        'title': C.isStr,
+        'userId': C.isNum,
       },
       optional: {
-        'content': s.isStr,
+        'content': C.isStr,
         'ooShape': [ startWithOo, shape( {
           required: {
-            'val': s.isNum,
+            'val': C.isNum,
           },
         } ) ],
       },
@@ -91,6 +91,25 @@ describe( 'shape', function() {
       expect( ObjClause.conform( unconformed2 ) ).to.be.an.instanceof( Problem );
       expect( ObjClause.conform( unconformed3 ) ).to.be.an.instanceof( Problem );
       expect( ObjClause.conform( unconformed4 ) ).to.be.an.instanceof( Problem );
+    } );
+  } );
+
+  describe( 'mutate', () => {
+    it( 'should create new object by default', () => {
+      var ObjClause = shape( {
+        required: {
+          a: C.isStr,
+          b: C.any,
+          c: C.isNum,
+        },
+      } );
+      var conformed1 = { a: '', b: null, c: 2 };
+      var conformed2 = { a: '', b: null, c: 2 };
+
+      expect( C.conform( ObjClause, conformed1 ) === conformed1 ).to.be.false;
+
+      // TODO
+      // expect( C.conform( ObjClause, conformed2, { mutate: true } ) === conformed2 ).to.be.true;
     } );
   } );
 } );

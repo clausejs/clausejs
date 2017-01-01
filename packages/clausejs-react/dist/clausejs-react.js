@@ -98,11 +98,11 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_113__;
 "use strict";
 
 
-var _ClauseComponent = __webpack_require__(94);
+var _ClauseComponent = __webpack_require__(98);
 
 var _ClauseComponent2 = _interopRequireDefault(_ClauseComponent);
 
-var _fromBaseClass = __webpack_require__(88);
+var _fromBaseClass = __webpack_require__(92);
 
 var _fromBaseClass2 = _interopRequireDefault(_fromBaseClass);
 
@@ -115,7 +115,7 @@ module.exports = {
 
 /***/ },
 
-/***/ 88:
+/***/ 92:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -179,13 +179,13 @@ module.exports.default = fromBaseClass;
 
 /***/ },
 
-/***/ 94:
+/***/ 98:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _fromBaseClass = __webpack_require__(88);
+var _fromBaseClass = __webpack_require__(92);
 
 var _fromBaseClass2 = _interopRequireDefault(_fromBaseClass);
 

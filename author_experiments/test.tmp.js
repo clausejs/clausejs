@@ -2,6 +2,7 @@ require( 'babel-core/register' );
 
 // var s = require( '../src/core/regex' );
 var C = require( '../src' );
+window.C = C;
 
 var myClause = C.cat( 'a', C.isStr, {} );
 

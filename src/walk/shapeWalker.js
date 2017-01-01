@@ -99,11 +99,11 @@ function shapeWalker( clause, walkFn ) {
 
     var conform = { walkOpts };
 
-    var { instrument } = walkOpts;
+    var { mutate } = walkOpts;
 
     var conformed;
 
-    if ( instrument ) {
+    if ( mutate ) {
       conformed = val;
     } else {
       conformed = oAssign( {}, val );

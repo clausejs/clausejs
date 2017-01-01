@@ -228,11 +228,16 @@ npm run test
 Clojure IMO is a great and practical language. If you can use Clojure/ClojureScript, by all means go ahead and try cljs.spec.
 
 
-The goal for Clause is to provide JavaScript developers as much the benefit as possible derived from the clause system.
+The goal for Clause is to provide JavaScript developers as much the benefit derived from the spec system as possible.
 
-Clause API for the most part is kept similar to clojure.spec, except for some differences related to usability and JavaScript-clauseific conventions.
+Clause API for the most part is kept similar to clojure.spec, except for some differences related to usability and JavaScript-related conventions.
 
-## Credit & Prior work
-- Both origin of the idea and API are heavily inspired by Rich Hickey's [clojure.spec](http://clojure.org/about/clause)
-- Some aspects of the design are drawn by Scheme's [contract system](https://docs.racket-lang.org/guide/contracts.html)
-- NFA clause matching inspired by Thompson NFA regex matching algorithm, and is based on [afader's implementation](https://github.com/afader/thompson-regex-js)
+### Why don't you call it "Spec"?
+
+"Spec" already carries a different meaning in the JavaScript community, which is associated with unit tests. When I was gathering feedback from developers with the term "spec", I often got a blank stare with commments like "I already know how to write a spec. What's the point?"
+Therefore, I quickly realized a new term needs to be coined to refect the new concept introduced in Clause.
+
+## Credit, Inspirations & Prior work
+- Both origin of the idea and API are heavily inspired by Rich Hickey's [clojure.spec](http://clojure.org/about/clause).
+- Some aspects of the design are drawn by Scheme's [contract system](https://docs.racket-lang.org/guide/contracts.html).
+- NFA clause matching inspired by Thompson NFA regex matching algorithm, and is based on [afader's implementation](https://github.com/afader/thompson-regex-js).
