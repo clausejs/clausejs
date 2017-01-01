@@ -1,13 +1,10 @@
 var oAssign = require( 'object-assign' );
-
 var Clause = require( '../models/Clause' );
 var isClause = require( '../utils/isClause' );
 var isPred = require( '../utils/isPred' );
 var isExpr = require( '../utils/isExpr' );
-var not = require( '../preds/not' );
 var clauseFromAlts = require( '../utils/clauseFromAlts' );
-var isObj = require( '../preds/isObj' );
-var isStr = require( '../preds/isStr' );
+var isProblem = require( '../utils/isProblem' );
 var isClauseName = require( '../utils/isClauseName' );
 var namedFn = require( '../utils/namedFn' );
 var isClauseRef = require( '../utils/isClauseRef' );
@@ -16,6 +13,12 @@ var c = require( '../core/constants' );
 var coerceIntoClause = require( '../utils/coerceIntoClause' );
 var fclause = require( './fclause' );
 var walk = require( '../walk' );
+
+var isObj = require( '../preds/isObj' );
+var isStr = require( '../preds/isStr' );
+var oneOf = require( '../preds/oneOf' );
+var not = require( '../preds/not' );
+
 var clauseClause = coerceIntoClause( isClause );
 var nameClause = coerceIntoClause( isClauseName );
 
@@ -31,109 +34,86 @@ var ClauseRefClause = coerceIntoClause( isClauseRef );
 var DelayedClauseClause = coerceIntoClause( isDelayedClause );
 var PredClause = coerceIntoClause( isPred );
 
-var ExprClause = orOp( {
-  expressions: {
-    withLabels: [
-      { name: 'clause', expr: {
-        clause: ClauseClause,
-      } },
-      { name: 'pred', expr: {
-        clause: PredClause,
-      } },
-      { name: 'delayedClause', expr: {
-        clause: DelayedClauseClause,
-      } },
-      { name: 'clauseRef', expr: {
-        clause: ClauseRefClause,
-      } },
-    ],
-  }
-} );
 
-var NameExprOptionalComment = catOp( {
-  expressions: {
-    withLabels: [
-      { name: 'name', expr: {
-        clause: nameClause,
-      } },
-      { name: 'comment', expr: {
-        clause: zeroOrOneOp( {
-          expr: {
-            pred: isStr,
-          }
-        } ),
-      } },
-      { name: 'expr', expr: {
-        clause: ExprClause,
-      } },
-    ],
-  }
-} );
+// helper method for constructing labelled structure
+function _labelled( ) {
+  var arr = Array.prototype.slice.call( arguments );
+  return {
+    expressions: {
+      withLabels: arr.map(
+        ( [ name, type, v ] ) =>
+          ( { name, expr: { [ type ]: v } } )
+      )
+    }
+  };
+}
 
-var MultipleArgClause = catOp( {
-  expressions: {
-    withLabels: [
-      { name: 'expressions',
-        expr: {
-          clause: orOp( {
-            expressions: {
-              withLabels: [
-                {
-                  name: 'withLabels',
-                  expr: {
-                    clause: orOp( {
-                      expressions: {
-                        withoutLabels: [
-                          {
-                            clause: zeroOrMoreOp( {
-                              expr: {
-                                clause: NameExprOptionalComment,
-                              },
-                            } )
-                          },
-                          {
-                            clause: collOfOp( {
-                              expr: {
-                                clause: NameExprOptionalComment,
-                              },
-                            } )
-                          },
-                        ]
-                      }
-                    } ),
-                  },
-                },
-                {
-                  name: 'withoutLabels',
-                  expr: {
-                    clause: zeroOrMoreOp( {
-                      expr: {
-                        clause: ExprClause,
-                      },
-                    } ),
-                  },
-                },
-              ],
-            }
-          } )
-        }
-      },
-      {
-        name: 'options',
-        expr: {
-          clause: zeroOrOneOp( {
-            expr: {
-              clause: andOp( [
-                 { pred: isObj },
-                 { pred: not( isExpr ) }
-              ] )
-            }
-          } )
-        }
+function _unlabelled() {
+  var arr = Array.prototype.slice.call( arguments );
+  return {
+    expressions: {
+      withoutLabels: arr.map(
+        ( [ type, v ] ) =>
+          ( { [ type ]: v } )
+      )
+    }
+  };
+}
+
+var ExprClause = orOp( _labelled(
+    [ 'clause', 'clause', ClauseClause ],
+    [ 'pred', 'clause', PredClause ],
+    [ 'delayedClause', 'clause', DelayedClauseClause ],
+    [ 'clauseRef', 'clause', ClauseRefClause ]
+   ) );
+
+var NameExprOptionalComment = catOp( _labelled(
+    [ 'name', 'clause', nameClause ],
+    [ 'comment', 'clause', zeroOrOneOp( { expr: { pred: isStr } } ) ],
+    [ 'expr', 'clause', ExprClause ]
+  ) );
+
+var MultipleArgClause = catOp( _labelled(
+  [
+    'expressions', 'clause',
+    orOp( _labelled(
+      [
+        'withLabels', 'clause',
+        orOp( _unlabelled(
+          [
+            'clause',
+            zeroOrMoreOp( {
+              expr: { clause: NameExprOptionalComment },
+            } )
+          ],
+          [
+            'clause',
+            collOfOp( {
+              expr: { clause: NameExprOptionalComment },
+            } )
+          ]
+         ) )
+      ],
+      [
+        'withoutLabels', 'clause',
+        zeroOrMoreOp( {
+          expr: { clause: ExprClause },
+        } )
+      ]
+    ) )
+  ],
+  [
+    'options', 'clause',
+    zeroOrOneOp( {
+      expr: {
+        clause: andOp( [
+          { pred: isObj },
+          { pred: not( isExpr ) }
+        ] )
       }
-    ]
-  }
-} );
+    } )
+  ]
+) );
 
 function andOp( exprs ) {
   var andS = new Clause( {
@@ -179,27 +159,14 @@ var multipleArgOpClause = {
   ret: clauseClause,
 };
 
-var singleArgOpClauseFn = ( optClause ) => ( {
-  args: catOp( {
-    expressions: {
-      withLabels: [
-        {
-          name: 'expr',
-          expr: {
-            clause: ExprClause,
-          }
-        },
-        {
-          name: 'opts',
-          expr: {
-            clause: zeroOrOneOp( {
-              expr: optClause
-            } ),
-          }
-        },
-      ],
-    }
-  } ),
+var singleArgOpClauseFn = ( optClauseAlts ) => ( {
+  args: catOp( _labelled(
+    [ 'expr', 'clause', ExprClause ],
+    [
+      'opts', 'clause',
+      zeroOrOneOp( { expr: optClauseAlts } )
+    ]
+  ) ),
   ret: clauseClause,
 } );
 
@@ -314,6 +281,149 @@ function genSingleArgOp( type ) {
   } );
 }
 
+
+function isPropName( x ) {
+  return isStr( x );
+}
+
+var TYPE_SHAPE = 'SHAPE';
+var TYPE_MAP_OF = 'MAP_OF';
+
+var FieldDefs = shapeOp( {
+  shapeArgs: {
+    optionalFields: {
+      opt: {
+        fieldDefs: {
+          fields: {
+            'fields':
+            {
+              keyValExprPair: {
+                keyExpression: {
+                  clause: coerceIntoClause( isStr ),
+                },
+                valExpression: {
+                  clause: orOp( _labelled(
+                    [ 'valExpressionOnly', 'clause', ExprClause ],
+                    [
+                      'keyValExprPair', 'clause',
+                      catOp( _labelled(
+                        [ 'keyExpression', 'clause', ExprClause ],
+                        [ 'valExpression', 'clause', ExprClause ]
+                      ) )
+                    ]
+                  ) )
+                },
+              }
+            },
+          }
+        }
+      }
+    },
+  }
+} );
+
+
+var KeyOnlyArray = zeroOrMoreOp( {
+  expr: { pred: isPropName }
+} );
+
+var KeyArrayOrFieldDefs = orOp( _labelled(
+  [ 'keyList', 'clause', KeyOnlyArray ],
+  [ 'fieldDefs', 'clause', FieldDefs ]
+) );
+
+var ShapeArgs = shapeOp( {
+  shapeArgs: {
+    optionalFields: {
+      opt: {
+        fieldDefs: {
+          fields: {
+            'requiredFields': {
+              keyValExprPair: {
+                keyExpression: {
+                  pred: oneOf( 'req', 'required' ),
+                },
+                valExpression: {
+                  clause: KeyArrayOrFieldDefs
+                },
+              },
+            },
+            'optionalFields': {
+              keyValExprPair: {
+                keyExpression: {
+                  pred: oneOf( 'opt', 'optional' ),
+                },
+                valExpression: {
+                  clause: KeyArrayOrFieldDefs
+                },
+              },
+            },
+          }
+        }
+      }
+    },
+  }
+} );
+
+var MapOfFnClause = fclause( {
+  args: catOp(
+    _labelled(
+      [ 'keyExpression', 'clause', ExprClause ],
+      [ 'valExpression', 'clause', ExprClause ]
+    )
+  ),
+  ret: isClause,
+} );
+
+var ShapeFnClause = fclause( {
+  args: catOp( _labelled(
+      [ 'shapeArgs', 'clause', ShapeArgs ]
+    ) ),
+  ret: isClause,
+} );
+
+function mapOfOp( cargs ) {
+  if ( isProblem( cargs ) ) {
+    throw cargs;
+  }
+  const { keyExpression, valExpression } = cargs;
+
+  var s = new Clause( {
+    type: TYPE_MAP_OF,
+    exprs: [],
+    opts: { keyExpression, valExpression }
+  } );
+
+  s.conform = function mapOfConform( x ) {
+    return walk( s, x, { conform: true } );
+  }
+
+  return s;
+}
+
+function shapeOp( cargs ) {
+  if ( isProblem( cargs ) ) {
+    throw cargs;
+  }
+  // const { shapeArgs: { requiredFields, optionalFields } } = cargs;
+
+  var s = new Clause( {
+    type: TYPE_SHAPE,
+    exprs: [ ],
+    // TODO: do fragments
+    fragments: [ ],
+    opts: { conformedArgs: cargs }
+  } );
+  s.conform = function shapeConform( x ) {
+    return walk( s, x, { conform: true } );
+  }
+  return s;
+}
+
+var shape = ShapeFnClause.instrumentConformed( shapeOp );
+var mapOf = MapOfFnClause.instrumentConformed( mapOfOp );
+
+
 var CollOfClause = fclause( singleArgOpClauseFn( { pred: isObj } ) );
 var collOf = CollOfClause.instrumentConformed( collOfOp );
 
@@ -338,6 +448,11 @@ var core = {
   CollOfClause,
   collOf,
   and,
+  shape,
+  keys: shape,
+  mapOf,
+  ShapeFnClause,
+  MapOfFnClause,
 };
 
 core[ 'alt' ] = core.or;
@@ -346,6 +461,25 @@ core[ '+' ] = core.oneOrMore;
 core[ '?' ] = core.zeroOrOne;
 
 module.exports = core;
+
+
+// // // // //
+
+// var TestClause = shapeOp({
+//   shapeArgs: {
+//     req: {
+//       fieldDefs: {
+//         fields: {
+//           'a': { valExpressionOnly: { pred: isStr } }
+//         }
+//       }
+//     }
+//   }
+// });
+// //
+// var r = TestClause.conform({a: 's'});
+// console.log(r);
+
 
 // // //
 //

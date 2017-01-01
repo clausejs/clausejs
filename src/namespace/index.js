@@ -1,7 +1,7 @@
 var oAssign = require( 'object-assign' );
 var ClauseRef = require( '../models/ClauseRef' );
 import { cat, or, fclause } from '../core' ;
-var { shape } = require( '../core/objRelated' );
+var { shape } = require( '../core/regex' );
 var isClause = require( '../utils/isClause' );
 var isPred = require( '../utils/isPred' );
 var isUndefined = require( '../preds/isUndefined' );

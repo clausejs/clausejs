@@ -5,7 +5,7 @@ import { any, ExprClause, CatFnClause, OrFnClause, AndFnClause,
   CollOfClause, collOf, ClauseClause, PredClause, DelayedClauseClause, ClauseRefClause,
   ZeroOrMoreFnClause, OneOrMoreFnClause, ZeroOrOneFnClause } from '../core';
 import { WallFnClause } from '../core/wall';
-import { ShapeFnClause, MapOfFnClause } from '../core/objRelated';
+import { ShapeFnClause, MapOfFnClause } from '../core/regex';
 import { isNamespacePath, GetNSFnClause, NamespaceFnClause, MetaFnClause, SetNSFnClause, NamespaceObjClause } from './namespace.types';
 
 // TODO

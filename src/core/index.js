@@ -1,6 +1,6 @@
 var oAssign = require( 'object-assign' );
 var regex = require( './regex' );
-var { shape, keys, mapOf, } = require( './objRelated' );
+var { shape, keys, mapOf, } = require( './regex' );
 var nullable = require( './nullable' );
 var undefinable = require( './undefinable' );
 var { wall } = require( './wall' );
