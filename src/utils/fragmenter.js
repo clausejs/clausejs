@@ -1,3 +1,5 @@
+var fnName = require( './fnName' );
+
 var multipleArgFragmenter = ( { opts: { named }, exprs } ) => {
   if ( exprs.length === 0 ) {
   //empty case

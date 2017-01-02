@@ -1,7 +1,6 @@
 var oAssign = require( 'object-assign' );
 var ClauseRef = require( '../models/ClauseRef' );
-import { cat, or, fclause } from '../core' ;
-var { shape } = require( '../core/regex' );
+var { cat, or, fclause, shape } = require( '../core' );
 var isClause = require( '../utils/isClause' );
 var isPred = require( '../utils/isPred' );
 var isUndefined = require( '../preds/isUndefined' );
@@ -9,8 +8,8 @@ var walk = require( '../walk' );
 var coerceIntoClause = require( '../utils/coerceIntoClause' );
 var oPath = require( './simpleObjectPath' );
 
-import { isNamespacePath, isClauseRef } from '../utils';
-import { GetNSFnClause, SetNSFnClause, NamespaceFnClause, MetaFnClause } from '../clauses/namespace.types';
+var { isNamespacePath, isClauseRef } = require( '../utils' );
+var { GetNSFnClause, SetNSFnClause, NamespaceFnClause, MetaFnClause } = require( '../clauses/namespace.types' );
 var reg;
 
 var _get = fclause( {
