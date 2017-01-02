@@ -41,7 +41,6 @@
     "object-assign": "4.1.0"
   },
   "devDependencies": {
-    "lodash": "4.17.2",
     "babel-core": "6.21.0",
     "babel-eslint": "^7.1.1",
     "babel-loader": "6.2.10",
@@ -56,11 +55,13 @@
     "eslint-config-idiomatic": "^2.1.0",
     "exports-loader": "^0.6.3",
     "expose-loader": "^0.7.1",
+    "lodash": "4.17.2",
     "mocha": "^3.0.2",
-    "mocha-testcheck": "^0.1.2",
+    "mocha-testcheck": "0.1.2",
     "raw-loader": "^0.5.1",
     "showdown": "^1.5.4",
     "style-loader": "^0.13.1",
+    "testcheck": "^0.1.4",
     "webpack": "2.2.0-rc.2"
   }
 }

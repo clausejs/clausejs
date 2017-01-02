@@ -1,13 +1,13 @@
 <img src="https://cdn.rawgit.com/clausejs/clausejs/master/media/clausejs.svg"
      width="190" height="190" align="right" hspace="10" />
 
-# Clause (js)
+# Clause
+
+A powerful & practical JavaScript library for data validation, conformation, runtime-checking & property-based testing.
 
  [![Build Status](https://travis-ci.org/clausejs/clausejs.svg?branch=master)](https://travis-ci.org/clausejs/clausejs) [![npm version](https://badge.fury.io/js/clausejs.svg)](https://badge.fury.io/js/clausejs)  [![Size Gzipped](http://img.badgesize.io/clausejs/clausejs/master/packages/clausejs/dist/clausejs.min.js?compression=gzip&label=min%2Bgzipped)](packages/clausejs/dist) [![Open Source Love](https://badges.frapsoft.com/os/mit/mit.svg?v=102)](https://github.com/ellerbrock/open-source-badge/)
 
-## What is Clause?
-
-Clause is a powerful & flexible JavaScript library for data validation, conformation, runtime-checking & property-based testing.
+## Overview of Features
 
 Clause enables you to:
 
@@ -16,7 +16,7 @@ Clause enables you to:
 - Define complex clauses for your functions' arguments, return value and the relation between them
 - Conform (parse) your data/arguments for writing simpler code
 
-Clause is a JavaScript port of Clojure.spec, with its own improvements and advancements that are particular to the JavaScript language.
+Clause started as a JavaScript port of [clojure.spec](http://clojure.org/about/spec). As time progresses Clause will evolve with its own improvements and advancements that are particular to the JavaScript language and its ecosystem.
 
 ## Why Clause
 
@@ -30,7 +30,6 @@ Clause's ultimate goal is to provide *the defining contract* for your JS app. By
 - Convenient **data conformation** that simplifies your code for complex data and parameter parsing
 - **Automatic generation of API documentation** for your app (via [clausejs-docgen](packages/clausejs-docgen), WIP)
 - **Automatic generation of property-based test cases** for your functions (via [clausejs-gen](packages/clausejs-gen), coming soon)
-
 
 ## Project status
 
@@ -227,7 +226,6 @@ npm run test
 
 Clojure IMO is a great and practical language. If you can use Clojure/ClojureScript, by all means go ahead and try cljs.spec.
 
-
 The goal for Clause is to provide JavaScript developers as much the benefit derived from the spec system as possible.
 
 Clause API for the most part is kept similar to clojure.spec, except for some differences related to usability and JavaScript-related conventions.
@@ -238,6 +236,7 @@ Clause API for the most part is kept similar to clojure.spec, except for some di
 Therefore, I quickly realized a new term needs to be coined to refect the new concept introduced in Clause.
 
 ## Credit, Inspirations & Prior work
-- Both origin of the idea and API are heavily inspired by Rich Hickey's [clojure.spec](http://clojure.org/about/clause).
+
+- Both origin of the idea and API are heavily inspired by Rich Hickey et, al.'s [clojure.spec](http://clojure.org/about/clause).
 - Some aspects of the design are drawn by Scheme's [contract system](https://docs.racket-lang.org/guide/contracts.html).
 - NFA clause matching inspired by Thompson NFA regex matching algorithm, and is based on [afader's implementation](https://github.com/afader/thompson-regex-js).
