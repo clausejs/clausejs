@@ -85,7 +85,7 @@ function fclauseWalker( clause, walkFn ) {
     if ( argsClause ) {
       var instrumentedArgs = walkFn( argsClause, args, { phase: 'trailblaze' } );
       if ( isProblem( instrumentedArgs ) ) {
-        var p = new Problem( args, clause, [ instrumentedArgs ], `Arguments ${stringifyWithFnName( args )} for function ${fnName} failed validation` );
+        var p = new Problem( args, clause, [ instrumentedArgs ], `Arguments ${stringifyWithFnName( args )} for function ${fnName} is not valid` );
         betterThrow( p );
       } else {
         return walkFn( argsClause, instrumentedArgs, { phase: 'reconstruct', conform: false, instrument: true } );
@@ -99,7 +99,7 @@ function fclauseWalker( clause, walkFn ) {
     if ( retClause ) {
       var instrumentedRetVal = walkFn( retClause, retVal, { phase: 'trailblaze' } );
       if ( isProblem( instrumentedRetVal ) ) {
-        var p = new Problem( retVal, clause, [ instrumentedRetVal ], 'Return value ' + retVal + ' for function ' + fnName + ' is not valid.' );
+        var p = new Problem( retVal, clause, [ instrumentedRetVal ], 'Return value for function ' + ( fnName || '<anonymous>' ) + '() is not valid' );
         betterThrow( p );
       } else {
         var r = walkFn( retClause, instrumentedRetVal, { phase: 'reconstruct', instrument: true, conform: false } );
