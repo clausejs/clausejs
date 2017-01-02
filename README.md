@@ -5,9 +5,10 @@
 
 A powerful & practical JavaScript library for data validation, conformation, runtime-checking & property-based testing.
 
- [![Build Status](https://travis-ci.org/clausejs/clausejs.svg?branch=master)](https://travis-ci.org/clausejs/clausejs) [![npm version](https://badge.fury.io/js/clausejs.svg)](https://badge.fury.io/js/clausejs)  [![Size Gzipped](http://img.badgesize.io/clausejs/clausejs/master/packages/clausejs/dist/clausejs.min.js?compression=gzip&label=min%2Bgzipped)](packages/clausejs/dist) [![Open Source Love](https://badges.frapsoft.com/os/mit/mit.svg?v=102)](https://github.com/ellerbrock/open-source-badge/)
+ [![Build Status](https://travis-ci.org/clausejs/clausejs.svg?branch=master)](https://travis-ci.org/clausejs/clausejs) [![npm version](https://badge.fury.io/js/clausejs.svg)](https://badge.fury.io/js/clausejs)  [![Size Gzipped](http://img.badgesize.io/clausejs/clausejs/master/packages/clausejs/dist/clausejs.min.js?compression=gzip&label=min%2Bgzipped)](packages/clausejs/dist) [![Open Source Love](https://badges.frapsoft.com/os/mit/mit.svg?v=102)](https://github.com/ellerbrock/open-source-badge/)  [![Discussion](https://img.shields.io/gitter/room/TechnologyAdvice/Stardust.svg)](https://gitter.im/clausejs/clausejs)
 
-## Overview of Features
+
+## Overview
 
 Clause enables you to:
 
@@ -20,9 +21,13 @@ Clause started as a JavaScript port of [clojure.spec](http://clojure.org/about/s
 
 ## Why Clause
 
-In fact, Clause does a lot more than just data validation and function argument checking.
+> If a programming language is regarded as a tool to aid the programmer, it should give him the greatest assistance in the most difficult aspects of his art, namely program design, documentation, and debugging.
+>
+> — *C. A. R. Hoare, Hints on Programming Language Design*
 
-Clause's ultimate goal is to provide *the defining contract* for your JS app. By asking you to write clauses for your data and functions *only once*, Clause strives at getting as much leverage out your effort as possible, including
+Clause aims at providing *the defining contract* for your JavaScript project. 
+
+By writing clauses for your data and functions *only once*, you can get a lot of leverage out your effort, including
 
 - Clearly defined specifications for your app's functions and data structures
 - Mathematically sound, plain-old-object style contracts that can be compared against previous and future versions to **detect breaking changes**
@@ -157,9 +162,15 @@ sumIsOdd( 1, 1, 1, {} ); // true (remember the optional trailing isObj we define
 sumIsOdd( 2, 2, 2, null ); // throws a "Problem" because arguments do not conform
 sumIsOdd( 2, 2, 2, {}, {} ); // same as above
 ```
-
 For more advanced features and concepts, refer to [documentation site](https://clause.js.org).
 
+## More Examples
+
+- [Simple example in browser](examples/simple.html)
+- [Experiment on clausing promises](examples/promise/index.js)
+- [Codebreaker game example](examples/codebreaker/index.js)
+
+In addition, there are plenty of examples in test files under [`/test`](test/).
 
 ## Try It Yourself
 
@@ -184,19 +195,25 @@ Include Clause script tag in `<head>` or `<body>` tag of your HTML:
 
 The variable `C` will be exposed in the global environment (e.g. `window` for browser and `globals` for Node.js).
 
+
+## Run tests
+
+### In Dev mode
+
+```bash
+npm run dev
+```
+
+### In CI mode
+```bash
+npm run test
+```
+
 ## Documentation
 
 Documentation website: http://clause.js.org
 
-## Detailed Examples
-
-- [Simple example in browser](examples/simple.html)
-- [Experiment on clausing promises](examples/promise/index.js)
-- [Codebreaker game example](examples/codebreaker/index.js)
-
-In addition, there are plenty of examples in test files under [`/test`](test/).
-
-## Performance & Reliability
+## Performance
 
 - [![Size Minified](http://img.badgesize.io/clausejs/clausejs/master/packages/clausejs/dist/clausejs.min.js?label=min)](packages/clausejs/dist) [![Size Gzipped](http://img.badgesize.io/clausejs/clausejs/master/packages/clausejs/dist/clausejs.min.js?compression=gzip&label=min%2Bgzipped)](packages/clausejs/dist)
 - Clause is mostly self-contained and has very few external dependencies.
@@ -212,19 +229,6 @@ WIP.
 - [`clausejs-gen`](packages/clausejs-gen): Generative/Property-based Testing
 - [`clausejs-diff`](packages/clausejs-diff): (Coming soon) clause version diffing that detects breaking changes.
 
-## Run tests
-
-### In Dev mode
-
-```bash
-npm run dev
-```
-
-### In CI mode
-```bash
-npm run test
-```
-
 ## FAQ
 
 ### Why not just use ClojureScript + cljs.spec?
@@ -235,10 +239,13 @@ The goal for Clause is to provide JavaScript developers as much the benefit deri
 
 Clause API for the most part is kept similar to clojure.spec, except for some differences related to usability and JavaScript-related conventions.
 
-### Why don't you call it "Spec"?
+### Why don't you call it "spec"?
 
-"Spec" already carries a different meaning in the JavaScript community, which is associated with unit tests. When I was gathering feedback from developers with the term "spec", I often got a blank stare with commments like "I already know how to write a spec. What's the point?"
-Therefore, I quickly realized a new term needs to be coined to refect the new concept introduced in Clause.
+"Spec" already carries a different meaning in the JavaScript community, which is strongly associated with unit tests. While introducing this library to developers with the term "spec", I was often met a blank stare along with a commment like "I already know how to write a spec, so what's the point?" I then quickly realized that a new term needs to be coined to refect some of the vastly different concepts introduced by Clause.
+
+## Community
+
+[![Discussion](https://img.shields.io/gitter/room/TechnologyAdvice/Stardust.svg)](https://gitter.im/clausejs/clausejs)
 
 ## Credit, Inspirations & Prior work
 
