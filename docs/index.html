@@ -4757,10 +4757,92 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-info">
     <legend class="clause-type">
-      <span class="tag tag-info"><span class="tag tag-info">any</span></span>
+      <span class="tag tag-info">or (alts)</span>
     </legend>
     
-    <div class="card-block">Any value.</div>
+    <div class="card-block">
+      
+      <p class="card-title">
+      
+      
+        Should be <em>one of</em> the following:
+      </p>
+    </div>
+    <ol class="list-group list-group-flush list-for-or">
+      
+        <li class="list-group-item card-outline-info">
+          <div class="row">
+            <div class="col-md-12">
+              <span class="tag tag-default">
+                Option 1
+              </span>
+              
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    
+    
+    <fieldset class="card card-outline-primary">
+    <legend class="clause-type">
+      <span class="tag tag-primary">of predicate</span>
+    </legend>
+    
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isString()" data-content="&lt;pre&gt;function isString(x) {
+  return x !== null &amp;&amp; x !== undefined &amp;&amp; x.constructor === String;
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <em>isString()</em>
+      </span>
+    </div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </li>
+    
+        <li class="list-group-item card-outline-info">
+          <div class="row">
+            <div class="col-md-12">
+              <span class="tag tag-default">
+                Option 2
+              </span>
+              
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 offset-md-1">
+              
+    
+    
+    <fieldset class="card card-outline-primary">
+    <legend class="clause-type">
+      <span class="tag tag-primary">of predicate</span>
+    </legend>
+    
+    <div class="card-block">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="any()" data-content="&lt;pre&gt;function any() {
+  return new Clause({
+    type: CLAUSE_TYPE_ANY,
+    exprs: [],
+    conformFn: identity
+  });
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        A value that satisfies
+        <em>any()</em>
+      </span>
+    </div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </li>
+    
+    </ol>
   
     </fieldset>
     
@@ -5980,11 +6062,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
           </div>
         
     <div class="card-block">
-      <span data-toggle="popover" data-trigger="hover" data-html="true" title="isDelayedClause()" data-content="&lt;pre&gt;function isDelayedClause(x) {
-  return x instanceof DelayedClause;
-}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+      <span data-toggle="popover" data-trigger="hover" data-html="true" title="instanceOfT()" data-content="&lt;pre&gt;function instanceOfT(x) {
+    return x instanceof t;
+  }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         A value that satisfies
-        <em>isDelayedClause()</em>
+        <em>instanceOfT()</em>
       </span>
     </div>
   
