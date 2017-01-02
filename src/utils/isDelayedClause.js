@@ -1,6 +1,5 @@
 var DelayedClause = require( '../models/DelayedClause' );
+var instanceOf = require( '../preds/instanceOf' );
 
 //TODO
-module.exports = function isDelayedClause( x ) {
-  return x instanceof DelayedClause;
-}
+module.exports = instanceOf( DelayedClause );
