@@ -21,6 +21,11 @@ const SingleArgPredClause = () => fclause( {
   ret: isBool,
 } );
 
+const IsUuidFnClause = fclause( {
+  args: cat( 'x', or( isStr, any ) ),
+  ret: isBool,
+} );
+
 const AnyClause = fclause( {
   ret: ClauseClause,
 } );
@@ -121,7 +126,7 @@ C( 'clausejs.preds/isFn', SingleArgPredClause() );
 C( 'clausejs.preds/isNum', SingleArgPredClause() );
 C( 'clausejs.preds/isInt', SingleArgPredClause() );
 C( 'clausejs.preds/isNatInt', SingleArgPredClause() );
-C( 'clausejs.preds/isUuid', SingleArgPredClause() );
+C( 'clausejs.preds/isUuid', IsUuidFnClause );
 C( 'clausejs.preds/oneOf', OneOfFnClause );
 C( 'clausejs.preds/equals', EqualsFnClause );
 C( 'clausejs.preds/instanceOf', InstanceOfFnClause );
