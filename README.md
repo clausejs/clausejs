@@ -31,6 +31,11 @@ Clause's ultimate goal is to provide *the defining contract* for your JS app. By
 - **Automatic generation of API documentation** for your app (via [clausejs-docgen](packages/clausejs-docgen), WIP)
 - **Automatic generation of property-based test cases** for your functions (via [clausejs-gen](packages/clausejs-gen), coming soon)
 
+Also worth looking at are videos on rationale for clojure.spec (and, by extension, Clause).
+
+- ["Agility & Robustness: Clojure spec" by Stuart Halloway](https://www.youtube.com/watch?v=VNTQ-M_uSo8&t=746s)
+- [Rich Hickey on Clojure Spec](https://vimeo.com/195711510)
+
 ## Project status
 
 Alpha.
