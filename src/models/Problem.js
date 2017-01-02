@@ -28,15 +28,23 @@ function _constructMessage( { subproblems, val, shortMessage }, lvl ) {
       reasons = subproblems.map( ( r ) => {
         return `${_open( lvl )}${_constructMessage( r, lvl + 1 )}${_close( lvl )}`;
       } );
-      return `${shortMessage}, because ${reasons.join( ', ' )}`;
+      return `${shortMessage}, because\n${_repeatStr( ' ', lvl * 2 )} ${reasons.join( ', ' )}`;
     }
   } else if ( typeof subproblems === 'object' ) {
     reasons = [];
     for ( var name in subproblems ) {
       reasons.push( `${_open( lvl )}${name}: ${_constructMessage( subproblems[ name ], lvl + 1 )}${_close( lvl )}` );
     }
-    return `${shortMessage}, because ${reasons.join( ', ' )}`;
+    return `${shortMessage}, because\n${_repeatStr( ' ', lvl * 2 )} ${reasons.join( ', ' )}`;
   }
+}
+
+function _repeatStr( str, n ) {
+  var r = '';
+  for ( let i = 0; i < n; i += 1 ) {
+    r += str;
+  }
+  return r;
 }
 
 function _open( lvl ) {
