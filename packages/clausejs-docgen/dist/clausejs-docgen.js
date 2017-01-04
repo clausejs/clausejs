@@ -21887,9 +21887,9 @@ function _typeFor(expr) {
   var lowerT = _rawTypeFor(expr);
   switch (lowerT) {
     case 'pred':
-      return 'of predicate';
+      return 'meets predicate';
     case 'fclause':
-      return 'of fclause (function)';
+      return 'fclause (a function)';
     case 'z_or_m':
       return 'zero or more of (*)';
     case 'o_or_m':
@@ -21897,11 +21897,11 @@ function _typeFor(expr) {
     case 'z_or_o':
       return 'optional (?)';
     case 'coll_of':
-      return 'collection of';
+      return 'a collection of';
     case 'cat':
-      return 'cat (concatenation) of';
+      return 'a cat (concatenation) of';
     case 'or':
-      return 'or (alts)';
+      return 'or (either one)';
     default:
       return '<span class="tag tag-info">' + lowerT + '</span>';
   }
@@ -21942,7 +21942,7 @@ function _clauseRefLink(p) {
 function _genAndClause(globalReg, exprName, path, expr, meta) {
   var example = meta && meta.example;
   var altDefs = expr.opts.conformedExprs.map(function (altE, idx) {
-    return '\n        <li class="list-group-item card-outline-' + _labelFor(expr) + '">\n          <div class="row">\n            <div class="col-md-12">\n              <span class="tag tag-default">Part ' + (idx + 1) + ' </span>\n            </div>\n          </div>\n          <div class="row">\n            <div class="col-md-11 offset-md-1">\n              ' + genForExpression(globalReg, null, clauseFromAlts(altE), null) + '\n            </div>\n          </div>\n        </li>\n    ';
+    return '\n        <li class="list-group-item card-outline-' + _labelFor(expr) + '">\n          <div class="row">\n            <div class="col-md-12">\n              <span class="tag tag-default">Condition ' + (idx + 1) + ' </span>\n            </div>\n          </div>\n          <div class="row">\n            <div class="col-md-11 offset-md-1">\n              ' + genForExpression(globalReg, null, clauseFromAlts(altE), null) + '\n            </div>\n          </div>\n        </li>\n    ';
   });
 
   var r = '\n    <div class="card-block">\n      <p class="card-title">\n        ' + _syntax(expr, globalReg, path) + '\n      </p>\n      <p class="card-title">\n        Should satisfy <em>all</em> of the following expression:\n      </p>\n    </div>\n    <ol class="list-group list-group-flush list-for-cat">\n      ' + altDefs.join(' ') + '\n    </ol>\n  ';

@@ -206,9 +206,9 @@ function _typeFor( expr ) {
   var lowerT = _rawTypeFor( expr );
   switch ( lowerT ) {
   case 'pred':
-    return 'of predicate';
+    return 'meets predicate';
   case 'fclause':
-    return 'of fclause (function)';
+    return 'fclause (a function)';
   case 'z_or_m':
     return 'zero or more of (*)';
   case 'o_or_m':
@@ -216,11 +216,11 @@ function _typeFor( expr ) {
   case 'z_or_o':
     return 'optional (?)';
   case 'coll_of':
-    return 'collection of';
+    return 'a collection of';
   case 'cat':
-    return 'cat (concatenation) of';
+    return 'a cat (concatenation) of';
   case 'or':
-    return 'or (alts)';
+    return 'or (either one)';
   default:
     return `<span class="tag tag-info">${lowerT}</span>`;
   }
@@ -269,7 +269,7 @@ function _genAndClause( globalReg, exprName, path, expr, meta ) {
         <li class="list-group-item card-outline-${_labelFor( expr )}">
           <div class="row">
             <div class="col-md-12">
-              <span class="tag tag-default">Part ${idx + 1} </span>
+              <span class="tag tag-default">Condition ${idx + 1} </span>
             </div>
           </div>
           <div class="row">
