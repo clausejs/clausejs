@@ -22047,9 +22047,13 @@ function genForExpression(globalReg, exprName, expr, meta) {
   }
 
   var name = meta && meta['name'] || exprName;
+  var header = exprName && path ? '\n      <h6>' + _stylizeName(expr, name) + '</h6>&nbsp;\n        <span class="tag tag-primary">\n          ' + _type(expr) + '\n        </span>\n      ' : null;
+  if (exprName && path) {
+    docstr = '\n      <p class="card-title">\n      ' + _syntax(expr, globalReg, path) + '\n      </p>\n    ' + docstr;
+  }
 
   return '\n    ' + (exprName && path ? '<a name="' + path + '"></a>' : '') + '\n    ' + _wrapCard({
-    header: exprName && path ? '\n      <h6>' + _stylizeName(expr, name) + '</h6>&nbsp;\n        <span class="tag tag-primary">\n          ' + _type(expr) + '\n        </span>\n      ' : null,
+    header: header,
     legend: !path ? _tagFor(expr) : '<span class="tag tag-info">satisfies clause</span>',
     borderlabel: _labelFor(expr)
   })(docstr);
@@ -22145,10 +22149,10 @@ function _clauseRefLink(p) {
 function _genAndClause(globalReg, exprName, path, expr, meta) {
   var example = meta && meta.example;
   var altDefs = expr.opts.conformedExprs.map(function (altE, idx) {
-    return '\n        <fieldset class="list-group-item card-outline-' + _labelFor(expr) + '">\n          <legend class="clause-type">\n            <span class="tag tag-default">Condition ' + (idx + 1) + ' </span>\n          </legend>\n          <div class="row">\n            <div class="col-md-11 offset-md-1">\n              ' + genForExpression(globalReg, null, clauseFromAlts(altE), null) + '\n            </div>\n          </div>\n        </fieldset>\n    ';
+    return '\n        <fieldset class="list-group-item card-outline-' + _labelFor(expr) + '">\n          <legend class="clause-type">\n            <span class="tag tag-default">Condition ' + (idx + 1) + ' </span>\n          </legend>\n          <div class="row">\n            <div class="col-md-12">\n              ' + genForExpression(globalReg, null, clauseFromAlts(altE), null) + '\n            </div>\n          </div>\n        </fieldset>\n    ';
   });
 
-  var r = '\n    <div class="card-block">\n      <p class="card-title">\n        ' + _syntax(expr, globalReg, path) + '\n      </p>\n      <p class="card-title">\n        Should satisfy <em>all</em> of the following expression:\n      </p>\n    </div>\n    <div class="list-group list-group-flush list-for-cat">\n      ' + altDefs.join(' ') + '\n    </div>\n  ';
+  var r = '\n    <div class="card-block">\n      <p class="card-title">\n        Should satisfy <em>all</em> of the following expression:\n      </p>\n    </div>\n    <div class="list-group list-group-flush list-for-cat">\n      ' + altDefs.join(' ') + '\n    </div>\n  ';
   return r;
 }
 
@@ -22159,10 +22163,10 @@ function _genCatClause(globalReg, exprName, path, expr, meta) {
         altE = _ref4.expr;
 
     var comment = meta && meta[name] && meta[name].comment;
-    return '\n        <fieldset class="list-group-item card card-outline-' + _labelFor(expr) + '">\n          <legend class="clause-type">\n          ' + (name ? '\n            <span class="tag tag-default">Part ' + (idx + 1) + '</span>\n            &lt;<span class="lead font-italic text-primary">' + name + '</span>&gt;          \n          ' : '<span class="tag tag-default">Part ' + (idx + 1) + '</span>') + '\n          </legend>\n          <div class="row">\n            <div class="col-md-12">\n              ' + (comment ? '<span>' + comment + '</span>' : '') + '\n            </div>\n          </div>\n          <div class="row">\n            <div class="col-md-11 offset-md-1">\n              ' + genForExpression(globalReg, null, altE, meta && meta[name]) + '\n            </div>\n          </div>\n        </fieldset>\n    ';
+    return '\n        <fieldset class="list-group-item card card-outline-' + _labelFor(expr) + '">\n          <legend class="clause-type">\n          ' + (name ? '\n            <span class="tag tag-default">Part ' + (idx + 1) + '</span>\n            &lt;<span class="lead font-italic text-primary">' + name + '</span>&gt;          \n          ' : '<span class="tag tag-default">Part ' + (idx + 1) + '</span>') + '\n          </legend>\n          <div class="row">\n            <div class="col-md-12">\n              ' + (comment ? '<span>' + comment + '</span>' : '') + '\n            </div>\n          </div>\n          <div class="row">\n            <div class="col-md-12">\n              ' + genForExpression(globalReg, null, altE, meta && meta[name]) + '\n            </div>\n          </div>\n        </fieldset>\n    ';
   });
 
-  var r = '\n    <div class="card-block">\n      <p class="card-title">\n        ' + _syntax(expr, globalReg, path) + '\n      </p>\n      <p class="card-title">\n        Should be <em>an ordered list</em> of the following:\n      </p>\n    </div>\n    <div class="list-group list-group-flush list-for-cat">\n      ' + altDefs.join(' ') + '\n    </div>\n  ';
+  var r = '\n    <div class="card-block">\n      <p class="card-title">\n        Should be <em>an ordered list</em> of the following:\n      </p>\n    </div>\n    <div class="list-group list-group-flush list-for-cat">\n      ' + altDefs.join(' ') + '\n    </div>\n  ';
   return r;
 }
 
@@ -22355,7 +22359,7 @@ function _predSourcePopover(prefix, pred) {
 }
 
 function _genUnknownClause(globalReg, exprName, path, expr, meta) {
-  var r = '\n    <div class="card-block">\n      ' + _syntax(expr, globalReg, path) + '\n      ' + expr.exprs.map(function (exprAlts) {
+  var r = '\n    <div class="card-block">\n      ' + expr.exprs.map(function (exprAlts) {
     var name = exprAlts.name,
         expr = exprAlts.expr;
 
@@ -22375,7 +22379,7 @@ function _genOrClause(globalReg, exprName, path, expr, meta) {
         altE = _ref7.expr;
 
     var comment = meta && meta[name] && meta[name].comment;
-    return '\n        <fieldset class="list-group-item card-outline-' + _labelFor(expr) + '">\n          <legend class="clause-type">\n            <span class="tag tag-default">\n                Option ' + (idx + 1) + '\n            </span>\n            ' + (name ? '\n                &lt;<span class="lead font-italic text-primary">' + name + '</span>&gt;\n            ' : '') + '\n          </legend>\n          <div class="row">\n            <div class="col-md-12">\n            ' + (comment ? '<span>' + comment + '</span>' : '') + '\n            </div>\n          </div>\n          <div class="row">\n            <div class="col-md-11 offset-md-1">\n              ' + genForExpression(globalReg, null, altE, meta && meta[name]) + '\n            </div>\n          </div>\n        </fieldset>\n    ';
+    return '\n        <fieldset class="list-group-item card-outline-' + _labelFor(expr) + '">\n          <legend class="clause-type">\n            <span class="tag tag-default">\n                Option ' + (idx + 1) + '\n            </span>\n            ' + (name ? '\n                &lt;<span class="lead font-italic text-primary">' + name + '</span>&gt;\n            ' : '') + '\n          </legend>\n          <div class="row">\n            <div class="col-md-12">\n            ' + (comment ? '<span>' + comment + '</span>' : '') + '\n            </div>\n          </div>\n          <div class="row">\n            <div class="col-md-12">\n              ' + genForExpression(globalReg, null, altE, meta && meta[name]) + '\n            </div>\n          </div>\n        </fieldset>\n    ';
   });
 
   var r = '\n    <div class="card-block">\n      ' + _syntax(expr, globalReg, path) + '\n      <p class="card-title">\n      ' + (exprName ? '' : '\n      ') + '\n        Should be <em>one of</em> the following:\n      </p>\n    </div>\n    <div class="list-group list-group-flush list-for-or">\n      ' + altDefs.join('') + '\n    </div>\n  ';

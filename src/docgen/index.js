@@ -149,16 +149,24 @@ function genForExpression( globalReg, exprName, expr, meta ) {
   }
 
   const name = meta && meta[ 'name' ] || exprName;
-
-  return `
-    ${( exprName && path ) ? `<a name="${path}"></a>` : ''}
-    ${_wrapCard( {
-      header: ( exprName && path ) ? `
+  const header = ( exprName && path ) ? `
       <h6>${_stylizeName( expr, name )}</h6>&nbsp;
         <span class="tag tag-primary">
           ${_type( expr )}
         </span>
-      ` : null,
+      ` : null;
+  if ( exprName && path ) {
+    docstr = `
+      <p class="card-title">
+      ${_syntax( expr, globalReg, path )}
+      </p>
+    ` + docstr;
+  }
+
+  return `
+    ${( exprName && path ) ? `<a name="${path}"></a>` : ''}
+    ${_wrapCard( {
+      header,
       legend: !path ? _tagFor( expr ) : '<span class="tag tag-info">satisfies clause</span>',
       borderlabel: _labelFor( expr )
     } )( docstr )}`;
@@ -271,7 +279,7 @@ function _genAndClause( globalReg, exprName, path, expr, meta ) {
             <span class="tag tag-default">Condition ${idx + 1} </span>
           </legend>
           <div class="row">
-            <div class="col-md-11 offset-md-1">
+            <div class="col-md-12">
               ${genForExpression( globalReg, null, clauseFromAlts( altE ), null )}
             </div>
           </div>
@@ -281,9 +289,6 @@ function _genAndClause( globalReg, exprName, path, expr, meta ) {
 
   const r = `
     <div class="card-block">
-      <p class="card-title">
-        ${_syntax( expr, globalReg, path )}
-      </p>
       <p class="card-title">
         Should satisfy <em>all</em> of the following expression:
       </p>
@@ -313,7 +318,7 @@ function _genCatClause( globalReg, exprName, path, expr, meta ) {
             </div>
           </div>
           <div class="row">
-            <div class="col-md-11 offset-md-1">
+            <div class="col-md-12">
               ${genForExpression( globalReg, null, altE, meta && meta[ name ] )}
             </div>
           </div>
@@ -323,9 +328,6 @@ function _genCatClause( globalReg, exprName, path, expr, meta ) {
 
   const r = `
     <div class="card-block">
-      <p class="card-title">
-        ${_syntax( expr, globalReg, path )}
-      </p>
       <p class="card-title">
         Should be <em>an ordered list</em> of the following:
       </p>
@@ -506,7 +508,6 @@ function _predSourcePopover( prefix, pred ) {
 function _genUnknownClause( globalReg, exprName, path, expr, meta ) {
   const r = `
     <div class="card-block">
-      ${_syntax( expr, globalReg, path )}
       ${expr.exprs.map( ( exprAlts ) => {
         var { name, expr } = exprAlts;
         if ( expr ) {
@@ -541,7 +542,7 @@ function _genOrClause( globalReg, exprName, path, expr, meta ) {
             </div>
           </div>
           <div class="row">
-            <div class="col-md-11 offset-md-1">
+            <div class="col-md-12">
               ${genForExpression( globalReg, null, altE, meta && meta[ name ] )}
             </div>
           </div>
