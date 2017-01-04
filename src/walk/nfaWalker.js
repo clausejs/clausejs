@@ -21,9 +21,13 @@ function nfaWalker( clause, walkFn ) {
     if ( matched === true ) {
       return chain;
     } else {
-      var subproblems = [];
+      let subproblems;
+
       if ( lastProblem ) {
-        subproblems.push( lastProblem );
+        let { name, position, problem } = lastProblem;
+        subproblems = { [ name ? `"${name}"` : `<At position ${position}>` ]: problem };
+      } else {
+        subproblems = [];
       }
       return new Problem( x, clause, subproblems, 'Clause ' + clause.type + ' did not match value' );
     }

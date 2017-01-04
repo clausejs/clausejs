@@ -33,7 +33,9 @@ function _constructMessage( { subproblems, val, shortMessage }, lvl ) {
   } else if ( typeof subproblems === 'object' ) {
     reasons = [];
     for ( var name in subproblems ) {
-      reasons.push( `${_open( lvl )}${name}: ${_constructMessage( subproblems[ name ], lvl + 1 )}${_close( lvl )}` );
+      if ( subproblems.hasOwnProperty( name ) ) {
+        reasons.push( `-> ${name}: ${_open( lvl )} ${_constructMessage( subproblems[ name ], lvl + 1 )}${_close( lvl )}` );
+      }
     }
     return `${shortMessage}, because\n${_repeatStr( ' ', lvl * 2 )} ${reasons.join( ', ' )}`;
   }

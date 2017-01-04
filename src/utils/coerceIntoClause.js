@@ -14,7 +14,6 @@ function coerceIntoClause( expr ) {
   } else if ( isPred( expr ) ) {
     return _wrap( expr );
   } else {
-    debugger;
     console.error( expr );
     throw new Error( 'Expression must either be a Clause object or a predication function that returns true or false. ' );
   }

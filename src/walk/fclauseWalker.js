@@ -82,10 +82,11 @@ function fclauseWalker( clause, walkFn ) {
   }
 
   function checkArgs( fn, fnName, args ) {
+    const displayFnName = fnName || '<anonymous>';
     if ( argsClause ) {
       var instrumentedArgs = walkFn( argsClause, args, { phase: 'trailblaze' } );
       if ( isProblem( instrumentedArgs ) ) {
-        var p = new Problem( args, clause, [ instrumentedArgs ], `Arguments ${stringifyWithFnName( args )} for function ${fnName} is not valid` );
+        var p = new Problem( args, clause, [ instrumentedArgs ], `Arguments for function ${displayFnName}() is not valid` );
         betterThrow( p );
       } else {
         return walkFn( argsClause, instrumentedArgs, { phase: 'reconstruct', conform: false, instrument: true } );
@@ -96,10 +97,12 @@ function fclauseWalker( clause, walkFn ) {
   }
 
   function checkRet( fn, fnName, retVal ) {
+    const displayFnName = fnName || '<anonymous>';
+
     if ( retClause ) {
       var instrumentedRetVal = walkFn( retClause, retVal, { phase: 'trailblaze' } );
       if ( isProblem( instrumentedRetVal ) ) {
-        var p = new Problem( retVal, clause, [ instrumentedRetVal ], 'Return value for function ' + ( fnName || '<anonymous>' ) + '() is not valid' );
+        var p = new Problem( retVal, clause, [ instrumentedRetVal ], 'Return value for function ' + displayFnName + '() is not valid' );
         betterThrow( p );
       } else {
         var r = walkFn( retClause, instrumentedRetVal, { phase: 'reconstruct', instrument: true, conform: false } );
@@ -111,12 +114,14 @@ function fclauseWalker( clause, walkFn ) {
   }
 
   function getArgConformedInstrumentedFn( fnName, fn ) {
+    const displayFnName = fnName || '<anonymous>';
+
     return function __instrumentConformed() {
       var args = Array.prototype.slice.call( arguments );
 
       var conformedArgs = walkFn( argsClause, args, { conform: true, instrument: true } );
       if ( isProblem( conformedArgs ) ) {
-        var p = new Problem( args, argsClause, [ conformedArgs ], `Arguments ${stringifyWithFnName( args )} for function ${fnName} is not valid` );
+        var p = new Problem( args, argsClause, [ conformedArgs ], `Arguments for function ${displayFnName} is not valid` );
         betterThrow( p );
       }
 

@@ -182,7 +182,9 @@ function _constructMessage(_ref, lvl) {
   } else if ((typeof subproblems === 'undefined' ? 'undefined' : _typeof(subproblems)) === 'object') {
     reasons = [];
     for (var name in subproblems) {
-      reasons.push('' + _open(lvl) + name + ': ' + _constructMessage(subproblems[name], lvl + 1) + _close(lvl));
+      if (subproblems.hasOwnProperty(name)) {
+        reasons.push('-> ' + name + ': ' + _open(lvl) + ' ' + _constructMessage(subproblems[name], lvl + 1) + _close(lvl));
+      }
     }
     return shortMessage + ', because\n' + _repeatStr(' ', lvl * 2) + ' ' + reasons.join(', ');
   }
@@ -850,7 +852,6 @@ function coerceIntoClause(expr) {
   } else if (isPred(expr)) {
     return _wrap(expr);
   } else {
-    debugger;
     console.error(expr);
     throw new Error('Expression must either be a Clause object or a predication function that returns true or false. ');
   }
@@ -2442,11 +2443,16 @@ function simulate(nfa, rawInput, walkFn, walkOpts) {
       var nextState = parseInt(nextStateStr);
 
       var m = _getNextMove(nfa, nextState, current, walkFn, walkOpts);
+      if (m) {
+        if (m.isProblem) {
+          var name = m.name,
+              problem = m.problem,
+              position = m.position;
 
-      if (isProblem(m)) {
-        r.lastProblem = m;
-      } else if (m) {
-        frontier.push(m);
+          r.lastProblem = { name: name, problem: problem, position: position };
+        } else {
+          frontier.push(m);
+        }
       }
     }
   }
@@ -2495,10 +2501,17 @@ function _getNextMove(nfa, nextState, current, walkFn, walkOpts) {
   }
 
   var validateResult, next;
+
+  var name = transition.name || current.move && current.move.name;
   if (nextOffset <= input.length) {
     if (transition.isEpsilon) {
       if (transition.dir) {
-        move = { dir: transition.dir, name: transition.name, op: transition.op, group: transition.group };
+        move = {
+          dir: transition.dir,
+          name: transition.name,
+          op: transition.op,
+          group: transition.group
+        };
       } else {
         move = null;
       }
@@ -2531,7 +2544,7 @@ function _getNextMove(nfa, nextState, current, walkFn, walkOpts) {
           return next;
         }
       } else {
-        return validateResult;
+        return { isProblem: true, problem: validateResult, name: name, position: currentOffset };
       }
     }
   }
@@ -3176,10 +3189,11 @@ function fclauseWalker(clause, walkFn) {
   }
 
   function checkArgs(fn, fnName, args) {
+    var displayFnName = fnName || '<anonymous>';
     if (argsClause) {
       var instrumentedArgs = walkFn(argsClause, args, { phase: 'trailblaze' });
       if (isProblem(instrumentedArgs)) {
-        var p = new Problem(args, clause, [instrumentedArgs], 'Arguments ' + stringifyWithFnName(args) + ' for function ' + fnName + ' is not valid');
+        var p = new Problem(args, clause, [instrumentedArgs], 'Arguments for function ' + displayFnName + '() is not valid');
         betterThrow(p);
       } else {
         return walkFn(argsClause, instrumentedArgs, { phase: 'reconstruct', conform: false, instrument: true });
@@ -3190,10 +3204,12 @@ function fclauseWalker(clause, walkFn) {
   }
 
   function checkRet(fn, fnName, retVal) {
+    var displayFnName = fnName || '<anonymous>';
+
     if (retClause) {
       var instrumentedRetVal = walkFn(retClause, retVal, { phase: 'trailblaze' });
       if (isProblem(instrumentedRetVal)) {
-        var p = new Problem(retVal, clause, [instrumentedRetVal], 'Return value for function ' + (fnName || '<anonymous>') + '() is not valid');
+        var p = new Problem(retVal, clause, [instrumentedRetVal], 'Return value for function ' + displayFnName + '() is not valid');
         betterThrow(p);
       } else {
         var r = walkFn(retClause, instrumentedRetVal, { phase: 'reconstruct', instrument: true, conform: false });
@@ -3205,12 +3221,14 @@ function fclauseWalker(clause, walkFn) {
   }
 
   function getArgConformedInstrumentedFn(fnName, fn) {
+    var displayFnName = fnName || '<anonymous>';
+
     return function __instrumentConformed() {
       var args = Array.prototype.slice.call(arguments);
 
       var conformedArgs = walkFn(argsClause, args, { conform: true, instrument: true });
       if (isProblem(conformedArgs)) {
-        var p = new Problem(args, argsClause, [conformedArgs], 'Arguments ' + stringifyWithFnName(args) + ' for function ' + fnName + ' is not valid');
+        var p = new Problem(args, argsClause, [conformedArgs], 'Arguments for function ' + displayFnName + ' is not valid');
         betterThrow(p);
       }
 
@@ -3297,6 +3315,8 @@ module.exports = mapOfWalker;
 "use strict";
 
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var simulate = __webpack_require__(46);
 var getMatch = __webpack_require__(45);
 var compile = __webpack_require__(43);
@@ -3325,9 +3345,16 @@ function nfaWalker(clause, walkFn) {
     if (matched === true) {
       return chain;
     } else {
-      var subproblems = [];
+      var subproblems = void 0;
+
       if (lastProblem) {
-        subproblems.push(lastProblem);
+        var name = lastProblem.name,
+            position = lastProblem.position,
+            problem = lastProblem.problem;
+
+        subproblems = _defineProperty({}, name ? '"' + name + '"' : '<At position ' + position + '>', problem);
+      } else {
+        subproblems = [];
       }
       return new Problem(x, clause, subproblems, 'Clause ' + clause.type + ' did not match value');
     }

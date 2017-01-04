@@ -29,11 +29,13 @@ function simulate( nfa, rawInput, walkFn, walkOpts ) {
       var nextState = parseInt( nextStateStr );
 
       var m = _getNextMove( nfa, nextState, current, walkFn, walkOpts );
-
-      if ( isProblem( m ) ) {
-        r.lastProblem = m;
-      } else if ( m ) {
-        frontier.push( m );
+      if ( m ) {
+        if ( m.isProblem ) {
+          let { name, problem, position } = m;
+          r.lastProblem = { name, problem, position };
+        } else {
+          frontier.push( m );
+        }
       }
     }
   }
@@ -80,10 +82,17 @@ function _getNextMove( nfa, nextState, current, walkFn, walkOpts ) {
 
   var validateResult,
     next;
+
+  var name = transition.name || current.move && current.move.name;
   if ( nextOffset <= input.length ) {
     if ( transition.isEpsilon ) {
       if ( transition.dir ) {
-        move = { dir: transition.dir, name: transition.name, op: transition.op, group: transition.group };
+        move = {
+          dir: transition.dir,
+          name: transition.name,
+          op: transition.op,
+          group: transition.group
+        };
       } else {
         move = null;
       }
@@ -116,7 +125,7 @@ function _getNextMove( nfa, nextState, current, walkFn, walkOpts ) {
           return next;
         }
       } else {
-        return validateResult;
+        return { isProblem: true, problem: validateResult, name: name, position: currentOffset };
       }
     }
   }
