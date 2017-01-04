@@ -33,6 +33,9 @@ function getFunctionName( fn ) {
   if ( !isFunction( fn ) ) {
     return null;
   }
+  if ( fn.__predToString ) {
+    return fn.__predToString();
+  }
   return _getFnName ? _getFnName( fn ) : fn.name;
 }
 

@@ -105,15 +105,15 @@ var MultipleArgClause = catOp( _labelled(
   [
     'options', 'clause',
     zeroOrOneOp( {
-      expr: {
-        clause: andOp( [
-          { pred: isObj },
-          { pred: not( isExpr ) }
-        ] )
-      }
+      expr:
+        { pred: isOptionObject }
     } )
   ]
 ) );
+
+function isOptionObject( x ) {
+  return isObj( x ) && !isExpr( x );
+}
 
 function andOp( exprs ) {
   var andS = new Clause( {
@@ -406,7 +406,6 @@ function shapeOp( cargs ) {
     throw cargs;
   }
   // const { shapeArgs: { requiredFields, optionalFields } } = cargs;
-
   var s = new Clause( {
     type: TYPE_SHAPE,
     exprs: [ ],

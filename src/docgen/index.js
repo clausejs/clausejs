@@ -208,7 +208,7 @@ function _typeFor( expr ) {
   case 'pred':
     return 'meets predicate';
   case 'fclause':
-    return 'fclause (a function)';
+    return 'a function (fclause)';
   case 'z_or_m':
     return 'zero or more of (*)';
   case 'o_or_m':
@@ -216,11 +216,11 @@ function _typeFor( expr ) {
   case 'z_or_o':
     return 'optional (?)';
   case 'coll_of':
-    return 'a collection of';
+    return 'a collection of (collOf)';
   case 'cat':
-    return 'a cat (concatenation) of';
+    return 'a concatenation (cat) of';
   case 'or':
-    return 'or (either one)';
+    return 'either one of (or)';
   default:
     return `<span class="tag tag-info">${lowerT}</span>`;
   }
@@ -259,25 +259,23 @@ function _genClauseRef( globalReg, exprName, path, expr, meta ) {
 
 function _clauseRefLink( p ) {
   return pGenFn =>
-    `<a href="#${p}" data-path="${p}">${pGenFn( p )}</a>`;
+    `<a style="cursor: pointer;" href="#${p}" data-path="${p}">${pGenFn( p )}</a>`;
 }
 
 function _genAndClause( globalReg, exprName, path, expr, meta ) {
   const example = meta && meta.example;
   const altDefs = expr.opts.conformedExprs.map( ( altE, idx ) => {
     return `
-        <li class="list-group-item card-outline-${_labelFor( expr )}">
-          <div class="row">
-            <div class="col-md-12">
-              <span class="tag tag-default">Condition ${idx + 1} </span>
-            </div>
-          </div>
+        <fieldset class="list-group-item card-outline-${_labelFor( expr )}">
+          <legend class="clause-type">
+            <span class="tag tag-default">Condition ${idx + 1} </span>
+          </legend>
           <div class="row">
             <div class="col-md-11 offset-md-1">
               ${genForExpression( globalReg, null, clauseFromAlts( altE ), null )}
             </div>
           </div>
-        </li>
+        </fieldset>
     `;
   } );
 
@@ -290,9 +288,9 @@ function _genAndClause( globalReg, exprName, path, expr, meta ) {
         Should satisfy <em>all</em> of the following expression:
       </p>
     </div>
-    <ol class="list-group list-group-flush list-for-cat">
+    <div class="list-group list-group-flush list-for-cat">
       ${altDefs.join( ' ' )}
-    </ol>
+    </div>
   `;
   return r;
 }
@@ -302,14 +300,16 @@ function _genCatClause( globalReg, exprName, path, expr, meta ) {
   const altDefs = expr.exprs.map( ( { name, expr: altE }, idx ) => {
     const comment = meta && meta[ name ] && meta[ name ].comment;
     return `
-        <li class="list-group-item card-outline-${_labelFor( expr )}">
+        <fieldset class="list-group-item card card-outline-${_labelFor( expr )}">
+          <legend class="clause-type">
+          ${name ? `
+            <span class="tag tag-default">Part ${idx + 1}</span>
+            &lt;<span class="lead font-italic text-primary">${name}</span>&gt;          
+          ` : `<span class="tag tag-default">Part ${idx + 1}</span>`}
+          </legend>
           <div class="row">
             <div class="col-md-12">
-              ${name ? `<p>
-                <span class="tag tag-default">${toOrdinal( idx + 1 )} </span>
-                &lt;<span class="lead font-italic text-primary">${name}</span>&gt;
-                ${comment ? `: <span>${ comment }</span>` : ''}
-                  ` : `<span class="tag tag-default">${toOrdinal( idx + 1 )} </span>`}
+              ${comment ? `<span>${ comment }</span>` : ''}
             </div>
           </div>
           <div class="row">
@@ -317,7 +317,7 @@ function _genCatClause( globalReg, exprName, path, expr, meta ) {
               ${genForExpression( globalReg, null, altE, meta && meta[ name ] )}
             </div>
           </div>
-        </li>
+        </fieldset>
     `;
   } );
 
@@ -330,9 +330,9 @@ function _genCatClause( globalReg, exprName, path, expr, meta ) {
         Should be <em>an ordered list</em> of the following:
       </p>
     </div>
-    <ol class="list-group list-group-flush list-for-cat">
+    <div class="list-group list-group-flush list-for-cat">
       ${altDefs.join( ' ' )}
-    </ol>
+    </div>
   `;
   return r;
 }
@@ -438,10 +438,16 @@ function synopsisArray( prefixes, suffixes, exprName, clause, globalReg, meta, d
 }
 
 function _syntax( expr, globalReg, currPath ) {
-  return ``;
-  // return `<em class="text-info">
-  //   ${describe( expr, _refExprFn( globalReg, currPath ) )}
-  // </em>`;
+  // return ``;
+  return `
+    <blockquote class="blockquote">
+      <small>
+        <em class="text-muted">
+          <pre>${describe( expr, _refExprFn( globalReg, currPath ), 2 )}</pre>
+        </em>
+      </small>
+    </blockquote>
+  `;
 }
 
 function _refExprFn( reg, currPath ) {
@@ -449,6 +455,8 @@ function _refExprFn( reg, currPath ) {
     let path = resolve( reg, expr );
     if ( path && path !== currPath ) {
       return [ _clauseRefLink( path )( _unanbiguousName ) ];
+    } else {
+      return null;
     }
   }
 }
@@ -461,28 +469,33 @@ function _unanbiguousName( path ) {
 
 function _genPredClause( globalReg, exprName, expr, meta ) {
   let pred = expr.exprs ? expr.exprs[ 0 ] : expr;
-  const name = meta && meta[ 'name' ] || exprName;
-  const predName = fnName( pred );
-  const nameFrag = name ? `${name} ` : '';
+  // const name = meta && meta[ 'name' ] || exprName;
+  // const nameFrag = name ? `${name} ` : '';
+
   const r = `
     <div class="card-block">
-      <span
-        data-toggle="popover"
-        data-trigger="hover"
-        data-html="true"
-        title="${predName}()"
-        data-content="<pre>${pred.toString()}</pre>"
-        data-container="body"
-        data-animation="false"
-        data-delay="500">
-        A value that satisfies
-        <em>${predName}()</em>
-      </span>
+      ${_predSourcePopover( 'A value that satisfies ', pred )}
     </div>
   `;
   return r;
 }
 
+function _predSourcePopover( prefix, pred ) {
+  const predName = fnName( pred );
+  return `
+    <span
+      data-toggle="popover"
+      data-trigger="hover"
+      data-html="true"
+      title="${predName}()"
+      data-content="<pre>${pred.toString()}</pre>"
+      data-container="body"
+      data-animation="false"
+      data-delay="500">
+      <em>${prefix}${predName}()</em>
+    </span>
+  `;
+}
 
 function _genUnknownClause( globalReg, exprName, path, expr, meta ) {
   const r = `
@@ -507,16 +520,18 @@ function _genOrClause( globalReg, exprName, path, expr, meta ) {
   const altDefs = expr.exprs.map( ( { name, expr: altE }, idx ) => {
     const comment = meta && meta[ name ] && meta[ name ].comment;
     return `
-        <li class="list-group-item card-outline-${_labelFor( expr )}">
+        <fieldset class="list-group-item card-outline-${_labelFor( expr )}">
+          <legend class="clause-type">
+            <span class="tag tag-default">
+                Option ${idx + 1}
+            </span>
+            ${name ? `
+                &lt;<span class="lead font-italic text-primary">${name}</span>&gt;
+            ` : ''}
+          </legend>
           <div class="row">
             <div class="col-md-12">
-              <span class="tag tag-default">
-                Option ${idx + 1}
-              </span>
-              ${name ? `
-                  &lt;<span class="lead font-italic text-primary">${name}</span>&gt;
-              ${comment ? `: <span>${ comment }</span>` : ''}
-            ` : ''}
+            ${comment ? `<span>${ comment }</span>` : ''}
             </div>
           </div>
           <div class="row">
@@ -524,7 +539,7 @@ function _genOrClause( globalReg, exprName, path, expr, meta ) {
               ${genForExpression( globalReg, null, altE, meta && meta[ name ] )}
             </div>
           </div>
-        </li>
+        </fieldset>
     `;
   } );
 
@@ -537,9 +552,9 @@ function _genOrClause( globalReg, exprName, path, expr, meta ) {
         Should be <em>one of</em> the following:
       </p>
     </div>
-    <ol class="list-group list-group-flush list-for-or">
+    <div class="list-group list-group-flush list-for-or">
       ${altDefs.join( '' )}
-    </ol>
+    </div>
   `;
   return r;
 }

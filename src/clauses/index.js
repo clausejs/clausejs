@@ -12,7 +12,13 @@ import { isNamespacePath, GetNSFnClause, NamespaceFnClause, MetaFnClause, SetNSF
 // const C = Clause.withRegistry(nsObj);
 
 const DescribeFnClause = fclause( {
-  args: cat( C( 'clausejs.types/Expression' ) ),
+  args: cat(
+     'expression', C( 'clause.types/Expression' ),
+    'interceptor', fclause( {
+      args: cat( ExprClause ),
+      ret: or( isUndefined, isNull, collOf( isStr ) ),
+    } ),
+    'indent', C.zeroOrOne( C.isNatInt ) ),
   ret: isStr,
 } );
 
@@ -37,8 +43,8 @@ const FclauseClause = and(
 const FclauseFnClause = fclause( {
   args: cat( 'fclauseFields', shape( {
     optional: {
-      args: and( isArray, C( 'clausejs.types/Expression' ) ),
-      ret: C( 'clausejs.types/Expression' ),
+      args: and( isArray, C( 'clause.types/Expression' ) ),
+      ret: C( 'clause.types/Expression' ),
       fn: isFn,
     }
   } ) ),
@@ -58,7 +64,7 @@ const InstanceOfFnClause = fclause( {
 } );
 
 const NotFnClause = fclause( {
-  args: cat( 'predicateToNegate', C( 'clausejs.types/Predicate' ) ),
+  args: cat( 'predicateToNegate', C( 'clause.types/Predicate' ) ),
   ret: SingleArgPredClause(),
 } );
 
@@ -68,7 +74,7 @@ const EqualsFnClause = fclause( {
 } );
 
 const OneOfFnClause = fclause( {
-  args: cat( 'valueOptions', collOf( C( 'clausejs.types/Primitive' ) ) ),
+  args: cat( 'valueOptions', collOf( C( 'clause.types/Primitive' ) ) ),
   ret: SingleArgPredClause(),
 } );
 
@@ -81,7 +87,7 @@ const EnforceFnClause = fclause( {
 
 const ConformFnClause = fclause( {
   args: cat( 'expression', ExprClause, 'valueToConform', any() ),
-  ret: or( 'conformedValue', any(), 'problem', C( 'clausejs.types/Problem' ) ),
+  ret: or( 'conformedValue', any(), 'problem', C( 'clause.types/Problem' ) ),
 } );
 
 const DelayedFnClause = fclause( {
@@ -93,57 +99,57 @@ const DelayedFnClause = fclause( {
 
 C( '/clausejs', NamespaceFnClause );
 
-C( 'clausejs.compose/cat', CatFnClause );
-C( 'clausejs.compose/or', OrFnClause );
-C( 'clausejs.compose/zeroOrMore', ZeroOrMoreFnClause );
-C( 'clausejs.compose/oneOrMore', OneOrMoreFnClause );
-C( 'clausejs.compose/zeroOrOne', ZeroOrOneFnClause );
-C( 'clausejs.compose/and', AndFnClause );
-C( 'clausejs.compose/collOf', CollOfClause );
-C( 'clausejs.compose/mapOf', MapOfFnClause );
-C( 'clausejs.compose/shape', ShapeFnClause );
-C( 'clausejs.compose/any', AnyClause );
-C( 'clausejs.compose/wall', WallFnClause );
-C( 'clausejs.compose/fclause', FclauseFnClause );
-C( 'clausejs.compose/nullable', NullableFnClause );
-C( 'clausejs.compose/undefinable', UndefinableFnClause );
+C( 'clause.compose/cat', CatFnClause );
+C( 'clause.compose/or', OrFnClause );
+C( 'clause.compose/zeroOrMore', ZeroOrMoreFnClause );
+C( 'clause.compose/oneOrMore', OneOrMoreFnClause );
+C( 'clause.compose/zeroOrOne', ZeroOrOneFnClause );
+C( 'clause.compose/and', AndFnClause );
+C( 'clause.compose/collOf', CollOfClause );
+C( 'clause.compose/mapOf', MapOfFnClause );
+C( 'clause.compose/shape', ShapeFnClause );
+C( 'clause.compose/any', AnyClause );
+C( 'clause.compose/wall', WallFnClause );
+C( 'clause.compose/fclause', FclauseFnClause );
+C( 'clause.compose/nullable', NullableFnClause );
+C( 'clause.compose/undefinable', UndefinableFnClause );
 
-C( 'clausejs.utils/enforce', EnforceFnClause );
-C( 'clausejs.utils/conform', ConformFnClause );
-C( 'clausejs.utils/delayed', DelayedFnClause );
-C( 'clausejs.utils/describe', DescribeFnClause );
+C( 'clause.utils/enforce', EnforceFnClause );
+C( 'clause.utils/conform', ConformFnClause );
+C( 'clause.utils/delayed', DelayedFnClause );
+C( 'clause.utils/describe', DescribeFnClause );
 
-C( 'clausejs.preds/not', NotFnClause );
-C( 'clausejs.preds/isObj', SingleArgPredClause() );
-C( 'clausejs.preds/isStr', SingleArgPredClause() );
-C( 'clausejs.preds/isArray', SingleArgPredClause() );
-C( 'clausejs.preds/isDate', SingleArgPredClause() );
-C( 'clausejs.preds/isNull', SingleArgPredClause() );
-C( 'clausejs.preds/isUndefined', SingleArgPredClause() );
-C( 'clausejs.preds/notEmpty', SingleArgPredClause() );
-C( 'clausejs.preds/isBool', SingleArgPredClause() );
-C( 'clausejs.preds/isFn', SingleArgPredClause() );
-C( 'clausejs.preds/isNum', SingleArgPredClause() );
-C( 'clausejs.preds/isInt', SingleArgPredClause() );
-C( 'clausejs.preds/isNatInt', SingleArgPredClause() );
-C( 'clausejs.preds/isUuid', IsUuidFnClause );
-C( 'clausejs.preds/oneOf', OneOfFnClause );
-C( 'clausejs.preds/equals', EqualsFnClause );
-C( 'clausejs.preds/instanceOf', InstanceOfFnClause );
+C( 'clause.preds/not', NotFnClause );
+C( 'clause.preds/isObj', SingleArgPredClause() );
+C( 'clause.preds/isStr', SingleArgPredClause() );
+C( 'clause.preds/isArray', SingleArgPredClause() );
+C( 'clause.preds/isDate', SingleArgPredClause() );
+C( 'clause.preds/isNull', SingleArgPredClause() );
+C( 'clause.preds/isUndefined', SingleArgPredClause() );
+C( 'clause.preds/notEmpty', SingleArgPredClause() );
+C( 'clause.preds/isBool', SingleArgPredClause() );
+C( 'clause.preds/isFn', SingleArgPredClause() );
+C( 'clause.preds/isNum', SingleArgPredClause() );
+C( 'clause.preds/isInt', SingleArgPredClause() );
+C( 'clause.preds/isNatInt', SingleArgPredClause() );
+C( 'clause.preds/isUuid', IsUuidFnClause );
+C( 'clause.preds/oneOf', OneOfFnClause );
+C( 'clause.preds/equals', EqualsFnClause );
+C( 'clause.preds/instanceOf', InstanceOfFnClause );
 
 C( '/clausejs.namespace/set', SetNSFnClause );
 C( '/clausejs.namespace/get', GetNSFnClause );
 C( '/clausejs.namespace/meta', MetaFnClause );
 
-C( 'clausejs.types/Expression', ExprClause );
-C( 'clausejs.types/Clause', ClauseClause );
-C( 'clausejs.types/FClause', FclauseClause );
-C( 'clausejs.types/Predicate', PredClause );
-C( 'clausejs.types/DelayedClause', DelayedClauseClause );
-C( 'clausejs.types/ClauseReference', ClauseRefClause );
-C( 'clausejs.types/Problem', isProblem );
-C( 'clausejs.types/NamespaceObj', NamespaceObjClause );
-C( 'clausejs.types/NamespacePath', isNamespacePath );
-C( 'clausejs.types/Primitive', PrimitiveClause );
+C( 'clause.types/Expression', ExprClause );
+C( 'clause.types/Clause', ClauseClause );
+C( 'clause.types/FClause', FclauseClause );
+C( 'clause.types/Predicate', PredClause );
+C( 'clause.types/DelayedClause', DelayedClauseClause );
+C( 'clause.types/ClauseReference', ClauseRefClause );
+C( 'clause.types/Problem', isProblem );
+C( 'clause.types/NamespaceObj', NamespaceObjClause );
+C( 'clause.types/NamespacePath', isNamespacePath );
+C( 'clause.types/Primitive', PrimitiveClause );
 
 export default C.getRegistry();

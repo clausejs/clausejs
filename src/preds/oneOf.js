@@ -8,7 +8,11 @@ module.exports = function oneOf( ) {
   } else {
     throw new Error( 'Items list is required.' );
   }
-  return function oneOfItems( x ) {
+  var fn = function oneOf( x ) {
     return items.indexOf( x ) >= 0;
+  };
+  fn.__predToString = () => {
+    return 'oneOf('.concat( [ items.map( JSON.stringify ).join( ', ' ) ] ).concat( ')' );
   }
+  return fn;
 }
