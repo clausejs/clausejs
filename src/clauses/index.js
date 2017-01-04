@@ -36,12 +36,10 @@ const AnyClause = fclause( {
   ret: ClauseClause,
 } );
 
-const FclauseClause = and(
-  isFclause
-);
+const FclauseClause = isFclause;
 
 const FclauseFnClause = fclause( {
-  args: cat( 'fclauseFields', shape( {
+  args: cat( shape( {
     optional: {
       args: and( isArray, C( 'clause.types/Expression' ) ),
       ret: C( 'clause.types/Expression' ),

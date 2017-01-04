@@ -16,9 +16,8 @@ function _strFragments( repo, expr, interceptor, indent, lvl ) {
   if ( interceptor && ( interceptR = interceptor( expr ) ) ) {
     return interceptR;
   } else if ( _exists( repo, expr ) ) {
-    return [ `(recursive: ${_clauseToHuman( expr )})` ];
+    return [ `<recursive: ${_clauseToHuman( expr )}>` ];
   } else if ( isPred( expr ) ) {
-    _addToRepo( repo, expr );
     return [ fnName( expr ) ];
   } else if ( expr.type === 'PRED' ) {
     return _strFragments( repo, expr.opts.predicate, interceptor, indent, lvl + 1 );
@@ -27,8 +26,8 @@ function _strFragments( repo, expr, interceptor, indent, lvl ) {
       let realExpr = expr.get();
       return _strFragments( repo, realExpr, interceptor, indent, lvl + 1 );
     } else {
-      _addToRepo( repo, expr );
-      var inners = _processInner( repo, expr, interceptor, indent, lvl );
+      let newRepo = _addToRepo( repo, expr );
+      var inners = _processInner( newRepo, expr, interceptor, indent, lvl );
       var moreThanOneItem = _moreThanOneItem( inners );
       return [ _clauseToHuman( expr ), '(', ]
         .concat( moreThanOneItem && indent ? [ '\n', repeat( lvl * indent, ' ' ).join( '' ) ] : [ ] )
@@ -108,7 +107,7 @@ function _processInner( repo, clause, interceptor, indent, level ) {
 
 function _addToRepo( repo, expr ) {
   if ( !_exists( repo, expr ) ) {
-    repo.push( expr );
+    return repo.concat( [ expr ] );
   }
 }
 

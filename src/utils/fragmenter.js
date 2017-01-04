@@ -76,15 +76,15 @@ function _fieldDefToFrags( { fieldDefs: { fields } } ) {
   var r = [ '{ ', SEPARATOR, new LevelIn( 1 ) ];
   for ( let key in fields ) {
     if ( fields.hasOwnProperty( key ) ) {
-      r.push( key );
+      r.push( `"${key}"` );
       r.push( ': ' );
       const { keyValExprPair, valExpressionOnly } = fields[ key ];
       if ( keyValExprPair ) {
         let { keyExpression, valExpression } = keyValExprPair;
         r = r.concat( [ '[', ] )
           .concat( [
-            SEPARATOR, '(keyExpression): ', clauseFromAlts( keyExpression ), ', ',
-            SEPARATOR, '(valExpression): ', clauseFromAlts( valExpression ) ] )
+            SEPARATOR, '<keyExpression>: ', clauseFromAlts( keyExpression ), ', ',
+            SEPARATOR, '<valExpression>: ', clauseFromAlts( valExpression ) ] )
           .concat( [ ']' ] );
       } else if ( valExpressionOnly ) {
         r.push( clauseFromAlts( valExpressionOnly ) );

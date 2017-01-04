@@ -1,6 +1,6 @@
 import { meta as M } from '../';
 
-M( '/clausejs', {
+M( '/clause', {
   'name': 'C',
   'comment': 'Convenient method that combines C.get() and C.set() into one function to get or set clauses from the global registry.',
   'args': {
@@ -18,25 +18,25 @@ M( '/clausejs', {
   },
 } );
 
-M( '/clausejs/get', {
+M( '/clause/get', {
   'name': 'C.get'
 } );
 
-M( '/clausejs/set', {
+M( '/clause/set', {
   'name': 'C.set'
 } );
 
-M( 'clausejs.types/NamespacePath', {
+M( 'clause.types/NamespacePath', {
   'comment': 'Represents a namespace path.',
   'example': '"com.xyz.awesomeApp/User"',
 } );
 
-M( 'clausejs.types/Expression', {
+M( 'clause.types/Expression', {
   'comment': 'Represents an Clause expression.',
   'example': 'isPositiveNumber(x); C.cat(...)',
 } );
 
-M( 'clausejs.utils/describe', {
+M( 'clause.utils/describe', {
   'name': 'C.describe',
   'comment': 'Returns an abbreviated description of the clause as a simple tree structure.',
 } );

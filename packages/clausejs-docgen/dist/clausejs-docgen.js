@@ -1722,9 +1722,8 @@ function _strFragments(repo, expr, interceptor, indent, lvl) {
   if (interceptor && (interceptR = interceptor(expr))) {
     return interceptR;
   } else if (_exists(repo, expr)) {
-    return ['(recursive: ' + _clauseToHuman(expr) + ')'];
+    return ['<recursive: ' + _clauseToHuman(expr) + '>'];
   } else if (isPred(expr)) {
-    _addToRepo(repo, expr);
     return [fnName(expr)];
   } else if (expr.type === 'PRED') {
     return _strFragments(repo, expr.opts.predicate, interceptor, indent, lvl + 1);
@@ -1733,8 +1732,8 @@ function _strFragments(repo, expr, interceptor, indent, lvl) {
       var realExpr = expr.get();
       return _strFragments(repo, realExpr, interceptor, indent, lvl + 1);
     } else {
-      _addToRepo(repo, expr);
-      var inners = _processInner(repo, expr, interceptor, indent, lvl);
+      var newRepo = _addToRepo(repo, expr);
+      var inners = _processInner(newRepo, expr, interceptor, indent, lvl);
       var moreThanOneItem = _moreThanOneItem(inners);
       return [_clauseToHuman(expr), '('].concat(moreThanOneItem && indent ? ['\n', repeat(lvl * indent, ' ').join('')] : []).concat(inners.length > 0 ? [' '] : []).concat(inners.map(function (_ref) {
         var _ref2 = _slicedToArray(_ref, 2),
@@ -1817,7 +1816,7 @@ function _processInner(repo, clause, interceptor, indent, level) {
 
 function _addToRepo(repo, expr) {
   if (!_exists(repo, expr)) {
-    repo.push(expr);
+    return repo.concat([expr]);
   }
 }
 
@@ -2956,7 +2955,7 @@ function _fieldDefToFrags(_ref10) {
   var r = ['{ ', SEPARATOR, new LevelIn(1)];
   for (var key in fields) {
     if (fields.hasOwnProperty(key)) {
-      r.push(key);
+      r.push('"' + key + '"');
       r.push(': ');
       var _fields$key = fields[key],
           keyValExprPair = _fields$key.keyValExprPair,
@@ -2966,7 +2965,7 @@ function _fieldDefToFrags(_ref10) {
         var keyExpression = keyValExprPair.keyExpression,
             valExpression = keyValExprPair.valExpression;
 
-        r = r.concat(['[']).concat([SEPARATOR, '(keyExpression): ', clauseFromAlts(keyExpression), ', ', SEPARATOR, '(valExpression): ', clauseFromAlts(valExpression)]).concat([']']);
+        r = r.concat(['[']).concat([SEPARATOR, '<keyExpression>: ', clauseFromAlts(keyExpression), ', ', SEPARATOR, '<valExpression>: ', clauseFromAlts(valExpression)]).concat([']']);
       } else if (valExpressionOnly) {
         r.push(clauseFromAlts(valExpressionOnly));
       }
@@ -22051,7 +22050,7 @@ function genForExpression(globalReg, exprName, expr, meta) {
 
   return '\n    ' + (exprName && path ? '<a name="' + path + '"></a>' : '') + '\n    ' + _wrapCard({
     header: exprName && path ? '\n      <h6>' + _stylizeName(expr, name) + '</h6>&nbsp;\n        <span class="tag tag-primary">\n          ' + _type(expr) + '\n        </span>\n      ' : null,
-    legend: !path ? _tagFor(expr) : '<span class="tag tag-info">of clause</span>',
+    legend: !path ? _tagFor(expr) : '<span class="tag tag-info">satisfies clause</span>',
     borderlabel: _labelFor(expr)
   })(docstr);
 }
@@ -22091,7 +22090,7 @@ function _typeFor(expr) {
   var lowerT = _rawTypeFor(expr);
   switch (lowerT) {
     case 'pred':
-      return 'meets predicate';
+      return 'satisfies predicate';
     case 'fclause':
       return 'a function (fclause)';
     case 'z_or_m':
@@ -22139,7 +22138,7 @@ function _genClauseRef(globalReg, exprName, path, expr, meta) {
 
 function _clauseRefLink(p) {
   return function (pGenFn) {
-    return '<a style="cursor: pointer;" href="#' + p + '" data-path="' + p + '">' + pGenFn(p) + '</a>';
+    return '<a href="#' + p + '" data-path="' + p + '">' + pGenFn(p) + '</a>';
   };
 }
 
@@ -22315,14 +22314,20 @@ function synopsisArray(prefixes, suffixes, exprName, clause, globalReg, meta, de
 
 function _syntax(expr, globalReg, currPath) {
   // return ``;
-  return '\n    <blockquote class="blockquote">\n      <small>\n        <em class="text-muted">\n          <pre>' + (0, _describe2.default)(expr, _refExprFn(globalReg, currPath), 2) + '</pre>\n        </em>\n      </small>\n    </blockquote>\n  ';
+  return '\n    <blockquote class="blockquote">\n      <small>\n        <em class="text-muted">\n          <pre>' + unescape(_encode((0, _describe2.default)(expr, _refExprFn(globalReg, currPath), 2))) + '</pre>\n        </em>\n      </small>\n    </blockquote>\n  ';
+}
+
+function _encode(str) {
+  return str.split('<').join('&lt;').split('>').join('&gt;');
 }
 
 function _refExprFn(reg, currPath) {
   return function (expr) {
     var path = (0, _namespaceResolver.resolve)(reg, expr);
     if (path && path !== currPath) {
-      return [_clauseRefLink(path)(_unanbiguousName)];
+      var r = _clauseRefLink(path)(_unanbiguousName);
+      r = escape(r);
+      return [r];
     } else {
       return null;
     }
@@ -22407,10 +22412,10 @@ function _genFclause(globalReg, exprName, clause, meta) {
   }
   if (argsClause) {
     frags.push(['Synopsis', _synopsis(exprName, clause, globalReg, meta)]);
-    frags.push(['Argument clause', genForExpression(globalReg, null, argsClause, meta && meta.args)]);
+    frags.push(['Arguments', genForExpression(globalReg, null, argsClause, meta && meta.args)]);
   }
   if (retClause) {
-    frags.push(['Return value clause', genForExpression(globalReg, null, retClause, meta && meta.ret)]);
+    frags.push(['Return Value', genForExpression(globalReg, null, retClause, meta && meta.ret)]);
   }if (fn) {
     frags.push(['Argument-return value relation', '<pre>' + (0, _fnName3.default)(fn) + '</pre>']);
   }
