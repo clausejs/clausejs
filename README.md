@@ -43,9 +43,10 @@ Also worth looking at are videos on rationale for clojure.spec (and, by extensio
 
 ## Project status
 
-Alpha.
+Alpha. 
 
-- Most core functions of Clause have gone through many iterations of bug fixing and are now stablizing.
+- Feedback and suggestions [are welcome](https://github.com/clausejs/clausejs/issues/new).
+- Most core functions of Clause have gone through many iterations of bug fixing and are stablizing.
 - Some aspects of the API's are subject to change and improvement based on [developer feedback](/../../issues/).
 
 ## Quick Examples
