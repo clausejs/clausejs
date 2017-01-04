@@ -38,6 +38,7 @@
   },
   "homepage": "https://github.com/clausejs/clausejs#readme",
   "dependencies": {
+    "lodash.flatten": "^4.4.0",
     "object-assign": "4.1.0"
   },
   "devDependencies": {
