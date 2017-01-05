@@ -157,9 +157,12 @@ function genForExpression( globalReg, exprName, expr, meta ) {
       ` : null;
   if ( exprName && path ) {
     docstr = `
-      <p class="card-title">
-      ${_syntax( expr, globalReg, path )}
-      </p>
+      <div class="card-block">
+        <h6><strong>Syntax</strong></h6>
+        <p class="card-title">
+        ${_syntax( expr, globalReg, path )}
+        </p>
+      </div>
     ` + docstr;
   }
 
@@ -351,10 +354,6 @@ function _synopsis( exprName, fclause, globalReg, meta ) {
   var r = synopsisArray( [], [], exprName, fclause, globalReg, meta, [] );
   var h = _synopsisToHtml( r );
   return h;
-}
-
-function AltName( name ) {
-  this.name = name;
 }
 
 function _synopsisToHtml( arr ) {
@@ -552,7 +551,6 @@ function _genOrClause( globalReg, exprName, path, expr, meta ) {
 
   const r = `
     <div class="card-block">
-      ${_syntax( expr, globalReg, path )}
       <p class="card-title">
       ${exprName ? '' : `
       `}

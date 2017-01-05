@@ -25,7 +25,7 @@ Clause started as a JavaScript port of [clojure.spec](http://clojure.org/about/s
 >
 > — *C. A. R. Hoare, Hints on Programming Language Design*
 
-Clause aims at providing *the defining contract* for your JavaScript project. 
+Clause aims at providing *the defining contract* for your JavaScript project.
 
 By writing clauses for your data and functions *only once*, you can get a lot of leverage out your effort, including
 
@@ -43,7 +43,7 @@ Also worth looking at are videos on rationale for clojure.spec (and, by extensio
 
 ## Project status
 
-Alpha. 
+Alpha.
 
 - Feedback and suggestions [are welcome](https://github.com/clausejs/clausejs/issues/new).
 - Most core functions of Clause have gone through many iterations of bug fixing and are stablizing.
@@ -54,6 +54,10 @@ Alpha.
 #### Regex Ops
 
 ```js
+
+// In browser environment, Clause will automatically expose "C" as a global variable
+var C = require('clausejs');
+
 var MyClause = C.cat( C.oneOrMore(C.isNum), C.zeroOrOne( C.isObj ) );
 C.isValid(MyClause, [ 1, 2, 3, { a: 1 } ]); // true
 C.isValid(MyClause,  [ 1, 2, 3 ]); // true
@@ -69,7 +73,7 @@ var MyLabelledClause = C.cat(
   );
 S
 MyLabelledClause.conform( [ 1, 2, 3, { a: 1 } ] );
-// returns { myNumbers: [ 1, 2, 3 ], myObject: { a: 1 } }
+// { myNumbers: [ 1, 2, 3 ], myObject: { a: 1 } }
 
 ```
 
@@ -109,7 +113,7 @@ var MyObjClause = C.shape({
 
 // With the above clause defined, now let's try shape conformation.
 C.conform( MyObjClause, { foo: true, bar1: 1, bar2: 2, bar3: 3 });
-// returns { foo: true, bars: { bar1: 1, bar2: 2, bar3: 3 } }
+// { foo: true, bars: { bar1: 1, bar2: 2, bar3: 3 } }
 // (Notice how all object keys that begin with "bar" are now grouped under a single value "bars").
 ```
 #### Function Clauses

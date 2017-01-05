@@ -22049,7 +22049,7 @@ function genForExpression(globalReg, exprName, expr, meta) {
   var name = meta && meta['name'] || exprName;
   var header = exprName && path ? '\n      <h6>' + _stylizeName(expr, name) + '</h6>&nbsp;\n        <span class="tag tag-primary">\n          ' + _type(expr) + '\n        </span>\n      ' : null;
   if (exprName && path) {
-    docstr = '\n      <p class="card-title">\n      ' + _syntax(expr, globalReg, path) + '\n      </p>\n    ' + docstr;
+    docstr = '\n      <div class="card-block">\n        <h6><strong>Syntax</strong></h6>\n        <p class="card-title">\n        ' + _syntax(expr, globalReg, path) + '\n        </p>\n      </div>\n    ' + docstr;
   }
 
   return '\n    ' + (exprName && path ? '<a name="' + path + '"></a>' : '') + '\n    ' + _wrapCard({
@@ -22179,10 +22179,6 @@ function _synopsis(exprName, fclause, globalReg, meta) {
   var r = synopsisArray([], [], exprName, fclause, globalReg, meta, []);
   var h = _synopsisToHtml(r);
   return h;
-}
-
-function AltName(name) {
-  this.name = name;
 }
 
 function _synopsisToHtml(arr) {
@@ -22382,7 +22378,7 @@ function _genOrClause(globalReg, exprName, path, expr, meta) {
     return '\n        <fieldset class="list-group-item card-outline-' + _labelFor(expr) + '">\n          <legend class="clause-type">\n            <span class="tag tag-default">\n                Option ' + (idx + 1) + '\n            </span>\n            ' + (name ? '\n                &lt;<span class="lead font-italic text-primary">' + name + '</span>&gt;\n            ' : '') + '\n          </legend>\n          <div class="row">\n            <div class="col-md-12">\n            ' + (comment ? '<span>' + comment + '</span>' : '') + '\n            </div>\n          </div>\n          <div class="row">\n            <div class="col-md-12">\n              ' + genForExpression(globalReg, null, altE, meta && meta[name]) + '\n            </div>\n          </div>\n        </fieldset>\n    ';
   });
 
-  var r = '\n    <div class="card-block">\n      ' + _syntax(expr, globalReg, path) + '\n      <p class="card-title">\n      ' + (exprName ? '' : '\n      ') + '\n        Should be <em>one of</em> the following:\n      </p>\n    </div>\n    <div class="list-group list-group-flush list-for-or">\n      ' + altDefs.join('') + '\n    </div>\n  ';
+  var r = '\n    <div class="card-block">\n      <p class="card-title">\n      ' + (exprName ? '' : '\n      ') + '\n        Should be <em>one of</em> the following:\n      </p>\n    </div>\n    <div class="list-group list-group-flush list-for-or">\n      ' + altDefs.join('') + '\n    </div>\n  ';
   return r;
 }
 
