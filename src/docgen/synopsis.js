@@ -4,7 +4,6 @@ const { isStr, isNum, isObj, isBool } = require( '../preds' );
 const { conform, isClause, deref } = require( '../utils' );
 const C = require( '../' );
 const fnName = require( '../utils/fnName' );
-const flatten = require( 'lodash.flatten' );
 
 
 //     ----'first'-----  --------'second'---------
@@ -23,31 +22,29 @@ const flatten = require( 'lodash.flatten' );
 
 // console.log( conform( sample, [ 'hello', true, 'abc', false, 32, false ] ) );
 
-function LabelledAlt( name, orSpec, fragments ) {
+function LabelledAlt( name, orSpec, _case ) {
   this.name = name;
-  this.fragments = fragments;
+  this._case = _case;
   this.orSpec = orSpec;
 }
 
-function LabelledPart( name, catSpec, fragments ) {
+function LabelledPart( name, catSpec, _case ) {
   this.name = name;
-  this.fragments = fragments;
+  this._case = _case;
   this.catSpec = catSpec;
 }
+
+const PartialableClauseC = C.or(
+  'aClause', ExprClause,
+  'anAlt', C.instanceOf( LabelledAlt ),
+  'aPart', C.instanceOf( LabelledPart )
+);
 
 // prefix notation data structure
 const CaseC = C.wall(
   C.cat(
-  'theClause',
-  ExprClause,
-  'params',
-  C.zeroOrMore(
-     C.or(
-       'aClause', ExprClause,
-      'anAlt', C.instanceOf( LabelledAlt ),
-      'aPart', C.instanceOf( LabelledPart )
-    )
-  )
+  'theClause', PartialableClauseC,
+  'params', C.zeroOrMore( PartialableClauseC )
 ) );
 
 const OrC = C.and(
@@ -61,9 +58,10 @@ const CatC = C.and(
 );
 
 const InfinitableIntegerC = or( C.isInt, C.oneOf( Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY ) );
-const PivotLocationC = C.wall( oneOrMore( InfinitableIntegerC ) );
+const PivotLocationC = C.wall( oneOrMore( C.isInt ) );
 
-const PivotSetWithLocationsC = collOf( cat( OrC, PivotLocationC ) );
+const PivotWithLocationC = C.wall( cat( OrC, PivotLocationC ) );
+const PivotSetWithLocationsC = collOf( PivotWithLocationC );
 
 var multipleArgFragmenter = ( cls ) =>
   ( clause ) => {
@@ -76,7 +74,7 @@ var multipleArgFragmenter = ( cls ) =>
       params = exprs.reduce(
         ( curr, { name, expr } ) =>
           curr
-            .concat( [ new cls( name, clause, _getFragmentsExpandingParts( expr ) ) ] )
+            .concat( [ new cls( name, clause, _getFragmentsExpandingCat( expr ) ) ] )
           , [] );
     }
     return [ clause ].concat( params );
@@ -99,7 +97,6 @@ var Fragmenters = {
   'MAP_OF': () => [],
   // TODO
   'SHAPE': () => [],
-  // TODO: fix comma
   'FCLAUSE': ( { args, ret, fn } ) => [].concat( args ? [ 'args: ', args ] : [] )
     .concat( ret ? [ 'ret: ', ret ] : [] )
     .concat( fn ? [ 'fn: ', fnName( fn ), '()' ] : [] ),
@@ -111,71 +108,139 @@ const ExpandableCaseC = C.wall(
   'theCase', CaseC )
 );
 
-function _getFragmentsExpandingParts( frag ) {
+function _getFragmentsExpandingCat( frag ) {
   let expandedParams;
-  if ( ( isClause( frag ) ) ) {
+  if ( isClause( frag ) ) {
     let [ , ...params ] = Fragmenters[ frag.type ]( frag );
-    expandedParams = flatten( params.map( ( p ) => {
-      return _getFragmentsExpandingParts( p );
-    } ) );
+    expandedParams = params.reduce( ( acc, p ) => {
+      return acc.concat( _getFragmentsExpandingCat( p ) );
+    }, [] );
+
+    return [ frag ].concat( expandedParams );
   } else {
     return [ frag ];
   }
-  return [ frag ].concat( expandedParams );
 }
+
+var _elevatePivotWithLocation = fclause( {
+  args: cat( PivotLocationC, PivotWithLocationC )
+} ).instrument(
+  function _elevatePivotWithLocation( parentLoc, [ pivot, loc ] ) {
+    return [ pivot, parentLoc.concat( loc ) ];
+  }
+)
+
+var _pivotsWithLocations = fclause( {
+  args: cat( CaseC ),
+  ret: PivotSetWithLocationsC
+} ).instrument(
+  function _pivotsWithLocations( _case ) {
+    const pivotsWithLocations = _case.reduce( ( acc, curr, idx ) => {
+      const currLoc = [ parseInt( idx + 1 ) ];
+      if ( C.isValid( OrC, curr ) ) {
+        return acc.concat( [ [ curr, currLoc ] ] );
+      } else if ( curr instanceof LabelledPart ) {
+        var psWithLs = _pivotsWithLocations( curr._case );
+        var elevatedPsWithLs = psWithLs.map(
+          ( pWithL ) => _elevatePivotWithLocation( currLoc, pWithL ) );
+        return acc.concat( elevatedPsWithLs );
+      } else {
+        return acc;
+      }
+    }, [] );
+    return pivotsWithLocations;
+  }
+);
+
 
 var getSingleCase = C.fclause( {
   args: cat( isClause ),
   ret: ExpandableCaseC,
 } ).instrument(
   function getSingleCase( clause ) {
-    const _case = _getFragmentsExpandingParts( clause );
+    const _case = _getFragmentsExpandingCat( clause );
     // const caseExpandedWithParts = _expandWithParts( _case );
     // console.log( _case )
-    const pivotsWithPositions = _case.reduce( ( acc, curr, idx ) => {
-      if ( C.isValid( OrC, curr ) ) {
-        return acc.concat( [ curr, idx + 1 ] );
-      } else {
-        return acc;
-      }
-    }, [] );
-    return [ pivotsWithPositions, _case ];
+    const pivotsWithLocations = _pivotsWithLocations( _case );
+    return [ pivotsWithLocations, _case ];
   }
 );
 
-var SampleClause = cat( 'first', oneOrMore( cat( isStr, isBool ) ),
-                      'second', or( 'objOpt', isObj, 'showNum', cat( isNum, isBool ) ) );
+var SampleClause = cat(
+  'first', oneOrMore( cat( isStr, isBool ) ),
+  'second', or(
+    'objOpt', isObj,
+    'showNum', cat( isNum, or( isBool, isObj ) ) ) );
 
 var expandCase = fclause( {
-  args: cat( OrC, CaseC ),
-  ret: collOf( ExpandableCaseC ),
+  args: cat( PivotWithLocationC, CaseC ),
+  ret: collOf( ExpandableCaseC, { minCount: 1 } ),
 } ).instrument(
-  function expandCase( [ pivot, idxInCase ], _case ) {
+  function expandCase( [ pivot, location ], _case ) {
     // TODO
-    var ePartials;
     if ( pivot.opts.named ) {
-      ePartials = pivot.exprs.map( ( { name, expr } ) => {
-        return [ name, getSingleCase( expr ) ];
+      alts = pivot.exprs.map( ( { label, expr } ) => {
+        return new LabelledAlt( label, pivot, getSingleCase( expr ) );
       } );
     } else {
-      ePartials = pivot.exprs.map( ( expr ) => {
-        return [ null, getSingleCase( expr ) ];
+      alts = pivot.exprs.map( ( expr ) => {
+        return new LabelledAlt( null, pivot, getSingleCase( expr ) );
       } );
     }
 
-    const prefix = _case.slice( 0, idxInCase ),
-      suffix = _case.slice( idxInCase + 1 );
+    const params = _case.slice( 1 );
+    var newCases = alts.map(
+      ( alt ) => {
+        var newCase = [ alt ].concat( params );
 
-    var newCases = ePartials.map( ( [ name, [ pSetWithPos, _partialCase ] ] ) => {
-      var alt = new LabelledAlt( name, pivot, _partialCase );
-      var newCase = prefix.concat( [ alt ] ).concat( suffix );
-      var pSetWithAdjustedPos = pSetWithPos.map( ( [ p, idx ] ) => {
-        return [ p, idx + idxInCase ];
+        return [ [ [ pivot, location ] ], newCase ];
       } );
-      return [ pSetWithAdjustedPos, newCase ];
-    } );
 
     return newCases;
+  }
+)
+
+var _expandToLimit = fclause( {
+  args: cat( InfinitableIntegerC, C.collOf( ExpandableCaseC ) ),
+  ret: C.collOf( ExpandableCaseC ),
+} ).instrument(
+  function _expandToLimit( limit, eCases ) {
+    let remaining = limit;
+    var newECases = eCases;
+    let count = 0;
+    do {
+      eCases = newECases;
+      newECases = _epandOneLevel( eCases );
+      if ( remaining >= newECases.length ) {
+        remaining -= newECases.length;
+      }
+    } while ( count < 20 && remaining > 0 && newECases.length > eCases.length );
+
+    return newECases;
+  }
+)
+
+var _epandOneLevel = fclause( {
+  args: cat( C.collOf( ExpandableCaseC ) ),
+  ret: C.collOf( ExpandableCaseC ),
+  fn: ( [ cases ], newCases ) => newCases.length >= cases.length,
+} ).instrument(
+  function _epandOneLevel( eCases ) {
+    const newECases = eCases.reduce(
+      ( acc, eCase ) => {
+        const [ pivotsWithLocations, _case ] = eCase;
+        if ( pivotsWithLocations.length === 0 ) {
+          return acc.concat( [ eCase ] );
+        } else {
+          const im = pivotsWithLocations.reduce(
+          ( acc1, pivotWithLocation ) => {
+            const expandedCases = expandCase( pivotWithLocation, _case );
+            return acc1.concat( expandedCases );
+          }, [] );
+          return acc.concat( im );
+        }
+      }, [] );
+    return newECases;
   }
 )
 
@@ -188,39 +253,6 @@ var synopsis = fclause( {
     return expandedECases;
   }
 );
-
-var _expandToLimit = fclause( {
-  args: cat( InfinitableIntegerC, C.collOf( ExpandableCaseC ) ),
-  ret: C.collOf( ExpandableCaseC ),
-} ).instrument(
-  function _expandToLimit( limit, eCases ) {
-    let remaining = limit;
-    var newECases;
-    do {
-      newECases = _epandOneLevel( eCases );
-      if ( remaining >= newECases.length ) {
-        remaining -= newECases.length;
-      }
-    } while ( remaining > 0 && newECases.length > eCases.length );
-
-    return newECases;
-  }
-)
-
-var _epandOneLevel = fclause( {
-  args: cat( C.collOf( ExpandableCaseC ) ),
-  ret: C.collOf( ExpandableCaseC )
-} ).instrument(
-  function _epandOneLevel( eCases ) {
-    const eCaseSets = eCases.map( ( [ pivotsWithPositions, _case ] ) => {
-      const im = pivotsWithPositions.map( ( pivotWithPosition ) => {
-        return expandCase( pivotWithPosition, _case );
-      } );
-      return flatten( im );
-    } );
-    return flatten( eCaseSets );
-  }
-)
 
 
 var r = synopsis( SampleClause );

@@ -2456,10 +2456,13 @@ function _foldLeft(inputType, conform, acc, c) {
       rightArr = {};
     } else if (acc instanceof GroupedPiece) {
       rightArr = acc.fragment;
+    } else if (acc instanceof Piece) {
+      rightArr = acc.fragment;
     } else if (acc instanceof GroupedAltPiece) {
       rightArr = acc.fragment;
     } else {
       console.error(acc, c);
+      debugger;
       throw '!!acc_fl_np';
     }
     return new GroupedPiece(oAssign({}, _defineProperty({}, c.name, c.fragment), rightArr));
@@ -3222,6 +3225,10 @@ function collOfWalker(clause, walkFn) {
   };
 
   function collOfTrailblaze(x, walkOpts) {
+
+    var guides = [],
+        problems = [];
+
     if (!Array.isArray(x)) {
       return new Problem(x, clause, [], 'collOf expects an array');
     } else {
@@ -3239,9 +3246,6 @@ function collOfWalker(clause, walkFn) {
           return new Problem(x, clause, problems, 'collOf: collection size ' + x.length + ' is less than minCount ' + minCount + '.');
         }
       }
-
-      var guides = [],
-          problems = [];
 
       for (var i = 0; i < x.length; i += 1) {
         var guide = walkFn(expr, x[i], walkOpts);
@@ -3385,7 +3389,7 @@ function fclauseWalker(clause, walkFn) {
     if (validateFn) {
       var r = validateFn.call(null, conformedArgs, retVal);
       if (!r) {
-        var p = new Problem(fn, clause, [], 'Function ' + fnName + ' failed valiation on argument-return value relation');
+        var p = new Problem({ args: conformedArgs, ret: retVal }, clause, [], 'Function ' + fnName + ' failed valiation on argument-return value relation');
         betterThrow(p);
       }
     }
@@ -21924,9 +21928,9 @@ function genCot(registry) {
           n = _ref2[1],
           ref = _ref2[2];
 
-      return '<li>' + _clauseRefLink(p + '/' + n)(function (p) {
+      return '<li>\n            ' + _clauseRefLink(p + '/' + n)(function (p) {
         return _stylizeName((0, _deref2.default)(ref), _unanbiguousName(p));
-      }) + '</li>';
+      }) + '\n          </li>';
     }).join('') + '\n      </ul>\n    </dd>\n    ';
   }).join('') + '\n  </dl>';
 }
@@ -22170,10 +22174,13 @@ function _genCatClause(globalReg, exprName, path, expr, meta) {
   return r;
 }
 
-function _codeExample(code) {
-  var r = '' + (code ? '\n    <blockquote class="blockquote">\n      <pre><code class="js">' + code + '</code></pre>\n    </blockquote>' : '');
-  return r;
-}
+// function _codeExample( code ) {
+//   const r = `${code ? `
+//     <blockquote class="blockquote">
+//       <pre><code class="js">${ code }</code></pre>
+//     </blockquote>` : ''}`
+//   return r;
+// }
 
 function _synopsis(exprName, fclause, globalReg, meta) {
   var r = synopsisArray([], [], exprName, fclause, globalReg, meta, []);
