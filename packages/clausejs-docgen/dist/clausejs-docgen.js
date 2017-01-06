@@ -22053,12 +22053,12 @@ function genForExpression(globalReg, exprName, expr, meta) {
   var name = meta && meta['name'] || exprName;
   var header = exprName && path ? '\n      <h6>' + _stylizeName(expr, name) + '</h6>&nbsp;\n        <span class="tag tag-primary">\n          ' + _type(expr) + '\n        </span>\n      ' : null;
   if (exprName && path) {
-    docstr = '\n      <div class="card-block">\n        <h6><strong>Syntax</strong></h6>\n        <p class="card-title">\n        ' + _syntax(expr, globalReg, path) + '\n        </p>\n      </div>\n    ' + docstr;
+    docstr = '\n      <div class="card-block">\n        <h6><strong>Syntax</strong></h6>\n        <p class="card-title">\n          <blockquote class="blockquote">\n            <small>\n              <em class="text-muted">\n                ' + _syntax(expr, globalReg, path) + '\n              </em>\n            </small>\n          </blockquote>\n        </p>\n      </div>\n    ' + docstr;
   }
 
   return '\n    ' + (exprName && path ? '<a name="' + path + '"></a>' : '') + '\n    ' + _wrapCard({
     header: header,
-    legend: !path ? _tagFor(expr) : '<span class="tag tag-info">satisfies clause</span>',
+    legend: !path ? _tagFor(expr, globalReg, path) : '<span class="tag tag-info">satisfies clause</span>',
     borderlabel: _labelFor(expr)
   })(docstr);
 }
@@ -22079,8 +22079,22 @@ function _wrapCard(_ref3) {
   }
 }
 
-function _tagFor(expr) {
-  return '<span class="tag tag-' + _labelFor(expr) + '">' + _typeFor(expr) + '</span>';
+function escapeHtml(text) {
+  var map = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    '\'': '&#039;'
+  };
+
+  return text.replace(/[&<>"']/g, function (m) {
+    return map[m];
+  });
+}
+
+function _tagFor(expr, globalReg, path) {
+  return '\n    <span \n      role="button"\n      data-toggle="popover"\n      data-trigger="focus hover"\n      data-html="true"\n      data-content="' + escapeHtml(_syntax(expr, globalReg, path)) + '"\n      data-container="body"\n      data-animation="false"\n      data-delay="500"\n      class="tag tag-' + _labelFor(expr) + '">\n      ' + _typeFor(expr) + '\n    </span>\n  ';
 }
 
 function _rawTypeFor(expr) {
@@ -22321,7 +22335,7 @@ function synopsisArray(prefixes, suffixes, exprName, clause, globalReg, meta, de
 
 function _syntax(expr, globalReg, currPath) {
   // return ``;
-  return '\n    <blockquote class="blockquote">\n      <small>\n        <em class="text-muted">\n          <pre>' + unescape(_encode((0, _describe2.default)(expr, _refExprFn(globalReg, currPath), 2))) + '</pre>\n        </em>\n      </small>\n    </blockquote>\n  ';
+  return '\n    <pre>' + unescape(_encode((0, _describe2.default)(expr, _refExprFn(globalReg, currPath), 2))) + '</pre>\n  ';
 }
 
 function _encode(str) {
@@ -22358,7 +22372,7 @@ function _genPredClause(globalReg, exprName, expr, meta) {
 
 function _predSourcePopover(prefix, pred) {
   var predName = (0, _fnName3.default)(pred);
-  return '\n    <span\n      data-toggle="popover"\n      data-trigger="hover"\n      data-html="true"\n      title="' + predName + '()"\n      data-content="<pre>' + pred.toString() + '</pre>"\n      data-container="body"\n      data-animation="false"\n      data-delay="500">\n      <em>' + prefix + predName + '()</em>\n    </span>\n  ';
+  return '\n    <em>\n      ' + prefix + '\n      <span\n        data-toggle="popover"\n        data-trigger="hover click"\n        data-html="true"\n        role="button"\n        data-placement="top"\n        data-content="<pre>' + pred.toString() + '</pre>"\n        data-container="body"\n        data-animation="false"\n        data-delay="500">\n        ' + predName + '()\n      </span>\n    </em>\n  ';
 }
 
 function _genUnknownClause(globalReg, exprName, path, expr, meta) {

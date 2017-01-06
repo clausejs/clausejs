@@ -168,7 +168,13 @@ function genForExpression( globalReg, exprName, expr, meta ) {
       <div class="card-block">
         <h6><strong>Syntax</strong></h6>
         <p class="card-title">
-        ${_syntax( expr, globalReg, path )}
+          <blockquote class="blockquote">
+            <small>
+              <em class="text-muted">
+                ${_syntax( expr, globalReg, path )}
+              </em>
+            </small>
+          </blockquote>
         </p>
       </div>
     ` + docstr;
@@ -179,7 +185,7 @@ function genForExpression( globalReg, exprName, expr, meta ) {
     ${_wrapCard( {
       header,
       legend: !path ?
-        _tagFor( expr ) :
+        _tagFor( expr, globalReg, path ) :
         '<span class="tag tag-info">satisfies clause</span>',
       borderlabel: _labelFor( expr )
     } )( docstr )}`;
@@ -208,8 +214,35 @@ function _wrapCard( { header, legend, borderlabel } ) {
   }
 }
 
-function _tagFor( expr ) {
-  return `<span class="tag tag-${_labelFor( expr )}">${_typeFor( expr )}</span>`;
+function escapeHtml( text ) {
+  var map = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    '\'': '&#039;'
+  };
+
+  return text.replace( /[&<>"']/g, function( m ) {
+    return map[ m ];
+  } );
+}
+
+function _tagFor( expr, globalReg, path ) {
+  return `
+    <span 
+      role="button"
+      data-toggle="popover"
+      data-trigger="focus hover"
+      data-html="true"
+      data-content="${escapeHtml( _syntax( expr, globalReg, path ) )}"
+      data-container="body"
+      data-animation="false"
+      data-delay="500"
+      class="tag tag-${_labelFor( expr )}">
+      ${_typeFor( expr )}
+    </span>
+  `;
 }
 
 function _rawTypeFor( expr ) {
@@ -452,13 +485,7 @@ function synopsisArray( prefixes, suffixes, exprName, clause, globalReg, meta, d
 function _syntax( expr, globalReg, currPath ) {
   // return ``;
   return `
-    <blockquote class="blockquote">
-      <small>
-        <em class="text-muted">
-          <pre>${unescape( _encode( describe( expr, _refExprFn( globalReg, currPath ), 2 ) ) )}</pre>
-        </em>
-      </small>
-    </blockquote>
+    <pre>${unescape( _encode( describe( expr, _refExprFn( globalReg, currPath ), 2 ) ) )}</pre>
   `;
 }
 
@@ -501,17 +528,21 @@ function _genPredClause( globalReg, exprName, expr, meta ) {
 function _predSourcePopover( prefix, pred ) {
   const predName = fnName( pred );
   return `
-    <span
-      data-toggle="popover"
-      data-trigger="hover"
-      data-html="true"
-      title="${predName}()"
-      data-content="<pre>${pred.toString()}</pre>"
-      data-container="body"
-      data-animation="false"
-      data-delay="500">
-      <em>${prefix}${predName}()</em>
-    </span>
+    <em>
+      ${prefix}
+      <span
+        data-toggle="popover"
+        data-trigger="hover click"
+        data-html="true"
+        role="button"
+        data-placement="top"
+        data-content="<pre>${pred.toString()}</pre>"
+        data-container="body"
+        data-animation="false"
+        data-delay="500">
+        ${predName}()
+      </span>
+    </em>
   `;
 }
 
