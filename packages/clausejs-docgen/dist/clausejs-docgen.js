@@ -22167,7 +22167,7 @@ function _genCatClause(globalReg, exprName, path, expr, meta) {
         altE = _ref4.expr;
 
     var comment = meta && meta[name] && meta[name].comment;
-    return '\n        <fieldset class="list-group-item card card-outline-' + _labelFor(expr) + '">\n          <legend class="clause-type">\n          ' + (name ? '\n            <span class="tag tag-default">Part ' + (idx + 1) + '</span>\n            &lt;<span class="lead font-italic text-primary">' + name + '</span>&gt;          \n          ' : '<span class="tag tag-default">Part ' + (idx + 1) + '</span>') + '\n          </legend>\n          <div class="row">\n            <div class="col-md-12">\n              ' + (comment ? '<span>' + comment + '</span>' : '') + '\n            </div>\n          </div>\n          <div class="row">\n            <div class="col-md-12">\n              ' + genForExpression(globalReg, null, altE, meta && meta[name]) + '\n            </div>\n          </div>\n        </fieldset>\n    ';
+    return '\n        <fieldset class="list-group-item card card-outline-' + _labelFor(expr) + '">\n          <legend class="clause-type">\n          ' + (name ? '\n            <span class="tag tag-default">Part ' + (idx + 1) + '</span>\n            <span class="lead font-italic text-primary">\n              &ldquo;' + name + '&rdquo;</span>          \n          ' : '<span class="tag tag-default">Part ' + (idx + 1) + '</span>') + '\n          </legend>\n          <div class="row">\n            <div class="col-md-12">\n              ' + (comment ? '<span>' + comment + '</span>' : '') + '\n            </div>\n          </div>\n          <div class="row">\n            <div class="col-md-12">\n              ' + genForExpression(globalReg, null, altE, meta && meta[name]) + '\n            </div>\n          </div>\n        </fieldset>\n    ';
   });
 
   var r = '\n    <div class="card-block">\n      <p class="card-title">\n        Should be <em>an ordered list</em> of the following:\n      </p>\n    </div>\n    <div class="list-group list-group-flush list-for-cat">\n      ' + altDefs.join(' ') + '\n    </div>\n  ';
@@ -22203,7 +22203,7 @@ function _synopsisToHtml(arr) {
           name = _ref6[0],
           item = _ref6[1];
 
-      return '<li>&lt;' + name + '&gt;:<div>' + _synopsisToHtml(item) + '</div></li>';
+      return '<li>&ldquo;' + name + '&rdquo;:<div>' + _synopsisToHtml(item) + '</div></li>';
     }).join('');
     h = '<ul>' + h + '</ul>';
   } else if ((0, _preds.isStr)(arr)) {
@@ -22382,7 +22382,7 @@ function _genOrClause(globalReg, exprName, path, expr, meta) {
         altE = _ref7.expr;
 
     var comment = meta && meta[name] && meta[name].comment;
-    return '\n        <fieldset class="list-group-item card-outline-' + _labelFor(expr) + '">\n          <legend class="clause-type">\n            <span class="tag tag-default">\n                Option ' + (idx + 1) + '\n            </span>\n            ' + (name ? '\n                &lt;<span class="lead font-italic text-primary">' + name + '</span>&gt;\n            ' : '') + '\n          </legend>\n          <div class="row">\n            <div class="col-md-12">\n            ' + (comment ? '<span>' + comment + '</span>' : '') + '\n            </div>\n          </div>\n          <div class="row">\n            <div class="col-md-12">\n              ' + genForExpression(globalReg, null, altE, meta && meta[name]) + '\n            </div>\n          </div>\n        </fieldset>\n    ';
+    return '\n        <fieldset class="list-group-item card-outline-' + _labelFor(expr) + '">\n          <legend class="clause-type">\n            <span class="tag tag-default">\n                Option ' + (idx + 1) + '\n            </span>\n            ' + (name ? '\n                <span class="lead font-italic text-primary">\n                  &ldquo;' + name + '&rdquo;\n                </span>\n            ' : '') + '\n          </legend>\n          <div class="row">\n            <div class="col-md-12">\n            ' + (comment ? '<span>' + comment + '</span>' : '') + '\n            </div>\n          </div>\n          <div class="row">\n            <div class="col-md-12">\n              ' + genForExpression(globalReg, null, altE, meta && meta[name]) + '\n            </div>\n          </div>\n        </fieldset>\n    ';
   });
 
   var r = '\n    <div class="card-block">\n      <p class="card-title">\n      ' + (exprName ? '' : '\n      ') + '\n        Should be <em>one of</em> the following:\n      </p>\n    </div>\n    <div class="list-group list-group-flush list-for-or">\n      ' + altDefs.join('') + '\n    </div>\n  ';

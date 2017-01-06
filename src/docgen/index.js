@@ -322,7 +322,8 @@ function _genCatClause( globalReg, exprName, path, expr, meta ) {
           <legend class="clause-type">
           ${name ? `
             <span class="tag tag-default">Part ${idx + 1}</span>
-            &lt;<span class="lead font-italic text-primary">${name}</span>&gt;          
+            <span class="lead font-italic text-primary">
+              &ldquo;${name}&rdquo;</span>          
           ` : `<span class="tag tag-default">Part ${idx + 1}</span>`}
           </legend>
           <div class="row">
@@ -377,7 +378,7 @@ function _synopsisToHtml( arr ) {
       nameItemPairs.push( [ name, arr[ name ] ] );
     }
     h = nameItemPairs.map( ( [ name, item ] ) => {
-      return `<li>&lt;${name}&gt;:<div>${_synopsisToHtml( item )}</div></li>`
+      return `<li>&ldquo;${name}&rdquo;:<div>${_synopsisToHtml( item )}</div></li>`
     } ).join( '' );
     h = `<ul>${h}</ul>`;
   } else if ( isStr( arr ) ) {
@@ -542,7 +543,9 @@ function _genOrClause( globalReg, exprName, path, expr, meta ) {
                 Option ${idx + 1}
             </span>
             ${name ? `
-                &lt;<span class="lead font-italic text-primary">${name}</span>&gt;
+                <span class="lead font-italic text-primary">
+                  &ldquo;${name}&rdquo;
+                </span>
             ` : ''}
           </legend>
           <div class="row">
