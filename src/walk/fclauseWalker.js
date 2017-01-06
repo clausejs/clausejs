@@ -74,7 +74,7 @@ function fclauseWalker( clause, walkFn ) {
     if ( validateFn ) {
       var r = validateFn.call( null, conformedArgs, retVal );
       if ( !r ) {
-        var p = new Problem( fn, clause, [],
+        var p = new Problem( { args: conformedArgs, ret: retVal }, clause, [],
           `Function ${fnName} failed valiation on argument-return value relation` );
         betterThrow( p );
       }
