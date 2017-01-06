@@ -12,6 +12,10 @@ function collOfWalker( clause, walkFn ) {
   };
 
   function collOfTrailblaze( x, walkOpts ) {
+
+    var guides = [],
+      problems = [];
+
     if ( !Array.isArray( x ) ) {
       return new Problem( x, clause, [], 'collOf expects an array' );
     } else {
@@ -31,9 +35,6 @@ function collOfWalker( clause, walkFn ) {
           );
         }
       }
-
-      var guides = [],
-        problems = [];
 
       for ( var i = 0; i < x.length; i += 1 ) {
         var guide = walkFn( expr, x[ i ], walkOpts );
