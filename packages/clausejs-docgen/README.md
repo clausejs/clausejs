@@ -6,6 +6,15 @@ The goal for this subproject is to provide necessary tools that automatically ge
 
 This is currently a work in progress and is subject to heavy change.
 
+Features
+
+clausejs-docgen can automatically generate the following content:
+
+- Syntaxis and visual hierarchy graphs for clauses
+- Function synopsis for fclause
+- Table of contents/indexes based on a Clause namespace registry
+- HTML output of user-provided summary, comment and usage examples
+
 Projects that use clausejs-docgen:
 
 - Clause (http://clause.js.org)
