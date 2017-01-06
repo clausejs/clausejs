@@ -192,10 +192,13 @@ function _foldLeft( inputType, conform, acc, c ) {
       rightArr = {};
     } else if ( acc instanceof GroupedPiece ) {
       rightArr = acc.fragment;
+    } else if ( acc instanceof Piece ) {
+      rightArr = acc.fragment;
     } else if ( acc instanceof GroupedAltPiece ) {
       rightArr = acc.fragment;
     } else {
       console.error( acc, c );
+      debugger;
       throw '!!acc_fl_np';
     }
     return new GroupedPiece(
