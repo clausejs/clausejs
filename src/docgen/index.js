@@ -26,7 +26,11 @@ function genCot( registry ) {
       <ul>
       ${r[ p ]
         .map( ( [ p, n, ref ] ) =>
-          `<li>${_clauseRefLink( `${p}/${n}` )( ( p ) => _stylizeName( deref( ref ), _unanbiguousName( p ) ) )}</li>` )
+          `<li>
+            ${_clauseRefLink( `${p}/${n}` )(
+              ( p ) => _stylizeName( deref( ref ), _unanbiguousName( p ) )
+            )}
+          </li>` )
         .join( '' )}
       </ul>
     </dd>
@@ -48,7 +52,8 @@ function _walk( globalReg, prefix, currentFrag, creg ) {
         subNamespaces = creg[ key ];
         for ( let subnamespace in subNamespaces ) {
           if ( subNamespaces.hasOwnProperty( subnamespace ) ) {
-            let subresult = _walk( globalReg, currentNs, subnamespace, subNamespaces[ subnamespace ] );
+            let subresult = _walk(
+              globalReg, currentNs, subnamespace, subNamespaces[ subnamespace ] );
             subresults.push( subresult );
           }
         }
@@ -57,7 +62,8 @@ function _walk( globalReg, prefix, currentFrag, creg ) {
         nsComment = `<p><i>${creg[ key ]}</i></p>`;
         break;
       case '.expr':
-        exprResult = _exprMeta( globalReg, currentFrag, creg[ '.expr' ], creg[ '.meta' ] );
+        exprResult = _exprMeta(
+          globalReg, currentFrag, creg[ '.expr' ], creg[ '.meta' ] );
         break;
       default:
         break;
@@ -93,7 +99,8 @@ function _hasExprs( subNamespaces ) {
 
 function _exprMeta( globalReg, exprName, expr, meta ) {
   if ( !expr ) {
-    throw new Error( `Expression ${exprName} does not exist in the registry` );
+    throw new Error(
+      `Expression ${exprName} does not exist in the registry` );
   }
   let docstr;
   docstr = genForExpression( globalReg, exprName, expr, meta );
@@ -145,7 +152,8 @@ function genForExpression( globalReg, exprName, expr, meta ) {
   } else if ( expr.type === 'AND' ) {
     docstr = _genAndClause( globalReg, exprName, path, expr, meta );
   } else {
-    docstr = _genUnknownClause( globalReg, exprName, path, expr, meta );
+    docstr = _genUnknownClause(
+      globalReg, exprName, path, expr, meta );
   }
 
   const name = meta && meta[ 'name' ] || exprName;
@@ -170,7 +178,9 @@ function genForExpression( globalReg, exprName, expr, meta ) {
     ${( exprName && path ) ? `<a name="${path}"></a>` : ''}
     ${_wrapCard( {
       header,
-      legend: !path ? _tagFor( expr ) : '<span class="tag tag-info">satisfies clause</span>',
+      legend: !path ?
+        _tagFor( expr ) :
+        '<span class="tag tag-info">satisfies clause</span>',
       borderlabel: _labelFor( expr )
     } )( docstr )}`;
 }
@@ -342,13 +352,13 @@ function _genCatClause( globalReg, exprName, path, expr, meta ) {
   return r;
 }
 
-function _codeExample( code ) {
-  const r = `${code ? `
-    <blockquote class="blockquote">
-      <pre><code class="js">${ code }</code></pre>
-    </blockquote>` : ''}`
-  return r;
-}
+// function _codeExample( code ) {
+//   const r = `${code ? `
+//     <blockquote class="blockquote">
+//       <pre><code class="js">${ code }</code></pre>
+//     </blockquote>` : ''}`
+//   return r;
+// }
 
 function _synopsis( exprName, fclause, globalReg, meta ) {
   var r = synopsisArray( [], [], exprName, fclause, globalReg, meta, [] );
