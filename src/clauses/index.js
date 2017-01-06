@@ -43,7 +43,13 @@ const FclauseFnClause = fclause( {
     optional: {
       args: and( isArray, C( 'clause.types/Expression' ) ),
       ret: C( 'clause.types/Expression' ),
-      fn: isFn,
+      fn: fclause( {
+        args: cat(
+          'conformedArguments', C.zeroOrMore( any ),
+          'conformedReturnValue', any
+        ),
+        ret: any
+      } ),
     }
   } ) ),
 } );
