@@ -3,10 +3,9 @@
 
 # Clause
 
-A powerful & practical JavaScript library for data validation, conformation, runtime-checking & property-based testing.
+A practical & powerful JavaScript library for data validation, conformation, documentation and property-based testing (WIP).
 
  [![Build Status](https://travis-ci.org/clausejs/clausejs.svg?branch=master)](https://travis-ci.org/clausejs/clausejs) [![npm version](https://badge.fury.io/js/clausejs.svg)](https://badge.fury.io/js/clausejs)  [![Size Gzipped](http://img.badgesize.io/clausejs/clausejs/master/packages/clausejs/dist/clausejs.min.js?compression=gzip&label=min%2Bgzipped)](packages/clausejs/dist) [![Open Source Love](https://badges.frapsoft.com/os/mit/mit.svg?v=102)](https://github.com/ellerbrock/open-source-badge/)  [![Discussion](https://img.shields.io/gitter/room/TechnologyAdvice/Stardust.svg)](https://gitter.im/clausejs/clausejs)
-
 
 ## Overview
 
@@ -25,7 +24,9 @@ Clause started as a JavaScript port of [clojure.spec](http://clojure.org/about/s
 >
 > — *C. A. R. Hoare, Hints on Programming Language Design*
 
-Clause aims at providing *the defining contract* for your JavaScript project.
+Clause's primary goal is to allow you to create *the defining contract* for your JavaScript project.
+
+Clause is also a *tool for thought*.
 
 By writing clauses for your data and functions *only once*, you can get a lot of leverage out your effort, including
 
@@ -40,6 +41,7 @@ Also worth looking at are videos on rationale for clojure.spec (and, by extensio
 
 - ["Agility & Robustness: Clojure spec" by Stuart Halloway](https://www.youtube.com/watch?v=VNTQ-M_uSo8&t=746s)
 - [Rich Hickey on Clojure Spec](https://vimeo.com/195711510)
+- ["A Tool for Thought by David Nolen"](http://swannodette.github.io/2016/06/03/tools-for-thought)
 
 ## Project status
 
