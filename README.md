@@ -26,8 +26,6 @@ Clause started as a JavaScript port of [clojure.spec](http://clojure.org/about/s
 
 Clause's primary goal is to allow you to create *the defining contract* for your JavaScript project.
 
-Clause is also a *tool for thought*.
-
 By writing clauses for your data and functions *only once*, you can get a lot of leverage out your effort, including
 
 - Clearly defined specifications for your app's functions and data structures
