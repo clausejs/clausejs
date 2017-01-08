@@ -6,9 +6,6 @@ var C = require( '../src/' );
 var cat = C.cat;
 var oneOrMore = C.oneOrMore;
 var repeat = require( '../src/utils/repeat' );
-var catS = function( str ) {
-  return C.cat.apply( null, Array.prototype.slice.call( str ).map( C.equals ) );
-};
 
 function isInteger( value ) {
   return typeof value === 'number' &&
@@ -79,7 +76,7 @@ describe( 'nfa regex', function() {
 
     it( 'string vocab', () => {
 
-      var VocabClause = C.or.apply( null, [ 'foo', 'bar', 'baz', ' ' ].map( catS ) );
+      var VocabClause = C.or.apply( null, [ 'foo', 'bar', 'baz', ' ' ].map( C.sCat ) );
       var ContentClause = C.zeroOrMore( VocabClause );
 
       var treatise = ' baz foo bar bar';

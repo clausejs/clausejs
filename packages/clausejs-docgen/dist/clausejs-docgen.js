@@ -1135,11 +1135,16 @@ var undefinable = __webpack_require__(48);
 var _require2 = __webpack_require__(39),
     wall = _require2.wall;
 
+var sCat = function sCat(str) {
+  return regex.cat.apply(null, Array.prototype.slice.call(str).map(C.equals));
+};
+
 var other = {
   any: __webpack_require__(41),
   fclause: __webpack_require__(16),
   wall: wall, clause: wall,
-  nullable: nullable, undefinable: undefinable
+  nullable: nullable, undefinable: undefinable,
+  sCat: sCat
 };
 
 var r = oAssign({}, regex, { shape: shape, keys: keys, mapOf: mapOf }, other);
@@ -22054,7 +22059,7 @@ function genForExpression(globalReg, exprName, expr, meta) {
   } else if (expr.type === 'DELAYED') {
     return genForExpression(globalReg, exprName, expr.get(), meta);
   } else if (expr.type === 'FCLAUSE') {
-    docstr = _genFclause(globalReg, exprName, expr, meta);
+    docstr = _genFclause(globalReg, exprName, expr, path, meta);
   } else if (expr.type === 'OR') {
     docstr = _genOrClause(globalReg, exprName, path, expr, meta);
   } else if (expr.type === 'CAT') {
@@ -22071,9 +22076,6 @@ function genForExpression(globalReg, exprName, expr, meta) {
 
   var name = meta && meta['name'] || exprName;
   var header = exprName && path ? '\n      <h6>' + _stylizeName(expr, name) + '</h6>&nbsp;\n        <span class="tag tag-primary">\n          ' + _type(expr) + '\n        </span>\n      ' : null;
-  if (exprName && path) {
-    docstr = '\n      <div class="card-block">\n        <h6><strong>Syntax</strong></h6>\n        <p class="card-title">\n          <blockquote class="blockquote">\n            <small>\n              <em class="text-muted">\n                ' + _syntax(expr, globalReg, path) + '\n              </em>\n            </small>\n          </blockquote>\n        </p>\n      </div>\n    ' + docstr;
-  }
 
   return '\n    ' + (exprName && path ? '<a name="' + path + '"></a>' : '') + '\n    ' + _wrapCard({
     header: header,
@@ -22438,10 +22440,14 @@ function toOrdinal(i) {
 }
 
 // NOTE: meta param is omitted at the end
-function _genFclause(globalReg, exprName, clause, meta) {
+function _genFclause(globalReg, exprName, clause, path) {
+  var meta = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : {};
+
   var frags = [];
-  var name = meta && meta['name'] || exprName;
-  var comment = meta && meta['comment'];
+  var _meta$name = meta.name,
+      name = _meta$name === undefined ? exprName : _meta$name,
+      comment = meta.comment,
+      examples = meta.examples;
   var _clause$opts = clause.opts,
       argsClause = _clause$opts.args,
       retClause = _clause$opts.ret,
@@ -22450,8 +22456,18 @@ function _genFclause(globalReg, exprName, clause, meta) {
   if (comment) {
     frags.push([null, comment]);
   }
+  if (exprName && path) {
+    frags.push(['Syntax', '\n    <div class="card-block">\n        <h6><strong>Syntax</strong></h6>\n        <p class="card-title">\n          <blockquote class="blockquote">\n            <small>\n              <em class="text-muted">\n                ' + _syntax(clause, globalReg, path) + '\n              </em>\n            </small>\n          </blockquote>\n        </p>\n      </div>\n    ']);
+  }
   if (argsClause) {
     frags.push(['Synopsis', _synopsis(exprName, clause, globalReg, meta)]);
+  }
+  if (examples) {
+    frags.push(['Examples', examples.map(function (e) {
+      return '\n      <pre><code>' + e + '</code></pre>\n    ';
+    }).join('\n')]);
+  }
+  if (argsClause) {
     frags.push(['Arguments', genForExpression(globalReg, null, argsClause, meta && meta.args)]);
   }
   if (retClause) {

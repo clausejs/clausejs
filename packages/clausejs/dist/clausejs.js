@@ -1135,11 +1135,16 @@ var undefinable = __webpack_require__(48);
 var _require2 = __webpack_require__(39),
     wall = _require2.wall;
 
+var sCat = function sCat(str) {
+  return regex.cat.apply(null, Array.prototype.slice.call(str).map(C.equals));
+};
+
 var other = {
   any: __webpack_require__(41),
   fclause: __webpack_require__(16),
   wall: wall, clause: wall,
-  nullable: nullable, undefinable: undefinable
+  nullable: nullable, undefinable: undefinable,
+  sCat: sCat
 };
 
 var r = oAssign({}, regex, { shape: shape, keys: keys, mapOf: mapOf }, other);

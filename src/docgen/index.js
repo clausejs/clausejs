@@ -140,7 +140,7 @@ function genForExpression( globalReg, exprName, expr, meta ) {
   } else if ( expr.type === 'DELAYED' ) {
     return genForExpression( globalReg, exprName, expr.get(), meta );
   } else if ( expr.type === 'FCLAUSE' ) {
-    docstr = _genFclause( globalReg, exprName, expr, meta );
+    docstr = _genFclause( globalReg, exprName, expr, path, meta );
   } else if ( expr.type === 'OR' ) {
     docstr = _genOrClause( globalReg, exprName, path, expr, meta );
   } else if ( expr.type === 'CAT' ) {
@@ -163,22 +163,6 @@ function genForExpression( globalReg, exprName, expr, meta ) {
           ${_type( expr )}
         </span>
       ` : null;
-  if ( exprName && path ) {
-    docstr = `
-      <div class="card-block">
-        <h6><strong>Syntax</strong></h6>
-        <p class="card-title">
-          <blockquote class="blockquote">
-            <small>
-              <em class="text-muted">
-                ${_syntax( expr, globalReg, path )}
-              </em>
-            </small>
-          </blockquote>
-        </p>
-      </div>
-    ` + docstr;
-  }
 
   return `
     ${( exprName && path ) ? `<a name="${path}"></a>` : ''}
@@ -624,16 +608,38 @@ function toOrdinal( i ) {
 }
 
 // NOTE: meta param is omitted at the end
-function _genFclause( globalReg, exprName, clause, meta ) {
+function _genFclause( globalReg, exprName, clause, path, meta = {} ) {
   var frags = [ ];
-  const name = meta && meta[ 'name' ] || exprName;
-  const comment = meta && meta[ 'comment' ];
+  const { name = exprName, comment, examples } = meta;
   const { args: argsClause, ret: retClause, fn } = clause.opts;
   if ( comment ) {
     frags.push( [ null, comment ] );
   }
+  if ( exprName && path ) {
+    frags.push( [ 'Syntax', `
+    <div class="card-block">
+        <h6><strong>Syntax</strong></h6>
+        <p class="card-title">
+          <blockquote class="blockquote">
+            <small>
+              <em class="text-muted">
+                ${_syntax( clause, globalReg, path )}
+              </em>
+            </small>
+          </blockquote>
+        </p>
+      </div>
+    ` ] );
+  }
   if ( argsClause ) {
     frags.push( [ 'Synopsis', _synopsis( exprName, clause, globalReg, meta ) ] );
+  }
+  if ( examples ) {
+    frags.push( [ 'Examples', examples.map( ( e ) => `
+      <pre><code>${e}</code></pre>
+    ` ).join( '\n' ) ] );
+  }
+  if ( argsClause ) {
     frags.push( [ 'Arguments', genForExpression( globalReg, null, argsClause, meta && meta.args ) ] );
   }
   if ( retClause ) {

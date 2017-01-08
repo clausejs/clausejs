@@ -5,11 +5,16 @@ var nullable = require( './nullable' );
 var undefinable = require( './undefinable' );
 var { wall } = require( './wall' );
 
+var sCat = function( str ) {
+  return regex.cat.apply( null, Array.prototype.slice.call( str ).map( C.equals ) );
+};
+
 var other = {
   any: require( './any' ),
   fclause: require( './fclause' ),
   wall, clause: wall,
   nullable, undefinable,
+  sCat,
 };
 
 var r = oAssign( {},

@@ -3,6 +3,10 @@ import { meta as M } from '../';
 M( '/clause', {
   'name': 'C',
   'comment': 'Convenient method that combines C.get() and C.set() into one function to get or set clauses from the global registry.',
+  'examples': [
+    'C("awesomeapp/TodoItem", TodoItemClause)',
+    'C("awesomeapp/TodoItem")'
+  ],
   'args': {
     'register': {
       'comment': 'Put the given expression onto the given path in the global clause registry.',

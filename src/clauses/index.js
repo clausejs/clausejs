@@ -38,6 +38,11 @@ const AnyClause = fclause( {
 
 const FclauseClause = isFclause;
 
+const SCatFnClause = fclause( {
+  args: cat( 'string', isStr ),
+  ret: ClauseClause,
+} );
+
 const FclauseFnClause = fclause( {
   args: cat( shape( {
     optional: {
@@ -101,7 +106,7 @@ const DelayedFnClause = fclause( {
   ret: DelayedClauseClause,
 } );
 
-C( '/clausejs', NamespaceFnClause );
+C( '/clause', NamespaceFnClause );
 
 C( 'clause.compose/cat', CatFnClause );
 C( 'clause.compose/or', OrFnClause );
@@ -117,6 +122,8 @@ C( 'clause.compose/wall', WallFnClause );
 C( 'clause.compose/fclause', FclauseFnClause );
 C( 'clause.compose/nullable', NullableFnClause );
 C( 'clause.compose/undefinable', UndefinableFnClause );
+
+C( 'clause.compose.string/sCat', SCatFnClause );
 
 C( 'clause.utils/enforce', EnforceFnClause );
 C( 'clause.utils/conform', ConformFnClause );
@@ -141,9 +148,9 @@ C( 'clause.preds/oneOf', OneOfFnClause );
 C( 'clause.preds/equals', EqualsFnClause );
 C( 'clause.preds/instanceOf', InstanceOfFnClause );
 
-C( '/clausejs.namespace/set', SetNSFnClause );
-C( '/clausejs.namespace/get', GetNSFnClause );
-C( '/clausejs.namespace/meta', MetaFnClause );
+C( '/clause.namespace/set', SetNSFnClause );
+C( '/clause.namespace/get', GetNSFnClause );
+C( '/clause.namespace/meta', MetaFnClause );
 
 C( 'clause.types/Expression', ExprClause );
 C( 'clause.types/Clause', ClauseClause );
