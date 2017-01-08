@@ -1,16 +1,22 @@
 const CLAUSEJS_EXTERN = 'C';
+const path = require( 'path' );
 
 var webpack = require( 'webpack' );
 // var ClosureCompilerPlugin = require('webpack-closure-compiler');
-var PROD = JSON.parse( process.env.PROD_ENV || '0' );
+var MINIFY_ME = JSON.parse( process.env.MINIFY_ME || '0' );
+var CLAUSEJS_ENV = process.env.CLAUSEJS_ENV;
+
 var plugins = [
+  new webpack.DefinePlugin( {
+    'CLAUSEJS_INTERNAL_DEV': JSON.stringify( CLAUSEJS_ENV !== 'production' )
+  } ),
   new webpack.LoaderOptionsPlugin( {
     minimize: true,
     debug: false
   } )
 ];
 
-if ( PROD ) {
+if ( MINIFY_ME ) {
   plugins.push( new webpack.optimize.UglifyJsPlugin( {
     compress: {
       warnings: true
@@ -34,8 +40,8 @@ module.exports = {
   output: {
     library: [ CLAUSEJS_EXTERN ],
     libraryTarget: 'umd',
-    path: './',
-    filename: PROD ? '[name].min.js' : '[name].js',
+    path: __dirname,
+    filename: MINIFY_ME ? '[name].min.js' : '[name].js',
   },
   externals: {
         // require("jquery") is external and available
