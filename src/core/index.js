@@ -4,9 +4,10 @@ var { shape, keys, mapOf, } = require( './regex' );
 var nullable = require( './nullable' );
 var undefinable = require( './undefinable' );
 var { wall } = require( './wall' );
+var equals = require( '../preds/equals' );
 
 var sCat = function( str ) {
-  return regex.cat.apply( null, Array.prototype.slice.call( str ).map( C.equals ) );
+  return regex.cat.apply( null, Array.prototype.slice.call( str ).map( equals ) );
 };
 
 var other = {

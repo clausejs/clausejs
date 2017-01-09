@@ -3,7 +3,7 @@ var ClauseRef = require( '../models/ClauseRef' );
 var { cat, or, fclause, shape } = require( '../core' );
 var isClause = require( '../utils/isClause' );
 var isPred = require( '../utils/isPred' );
-var isUndefined = require( '../preds/isUndefined' );
+var isBool = require( '../preds/isBool' );
 var walk = require( '../walk' );
 var coerceIntoClause = require( '../utils/coerceIntoClause' );
 var oPath = require( './simpleObjectPath' );
@@ -18,7 +18,7 @@ var _get = fclause( {
 } ).instrument( _getUnchecked );
 
 function _getUnchecked( ref ) {
-  var getFn = ( prefix ) => {
+  function getFn( prefix ) {
     var path = reg;
     if ( prefix ) {
       path = prefix + ref;
@@ -32,7 +32,7 @@ function _getUnchecked( ref ) {
     } else {
       return undefined;
     }
-  };
+  }
 
   var sr = new ClauseRef( { ref, getFn, conformFn: null } );
   sr.conform = function clauseRefConform( x ) {
@@ -95,11 +95,12 @@ var NameObjClause = shape( {
 
 var _set = fclause( {
   args: cat( isNamespacePath, NameObjClause ),
-  ret: isUndefined,
+  ret: isBool,
 } ).instrument( function _set( n, nObj ) {
   _maybeInitRegistry();
   var existing = oPath.get( reg, _slashToDot( n ) );
   oPath.set( reg, _slashToDot( n ), oAssign( {}, existing, nObj ) );
+  return true;
 } );
 
 var K = '___CLAUSEJS_REGISTRY';

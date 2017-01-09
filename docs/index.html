@@ -316,13 +316,10 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <dl class="card-block">
     <dd>Convenient method that combines C.get() and C.set() into one function to get or set clauses from the global registry.</dd>
 <dt>Syntax</dt><dd>
-    <div class="card-block">
-        <h6><strong>Syntax</strong></h6>
-        <p class="card-title">
-          <blockquote class="blockquote">
-            <small>
-              <em class="text-muted">
-                
+      <blockquote class="blockquote">
+        <small>
+          <em class="text-muted">
+            
     <pre>fclause(
    { 
   args: or(
@@ -335,11 +332,9 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
    } 
 )</pre>
   
-              </em>
-            </small>
-          </blockquote>
-        </p>
-      </div>
+          </em>
+        </small>
+      </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><li>&#x201C;register&#x201D;:<div><ul><em>C(nsPath, expression)</em></ul></div></li><li>&#x201C;retrieve&#x201D;:<div><ul><em>C(nsPath)</em></ul></div></li></ul></dd>
 <dt>Examples</dt><dd>
@@ -390,7 +385,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
           </legend>
           <div class="row">
             <div class="col-md-12">
-            <span>Put the given expression onto the given path in the global clause registry.</span>
+            <div>Put the given expression onto the given path in the global clause registry.</div>
+            
+            <h6>Examples: </h6>
+              <pre><code>C(&quot;awesomeapp/TodoItem&quot;, TodoItemClause)</code></pre>
+            
             </div>
           </div>
           <div class="row">
@@ -522,7 +521,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
           </legend>
           <div class="row">
             <div class="col-md-12">
-            <span>Retrieves an expression from the given namespace path, or returns null if not found.</span>
+            <div>Retrieves an expression from the given namespace path, or returns null if not found.</div>
+            
+            <h6>Examples: </h6>
+              <pre><code>C(&quot;awesomeapp/TodoItem&quot;)</code></pre>
+            
             </div>
           </div>
           <div class="row">
@@ -626,13 +629,10 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd>
-    <div class="card-block">
-        <h6><strong>Syntax</strong></h6>
-        <p class="card-title">
-          <blockquote class="blockquote">
-            <small>
-              <em class="text-muted">
-                
+      <blockquote class="blockquote">
+        <small>
+          <em class="text-muted">
+            
     <pre>fclause(
    { 
   args: and(
@@ -660,11 +660,9 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
    } 
 )</pre>
   
-              </em>
-            </small>
-          </blockquote>
-        </p>
-      </div>
+          </em>
+        </small>
+      </blockquote>
     </dd>
 <dt>Synopsis</dt><dd>AND</dd>
 <dt>Arguments</dt><dd>
@@ -818,6 +816,8 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
           <div class="row">
             <div class="col-md-12">
             
+            
+            
             </div>
           </div>
           <div class="row">
@@ -865,6 +865,8 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
           </legend>
           <div class="row">
             <div class="col-md-12">
+            
+            
             
             </div>
           </div>
@@ -1086,6 +1088,8 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
           </legend>
           <div class="row">
             <div class="col-md-12">
+            
+            
             
             </div>
           </div>
@@ -1319,6 +1323,8 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
           </legend>
           <div class="row">
             <div class="col-md-12">
+            
+            
             
             </div>
           </div>
@@ -1550,13 +1556,10 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd>
-    <div class="card-block">
-        <h6><strong>Syntax</strong></h6>
-        <p class="card-title">
-          <blockquote class="blockquote">
-            <small>
-              <em class="text-muted">
-                
+      <blockquote class="blockquote">
+        <small>
+          <em class="text-muted">
+            
     <pre>fclause(
    { 
   args: and(
@@ -1584,11 +1587,9 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
    } 
 )</pre>
   
-              </em>
-            </small>
-          </blockquote>
-        </p>
-      </div>
+          </em>
+        </small>
+      </blockquote>
     </dd>
 <dt>Synopsis</dt><dd>AND</dd>
 <dt>Arguments</dt><dd>
@@ -1742,6 +1743,8 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
           <div class="row">
             <div class="col-md-12">
             
+            
+            
             </div>
           </div>
           <div class="row">
@@ -1789,6 +1792,8 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
           </legend>
           <div class="row">
             <div class="col-md-12">
+            
+            
             
             </div>
           </div>
@@ -2010,6 +2015,8 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
           </legend>
           <div class="row">
             <div class="col-md-12">
+            
+            
             
             </div>
           </div>
@@ -2244,6 +2251,8 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
           <div class="row">
             <div class="col-md-12">
             
+            
+            
             </div>
           </div>
           <div class="row">
@@ -2474,13 +2483,10 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd>
-    <div class="card-block">
-        <h6><strong>Syntax</strong></h6>
-        <p class="card-title">
-          <blockquote class="blockquote">
-            <small>
-              <em class="text-muted">
-                
+      <blockquote class="blockquote">
+        <small>
+          <em class="text-muted">
+            
     <pre>fclause(
    { 
   args: cat(
@@ -2491,11 +2497,9 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
    } 
 )</pre>
   
-              </em>
-            </small>
-          </blockquote>
-        </p>
-      </div>
+          </em>
+        </small>
+      </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>zeroOrMore(<a href="#clause.types/Expression" data-path="clause.types/Expression">expr</a>, opts)</em></ul></dd>
 <dt>Arguments</dt><dd>
@@ -2676,13 +2680,10 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd>
-    <div class="card-block">
-        <h6><strong>Syntax</strong></h6>
-        <p class="card-title">
-          <blockquote class="blockquote">
-            <small>
-              <em class="text-muted">
-                
+      <blockquote class="blockquote">
+        <small>
+          <em class="text-muted">
+            
     <pre>fclause(
    { 
   args: cat(
@@ -2693,11 +2694,9 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
    } 
 )</pre>
   
-              </em>
-            </small>
-          </blockquote>
-        </p>
-      </div>
+          </em>
+        </small>
+      </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>oneOrMore(<a href="#clause.types/Expression" data-path="clause.types/Expression">expr</a>, opts)</em></ul></dd>
 <dt>Arguments</dt><dd>
@@ -2878,13 +2877,10 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd>
-    <div class="card-block">
-        <h6><strong>Syntax</strong></h6>
-        <p class="card-title">
-          <blockquote class="blockquote">
-            <small>
-              <em class="text-muted">
-                
+      <blockquote class="blockquote">
+        <small>
+          <em class="text-muted">
+            
     <pre>fclause(
    { 
   args: cat(
@@ -2895,11 +2891,9 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
    } 
 )</pre>
   
-              </em>
-            </small>
-          </blockquote>
-        </p>
-      </div>
+          </em>
+        </small>
+      </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>zeroOrOne(<a href="#clause.types/Expression" data-path="clause.types/Expression">expr</a>, opts)</em></ul></dd>
 <dt>Arguments</dt><dd>
@@ -3080,13 +3074,10 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd>
-    <div class="card-block">
-        <h6><strong>Syntax</strong></h6>
-        <p class="card-title">
-          <blockquote class="blockquote">
-            <small>
-              <em class="text-muted">
-                
+      <blockquote class="blockquote">
+        <small>
+          <em class="text-muted">
+            
     <pre>fclause(
    { 
   args: oneOrMore( <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ), 
@@ -3094,11 +3085,9 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
    } 
 )</pre>
   
-              </em>
-            </small>
-          </blockquote>
-        </p>
-      </div>
+          </em>
+        </small>
+      </blockquote>
     </dd>
 <dt>Synopsis</dt><dd>O_OR_M</dd>
 <dt>Arguments</dt><dd>
@@ -3184,13 +3173,10 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd>
-    <div class="card-block">
-        <h6><strong>Syntax</strong></h6>
-        <p class="card-title">
-          <blockquote class="blockquote">
-            <small>
-              <em class="text-muted">
-                
+      <blockquote class="blockquote">
+        <small>
+          <em class="text-muted">
+            
     <pre>fclause(
    { 
   args: cat(
@@ -3201,11 +3187,9 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
    } 
 )</pre>
   
-              </em>
-            </small>
-          </blockquote>
-        </p>
-      </div>
+          </em>
+        </small>
+      </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>collOf(<a href="#clause.types/Expression" data-path="clause.types/Expression">expr</a>, opts)</em></ul></dd>
 <dt>Arguments</dt><dd>
@@ -3386,13 +3370,10 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd>
-    <div class="card-block">
-        <h6><strong>Syntax</strong></h6>
-        <p class="card-title">
-          <blockquote class="blockquote">
-            <small>
-              <em class="text-muted">
-                
+      <blockquote class="blockquote">
+        <small>
+          <em class="text-muted">
+            
     <pre>fclause(
    { 
   args: cat(
@@ -3403,11 +3384,9 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
    } 
 )</pre>
   
-              </em>
-            </small>
-          </blockquote>
-        </p>
-      </div>
+          </em>
+        </small>
+      </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>mapOf(<a href="#clause.types/Expression" data-path="clause.types/Expression">keyExpression</a>, <a href="#clause.types/Expression" data-path="clause.types/Expression">valExpression</a>)</em></ul></dd>
 <dt>Arguments</dt><dd>
@@ -3554,13 +3533,10 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd>
-    <div class="card-block">
-        <h6><strong>Syntax</strong></h6>
-        <p class="card-title">
-          <blockquote class="blockquote">
-            <small>
-              <em class="text-muted">
-                
+      <blockquote class="blockquote">
+        <small>
+          <em class="text-muted">
+            
     <pre>fclause(
    { 
   args: cat( &quot;shapeArgs&quot;, shape(
@@ -3613,11 +3589,9 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
    } 
 )</pre>
   
-              </em>
-            </small>
-          </blockquote>
-        </p>
-      </div>
+          </em>
+        </small>
+      </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>shape(shapeArgs)</em></ul></dd>
 <dt>Arguments</dt><dd>
@@ -3823,24 +3797,19 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd>
-    <div class="card-block">
-        <h6><strong>Syntax</strong></h6>
-        <p class="card-title">
-          <blockquote class="blockquote">
-            <small>
-              <em class="text-muted">
-                
+      <blockquote class="blockquote">
+        <small>
+          <em class="text-muted">
+            
     <pre>fclause(
    { 
   ret: <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a>
    } 
 )</pre>
   
-              </em>
-            </small>
-          </blockquote>
-        </p>
-      </div>
+          </em>
+        </small>
+      </blockquote>
     </dd>
 <dt>Return Value</dt><dd>
     
@@ -3876,13 +3845,10 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd>
-    <div class="card-block">
-        <h6><strong>Syntax</strong></h6>
-        <p class="card-title">
-          <blockquote class="blockquote">
-            <small>
-              <em class="text-muted">
-                
+      <blockquote class="blockquote">
+        <small>
+          <em class="text-muted">
+            
     <pre>fclause(
    { 
   args: cat( <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ), 
@@ -3890,11 +3856,9 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
    } 
 )</pre>
   
-              </em>
-            </small>
-          </blockquote>
-        </p>
-      </div>
+          </em>
+        </small>
+      </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>wall(<a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>)</em></ul></dd>
 <dt>Arguments</dt><dd>
@@ -3986,13 +3950,10 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd>
-    <div class="card-block">
-        <h6><strong>Syntax</strong></h6>
-        <p class="card-title">
-          <blockquote class="blockquote">
-            <small>
-              <em class="text-muted">
-                
+      <blockquote class="blockquote">
+        <small>
+          <em class="text-muted">
+            
     <pre>fclause(
    { 
   args: cat( shape(
@@ -4018,11 +3979,9 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
    } 
 )</pre>
   
-              </em>
-            </small>
-          </blockquote>
-        </p>
-      </div>
+          </em>
+        </small>
+      </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>fclause()</em></ul></dd>
 <dt>Arguments</dt><dd>
@@ -4143,24 +4102,19 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd>
-    <div class="card-block">
-        <h6><strong>Syntax</strong></h6>
-        <p class="card-title">
-          <blockquote class="blockquote">
-            <small>
-              <em class="text-muted">
-                
+      <blockquote class="blockquote">
+        <small>
+          <em class="text-muted">
+            
     <pre>fclause(
    { 
   args: cat( <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> )
    } 
 )</pre>
   
-              </em>
-            </small>
-          </blockquote>
-        </p>
-      </div>
+          </em>
+        </small>
+      </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>nullable(<a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>)</em></ul></dd>
 <dt>Arguments</dt><dd>
@@ -4237,24 +4191,19 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd>
-    <div class="card-block">
-        <h6><strong>Syntax</strong></h6>
-        <p class="card-title">
-          <blockquote class="blockquote">
-            <small>
-              <em class="text-muted">
-                
+      <blockquote class="blockquote">
+        <small>
+          <em class="text-muted">
+            
     <pre>fclause(
    { 
   args: cat( <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> )
    } 
 )</pre>
   
-              </em>
-            </small>
-          </blockquote>
-        </p>
-      </div>
+          </em>
+        </small>
+      </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>undefinable(<a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>)</em></ul></dd>
 <dt>Arguments</dt><dd>
@@ -4331,13 +4280,10 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd>
-    <div class="card-block">
-        <h6><strong>Syntax</strong></h6>
-        <p class="card-title">
-          <blockquote class="blockquote">
-            <small>
-              <em class="text-muted">
-                
+      <blockquote class="blockquote">
+        <small>
+          <em class="text-muted">
+            
     <pre>fclause(
    { 
   args: cat( &quot;string&quot;, isString ), 
@@ -4345,13 +4291,20 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
    } 
 )</pre>
   
-              </em>
-            </small>
-          </blockquote>
-        </p>
-      </div>
+          </em>
+        </small>
+      </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>sCat(string)</em></ul></dd>
+<dt>Examples</dt><dd>
+      <pre><code>
+var StrClause = C.cat(&apos;part1&apos;, C.zeroOrMore(C.sCat(&apos;foo&apos;)),
+                      &apos;part2.5&apos;, C.zeroOrMore(C.sCat(&apos;weeee&apos;)),
+                      &apos;part2&apos;, C.zeroOrMore(C.sCat(&apos;bar&apos;)));
+
+C.conform(StrClause, &apos;foofoofoobarbar&apos;);
+</code></pre>
+    </dd>
 <dt>Arguments</dt><dd>
     
     
@@ -4459,13 +4412,10 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd>
-    <div class="card-block">
-        <h6><strong>Syntax</strong></h6>
-        <p class="card-title">
-          <blockquote class="blockquote">
-            <small>
-              <em class="text-muted">
-                
+      <blockquote class="blockquote">
+        <small>
+          <em class="text-muted">
+            
     <pre>fclause(
    { 
   args: cat(
@@ -4476,11 +4426,9 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
    } 
 )</pre>
   
-              </em>
-            </small>
-          </blockquote>
-        </p>
-      </div>
+          </em>
+        </small>
+      </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>enforce(<a href="#clause.types/Expression" data-path="clause.types/Expression">expression</a>, valueToCheck)</em></ul></dd>
 <dt>Arguments</dt><dd>
@@ -4630,13 +4578,10 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd>
-    <div class="card-block">
-        <h6><strong>Syntax</strong></h6>
-        <p class="card-title">
-          <blockquote class="blockquote">
-            <small>
-              <em class="text-muted">
-                
+      <blockquote class="blockquote">
+        <small>
+          <em class="text-muted">
+            
     <pre>fclause(
    { 
   args: cat(
@@ -4650,11 +4595,9 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
    } 
 )</pre>
   
-              </em>
-            </small>
-          </blockquote>
-        </p>
-      </div>
+          </em>
+        </small>
+      </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>conform(<a href="#clause.types/Expression" data-path="clause.types/Expression">expression</a>, valueToConform)</em></ul></dd>
 <dt>Arguments</dt><dd>
@@ -4796,6 +4739,8 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
           <div class="row">
             <div class="col-md-12">
             
+            
+            
             </div>
           </div>
           <div class="row">
@@ -4835,6 +4780,8 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
           </legend>
           <div class="row">
             <div class="col-md-12">
+            
+            
             
             </div>
           </div>
@@ -4888,13 +4835,10 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd>
-    <div class="card-block">
-        <h6><strong>Syntax</strong></h6>
-        <p class="card-title">
-          <blockquote class="blockquote">
-            <small>
-              <em class="text-muted">
-                
+      <blockquote class="blockquote">
+        <small>
+          <em class="text-muted">
+            
     <pre>fclause(
    { 
   args: cat( &quot;getFn&quot;, fclause(
@@ -4906,11 +4850,9 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
    } 
 )</pre>
   
-              </em>
-            </small>
-          </blockquote>
-        </p>
-      </div>
+          </em>
+        </small>
+      </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>delayed(getFn)</em></ul></dd>
 <dt>Arguments</dt><dd>
@@ -5034,13 +4976,10 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <dl class="card-block">
     <dd>Returns an abbreviated description of the clause as a simple tree structure.</dd>
 <dt>Syntax</dt><dd>
-    <div class="card-block">
-        <h6><strong>Syntax</strong></h6>
-        <p class="card-title">
-          <blockquote class="blockquote">
-            <small>
-              <em class="text-muted">
-                
+      <blockquote class="blockquote">
+        <small>
+          <em class="text-muted">
+            
     <pre>fclause(
    { 
   args: cat(
@@ -5061,11 +5000,9 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
    } 
 )</pre>
   
-              </em>
-            </small>
-          </blockquote>
-        </p>
-      </div>
+          </em>
+        </small>
+      </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>C.describe(expression, interceptor, indent)</em></ul></dd>
 <dt>Arguments</dt><dd>
@@ -5274,6 +5211,8 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
           <div class="row">
             <div class="col-md-12">
             
+            
+            
             </div>
           </div>
           <div class="row">
@@ -5321,6 +5260,8 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
           <div class="row">
             <div class="col-md-12">
             
+            
+            
             </div>
           </div>
           <div class="row">
@@ -5367,6 +5308,8 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
           </legend>
           <div class="row">
             <div class="col-md-12">
+            
+            
             
             </div>
           </div>
@@ -5557,13 +5500,10 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd>
-    <div class="card-block">
-        <h6><strong>Syntax</strong></h6>
-        <p class="card-title">
-          <blockquote class="blockquote">
-            <small>
-              <em class="text-muted">
-                
+      <blockquote class="blockquote">
+        <small>
+          <em class="text-muted">
+            
     <pre>fclause(
    { 
   args: cat( &quot;predicateToNegate&quot;, <a href="#clause.types/Predicate" data-path="clause.types/Predicate">Predicate</a> ), 
@@ -5576,11 +5516,9 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
    } 
 )</pre>
   
-              </em>
-            </small>
-          </blockquote>
-        </p>
-      </div>
+          </em>
+        </small>
+      </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>not(predicateToNegate)</em></ul></dd>
 <dt>Arguments</dt><dd>
@@ -5783,13 +5721,10 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd>
-    <div class="card-block">
-        <h6><strong>Syntax</strong></h6>
-        <p class="card-title">
-          <blockquote class="blockquote">
-            <small>
-              <em class="text-muted">
-                
+      <blockquote class="blockquote">
+        <small>
+          <em class="text-muted">
+            
     <pre>fclause(
    { 
   args: cat( &quot;x&quot;, any() ), 
@@ -5797,11 +5732,9 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
    } 
 )</pre>
   
-              </em>
-            </small>
-          </blockquote>
-        </p>
-      </div>
+          </em>
+        </small>
+      </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>isObj(x)</em></ul></dd>
 <dt>Arguments</dt><dd>
@@ -5914,13 +5847,10 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd>
-    <div class="card-block">
-        <h6><strong>Syntax</strong></h6>
-        <p class="card-title">
-          <blockquote class="blockquote">
-            <small>
-              <em class="text-muted">
-                
+      <blockquote class="blockquote">
+        <small>
+          <em class="text-muted">
+            
     <pre>fclause(
    { 
   args: cat( &quot;x&quot;, any() ), 
@@ -5928,11 +5858,9 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
    } 
 )</pre>
   
-              </em>
-            </small>
-          </blockquote>
-        </p>
-      </div>
+          </em>
+        </small>
+      </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>isStr(x)</em></ul></dd>
 <dt>Arguments</dt><dd>
@@ -6045,13 +5973,10 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd>
-    <div class="card-block">
-        <h6><strong>Syntax</strong></h6>
-        <p class="card-title">
-          <blockquote class="blockquote">
-            <small>
-              <em class="text-muted">
-                
+      <blockquote class="blockquote">
+        <small>
+          <em class="text-muted">
+            
     <pre>fclause(
    { 
   args: cat( &quot;x&quot;, any() ), 
@@ -6059,11 +5984,9 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
    } 
 )</pre>
   
-              </em>
-            </small>
-          </blockquote>
-        </p>
-      </div>
+          </em>
+        </small>
+      </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>isArray(x)</em></ul></dd>
 <dt>Arguments</dt><dd>
@@ -6176,13 +6099,10 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd>
-    <div class="card-block">
-        <h6><strong>Syntax</strong></h6>
-        <p class="card-title">
-          <blockquote class="blockquote">
-            <small>
-              <em class="text-muted">
-                
+      <blockquote class="blockquote">
+        <small>
+          <em class="text-muted">
+            
     <pre>fclause(
    { 
   args: cat( &quot;x&quot;, any() ), 
@@ -6190,11 +6110,9 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
    } 
 )</pre>
   
-              </em>
-            </small>
-          </blockquote>
-        </p>
-      </div>
+          </em>
+        </small>
+      </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>isDate(x)</em></ul></dd>
 <dt>Arguments</dt><dd>
@@ -6307,13 +6225,10 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd>
-    <div class="card-block">
-        <h6><strong>Syntax</strong></h6>
-        <p class="card-title">
-          <blockquote class="blockquote">
-            <small>
-              <em class="text-muted">
-                
+      <blockquote class="blockquote">
+        <small>
+          <em class="text-muted">
+            
     <pre>fclause(
    { 
   args: cat( &quot;x&quot;, any() ), 
@@ -6321,11 +6236,9 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
    } 
 )</pre>
   
-              </em>
-            </small>
-          </blockquote>
-        </p>
-      </div>
+          </em>
+        </small>
+      </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>isNull(x)</em></ul></dd>
 <dt>Arguments</dt><dd>
@@ -6438,13 +6351,10 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd>
-    <div class="card-block">
-        <h6><strong>Syntax</strong></h6>
-        <p class="card-title">
-          <blockquote class="blockquote">
-            <small>
-              <em class="text-muted">
-                
+      <blockquote class="blockquote">
+        <small>
+          <em class="text-muted">
+            
     <pre>fclause(
    { 
   args: cat( &quot;x&quot;, any() ), 
@@ -6452,11 +6362,9 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
    } 
 )</pre>
   
-              </em>
-            </small>
-          </blockquote>
-        </p>
-      </div>
+          </em>
+        </small>
+      </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>isUndefined(x)</em></ul></dd>
 <dt>Arguments</dt><dd>
@@ -6569,13 +6477,10 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd>
-    <div class="card-block">
-        <h6><strong>Syntax</strong></h6>
-        <p class="card-title">
-          <blockquote class="blockquote">
-            <small>
-              <em class="text-muted">
-                
+      <blockquote class="blockquote">
+        <small>
+          <em class="text-muted">
+            
     <pre>fclause(
    { 
   args: cat( &quot;x&quot;, any() ), 
@@ -6583,11 +6488,9 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
    } 
 )</pre>
   
-              </em>
-            </small>
-          </blockquote>
-        </p>
-      </div>
+          </em>
+        </small>
+      </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>notEmpty(x)</em></ul></dd>
 <dt>Arguments</dt><dd>
@@ -6700,13 +6603,10 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd>
-    <div class="card-block">
-        <h6><strong>Syntax</strong></h6>
-        <p class="card-title">
-          <blockquote class="blockquote">
-            <small>
-              <em class="text-muted">
-                
+      <blockquote class="blockquote">
+        <small>
+          <em class="text-muted">
+            
     <pre>fclause(
    { 
   args: cat( &quot;x&quot;, any() ), 
@@ -6714,11 +6614,9 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
    } 
 )</pre>
   
-              </em>
-            </small>
-          </blockquote>
-        </p>
-      </div>
+          </em>
+        </small>
+      </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>isBool(x)</em></ul></dd>
 <dt>Arguments</dt><dd>
@@ -6831,13 +6729,10 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd>
-    <div class="card-block">
-        <h6><strong>Syntax</strong></h6>
-        <p class="card-title">
-          <blockquote class="blockquote">
-            <small>
-              <em class="text-muted">
-                
+      <blockquote class="blockquote">
+        <small>
+          <em class="text-muted">
+            
     <pre>fclause(
    { 
   args: cat( &quot;x&quot;, any() ), 
@@ -6845,11 +6740,9 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
    } 
 )</pre>
   
-              </em>
-            </small>
-          </blockquote>
-        </p>
-      </div>
+          </em>
+        </small>
+      </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>isFn(x)</em></ul></dd>
 <dt>Arguments</dt><dd>
@@ -6962,13 +6855,10 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd>
-    <div class="card-block">
-        <h6><strong>Syntax</strong></h6>
-        <p class="card-title">
-          <blockquote class="blockquote">
-            <small>
-              <em class="text-muted">
-                
+      <blockquote class="blockquote">
+        <small>
+          <em class="text-muted">
+            
     <pre>fclause(
    { 
   args: cat( &quot;x&quot;, any() ), 
@@ -6976,11 +6866,9 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
    } 
 )</pre>
   
-              </em>
-            </small>
-          </blockquote>
-        </p>
-      </div>
+          </em>
+        </small>
+      </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>isNum(x)</em></ul></dd>
 <dt>Arguments</dt><dd>
@@ -7093,13 +6981,10 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd>
-    <div class="card-block">
-        <h6><strong>Syntax</strong></h6>
-        <p class="card-title">
-          <blockquote class="blockquote">
-            <small>
-              <em class="text-muted">
-                
+      <blockquote class="blockquote">
+        <small>
+          <em class="text-muted">
+            
     <pre>fclause(
    { 
   args: cat( &quot;x&quot;, any() ), 
@@ -7107,11 +6992,9 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
    } 
 )</pre>
   
-              </em>
-            </small>
-          </blockquote>
-        </p>
-      </div>
+          </em>
+        </small>
+      </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>isInt(x)</em></ul></dd>
 <dt>Arguments</dt><dd>
@@ -7224,13 +7107,10 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd>
-    <div class="card-block">
-        <h6><strong>Syntax</strong></h6>
-        <p class="card-title">
-          <blockquote class="blockquote">
-            <small>
-              <em class="text-muted">
-                
+      <blockquote class="blockquote">
+        <small>
+          <em class="text-muted">
+            
     <pre>fclause(
    { 
   args: cat( &quot;x&quot;, any() ), 
@@ -7238,11 +7118,9 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
    } 
 )</pre>
   
-              </em>
-            </small>
-          </blockquote>
-        </p>
-      </div>
+          </em>
+        </small>
+      </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>isNatInt(x)</em></ul></dd>
 <dt>Arguments</dt><dd>
@@ -7355,13 +7233,10 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd>
-    <div class="card-block">
-        <h6><strong>Syntax</strong></h6>
-        <p class="card-title">
-          <blockquote class="blockquote">
-            <small>
-              <em class="text-muted">
-                
+      <blockquote class="blockquote">
+        <small>
+          <em class="text-muted">
+            
     <pre>fclause(
    { 
   args: cat( &quot;x&quot;, or(
@@ -7372,11 +7247,9 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
    } 
 )</pre>
   
-              </em>
-            </small>
-          </blockquote>
-        </p>
-      </div>
+          </em>
+        </small>
+      </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>isUuid(x)</em></ul></dd>
 <dt>Arguments</dt><dd>
@@ -7454,6 +7327,8 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
           <div class="row">
             <div class="col-md-12">
             
+            
+            
             </div>
           </div>
           <div class="row">
@@ -7500,6 +7375,8 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
           </legend>
           <div class="row">
             <div class="col-md-12">
+            
+            
             
             </div>
           </div>
@@ -7602,13 +7479,10 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd>
-    <div class="card-block">
-        <h6><strong>Syntax</strong></h6>
-        <p class="card-title">
-          <blockquote class="blockquote">
-            <small>
-              <em class="text-muted">
-                
+      <blockquote class="blockquote">
+        <small>
+          <em class="text-muted">
+            
     <pre>fclause(
    { 
   args: cat( &quot;valueOptions&quot;, collOf( <a href="#clause.types/Primitive" data-path="clause.types/Primitive">Primitive</a> ) ), 
@@ -7621,11 +7495,9 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
    } 
 )</pre>
   
-              </em>
-            </small>
-          </blockquote>
-        </p>
-      </div>
+          </em>
+        </small>
+      </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>oneOf(valueOptions)</em></ul></dd>
 <dt>Arguments</dt><dd>
@@ -7848,13 +7720,10 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd>
-    <div class="card-block">
-        <h6><strong>Syntax</strong></h6>
-        <p class="card-title">
-          <blockquote class="blockquote">
-            <small>
-              <em class="text-muted">
-                
+      <blockquote class="blockquote">
+        <small>
+          <em class="text-muted">
+            
     <pre>fclause(
    { 
   args: cat( &quot;valueToCompareWith&quot;, any() ), 
@@ -7867,11 +7736,9 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
    } 
 )</pre>
   
-              </em>
-            </small>
-          </blockquote>
-        </p>
-      </div>
+          </em>
+        </small>
+      </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>equals(valueToCompareWith)</em></ul></dd>
 <dt>Arguments</dt><dd>
@@ -8071,13 +7938,10 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd>
-    <div class="card-block">
-        <h6><strong>Syntax</strong></h6>
-        <p class="card-title">
-          <blockquote class="blockquote">
-            <small>
-              <em class="text-muted">
-                
+      <blockquote class="blockquote">
+        <small>
+          <em class="text-muted">
+            
     <pre>fclause(
    { 
   args: cat( &quot;instanceType&quot;, isFunction ), 
@@ -8090,11 +7954,9 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
    } 
 )</pre>
   
-              </em>
-            </small>
-          </blockquote>
-        </p>
-      </div>
+          </em>
+        </small>
+      </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>instanceOf(instanceType)</em></ul></dd>
 <dt>Arguments</dt><dd>
@@ -8307,28 +8169,23 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd>
-    <div class="card-block">
-        <h6><strong>Syntax</strong></h6>
-        <p class="card-title">
-          <blockquote class="blockquote">
-            <small>
-              <em class="text-muted">
-                
+      <blockquote class="blockquote">
+        <small>
+          <em class="text-muted">
+            
     <pre>fclause(
    { 
   args: cat(
        &quot;nsPath&quot;, <a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">NamespacePath</a>, 
       &quot;expression&quot;, <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> 
     ), 
-    ret: isUndefined
+    ret: isBool
    } 
 )</pre>
   
-              </em>
-            </small>
-          </blockquote>
-        </p>
-      </div>
+          </em>
+        </small>
+      </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>set(nsPath, expression)</em></ul></dd>
 <dt>Arguments</dt><dd>
@@ -8448,7 +8305,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;isUndefined&lt;/pre&gt;
+    &lt;pre&gt;isBool&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
       satisfies predicate
     </span>
@@ -8459,10 +8316,10 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       
     <em>
       A value that satisfies 
-      <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isUndefined(x) {
-  return x === undefined;
+      <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isBool(x) {
+  return typeof x === &apos;boolean&apos;;
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
-        isUndefined()
+        isBool()
       </span>
     </em>
   
@@ -8489,13 +8346,10 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd>
-    <div class="card-block">
-        <h6><strong>Syntax</strong></h6>
-        <p class="card-title">
-          <blockquote class="blockquote">
-            <small>
-              <em class="text-muted">
-                
+      <blockquote class="blockquote">
+        <small>
+          <em class="text-muted">
+            
     <pre>fclause(
    { 
   args: cat( &quot;nsPath&quot;, <a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">NamespacePath</a> ), 
@@ -8503,11 +8357,9 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
    } 
 )</pre>
   
-              </em>
-            </small>
-          </blockquote>
-        </p>
-      </div>
+          </em>
+        </small>
+      </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>get(nsPath)</em></ul></dd>
 <dt>Arguments</dt><dd>
@@ -8617,13 +8469,10 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd>
-    <div class="card-block">
-        <h6><strong>Syntax</strong></h6>
-        <p class="card-title">
-          <blockquote class="blockquote">
-            <small>
-              <em class="text-muted">
-                
+      <blockquote class="blockquote">
+        <small>
+          <em class="text-muted">
+            
     <pre>fclause(
    { 
   args: cat(
@@ -8637,11 +8486,9 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
    } 
 )</pre>
   
-              </em>
-            </small>
-          </blockquote>
-        </p>
-      </div>
+          </em>
+        </small>
+      </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>meta(source, metaObj)</em></ul></dd>
 <dt>Arguments</dt><dd>
@@ -8726,6 +8573,8 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
           <div class="row">
             <div class="col-md-12">
             
+            
+            
             </div>
           </div>
           <div class="row">
@@ -8776,6 +8625,8 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
           </legend>
           <div class="row">
             <div class="col-md-12">
+            
+            
             
             </div>
           </div>
@@ -8942,6 +8793,8 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
           <div class="row">
             <div class="col-md-12">
             
+            
+            
             </div>
           </div>
           <div class="row">
@@ -8978,6 +8831,8 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
           </legend>
           <div class="row">
             <div class="col-md-12">
+            
+            
             
             </div>
           </div>
@@ -9016,6 +8871,8 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
           <div class="row">
             <div class="col-md-12">
             
+            
+            
             </div>
           </div>
           <div class="row">
@@ -9052,6 +8909,8 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
           </legend>
           <div class="row">
             <div class="col-md-12">
+            
+            
             
             </div>
           </div>
@@ -9325,6 +9184,8 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
           <div class="row">
             <div class="col-md-12">
             
+            
+            
             </div>
           </div>
           <div class="row">
@@ -9371,6 +9232,8 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
           </legend>
           <div class="row">
             <div class="col-md-12">
+            
+            
             
             </div>
           </div>
@@ -9419,6 +9282,8 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
           <div class="row">
             <div class="col-md-12">
             
+            
+            
             </div>
           </div>
           <div class="row">
@@ -9466,6 +9331,8 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
           <div class="row">
             <div class="col-md-12">
             
+            
+            
             </div>
           </div>
           <div class="row">
@@ -9512,6 +9379,8 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
           </legend>
           <div class="row">
             <div class="col-md-12">
+            
+            
             
             </div>
           </div>

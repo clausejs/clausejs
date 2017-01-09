@@ -548,9 +548,16 @@ function _genUnknownClause( globalReg, exprName, path, expr, meta ) {
 }
 
 function _genOrClause( globalReg, exprName, path, expr, meta ) {
-  const example = meta && meta.example;
+  if ( !meta ) {
+    meta = {};
+  }
   const altDefs = expr.exprs.map( ( { name, expr: altE }, idx ) => {
-    const comment = meta && meta[ name ] && meta[ name ].comment;
+    const comment = meta[ name ] && meta[ name ].comment;
+    var examples = meta[ name ] && meta[ name ].examples;
+    if ( isStr( examples ) ) {
+      examples = [ examples ];
+    }
+
     return `
         <fieldset class="list-group-item card-outline-${_labelFor( expr )}">
           <legend class="clause-type">
@@ -565,7 +572,11 @@ function _genOrClause( globalReg, exprName, path, expr, meta ) {
           </legend>
           <div class="row">
             <div class="col-md-12">
-            ${comment ? `<span>${ comment }</span>` : ''}
+            ${comment ? `<div>${ comment }</div>` : ''}
+            
+            ${examples ? '<h6>Examples: </h6>' + examples.map( ( e ) => `
+              <pre><code>${e}</code></pre>
+            ` ).join( '\n' ) : ''}
             </div>
           </div>
           <div class="row">
@@ -610,25 +621,23 @@ function toOrdinal( i ) {
 // NOTE: meta param is omitted at the end
 function _genFclause( globalReg, exprName, clause, path, meta = {} ) {
   var frags = [ ];
-  const { name = exprName, comment, examples } = meta;
+  var { name = exprName, comment, examples } = meta;
+  if ( isStr( examples ) ) {
+    examples = [ examples ];
+  }
   const { args: argsClause, ret: retClause, fn } = clause.opts;
   if ( comment ) {
     frags.push( [ null, comment ] );
   }
   if ( exprName && path ) {
     frags.push( [ 'Syntax', `
-    <div class="card-block">
-        <h6><strong>Syntax</strong></h6>
-        <p class="card-title">
-          <blockquote class="blockquote">
-            <small>
-              <em class="text-muted">
-                ${_syntax( clause, globalReg, path )}
-              </em>
-            </small>
-          </blockquote>
-        </p>
-      </div>
+      <blockquote class="blockquote">
+        <small>
+          <em class="text-muted">
+            ${_syntax( clause, globalReg, path )}
+          </em>
+        </small>
+      </blockquote>
     ` ] );
   }
   if ( argsClause ) {

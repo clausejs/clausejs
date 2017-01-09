@@ -19,7 +19,11 @@ var plugins = [
 if ( MINIFY_ME ) {
   plugins.push( new webpack.optimize.UglifyJsPlugin( {
     compress: {
-      warnings: true
+      warnings: true,
+      keep_fnames: true
+    },
+    mangle: {
+      keep_fnames: true
     },
     output: {
       comments: false

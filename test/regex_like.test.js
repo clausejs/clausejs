@@ -7,21 +7,15 @@ var cat = C.cat;
 var oneOrMore = C.oneOrMore;
 var repeat = require( '../src/utils/repeat' );
 
-function isInteger( value ) {
-  return typeof value === 'number' &&
-    isFinite( value ) &&
-    Math.floor( value ) === value;
-}
-
-describe( 'nfa regex', function() {
+describe( 'nfa regex', function t() {
   this.slow( 90000 ); //generative tests take more time
   this.timeout( 10000 ); //generative tests take more time
 
-  describe( 'zeroOrMore', function() {
+  describe( 'zeroOrMore', function t() {
     check.it( 'accepts zero or more int\'s',
       { times: 20 },
-      [ gen.array( gen.int ) ], function( ints ) {
-        var ZeroOrMoreIntegers = C.zeroOrMore( isInteger );
+      [ gen.array( gen.int ) ], ( ints ) => {
+        var ZeroOrMoreIntegers = C.zeroOrMore( C.isInteger );
         expect( C.isValid( ZeroOrMoreIntegers, ints ) ).to.be.true;
         expect( C.isValid( ZeroOrMoreIntegers, [] ) ).to.be.true;
       } );
@@ -29,16 +23,31 @@ describe( 'nfa regex', function() {
     check.it( 'rejects mixtures',
       { times: 20 },
       [ gen.array( gen.int ), gen.notEmpty( gen.array( gen.string ) ) ],
-      function( ints, strs ) {
-        var ZeroOrMoreIntegers = C.zeroOrMore( isInteger );
+      ( ints, strs ) => {
+        var ZeroOrMoreIntegers = C.zeroOrMore( C.isInteger );
         expect( C.isValid( ZeroOrMoreIntegers, ints.concat( strs ) ) ).to.be.false;
         expect( C.isValid( ZeroOrMoreIntegers, strs ) ).to.be.false;
+      } );
+
+    check.it( 'multiple consecutive zeroOrMores',
+      { times: 30 },
+      [ gen.array( gen.int ),
+        gen.array( gen.string ),
+        gen.array( gen.boolean ) ],
+      ( ints, strs, bools ) => {
+        var Clause = C.cat(
+          C.zeroOrMore( C.isInteger ),
+          C.zeroOrMore( C.isString ),
+          C.zeroOrMore( C.isBool ) );
+        expect( C.isValid( Clause, ints.concat( strs ) ) ).to.be.true;
+        expect( C.isValid( Clause, ints ) ).to.be.true;
+        expect( C.isValid( Clause, bools ) ).to.be.true;
       } );
 
     check.it( 'more complex expressions',
       { times: 20 },
       [ gen.int, gen.string, gen.strictPosInt ],
-      function( a, b, n ) {
+      ( a, b, n ) => {
         //imitates regex a(bb+)a
 
         var expr = cat( C.isNum, oneOrMore( cat( C.isStr, C.isStr ) ), C.isNum );
@@ -56,10 +65,10 @@ describe( 'nfa regex', function() {
       expect( C.isValid( expr, val ) ).to.be.true;
     } );
 
-    it( 'use in conjunction with cat', function() {
+    it( 'use in conjunction with cat', () => {
       var ZeroOrMoreStrings = C[ '*' ]( C.isStr );
-      var ZeroOrMoreIntegers = C[ '*' ]( isInteger );
-      var oneOrMoreIntegers = C[ '+' ]( isInteger );
+      var ZeroOrMoreIntegers = C[ '*' ]( C.isInteger );
+      var oneOrMoreIntegers = C[ '+' ]( C.isInteger );
       var expr = C.cat(
         ZeroOrMoreStrings,
         ZeroOrMoreIntegers,
@@ -102,9 +111,9 @@ describe( 'nfa regex', function() {
       `;
       var TreatiseClause = C.cat(
         'spacing', C.zeroOrMore( C.isStr ),
-        'intro', C.cat( catS( 'Abstract' ), C.oneOrMore( C.isStr ) ),
-        'body', C.cat( catS( 'My Points' ), C.oneOrMore( C.isStr ) ),
-        'ending', C.cat( catS( 'Conclusion' ), C.oneOrMore( C.isStr ) )
+        'intro', C.cat( C.sCat( 'Abstract' ), C.oneOrMore( C.isStr ) ),
+        'body', C.cat( C.sCat( 'My Points' ), C.oneOrMore( C.isStr ) ),
+        'ending', C.cat( C.sCat( 'Conclusion' ), C.oneOrMore( C.isStr ) )
       );
 
       expect( TreatiseClause.conform( treatise ).body ).to.contain( 'eat pie' );
@@ -149,6 +158,19 @@ describe( 'nfa regex', function() {
       var KleeneStringClause = C.zeroOrMore( C.isString );
 
       expect( KleeneStringClause.conform( data ) ).to.equal( data );
+    } );
+
+    it( 'sCat zeroOrMore in the middle', () => {
+      var StrClause = C.cat(
+        'foos', C.oneOrMore( C.sCat( 'foo' ) ),
+        'wee', C.zeroOrMore( C.sCat( 'weeeeeeee' ) ),
+        'bars', C.oneOrMore( C.sCat( 'bar' ) ) );
+
+      var r = C.conform( StrClause, 'foofoofoobarbar' );
+      expect( r ).to.deep.equal( {
+        'foos': 'foofoofoo',
+        'bars': 'barbar'
+      } );
     } );
   } );
 } );

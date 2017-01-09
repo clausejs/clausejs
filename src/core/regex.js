@@ -201,7 +201,6 @@ function genMultiArgOp( type ) {
       return s;
     } else if ( withoutLabels ) {
       exprs = withoutLabels;
-
       coercedExprs = exprs.map( ( p ) => {
         var s;
         if ( p.clause ) {

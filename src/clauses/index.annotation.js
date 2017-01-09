@@ -10,11 +10,11 @@ M( '/clause', {
   'args': {
     'register': {
       'comment': 'Put the given expression onto the given path in the global clause registry.',
-      'example': 'S("awesomeapp/TodoItem", todoItemClause)',
+      'examples': 'C("awesomeapp/TodoItem", TodoItemClause)',
     },
     'retrieve': {
       'comment': 'Retrieves an expression from the given namespace path, or returns null if not found.',
-      'example': 'S("awesomeapp/TodoItem")',
+      'examples': 'C("awesomeapp/TodoItem")',
     }
   },
   'ret': {
@@ -30,14 +30,23 @@ M( '/clause/set', {
   'name': 'C.set'
 } );
 
+M( 'clause.compose.string/sCat', {
+  examples: `
+var StrClause = C.cat('part1', C.zeroOrMore(C.sCat('foo')),
+                      'part2.5', C.zeroOrMore(C.sCat('weeee')),
+                      'part2', C.zeroOrMore(C.sCat('bar')));
+
+C.conform(StrClause, 'foofoofoobarbar');
+` } );
+
 M( 'clause.types/NamespacePath', {
   'comment': 'Represents a namespace path.',
-  'example': '"com.xyz.awesomeApp/User"',
+  'examples': '"com.xyz.awesomeApp/User"',
 } );
 
 M( 'clause.types/Expression', {
   'comment': 'Represents an Clause expression.',
-  'example': 'isPositiveNumber(x); C.cat(...)',
+  'examples': 'isPositiveNumber(x); C.cat(...)',
 } );
 
 M( 'clause.utils/describe', {

@@ -4,8 +4,14 @@ require( 'babel-core/register' );
 var C = require( '../src' );
 window.C = C;
 
-var myClause = C.cat( 'a', C.isStr, {} );
+var StrClause = C.cat(
+  'foos', C.oneOrMore( C.sCat( 'foo' ) ),
+  'wee', C.zeroOrMore( C.sCat( 'weeeeeeee' ) ),
+  'bars', C.oneOrMore( C.sCat( 'bar' ) ) );
 
+var r = C.conform( StrClause, 'foofoofoobarbar' );
+
+console.log( r );
 
 // var PropagatedAndClause = C.and(
 //   C.isArray,

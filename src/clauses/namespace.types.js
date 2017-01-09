@@ -1,6 +1,6 @@
 import { or, cat, fclause, shape, ExprClause } from '../core';
 import { delayed, isNamespacePath, isExpr, isClauseRef } from '../utils';
-import { isObj, isUndefined } from '../preds';
+import { isObj, isBool } from '../preds';
 
 var ExprOrPartialRefMapClause =
  // or(
@@ -24,7 +24,7 @@ const SetArgClause = cat(
 
 const SetNSFnClause = fclause( {
   args: SetArgClause,
-  ret: isUndefined,
+  ret: isBool,
 } );
 
 const NamespaceFnClause = fclause( {
