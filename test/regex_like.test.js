@@ -172,5 +172,20 @@ describe( 'nfa regex', function t() {
         'bars': 'barbar'
       } );
     } );
+
+    it( 'sCat zeroOrOne mix', () => {
+      var StrClause = C.cat( 'foos', C.oneOrMore( C.sCat( 'foo' ) ),
+                      'bar1', C.zeroOrOne( C.sCat( 'bar' ) ),
+                      'bar2', C.zeroOrOne( C.sCat( 'bar' ) ),
+                      'bar3', C.zeroOrOne( C.sCat( 'bar' ) ) );
+
+      var r = C.conform( StrClause, 'foofoofoobarbar' );
+
+      expect( r ).to.deep.equal( {
+        'foos': 'foofoofoo',
+        'bar3': 'bar',
+        'bar2': 'bar',
+      } );
+    } )
   } );
 } );

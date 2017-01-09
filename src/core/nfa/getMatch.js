@@ -145,7 +145,7 @@
 
   function _giveName( groupName, c ) {
     if ( c instanceof Nothing ) {
-      return new NamedPiece( groupName.name, undefined );
+      return new NamedPiece( groupName.name, new Empty() );
     } else if ( c instanceof GroupedPiece ) {
       return new NamedPiece( groupName.name, c.fragment );
     } else if ( c instanceof Piece || c instanceof GroupedAltPiece ) {
@@ -162,7 +162,7 @@
 
   function _giveAltName( groupName, c ) {
     if ( c instanceof Nothing ) {
-      return new NamedAltPiece( groupName.name, undefined );
+      return new NamedAltPiece( groupName.name, new Empty() );
     } else if ( c instanceof GroupedAltPiece ) {
       return new NamedAltPiece( groupName.name, c.fragment );
     } else if ( c instanceof Piece ) {
