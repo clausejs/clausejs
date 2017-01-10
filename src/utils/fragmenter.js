@@ -33,7 +33,8 @@ var multipleArgFragmenter = ( { opts: { named }, exprs } ) => {
   }
 };
 
-var singleArgFragmenter = ( { opts: { enclosedClause } } ) => [ enclosedClause ];
+var singleArgFragmenter = ( { opts: { enclosedClause } } ) =>
+  [ enclosedClause ];
 
 var Fragmenters = {
   'PRED': ( { opts: { predicate } } ) => [ predicate ],
