@@ -6,6 +6,11 @@ const delayed = require( './delayed' );
 const isPred = require( './isPred' );
 const { isStr, isObj } = require( '../preds' );
 
+function Recursive( expression ) {
+  this.isRecursive = true;
+  this.expression = expression;
+}
+
 var ParamObjC = mapOf(
     any,
     delayed( () => SExpressionC ) );
@@ -23,29 +28,29 @@ var SExpressionC = cat(
     )
 );
 
-var singleArgParamGenerator = ( { opts: { enclosedClause } } ) =>
-  [ sExpression( enclosedClause ) ];
+var singleArgParamGenerator = ( repo, { opts: { enclosedClause } } ) =>
+  [ _createSExpr( repo, enclosedClause ) ];
 
-var multipleArgParamGenerator = ( { opts: { named }, exprs } ) => {
+var multipleArgParamGenerator = ( repo, { opts: { named }, exprs } ) => {
   if ( exprs.length === 0 ) {
   //empty case
     return [];
   } else if ( named ) {
     return exprs.reduce(
       ( acc, { name, expr } ) =>
-        acc.concat( [ `"${name}"`, sExpression( expr ) ] )
+        acc.concat( [ `"${name}"`, _createSExpr( repo, expr ) ] )
         , [] );
   } else {
     return exprs.reduce(
-      ( acc, { expr } ) => acc.concat( [ sExpression( expr ) ] ),
+      ( acc, { expr } ) => acc.concat( [ _createSExpr( repo, expr ) ] ),
       [] );
   }
 };
 
 var sParamsConverters = {
-  'PRED': ( { opts: { predicate } } ) => [ 'pred', predicate ],
-  'WALL': ( { opts: { enclosedClause } } ) => [ '', enclosedClause ],
-  'AND': ( { opts: { conformedExprs } } ) =>
+  'PRED': ( repo, { opts: { predicate } } ) => [ predicate ],
+  'WALL': ( repo, { opts: { enclosedClause } } ) => [ _createSExpr( repo, enclosedClause ) ],
+  'AND': ( repo, { opts: { conformedExprs } } ) =>
     conformedExprs.map( clauseFromAlts ),
   'CAT': multipleArgParamGenerator,
   'OR': multipleArgParamGenerator,
@@ -57,23 +62,23 @@ var sParamsConverters = {
   // TODO
   'MAP_OF': () => [],
   // TODO
-  'SHAPE': ( { opts: { conformedArgs: { shapeArgs: { optionalFields: { opt, optional } = {}, requiredFields: { req, required } = {} } } } } ) =>
+  'SHAPE': ( repo, { opts: { conformedArgs: { shapeArgs: { optionalFields: { opt, optional } = {}, requiredFields: { req, required } = {} } } } } ) =>
     oAssign( {},
       ( req || required ) ? {
-        required: _fieldDefToFrags( req || required ),
+        required: _fieldDefToFrags( repo, req || required ),
       } : {},
       ( opt || optional ) ? {
-        optional: _fieldDefToFrags( opt || optional ),
+        optional: _fieldDefToFrags( repo, opt || optional ),
       } : {}
     ),
-  'FCLAUSE': ( { opts: { args, ret, fn } } ) =>
+  'FCLAUSE': ( repo, { opts: { args, ret, fn } } ) =>
     oAssign( {},
-    args ? { args: sExpression( args ) } : {},
-    ret ? { ret: sExpression( ret ) } : {},
+    args ? { args: _createSExpr( repo, args ) } : {},
+    ret ? { ret: _createSExpr( repo, ret ) } : {},
     fn ? { fn: `${fnName( fn )}()` } : {} )
 }
 
-function _fieldDefToFrags( { fieldDefs: { fields } } ) {
+function _fieldDefToFrags( repo, { fieldDefs: { fields } } ) {
   let r = {};
   for ( let key in fields ) {
     if ( fields.hasOwnProperty( key ) ) {
@@ -82,13 +87,13 @@ function _fieldDefToFrags( { fieldDefs: { fields } } ) {
         let { keyExpression, valExpression } = keyValExprPair;
         oAssign( r, {
           [ key ]: {
-            '<keyExpression>': sExpression( clauseFromAlts( keyExpression ) ),
-            '<valExpression>': sExpression( clauseFromAlts( valExpression ) ),
+            '<keyExpression>': _createSExpr( repo, clauseFromAlts( keyExpression ) ),
+            '<valExpression>': _createSExpr( repo, clauseFromAlts( valExpression ) ),
           }
         } );
       } else if ( valExpressionOnly ) {
         oAssign( r, {
-          [ key ]: sExpression( clauseFromAlts( valExpressionOnly ) )
+          [ key ]: _createSExpr( repo, clauseFromAlts( valExpressionOnly ) )
         } )
       }
     }
@@ -96,22 +101,49 @@ function _fieldDefToFrags( { fieldDefs: { fields } } ) {
   return r;
 }
 
-function _params( clause ) {
+function _params( repo, clause ) {
   const converter = sParamsConverters[ clause.type ];
   if ( !converter ) {
     console.error( clause );
     throw new Error( `Unsupported clause type ${clause.type}.` );
   } else {
-    return converter( clause );
+    return converter( repo, clause );
   }
 }
 
-function sExpression( expr ) {
+function _createSExpr( repo, expr ) {
+  if ( _exists( repo, expr ) ) {
+    return new Recursive( expr );
+  }
+  let realExpr,
+    newRepo = repo;
   if ( isPred( expr ) ) {
     return `${fnName( expr )}()`;
+  } else if ( expr.type === 'DELAYED' || expr.type === 'CLAUSE_REF' ) {
+    realExpr = expr.get();
+    return _createSExpr( repo, realExpr );
+  } else {
+    realExpr = expr;
+    newRepo = _addToRepo( repo, expr );
   }
-  var params = _params( expr );
-  return [ expr ].concat( params );
+  var params = _params( newRepo, realExpr );
+  return [ realExpr ].concat( params );
+}
+
+
+function _addToRepo( repo, expr ) {
+  if ( !_exists( repo, expr ) ) {
+    return repo.concat( [ expr ] );
+  }
+}
+
+function _exists( repo, piece ) {
+  return repo.indexOf( piece ) >= 0;
+}
+
+function sExpression( expr ) {
+  const repo = [];
+  return _createSExpr( repo, expr );
 }
 
 module.exports = sExpression;
