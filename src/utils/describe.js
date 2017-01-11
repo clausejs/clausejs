@@ -1,118 +1,111 @@
-var getFragments = require( './fragmenter' );
-var isPred = require( '../utils/isPred' );
-var isClause = require( '../utils/isClause' );
-var isStr = require( '../preds/isStr' );
-var fnName = require( '../utils/fnName' );
-var repeat = require( '../utils/repeat' );
+import sExpression, { SExpressionClause } from './sExpression';
+const humanReadable = require( './humanReadable' );
+const isStr = require( '../preds/isStr' );
+const conform = require( './conform' );
+const isProblem = require( './isProblem' );
+const handle = require( './handle' );
+const clauseFromAlts = require( './clauseFromAlts' );
+const fnName = require( './fnName' );
 
 function describe( expr, interceptor, indent ) {
-  const repo = [];
-
-  return _strFragments( repo, expr, interceptor, indent, 1 ).join( '' );
-}
-
-function _strFragments( repo, expr, interceptor, indent, lvl ) {
-  let interceptR;
-  if ( interceptor && ( interceptR = interceptor( expr ) ) ) {
-    return interceptR;
-  } else if ( _exists( repo, expr ) ) {
-    return [ `<recursive: ${_clauseToHuman( expr )}>` ];
-  } else if ( isPred( expr ) ) {
-    return [ fnName( expr ) ];
-  } else if ( expr.type === 'PRED' ) {
-    return _strFragments( repo, expr.opts.predicate, interceptor, indent, lvl + 1 );
-  } else if ( isClause( expr ) ) {
-    if ( expr.type === 'DELAYED' || expr.type === 'CLAUSE_REF' ) {
-      let realExpr = expr.get();
-      return _strFragments( repo, realExpr, interceptor, indent, lvl + 1 );
-    } else {
-      let newRepo = _addToRepo( repo, expr );
-      var inners = _processInner( newRepo, expr, interceptor, indent, lvl );
-      var moreThanOneItem = _moreThanOneItem( inners );
-      return [ _clauseToHuman( expr ), '(', ]
-        .concat( moreThanOneItem && indent ? [ '\n', repeat( lvl * indent, ' ' ).join( '' ) ] : [ ] )
-        .concat( inners.length > 0 ? [ ' ' ] : [] )
-        .concat(
-          inners.map( ( [ currLvl, f ] ) => {
-            if ( f === getFragments.SEPARATOR ) {
-              if ( moreThanOneItem && indent ) {
-                return [ '\n' ].concat( repeat( currLvl * indent, ' ' ) ).join( '' );
-              } else {
-                return '';
-              }
-            } else {
-              return f;
-            }
-          } )
-         )
-        .concat( inners.length > 0 ? [ ' ' ] : [] )
-        .concat( moreThanOneItem && indent ? [ '\n', repeat( ( lvl - 1 ) * indent, ' ' ).join( '' ) ] : [ ] )
-        .concat( [ ')' ] );
-    }
-  } else {
-    console.error( expr );
-    throw new Error( 'Argument must be an expression' );
+  const sexpr = sExpression( expr );
+  const cSexpr = SExpressionClause.conform( sexpr );
+  if ( isProblem( cSexpr ) ) {
+    console.error( cSexpr );
+    debugger;
+    throw new Error( 'The given expression is not a valid expression.' );
   }
+  const strFragments = _strFragments( cSexpr );
+  const r = _walkConcat( strFragments );
+
+  return r;
 }
 
-function _moreThanOneItem( frags ) {
-  return frags.filter( ( [ , f ] ) => f === getFragments.SEPARATOR ).length > 0;
-}
-
-const dict = {
-  Z_OR_M: 'zeroOrMore',
-  O_OR_M: 'oneOrMore',
-  Z_OR_O: 'zeroOrOne',
-  COLL_OF: 'collOf',
-};
-
-function _clauseToHuman( expr ) {
-  if ( expr.type ) {
-    if ( dict[ expr.type ] ) {
-      return dict[ expr.type ];
-    } else {
-      return expr.type.toLowerCase();
-    }
-  } else {
-    return expr.toString();
+function _strFragments( { head: headAlt, params } ) {
+  const head = clauseFromAlts( headAlt );
+  if ( head.type === 'PRED' ) {
+    return [ `${fnName( head.opts.predicate )}()` ];
   }
+  const label = humanReadable( head );
+  let paramFrags;
+  if ( params ) {
+    paramFrags = params.map( _fragmentParamAlts );
+  } else {
+    paramFrags = [];
+  }
+
+  var commaedParamFrags = interpose( paramFrags, [ ', ' ] );
+
+  return [ label, '( ' ].concat( commaedParamFrags ).concat( ' )' );
 }
 
-function _processInner( repo, clause, interceptor, indent, level ) {
-  var fragments = getFragments( clause );
-  return fragments.reduce(
-    ( { acc, lvl }, piece ) => {
-      if ( isStr( piece ) ) {
-        return { acc: acc.concat( [ [ lvl, piece ] ] ), lvl };
-      } else if ( piece.isLevelIn ) {
-        return {
-          acc: acc,
-          lvl: lvl + piece.level,
-        }
-      } else if ( piece.isLevelOut ) {
-        return {
-          acc: acc,
-          lvl: lvl - piece.level,
-        }
+function interpose( arr, interArr ) {
+  if ( arr.length === 0 ) {
+    return arr;
+  } else {
+    return arr.reduce( ( acc, curr, idx ) => {
+      if ( idx < arr.length - 1 ) {
+        return acc.concat( [ curr ] ).concat( interArr );
       } else {
-        return {
-          acc: acc.concat( _strFragments( repo, piece, interceptor, indent, lvl + 1 ).map( ( f ) => [ lvl + 1, f ] ) ),
-          lvl
-        }
+        return acc.concat( [ curr ] );
       }
-    }, { acc: [], lvl: level }
-    ).acc;
-
-}
-
-function _addToRepo( repo, expr ) {
-  if ( !_exists( repo, expr ) ) {
-    return repo.concat( [ expr ] );
+    }, [] );
   }
 }
 
-function _exists( repo, piece ) {
-  return repo.indexOf( piece ) >= 0;
+function _fragmentParamAlts( pAlts ) {
+  const r = handle( pAlts, {
+    'label': ( lbl ) => lbl,
+    'sExpression': _strFragments,
+    'paramsObj': _fragmentParamsObj,
+    'optionsObj': ( o ) => JSON.stringify( o ),
+    'recursive': ( { expression } ) => [
+      '<recursive>: ',
+      humanReadable( expression )
+    ]
+  }, () => {
+    throw '!';
+  } );
+  return r;
+}
+
+function _fragmentParamsObj( pObj ) {
+  var r = [];
+  r.push( '{ ' );
+  let body = [];
+  for ( let label in pObj ) {
+    if ( pObj.hasOwnProperty( label ) ) {
+      let item = [];
+      item.push( `${label}: ` );
+      var r1 = handle( pObj[ label ], {
+        paramList: ( list ) => {
+          return [ '[ ' ].concat(
+          interpose( list.map( _fragmentParamAlts ), [ ', ' ] ) )
+          .concat( ' ]' );
+
+        },
+        paramMap: _fragmentParamsObj
+      }, () => {
+        throw '!';
+      } );
+      item.push( r1 );
+      body.push( item );
+    }
+  }
+  body = interpose( body, ', ' );
+  r = r.concat( body ).concat( [ ' }' ] );
+  return r;
+}
+
+
+function _walkConcat( frags ) {
+  return frags.map( ( f ) => {
+    if ( isStr( f ) ) {
+      return f;
+    } else if ( Array.isArray( f ) ) {
+      return _walkConcat( f );
+    }
+  } ).join( '' );
 }
 
 module.exports = describe;

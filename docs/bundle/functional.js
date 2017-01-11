@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 109);
+/******/ 	return __webpack_require__(__webpack_require__.s = 111);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -140,7 +140,7 @@ module.exports = Clause;
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var PAREN_PAIRS = '❰❮❬❨❪﹙₍₎﹚❫❩❭❯❱';
-var stringifyWithFnName = __webpack_require__(35);
+var stringifyWithFnName = __webpack_require__(36);
 
 function Problem(val, failsPredicate, subproblems, msg) {
   var _this = this;
@@ -227,7 +227,7 @@ if (function test() {}.name !== 'test') {
   var fToString = Function.prototype.toString;
   var pMatch = String.prototype.match;
   var pReplace = String.prototype.replace;
-  var s = __webpack_require__(81).ws;
+  var s = __webpack_require__(83).ws;
   var reName = new RegExp('^[' + s + ']*(?:function|class)[' + s + ']*\\*?[' + s + ']+([\\w\\$]+)[' + s + ']*', 'i');
   _getFnName = function getName(fn) {
     var name = pMatch.call(pReplace.call(fToString.call(fn), STRIP_COMMENTS, ' '), reName);
@@ -256,21 +256,6 @@ module.exports = getFunctionName;
 
 /***/ },
 /* 4 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var Clause = __webpack_require__(1);
-
-function isClause(x) {
-  return x instanceof Clause;
-}
-
-module.exports = isClause;
-
-/***/ },
-/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -360,22 +345,22 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 
 /***/ },
-/* 6 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var isFn = __webpack_require__(11);
+var Clause = __webpack_require__(1);
 
-function isPred(x) {
-  return isFn(x);
+function isClause(x) {
+  return x instanceof Clause;
 }
 
-module.exports = isPred;
+module.exports = isClause;
 
 /***/ },
-/* 7 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -388,7 +373,7 @@ function isString(x) {
 module.exports = isString;
 
 /***/ },
-/* 8 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -416,6 +401,21 @@ module.exports = function clauseFromAlts(alts) {
 };
 
 /***/ },
+/* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var isFn = __webpack_require__(11);
+
+function isPred(x) {
+  return isFn(x);
+}
+
+module.exports = isPred;
+
+/***/ },
 /* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -426,24 +426,24 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var oAssign = __webpack_require__(5);
+var oAssign = __webpack_require__(4);
 var Clause = __webpack_require__(1);
-var isClause = __webpack_require__(4);
-var isPred = __webpack_require__(6);
-var isExpr = __webpack_require__(34);
-var clauseFromAlts = __webpack_require__(8);
+var isClause = __webpack_require__(5);
+var isPred = __webpack_require__(8);
+var isExpr = __webpack_require__(35);
+var clauseFromAlts = __webpack_require__(7);
 var isProblem = __webpack_require__(0);
-var isClauseName = __webpack_require__(59);
-var namedFn = __webpack_require__(13);
-var isClauseRef = __webpack_require__(12);
-var isDelayedClause = __webpack_require__(18);
-var c = __webpack_require__(44);
+var isClauseName = __webpack_require__(61);
+var namedFn = __webpack_require__(14);
+var isClauseRef = __webpack_require__(13);
+var isDelayedClause = __webpack_require__(21);
+var c = __webpack_require__(45);
 var coerceIntoClause = __webpack_require__(10);
-var fclause = __webpack_require__(15);
-var walk = __webpack_require__(14);
+var fclause = __webpack_require__(18);
+var walk = __webpack_require__(16);
 
-var isObj = __webpack_require__(30);
-var isStr = __webpack_require__(7);
+var isObj = __webpack_require__(19);
+var isStr = __webpack_require__(6);
 var oneOf = __webpack_require__(32);
 var not = __webpack_require__(31);
 
@@ -867,10 +867,10 @@ module.exports = core;
 "use strict";
 
 
-var isPred = __webpack_require__(6);
-var isClause = __webpack_require__(4);
-var isClauseRef = __webpack_require__(12);
-var isDelayedClause = __webpack_require__(18);
+var isPred = __webpack_require__(8);
+var isClause = __webpack_require__(5);
+var isClauseRef = __webpack_require__(13);
+var isDelayedClause = __webpack_require__(21);
 var Clause = __webpack_require__(1);
 var Problem = __webpack_require__(2);
 var fnName = __webpack_require__(3);
@@ -933,7 +933,27 @@ module.exports = isFunction;
 "use strict";
 
 
-var ClauseRef = __webpack_require__(38);
+var isClause = __webpack_require__(5);
+
+function conform(clause, x, options) {
+  if (clause && isClause(clause)) {
+    var r = clause.conform(x);
+    return r;
+  } else {
+    throw new Error('Expression needs to be of type Clause. expression: \n' + clause + '\n offending value: ' + x);
+  }
+}
+
+module.exports = conform;
+
+/***/ },
+/* 13 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var ClauseRef = __webpack_require__(39);
 // TODO
 function isClauseRef(x) {
   return x instanceof ClauseRef;
@@ -941,7 +961,7 @@ function isClauseRef(x) {
 module.exports = isClauseRef;
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -959,24 +979,62 @@ function getNamedFn(fnName, fn, suffix) {
 module.exports = getNamedFn;
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var oAssign = __webpack_require__(5);
-var nfaWalker = __webpack_require__(71);
-var anyWalker = __webpack_require__(65);
-var predWalker = __webpack_require__(72);
-var wallWalker = __webpack_require__(74);
-var fclauseWalker = __webpack_require__(69);
-var shapeWalker = __webpack_require__(73);
-var andWalker = __webpack_require__(64);
-var collOfWalker = __webpack_require__(67);
-var mapOfWalker = __webpack_require__(70);
-var clauseRefWalker = __webpack_require__(66);
-var delayedClauseWalker = __webpack_require__(68);
+var oAssign = __webpack_require__(4);
+var regex = __webpack_require__(9);
+
+var _require = __webpack_require__(9),
+    shape = _require.shape,
+    keys = _require.keys,
+    mapOf = _require.mapOf;
+
+var nullable = __webpack_require__(50);
+var undefinable = __webpack_require__(51);
+
+var _require2 = __webpack_require__(42),
+    wall = _require2.wall;
+
+var equals = __webpack_require__(26);
+
+var sCat = function sCat(str) {
+  return regex.cat.apply(null, Array.prototype.slice.call(str).map(equals));
+};
+
+var other = {
+  any: __webpack_require__(44),
+  fclause: __webpack_require__(18),
+  wall: wall, clause: wall,
+  nullable: nullable, undefinable: undefinable,
+  sCat: sCat
+};
+
+var r = oAssign({}, regex, { shape: shape, keys: keys, mapOf: mapOf }, other);
+module.exports = r;
+
+/***/ },
+/* 16 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var oAssign = __webpack_require__(4);
+var nfaWalker = __webpack_require__(73);
+var anyWalker = __webpack_require__(67);
+var predWalker = __webpack_require__(74);
+var wallWalker = __webpack_require__(76);
+var fclauseWalker = __webpack_require__(71);
+var shapeWalker = __webpack_require__(75);
+var andWalker = __webpack_require__(66);
+var collOfWalker = __webpack_require__(69);
+var mapOfWalker = __webpack_require__(72);
+var clauseRefWalker = __webpack_require__(68);
+var delayedClauseWalker = __webpack_require__(70);
 var coerceIntoClause = __webpack_require__(10);
 var isProblem = __webpack_require__(0);
 
@@ -1037,14 +1095,61 @@ function _getWalker(expr) {
 module.exports = walk;
 
 /***/ },
-/* 15 */
+/* 17 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var isNum = __webpack_require__(30);
+var isNatInt = __webpack_require__(53);
+var isInt = __webpack_require__(28);
+var isBool = __webpack_require__(40);
+var isFn = __webpack_require__(11);
+var isObj = __webpack_require__(19);
+var isPlainObj = __webpack_require__(54);
+var equals = __webpack_require__(26);
+var oneOf = __webpack_require__(32);
+var isStr = __webpack_require__(6);
+var isDate = __webpack_require__(52);
+var not = __webpack_require__(31);
+var instanceOf = __webpack_require__(27);
+var isUuid = __webpack_require__(55);
+var isArray = Array.isArray;
+
+var e = {
+  isNull: __webpack_require__(29),
+  isUndefined: __webpack_require__(20),
+  notEmpty: __webpack_require__(56),
+  isBool: isBool, isBoolean: isBool,
+  isFn: isFn, isFunction: isFn,
+  isNum: isNum, isNumber: isNum,
+  isNatInt: isNatInt, isNaturalNumber: isNatInt,
+  isInt: isInt, isInteger: isInt,
+  isObj: isObj, isObject: isObj,
+  isPlainObj: isPlainObj, isPlainObject: isPlainObj,
+  isStr: isStr, isString: isStr,
+  isArray: isArray, isArr: isArray,
+  equal: equals, equals: equals, equalsTo: equals, eq: equals,
+  oneOf: oneOf,
+  not: not,
+  isDate: isDate,
+  instanceOf: instanceOf,
+  isUuid: isUuid, isUUID: isUuid
+};
+
+e.default = e;
+module.exports = e;
+
+/***/ },
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var Clause = __webpack_require__(1);
-var walk = __webpack_require__(14);
+var walk = __webpack_require__(16);
 var fnName = __webpack_require__(3);
 
 function fclause(fnClause) {
@@ -1070,7 +1175,22 @@ function fclause(fnClause) {
 module.exports = fclause;
 
 /***/ },
-/* 16 */
+/* 19 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+function isObject(x) {
+  return (typeof x === 'undefined' ? 'undefined' : _typeof(x)) === 'object' && x !== null;
+}
+
+module.exports = isObject;
+
+/***/ },
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1081,78 +1201,20 @@ module.exports = function isUndefined(x) {
 };
 
 /***/ },
-/* 17 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var isClause = __webpack_require__(4);
-
-function conform(clause, x, options) {
-  if (clause && isClause(clause)) {
-    var r = clause.conform(x);
-    return r;
-  } else {
-    throw new Error('Expression needs to be of type Clause. expression: \n' + clause + '\n offending value: ' + x);
-  }
-}
-
-module.exports = conform;
-
-/***/ },
-/* 18 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var DelayedClause = __webpack_require__(24);
-var instanceOf = __webpack_require__(26);
+var DelayedClause = __webpack_require__(25);
+var instanceOf = __webpack_require__(27);
 
 //TODO
 module.exports = instanceOf(DelayedClause);
 
 /***/ },
-/* 19 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var oAssign = __webpack_require__(5);
-var regex = __webpack_require__(9);
-
-var _require = __webpack_require__(9),
-    shape = _require.shape,
-    keys = _require.keys,
-    mapOf = _require.mapOf;
-
-var nullable = __webpack_require__(49);
-var undefinable = __webpack_require__(50);
-
-var _require2 = __webpack_require__(41),
-    wall = _require2.wall;
-
-var equals = __webpack_require__(25);
-
-var sCat = function sCat(str) {
-  return regex.cat.apply(null, Array.prototype.slice.call(str).map(equals));
-};
-
-var other = {
-  any: __webpack_require__(43),
-  fclause: __webpack_require__(15),
-  wall: wall, clause: wall,
-  nullable: nullable, undefinable: undefinable,
-  sCat: sCat
-};
-
-var r = oAssign({}, regex, { shape: shape, keys: keys, mapOf: mapOf }, other);
-module.exports = r;
-
-/***/ },
-/* 20 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1168,75 +1230,30 @@ module.exports = function deref(clause) {
 };
 
 /***/ },
-/* 21 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 module.exports = {
-  conform: __webpack_require__(17),
-  isValid: __webpack_require__(62),
-  isNamespacePath: __webpack_require__(61),
-  identity: __webpack_require__(33),
+  conform: __webpack_require__(12),
+  isValid: __webpack_require__(64),
+  isNamespacePath: __webpack_require__(63),
+  identity: __webpack_require__(34),
   isProblem: __webpack_require__(0),
-  delayed: __webpack_require__(56),
-  enforce: __webpack_require__(57),
-  isExpr: __webpack_require__(34),
-  isClause: __webpack_require__(4),
-  isFclause: __webpack_require__(60),
-  isClauseRef: __webpack_require__(12),
-  describe: __webpack_require__(40),
-  deref: __webpack_require__(20)
+  delayed: __webpack_require__(33),
+  enforce: __webpack_require__(58),
+  isExpr: __webpack_require__(35),
+  isClause: __webpack_require__(5),
+  isFclause: __webpack_require__(62),
+  isClauseRef: __webpack_require__(13),
+  describe: __webpack_require__(41),
+  deref: __webpack_require__(22)
 };
 
 /***/ },
-/* 22 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var isNum = __webpack_require__(29);
-var isNatInt = __webpack_require__(52);
-var isInt = __webpack_require__(27);
-var isBool = __webpack_require__(39);
-var isFn = __webpack_require__(11);
-var isObj = __webpack_require__(30);
-var equals = __webpack_require__(25);
-var oneOf = __webpack_require__(32);
-var isStr = __webpack_require__(7);
-var isDate = __webpack_require__(51);
-var not = __webpack_require__(31);
-var instanceOf = __webpack_require__(26);
-var isUuid = __webpack_require__(53);
-var isArray = Array.isArray;
-
-var e = {
-  isNull: __webpack_require__(28),
-  isUndefined: __webpack_require__(16),
-  notEmpty: __webpack_require__(54),
-  isBool: isBool, isBoolean: isBool,
-  isFn: isFn, isFunction: isFn,
-  isNum: isNum, isNumber: isNum,
-  isNatInt: isNatInt, isNaturalNumber: isNatInt,
-  isInt: isInt, isInteger: isInt,
-  isObj: isObj, isObject: isObj,
-  isStr: isStr, isString: isStr,
-  isArray: isArray, isArr: isArray,
-  equal: equals, equals: equals, equalsTo: equals, eq: equals,
-  oneOf: oneOf,
-  not: not,
-  isDate: isDate,
-  instanceOf: instanceOf,
-  isUuid: isUuid, isUUID: isUuid
-};
-
-e.default = e;
-module.exports = e;
-
-/***/ },
-/* 23 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1247,11 +1264,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.NamespaceObjClause = exports.MetaFnClause = exports.isNamespacePath = exports.NamespaceFnClause = exports.GetNSFnClause = exports.SetNSFnClause = exports.isClauseRef = undefined;
 
-var _core = __webpack_require__(19);
+var _core = __webpack_require__(15);
 
-var _utils = __webpack_require__(21);
+var _utils = __webpack_require__(23);
 
-var _preds = __webpack_require__(22);
+var _preds = __webpack_require__(17);
 
 var ExprOrPartialRefMapClause =
 // or(
@@ -1308,7 +1325,7 @@ exports.MetaFnClause = MetaFnClause;
 exports.NamespaceObjClause = NamespaceObjClause;
 
 /***/ },
-/* 24 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1344,7 +1361,7 @@ DelayedClause.prototype = Object.create(Clause.prototype);
 module.exports = DelayedClause;
 
 /***/ },
-/* 25 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1357,14 +1374,14 @@ module.exports = function equals(test) {
 };
 
 /***/ },
-/* 26 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var fnName = __webpack_require__(3);
-var namedFn = __webpack_require__(13);
+var namedFn = __webpack_require__(14);
 
 module.exports = function instanceOf(t) {
   var n = fnName(t);
@@ -1385,7 +1402,7 @@ module.exports = function instanceOf(t) {
 };
 
 /***/ },
-/* 27 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1402,7 +1419,7 @@ function isInt(x) {
 module.exports = isInt;
 
 /***/ },
-/* 28 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1415,7 +1432,7 @@ function isNull(x) {
 module.exports = isNull;
 
 /***/ },
-/* 29 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1428,21 +1445,6 @@ function isNum(x) {
 module.exports = isNum;
 
 /***/ },
-/* 30 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-function isObject(x) {
-  return (typeof x === 'undefined' ? 'undefined' : _typeof(x)) === 'object' && x !== null;
-}
-
-module.exports = isObject;
-
-/***/ },
 /* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -1450,7 +1452,7 @@ module.exports = isObject;
 
 
 var fnName = __webpack_require__(3);
-var namedFn = __webpack_require__(13);
+var namedFn = __webpack_require__(14);
 
 function not(pred) {
   var n = fnName(pred);
@@ -1501,11 +1503,13 @@ module.exports = function oneOf() {
 "use strict";
 
 
-function identity(x) {
-  return x;
+var DelayedClause = __webpack_require__(25);
+
+function delayed(getFn) {
+  return new DelayedClause({ getFn: getFn });
 }
 
-module.exports = identity;
+module.exports = delayed;
 
 /***/ },
 /* 34 */
@@ -1514,10 +1518,23 @@ module.exports = identity;
 "use strict";
 
 
-var isPred = __webpack_require__(6);
-var isClause = __webpack_require__(4);
-var isClauseRef = __webpack_require__(12);
-var isDelayedClause = __webpack_require__(18);
+function identity(x) {
+  return x;
+}
+
+module.exports = identity;
+
+/***/ },
+/* 35 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var isPred = __webpack_require__(8);
+var isClause = __webpack_require__(5);
+var isClauseRef = __webpack_require__(13);
+var isDelayedClause = __webpack_require__(21);
 
 function isExpr(x) {
   return isPred(x) || isClause(x) || isClauseRef(x) || isDelayedClause(x);
@@ -1526,7 +1543,7 @@ function isExpr(x) {
 module.exports = isExpr;
 
 /***/ },
-/* 35 */
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1561,7 +1578,7 @@ function stringifyWithFnName(subject, currTransform) {
 module.exports = stringifyWithFnName;
 
 /***/ },
-/* 36 */
+/* 37 */
 /***/ function(module, exports) {
 
 /**
@@ -1639,7 +1656,7 @@ module.exports = stringifyWithFnName;
 
 
 /***/ },
-/* 37 */
+/* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1691,7 +1708,7 @@ module.exports = isUndefined;
 
 
 /***/ },
-/* 38 */
+/* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1715,7 +1732,7 @@ ClauseRef.prototype = Object.create(Clause.prototype);
 module.exports = ClauseRef;
 
 /***/ },
-/* 39 */
+/* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1728,138 +1745,133 @@ function isBool(x) {
 module.exports = isBool;
 
 /***/ },
-/* 40 */
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+var _sExpression = __webpack_require__(65);
 
-var getFragments = __webpack_require__(58);
-var isPred = __webpack_require__(6);
-var isClause = __webpack_require__(4);
-var isStr = __webpack_require__(7);
+var _sExpression2 = _interopRequireDefault(_sExpression);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var humanReadable = __webpack_require__(60);
+var isStr = __webpack_require__(6);
+var conform = __webpack_require__(12);
+var isProblem = __webpack_require__(0);
+var handle = __webpack_require__(59);
+var clauseFromAlts = __webpack_require__(7);
 var fnName = __webpack_require__(3);
-var repeat = __webpack_require__(63);
 
 function describe(expr, interceptor, indent) {
-  var repo = [];
+  var sexpr = (0, _sExpression2.default)(expr);
+  var cSexpr = _sExpression.SExpressionClause.conform(sexpr);
+  if (isProblem(cSexpr)) {
+    console.error(cSexpr);
+    throw new Error('The given expression is not a valid expression.');
+  }
+  var strFragments = _strFragments(cSexpr);
+  var r = _walkConcat(strFragments);
 
-  return _strFragments(repo, expr, interceptor, indent, 1).join('');
+  return r;
 }
 
-function _strFragments(repo, expr, interceptor, indent, lvl) {
-  var interceptR = void 0;
-  if (interceptor && (interceptR = interceptor(expr))) {
-    return interceptR;
-  } else if (_exists(repo, expr)) {
-    return ['<recursive: ' + _clauseToHuman(expr) + '>'];
-  } else if (isPred(expr)) {
-    return [fnName(expr)];
-  } else if (expr.type === 'PRED') {
-    return _strFragments(repo, expr.opts.predicate, interceptor, indent, lvl + 1);
-  } else if (isClause(expr)) {
-    if (expr.type === 'DELAYED' || expr.type === 'CLAUSE_REF') {
-      var realExpr = expr.get();
-      return _strFragments(repo, realExpr, interceptor, indent, lvl + 1);
-    } else {
-      var newRepo = _addToRepo(repo, expr);
-      var inners = _processInner(newRepo, expr, interceptor, indent, lvl);
-      var moreThanOneItem = _moreThanOneItem(inners);
-      return [_clauseToHuman(expr), '('].concat(moreThanOneItem && indent ? ['\n', repeat(lvl * indent, ' ').join('')] : []).concat(inners.length > 0 ? [' '] : []).concat(inners.map(function (_ref) {
-        var _ref2 = _slicedToArray(_ref, 2),
-            currLvl = _ref2[0],
-            f = _ref2[1];
+function _strFragments(_ref) {
+  var headAlt = _ref.head,
+      params = _ref.params;
 
-        if (f === getFragments.SEPARATOR) {
-          if (moreThanOneItem && indent) {
-            return ['\n'].concat(repeat(currLvl * indent, ' ')).join('');
-          } else {
-            return '';
-          }
-        } else {
-          return f;
-        }
-      })).concat(inners.length > 0 ? [' '] : []).concat(moreThanOneItem && indent ? ['\n', repeat((lvl - 1) * indent, ' ').join('')] : []).concat([')']);
-    }
+  var head = clauseFromAlts(headAlt);
+  if (head.type === 'PRED') {
+    return fnName(head.opts.predicate) + '()';
+  }
+  var label = humanReadable(head);
+  var paramFrags = void 0;
+  if (params) {
+    paramFrags = params.map(_fragmentParamAlts);
   } else {
-    console.error(expr);
-    throw new Error('Argument must be an expression');
+    paramFrags = [];
   }
+
+  var commaedParamFrags = interpose(paramFrags, [', ']);
+
+  return [label, '( '].concat(commaedParamFrags).concat(' )');
 }
 
-function _moreThanOneItem(frags) {
-  return frags.filter(function (_ref3) {
-    var _ref4 = _slicedToArray(_ref3, 2),
-        f = _ref4[1];
-
-    return f === getFragments.SEPARATOR;
-  }).length > 0;
-}
-
-var dict = {
-  Z_OR_M: 'zeroOrMore',
-  O_OR_M: 'oneOrMore',
-  Z_OR_O: 'zeroOrOne',
-  COLL_OF: 'collOf'
-};
-
-function _clauseToHuman(expr) {
-  if (expr.type) {
-    if (dict[expr.type]) {
-      return dict[expr.type];
-    } else {
-      return expr.type.toLowerCase();
-    }
+function interpose(arr, interArr) {
+  if (arr.length === 0) {
+    return arr;
   } else {
-    return expr.toString();
+    return arr.reduce(function (acc, curr, idx) {
+      if (idx < arr.length - 1) {
+        return acc.concat([curr]).concat(interArr);
+      } else {
+        return acc.concat([curr]);
+      }
+    }, []);
   }
 }
 
-function _processInner(repo, clause, interceptor, indent, level) {
-  var fragments = getFragments(clause);
-  return fragments.reduce(function (_ref5, piece) {
-    var acc = _ref5.acc,
-        lvl = _ref5.lvl;
-
-    if (isStr(piece)) {
-      return { acc: acc.concat([[lvl, piece]]), lvl: lvl };
-    } else if (piece.isLevelIn) {
-      return {
-        acc: acc,
-        lvl: lvl + piece.level
-      };
-    } else if (piece.isLevelOut) {
-      return {
-        acc: acc,
-        lvl: lvl - piece.level
-      };
-    } else {
-      return {
-        acc: acc.concat(_strFragments(repo, piece, interceptor, indent, lvl + 1).map(function (f) {
-          return [lvl + 1, f];
-        })),
-        lvl: lvl
-      };
+function _fragmentParamAlts(pAlts) {
+  var r = handle(pAlts, {
+    'label': function label(lbl) {
+      return lbl;
+    },
+    'sExpression': _strFragments,
+    'paramsObj': _fragmentParamsObj,
+    'optionsObj': function optionsObj(o) {
+      return JSON.stringify(o);
+    },
+    'recursive': function recursive(_ref2) {
+      var expression = _ref2.expression;
+      return ['<recursive>: ', humanReadable(expression)];
     }
-  }, { acc: [], lvl: level }).acc;
+  }, function () {
+    throw '!';
+  });
+  return r;
 }
 
-function _addToRepo(repo, expr) {
-  if (!_exists(repo, expr)) {
-    return repo.concat([expr]);
+function _fragmentParamsObj(pObj) {
+  var r = [];
+  r.push('{ ');
+  var body = [];
+  for (var label in pObj) {
+    if (pObj.hasOwnProperty(label)) {
+      var item = [];
+      item.push(label + ': ');
+      var r1 = handle(pObj[label], {
+        paramList: function paramList(list) {
+          return ['[ '].concat(interpose(list.map(_fragmentParamAlts), [', '])).concat(' ]');
+        },
+        paramMap: _fragmentParamsObj
+      }, function () {
+        throw '!';
+      });
+      item.push(r1);
+      body.push(item);
+    }
   }
+  body = interpose(body, ', ');
+  r = r.concat(body).concat([' }']);
+  return r;
 }
 
-function _exists(repo, piece) {
-  return repo.indexOf(piece) >= 0;
+function _walkConcat(frags) {
+  return frags.map(function (f) {
+    if (isStr(f)) {
+      return f;
+    } else if (Array.isArray(f)) {
+      return _walkConcat(f);
+    }
+  }).join('');
 }
 
 module.exports = describe;
 
 /***/ },
-/* 41 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1872,8 +1884,8 @@ var _require = __webpack_require__(9),
     cat = _require.cat,
     ExprClause = _require.ExprClause;
 
-var fclause = __webpack_require__(15);
-var walk = __webpack_require__(14);
+var fclause = __webpack_require__(18);
+var walk = __webpack_require__(16);
 
 var WallFnClause = fclause({
   args: cat(ExprClause),
@@ -1900,7 +1912,7 @@ module.exports = {
 };
 
 /***/ },
-/* 42 */
+/* 43 */
 /***/ function(module, exports) {
 
 var g;
@@ -1925,14 +1937,14 @@ module.exports = g;
 
 
 /***/ },
-/* 43 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var Clause = __webpack_require__(1);
-var identity = __webpack_require__(33);
+var identity = __webpack_require__(34);
 var CLAUSE_TYPE_ANY = 'ANY';
 
 function any() {
@@ -1946,7 +1958,7 @@ function any() {
 module.exports = any;
 
 /***/ },
-/* 44 */
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1963,15 +1975,15 @@ module.exports = {
 };
 
 /***/ },
-/* 45 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var fragment = __webpack_require__(46);
+var fragment = __webpack_require__(47);
 var Clause = __webpack_require__(1);
-var deref = __webpack_require__(20);
+var deref = __webpack_require__(22);
 
 var indexedFragmentStates = function indexedFragmentStates(fragment) {
   var nextIndex = 0;
@@ -2074,7 +2086,7 @@ var compile = function compile(expr) {
 module.exports = compile;
 
 /***/ },
-/* 46 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2277,7 +2289,7 @@ build.ROOT = function ROOT(frag) {
 module.exports = build;
 
 /***/ },
-/* 47 */
+/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2285,7 +2297,7 @@ module.exports = build;
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var oAssign = __webpack_require__(5);
+var oAssign = __webpack_require__(4);
 
 /*eslint func-names: 0*/
 
@@ -2573,7 +2585,7 @@ function _coerceToProperType(t, arr) {
 module.exports = getMatch;
 
 /***/ },
-/* 48 */
+/* 49 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2582,7 +2594,7 @@ module.exports = getMatch;
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var isProblem = __webpack_require__(0);
-var isStr = __webpack_require__(7);
+var isStr = __webpack_require__(6);
 
 function simulate(nfa, rawInput, walkFn, walkOpts) {
 
@@ -2748,24 +2760,6 @@ function _getChain(nfa, finalState, inputType) {
 module.exports = simulate;
 
 /***/ },
-/* 49 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _require = __webpack_require__(9),
-    or = _require.or;
-
-var isNull = __webpack_require__(28);
-
-function nullable(clause) {
-  return or(isNull, clause);
-}
-
-module.exports = nullable;
-
-/***/ },
 /* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -2775,7 +2769,25 @@ module.exports = nullable;
 var _require = __webpack_require__(9),
     or = _require.or;
 
-var isUndefined = __webpack_require__(16);
+var isNull = __webpack_require__(29);
+
+function nullable(clause) {
+  return or(isNull, clause);
+}
+
+module.exports = nullable;
+
+/***/ },
+/* 51 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _require = __webpack_require__(9),
+    or = _require.or;
+
+var isUndefined = __webpack_require__(20);
 
 function undefinable(clause) {
   return or(isUndefined, clause);
@@ -2784,7 +2796,7 @@ function undefinable(clause) {
 module.exports = undefinable;
 
 /***/ },
-/* 51 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2795,13 +2807,13 @@ module.exports = function isDate(date) {
 };
 
 /***/ },
-/* 52 */
+/* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var isInt = __webpack_require__(27);
+var isInt = __webpack_require__(28);
 
 function isNatInt(x) {
   return isInt(x) && x >= 0.0;
@@ -2810,7 +2822,37 @@ function isNatInt(x) {
 module.exports = isNatInt;
 
 /***/ },
-/* 53 */
+/* 54 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var isObj = __webpack_require__(19);
+
+function isPlainObject(x) {
+  // Basic check for Type object that's not null
+  if (isObj(x)) {
+
+    // If Object.getPrototypeOf supported, use it
+    if (typeof Object.getPrototypeOf == 'function') {
+      var proto = Object.getPrototypeOf(x);
+      return proto === Object.prototype || proto === null;
+    }
+
+    // Otherwise, use internal class
+    // This should be reliable as if getPrototypeOf not supported, is pre-ES5
+    return Object.prototype.toString.call(x) == '[object Object]';
+  }
+
+  // Not an object
+  return false;
+}
+
+module.exports = isPlainObject;
+
+/***/ },
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2821,7 +2863,7 @@ module.exports = function isUuid(x) {
 };
 
 /***/ },
-/* 54 */
+/* 56 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2838,7 +2880,7 @@ module.exports = function notEmpty(x) {
 };
 
 /***/ },
-/* 55 */
+/* 57 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2854,22 +2896,7 @@ function betterThrow(problem) {
 module.exports = betterThrow;
 
 /***/ },
-/* 56 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var DelayedClause = __webpack_require__(24);
-
-function delayed(getFn) {
-  return new DelayedClause({ getFn: getFn });
-}
-
-module.exports = delayed;
-
-/***/ },
-/* 57 */
+/* 58 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2877,7 +2904,7 @@ module.exports = delayed;
 
 var isProblem = __webpack_require__(0);
 // TODO : replace with checkProblem
-var conform = __webpack_require__(17);
+var conform = __webpack_require__(12);
 
 module.exports = function enforce(clause, x) {
   var r = conform(clause, x);
@@ -2888,181 +2915,33 @@ module.exports = function enforce(clause, x) {
 };
 
 /***/ },
-/* 58 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var fnName = __webpack_require__(3);
-var clauseFromAlts = __webpack_require__(8);
-var SEPARATOR = '___CLAUSEJS_SEPARATOR___';
-
-function LevelIn(lvl) {
-  this.level = lvl;
-  this.isLevelIn = true;
-}
-
-function LevelOut(lvl) {
-  this.level = lvl;
-  this.isLevelOut = true;
-}
-
-var multipleArgFragmenter = function multipleArgFragmenter(_ref) {
-  var named = _ref.opts.named,
-      exprs = _ref.exprs;
-
-  if (exprs.length === 0) {
-    //empty case
-    return [];
-  } else if (named) {
-    return exprs.reduce(function (curr, _ref2, idx) {
-      var name = _ref2.name,
-          expr = _ref2.expr;
-      return curr.concat(['"' + name + '"', ', ', expr]).concat(idx < exprs.length - 1 ? [', ', SEPARATOR] : []);
-    }, []);
-  } else {
-    return exprs.reduce(function (curr, _ref3, idx) {
-      var expr = _ref3.expr;
-      return curr.concat([expr]).concat(idx < exprs.length - 1 ? [', ', SEPARATOR] : []);
-    }, []);
-  }
-};
-
-var singleArgFragmenter = function singleArgFragmenter(_ref4) {
-  var enclosedClause = _ref4.opts.enclosedClause;
-  return [enclosedClause];
-};
-
-var Fragmenters = {
-  'PRED': function PRED(_ref5) {
-    var predicate = _ref5.opts.predicate;
-    return [predicate];
-  },
-  'WALL': function WALL(_ref6) {
-    var enclosedClause = _ref6.opts.enclosedClause;
-    return [enclosedClause];
-  },
-  // TODO
-  'AND': function AND(_ref7) {
-    var conformedExprs = _ref7.opts.conformedExprs;
-    return interpose(conformedExprs.map(clauseFromAlts), [', ', SEPARATOR]);
-  },
-  'CAT': multipleArgFragmenter,
-  'OR': multipleArgFragmenter,
-  'Z_OR_M': singleArgFragmenter,
-  'O_OR_M': singleArgFragmenter,
-  'Z_OR_O': singleArgFragmenter,
-  'COLL_OF': singleArgFragmenter,
-  'ANY': function ANY() {
-    return [];
-  },
-  // TODO
-  'MAP_OF': function MAP_OF() {
-    return [];
-  },
-  // TODO
-  'SHAPE': function SHAPE(_ref8) {
-    var _ref8$opts$conformedA = _ref8.opts.conformedArgs.shapeArgs,
-        _ref8$opts$conformedA2 = _ref8$opts$conformedA.optionalFields;
-    _ref8$opts$conformedA2 = _ref8$opts$conformedA2 === undefined ? {} : _ref8$opts$conformedA2;
-    var opt = _ref8$opts$conformedA2.opt,
-        optional = _ref8$opts$conformedA2.optional,
-        _ref8$opts$conformedA3 = _ref8$opts$conformedA.requiredFields;
-    _ref8$opts$conformedA3 = _ref8$opts$conformedA3 === undefined ? {} : _ref8$opts$conformedA3;
-    var req = _ref8$opts$conformedA3.req,
-        required = _ref8$opts$conformedA3.required;
-
-
-    return ['{ ', SEPARATOR, new LevelIn(1)].concat(_trimTrailingSeparator([].concat(req || required ? ['required: '].concat(_fieldDefToFrags(req || required)).concat([', ', SEPARATOR]) : []).concat(opt || optional ? ['optional: '].concat(_fieldDefToFrags(opt || optional)).concat([', ', SEPARATOR]) : []))).concat([new LevelOut(1), ' }']);
-  },
-  'FCLAUSE': function FCLAUSE(_ref9) {
-    var _ref9$opts = _ref9.opts,
-        args = _ref9$opts.args,
-        ret = _ref9$opts.ret,
-        fn = _ref9$opts.fn;
-    return ['{ ', SEPARATOR, new LevelIn(1)].concat(_trimTrailingSeparator([].concat(args ? ['args: ', args, ', ', SEPARATOR] : []).concat(ret ? ['ret: ', ret, ', ', SEPARATOR] : []).concat(fn ? ['fn: ', fnName(fn), '()', ', ', SEPARATOR] : []))).concat([new LevelOut(1), SEPARATOR, ' }']);
-  }
-};
-
-function _fieldDefToFrags(_ref10) {
-  var fields = _ref10.fieldDefs.fields;
-
-  var r = ['{ ', SEPARATOR, new LevelIn(1)];
-  for (var key in fields) {
-    if (fields.hasOwnProperty(key)) {
-      r.push('"' + key + '"');
-      r.push(': ');
-      var _fields$key = fields[key],
-          keyValExprPair = _fields$key.keyValExprPair,
-          valExpressionOnly = _fields$key.valExpressionOnly;
-
-      if (keyValExprPair) {
-        var keyExpression = keyValExprPair.keyExpression,
-            valExpression = keyValExprPair.valExpression;
-
-        r = r.concat(['[']).concat([SEPARATOR, '<keyExpression>: ', clauseFromAlts(keyExpression), ', ', SEPARATOR, '<valExpression>: ', clauseFromAlts(valExpression)]).concat([']']);
-      } else if (valExpressionOnly) {
-        r.push(clauseFromAlts(valExpressionOnly));
-      }
-      r.push(', ');
-      r.push(SEPARATOR);
-    }
-  }
-  return r.concat([new LevelOut(1), SEPARATOR, ' }']);
-}
-
-function _trimTrailingSeparator(frags) {
-  if (frags.length > 0) {
-    return frags.slice(0, frags.length - 2);
-  } else {
-    return frags;
-  }
-}
-
-function getFragments(clause) {
-
-  var fragmenter = Fragmenters[clause.type];
-  if (!fragmenter) {
-    console.error(clause);
-    throw new Error('Unsupported clause type ' + clause.type);
-  }
-  return fragmenter(clause);
-}
-
-function interpose(arr, interArr) {
-  if (arr.length === 0) {
-    return arr;
-  } else {
-    return arr.reduce(function (acc, curr, idx) {
-      if (idx < arr.length - 1) {
-        return acc.concat([curr]).concat(interArr);
-      } else {
-        return acc.concat([curr]);
-      }
-    }, []);
-  }
-}
-
-getFragments.SEPARATOR = SEPARATOR;
-getFragments.LevelIn = LevelIn;
-getFragments.LevelOut = LevelOut;
-
-module.exports = getFragments;
-
-/***/ },
 /* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var isStr = __webpack_require__(7);
+/**
+ * convenient method used in conjunction with "and" and "or" conformation to handle labelled cases
+ *
+ */
 
-//TODO
-module.exports = function isClauseName(x) {
-  return isStr(x);
-};
+function handle(alts, handlerMap, unknownCaseHandler) {
+  for (var label in alts) {
+    // should iterate only once
+    if (alts.hasOwnProperty(label) && handlerMap.hasOwnProperty(label)) {
+      return handlerMap[label](alts[label]);
+    } else {
+      return unknownCaseHandler(alts[label]);
+    }
+  }
+
+  // only reach here if alts is empty
+  console.error(alts);
+  throw new Error('No cases present in the given object');
+}
+
+module.exports = handle;
 
 /***/ },
 /* 60 */
@@ -3071,13 +2950,35 @@ module.exports = function isClauseName(x) {
 "use strict";
 
 
-var isClause = __webpack_require__(4);
+var isStr = __webpack_require__(6);
 
-function isFclause(x) {
-  return isClause(x) && x.type === 'FCLAUSE';
+var dict = {
+  Z_OR_M: 'zeroOrMore',
+  O_OR_M: 'oneOrMore',
+  Z_OR_O: 'zeroOrOne',
+  COLL_OF: 'collOf',
+  MAP_OF: 'mapOf'
+};
+
+function humanReadable(expr) {
+  if (isStr(expr)) {
+    return expr;
+  }
+  if (!expr) {
+    debugger;
+  }
+  if (expr.type) {
+    if (dict[expr.type]) {
+      return dict[expr.type];
+    } else {
+      return expr.type.toLowerCase();
+    }
+  } else {
+    return expr.toString();
+  }
 }
 
-module.exports = isFclause;
+module.exports = humanReadable;
 
 /***/ },
 /* 61 */
@@ -3086,13 +2987,12 @@ module.exports = isFclause;
 "use strict";
 
 
-var isStr = __webpack_require__(7);
+var isStr = __webpack_require__(6);
 
-function isNamespacePath(x) {
-  return isStr(x) && /^\/?[a-zA-Z0-9\-_\.]*\/([a-zA-Z0-9\-_]+)$/.test(x);
-}
-
-module.exports = isNamespacePath;
+//TODO
+module.exports = function isClauseName(x) {
+  return isStr(x);
+};
 
 /***/ },
 /* 62 */
@@ -3101,10 +3001,40 @@ module.exports = isNamespacePath;
 "use strict";
 
 
+var isClause = __webpack_require__(5);
+
+function isFclause(x) {
+  return isClause(x) && x.type === 'FCLAUSE';
+}
+
+module.exports = isFclause;
+
+/***/ },
+/* 63 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var isStr = __webpack_require__(6);
+
+function isNamespacePath(x) {
+  return isStr(x) && /^\/?[a-zA-Z0-9\-_\.]*\/([a-zA-Z0-9\-_]+)$/.test(x);
+}
+
+module.exports = isNamespacePath;
+
+/***/ },
+/* 64 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 var isProblem = __webpack_require__(0);
-var isPred = __webpack_require__(6);
-var isClause = __webpack_require__(4);
-var conform = __webpack_require__(17);
+var isPred = __webpack_require__(8);
+var isClause = __webpack_require__(5);
+var conform = __webpack_require__(12);
 
 function isValid(pred, x) {
   if (!pred) {
@@ -3121,25 +3051,224 @@ function isValid(pred, x) {
 module.exports = isValid;
 
 /***/ },
-/* 63 */
+/* 65 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-function repeat(n, x) {
-  var arr = [],
-      i;
-  for (i = 0; i < n; i++) {
-    arr.push(x);
-  }
-  return arr;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var fnName = __webpack_require__(3);
+var clauseFromAlts = __webpack_require__(7);
+var oAssign = __webpack_require__(4);
+
+var _require = __webpack_require__(15),
+    wall = _require.wall,
+    any = _require.any,
+    zeroOrMore = _require.zeroOrMore,
+    and = _require.and,
+    cat = _require.cat,
+    or = _require.or,
+    ExprClause = _require.ExprClause,
+    mapOf = _require.mapOf;
+
+var delayed = __webpack_require__(33);
+var isPred = __webpack_require__(8);
+
+var _require2 = __webpack_require__(17),
+    isStr = _require2.isStr,
+    isPlainObj = _require2.isPlainObj,
+    instanceOf = _require2.instanceOf;
+
+function Recursive(expression) {
+  this.isRecursive = true;
+  this.expression = expression;
 }
 
-module.exports = repeat;
+function ParamsMap(map) {
+  oAssign(this, map);
+}
+
+var ParamsMapC = and(instanceOf(ParamsMap), mapOf(any, or('paramList', zeroOrMore(delayed(function () {
+  return ParamItemClause;
+})), 'paramMap', delayed(function () {
+  return ParamsMapC;
+}))));
+
+var ParamItemClause = or('label', isStr, 'sExpression', delayed(function () {
+  return SExpressionClause;
+}), 'paramsObj', ParamsMapC, 'optionsObj', isPlainObj, 'recursive', instanceOf(Recursive));
+
+var SExpressionClause = wall(cat('head', ExprClause, 'params', zeroOrMore(ParamItemClause)));
+
+var singleArgParamGenerator = function singleArgParamGenerator(repo, _ref) {
+  var enclosedClause = _ref.opts.enclosedClause;
+  return [_createSExpr(repo, enclosedClause)];
+};
+
+var multipleArgParamGenerator = function multipleArgParamGenerator(repo, _ref2) {
+  var named = _ref2.opts.named,
+      exprs = _ref2.exprs;
+
+  if (exprs.length === 0) {
+    //empty case
+    return [];
+  } else if (named) {
+    return exprs.reduce(function (acc, _ref3) {
+      var name = _ref3.name,
+          expr = _ref3.expr;
+      return acc.concat(['"' + name + '"', _createSExpr(repo, expr)]);
+    }, []);
+  } else {
+    return exprs.reduce(function (acc, _ref4) {
+      var expr = _ref4.expr;
+      return acc.concat([_createSExpr(repo, expr)]);
+    }, []);
+  }
+};
+
+var sParamsConverters = {
+  'PRED': function PRED(repo, _ref5) {
+    var predicate = _ref5.opts.predicate;
+    return [fnName(predicate) + '()'];
+  },
+  'WALL': function WALL(repo, _ref6) {
+    var enclosedClause = _ref6.opts.enclosedClause;
+    return [_createSExpr(repo, enclosedClause)];
+  },
+  'AND': function AND(repo, _ref7) {
+    var conformedExprs = _ref7.opts.conformedExprs;
+    return conformedExprs.map(clauseFromAlts);
+  },
+  'CAT': multipleArgParamGenerator,
+  'OR': multipleArgParamGenerator,
+  'Z_OR_M': singleArgParamGenerator,
+  'O_OR_M': singleArgParamGenerator,
+  'Z_OR_O': singleArgParamGenerator,
+  'COLL_OF': singleArgParamGenerator,
+  'ANY': function ANY() {
+    return [];
+  },
+  // TODO
+  'MAP_OF': function MAP_OF() {
+    return [];
+  },
+  // TODO
+  'SHAPE': function SHAPE(repo, _ref8) {
+    var _ref8$opts$conformedA = _ref8.opts.conformedArgs.shapeArgs,
+        _ref8$opts$conformedA2 = _ref8$opts$conformedA.optionalFields;
+    _ref8$opts$conformedA2 = _ref8$opts$conformedA2 === undefined ? {} : _ref8$opts$conformedA2;
+    var opt = _ref8$opts$conformedA2.opt,
+        optional = _ref8$opts$conformedA2.optional,
+        _ref8$opts$conformedA3 = _ref8$opts$conformedA.requiredFields;
+    _ref8$opts$conformedA3 = _ref8$opts$conformedA3 === undefined ? {} : _ref8$opts$conformedA3;
+    var req = _ref8$opts$conformedA3.req,
+        required = _ref8$opts$conformedA3.required;
+    return oAssign(new ParamsMap(), req || required ? {
+      required: _fieldDefToFrags(repo, req || required)
+    } : {}, opt || optional ? {
+      optional: _fieldDefToFrags(repo, opt || optional)
+    } : {});
+  },
+  'FCLAUSE': function FCLAUSE(repo, _ref9) {
+    var _ref9$opts = _ref9.opts,
+        args = _ref9$opts.args,
+        ret = _ref9$opts.ret,
+        fn = _ref9$opts.fn;
+    return oAssign(new ParamsMap(), args ? { args: _createSExpr(repo, args) } : {}, ret ? { ret: _createSExpr(repo, ret) } : {}, fn ? { fn: fnName(fn) + '()' } : {});
+  }
+};
+
+function _fieldDefToFrags(repo, _ref10) {
+  var _ref10$fieldDefs = _ref10.fieldDefs;
+  _ref10$fieldDefs = _ref10$fieldDefs === undefined ? {} : _ref10$fieldDefs;
+  var fields = _ref10$fieldDefs.fields,
+      keyList = _ref10.keyList;
+
+  if (fields) {
+    var r = new ParamsMap();
+    for (var key in fields) {
+      if (fields.hasOwnProperty(key)) {
+        var _fields$key = fields[key],
+            keyValExprPair = _fields$key.keyValExprPair,
+            valExpressionOnly = _fields$key.valExpressionOnly;
+
+        if (keyValExprPair) {
+          var keyExpression = keyValExprPair.keyExpression,
+              valExpression = keyValExprPair.valExpression;
+
+          oAssign(r, _defineProperty({}, key, {
+            '<keyExpression>': _createSExpr(repo, clauseFromAlts(keyExpression)),
+            '<valExpression>': _createSExpr(repo, clauseFromAlts(valExpression))
+          }));
+        } else if (valExpressionOnly) {
+          oAssign(r, _defineProperty({}, key, _createSExpr(repo, clauseFromAlts(valExpressionOnly))));
+        }
+      }
+    }
+    return r;
+  } else if (keyList) {
+    return keyList;
+  } else {
+    throw '!';
+  }
+}
+
+function _params(repo, clause) {
+  var converter = sParamsConverters[clause.type];
+  if (!converter) {
+    console.error(clause);
+    throw new Error('Unsupported clause type ' + clause.type + '.');
+  } else {
+    return converter(repo, clause);
+  }
+}
+
+function _createSExpr(repo, expr) {
+  if (_exists(repo, expr)) {
+    return new Recursive(expr);
+  }
+  var realExpr = void 0,
+      newRepo = repo;
+  if (isPred(expr)) {
+    return fnName(expr) + '()';
+  } else if (expr.type === 'DELAYED' || expr.type === 'CLAUSE_REF') {
+    realExpr = expr.get();
+    return _createSExpr(repo, realExpr);
+  } else {
+    realExpr = expr;
+    newRepo = _addToRepo(repo, expr);
+  }
+  var params = _params(newRepo, realExpr);
+  return [realExpr].concat(params);
+}
+
+function _addToRepo(repo, expr) {
+  if (!_exists(repo, expr)) {
+    return repo.concat([expr]);
+  }
+}
+
+function _exists(repo, piece) {
+  return repo.indexOf(piece) >= 0;
+}
+
+function sExpression(expr) {
+  var repo = [];
+  return _createSExpr(repo, expr);
+}
+
+exports.default = sExpression;
+exports.SExpressionClause = SExpressionClause;
+exports.ParamItemClause = ParamItemClause;
 
 /***/ },
-/* 64 */
+/* 66 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3147,8 +3276,8 @@ module.exports = repeat;
 
 var Problem = __webpack_require__(2);
 var isProblem = __webpack_require__(0);
-var clauseFromAlts = __webpack_require__(8);
-var oAssign = __webpack_require__(5);
+var clauseFromAlts = __webpack_require__(7);
+var oAssign = __webpack_require__(4);
 
 function andWalker(clause, walkFn) {
   var exprs = clause.opts.conformedExprs.map(clauseFromAlts);
@@ -3194,7 +3323,7 @@ function andWalker(clause, walkFn) {
 module.exports = andWalker;
 
 /***/ },
-/* 65 */
+/* 67 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3214,7 +3343,7 @@ function walkThroughAny(x) {
 module.exports = anyWalker;
 
 /***/ },
-/* 66 */
+/* 68 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3238,7 +3367,7 @@ function clauseRefWalker(clauseRef, walkFn) {
 module.exports = clauseRefWalker;
 
 /***/ },
-/* 67 */
+/* 69 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3246,7 +3375,7 @@ module.exports = clauseRefWalker;
 
 var Problem = __webpack_require__(2);
 var isProblem = __webpack_require__(0);
-var isNum = __webpack_require__(29);
+var isNum = __webpack_require__(30);
 
 function collOfWalker(clause, walkFn) {
   var expr = clause.exprs[0];
@@ -3314,7 +3443,7 @@ function collOfWalker(clause, walkFn) {
 module.exports = collOfWalker;
 
 /***/ },
-/* 68 */
+/* 70 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3337,7 +3466,7 @@ function delayedClauseWalker(delayedClause, walkFn) {
 module.exports = delayedClauseWalker;
 
 /***/ },
-/* 69 */
+/* 71 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3346,9 +3475,9 @@ module.exports = delayedClauseWalker;
 var isProblem = __webpack_require__(0);
 var Problem = __webpack_require__(2);
 var functionName = __webpack_require__(3);
-var namedFn = __webpack_require__(13);
-var betterThrow = __webpack_require__(55);
-var stringifyWithFnName = __webpack_require__(35);
+var namedFn = __webpack_require__(14);
+var betterThrow = __webpack_require__(57);
+var stringifyWithFnName = __webpack_require__(36);
 
 function fclauseWalker(clause, walkFn) {
   var _clause$opts = clause.opts,
@@ -3494,7 +3623,7 @@ function fclauseWalker(clause, walkFn) {
 module.exports = fclauseWalker;
 
 /***/ },
-/* 70 */
+/* 72 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3502,7 +3631,7 @@ module.exports = fclauseWalker;
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var clauseFromAlts = __webpack_require__(8);
+var clauseFromAlts = __webpack_require__(7);
 var isProblem = __webpack_require__(0);
 var Problem = __webpack_require__(2);
 
@@ -3520,36 +3649,43 @@ function mapOfWalker(clause, walkFn) {
   };
 
   function mapOfTrailblaze(x, walkOpts) {
+    var guide = {};
     for (var key in x) {
       if (x.hasOwnProperty(key)) {
-        if (keyClause) {
-          var keyR = walkFn(keyClause, key, walkOpts);
-          if (isProblem(keyR)) {
-            return new Problem(x, clause, _defineProperty({}, key, keyR), 'mapOf: key ' + key + ' failed validation');
-          }
+        var keyR = walkFn(keyClause, key, walkOpts);
+        if (isProblem(keyR)) {
+          return new Problem(x, clause, _defineProperty({}, key, keyR), 'mapOf: key ' + key + ' failed validation');
         }
 
-        if (valClause) {
-          var valR = walkFn(valClause, x[key], walkOpts);
-          if (isProblem(valR)) {
-            return new Problem(x, clause, _defineProperty({}, key, valR), 'mapOf: value for key ' + key + ' failed validation');
-          }
+        var valR = walkFn(valClause, x[key], walkOpts);
+        if (isProblem(valR)) {
+          return new Problem(x, clause, _defineProperty({}, key, valR), 'mapOf: value for key ' + key + ' failed validation');
         }
+        guide[key] = {
+          expr: valClause,
+          valGuide: valR
+        };
       }
     }
-    return { val: x };
+    return guide;
   }
 
-  function mapOfReconstruct(_ref3) {
-    var val = _ref3.val;
+  function mapOfReconstruct(guide, walkOpts) {
+    var r = {};
+    for (var key in guide) {
+      var _guide$key = guide[key],
+          expr = _guide$key.expr,
+          valGuide = _guide$key.valGuide;
 
-    return val;
+      r[key] = walkFn(expr, valGuide, walkOpts);
+    }
+    return r;
   }
 }
 module.exports = mapOfWalker;
 
 /***/ },
-/* 71 */
+/* 73 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3557,9 +3693,9 @@ module.exports = mapOfWalker;
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var simulate = __webpack_require__(48);
-var getMatch = __webpack_require__(47);
-var compile = __webpack_require__(45);
+var simulate = __webpack_require__(49);
+var getMatch = __webpack_require__(48);
+var compile = __webpack_require__(46);
 var Problem = __webpack_require__(2);
 
 function nfaWalker(clause, walkFn) {
@@ -3583,7 +3719,7 @@ function nfaWalker(clause, walkFn) {
         lastProblem = _simulate.lastProblem;
 
     if (matched === true) {
-      return chain;
+      return { chain: chain };
     } else {
       var subproblems = void 0;
 
@@ -3600,7 +3736,9 @@ function nfaWalker(clause, walkFn) {
     }
   }
 
-  function nfaReconstruct(chain, walkOpts) {
+  function nfaReconstruct(_ref, walkOpts) {
+    var chain = _ref.chain;
+
     var result = getMatch(chain, walkFn, walkOpts);
     return result;
   }
@@ -3609,7 +3747,7 @@ function nfaWalker(clause, walkFn) {
 module.exports = nfaWalker;
 
 /***/ },
-/* 72 */
+/* 74 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3641,7 +3779,7 @@ function predWalker(clause) {
 module.exports = predWalker;
 
 /***/ },
-/* 73 */
+/* 75 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3652,10 +3790,10 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var isProblem = __webpack_require__(0);
-var isUndefined = __webpack_require__(16);
-var oAssign = __webpack_require__(5);
+var isUndefined = __webpack_require__(20);
+var oAssign = __webpack_require__(4);
 var Problem = __webpack_require__(2);
-var clauseFromAlts = __webpack_require__(8);
+var clauseFromAlts = __webpack_require__(7);
 
 function shapeWalker(clause, walkFn) {
   var keyConformer;
@@ -3943,7 +4081,7 @@ function _conformNamedOrExpr(x, alts, walkFn, walkOpts) {
 module.exports = shapeWalker;
 
 /***/ },
-/* 74 */
+/* 76 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3968,7 +4106,7 @@ function wallWalker(wallClause, walkFn) {
 module.exports = wallWalker;
 
 /***/ },
-/* 75 */
+/* 77 */
 /***/ function(module, exports, __webpack_require__) {
 
 /**
@@ -4035,9 +4173,9 @@ module.exports = wallWalker;
 ;(function () {
   'use strict';
 
-  var hasSymbols = __webpack_require__(36);
-  var isFunction = __webpack_require__(77);
-  var isUndefined = __webpack_require__(37);
+  var hasSymbols = __webpack_require__(37);
+  var isFunction = __webpack_require__(79);
+  var isUndefined = __webpack_require__(38);
   var pConcat = Array.prototype.concat;
   var pForEach = Array.prototype.forEach;
   var $keys = Object.keys;
@@ -4168,7 +4306,7 @@ module.exports = wallWalker;
 
 
 /***/ },
-/* 76 */
+/* 78 */
 /***/ function(module, exports, __webpack_require__) {
 
 /**
@@ -4240,13 +4378,13 @@ module.exports = wallWalker;
    *
    * @type boolean
    */
-  module.exports = __webpack_require__(36) &&
+  module.exports = __webpack_require__(37) &&
     typeof Symbol.toStringTag === 'symbol';
 }());
 
 
 /***/ },
-/* 77 */
+/* 79 */
 /***/ function(module, exports, __webpack_require__) {
 
 /**
@@ -4313,9 +4451,9 @@ module.exports = wallWalker;
   'use strict';
 
   var fToString = Function.prototype.toString;
-  var toStringTag = __webpack_require__(80);
-  var hasToStringTag = __webpack_require__(76);
-  var isPrimitive = __webpack_require__(78);
+  var toStringTag = __webpack_require__(82);
+  var hasToStringTag = __webpack_require__(78);
+  var isPrimitive = __webpack_require__(80);
   var funcTag = '[object Function]';
   var genTag = '[object GeneratorFunction]';
 
@@ -4370,7 +4508,7 @@ module.exports = wallWalker;
 
 
 /***/ },
-/* 78 */
+/* 80 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4390,7 +4528,7 @@ module.exports = function isPrimitive(value) {
 
 
 /***/ },
-/* 79 */
+/* 81 */
 /***/ function(module, exports) {
 
 /**
@@ -4426,7 +4564,7 @@ module.exports = isNull;
 
 
 /***/ },
-/* 80 */
+/* 82 */
 /***/ function(module, exports, __webpack_require__) {
 
 /**
@@ -4504,8 +4642,8 @@ module.exports = isNull;
   'use strict';
 
   var pToString = Object.prototype.toString;
-  var isNull = __webpack_require__(79);
-  var isUndefined = __webpack_require__(37);
+  var isNull = __webpack_require__(81);
+  var isUndefined = __webpack_require__(38);
   var nullTag = '[object Null]';
   var undefTag = '[object Undefined]';
 
@@ -4533,7 +4671,7 @@ module.exports = isNull;
 
 
 /***/ },
-/* 81 */
+/* 83 */
 /***/ function(module, exports, __webpack_require__) {
 
 /**
@@ -4597,7 +4735,7 @@ module.exports = isNull;
 ;(function () {
   'use strict';
 
-  var define = __webpack_require__(75);
+  var define = __webpack_require__(77);
 
   /**
    * An array of the whitespace char codes.
@@ -4692,7 +4830,7 @@ module.exports = isNull;
 
 
 /***/ },
-/* 82 */
+/* 84 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4701,7 +4839,7 @@ module.exports = isNull;
 module.exports = '0.0.23';
 
 /***/ },
-/* 83 */
+/* 85 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4710,27 +4848,27 @@ module.exports = '0.0.23';
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var oAssign = __webpack_require__(5);
-var ClauseRef = __webpack_require__(38);
+var oAssign = __webpack_require__(4);
+var ClauseRef = __webpack_require__(39);
 
-var _require = __webpack_require__(19),
+var _require = __webpack_require__(15),
     cat = _require.cat,
     or = _require.or,
     fclause = _require.fclause,
     shape = _require.shape;
 
-var isClause = __webpack_require__(4);
-var isPred = __webpack_require__(6);
-var isBool = __webpack_require__(39);
-var walk = __webpack_require__(14);
+var isClause = __webpack_require__(5);
+var isPred = __webpack_require__(8);
+var isBool = __webpack_require__(40);
+var walk = __webpack_require__(16);
 var coerceIntoClause = __webpack_require__(10);
-var oPath = __webpack_require__(85);
+var oPath = __webpack_require__(87);
 
-var _require2 = __webpack_require__(21),
+var _require2 = __webpack_require__(23),
     isNamespacePath = _require2.isNamespacePath,
     isClauseRef = _require2.isClauseRef;
 
-var _require3 = __webpack_require__(23),
+var _require3 = __webpack_require__(24),
     GetNSFnClause = _require3.GetNSFnClause,
     SetNSFnClause = _require3.SetNSFnClause,
     NamespaceFnClause = _require3.NamespaceFnClause,
@@ -4891,10 +5029,10 @@ exports.getRegistry = getRegistry;
 exports.clearRegistry = clearRegistry;
 exports.meta = meta;
 exports.default = namespaceGetOrSet;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(42)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(43)))
 
 /***/ },
-/* 84 */
+/* 86 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4904,19 +5042,19 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _namespace = __webpack_require__(83);
+var _namespace = __webpack_require__(85);
 
 var _namespace2 = _interopRequireDefault(_namespace);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var oAssign = __webpack_require__(5);
+var oAssign = __webpack_require__(4);
 
 
-var ops = __webpack_require__(19);
-var utils = __webpack_require__(21);
+var ops = __webpack_require__(15);
+var utils = __webpack_require__(23);
 
-var predicates = __webpack_require__(22);
+var predicates = __webpack_require__(17);
 
 var models = {
   Problem: __webpack_require__(2),
@@ -4925,13 +5063,13 @@ var models = {
 
 var r = oAssign(_namespace2.default, ops, utils, models, predicates);
 
-r.VERSION = __webpack_require__(82);
+r.VERSION = __webpack_require__(84);
 
 module.exports = r;
 exports.default = r;
 
 /***/ },
-/* 85 */
+/* 87 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5004,7 +5142,7 @@ function getKey(key) {
 module.exports = { get: get, set: set };
 
 /***/ },
-/* 86 */
+/* 88 */
 /***/ function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -15230,14 +15368,14 @@ return jQuery;
 
 
 /***/ },
-/* 87 */,
-/* 88 */,
 /* 89 */,
 /* 90 */,
 /* 91 */,
 /* 92 */,
 /* 93 */,
-/* 94 */
+/* 94 */,
+/* 95 */,
+/* 96 */
 /***/ function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! tether 1.4.0 */
@@ -17054,9 +17192,9 @@ return Tether;
 
 
 /***/ },
-/* 95 */,
-/* 96 */,
-/* 97 */
+/* 97 */,
+/* 98 */,
+/* 99 */
 /***/ function(module, exports) {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -17258,7 +17396,7 @@ var Popover = function ($) {
 module.exports = Popover;
 
 /***/ },
-/* 98 */
+/* 100 */
 /***/ function(module, exports) {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -17858,7 +17996,7 @@ var Tooltip = function ($) {
 module.exports = Tooltip;
 
 /***/ },
-/* 99 */
+/* 101 */
 /***/ function(module, exports) {
 
 /**
@@ -18022,8 +18160,6 @@ var Util = function ($) {
 module.exports = Util;
 
 /***/ },
-/* 100 */,
-/* 101 */,
 /* 102 */,
 /* 103 */,
 /* 104 */,
@@ -18031,21 +18167,23 @@ module.exports = Util;
 /* 106 */,
 /* 107 */,
 /* 108 */,
-/* 109 */
+/* 109 */,
+/* 110 */,
+/* 111 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _jquery = __webpack_require__(86);
+var _jquery = __webpack_require__(88);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _tether = __webpack_require__(94);
+var _tether = __webpack_require__(96);
 
 var _tether2 = _interopRequireDefault(_tether);
 
-var _src = __webpack_require__(84);
+var _src = __webpack_require__(86);
 
 var _src2 = _interopRequireDefault(_src);
 
@@ -18057,9 +18195,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // HLJS.registerLanguage( 'javascript', require( 'highlight.js/lib/languages/javascript' ) );
 window.$ = window.jQuery = _jquery2.default;
 window.Tether = _tether2.default;
-window.Util = __webpack_require__(99);
-window.Tooltip = __webpack_require__(98);
-window.Popover = __webpack_require__(97);
+window.Util = __webpack_require__(101);
+window.Tooltip = __webpack_require__(100);
+window.Popover = __webpack_require__(99);
 
 (0, _jquery2.default)(function () {
 

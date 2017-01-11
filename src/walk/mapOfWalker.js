@@ -13,28 +13,34 @@ function mapOfWalker( clause, walkFn ) {
   };
 
   function mapOfTrailblaze( x, walkOpts ) {
+    var guide = {};
     for ( let key in x ) {
       if ( x.hasOwnProperty( key ) ) {
-        if ( keyClause ) {
-          let keyR = walkFn( keyClause, key, walkOpts );
-          if ( isProblem( keyR ) ) {
-            return new Problem( x, clause, { [ key ]: keyR }, `mapOf: key ${key} failed validation` );
-          }
+        let keyR = walkFn( keyClause, key, walkOpts );
+        if ( isProblem( keyR ) ) {
+          return new Problem( x, clause, { [ key ]: keyR }, `mapOf: key ${key} failed validation` );
         }
 
-        if ( valClause ) {
-          let valR = walkFn( valClause, x[ key ], walkOpts );
-          if ( isProblem( valR ) ) {
-            return new Problem( x, clause, { [ key ]: valR }, `mapOf: value for key ${key} failed validation` );
-          }
+        let valR = walkFn( valClause, x[ key ], walkOpts );
+        if ( isProblem( valR ) ) {
+          return new Problem( x, clause, { [ key ]: valR }, `mapOf: value for key ${key} failed validation` );
         }
+        guide[ key ] = {
+          expr: valClause,
+          valGuide: valR,
+        };
       }
     }
-    return { val: x };
+    return guide;
   }
 
-  function mapOfReconstruct( { val } ) {
-    return val;
+  function mapOfReconstruct( guide, walkOpts ) {
+    const r = {};
+    for ( let key in guide ) {
+      let { expr, valGuide } = guide[ key ];
+      r[ key ] = walkFn( expr, valGuide, walkOpts );
+    }
+    return r;
   }
 
 }

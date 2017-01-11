@@ -4,6 +4,7 @@ var isInt = require( './isInt' );
 var isBool = require( './isBool' );
 var isFn = require( './isFn' );
 var isObj = require( './isObj' );
+var isPlainObj = require( './isPlainObj' );
 var equals = require( './equals' );
 var oneOf = require( './oneOf' );
 var isStr = require( './isStr' );
@@ -23,6 +24,7 @@ var e = {
   isNatInt, isNaturalNumber: isNatInt,
   isInt, isInteger: isInt,
   isObj, isObject: isObj,
+  isPlainObj, isPlainObject: isPlainObj,
   isStr, isString: isStr,
   isArray, isArr: isArray,
   equal: equals, equals, equalsTo: equals, eq: equals,

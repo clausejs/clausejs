@@ -24,4 +24,9 @@ describe( 'or', function() {
     expect( Clause.conform( [ 1, '2' ] ) ).not.to.be.an.instanceOf( Problem );
     expect( Clause.conform( [ '1', 2 ] ) ).not.to.be.an.instanceOf( Problem );
   } );
+
+  it( 'labelled', () => {
+    var Clause = C.or( 'foo', C.isStr, 'bar', C.isObj );
+    expect( Clause.conform( 'aaa' ) ).to.deep.equal( { foo: 'aaa' } );
+  } );
 } );

@@ -1,31 +1,45 @@
 var fnName = require( './fnName' );
 var clauseFromAlts = require( './clauseFromAlts' );
 var oAssign = require( 'object-assign' );
-const { any, zeroOrMore, cat, or, ClauseClause, mapOf } = require( '../core' );
+const { wall, any, zeroOrMore, and, cat, or, ExprClause, mapOf } = require( '../core' );
 const delayed = require( './delayed' );
 const isPred = require( './isPred' );
-const { isStr, isObj } = require( '../preds' );
+const coerceIntoClause = require( './coerceIntoClause' );
+const { isStr, isPlainObj, instanceOf } = require( '../preds' );
 
 function Recursive( expression ) {
   this.isRecursive = true;
   this.expression = expression;
 }
 
-var ParamObjC = mapOf(
+function ParamsMap( map ) {
+  oAssign( this, map );
+}
+
+var ParamsMapC = and(
+  instanceOf( ParamsMap ),
+  mapOf(
     any,
-    delayed( () => SExpressionC ) );
-
-var OptionsC = isObj;
-
-var SExpressionC = cat(
-    'head', ClauseClause,
-    'params', zeroOrMore(
-      or(
-        isStr,
-        delayed( () => SExpressionC ),
-        OptionsC,
-        ParamObjC )
+    or(
+      'paramList', zeroOrMore( delayed( () => ParamItemClause ) ),
+      'paramMap', delayed( () => ParamsMapC )
     )
+  )
+);
+
+var ParamItemClause = or(
+  'label', isStr,
+  'sExpression', delayed( () => SExpressionClause ),
+  'paramsObj', ParamsMapC,
+  'optionsObj', isPlainObj,
+  'recursive', instanceOf( Recursive )
+);
+
+var SExpressionClause = wall(
+  cat(
+    'head', ExprClause,
+    'params', zeroOrMore( ParamItemClause )
+  )
 );
 
 var singleArgParamGenerator = ( repo, { opts: { enclosedClause } } ) =>
@@ -48,7 +62,7 @@ var multipleArgParamGenerator = ( repo, { opts: { named }, exprs } ) => {
 };
 
 var sParamsConverters = {
-  'PRED': ( repo, { opts: { predicate } } ) => [ predicate ],
+  'PRED': ( repo, { opts: { predicate } } ) => [ `${fnName( predicate )}()` ],
   'WALL': ( repo, { opts: { enclosedClause } } ) => [ _createSExpr( repo, enclosedClause ) ],
   'AND': ( repo, { opts: { conformedExprs } } ) =>
     conformedExprs.map( clauseFromAlts ),
@@ -63,7 +77,7 @@ var sParamsConverters = {
   'MAP_OF': () => [],
   // TODO
   'SHAPE': ( repo, { opts: { conformedArgs: { shapeArgs: { optionalFields: { opt, optional } = {}, requiredFields: { req, required } = {} } } } } ) =>
-    oAssign( {},
+    oAssign( new ParamsMap(),
       ( req || required ) ? {
         required: _fieldDefToFrags( repo, req || required ),
       } : {},
@@ -72,33 +86,39 @@ var sParamsConverters = {
       } : {}
     ),
   'FCLAUSE': ( repo, { opts: { args, ret, fn } } ) =>
-    oAssign( {},
-    args ? { args: _createSExpr( repo, args ) } : {},
-    ret ? { ret: _createSExpr( repo, ret ) } : {},
-    fn ? { fn: `${fnName( fn )}()` } : {} )
+    oAssign( new ParamsMap(),
+    args ? { args: [ _createSExpr( repo, args ) ] } : [],
+    ret ? { ret: [ _createSExpr( repo, ret ) ] } : [],
+    fn ? { fn: [ `${fnName( fn )}()` ] } : [] )
 }
 
-function _fieldDefToFrags( repo, { fieldDefs: { fields } } ) {
-  let r = {};
-  for ( let key in fields ) {
-    if ( fields.hasOwnProperty( key ) ) {
-      const { keyValExprPair, valExpressionOnly } = fields[ key ];
-      if ( keyValExprPair ) {
-        let { keyExpression, valExpression } = keyValExprPair;
-        oAssign( r, {
-          [ key ]: {
-            '<keyExpression>': _createSExpr( repo, clauseFromAlts( keyExpression ) ),
-            '<valExpression>': _createSExpr( repo, clauseFromAlts( valExpression ) ),
-          }
-        } );
-      } else if ( valExpressionOnly ) {
-        oAssign( r, {
-          [ key ]: _createSExpr( repo, clauseFromAlts( valExpressionOnly ) )
-        } )
+function _fieldDefToFrags( repo, { fieldDefs: { fields } = {}, keyList } ) {
+  if ( fields ) {
+    let r = new ParamsMap();
+    for ( let key in fields ) {
+      if ( fields.hasOwnProperty( key ) ) {
+        const { keyValExprPair, valExpressionOnly } = fields[ key ];
+        if ( keyValExprPair ) {
+          let { keyExpression, valExpression } = keyValExprPair;
+          oAssign( r, {
+            [ key ]: {
+              '<keyExpression>': _createSExpr( repo, clauseFromAlts( keyExpression ) ),
+              '<valExpression>': _createSExpr( repo, clauseFromAlts( valExpression ) ),
+            }
+          } );
+        } else if ( valExpressionOnly ) {
+          oAssign( r, {
+            [ key ]: _createSExpr( repo, clauseFromAlts( valExpressionOnly ) )
+          } )
+        }
       }
     }
+    return r;
+  } else if ( keyList ) {
+    return keyList;
+  } else {
+    throw '!';
   }
-  return r;
 }
 
 function _params( repo, clause ) {
@@ -115,16 +135,16 @@ function _createSExpr( repo, expr ) {
   if ( _exists( repo, expr ) ) {
     return new Recursive( expr );
   }
-  let realExpr,
+  let coercedExpr = coerceIntoClause( expr ),
+    realExpr,
     newRepo = repo;
-  if ( isPred( expr ) ) {
-    return `${fnName( expr )}()`;
-  } else if ( expr.type === 'DELAYED' || expr.type === 'CLAUSE_REF' ) {
-    realExpr = expr.get();
+  if ( coercedExpr.type === 'DELAYED' ||
+     coercedExpr.type === 'CLAUSE_REF' ) {
+    realExpr = coercedExpr.get();
     return _createSExpr( repo, realExpr );
   } else {
-    realExpr = expr;
-    newRepo = _addToRepo( repo, expr );
+    realExpr = coercedExpr;
+    newRepo = _addToRepo( repo, coercedExpr );
   }
   var params = _params( newRepo, realExpr );
   return [ realExpr ].concat( params );
@@ -146,4 +166,5 @@ function sExpression( expr ) {
   return _createSExpr( repo, expr );
 }
 
-module.exports = sExpression;
+export default sExpression;
+export { SExpressionClause, ParamItemClause };

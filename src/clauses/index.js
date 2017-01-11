@@ -132,6 +132,7 @@ C( 'clause.utils/describe', DescribeFnClause );
 
 C( 'clause.preds/not', NotFnClause );
 C( 'clause.preds/isObj', SingleArgPredClause() );
+C( 'clause.preds/isPlainObj', SingleArgPredClause() );
 C( 'clause.preds/isStr', SingleArgPredClause() );
 C( 'clause.preds/isArray', SingleArgPredClause() );
 C( 'clause.preds/isDate', SingleArgPredClause() );

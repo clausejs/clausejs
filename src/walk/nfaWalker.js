@@ -19,7 +19,7 @@ function nfaWalker( clause, walkFn ) {
     }
     var { chain, matched, lastProblem } = simulate( nfa, x, walkFn, walkOpts );
     if ( matched === true ) {
-      return chain;
+      return { chain };
     } else {
       let subproblems;
 
@@ -33,7 +33,7 @@ function nfaWalker( clause, walkFn ) {
     }
   }
 
-  function nfaReconstruct( chain, walkOpts ) {
+  function nfaReconstruct( { chain }, walkOpts ) {
     var result = getMatch( chain, walkFn, walkOpts );
     return result;
   }

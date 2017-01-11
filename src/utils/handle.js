@@ -6,7 +6,7 @@
 function handle( alts, handlerMap, unknownCaseHandler ) {
   for ( var label in alts ) {
     // should iterate only once
-    if ( alts.hasOwnPropety( label ) && handlerMap.hasOwnPropety( label ) ) {
+    if ( alts.hasOwnProperty( label ) && handlerMap.hasOwnProperty( label ) ) {
       return handlerMap[ label ]( alts[ label ] );
     } else {
       return unknownCaseHandler( alts[ label ] );

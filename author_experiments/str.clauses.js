@@ -12,4 +12,4 @@ var ContentClause = C.zeroOrMore( VocabClause );
 
 var r = ContentClause.conform( ' baz foo bar bar' );
 
-console.log( r );
+// console.log( r );
