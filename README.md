@@ -1,11 +1,11 @@
-<img src="https://cdn.rawgit.com/clausejs/clausejs/master/media/clausejs.svg"
-     width="190" height="190" align="right" hspace="10" />
-
 # Clause
 
 A practical & powerful JavaScript library for data validation, conformation, documentation and property-based testing (WIP).
 
  [![Build Status](https://travis-ci.org/clausejs/clausejs.svg?branch=master)](https://travis-ci.org/clausejs/clausejs) [![npm version](https://badge.fury.io/js/clausejs.svg)](https://badge.fury.io/js/clausejs)  [![Size Gzipped](http://img.badgesize.io/clausejs/clausejs/master/packages/clausejs/dist/clausejs.min.js?compression=gzip&label=min%2Bgzipped)](packages/clausejs/dist)  [![Open Source Love](https://badges.frapsoft.com/os/mit/mit.svg?v=102)](https://github.com/ellerbrock/open-source-badge/)  [![Dependencies](https://david-dm.org/clausejs/clausejs.svg)](https://david-dm.org/clausejs/clausejs)  [![Discussion](https://img.shields.io/gitter/room/TechnologyAdvice/Stardust.svg)](https://gitter.im/clausejs/clausejs)
+
+<img src="https://cdn.rawgit.com/clausejs/clausejs/master/media/clausejs.svg"
+     width="190" height="190" align="right" hspace="10" />
 
 ## Overview
 
