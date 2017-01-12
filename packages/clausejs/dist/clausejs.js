@@ -427,7 +427,7 @@ var coerceIntoClause = __webpack_require__(9);
 var fclause = __webpack_require__(18);
 var walk = __webpack_require__(16);
 
-var isObj = __webpack_require__(19);
+var isObj = __webpack_require__(20);
 var isStr = __webpack_require__(6);
 var oneOf = __webpack_require__(32);
 var not = __webpack_require__(31);
@@ -933,11 +933,9 @@ module.exports = isFunction;
 "use strict";
 
 
-function isNull(x) {
-  return x === null;
-}
-
-module.exports = isNull;
+module.exports = function isUndefined(x) {
+  return x === undefined;
+};
 
 /***/ },
 /* 13 */
@@ -1100,7 +1098,7 @@ var isNatInt = __webpack_require__(52);
 var isInt = __webpack_require__(29);
 var isBool = __webpack_require__(38);
 var isFn = __webpack_require__(11);
-var isObj = __webpack_require__(19);
+var isObj = __webpack_require__(20);
 var isPlainObj = __webpack_require__(53);
 var equals = __webpack_require__(27);
 var oneOf = __webpack_require__(32);
@@ -1112,8 +1110,8 @@ var isUuid = __webpack_require__(54);
 var isArray = Array.isArray;
 
 var e = {
-  isNull: __webpack_require__(12),
-  isUndefined: __webpack_require__(20),
+  isNull: __webpack_require__(19),
+  isUndefined: __webpack_require__(12),
   notEmpty: __webpack_require__(55),
   isBool: isBool, isBoolean: isBool,
   isFn: isFn, isFunction: isFn,
@@ -1175,13 +1173,11 @@ module.exports = fclause;
 "use strict";
 
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-function isObject(x) {
-  return (typeof x === 'undefined' ? 'undefined' : _typeof(x)) === 'object' && x !== null;
+function isNull(x) {
+  return x === null;
 }
 
-module.exports = isObject;
+module.exports = isNull;
 
 /***/ },
 /* 20 */
@@ -1190,9 +1186,13 @@ module.exports = isObject;
 "use strict";
 
 
-module.exports = function isUndefined(x) {
-  return x === undefined;
-};
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+function isObject(x) {
+  return (typeof x === 'undefined' ? 'undefined' : _typeof(x)) === 'object' && x !== null;
+}
+
+module.exports = isObject;
 
 /***/ },
 /* 21 */
@@ -1951,7 +1951,7 @@ module.exports = {
 var _require = __webpack_require__(8),
     or = _require.or;
 
-var isNull = __webpack_require__(12);
+var isNull = __webpack_require__(19);
 var isUndefined = __webpack_require__(12);
 
 function maybe(clause) {
@@ -2755,7 +2755,7 @@ module.exports = simulate;
 var _require = __webpack_require__(8),
     or = _require.or;
 
-var isNull = __webpack_require__(12);
+var isNull = __webpack_require__(19);
 
 function nullable(clause) {
   return or(isNull, clause);
@@ -2773,7 +2773,7 @@ module.exports = nullable;
 var _require = __webpack_require__(8),
     or = _require.or;
 
-var isUndefined = __webpack_require__(20);
+var isUndefined = __webpack_require__(12);
 
 function undefinable(clause) {
   return or(isUndefined, clause);
@@ -2814,7 +2814,7 @@ module.exports = isNatInt;
 "use strict";
 
 
-var isObj = __webpack_require__(19);
+var isObj = __webpack_require__(20);
 
 function isPlainObject(x) {
   // Basic check for Type object that's not null
@@ -3815,7 +3815,7 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var isProblem = __webpack_require__(0);
-var isUndefined = __webpack_require__(20);
+var isUndefined = __webpack_require__(12);
 var oAssign = __webpack_require__(4);
 var Problem = __webpack_require__(2);
 var clauseFromAlts = __webpack_require__(7);

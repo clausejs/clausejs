@@ -26,7 +26,7 @@ describe( 'perhaps, perhaps, perhaps', () => {
     } );
   } );
 
-  it( 'combined', () => {
+  it( 'maybe', () => {
     var MaybeClause = C.maybe( C.cat( C.isNum, C.isObj ) );
 
 
