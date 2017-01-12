@@ -1,6 +1,6 @@
 
 var oAssign = require( './utils/objectAssign' );
-import namespaceFn from './namespace';
+import namespaceFn, { resolve } from './namespace';
 
 var ops = require( './core' );
 var utils = require( './utils' );
@@ -12,7 +12,9 @@ var models = {
   Clause: require( './models/Clause' ),
 };
 
-var r = oAssign( namespaceFn, ops, utils, models, predicates );
+var r = oAssign( namespaceFn,
+  { resolve },
+  ops, utils, models, predicates );
 
 r.VERSION = require( '../package_version' );
 

@@ -1,4 +1,4 @@
-import { or, cat, fclause, shape, ExprClause } from '../core';
+import { or, cat, fclause, shape, zeroOrOne, ExprClause } from '../core';
 import { delayed, isNamespacePath, isExpr, isClauseRef } from '../utils';
 import { isObj, isBool } from '../preds';
 
@@ -44,6 +44,12 @@ const MetaFnClause = fclause( {
   ret: isExpr,
 } );
 
+const ResolveFnClause = fclause( {
+  args: cat( 'expression', ExprClause,
+            'registry', zeroOrOne( isObj ) ),
+  ret: isNamespacePath,
+} );
+
 function isNamespaceFragment( x ) {
   return !!/^[^.@%\&\*#]+/.test( x );
 }
@@ -62,5 +68,6 @@ export {
   isClauseRef, SetNSFnClause, GetNSFnClause,
   NamespaceFnClause,
   isNamespacePath, MetaFnClause,
+  ResolveFnClause,
   NamespaceObjClause
 };

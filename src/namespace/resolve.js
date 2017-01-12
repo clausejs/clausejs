@@ -2,7 +2,7 @@ import _ from 'lodash';
 const resolvedMaps = [];
 import { NamespaceObjClause } from '../clauses/namespace.types';
 
-function resolve( registry, clauseRef ) {
+function resolve( clauseRef, registry ) {
   let map = _findFirst( resolvedMaps, ( [ registryRef, m ] ) => {
     if ( registryRef === registry ) {
       return m;

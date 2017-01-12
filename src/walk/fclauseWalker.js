@@ -3,7 +3,6 @@ var Problem = require( '../models/Problem' );
 var functionName = require( '../utils/fnName' );
 var namedFn = require( '../utils/namedFn' );
 var betterThrow = require( '../utils/betterThrow' );
-var stringifyWithFnName = require( '../utils/stringifyWithFnName' );
 
 function fclauseWalker( clause, walkFn ) {
   var { args: argsClause, ret: retClause, fn: validateFn } = clause.opts;

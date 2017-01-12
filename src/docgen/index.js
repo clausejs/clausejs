@@ -5,7 +5,7 @@ import isClause from '../utils/isClause';
 import { isStr, isObj } from '../preds';
 import describe from '../utils/describe';
 import deref from '../utils/deref';
-import { resolve, getDefList } from './namespaceResolver';
+import { resolve, getDefList } from '../namespace/resolve';
 const clauseFromAlts = require( '../utils/clauseFromAlts' );
 
 function gen( registry ) {
@@ -131,7 +131,7 @@ function _type( expr ) {
 
 function genForExpression( globalReg, exprName, expr, meta ) {
   let docstr;
-  let path = resolve( globalReg, expr );
+  let path = resolve( expr, globalReg );
 
   if ( path && !exprName ) {
     docstr = _genClauseRef( globalReg, exprName, path, expr, meta );
@@ -440,7 +440,7 @@ function synopsisArray( prefixes, suffixes, exprName, clause, globalReg, meta, d
     let obj = [];
     for ( let i = 0; i < clause.exprs.length; i++ ) {
       let eAlt = clause.exprs[ i ];
-      let path = resolve( globalReg, eAlt.expr );
+      let path = resolve( eAlt.expr, globalReg );
       if ( named ) {
         obj.push( path ? _clauseRefLink( path )( () => eAlt.name ) : eAlt.name );
       } else {
@@ -479,7 +479,7 @@ function _encode( str ) {
 
 function _refExprFn( reg, currPath ) {
   return ( expr ) => {
-    let path = resolve( reg, expr );
+    let path = resolve( expr, reg );
     if ( path && path !== currPath ) {
       let r = _clauseRefLink( path )( _unanbiguousName );
       r = escape( r );
@@ -621,7 +621,7 @@ function toOrdinal( i ) {
 // NOTE: meta param is omitted at the end
 function _genFclause( globalReg, exprName, clause, path, meta = {} ) {
   var frags = [ ];
-  var { name = exprName, comment, examples } = meta;
+  var { comment, examples } = meta || {};
   if ( isStr( examples ) ) {
     examples = [ examples ];
   }

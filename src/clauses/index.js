@@ -6,7 +6,7 @@ import { any, ExprClause, CatFnClause, OrFnClause, AndFnClause,
   ZeroOrMoreFnClause, OneOrMoreFnClause, ZeroOrOneFnClause } from '../core';
 import { WallFnClause } from '../core/wall';
 import { ShapeFnClause, MapOfFnClause } from '../core/regex';
-import { isNamespacePath, GetNSFnClause, NamespaceFnClause, MetaFnClause, SetNSFnClause, NamespaceObjClause } from './namespace.types';
+import { isNamespacePath, GetNSFnClause, NamespaceFnClause, MetaFnClause, SetNSFnClause, NamespaceObjClause, ResolveFnClause } from './namespace.types';
 
 // TODO
 // const C = Clause.withRegistry(nsObj);
@@ -14,11 +14,11 @@ import { isNamespacePath, GetNSFnClause, NamespaceFnClause, MetaFnClause, SetNSF
 const DescribeFnClause = fclause( {
   args: cat(
      'expression', C( 'clause.types/Expression' ),
-    'interceptor', fclause( {
+    'replacer', C.zeroOrOne( fclause( {
       args: cat( ExprClause ),
       ret: or( isUndefined, isNull, collOf( isStr ) ),
-    } ),
-    'indent', C.zeroOrOne( C.isNatInt ) ),
+    } ) ),
+    'space', C.zeroOrOne( C.isNatInt ) ),
   ret: isStr,
 } );
 
@@ -151,6 +151,7 @@ C( 'clause.preds/instanceOf', InstanceOfFnClause );
 
 C( '/clause.namespace/set', SetNSFnClause );
 C( '/clause.namespace/get', GetNSFnClause );
+C( '/clause.namespace/resolve', ResolveFnClause );
 C( '/clause.namespace/meta', MetaFnClause );
 
 C( 'clause.types/Expression', ExprClause );

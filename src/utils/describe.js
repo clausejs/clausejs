@@ -1,27 +1,33 @@
 import sExpression, { SExpressionClause } from './sExpression';
 const humanReadable = require( './humanReadable' );
 const isStr = require( '../preds/isStr' );
-const conform = require( './conform' );
 const isProblem = require( './isProblem' );
 const handle = require( './handle' );
 const clauseFromAlts = require( './clauseFromAlts' );
 const fnName = require( './fnName' );
+const stringifyWithFnName = require( '../utils/stringifyWithFnName' );
 
-function describe( expr, interceptor, indent ) {
+function describe( expr, replacer, space ) {
   const sexpr = sExpression( expr );
   const cSexpr = SExpressionClause.conform( sexpr );
   if ( isProblem( cSexpr ) ) {
     console.error( cSexpr );
     throw new Error( 'The given expression is not a valid expression.' );
   }
-  const strFragments = _strFragments( cSexpr );
+  const strFragments = _strFragments( cSexpr, replacer );
   const r = _walkConcat( strFragments );
 
   return r;
 }
 
-function _strFragments( { head: headAlt, params } ) {
+function _strFragments( { head: headAlt, params }, replacer ) {
   const head = clauseFromAlts( headAlt );
+  if ( replacer ) {
+    let interceptR = replacer( head );
+    if ( interceptR ) {
+      return interceptR;
+    }
+  }
   if ( head.type === 'PRED' ) {
     return [ `${fnName( head.opts.predicate )}()` ];
   }
@@ -57,7 +63,7 @@ function _fragmentParamAlts( pAlts ) {
     'label': ( lbl ) => lbl,
     'sExpression': _strFragments,
     'paramsObj': _fragmentParamsObj,
-    'optionsObj': ( o ) => JSON.stringify( o ),
+    'optionsObj': ( o ) => stringifyWithFnName( o ),
     'recursive': ( { expression } ) => [
       '<recursive>: ',
       humanReadable( expression )

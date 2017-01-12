@@ -5,6 +5,7 @@ var isClause = require( '../utils/isClause' );
 var isPred = require( '../utils/isPred' );
 var isBool = require( '../preds/isBool' );
 var walk = require( '../walk' );
+var resolveWithRegistry = require( './resolve' );
 var coerceIntoClause = require( '../utils/coerceIntoClause' );
 var oPath = require( './simpleObjectPath' );
 
@@ -130,6 +131,14 @@ const meta = MetaFnClause.instrumentConformed(
   }
 );
 
+function resolve( expr, reg ) {
+  if ( !reg ) {
+    return resolveWithRegistry( expr, getRegistry() );
+  } else {
+    return resolveWithRegistry( expr, reg );
+  }
+}
+
 _maybeInitRegistry();
 
 const getRegistry = () => reg;
@@ -150,5 +159,7 @@ namespaceGetOrSet.clearRegistry = clearRegistry;
 namespaceGetOrSet.getRegistry = getRegistry;
 namespaceGetOrSet.meta = meta;
 
-export { getRegistry, clearRegistry, meta };
+export {
+  getRegistry, clearRegistry, meta,
+  resolve };
 export default namespaceGetOrSet;
