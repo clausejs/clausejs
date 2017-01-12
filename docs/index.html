@@ -140,6 +140,8 @@
             <a href="#clause.compose/nullable" data-path="clause.compose/nullable">nullable()</a>
           </li><li>
             <a href="#clause.compose/undefinable" data-path="clause.compose/undefinable">undefinable()</a>
+          </li><li>
+            <a href="#clause.compose/maybe" data-path="clause.compose/maybe">maybe()</a>
           </li>
       </ul>
     </dd>
@@ -3618,7 +3620,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         <small>
           <em class="text-muted">
             
-    <pre>fclause( { args: [ cat( or( &quot;clause&quot;, isClause(), &quot;pred&quot;, isPred(), &quot;delayedClause&quot;, instanceOf(DelayedClause)(), &quot;clauseRef&quot;, isClauseRef() ) ) ] } )</pre>
+    <pre>fclause( { args: [ cat( or( &quot;clause&quot;, isClause(), &quot;pred&quot;, isPred(), &quot;delayedClause&quot;, instanceOf(DelayedClause)(), &quot;clauseRef&quot;, isClauseRef() ) ) ], ret: [ isClause() ] } )</pre>
   
           </em>
         </small>
@@ -3680,6 +3682,21 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     </dd>
+<dt>Return Value</dt><dd>
+    
+    
+    <fieldset class="card card-outline-primary">
+    <legend class="clause-type">
+      <span class="tag tag-info">satisfies clause</span>
+    </legend>
+    
+    <div class="card-block">
+      A value that is of
+      <a href="#clause.types/Clause" data-path="clause.types/Clause">clause.types/Clause</a>
+    </div>
+  
+    </fieldset>
+    </dd>
     </dl>
   
         </div>
@@ -3703,7 +3720,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         <small>
           <em class="text-muted">
             
-    <pre>fclause( { args: [ cat( or( &quot;clause&quot;, isClause(), &quot;pred&quot;, isPred(), &quot;delayedClause&quot;, instanceOf(DelayedClause)(), &quot;clauseRef&quot;, isClauseRef() ) ) ] } )</pre>
+    <pre>fclause( { args: [ cat( or( &quot;clause&quot;, isClause(), &quot;pred&quot;, isPred(), &quot;delayedClause&quot;, instanceOf(DelayedClause)(), &quot;clauseRef&quot;, isClauseRef() ) ) ], ret: [ isClause() ] } )</pre>
   
           </em>
         </small>
@@ -3761,6 +3778,121 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
           </div>
         </fieldset>
     
+    </div>
+  
+    </fieldset>
+    </dd>
+<dt>Return Value</dt><dd>
+    
+    
+    <fieldset class="card card-outline-primary">
+    <legend class="clause-type">
+      <span class="tag tag-info">satisfies clause</span>
+    </legend>
+    
+    <div class="card-block">
+      A value that is of
+      <a href="#clause.types/Clause" data-path="clause.types/Clause">clause.types/Clause</a>
+    </div>
+  
+    </fieldset>
+    </dd>
+    </dl>
+  
+        </div>
+      
+
+    <a name="clause.compose/maybe"></a>
+    
+        <div class="card">
+          <div class="card-header inline-headers">
+            
+      <h6>maybe()</h6>&#xA0;
+        <span class="tag tag-primary">
+          function
+        </span>
+      
+          </div>
+        
+    <dl class="card-block">
+    <dt>Syntax</dt><dd>
+      <blockquote class="blockquote">
+        <small>
+          <em class="text-muted">
+            
+    <pre>fclause( { args: [ cat( or( &quot;clause&quot;, isClause(), &quot;pred&quot;, isPred(), &quot;delayedClause&quot;, instanceOf(DelayedClause)(), &quot;clauseRef&quot;, isClauseRef() ) ) ], ret: [ isClause() ] } )</pre>
+  
+          </em>
+        </small>
+      </blockquote>
+    </dd>
+<dt>Synopsis</dt><dd><ul><em>maybe(<a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>)</em></ul></dd>
+<dt>Arguments</dt><dd>
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="clause-type">
+      
+    <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
+    &lt;pre&gt;cat( or( &quot;clause&quot;, isClause(), &quot;pred&quot;, isPred(), &quot;delayedClause&quot;, instanceOf(DelayedClause)(), &quot;clauseRef&quot;, isClauseRef() ) )&lt;/pre&gt;
+  " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
+      a concatenation (cat) of
+    </span>
+  
+    </legend>
+    
+    <div class="card-block">
+      <p class="card-title">
+        Should be <em>an ordered list</em> of the following:
+      </p>
+    </div>
+    <div class="list-group list-group-flush list-for-cat">
+      
+        <fieldset class="list-group-item card card-outline-info">
+          <legend class="clause-type">
+          <span class="tag tag-default">Part 1</span>
+          </legend>
+          <div class="row">
+            <div class="col-md-12">
+              
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="clause-type">
+      <span class="tag tag-info">satisfies clause</span>
+    </legend>
+    
+    <div class="card-block">
+      A value that is of
+      <a href="#clause.types/Expression" data-path="clause.types/Expression">clause.types/Expression</a>
+    </div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </fieldset>
+    
+    </div>
+  
+    </fieldset>
+    </dd>
+<dt>Return Value</dt><dd>
+    
+    
+    <fieldset class="card card-outline-primary">
+    <legend class="clause-type">
+      <span class="tag tag-info">satisfies clause</span>
+    </legend>
+    
+    <div class="card-block">
+      A value that is of
+      <a href="#clause.types/Clause" data-path="clause.types/Clause">clause.types/Clause</a>
     </div>
   
     </fieldset>

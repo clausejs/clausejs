@@ -3,6 +3,7 @@ var regex = require( './regex' );
 var { shape, keys, mapOf, } = require( './regex' );
 var nullable = require( './nullable' );
 var undefinable = require( './undefinable' );
+var maybe = require( './maybe' );
 var { wall } = require( './wall' );
 var equals = require( '../preds/equals' );
 
@@ -14,7 +15,7 @@ var other = {
   any: require( './any' ),
   fclause: require( './fclause' ),
   wall, clause: wall,
-  nullable, undefinable,
+  nullable, undefinable, maybe,
   sCat,
 };
 

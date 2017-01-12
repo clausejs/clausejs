@@ -59,12 +59,9 @@ const FclauseFnClause = fclause( {
   } ) ),
 } );
 
-const NullableFnClause = fclause( {
+const clauseTransformFnClause = () => fclause( {
   args: cat( ExprClause ),
-} );
-
-const UndefinableFnClause = fclause( {
-  args: cat( ExprClause ),
+  ret: ClauseClause,
 } );
 
 const InstanceOfFnClause = fclause( {
@@ -120,8 +117,9 @@ C( 'clause.compose/shape', ShapeFnClause );
 C( 'clause.compose/any', AnyClause );
 C( 'clause.compose/wall', WallFnClause );
 C( 'clause.compose/fclause', FclauseFnClause );
-C( 'clause.compose/nullable', NullableFnClause );
-C( 'clause.compose/undefinable', UndefinableFnClause );
+C( 'clause.compose/nullable', clauseTransformFnClause() );
+C( 'clause.compose/undefinable', clauseTransformFnClause() );
+C( 'clause.compose/maybe', clauseTransformFnClause() );
 
 C( 'clause.compose.string/sCat', SCatFnClause );
 

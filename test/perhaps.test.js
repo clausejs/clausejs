@@ -1,7 +1,7 @@
 var C = require( '../src' );
 var expect = require( 'chai' ).expect;
 
-describe( 'the void', () => {
+describe( 'perhaps, perhaps, perhaps', () => {
   it( 'nullable', () => {
     var NullableClause = C.nullable( C.cat( C.isNum, C.isObj ) );
     expect( NullableClause.conform( [ 1, { c: 2 } ] ) ).to.deep.equal( [ 1, { c: 2 } ] );
@@ -15,7 +15,7 @@ describe( 'the void', () => {
     expect( UndefinableClause.conform( ) ).to.equal( undefined );
   } );
 
-  it( 'conbined', () => {
+  it( 'combined', () => {
     var NullableUndefinableClause = C.nullable( C.undefinable( C.cat( C.isNum, C.isObj ) ) );
     var UndefinableNullableClause = C.undefinable( C.nullable( C.cat( C.isNum, C.isObj ) ) );
 
@@ -24,5 +24,14 @@ describe( 'the void', () => {
       expect( Clause.conform( null ) ).to.deep.equal( null );
       expect( Clause.conform( ) ).to.equal( undefined );
     } );
+  } );
+
+  it( 'combined', () => {
+    var MaybeClause = C.maybe( C.cat( C.isNum, C.isObj ) );
+
+
+    expect( MaybeClause.conform( [ 1, { c: 2 } ] ) ).to.deep.equal( [ 1, { c: 2 } ] );
+    expect( MaybeClause.conform( null ) ).to.deep.equal( null );
+    expect( MaybeClause.conform( ) ).to.equal( undefined );
   } );
 } );
