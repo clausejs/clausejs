@@ -8,7 +8,7 @@ if ( ( function test() {} ).name !== 'test' ) {
   var fToString = Function.prototype.toString;
   var pMatch = String.prototype.match;
   var pReplace = String.prototype.replace;
-  var s = require( 'white-space-x' ).ws;
+  var s = require( './whiteSpace' );
   var reName = new RegExp(
       '^[' + s + ']*(?:function|class)[' + s + ']*\\*?[' + s + ']+([\\w\\$]+)[' + s + ']*',
       'i'

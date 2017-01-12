@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 93);
+/******/ 	return __webpack_require__(__webpack_require__.s = 85);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -227,7 +227,7 @@ if (function test() {}.name !== 'test') {
   var fToString = Function.prototype.toString;
   var pMatch = String.prototype.match;
   var pReplace = String.prototype.replace;
-  var s = __webpack_require__(83).ws;
+  var s = __webpack_require__(64);
   var reName = new RegExp('^[' + s + ']*(?:function|class)[' + s + ']*\\*?[' + s + ']+([\\w\\$]+)[' + s + ']*', 'i');
   _getFnName = function getName(fn) {
     var name = pMatch.call(pReplace.call(fToString.call(fn), STRIP_COMMENTS, ' '), reName);
@@ -260,89 +260,89 @@ module.exports = getFunctionName;
 
 "use strict";
 
+
 /* eslint-disable no-unused-vars */
+var getOwnPropertySymbols = Object.getOwnPropertySymbols;
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 var propIsEnumerable = Object.prototype.propertyIsEnumerable;
 
 function toObject(val) {
-	if (val === null || val === undefined) {
-		throw new TypeError('Object.assign cannot be called with null or undefined');
-	}
+  if (val === null || val === undefined) {
+    throw new TypeError('Object.assign cannot be called with null or undefined');
+  }
 
-	return Object(val);
+  return Object(val);
 }
 
 function shouldUseNative() {
-	try {
-		if (!Object.assign) {
-			return false;
-		}
+  try {
+    if (!Object.assign) {
+      return false;
+    }
 
-		// Detect buggy property enumeration order in older V8 versions.
+    // Detect buggy property enumeration order in older V8 versions.
 
-		// https://bugs.chromium.org/p/v8/issues/detail?id=4118
-		var test1 = new String('abc');  // eslint-disable-line
-		test1[5] = 'de';
-		if (Object.getOwnPropertyNames(test1)[0] === '5') {
-			return false;
-		}
+    // https://bugs.chromium.org/p/v8/issues/detail?id=4118
+    var test1 = new String('abc'); // eslint-disable-line no-new-wrappers
+    test1[5] = 'de';
+    if (Object.getOwnPropertyNames(test1)[0] === '5') {
+      return false;
+    }
 
-		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
-		var test2 = {};
-		for (var i = 0; i < 10; i++) {
-			test2['_' + String.fromCharCode(i)] = i;
-		}
-		var order2 = Object.getOwnPropertyNames(test2).map(function (n) {
-			return test2[n];
-		});
-		if (order2.join('') !== '0123456789') {
-			return false;
-		}
+    // https://bugs.chromium.org/p/v8/issues/detail?id=3056
+    var test2 = {};
+    for (var i = 0; i < 10; i++) {
+      test2['_' + String.fromCharCode(i)] = i;
+    }
+    var order2 = Object.getOwnPropertyNames(test2).map(function (n) {
+      return test2[n];
+    });
+    if (order2.join('') !== '0123456789') {
+      return false;
+    }
 
-		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
-		var test3 = {};
-		'abcdefghijklmnopqrst'.split('').forEach(function (letter) {
-			test3[letter] = letter;
-		});
-		if (Object.keys(Object.assign({}, test3)).join('') !==
-				'abcdefghijklmnopqrst') {
-			return false;
-		}
+    // https://bugs.chromium.org/p/v8/issues/detail?id=3056
+    var test3 = {};
+    'abcdefghijklmnopqrst'.split('').forEach(function (letter) {
+      test3[letter] = letter;
+    });
+    if (Object.keys(Object.assign({}, test3)).join('') !== 'abcdefghijklmnopqrst') {
+      return false;
+    }
 
-		return true;
-	} catch (e) {
-		// We don't expect any of the above to throw, but better to be safe.
-		return false;
-	}
+    return true;
+  } catch (err) {
+    // We don't expect any of the above to throw, but better to be safe.
+    return false;
+  }
 }
 
 module.exports = shouldUseNative() ? Object.assign : function (target, source) {
-	var from;
-	var to = toObject(target);
-	var symbols;
+  var from;
+  var to = toObject(target);
+  var symbols;
 
-	for (var s = 1; s < arguments.length; s++) {
-		from = Object(arguments[s]);
+  for (var s = 1; s < arguments.length; s++) {
+    from = Object(arguments[s]);
 
-		for (var key in from) {
-			if (hasOwnProperty.call(from, key)) {
-				to[key] = from[key];
-			}
-		}
+    for (var key in from) {
+      if (hasOwnProperty.call(from, key)) {
+        to[key] = from[key];
+      }
+    }
 
-		if (Object.getOwnPropertySymbols) {
-			symbols = Object.getOwnPropertySymbols(from);
-			for (var i = 0; i < symbols.length; i++) {
-				if (propIsEnumerable.call(from, symbols[i])) {
-					to[symbols[i]] = from[symbols[i]];
-				}
-			}
-		}
-	}
+    if (getOwnPropertySymbols) {
+      symbols = getOwnPropertySymbols(from);
+      for (var i = 0; i < symbols.length; i++) {
+        if (propIsEnumerable.call(from, symbols[i])) {
+          to[symbols[i]] = from[symbols[i]];
+        }
+      }
+    }
+  }
 
-	return to;
+  return to;
 };
-
 
 /***/ },
 /* 5 */
@@ -379,7 +379,7 @@ module.exports = isString;
 "use strict";
 
 
-var coerceIntoClause = __webpack_require__(10);
+var coerceIntoClause = __webpack_require__(8);
 
 module.exports = function clauseFromAlts(alts) {
   if (!alts) {
@@ -407,6 +407,57 @@ module.exports = function clauseFromAlts(alts) {
 "use strict";
 
 
+var isPred = __webpack_require__(9);
+var isClause = __webpack_require__(5);
+var isClauseRef = __webpack_require__(13);
+var isDelayedClause = __webpack_require__(21);
+var Clause = __webpack_require__(1);
+var Problem = __webpack_require__(2);
+var fnName = __webpack_require__(3);
+
+var CLAUSE_TYPE_PRED = 'PRED';
+
+function coerceIntoClause(expr) {
+  if (isClause(expr) || isClauseRef(expr) || isDelayedClause(expr)) {
+    return expr;
+  } else if (isPred(expr)) {
+    return _wrap(expr);
+  } else {
+    console.error(expr);
+    throw new Error('Expression must either be a Clause object or a predication function that returns true or false. ');
+  }
+}
+
+function _wrap(pred) {
+  return new Clause({
+    type: CLAUSE_TYPE_PRED,
+    exprs: [pred],
+    opts: {
+      predicate: pred
+    },
+    conformFn: predConformer(pred)
+  });
+}
+
+function predConformer(pred) {
+  return function conformPred(x) {
+    if (pred(x)) {
+      return x;
+    } else {
+      return new Problem(x, pred, [], 'Predicate ' + fnName(pred) + ' returns false');
+    }
+  };
+}
+
+module.exports = coerceIntoClause;
+
+/***/ },
+/* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 var isFn = __webpack_require__(11);
 
 function isPred(x) {
@@ -416,7 +467,7 @@ function isPred(x) {
 module.exports = isPred;
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -429,16 +480,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var oAssign = __webpack_require__(4);
 var Clause = __webpack_require__(1);
 var isClause = __webpack_require__(5);
-var isPred = __webpack_require__(8);
+var isPred = __webpack_require__(9);
 var isExpr = __webpack_require__(35);
 var clauseFromAlts = __webpack_require__(7);
 var isProblem = __webpack_require__(0);
-var isClauseName = __webpack_require__(61);
+var isClauseName = __webpack_require__(59);
 var namedFn = __webpack_require__(14);
 var isClauseRef = __webpack_require__(13);
 var isDelayedClause = __webpack_require__(21);
-var c = __webpack_require__(45);
-var coerceIntoClause = __webpack_require__(10);
+var c = __webpack_require__(43);
+var coerceIntoClause = __webpack_require__(8);
 var fclause = __webpack_require__(18);
 var walk = __webpack_require__(16);
 
@@ -861,57 +912,6 @@ module.exports = core;
 // var isBool = require( '../preds/isBool' );
 
 /***/ },
-/* 10 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var isPred = __webpack_require__(8);
-var isClause = __webpack_require__(5);
-var isClauseRef = __webpack_require__(13);
-var isDelayedClause = __webpack_require__(21);
-var Clause = __webpack_require__(1);
-var Problem = __webpack_require__(2);
-var fnName = __webpack_require__(3);
-
-var CLAUSE_TYPE_PRED = 'PRED';
-
-function coerceIntoClause(expr) {
-  if (isClause(expr) || isClauseRef(expr) || isDelayedClause(expr)) {
-    return expr;
-  } else if (isPred(expr)) {
-    return _wrap(expr);
-  } else {
-    console.error(expr);
-    throw new Error('Expression must either be a Clause object or a predication function that returns true or false. ');
-  }
-}
-
-function _wrap(pred) {
-  return new Clause({
-    type: CLAUSE_TYPE_PRED,
-    exprs: [pred],
-    opts: {
-      predicate: pred
-    },
-    conformFn: predConformer(pred)
-  });
-}
-
-function predConformer(pred) {
-  return function conformPred(x) {
-    if (pred(x)) {
-      return x;
-    } else {
-      return new Problem(x, pred, [], 'Predicate ' + fnName(pred) + ' returns false');
-    }
-  };
-}
-
-module.exports = coerceIntoClause;
-
-/***/ },
 /* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -953,7 +953,7 @@ module.exports = conform;
 "use strict";
 
 
-var ClauseRef = __webpack_require__(39);
+var ClauseRef = __webpack_require__(37);
 // TODO
 function isClauseRef(x) {
   return x instanceof ClauseRef;
@@ -986,17 +986,17 @@ module.exports = getNamedFn;
 
 
 var oAssign = __webpack_require__(4);
-var regex = __webpack_require__(9);
+var regex = __webpack_require__(10);
 
-var _require = __webpack_require__(9),
+var _require = __webpack_require__(10),
     shape = _require.shape,
     keys = _require.keys,
     mapOf = _require.mapOf;
 
-var nullable = __webpack_require__(50);
-var undefinable = __webpack_require__(51);
+var nullable = __webpack_require__(48);
+var undefinable = __webpack_require__(49);
 
-var _require2 = __webpack_require__(42),
+var _require2 = __webpack_require__(40),
     wall = _require2.wall;
 
 var equals = __webpack_require__(26);
@@ -1006,7 +1006,7 @@ var sCat = function sCat(str) {
 };
 
 var other = {
-  any: __webpack_require__(44),
+  any: __webpack_require__(42),
   fclause: __webpack_require__(18),
   wall: wall, clause: wall,
   nullable: nullable, undefinable: undefinable,
@@ -1024,18 +1024,18 @@ module.exports = r;
 
 
 var oAssign = __webpack_require__(4);
-var nfaWalker = __webpack_require__(73);
-var anyWalker = __webpack_require__(67);
-var predWalker = __webpack_require__(74);
-var wallWalker = __webpack_require__(76);
-var fclauseWalker = __webpack_require__(71);
-var shapeWalker = __webpack_require__(75);
-var andWalker = __webpack_require__(66);
-var collOfWalker = __webpack_require__(69);
-var mapOfWalker = __webpack_require__(72);
-var clauseRefWalker = __webpack_require__(68);
-var delayedClauseWalker = __webpack_require__(70);
-var coerceIntoClause = __webpack_require__(10);
+var nfaWalker = __webpack_require__(72);
+var anyWalker = __webpack_require__(66);
+var predWalker = __webpack_require__(73);
+var wallWalker = __webpack_require__(75);
+var fclauseWalker = __webpack_require__(70);
+var shapeWalker = __webpack_require__(74);
+var andWalker = __webpack_require__(65);
+var collOfWalker = __webpack_require__(68);
+var mapOfWalker = __webpack_require__(71);
+var clauseRefWalker = __webpack_require__(67);
+var delayedClauseWalker = __webpack_require__(69);
+var coerceIntoClause = __webpack_require__(8);
 var isProblem = __webpack_require__(0);
 
 function walk(clause, x, opts) {
@@ -1102,25 +1102,25 @@ module.exports = walk;
 
 
 var isNum = __webpack_require__(30);
-var isNatInt = __webpack_require__(53);
+var isNatInt = __webpack_require__(51);
 var isInt = __webpack_require__(28);
-var isBool = __webpack_require__(40);
+var isBool = __webpack_require__(38);
 var isFn = __webpack_require__(11);
 var isObj = __webpack_require__(19);
-var isPlainObj = __webpack_require__(54);
+var isPlainObj = __webpack_require__(52);
 var equals = __webpack_require__(26);
 var oneOf = __webpack_require__(32);
 var isStr = __webpack_require__(6);
-var isDate = __webpack_require__(52);
+var isDate = __webpack_require__(50);
 var not = __webpack_require__(31);
 var instanceOf = __webpack_require__(27);
-var isUuid = __webpack_require__(55);
+var isUuid = __webpack_require__(53);
 var isArray = Array.isArray;
 
 var e = {
   isNull: __webpack_require__(29),
   isUndefined: __webpack_require__(20),
-  notEmpty: __webpack_require__(56),
+  notEmpty: __webpack_require__(54),
   isBool: isBool, isBoolean: isBool,
   isFn: isFn, isFunction: isFn,
   isNum: isNum, isNumber: isNum,
@@ -1238,17 +1238,17 @@ module.exports = function deref(clause) {
 
 module.exports = {
   conform: __webpack_require__(12),
-  isValid: __webpack_require__(64),
-  isNamespacePath: __webpack_require__(63),
+  isValid: __webpack_require__(62),
+  isNamespacePath: __webpack_require__(61),
   identity: __webpack_require__(34),
   isProblem: __webpack_require__(0),
   delayed: __webpack_require__(33),
-  enforce: __webpack_require__(58),
+  enforce: __webpack_require__(56),
   isExpr: __webpack_require__(35),
   isClause: __webpack_require__(5),
-  isFclause: __webpack_require__(62),
+  isFclause: __webpack_require__(60),
   isClauseRef: __webpack_require__(13),
-  describe: __webpack_require__(41),
+  describe: __webpack_require__(39),
   deref: __webpack_require__(22)
 };
 
@@ -1531,7 +1531,7 @@ module.exports = identity;
 "use strict";
 
 
-var isPred = __webpack_require__(8);
+var isPred = __webpack_require__(9);
 var isClause = __webpack_require__(5);
 var isClauseRef = __webpack_require__(13);
 var isDelayedClause = __webpack_require__(21);
@@ -1579,136 +1579,6 @@ module.exports = stringifyWithFnName;
 
 /***/ },
 /* 37 */
-/***/ function(module, exports) {
-
-/**
- * @file
- * <a href="https://travis-ci.org/Xotic750/has-symbol-support-x"
- * title="Travis status">
- * <img
- * src="https://travis-ci.org/Xotic750/has-symbol-support-x.svg?branch=master"
- * alt="Travis status" height="18">
- * </a>
- * <a href="https://david-dm.org/Xotic750/has-symbol-support-x"
- * title="Dependency status">
- * <img src="https://david-dm.org/Xotic750/has-symbol-support-x.svg"
- * alt="Dependency status" height="18"/>
- * </a>
- * <a
- * href="https://david-dm.org/Xotic750/has-symbol-support-x#info=devDependencies"
- * title="devDependency status">
- * <img src="https://david-dm.org/Xotic750/has-symbol-support-x/dev-status.svg"
- * alt="devDependency status" height="18"/>
- * </a>
- * <a href="https://badge.fury.io/js/has-symbol-support-x" title="npm version">
- * <img src="https://badge.fury.io/js/has-symbol-support-x.svg"
- * alt="npm version" height="18">
- * </a>
- *
- * hasSymbolSupport module. Tests if `Symbol` exists and creates the correct
- * type.
- *
- * <h2>ECMAScript compatibility shims for legacy JavaScript engines</h2>
- * `es5-shim.js` monkey-patches a JavaScript context to contain all EcmaScript 5
- * methods that can be faithfully emulated with a legacy JavaScript engine.
- *
- * `es5-sham.js` monkey-patches other ES5 methods as closely as possible.
- * For these methods, as closely as possible to ES5 is not very close.
- * Many of these shams are intended only to allow code to be written to ES5
- * without causing run-time errors in older engines. In many cases,
- * this means that these shams cause many ES5 methods to silently fail.
- * Decide carefully whether this is what you want. Note: es5-sham.js requires
- * es5-shim.js to be able to work properly.
- *
- * `json3.js` monkey-patches the EcmaScript 5 JSON implimentation faithfully.
- *
- * `es6.shim.js` provides compatibility shims so that legacy JavaScript engines
- * behave as closely as possible to ECMAScript 6 (Harmony).
- *
- * @version 1.0.11
- * @author Xotic750 <Xotic750@gmail.com>
- * @copyright  Xotic750
- * @license {@link <https://opensource.org/licenses/MIT> MIT}
- * @module has-symbol-support-x
- */
-
-/*jslint maxlen:80, es6:true, white:true */
-
-/*jshint bitwise:true, camelcase:true, curly:true, eqeqeq:true, forin:true,
-  freeze:true, futurehostile:true, latedef:true, newcap:true, nocomma:true,
-  nonbsp:true, singleGroups:true, strict:true, undef:true, unused:true,
-  es3:false, esnext:true, plusplus:true, maxparams:1, maxdepth:1,
-  maxstatements:1, maxcomplexity:1 */
-
-/*global module */
-
-;(function () {
-  'use strict';
-
-  /**
-   * Indicates if `Symbol`exists and creates the correct type.
-   * `true`, if it exists and creates the correct type, otherwise `false`.
-   *
-   * @type boolean
-   */
-  module.exports = typeof Symbol === 'function' && typeof Symbol() === 'symbol';
-}());
-
-
-/***/ },
-/* 38 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
-*
-*	VALIDATE: undefined
-*
-*
-*	DESCRIPTION:
-*		- Validates if a value is undefined.
-*
-*
-*	NOTES:
-*		[1]
-*
-*
-*	TODO:
-*		[1]
-*
-*
-*	LICENSE:
-*		MIT
-*
-*	Copyright (c) 2014. Athan Reines.
-*
-*
-*	AUTHOR:
-*		Athan Reines. kgryte@gmail.com. 2014.
-*
-*/
-
-
-
-/**
-* FUNCTION: isUndefined( value )
-*	Validates if a value is undefined.
-*
-* @param {*} value - value to be validated
-* @returns {Boolean} boolean indicating whether value is undefined
-*/
-function isUndefined( value ) {
-	return value === void 0;
-} // end FUNCTION isUndefined()
-
-
-// EXPORTS //
-
-module.exports = isUndefined;
-
-
-/***/ },
-/* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1732,7 +1602,7 @@ ClauseRef.prototype = Object.create(Clause.prototype);
 module.exports = ClauseRef;
 
 /***/ },
-/* 40 */
+/* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1745,23 +1615,23 @@ function isBool(x) {
 module.exports = isBool;
 
 /***/ },
-/* 41 */
+/* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _sExpression = __webpack_require__(65);
+var _sExpression = __webpack_require__(63);
 
 var _sExpression2 = _interopRequireDefault(_sExpression);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var humanReadable = __webpack_require__(60);
+var humanReadable = __webpack_require__(58);
 var isStr = __webpack_require__(6);
 var conform = __webpack_require__(12);
 var isProblem = __webpack_require__(0);
-var handle = __webpack_require__(59);
+var handle = __webpack_require__(57);
 var clauseFromAlts = __webpack_require__(7);
 var fnName = __webpack_require__(3);
 
@@ -1784,7 +1654,7 @@ function _strFragments(_ref) {
 
   var head = clauseFromAlts(headAlt);
   if (head.type === 'PRED') {
-    return fnName(head.opts.predicate) + '()';
+    return [fnName(head.opts.predicate) + '()'];
   }
   var label = humanReadable(head);
   var paramFrags = void 0;
@@ -1871,16 +1741,16 @@ function _walkConcat(frags) {
 module.exports = describe;
 
 /***/ },
-/* 42 */
+/* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var Clause = __webpack_require__(1);
-var coerceIntoClause = __webpack_require__(10);
+var coerceIntoClause = __webpack_require__(8);
 
-var _require = __webpack_require__(9),
+var _require = __webpack_require__(10),
     cat = _require.cat,
     ExprClause = _require.ExprClause;
 
@@ -1912,7 +1782,7 @@ module.exports = {
 };
 
 /***/ },
-/* 43 */
+/* 41 */
 /***/ function(module, exports) {
 
 var g;
@@ -1937,7 +1807,7 @@ module.exports = g;
 
 
 /***/ },
-/* 44 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1958,7 +1828,7 @@ function any() {
 module.exports = any;
 
 /***/ },
-/* 45 */
+/* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1975,13 +1845,13 @@ module.exports = {
 };
 
 /***/ },
-/* 46 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var fragment = __webpack_require__(47);
+var fragment = __webpack_require__(45);
 var Clause = __webpack_require__(1);
 var deref = __webpack_require__(22);
 
@@ -2086,7 +1956,7 @@ var compile = function compile(expr) {
 module.exports = compile;
 
 /***/ },
-/* 47 */
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2289,7 +2159,7 @@ build.ROOT = function ROOT(frag) {
 module.exports = build;
 
 /***/ },
-/* 48 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2585,7 +2455,7 @@ function _coerceToProperType(t, arr) {
 module.exports = getMatch;
 
 /***/ },
-/* 49 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2760,13 +2630,13 @@ function _getChain(nfa, finalState, inputType) {
 module.exports = simulate;
 
 /***/ },
-/* 50 */
+/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _require = __webpack_require__(9),
+var _require = __webpack_require__(10),
     or = _require.or;
 
 var isNull = __webpack_require__(29);
@@ -2778,13 +2648,13 @@ function nullable(clause) {
 module.exports = nullable;
 
 /***/ },
-/* 51 */
+/* 49 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _require = __webpack_require__(9),
+var _require = __webpack_require__(10),
     or = _require.or;
 
 var isUndefined = __webpack_require__(20);
@@ -2796,7 +2666,7 @@ function undefinable(clause) {
 module.exports = undefinable;
 
 /***/ },
-/* 52 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2807,7 +2677,7 @@ module.exports = function isDate(date) {
 };
 
 /***/ },
-/* 53 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2822,7 +2692,7 @@ function isNatInt(x) {
 module.exports = isNatInt;
 
 /***/ },
-/* 54 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2852,7 +2722,7 @@ function isPlainObject(x) {
 module.exports = isPlainObject;
 
 /***/ },
-/* 55 */
+/* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2863,7 +2733,7 @@ module.exports = function isUuid(x) {
 };
 
 /***/ },
-/* 56 */
+/* 54 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2880,7 +2750,7 @@ module.exports = function notEmpty(x) {
 };
 
 /***/ },
-/* 57 */
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2896,7 +2766,7 @@ function betterThrow(problem) {
 module.exports = betterThrow;
 
 /***/ },
-/* 58 */
+/* 56 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2915,7 +2785,7 @@ module.exports = function enforce(clause, x) {
 };
 
 /***/ },
-/* 59 */
+/* 57 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2944,7 +2814,7 @@ function handle(alts, handlerMap, unknownCaseHandler) {
 module.exports = handle;
 
 /***/ },
-/* 60 */
+/* 58 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2981,7 +2851,7 @@ function humanReadable(expr) {
 module.exports = humanReadable;
 
 /***/ },
-/* 61 */
+/* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2995,7 +2865,7 @@ module.exports = function isClauseName(x) {
 };
 
 /***/ },
-/* 62 */
+/* 60 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3010,7 +2880,7 @@ function isFclause(x) {
 module.exports = isFclause;
 
 /***/ },
-/* 63 */
+/* 61 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3025,14 +2895,14 @@ function isNamespacePath(x) {
 module.exports = isNamespacePath;
 
 /***/ },
-/* 64 */
+/* 62 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var isProblem = __webpack_require__(0);
-var isPred = __webpack_require__(8);
+var isPred = __webpack_require__(9);
 var isClause = __webpack_require__(5);
 var conform = __webpack_require__(12);
 
@@ -3051,7 +2921,7 @@ function isValid(pred, x) {
 module.exports = isValid;
 
 /***/ },
-/* 65 */
+/* 63 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3078,7 +2948,7 @@ var _require = __webpack_require__(15),
     mapOf = _require.mapOf;
 
 var delayed = __webpack_require__(33);
-var isPred = __webpack_require__(8);
+var coerceIntoClause = __webpack_require__(8);
 
 var _require2 = __webpack_require__(17),
     isStr = _require2.isStr,
@@ -3180,7 +3050,7 @@ var sParamsConverters = {
         args = _ref9$opts.args,
         ret = _ref9$opts.ret,
         fn = _ref9$opts.fn;
-    return oAssign(new ParamsMap(), args ? { args: _createSExpr(repo, args) } : {}, ret ? { ret: _createSExpr(repo, ret) } : {}, fn ? { fn: fnName(fn) + '()' } : {});
+    return oAssign(new ParamsMap(), args ? { args: [_createSExpr(repo, args)] } : [], ret ? { ret: [_createSExpr(repo, ret)] } : [], fn ? { fn: [fnName(fn) + '()'] } : []);
   }
 };
 
@@ -3233,16 +3103,15 @@ function _createSExpr(repo, expr) {
   if (_exists(repo, expr)) {
     return new Recursive(expr);
   }
-  var realExpr = void 0,
+  var coercedExpr = coerceIntoClause(expr),
+      realExpr = void 0,
       newRepo = repo;
-  if (isPred(expr)) {
-    return fnName(expr) + '()';
-  } else if (expr.type === 'DELAYED' || expr.type === 'CLAUSE_REF') {
-    realExpr = expr.get();
+  if (coercedExpr.type === 'DELAYED' || coercedExpr.type === 'CLAUSE_REF') {
+    realExpr = coercedExpr.get();
     return _createSExpr(repo, realExpr);
   } else {
-    realExpr = expr;
-    newRepo = _addToRepo(repo, expr);
+    realExpr = coercedExpr;
+    newRepo = _addToRepo(repo, coercedExpr);
   }
   var params = _params(newRepo, realExpr);
   return [realExpr].concat(params);
@@ -3268,7 +3137,48 @@ exports.SExpressionClause = SExpressionClause;
 exports.ParamItemClause = ParamItemClause;
 
 /***/ },
-/* 66 */
+/* 64 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var whiteSpaces = [0x0009, // Tab
+0x000a, // Line Feed
+0x000b, // Vertical Tab
+0x000c, // Form Feed
+0x000d, // Carriage Return
+0x0020, // Space
+//0x0085, // Next line - Not ES5 whitespace
+0x00a0, // No-break space
+0x1680, // Ogham space mark
+0x180e, // Mongolian vowel separator
+0x2000, // En quad
+0x2001, // Em quad
+0x2002, // En space
+0x2003, // Em space
+0x2004, // Three-per-em space
+0x2005, // Four-per-em space
+0x2006, // Six-per-em space
+0x2007, // Figure space
+0x2008, // Punctuation space
+0x2009, // Thin space
+0x200a, // Hair space
+//0x200b, // Zero width space - Not ES5 whitespace
+0x2028, // Line separator
+0x2029, // Paragraph separator
+0x202f, // Narrow no-break space
+0x205f, // Medium mathematical space
+0x3000, // Ideographic space
+0xfeff // Byte Order Mark
+];
+
+module.exports = whiteSpaces.reduce(function (acc, item) {
+  return acc + String.fromCharCode(item);
+}, '');
+
+/***/ },
+/* 65 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3323,7 +3233,7 @@ function andWalker(clause, walkFn) {
 module.exports = andWalker;
 
 /***/ },
-/* 67 */
+/* 66 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3343,7 +3253,7 @@ function walkThroughAny(x) {
 module.exports = anyWalker;
 
 /***/ },
-/* 68 */
+/* 67 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3367,7 +3277,7 @@ function clauseRefWalker(clauseRef, walkFn) {
 module.exports = clauseRefWalker;
 
 /***/ },
-/* 69 */
+/* 68 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3443,7 +3353,7 @@ function collOfWalker(clause, walkFn) {
 module.exports = collOfWalker;
 
 /***/ },
-/* 70 */
+/* 69 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3466,7 +3376,7 @@ function delayedClauseWalker(delayedClause, walkFn) {
 module.exports = delayedClauseWalker;
 
 /***/ },
-/* 71 */
+/* 70 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3476,7 +3386,7 @@ var isProblem = __webpack_require__(0);
 var Problem = __webpack_require__(2);
 var functionName = __webpack_require__(3);
 var namedFn = __webpack_require__(14);
-var betterThrow = __webpack_require__(57);
+var betterThrow = __webpack_require__(55);
 var stringifyWithFnName = __webpack_require__(36);
 
 function fclauseWalker(clause, walkFn) {
@@ -3623,7 +3533,7 @@ function fclauseWalker(clause, walkFn) {
 module.exports = fclauseWalker;
 
 /***/ },
-/* 72 */
+/* 71 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3685,7 +3595,7 @@ function mapOfWalker(clause, walkFn) {
 module.exports = mapOfWalker;
 
 /***/ },
-/* 73 */
+/* 72 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3693,9 +3603,9 @@ module.exports = mapOfWalker;
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var simulate = __webpack_require__(49);
-var getMatch = __webpack_require__(48);
-var compile = __webpack_require__(46);
+var simulate = __webpack_require__(47);
+var getMatch = __webpack_require__(46);
+var compile = __webpack_require__(44);
 var Problem = __webpack_require__(2);
 
 function nfaWalker(clause, walkFn) {
@@ -3747,7 +3657,7 @@ function nfaWalker(clause, walkFn) {
 module.exports = nfaWalker;
 
 /***/ },
-/* 74 */
+/* 73 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3779,7 +3689,7 @@ function predWalker(clause) {
 module.exports = predWalker;
 
 /***/ },
-/* 75 */
+/* 74 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4081,7 +3991,7 @@ function _conformNamedOrExpr(x, alts, walkFn, walkOpts) {
 module.exports = shapeWalker;
 
 /***/ },
-/* 76 */
+/* 75 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4106,736 +4016,12 @@ function wallWalker(wallClause, walkFn) {
 module.exports = wallWalker;
 
 /***/ },
-/* 77 */
-/***/ function(module, exports, __webpack_require__) {
-
-/**
- * @file
- * <a href="https://travis-ci.org/Xotic750/define-properties-x"
- * title="Travis status">
- * <img
- * src="https://travis-ci.org/Xotic750/define-properties-x.svg?branch=master"
- * alt="Travis status" height="18">
- * </a>
- * <a href="https://david-dm.org/Xotic750/define-properties-x"
- * title="Dependency status">
- * <img src="https://david-dm.org/Xotic750/define-properties-x.svg"
- * alt="Dependency status" height="18"/>
- * </a>
- * <a
- * href="https://david-dm.org/Xotic750/define-properties-x#info=devDependencies"
- * title="devDependency status">
- * <img src="https://david-dm.org/Xotic750/define-properties-x/dev-status.svg"
- * alt="devDependency status" height="18"/>
- * </a>
- * <a href="https://badge.fury.io/js/define-properties-x" title="npm version">
- * <img src="https://badge.fury.io/js/define-properties-x.svg"
- * alt="npm version" height="18">
- * </a>
- *
- * Based on the original work by Jordan Harband
- * {@link https://www.npmjs.com/package/define-properties `define-properties`}.
- *
- * <h2>ECMAScript compatibility shims for legacy JavaScript engines</h2>
- * `es5-shim.js` monkey-patches a JavaScript context to contain all EcmaScript 5
- * methods that can be faithfully emulated with a legacy JavaScript engine.
- *
- * `es5-sham.js` monkey-patches other ES5 methods as closely as possible.
- * For these methods, as closely as possible to ES5 is not very close.
- * Many of these shams are intended only to allow code to be written to ES5
- * without causing run-time errors in older engines. In many cases,
- * this means that these shams cause many ES5 methods to silently fail.
- * Decide carefully whether this is what you want. Note: es5-sham.js requires
- * es5-shim.js to be able to work properly.
- *
- * `json3.js` monkey-patches the EcmaScript 5 JSON implimentation faithfully.
- *
- * `es6.shim.js` provides compatibility shims so that legacy JavaScript engines
- * behave as closely as possible to ECMAScript 6 (Harmony).
- *
- * @version 1.1.4
- * @author Xotic750 <Xotic750@gmail.com>
- * @copyright  Xotic750
- * @license {@link <https://opensource.org/licenses/MIT> MIT}
- * @module define-properties-x
- */
-
-/*jslint maxlen:80, es6:false, white:true */
-
-/*jshint bitwise:true, camelcase:true, curly:true, eqeqeq:true, forin:true,
-  freeze:true, futurehostile:true, latedef:true, newcap:true, nocomma:true,
-  nonbsp:true, singleGroups:true, strict:true, undef:true, unused:true,
-  es3:true, esnext:false, plusplus:true, maxparams:4, maxdepth:2,
-  maxstatements:12, maxcomplexity:3 */
-
-/*global module */
-
-;(function () {
-  'use strict';
-
-  var hasSymbols = __webpack_require__(37);
-  var isFunction = __webpack_require__(79);
-  var isUndefined = __webpack_require__(38);
-  var pConcat = Array.prototype.concat;
-  var pForEach = Array.prototype.forEach;
-  var $keys = Object.keys;
-  var $getOwnPropertySymbols = isFunction(Object.getOwnPropertySymbols) &&
-    Object.getOwnPropertySymbols;
-  var $defineProperty = isFunction(Object.defineProperty) &&
-    Object.defineProperty;
-  var supportsDescriptors = Boolean($defineProperty) && (function (unused) {
-    var obj = {};
-    try {
-      $defineProperty(obj, 'x', {
-        enumerable: false,
-        value: obj
-      });
-      for (unused in obj) {
-        /*jshint forin:false */
-        return false;
-      }
-      return obj.x === obj;
-    } catch (e) { /* this is IE 8. */
-      return false;
-    }
-  })();
-
-  /**
-   * Method `property`.
-   *
-   * @private
-   * @param {Object} object The object on which to define the property.
-   * @param {string|Symbol} prop The property name.
-   * @param {*} value The value of the property.
-   * @param {boolean} [force=false] If `true` then set property regardless.
-   */
-  function property(object, prop, value, force) {
-    if (prop in object && !force) {
-      return;
-    }
-    if (supportsDescriptors) {
-      $defineProperty(object, prop, {
-        configurable: true,
-        enumerable: false,
-        value: value,
-        writable: true
-      });
-    } else {
-      object[prop] = value;
-    }
-  }
-
-  /**
-   * Method `properties`.
-   *
-   * @private
-   * @param {Object} object The object on which to define the property.
-   * @param {Object} map The object of properties.
-   * @param {Object} [predicates] The object of property predicates.
-   */
-  function properties(object, map, predicates) {
-    var preds = isUndefined(predicates) ? {} : predicates;
-    var props = $keys(map);
-    if (hasSymbols && $getOwnPropertySymbols) {
-      props = pConcat.call(props, $getOwnPropertySymbols(map));
-    }
-    pForEach.call(props, function (name) {
-      var predicate = preds[name];
-      property(
-        object,
-        name,
-        map[name],
-        isFunction(predicate) && predicate()
-      );
-    });
-  }
-
-  properties(module.exports, {
-    /**
-     * Just like `properties` but for defining a single non-enumerable
-     * property. Useful in environments that do not
-     * support `Computed property names`. This can be done
-     * with `properties`, but this method can read a little cleaner.
-     *
-     * @function
-     * @param {Object} object The object on which to define the property.
-     * @param {string|Symbol} prop The property name.
-     * @param {*} value The value of the property.
-     * @param {boolean} [force=false] If `true` then set property regardless.
-     * @example
-     * var define = require('define-properties-x');
-     * var myString = 'something';
-     * define.property(obj, Symbol.iterator, function () {}, true);
-     * define.property(obj, myString, function () {}, true);
-     */
-    property: property,
-    /**
-     * Define multiple non-enumerable properties at once.
-     * Uses `Object.defineProperty` when available; falls back to standard
-     * assignment in older engines. Existing properties are not overridden.
-     * Accepts a map of property names to a predicate that, when true,
-     * force-overrides.
-     *
-     * @function
-     * @param {Object} object The object on which to define the property.
-     * @param {Object} map The object of properties.
-     * @param {Object} [predicates] The object of property predicates.
-     * @example
-     * var define = require('define-properties-x');
-     * define.properties({
-     *   a: 1,
-     *   b: 2
-     * }, {
-     *   a: function () { return false; },
-     *   b: function () { return true; }
-     * });
-     */
-    properties: properties,
-    /**
-     * Boolean indicator as to whether the environments supports descriptors
-     * or not.
-     *
-     * @type boolean
-     * @example
-     * var define = require('define-properties-x');
-     * define.supportsDescriptors; // true or false
-     */
-    supportsDescriptors: supportsDescriptors
-  });
-}());
-
-
-/***/ },
-/* 78 */
-/***/ function(module, exports, __webpack_require__) {
-
-/**
- * @file
- * <a href="https://travis-ci.org/Xotic750/has-to-string-tag-x"
- * title="Travis status">
- * <img
- * src="https://travis-ci.org/Xotic750/has-to-string-tag-x.svg?branch=master"
- * alt="Travis status" height="18">
- * </a>
- * <a href="https://david-dm.org/Xotic750/has-to-string-tag-x"
- * title="Dependency status">
- * <img src="https://david-dm.org/Xotic750/has-to-string-tag-x.svg"
- * alt="Dependency status" height="18"/>
- * </a>
- * <a
- * href="https://david-dm.org/Xotic750/has-to-string-tag-x#info=devDependencies"
- * title="devDependency status">
- * <img src="https://david-dm.org/Xotic750/has-to-string-tag-x/dev-status.svg"
- * alt="devDependency status" height="18"/>
- * </a>
- * <a href="https://badge.fury.io/js/has-to-string-tag-x" title="npm version">
- * <img src="https://badge.fury.io/js/has-to-string-tag-x.svg"
- * alt="npm version" height="18">
- * </a>
- *
- * hasToStringTag tests if @@toStringTag is supported. `true` if supported.
- *
- * <h2>ECMAScript compatibility shims for legacy JavaScript engines</h2>
- * `es5-shim.js` monkey-patches a JavaScript context to contain all EcmaScript 5
- * methods that can be faithfully emulated with a legacy JavaScript engine.
- *
- * `es5-sham.js` monkey-patches other ES5 methods as closely as possible.
- * For these methods, as closely as possible to ES5 is not very close.
- * Many of these shams are intended only to allow code to be written to ES5
- * without causing run-time errors in older engines. In many cases,
- * this means that these shams cause many ES5 methods to silently fail.
- * Decide carefully whether this is what you want. Note: es5-sham.js requires
- * es5-shim.js to be able to work properly.
- *
- * `json3.js` monkey-patches the EcmaScript 5 JSON implimentation faithfully.
- *
- * `es6.shim.js` provides compatibility shims so that legacy JavaScript engines
- * behave as closely as possible to ECMAScript 6 (Harmony).
- *
- * @version 1.0.10
- * @author Xotic750 <Xotic750@gmail.com>
- * @copyright  Xotic750
- * @license {@link <https://opensource.org/licenses/MIT> MIT}
- * @module has-to-string-tag-x
- */
-
-/*jslint maxlen:80, es6:true, white:true */
-
-/*jshint bitwise:true, camelcase:true, curly:true, eqeqeq:true, forin:true,
-  freeze:true, futurehostile:true, latedef:true, newcap:true, nocomma:true,
-  nonbsp:true, singleGroups:true, strict:true, undef:true, unused:true,
-  es3:false, esnext:true, plusplus:true, maxparams:1, maxdepth:1,
-  maxstatements:1, maxcomplexity:1 */
-
-/*global module */
-
-;(function () {
-  'use strict';
-
-  /**
-   * Indicates if `Symbol.toStringTag`exists and is the correct type.
-   * `true`, if it exists and is the correct type, otherwise `false`.
-   *
-   * @type boolean
-   */
-  module.exports = __webpack_require__(37) &&
-    typeof Symbol.toStringTag === 'symbol';
-}());
-
-
-/***/ },
-/* 79 */
-/***/ function(module, exports, __webpack_require__) {
-
-/**
- * @file
- * <a href="https://travis-ci.org/Xotic750/is-function-x"
- * title="Travis status">
- * <img
- * src="https://travis-ci.org/Xotic750/is-function-x.svg?branch=master"
- * alt="Travis status" height="18">
- * </a>
- * <a href="https://david-dm.org/Xotic750/is-function-x"
- * title="Dependency status">
- * <img src="https://david-dm.org/Xotic750/is-function-x.svg"
- * alt="Dependency status" height="18"/>
- * </a>
- * <a
- * href="https://david-dm.org/Xotic750/is-function-x#info=devDependencies"
- * title="devDependency status">
- * <img src="https://david-dm.org/Xotic750/is-function-x/dev-status.svg"
- * alt="devDependency status" height="18"/>
- * </a>
- * <a href="https://badge.fury.io/js/is-function-x" title="npm version">
- * <img src="https://badge.fury.io/js/is-function-x.svg"
- * alt="npm version" height="18">
- * </a>
- *
- * isFunction module. Determine whether a given value is a function object.
- *
- * <h2>ECMAScript compatibility shims for legacy JavaScript engines</h2>
- * `es5-shim.js` monkey-patches a JavaScript context to contain all EcmaScript 5
- * methods that can be faithfully emulated with a legacy JavaScript engine.
- *
- * `es5-sham.js` monkey-patches other ES5 methods as closely as possible.
- * For these methods, as closely as possible to ES5 is not very close.
- * Many of these shams are intended only to allow code to be written to ES5
- * without causing run-time errors in older engines. In many cases,
- * this means that these shams cause many ES5 methods to silently fail.
- * Decide carefully whether this is what you want. Note: es5-sham.js requires
- * es5-shim.js to be able to work properly.
- *
- * `json3.js` monkey-patches the EcmaScript 5 JSON implimentation faithfully.
- *
- * `es6.shim.js` provides compatibility shims so that legacy JavaScript engines
- * behave as closely as possible to ECMAScript 6 (Harmony).
- *
- * @version 1.0.6
- * @author Xotic750 <Xotic750@gmail.com>
- * @copyright  Xotic750
- * @license {@link <https://opensource.org/licenses/MIT> MIT}
- * @module is-function-x
- */
-
-/*jslint maxlen:80, es6:false, white:true */
-
-/*jshint bitwise:true, camelcase:true, curly:true, eqeqeq:true, forin:true,
-  freeze:true, futurehostile:true, latedef:true, newcap:true, nocomma:true,
-  nonbsp:true, singleGroups:true, strict:true, undef:true, unused:true,
-  es3:true, esnext:false, plusplus:true, maxparams:1, maxdepth:1,
-  maxstatements:8, maxcomplexity:4 */
-
-/*global module */
-
-;(function () {
-  'use strict';
-
-  var fToString = Function.prototype.toString;
-  var toStringTag = __webpack_require__(82);
-  var hasToStringTag = __webpack_require__(78);
-  var isPrimitive = __webpack_require__(80);
-  var funcTag = '[object Function]';
-  var genTag = '[object GeneratorFunction]';
-
-  /**
-   * Checks if `value` is classified as a `Function` object.
-   *
-   * @private
-   * @param {*} value The value to check.
-   * @return {boolean} Returns `true` if `value` is correctly classified,
-   * else `false`.
-   */
-  function tryFunctionObject(value) {
-    try {
-      fToString.call(value);
-      return true;
-    } catch (ignore) {}
-    return false;
-  }
-
-  /**
-   * Checks if `value` is classified as a `Function` object.
-   *
-   * @param {*} value The value to check.
-   * @return {boolean} Returns `true` if `value` is correctly classified,
-   * else `false`.
-   * @example
-   * var isFunction = require('is-function-x');
-   *
-   * isFunction(); // false
-   * isFunction(Number.MIN_VALUE); // false
-   * isFunction('abc'); // false
-   * isFunction(true); // false
-   * isFunction({ name: 'abc' }); // false
-   * isFunction(function () {}); // true
-   * isFunction(new Function ()); // true
-   * isFunction(function* test1() {}); // true
-   * isFunction(function test2(a, b) {}); // true
-   * isFunction(class Test {}); // true
-   * isFunction((x, y) => {return this;}); // true
-   */
-  module.exports = function isFunction(value) {
-    if (isPrimitive(value)) {
-      return false;
-    }
-    if (hasToStringTag) {
-      return tryFunctionObject(value);
-    }
-    var strTag = toStringTag(value);
-    return strTag === funcTag || strTag === genTag;
-  };
-}());
-
-
-/***/ },
-/* 80 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-/*!
- * is-primitive <https://github.com/jonschlinkert/is-primitive>
- *
- * Copyright (c) 2014-2015, Jon Schlinkert.
- * Licensed under the MIT License.
- */
-
-
-
-// see http://jsperf.com/testing-value-is-primitive/7
-module.exports = function isPrimitive(value) {
-  return value == null || (typeof value !== 'function' && typeof value !== 'object');
-};
-
-
-/***/ },
+/* 76 */,
+/* 77 */,
+/* 78 */,
+/* 79 */,
+/* 80 */,
 /* 81 */
-/***/ function(module, exports) {
-
-/**
- * lodash 3.0.0 (Custom Build) <https://lodash.com/>
- * Build: `lodash modern modularize exports="npm" -o ./`
- * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
- * Based on Underscore.js 1.7.0 <http://underscorejs.org/LICENSE>
- * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
- * Available under MIT license <https://lodash.com/license>
- */
-
-/**
- * Checks if `value` is `null`.
- *
- * @static
- * @memberOf _
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is `null`, else `false`.
- * @example
- *
- * _.isNull(null);
- * // => true
- *
- * _.isNull(void 0);
- * // => false
- */
-function isNull(value) {
-  return value === null;
-}
-
-module.exports = isNull;
-
-
-/***/ },
-/* 82 */
-/***/ function(module, exports, __webpack_require__) {
-
-/**
- * @file
- * <a href="https://travis-ci.org/Xotic750/to-string-tag-x"
- * title="Travis status">
- * <img src="https://travis-ci.org/Xotic750/to-string-tag-x.svg?branch=master"
- * alt="Travis status" height="18">
- * </a>
- * <a href="https://david-dm.org/Xotic750/to-string-tag-x"
- * title="Dependency status">
- * <img src="https://david-dm.org/Xotic750/to-string-tag-x.svg"
- * alt="Dependency status" height="18"/>
- * </a>
- * <a href="https://david-dm.org/Xotic750/to-string-tag-x#info=devDependencies"
- * title="devDependency status">
- * <img src="https://david-dm.org/Xotic750/to-string-tag-x/dev-status.svg"
- * alt="devDependency status" height="18"/>
- * </a>
- * <a href="https://badge.fury.io/js/to-string-tag-x" title="npm version">
- * <img src="https://badge.fury.io/js/to-string-tag-x.svg"
- * alt="npm version" height="18">
- * </a>
- *
- * Get an object's @@toStringTag. Includes fixes to correct ES3 differences
- * for the following.
- * - undefined => '[object Undefined]'
- * - null => '[object Null]'
- *
- * No other fixes are included, so legacy `arguments` will
- * give `[object Object]`, and many older native objects
- * give `[object Object]`. There are also other environmental bugs
- * for example `RegExp` gives `[object Function]` and `Uint8Array`
- * gives `[object Object]` on certain engines. While these and more could
- * be fixed, it was decided that this should be a very raw version and it
- * is left to the coder to use other `is` implimentations for detection.
- * It is also worth noting that as of ES6 `Symbol.toStringTag` can be set on
- * an object and therefore can report any string that it wishes.
- *
- * <h2>ECMAScript compatibility shims for legacy JavaScript engines</h2>
- * `es5-shim.js` monkey-patches a JavaScript context to contain all EcmaScript 5
- * methods that can be faithfully emulated with a legacy JavaScript engine.
- *
- * `es5-sham.js` monkey-patches other ES5 methods as closely as possible.
- * For these methods, as closely as possible to ES5 is not very close.
- * Many of these shams are intended only to allow code to be written to ES5
- * without causing run-time errors in older engines. In many cases,
- * this means that these shams cause many ES5 methods to silently fail.
- * Decide carefully whether this is what you want. Note: es5-sham.js requires
- * es5-shim.js to be able to work properly.
- *
- * `json3.js` monkey-patches the EcmaScript 5 JSON implimentation faithfully.
- *
- * `es6.shim.js` provides compatibility shims so that legacy JavaScript engines
- * behave as closely as possible to ECMAScript 6 (Harmony).
- *
- * @version 1.0.11
- * @author Xotic750 <Xotic750@gmail.com>
- * @copyright  Xotic750
- * @license {@link <https://opensource.org/licenses/MIT> MIT}
- * @module to-string-tag-x
- */
-
-/*jslint maxlen:80, es6:false, white:true */
-
-/*jshint bitwise:true, camelcase:true, curly:true, eqeqeq:true, forin:true,
-  freeze:true, futurehostile:true, latedef:true, newcap:true, nocomma:true,
-  nonbsp:true, singleGroups:true, strict:true, undef:true, unused:true,
-  es3:true, esnext:false, plusplus:true, maxparams:1, maxdepth:1,
-  maxstatements:6, maxcomplexity:3 */
-
-/*global module */
-
-;(function () {
-  'use strict';
-
-  var pToString = Object.prototype.toString;
-  var isNull = __webpack_require__(81);
-  var isUndefined = __webpack_require__(38);
-  var nullTag = '[object Null]';
-  var undefTag = '[object Undefined]';
-
-  /**
-   * The `toStringTag` method returns "[object type]", where type is the
-   * object type.
-   *
-   * @param {*} value The object of which to get the object type string.
-   * @return {string} The object type string.
-   * @example
-   * var o = new Object();
-   *
-   * toStringTag(o); // returns '[object Object]'
-   */
-  module.exports = function toStringTag(value) {
-    if (isNull(value)) {
-      return nullTag;
-    }
-    if (isUndefined(value)) {
-      return undefTag;
-    }
-    return pToString.call(value);
-  };
-}());
-
-
-/***/ },
-/* 83 */
-/***/ function(module, exports, __webpack_require__) {
-
-/**
- * @file
- * <a href="https://travis-ci.org/Xotic750/white-space-x"
- * title="Travis status">
- * <img src="https://travis-ci.org/Xotic750/white-space-x.svg?branch=master"
- * alt="Travis status" height="18">
- * </a>
- * <a href="https://david-dm.org/Xotic750/white-space-x"
- * title="Dependency status">
- * <img src="https://david-dm.org/Xotic750/white-space-x.svg"
- * alt="Dependency status" height="18"/>
- * </a>
- * <a href="https://david-dm.org/Xotic750/white-space-x#info=devDependencies"
- * title="devDependency status">
- * <img src="https://david-dm.org/Xotic750/white-space-x/dev-status.svg"
- * alt="devDependency status" height="18"/>
- * </a>
- * <a href="https://badge.fury.io/js/white-space-x" title="npm version">
- * <img src="https://badge.fury.io/js/white-space-x.svg"
- * alt="npm version" height="18">
- * </a>
- *
- * whitespace module.
- *
- * <h2>ECMAScript compatibility shims for legacy JavaScript engines</h2>
- * `es5-shim.js` monkey-patches a JavaScript context to contain all EcmaScript 5
- * methods that can be faithfully emulated with a legacy JavaScript engine.
- *
- * `es5-sham.js` monkey-patches other ES5 methods as closely as possible.
- * For these methods, as closely as possible to ES5 is not very close.
- * Many of these shams are intended only to allow code to be written to ES5
- * without causing run-time errors in older engines. In many cases,
- * this means that these shams cause many ES5 methods to silently fail.
- * Decide carefully whether this is what you want. Note: es5-sham.js requires
- * es5-shim.js to be able to work properly.
- *
- * `json3.js` monkey-patches the EcmaScript 5 JSON implimentation faithfully.
- *
- * `es6.shim.js` provides compatibility shims so that legacy JavaScript engines
- * behave as closely as possible to ECMAScript 6 (Harmony).
- *
- * @version 1.0.10
- * @author Xotic750 <Xotic750@gmail.com>
- * @copyright  Xotic750
- * @license {@link <https://opensource.org/licenses/MIT> MIT}
- * @module white-space-x
- */
-
-/*jslint maxlen:80, es6:false, white:true */
-
-/*jshint bitwise:true, camelcase:true, curly:true, eqeqeq:true, forin:true,
-  freeze:true, futurehostile:true, latedef:true, newcap:true, nocomma:true,
-  nonbsp:true, singleGroups:true, strict:true, undef:true, unused:true,
-  es3:true, esnext:false, plusplus:true, maxparams:2, maxdepth:2,
-  maxstatements:12, maxcomplexity:4 */
-
-/*global module */
-
-;(function () {
-  'use strict';
-
-  var define = __webpack_require__(77);
-
-  /**
-   * An array of the whitespace char codes.
-   *
-   * @name whiteSpaces
-   * @type Array.<number>
-   * @property {number} 0 0x0009 // Tab
-   * @property {number} 1 0x000a // Line Feed
-   * @property {number} 2 0x000b // Vertical Tab
-   * @property {number} 3 0x000c // Form Feed
-   * @property {number} 4 0x000d // Carriage Return
-   * @property {number} 5 0x0020 // Space
-   * @property {number} 6 0x00a0 // No-break space
-   * @property {number} 7 0x1680 // Ogham space mark
-   * @property {number} 8 0x180e // Mongolian vowel separator
-   * @property {number} 9 0x2000 // En quad
-   * @property {number} 10 0x2001 // Em quad
-   * @property {number} 11 0x2002 // En space
-   * @property {number} 12 0x2003 // Em space
-   * @property {number} 13 0x2004 // Three-per-em space
-   * @property {number} 14 0x2005 // Four-per-em space
-   * @property {number} 15 0x2006 // Six-per-em space
-   * @property {number} 16 0x2007 // Figure space
-   * @property {number} 17 0x2008 // Punctuation space
-   * @property {number} 18 0x2009 // Thin space
-   * @property {number} 19 0x200a // Hair space
-   * @property {number} 20 0x2028 // Line separator
-   * @property {number} 21 0x2029 // Paragraph separator
-   * @property {number} 22 0x202f // Narrow no-break space
-   * @property {number} 23 0x205f // Medium mathematical space
-   * @property {number} 24 0x3000 // Ideographic space
-   * @property {number} 25 0xfeff // Byte Order Mark
-   * @example
-   * var lib = require('white-space-x');
-   * var count = 0x110000;
-   * var nws = ''; // A string of all the non-whitepaces
-   * do {
-   *   count -= 1;
-   *   if (lib.whiteSpaces.indexOf(count) < 0) {
-   *     nws = String.fromCodePoint(count) + nws;
-   *   }
-   * } while (count);
-   */
-  define.property(module.exports, 'whiteSpaces', [
-    0x0009, // Tab
-    0x000a, // Line Feed
-    0x000b, // Vertical Tab
-    0x000c, // Form Feed
-    0x000d, // Carriage Return
-    0x0020, // Space
-    //0x0085, // Next line - Not ES5 whitespace
-    0x00a0, // No-break space
-    0x1680, // Ogham space mark
-    0x180e, // Mongolian vowel separator
-    0x2000, // En quad
-    0x2001, // Em quad
-    0x2002, // En space
-    0x2003, // Em space
-    0x2004, // Three-per-em space
-    0x2005, // Four-per-em space
-    0x2006, // Six-per-em space
-    0x2007, // Figure space
-    0x2008, // Punctuation space
-    0x2009, // Thin space
-    0x200a, // Hair space
-    //0x200b, // Zero width space - Not ES5 whitespace
-    0x2028, // Line separator
-    0x2029, // Paragraph separator
-    0x202f, // Narrow no-break space
-    0x205f, // Medium mathematical space
-    0x3000, // Ideographic space
-    0xfeff // Byte Order Mark
-  ]);
-
-  /**
-   * A string of the whitespace characters.
-   *
-   * @name ws
-   * @type string
-   * @default \u0009\u000a\u000b\u000c\u000d\u0020\u00a0\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000\ufeff
-   * @example
-   * var lib = require('white-space-x');
-   * var ws = '\u0009\u000a\u000b\u000c\u000d\u0020\u00a0\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000\ufeff';
-   * var re1 = new RegExp('^[' + lib.ws + ']+$)');
-   * re1.test(ws); // true
-   */
-  define.property(module.exports, 'ws', module.exports.whiteSpaces.reduce(function (acc, item) {
-      return acc + String.fromCharCode(item);
-    }, '')
-  );
-}());
-
-
-/***/ },
-/* 84 */,
-/* 85 */,
-/* 86 */,
-/* 87 */,
-/* 88 */,
-/* 89 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4843,7 +4029,7 @@ module.exports = isNull;
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
-var _lodash = __webpack_require__(90);
+var _lodash = __webpack_require__(82);
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
@@ -4946,7 +4132,7 @@ module.exports = {
 };
 
 /***/ },
-/* 90 */
+/* 82 */
 /***/ function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -22034,10 +21220,10 @@ module.exports = {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(43), __webpack_require__(91)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(41), __webpack_require__(83)(module)))
 
 /***/ },
-/* 91 */
+/* 83 */
 /***/ function(module, exports) {
 
 module.exports = function(module) {
@@ -22063,8 +21249,8 @@ module.exports = function(module) {
 
 
 /***/ },
-/* 92 */,
-/* 93 */
+/* 84 */,
+/* 85 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22078,7 +21264,7 @@ var _fnName2 = __webpack_require__(3);
 
 var _fnName3 = _interopRequireDefault(_fnName2);
 
-var _isPred = __webpack_require__(8);
+var _isPred = __webpack_require__(9);
 
 var _isPred2 = _interopRequireDefault(_isPred);
 
@@ -22088,7 +21274,7 @@ var _isClause2 = _interopRequireDefault(_isClause);
 
 var _preds = __webpack_require__(17);
 
-var _describe = __webpack_require__(41);
+var _describe = __webpack_require__(39);
 
 var _describe2 = _interopRequireDefault(_describe);
 
@@ -22096,7 +21282,7 @@ var _deref = __webpack_require__(22);
 
 var _deref2 = _interopRequireDefault(_deref);
 
-var _namespaceResolver = __webpack_require__(89);
+var _namespaceResolver = __webpack_require__(81);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
