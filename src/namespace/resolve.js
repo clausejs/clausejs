@@ -1,4 +1,3 @@
-import _ from 'lodash';
 const resolvedMaps = [];
 import { NamespaceObjClause } from '../clauses/namespace.types';
 
@@ -19,7 +18,14 @@ function resolve( clauseRef, registry ) {
 
 function getDefList( registry ) {
   const map = _createResolveMap( registry );
-  var groups = _.groupBy( map, ( [ p ] ) => p );
+  const groups = {};
+  map.forEach( ( curr ) => {
+    let [ p ] = curr;
+    if ( !groups[ p ] ) {
+      groups[ p ] = [];
+    }
+    groups[ p ].push( curr );
+  } );
   return groups;
 }
 
