@@ -1,4 +1,4 @@
-var oAssign = require( 'object-assign' );
+var oAssign = require( '../utils/objectAssign' );
 var nfaWalker = require( './nfaWalker' );
 var anyWalker = require( './anyWalker' );
 var predWalker = require( './predWalker' );

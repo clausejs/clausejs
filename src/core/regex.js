@@ -1,4 +1,4 @@
-var oAssign = require( 'object-assign' );
+var oAssign = require( '../utils/objectAssign' );
 var Clause = require( '../models/Clause' );
 var isClause = require( '../utils/isClause' );
 var isPred = require( '../utils/isPred' );

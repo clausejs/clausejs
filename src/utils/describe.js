@@ -12,7 +12,6 @@ function describe( expr, interceptor, indent ) {
   const cSexpr = SExpressionClause.conform( sexpr );
   if ( isProblem( cSexpr ) ) {
     console.error( cSexpr );
-    debugger;
     throw new Error( 'The given expression is not a valid expression.' );
   }
   const strFragments = _strFragments( cSexpr );

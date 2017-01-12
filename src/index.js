@@ -1,5 +1,5 @@
 
-var oAssign = require( 'object-assign' );
+var oAssign = require( './utils/objectAssign' );
 import namespaceFn from './namespace';
 
 var ops = require( './core' );

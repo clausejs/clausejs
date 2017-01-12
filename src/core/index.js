@@ -1,4 +1,4 @@
-var oAssign = require( 'object-assign' );
+var oAssign = require( '../utils/objectAssign' );
 var regex = require( './regex' );
 var { shape, keys, mapOf, } = require( './regex' );
 var nullable = require( './nullable' );

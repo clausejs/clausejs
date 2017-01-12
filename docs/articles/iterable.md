@@ -21,4 +21,7 @@ var StrClause = C.cat('foos', C.oneOrMore(C.sCat('foo')),
 
 C.conform(StrClause, 'foofoofoobarbar');
 ```
-Notice that in the first clause, we use C.equals() to treat the string as a single entity, whereas in the second, we use C.sEqual() to suggest that each character in the string is part of a collection that we run regex ops on.
+Notice that in the first clause, we use `C.equals()` to treat
+ the string as a single entity, whereas in the second, we use
+ `C.sCat()` to indicate that each character in the string is 
+ part of the collection that we run regex ops on.

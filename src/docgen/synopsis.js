@@ -1,4 +1,3 @@
-
 const { cat, or, zeroOrMore, oneOrMore, fclause, any, and, wall, ExprClause, collOf } = require( '../core' );
 const { isStr, isNum, isObj, isBool, instanceOf } = require( '../preds' );
 const { conform, isClause, deref, delayed } = require( '../utils' );

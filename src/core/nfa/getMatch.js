@@ -1,4 +1,4 @@
-  var oAssign = require( 'object-assign' );
+  var oAssign = require( '../../utils/objectAssign' );
 
 /*eslint func-names: 0*/
 

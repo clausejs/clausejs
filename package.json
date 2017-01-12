@@ -38,7 +38,6 @@
   },
   "homepage": "https://github.com/clausejs/clausejs#readme",
   "dependencies": {
-    "object-assign": "4.1.0"
   },
   "devDependencies": {
     "babel-core": "6.21.0",

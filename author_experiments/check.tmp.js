@@ -1,6 +1,5 @@
 require( 'babel-core/register' );
 
-
 var C = require( '../src' );
 
 const testcheck = require( 'testcheck' );

@@ -37,7 +37,6 @@ function evalClause( clause ) {
   return r;
 }
 
-
 var evalChildThen = function( wrapper ) {
   return function evalChildThenWrapped( clause ) {
     var childFrag = evalClause( clause.exprs[ 0 ] );

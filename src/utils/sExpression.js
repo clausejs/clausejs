@@ -1,9 +1,8 @@
 var fnName = require( './fnName' );
 var clauseFromAlts = require( './clauseFromAlts' );
-var oAssign = require( 'object-assign' );
+var oAssign = require( '../utils/objectAssign' );
 const { wall, any, zeroOrMore, and, cat, or, ExprClause, mapOf } = require( '../core' );
 const delayed = require( './delayed' );
-const isPred = require( './isPred' );
 const coerceIntoClause = require( './coerceIntoClause' );
 const { isStr, isPlainObj, instanceOf } = require( '../preds' );
 

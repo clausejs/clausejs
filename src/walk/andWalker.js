@@ -1,7 +1,7 @@
 var Problem = require( '../models/Problem' );
 var isProblem = require( '../utils/isProblem' );
 var clauseFromAlts = require( '../utils/clauseFromAlts' );
-var oAssign = require('object-assign');
+var oAssign = require( '../utils/objectAssign' );
 
 function andWalker( clause, walkFn ) {
   var exprs = clause.opts.conformedExprs.map( clauseFromAlts );

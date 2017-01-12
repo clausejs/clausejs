@@ -1,4 +1,4 @@
-var oAssign = require( 'object-assign' );
+var oAssign = require( '../utils/objectAssign' );
 var ClauseRef = require( '../models/ClauseRef' );
 var { cat, or, fclause, shape } = require( '../core' );
 var isClause = require( '../utils/isClause' );
