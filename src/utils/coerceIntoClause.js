@@ -5,6 +5,7 @@ var isDelayedClause = require( './isDelayedClause' );
 var Clause = require( '../models/Clause' );
 var Problem = require( '../models/Problem' );
 var fnName = require( './fnName' );
+var stringifyWithFnName = require( './stringifyWithFnName' );
 
 var CLAUSE_TYPE_PRED = 'PRED';
 
@@ -15,7 +16,8 @@ function coerceIntoClause( expr ) {
     return _wrap( expr );
   } else {
     console.error( expr );
-    throw new Error( 'Expression must either be a Clause object or a predication function that returns true or false. ' );
+    throw new Error(
+      `'Expression must either be a Clause object or a predication function that returns true or false. Given value: ${stringifyWithFnName( expr )}'` );
   }
 }
 

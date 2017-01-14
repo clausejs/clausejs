@@ -1,7 +1,7 @@
 var fnName = require( './fnName' );
 var clauseFromAlts = require( './clauseFromAlts' );
 var oAssign = require( '../utils/objectAssign' );
-const { wall, any, zeroOrMore, and, cat, or, ExprClause, mapOf } = require( '../core' );
+const { wall, any, zeroOrMore, and, cat, or, ExprClause, mapOf, maybe } = require( '../core' );
 const delayed = require( './delayed' );
 const coerceIntoClause = require( './coerceIntoClause' );
 const { isStr, isPlainObj, instanceOf } = require( '../preds' );
@@ -19,10 +19,11 @@ var ParamsMapC = and(
   instanceOf( ParamsMap ),
   mapOf(
     any,
-    or(
+    maybe( or(
       'paramList', zeroOrMore( delayed( () => ParamItemClause ) ),
-      'paramMap', delayed( () => ParamsMapC )
-    )
+      'paramMap', delayed( () => ParamsMapC ),
+      'singleParam', delayed( () => ParamItemClause )
+    ) )
   )
 );
 
@@ -86,9 +87,9 @@ var sParamsConverters = {
     ),
   'FCLAUSE': ( repo, { opts: { args, ret, fn } } ) =>
     oAssign( new ParamsMap(),
-    args ? { args: [ _createSExpr( repo, args ) ] } : [],
-    ret ? { ret: [ _createSExpr( repo, ret ) ] } : [],
-    fn ? { fn: [ `${fnName( fn )}()` ] } : [] )
+    args ? { args: _createSExpr( repo, args ) } : {},
+    ret ? { ret: _createSExpr( repo, ret ) } : {},
+    fn ? { fn: [ `${fnName( fn )}()` ] } : {} )
 }
 
 function _fieldDefToFrags( repo, { fieldDefs: { fields } = {}, keyList } ) {

@@ -295,11 +295,6 @@ function _genClauseRef( globalReg, exprName, path, expr, meta ) {
   `;
 }
 
-function _clauseRefLink( p ) {
-  return pGenFn =>
-    `<a href="#${p}" data-path="${p}">${pGenFn( p )}</a>`;
-}
-
 function _genAndClause( globalReg, exprName, path, expr, meta ) {
   const example = meta && meta.example;
   const altDefs = expr.opts.conformedExprs.map( ( altE, idx ) => {
@@ -464,6 +459,11 @@ function synopsisArray( prefixes, suffixes, exprName, clause, globalReg, meta, d
     return clause.type;
   }
 
+}
+
+function _clauseRefLink( p ) {
+  return pGenFn =>
+    `<a href="#${p}" data-path="${p}">${pGenFn( p )}</a>`;
 }
 
 function _syntax( expr, globalReg, currPath ) {

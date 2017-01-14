@@ -63,11 +63,21 @@ function _walk( prefix, currN, creg, r ) {
 
 function _resolveWithMap( map, clauseRef ) {
   const path = _findFirst( map, ( [ p, n, r ] ) => {
-    if ( r === clauseRef ) {
+    if (
+      r === clauseRef ||
+    _tryStripPredClause( r ) === _tryStripPredClause( clauseRef ) ) {
       return `${p}/${n}`;
     }
   } );
   return path;
+}
+
+function _tryStripPredClause( expr ) {
+  if ( expr.type === 'PRED' ) {
+    return expr.opts.predicate;
+  } else {
+    return expr;
+  }
 }
 
 function _findFirst( array, fn ) {

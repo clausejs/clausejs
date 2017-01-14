@@ -10,6 +10,7 @@ const stringifyWithFnName = require( '../utils/stringifyWithFnName' );
 function describe( expr, replacer, space ) {
   const sexpr = sExpression( expr );
   const cSexpr = SExpressionClause.conform( sexpr );
+
   if ( isProblem( cSexpr ) ) {
     console.error( cSexpr );
     throw new Error( 'The given expression is not a valid expression.' );
@@ -34,13 +35,13 @@ function _strFragments( { head: headAlt, params }, replacer ) {
   const label = humanReadable( head );
   let paramFrags;
   if ( params ) {
-    paramFrags = params.map( _fragmentParamAlts );
+    paramFrags = params.map( ( p ) => _fragmentParamAlts( p, replacer ) );
+
   } else {
     paramFrags = [];
   }
 
   var commaedParamFrags = interpose( paramFrags, [ ', ' ] );
-
   return [ label, '( ' ].concat( commaedParamFrags ).concat( ' )' );
 }
 
@@ -58,11 +59,11 @@ function interpose( arr, interArr ) {
   }
 }
 
-function _fragmentParamAlts( pAlts ) {
+function _fragmentParamAlts( pAlts, replacer ) {
   const r = handle( pAlts, {
     'label': ( lbl ) => lbl,
-    'sExpression': _strFragments,
-    'paramsObj': _fragmentParamsObj,
+    'sExpression': ( expr ) => _strFragments( expr, replacer ),
+    'paramsObj': ( o ) => _fragmentParamsObj( o, replacer ),
     'optionsObj': ( o ) => stringifyWithFnName( o ),
     'recursive': ( { expression } ) => [
       '<recursive>: ',
@@ -74,7 +75,7 @@ function _fragmentParamAlts( pAlts ) {
   return r;
 }
 
-function _fragmentParamsObj( pObj ) {
+function _fragmentParamsObj( pObj, replacer ) {
   var r = [];
   r.push( '{ ' );
   let body = [];
@@ -83,18 +84,20 @@ function _fragmentParamsObj( pObj ) {
       let item = [];
       item.push( `${label}: ` );
       var r1 = handle( pObj[ label ], {
-        paramList: ( list ) => {
+        'paramList': ( list ) => {
           return [ '[ ' ].concat(
-          interpose( list.map( _fragmentParamAlts ), [ ', ' ] ) )
+          interpose( list.map( ( f ) => _fragmentParamAlts( f, replacer ) ), [ ', ' ] ) )
           .concat( ' ]' );
-
         },
-        paramMap: _fragmentParamsObj
+        'singleParam': ( p ) => _fragmentParamAlts( p, replacer ),
+        'paramMap': ( m ) => _fragmentParamsObj( m, replacer ),
       }, () => {
         throw '!';
       } );
-      item.push( r1 );
-      body.push( item );
+      if ( r1 ) {
+        item.push( r1 );
+        body.push( item );
+      }
     }
   }
   body = interpose( body, ', ' );

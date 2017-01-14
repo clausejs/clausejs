@@ -140,7 +140,7 @@ module.exports = Clause;
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var PAREN_PAIRS = '❰❮❬❨❪﹙₍₎﹚❫❩❭❯❱';
-var stringifyWithFnName = __webpack_require__(36);
+var stringifyWithFnName = __webpack_require__(23);
 
 function Problem(val, failsPredicate, subproblems, msg) {
   var _this = this;
@@ -415,7 +415,7 @@ var oAssign = __webpack_require__(4);
 var Clause = __webpack_require__(1);
 var isClause = __webpack_require__(5);
 var isPred = __webpack_require__(10);
-var isExpr = __webpack_require__(35);
+var isExpr = __webpack_require__(36);
 var clauseFromAlts = __webpack_require__(7);
 var isProblem = __webpack_require__(0);
 var isClauseName = __webpack_require__(60);
@@ -429,8 +429,8 @@ var walk = __webpack_require__(16);
 
 var isObj = __webpack_require__(20);
 var isStr = __webpack_require__(6);
-var oneOf = __webpack_require__(32);
-var not = __webpack_require__(31);
+var oneOf = __webpack_require__(33);
+var not = __webpack_require__(32);
 
 var clauseClause = coerceIntoClause(isClause);
 var nameClause = coerceIntoClause(isClauseName);
@@ -859,6 +859,7 @@ var isDelayedClause = __webpack_require__(22);
 var Clause = __webpack_require__(1);
 var Problem = __webpack_require__(2);
 var fnName = __webpack_require__(3);
+var stringifyWithFnName = __webpack_require__(23);
 
 var CLAUSE_TYPE_PRED = 'PRED';
 
@@ -869,7 +870,7 @@ function coerceIntoClause(expr) {
     return _wrap(expr);
   } else {
     console.error(expr);
-    throw new Error('Expression must either be a Clause object or a predication function that returns true or false. ');
+    throw new Error('\'Expression must either be a Clause object or a predication function that returns true or false. Given value: ' + stringifyWithFnName(expr) + '\'');
   }
 }
 
@@ -991,7 +992,7 @@ var maybe = __webpack_require__(44);
 var _require2 = __webpack_require__(41),
     wall = _require2.wall;
 
-var equals = __webpack_require__(27);
+var equals = __webpack_require__(28);
 
 var sCat = function sCat(str) {
   return regex.cat.apply(null, Array.prototype.slice.call(str).map(equals));
@@ -1093,19 +1094,19 @@ module.exports = walk;
 "use strict";
 
 
-var isNum = __webpack_require__(30);
+var isNum = __webpack_require__(31);
 var isNatInt = __webpack_require__(52);
-var isInt = __webpack_require__(29);
+var isInt = __webpack_require__(30);
 var isBool = __webpack_require__(38);
 var isFn = __webpack_require__(11);
 var isObj = __webpack_require__(20);
 var isPlainObj = __webpack_require__(53);
-var equals = __webpack_require__(27);
-var oneOf = __webpack_require__(32);
+var equals = __webpack_require__(28);
+var oneOf = __webpack_require__(33);
 var isStr = __webpack_require__(6);
 var isDate = __webpack_require__(51);
-var not = __webpack_require__(31);
-var instanceOf = __webpack_require__(28);
+var not = __webpack_require__(32);
+var instanceOf = __webpack_require__(29);
 var isUuid = __webpack_require__(54);
 var isArray = Array.isArray;
 
@@ -1221,14 +1222,49 @@ module.exports = conform;
 "use strict";
 
 
-var DelayedClause = __webpack_require__(26);
-var instanceOf = __webpack_require__(28);
+var DelayedClause = __webpack_require__(27);
+var instanceOf = __webpack_require__(29);
 
 //TODO
 module.exports = instanceOf(DelayedClause);
 
 /***/ },
 /* 23 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var isFn = __webpack_require__(11);
+var fnName = __webpack_require__(3);
+
+function stringifyWithFnName(subject, currTransform) {
+
+  var newArgs = Array.prototype.slice.call(arguments);
+
+  newArgs[1] = function (key, val) {
+    var r;
+    if (isFn(val)) {
+      // implicitly `toString` it
+      var n = fnName(val);
+      if (n) {
+        r = n + '()';
+      } else {
+        r = val.toString();
+      }
+    } else {
+      r = val;
+    }
+    return currTransform ? currTransform(r) : r;
+  };
+
+  return JSON.stringify.apply(this, newArgs);
+}
+
+module.exports = stringifyWithFnName;
+
+/***/ },
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1241,7 +1277,7 @@ exports.NamespaceObjClause = exports.ResolveFnClause = exports.MetaFnClause = ex
 
 var _core = __webpack_require__(15);
 
-var _utils = __webpack_require__(25);
+var _utils = __webpack_require__(26);
 
 var _preds = __webpack_require__(17);
 
@@ -1306,7 +1342,7 @@ exports.ResolveFnClause = ResolveFnClause;
 exports.NamespaceObjClause = NamespaceObjClause;
 
 /***/ },
-/* 24 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1322,7 +1358,7 @@ module.exports = function deref(clause) {
 };
 
 /***/ },
-/* 25 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1332,20 +1368,20 @@ module.exports = {
   conform: __webpack_require__(21),
   isValid: __webpack_require__(63),
   isNamespacePath: __webpack_require__(62),
-  identity: __webpack_require__(34),
+  identity: __webpack_require__(35),
   isProblem: __webpack_require__(0),
-  delayed: __webpack_require__(33),
+  delayed: __webpack_require__(34),
   enforce: __webpack_require__(57),
-  isExpr: __webpack_require__(35),
+  isExpr: __webpack_require__(36),
   isClause: __webpack_require__(5),
   isFclause: __webpack_require__(61),
   isClauseRef: __webpack_require__(13),
   describe: __webpack_require__(39),
-  deref: __webpack_require__(24)
+  deref: __webpack_require__(25)
 };
 
 /***/ },
-/* 26 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1381,7 +1417,7 @@ DelayedClause.prototype = Object.create(Clause.prototype);
 module.exports = DelayedClause;
 
 /***/ },
-/* 27 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1394,7 +1430,7 @@ module.exports = function equals(test) {
 };
 
 /***/ },
-/* 28 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1422,7 +1458,7 @@ module.exports = function instanceOf(t) {
 };
 
 /***/ },
-/* 29 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1439,7 +1475,7 @@ function isInt(x) {
 module.exports = isInt;
 
 /***/ },
-/* 30 */
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1452,7 +1488,7 @@ function isNum(x) {
 module.exports = isNum;
 
 /***/ },
-/* 31 */
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1478,7 +1514,7 @@ function not(pred) {
 module.exports = not;
 
 /***/ },
-/* 32 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1504,13 +1540,13 @@ module.exports = function oneOf() {
 };
 
 /***/ },
-/* 33 */
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var DelayedClause = __webpack_require__(26);
+var DelayedClause = __webpack_require__(27);
 
 function delayed(getFn) {
   return new DelayedClause({ getFn: getFn });
@@ -1519,7 +1555,7 @@ function delayed(getFn) {
 module.exports = delayed;
 
 /***/ },
-/* 34 */
+/* 35 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1532,7 +1568,7 @@ function identity(x) {
 module.exports = identity;
 
 /***/ },
-/* 35 */
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1548,41 +1584,6 @@ function isExpr(x) {
 }
 
 module.exports = isExpr;
-
-/***/ },
-/* 36 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var isFn = __webpack_require__(11);
-var fnName = __webpack_require__(3);
-
-function stringifyWithFnName(subject, currTransform) {
-
-  var newArgs = Array.prototype.slice.call(arguments);
-
-  newArgs[1] = function (key, val) {
-    var r;
-    if (isFn(val)) {
-      // implicitly `toString` it
-      var n = fnName(val);
-      if (n) {
-        r = n + '()';
-      } else {
-        r = val.toString();
-      }
-    } else {
-      r = val;
-    }
-    return currTransform ? currTransform(r) : r;
-  };
-
-  return JSON.stringify.apply(this, newArgs);
-}
-
-module.exports = stringifyWithFnName;
 
 /***/ },
 /* 37 */
@@ -1640,11 +1641,12 @@ var isProblem = __webpack_require__(0);
 var handle = __webpack_require__(58);
 var clauseFromAlts = __webpack_require__(7);
 var fnName = __webpack_require__(3);
-var stringifyWithFnName = __webpack_require__(36);
+var stringifyWithFnName = __webpack_require__(23);
 
 function describe(expr, replacer, space) {
   var sexpr = (0, _sExpression2.default)(expr);
   var cSexpr = _sExpression.SExpressionClause.conform(sexpr);
+
   if (isProblem(cSexpr)) {
     console.error(cSexpr);
     throw new Error('The given expression is not a valid expression.');
@@ -1672,13 +1674,14 @@ function _strFragments(_ref, replacer) {
   var label = humanReadable(head);
   var paramFrags = void 0;
   if (params) {
-    paramFrags = params.map(_fragmentParamAlts);
+    paramFrags = params.map(function (p) {
+      return _fragmentParamAlts(p, replacer);
+    });
   } else {
     paramFrags = [];
   }
 
   var commaedParamFrags = interpose(paramFrags, [', ']);
-
   return [label, '( '].concat(commaedParamFrags).concat(' )');
 }
 
@@ -1696,13 +1699,17 @@ function interpose(arr, interArr) {
   }
 }
 
-function _fragmentParamAlts(pAlts) {
+function _fragmentParamAlts(pAlts, replacer) {
   var r = handle(pAlts, {
     'label': function label(lbl) {
       return lbl;
     },
-    'sExpression': _strFragments,
-    'paramsObj': _fragmentParamsObj,
+    'sExpression': function sExpression(expr) {
+      return _strFragments(expr, replacer);
+    },
+    'paramsObj': function paramsObj(o) {
+      return _fragmentParamsObj(o, replacer);
+    },
     'optionsObj': function optionsObj(o) {
       return stringifyWithFnName(o);
     },
@@ -1716,7 +1723,7 @@ function _fragmentParamAlts(pAlts) {
   return r;
 }
 
-function _fragmentParamsObj(pObj) {
+function _fragmentParamsObj(pObj, replacer) {
   var r = [];
   r.push('{ ');
   var body = [];
@@ -1725,15 +1732,24 @@ function _fragmentParamsObj(pObj) {
       var item = [];
       item.push(label + ': ');
       var r1 = handle(pObj[label], {
-        paramList: function paramList(list) {
-          return ['[ '].concat(interpose(list.map(_fragmentParamAlts), [', '])).concat(' ]');
+        'paramList': function paramList(list) {
+          return ['[ '].concat(interpose(list.map(function (f) {
+            return _fragmentParamAlts(f, replacer);
+          }), [', '])).concat(' ]');
         },
-        paramMap: _fragmentParamsObj
+        'singleParam': function singleParam(p) {
+          return _fragmentParamAlts(p, replacer);
+        },
+        'paramMap': function paramMap(m) {
+          return _fragmentParamsObj(m, replacer);
+        }
       }, function () {
         throw '!';
       });
-      item.push(r1);
-      body.push(item);
+      if (r1) {
+        item.push(r1);
+        body.push(item);
+      }
     }
   }
   body = interpose(body, ', ');
@@ -1762,7 +1778,7 @@ module.exports = describe;
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
-var _namespace = __webpack_require__(23);
+var _namespace = __webpack_require__(24);
 
 var resolvedMaps = [];
 
@@ -1840,11 +1856,19 @@ function _resolveWithMap(map, clauseRef) {
         n = _ref4[1],
         r = _ref4[2];
 
-    if (r === clauseRef) {
+    if (r === clauseRef || _tryStripPredClause(r) === _tryStripPredClause(clauseRef)) {
       return p + '/' + n;
     }
   });
   return path;
+}
+
+function _tryStripPredClause(expr) {
+  if (expr.type === 'PRED') {
+    return expr.opts.predicate;
+  } else {
+    return expr;
+  }
 }
 
 function _findFirst(array, fn) {
@@ -1911,7 +1935,7 @@ module.exports = {
 
 
 var Clause = __webpack_require__(1);
-var identity = __webpack_require__(34);
+var identity = __webpack_require__(35);
 var CLAUSE_TYPE_ANY = 'ANY';
 
 function any() {
@@ -1969,7 +1993,7 @@ module.exports = maybe;
 
 var fragment = __webpack_require__(46);
 var Clause = __webpack_require__(1);
-var deref = __webpack_require__(24);
+var deref = __webpack_require__(25);
 
 var indexedFragmentStates = function indexedFragmentStates(fragment) {
   var nextIndex = 0;
@@ -2799,7 +2823,7 @@ module.exports = function isDate(date) {
 "use strict";
 
 
-var isInt = __webpack_require__(29);
+var isInt = __webpack_require__(30);
 
 function isNatInt(x) {
   return isInt(x) && x >= 0.0;
@@ -3061,9 +3085,10 @@ var _require = __webpack_require__(15),
     cat = _require.cat,
     or = _require.or,
     ExprClause = _require.ExprClause,
-    mapOf = _require.mapOf;
+    mapOf = _require.mapOf,
+    maybe = _require.maybe;
 
-var delayed = __webpack_require__(33);
+var delayed = __webpack_require__(34);
 var coerceIntoClause = __webpack_require__(9);
 
 var _require2 = __webpack_require__(17),
@@ -3080,11 +3105,13 @@ function ParamsMap(map) {
   oAssign(this, map);
 }
 
-var ParamsMapC = and(instanceOf(ParamsMap), mapOf(any, or('paramList', zeroOrMore(delayed(function () {
+var ParamsMapC = and(instanceOf(ParamsMap), mapOf(any, maybe(or('paramList', zeroOrMore(delayed(function () {
   return ParamItemClause;
 })), 'paramMap', delayed(function () {
   return ParamsMapC;
-}))));
+}), 'singleParam', delayed(function () {
+  return ParamItemClause;
+})))));
 
 var ParamItemClause = or('label', isStr, 'sExpression', delayed(function () {
   return SExpressionClause;
@@ -3166,7 +3193,7 @@ var sParamsConverters = {
         args = _ref9$opts.args,
         ret = _ref9$opts.ret,
         fn = _ref9$opts.fn;
-    return oAssign(new ParamsMap(), args ? { args: [_createSExpr(repo, args)] } : [], ret ? { ret: [_createSExpr(repo, ret)] } : [], fn ? { fn: [fnName(fn) + '()'] } : []);
+    return oAssign(new ParamsMap(), args ? { args: _createSExpr(repo, args) } : {}, ret ? { ret: _createSExpr(repo, ret) } : {}, fn ? { fn: [fnName(fn) + '()'] } : {});
   }
 };
 
@@ -3401,7 +3428,7 @@ module.exports = clauseRefWalker;
 
 var Problem = __webpack_require__(2);
 var isProblem = __webpack_require__(0);
-var isNum = __webpack_require__(30);
+var isNum = __webpack_require__(31);
 
 function collOfWalker(clause, walkFn) {
   var expr = clause.exprs[0];
@@ -4146,7 +4173,7 @@ module.exports = wallWalker;
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
-var _namespace = __webpack_require__(23);
+var _namespace = __webpack_require__(24);
 
 var _fnName2 = __webpack_require__(3);
 
@@ -4166,7 +4193,7 @@ var _describe = __webpack_require__(39);
 
 var _describe2 = _interopRequireDefault(_describe);
 
-var _deref = __webpack_require__(24);
+var _deref = __webpack_require__(25);
 
 var _deref2 = _interopRequireDefault(_deref);
 
@@ -4419,12 +4446,6 @@ function _genClauseRef(globalReg, exprName, path, expr, meta) {
   }) + '\n    </div>\n  ';
 }
 
-function _clauseRefLink(p) {
-  return function (pGenFn) {
-    return '<a href="#' + p + '" data-path="' + p + '">' + pGenFn(p) + '</a>';
-  };
-}
-
 function _genAndClause(globalReg, exprName, path, expr, meta) {
   var example = meta && meta.example;
   var altDefs = expr.opts.conformedExprs.map(function (altE, idx) {
@@ -4592,6 +4613,12 @@ function synopsisArray(prefixes, suffixes, exprName, clause, globalReg, meta, de
     // throw '!';
     return clause.type;
   }
+}
+
+function _clauseRefLink(p) {
+  return function (pGenFn) {
+    return '<a href="#' + p + '" data-path="' + p + '">' + pGenFn(p) + '</a>';
+  };
 }
 
 function _syntax(expr, globalReg, currPath) {
