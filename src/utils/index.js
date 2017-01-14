@@ -1,3 +1,5 @@
+import sExpression from './sExpression';
+
 module.exports = {
   conform: require( './conform' ),
   isValid: require( './isValid' ),
@@ -13,4 +15,5 @@ module.exports = {
   describe: require( './describe' ),
   deref: require( './deref' ),
   isClauseName: require( './isClauseName' ),
+  sExpression,
 };

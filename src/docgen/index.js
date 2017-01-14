@@ -649,10 +649,10 @@ function _genFclause( globalReg, exprName, clause, path, meta = {} ) {
     ` ).join( '\n' ) ] );
   }
   if ( argsClause ) {
-    frags.push( [ 'Arguments', genForExpression( globalReg, null, argsClause, meta && meta.args ) ] );
+    frags.push( [ 'Argument Clause', genForExpression( globalReg, null, argsClause, meta && meta.args ) ] );
   }
   if ( retClause ) {
-    frags.push( [ 'Return Value', genForExpression( globalReg, null, retClause, meta && meta.ret ) ] );
+    frags.push( [ 'Return Value Clause', genForExpression( globalReg, null, retClause, meta && meta.ret ) ] );
   } if ( fn ) {
     frags.push( [ 'Argument-return value relation', `<pre>${fnName( fn )}</pre>` ] );
   }

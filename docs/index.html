@@ -170,6 +170,8 @@
             <a href="#clause.utils/delayed" data-path="clause.utils/delayed">delayed()</a>
           </li><li>
             <a href="#clause.utils/describe" data-path="clause.utils/describe">describe()</a>
+          </li><li>
+            <a href="#clause.utils/sExpression" data-path="clause.utils/sExpression">sExpression()</a>
           </li>
       </ul>
     </dd>
@@ -244,6 +246,8 @@
       <li>
             <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>
           </li><li>
+            <a href="#clause.types/Primitive" data-path="clause.types/Primitive">Primitive</a>
+          </li><li>
             <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a>
           </li><li>
             <a href="#clause.types/FClause" data-path="clause.types/FClause">FClause</a>
@@ -262,7 +266,7 @@
           </li><li>
             <a href="#clause.types/ClauseLabel" data-path="clause.types/ClauseLabel">ClauseLabel</a>
           </li><li>
-            <a href="#clause.types/Primitive" data-path="clause.types/Primitive">Primitive</a>
+            <a href="#clause.types/SExpression" data-path="clause.types/SExpression">SExpression</a>
           </li>
       </ul>
     </dd>
@@ -344,7 +348,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
 
       <pre><code>C(&quot;awesomeapp/TodoItem&quot;)</code></pre>
     </dd>
-<dt>Arguments</dt><dd>
+<dt>Argument Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -604,7 +608,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       </blockquote>
     </dd>
 <dt>Synopsis</dt><dd>AND</dd>
-<dt>Arguments</dt><dd>
+<dt>Argument Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -1341,7 +1345,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     </dd>
-<dt>Return Value</dt><dd>
+<dt>Return Value Clause</dt><dd>
     
     
     <fieldset class="card card-outline-primary">
@@ -1386,7 +1390,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       </blockquote>
     </dd>
 <dt>Synopsis</dt><dd>AND</dd>
-<dt>Arguments</dt><dd>
+<dt>Argument Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -2123,7 +2127,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     </dd>
-<dt>Return Value</dt><dd>
+<dt>Return Value Clause</dt><dd>
     
     
     <fieldset class="card card-outline-primary">
@@ -2168,7 +2172,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>zeroOrMore(<a href="#clause.types/Expression" data-path="clause.types/Expression">expr</a>, opts)</em></ul></dd>
-<dt>Arguments</dt><dd>
+<dt>Argument Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -2295,7 +2299,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     </dd>
-<dt>Return Value</dt><dd>
+<dt>Return Value Clause</dt><dd>
     
     
     <fieldset class="card card-outline-primary">
@@ -2340,7 +2344,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>oneOrMore(<a href="#clause.types/Expression" data-path="clause.types/Expression">expr</a>, opts)</em></ul></dd>
-<dt>Arguments</dt><dd>
+<dt>Argument Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -2467,7 +2471,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     </dd>
-<dt>Return Value</dt><dd>
+<dt>Return Value Clause</dt><dd>
     
     
     <fieldset class="card card-outline-primary">
@@ -2512,7 +2516,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>zeroOrOne(<a href="#clause.types/Expression" data-path="clause.types/Expression">expr</a>, opts)</em></ul></dd>
-<dt>Arguments</dt><dd>
+<dt>Argument Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -2639,7 +2643,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     </dd>
-<dt>Return Value</dt><dd>
+<dt>Return Value Clause</dt><dd>
     
     
     <fieldset class="card card-outline-primary">
@@ -2684,7 +2688,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       </blockquote>
     </dd>
 <dt>Synopsis</dt><dd>O_OR_M</dd>
-<dt>Arguments</dt><dd>
+<dt>Argument Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -2719,7 +2723,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     </dd>
-<dt>Return Value</dt><dd>
+<dt>Return Value Clause</dt><dd>
     
     
     <fieldset class="card card-outline-primary">
@@ -2764,7 +2768,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>collOf(<a href="#clause.types/Expression" data-path="clause.types/Expression">expr</a>, opts)</em></ul></dd>
-<dt>Arguments</dt><dd>
+<dt>Argument Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -2891,7 +2895,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     </dd>
-<dt>Return Value</dt><dd>
+<dt>Return Value Clause</dt><dd>
     
     
     <fieldset class="card card-outline-primary">
@@ -2936,7 +2940,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>mapOf(<a href="#clause.types/Expression" data-path="clause.types/Expression">keyExpression</a>, <a href="#clause.types/Expression" data-path="clause.types/Expression">valExpression</a>)</em></ul></dd>
-<dt>Arguments</dt><dd>
+<dt>Argument Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -3029,7 +3033,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     </dd>
-<dt>Return Value</dt><dd>
+<dt>Return Value Clause</dt><dd>
     
     
     <fieldset class="card card-outline-primary">
@@ -3074,7 +3078,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>shape(shapeArgs)</em></ul></dd>
-<dt>Arguments</dt><dd>
+<dt>Argument Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -3139,7 +3143,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     </dd>
-<dt>Return Value</dt><dd>
+<dt>Return Value Clause</dt><dd>
     
     
     <fieldset class="card card-outline-primary">
@@ -3183,7 +3187,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         </small>
       </blockquote>
     </dd>
-<dt>Return Value</dt><dd>
+<dt>Return Value Clause</dt><dd>
     
     
     <fieldset class="card card-outline-primary">
@@ -3228,7 +3232,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>wall(<a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>)</em></ul></dd>
-<dt>Arguments</dt><dd>
+<dt>Argument Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -3283,7 +3287,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     </dd>
-<dt>Return Value</dt><dd>
+<dt>Return Value Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -3328,7 +3332,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>fclause()</em></ul></dd>
-<dt>Arguments</dt><dd>
+<dt>Argument Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -3419,7 +3423,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>nullable(<a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>)</em></ul></dd>
-<dt>Arguments</dt><dd>
+<dt>Argument Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -3474,7 +3478,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     </dd>
-<dt>Return Value</dt><dd>
+<dt>Return Value Clause</dt><dd>
     
     
     <fieldset class="card card-outline-primary">
@@ -3519,7 +3523,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>undefinable(<a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>)</em></ul></dd>
-<dt>Arguments</dt><dd>
+<dt>Argument Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -3574,7 +3578,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     </dd>
-<dt>Return Value</dt><dd>
+<dt>Return Value Clause</dt><dd>
     
     
     <fieldset class="card card-outline-primary">
@@ -3619,7 +3623,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>maybe(<a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>)</em></ul></dd>
-<dt>Arguments</dt><dd>
+<dt>Argument Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -3674,7 +3678,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     </dd>
-<dt>Return Value</dt><dd>
+<dt>Return Value Clause</dt><dd>
     
     
     <fieldset class="card card-outline-primary">
@@ -3728,7 +3732,7 @@ var StrClause = C.cat(&apos;part1&apos;, C.zeroOrMore(C.sCat(&apos;foo&apos;)),
 C.conform(StrClause, &apos;foofoofoobarbar&apos;);
 </code></pre>
     </dd>
-<dt>Arguments</dt><dd>
+<dt>Argument Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -3801,7 +3805,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     </dd>
-<dt>Return Value</dt><dd>
+<dt>Return Value Clause</dt><dd>
     
     
     <fieldset class="card card-outline-primary">
@@ -3846,7 +3850,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>enforce(<a href="#clause.types/Expression" data-path="clause.types/Expression">expression</a>, valueToCheck)</em></ul></dd>
-<dt>Arguments</dt><dd>
+<dt>Argument Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -3942,7 +3946,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     </dd>
-<dt>Return Value</dt><dd>
+<dt>Return Value Clause</dt><dd>
     
     
     <fieldset class="card card-outline-primary">
@@ -4001,7 +4005,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>conform(<a href="#clause.types/Expression" data-path="clause.types/Expression">expression</a>, valueToConform)</em></ul></dd>
-<dt>Arguments</dt><dd>
+<dt>Argument Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -4097,7 +4101,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     </dd>
-<dt>Return Value</dt><dd>
+<dt>Return Value Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -4241,7 +4245,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>delayed(getFn)</em></ul></dd>
-<dt>Arguments</dt><dd>
+<dt>Argument Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -4292,7 +4296,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     </legend>
     
     <dl class="card-block">
-    <dt>Return Value</dt><dd>
+    <dt>Return Value Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -4319,7 +4323,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     </dd>
-<dt>Return Value</dt><dd>
+<dt>Return Value Clause</dt><dd>
     
     
     <fieldset class="card card-outline-primary">
@@ -4365,7 +4369,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>C.describe(expression, replacer, space)</em></ul></dd>
-<dt>Arguments</dt><dd>
+<dt>Argument Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -4472,7 +4476,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <dl class="card-block">
     <dt>Synopsis</dt><dd><ul><em>(<a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>)</em></ul></dd>
-<dt>Arguments</dt><dd>
+<dt>Argument Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -4527,7 +4531,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     </dd>
-<dt>Return Value</dt><dd>
+<dt>Return Value Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -4806,7 +4810,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     </dd>
-<dt>Return Value</dt><dd>
+<dt>Return Value Clause</dt><dd>
     
     
     <fieldset class="card card-outline-primary">
@@ -4831,6 +4835,116 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       </span>
     </em>
   
+    </div>
+  
+    </fieldset>
+    </dd>
+    </dl>
+  
+        </div>
+      
+
+    <a name="clause.utils/sExpression"></a>
+    
+        <div class="card">
+          <div class="card-header inline-headers">
+            
+      <h6>sExpression()</h6>&#xA0;
+        <span class="tag tag-primary">
+          function
+        </span>
+      
+          </div>
+        
+    <dl class="card-block">
+    <dt>Syntax</dt><dd>
+      <blockquote class="blockquote">
+        <small>
+          <em class="text-muted">
+            
+    <pre>fclause( { args: cat( &quot;expression&quot;, <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ), ret: <a href="#clause.types/SExpression" data-path="clause.types/SExpression">SExpression</a> } )</pre>
+  
+          </em>
+        </small>
+      </blockquote>
+    </dd>
+<dt>Synopsis</dt><dd><ul><em>sExpression(expression)</em></ul></dd>
+<dt>Argument Clause</dt><dd>
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="clause-type">
+      
+    <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
+    &lt;pre&gt;cat( &quot;expression&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; )&lt;/pre&gt;
+  " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
+      a concatenation (cat) of
+    </span>
+  
+    </legend>
+    
+    <div class="card-block">
+      <p class="card-title">
+        Should be <em>an ordered list</em> of the following:
+      </p>
+    </div>
+    <div class="list-group list-group-flush list-for-cat">
+      
+        <fieldset class="list-group-item card card-outline-info">
+          <legend class="clause-type">
+          
+            <span class="tag tag-default">Part 1</span>
+            <span class="lead font-italic text-primary">
+              &#x201C;expression&#x201D;</span>          
+          
+          </legend>
+          <div class="row">
+            <div class="col-md-12">
+              
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="clause-type">
+      
+    <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
+    &lt;pre&gt;&lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;&lt;/pre&gt;
+  " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
+      either one of (or)
+    </span>
+  
+    </legend>
+    
+    <div class="card-block">
+      A value that is of
+      <a href="#clause.types/Expression" data-path="clause.types/Expression">clause.types/Expression</a>
+    </div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </fieldset>
+    
+    </div>
+  
+    </fieldset>
+    </dd>
+<dt>Return Value Clause</dt><dd>
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="clause-type">
+      <span class="tag tag-info">satisfies clause</span>
+    </legend>
+    
+    <div class="card-block">
+      A value that is of
+      <a href="#clause.types/SExpression" data-path="clause.types/SExpression">clause.types/SExpression</a>
     </div>
   
     </fieldset>
@@ -4865,7 +4979,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>not(predicateToNegate)</em></ul></dd>
-<dt>Arguments</dt><dd>
+<dt>Argument Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -4930,7 +5044,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     </dd>
-<dt>Return Value</dt><dd>
+<dt>Return Value Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -4946,7 +5060,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <dl class="card-block">
     <dt>Synopsis</dt><dd><ul><em>(x)</em></ul></dd>
-<dt>Arguments</dt><dd>
+<dt>Argument Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -5008,7 +5122,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     </dd>
-<dt>Return Value</dt><dd>
+<dt>Return Value Clause</dt><dd>
     
     
     <fieldset class="card card-outline-primary">
@@ -5071,7 +5185,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>isObj(x)</em></ul></dd>
-<dt>Arguments</dt><dd>
+<dt>Argument Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -5133,7 +5247,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     </dd>
-<dt>Return Value</dt><dd>
+<dt>Return Value Clause</dt><dd>
     
     
     <fieldset class="card card-outline-primary">
@@ -5192,7 +5306,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>isPlainObj(x)</em></ul></dd>
-<dt>Arguments</dt><dd>
+<dt>Argument Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -5254,7 +5368,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     </dd>
-<dt>Return Value</dt><dd>
+<dt>Return Value Clause</dt><dd>
     
     
     <fieldset class="card card-outline-primary">
@@ -5313,7 +5427,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>isStr(x)</em></ul></dd>
-<dt>Arguments</dt><dd>
+<dt>Argument Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -5375,7 +5489,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     </dd>
-<dt>Return Value</dt><dd>
+<dt>Return Value Clause</dt><dd>
     
     
     <fieldset class="card card-outline-primary">
@@ -5434,7 +5548,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>isArray(x)</em></ul></dd>
-<dt>Arguments</dt><dd>
+<dt>Argument Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -5496,7 +5610,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     </dd>
-<dt>Return Value</dt><dd>
+<dt>Return Value Clause</dt><dd>
     
     
     <fieldset class="card card-outline-primary">
@@ -5555,7 +5669,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>isDate(x)</em></ul></dd>
-<dt>Arguments</dt><dd>
+<dt>Argument Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -5617,7 +5731,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     </dd>
-<dt>Return Value</dt><dd>
+<dt>Return Value Clause</dt><dd>
     
     
     <fieldset class="card card-outline-primary">
@@ -5676,7 +5790,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>isNull(x)</em></ul></dd>
-<dt>Arguments</dt><dd>
+<dt>Argument Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -5738,7 +5852,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     </dd>
-<dt>Return Value</dt><dd>
+<dt>Return Value Clause</dt><dd>
     
     
     <fieldset class="card card-outline-primary">
@@ -5797,7 +5911,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>isUndefined(x)</em></ul></dd>
-<dt>Arguments</dt><dd>
+<dt>Argument Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -5859,7 +5973,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     </dd>
-<dt>Return Value</dt><dd>
+<dt>Return Value Clause</dt><dd>
     
     
     <fieldset class="card card-outline-primary">
@@ -5918,7 +6032,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>notEmpty(x)</em></ul></dd>
-<dt>Arguments</dt><dd>
+<dt>Argument Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -5980,7 +6094,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     </dd>
-<dt>Return Value</dt><dd>
+<dt>Return Value Clause</dt><dd>
     
     
     <fieldset class="card card-outline-primary">
@@ -6039,7 +6153,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>isBool(x)</em></ul></dd>
-<dt>Arguments</dt><dd>
+<dt>Argument Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -6101,7 +6215,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     </dd>
-<dt>Return Value</dt><dd>
+<dt>Return Value Clause</dt><dd>
     
     
     <fieldset class="card card-outline-primary">
@@ -6160,7 +6274,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>isFn(x)</em></ul></dd>
-<dt>Arguments</dt><dd>
+<dt>Argument Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -6222,7 +6336,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     </dd>
-<dt>Return Value</dt><dd>
+<dt>Return Value Clause</dt><dd>
     
     
     <fieldset class="card card-outline-primary">
@@ -6281,7 +6395,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>isNum(x)</em></ul></dd>
-<dt>Arguments</dt><dd>
+<dt>Argument Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -6343,7 +6457,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     </dd>
-<dt>Return Value</dt><dd>
+<dt>Return Value Clause</dt><dd>
     
     
     <fieldset class="card card-outline-primary">
@@ -6402,7 +6516,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>isInt(x)</em></ul></dd>
-<dt>Arguments</dt><dd>
+<dt>Argument Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -6464,7 +6578,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     </dd>
-<dt>Return Value</dt><dd>
+<dt>Return Value Clause</dt><dd>
     
     
     <fieldset class="card card-outline-primary">
@@ -6523,7 +6637,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>isNatInt(x)</em></ul></dd>
-<dt>Arguments</dt><dd>
+<dt>Argument Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -6585,7 +6699,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     </dd>
-<dt>Return Value</dt><dd>
+<dt>Return Value Clause</dt><dd>
     
     
     <fieldset class="card card-outline-primary">
@@ -6644,7 +6758,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>isUuid(x)</em></ul></dd>
-<dt>Arguments</dt><dd>
+<dt>Argument Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -6817,7 +6931,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     </dd>
-<dt>Return Value</dt><dd>
+<dt>Return Value Clause</dt><dd>
     
     
     <fieldset class="card card-outline-primary">
@@ -6876,7 +6990,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>oneOf(valueOptions)</em></ul></dd>
-<dt>Arguments</dt><dd>
+<dt>Argument Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -6961,7 +7075,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     </dd>
-<dt>Return Value</dt><dd>
+<dt>Return Value Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -6977,7 +7091,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <dl class="card-block">
     <dt>Synopsis</dt><dd><ul><em>(x)</em></ul></dd>
-<dt>Arguments</dt><dd>
+<dt>Argument Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -7039,7 +7153,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     </dd>
-<dt>Return Value</dt><dd>
+<dt>Return Value Clause</dt><dd>
     
     
     <fieldset class="card card-outline-primary">
@@ -7102,7 +7216,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>equals(valueToCompareWith)</em></ul></dd>
-<dt>Arguments</dt><dd>
+<dt>Argument Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -7164,7 +7278,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     </dd>
-<dt>Return Value</dt><dd>
+<dt>Return Value Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -7180,7 +7294,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <dl class="card-block">
     <dt>Synopsis</dt><dd><ul><em>(x)</em></ul></dd>
-<dt>Arguments</dt><dd>
+<dt>Argument Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -7242,7 +7356,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     </dd>
-<dt>Return Value</dt><dd>
+<dt>Return Value Clause</dt><dd>
     
     
     <fieldset class="card card-outline-primary">
@@ -7305,7 +7419,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>instanceOf(instanceType)</em></ul></dd>
-<dt>Arguments</dt><dd>
+<dt>Argument Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -7380,7 +7494,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     </dd>
-<dt>Return Value</dt><dd>
+<dt>Return Value Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -7396,7 +7510,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <dl class="card-block">
     <dt>Synopsis</dt><dd><ul><em>(x)</em></ul></dd>
-<dt>Arguments</dt><dd>
+<dt>Argument Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -7458,7 +7572,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     </dd>
-<dt>Return Value</dt><dd>
+<dt>Return Value Clause</dt><dd>
     
     
     <fieldset class="card card-outline-primary">
@@ -7521,7 +7635,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>set(<a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">nsPath</a>, expression)</em></ul></dd>
-<dt>Arguments</dt><dd>
+<dt>Argument Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -7614,7 +7728,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     </dd>
-<dt>Return Value</dt><dd>
+<dt>Return Value Clause</dt><dd>
     
     
     <fieldset class="card card-outline-primary">
@@ -7673,7 +7787,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>get(<a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">nsPath</a>)</em></ul></dd>
-<dt>Arguments</dt><dd>
+<dt>Argument Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -7732,7 +7846,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     </dd>
-<dt>Return Value</dt><dd>
+<dt>Return Value Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -7777,7 +7891,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>resolve(<a href="#clause.types/Expression" data-path="clause.types/Expression">expression</a>, registry)</em></ul></dd>
-<dt>Arguments</dt><dd>
+<dt>Argument Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -7904,7 +8018,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     </dd>
-<dt>Return Value</dt><dd>
+<dt>Return Value Clause</dt><dd>
     
     
     <fieldset class="card card-outline-primary">
@@ -7949,7 +8063,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       </blockquote>
     </dd>
 <dt>Synopsis</dt><dd><ul><em>meta(source, metaObj)</em></ul></dd>
-<dt>Arguments</dt><dd>
+<dt>Argument Clause</dt><dd>
     
     
     <fieldset class="card card-outline-info">
@@ -8160,7 +8274,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     </dd>
-<dt>Return Value</dt><dd>
+<dt>Return Value Clause</dt><dd>
     
     
     <fieldset class="card card-outline-primary">
@@ -8370,248 +8484,6 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
           </div>
         </fieldset>
     
-    </div>
-  
-        </div>
-      
-
-    <a name="clause.types/Clause"></a>
-    
-        <div class="card">
-          <div class="card-header inline-headers">
-            
-      <h6>Clause</h6>&#xA0;
-        <span class="tag tag-primary">
-          predicate
-        </span>
-      
-          </div>
-        
-    <div class="card-block">
-      
-    <em>
-      A value that satisfies 
-      <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isClause(x) {
-  return x instanceof Clause;
-}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
-        isClause()
-      </span>
-    </em>
-  
-    </div>
-  
-        </div>
-      
-
-    <a name="clause.types/FClause"></a>
-    
-        <div class="card">
-          <div class="card-header inline-headers">
-            
-      <h6>FClause</h6>&#xA0;
-        <span class="tag tag-primary">
-          predicate
-        </span>
-      
-          </div>
-        
-    <div class="card-block">
-      
-    <em>
-      A value that satisfies 
-      <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isFclause(x) {
-  return isClause(x) &amp;&amp; x.type === &apos;FCLAUSE&apos;;
-}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
-        isFclause()
-      </span>
-    </em>
-  
-    </div>
-  
-        </div>
-      
-
-    <a name="clause.types/Predicate"></a>
-    
-        <div class="card">
-          <div class="card-header inline-headers">
-            
-      <h6>Predicate</h6>&#xA0;
-        <span class="tag tag-primary">
-          predicate
-        </span>
-      
-          </div>
-        
-    <div class="card-block">
-      
-    <em>
-      A value that satisfies 
-      <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isPred(x) {
-  return isFn(x);
-}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
-        isPred()
-      </span>
-    </em>
-  
-    </div>
-  
-        </div>
-      
-
-    <a name="clause.types/DelayedClause"></a>
-    
-        <div class="card">
-          <div class="card-header inline-headers">
-            
-      <h6>DelayedClause</h6>&#xA0;
-        <span class="tag tag-primary">
-          predicate
-        </span>
-      
-          </div>
-        
-    <div class="card-block">
-      
-    <em>
-      A value that satisfies 
-      <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function instanceOf_DelayedClause(){ return action.apply(this, arguments); }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
-        instanceOf(DelayedClause)()
-      </span>
-    </em>
-  
-    </div>
-  
-        </div>
-      
-
-    <a name="clause.types/ClauseReference"></a>
-    
-        <div class="card">
-          <div class="card-header inline-headers">
-            
-      <h6>ClauseReference</h6>&#xA0;
-        <span class="tag tag-primary">
-          predicate
-        </span>
-      
-          </div>
-        
-    <div class="card-block">
-      
-    <em>
-      A value that satisfies 
-      <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isClauseRef(x) {
-  return x instanceof ClauseRef;
-}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
-        isClauseRef()
-      </span>
-    </em>
-  
-    </div>
-  
-        </div>
-      
-
-    <a name="clause.types/Problem"></a>
-    
-        <div class="card">
-          <div class="card-header inline-headers">
-            
-      <h6>Problem</h6>&#xA0;
-        <span class="tag tag-primary">
-          predicate
-        </span>
-      
-          </div>
-        
-    <div class="card-block">
-      
-    <em>
-      A value that satisfies 
-      <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isProblem(x) {
-  return x instanceof Problem;
-}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
-        isProblem()
-      </span>
-    </em>
-  
-    </div>
-  
-        </div>
-      
-
-    <a name="clause.types/NamespaceObj"></a>
-    
-        <div class="card">
-          <div class="card-header inline-headers">
-            
-      <h6>NamespaceObj</h6>&#xA0;
-        <span class="tag tag-primary">
-          shape
-        </span>
-      
-          </div>
-        
-    <div class="card-block">
-      
-      TODO
-    </div>
-  
-        </div>
-      
-
-    <a name="clause.types/NamespacePath"></a>
-    
-        <div class="card">
-          <div class="card-header inline-headers">
-            
-      <h6>NamespacePath</h6>&#xA0;
-        <span class="tag tag-primary">
-          predicate
-        </span>
-      
-          </div>
-        
-    <div class="card-block">
-      
-    <em>
-      A value that satisfies 
-      <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isNamespacePath(x) {
-  return isStr(x) &amp;&amp; /^\/?[a-zA-Z0-9\-_\.]*\/([a-zA-Z0-9\-_]+)$/.test(x);
-}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
-        isNamespacePath()
-      </span>
-    </em>
-  
-    </div>
-  
-        </div>
-      
-
-    <a name="clause.types/ClauseLabel"></a>
-    
-        <div class="card">
-          <div class="card-header inline-headers">
-            
-      <h6>ClauseLabel</h6>&#xA0;
-        <span class="tag tag-primary">
-          predicate
-        </span>
-      
-          </div>
-        
-    <div class="card-block">
-      
-    <em>
-      A value that satisfies 
-      <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isClauseName(x) {
-  return isStr(x);
-}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
-        isClauseName()
-      </span>
-    </em>
-  
     </div>
   
         </div>
@@ -8882,6 +8754,720 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
           </div>
         </fieldset>
     
+    </div>
+  
+        </div>
+      
+
+    <a name="clause.types/Clause"></a>
+    
+        <div class="card">
+          <div class="card-header inline-headers">
+            
+      <h6>Clause</h6>&#xA0;
+        <span class="tag tag-primary">
+          predicate
+        </span>
+      
+          </div>
+        
+    <div class="card-block">
+      
+    <em>
+      A value that satisfies 
+      <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isClause(x) {
+  return x instanceof Clause;
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        isClause()
+      </span>
+    </em>
+  
+    </div>
+  
+        </div>
+      
+
+    <a name="clause.types/FClause"></a>
+    
+        <div class="card">
+          <div class="card-header inline-headers">
+            
+      <h6>FClause</h6>&#xA0;
+        <span class="tag tag-primary">
+          predicate
+        </span>
+      
+          </div>
+        
+    <div class="card-block">
+      
+    <em>
+      A value that satisfies 
+      <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isFclause(x) {
+  return isClause(x) &amp;&amp; x.type === &apos;FCLAUSE&apos;;
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        isFclause()
+      </span>
+    </em>
+  
+    </div>
+  
+        </div>
+      
+
+    <a name="clause.types/Predicate"></a>
+    
+        <div class="card">
+          <div class="card-header inline-headers">
+            
+      <h6>Predicate</h6>&#xA0;
+        <span class="tag tag-primary">
+          predicate
+        </span>
+      
+          </div>
+        
+    <div class="card-block">
+      
+    <em>
+      A value that satisfies 
+      <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isPred(x) {
+  return isFn(x);
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        isPred()
+      </span>
+    </em>
+  
+    </div>
+  
+        </div>
+      
+
+    <a name="clause.types/DelayedClause"></a>
+    
+        <div class="card">
+          <div class="card-header inline-headers">
+            
+      <h6>DelayedClause</h6>&#xA0;
+        <span class="tag tag-primary">
+          predicate
+        </span>
+      
+          </div>
+        
+    <div class="card-block">
+      
+    <em>
+      A value that satisfies 
+      <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function instanceOf_DelayedClause(){ return action.apply(this, arguments); }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        instanceOf(DelayedClause)()
+      </span>
+    </em>
+  
+    </div>
+  
+        </div>
+      
+
+    <a name="clause.types/ClauseReference"></a>
+    
+        <div class="card">
+          <div class="card-header inline-headers">
+            
+      <h6>ClauseReference</h6>&#xA0;
+        <span class="tag tag-primary">
+          predicate
+        </span>
+      
+          </div>
+        
+    <div class="card-block">
+      
+    <em>
+      A value that satisfies 
+      <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isClauseRef(x) {
+  return x instanceof ClauseRef;
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        isClauseRef()
+      </span>
+    </em>
+  
+    </div>
+  
+        </div>
+      
+
+    <a name="clause.types/Problem"></a>
+    
+        <div class="card">
+          <div class="card-header inline-headers">
+            
+      <h6>Problem</h6>&#xA0;
+        <span class="tag tag-primary">
+          predicate
+        </span>
+      
+          </div>
+        
+    <div class="card-block">
+      
+    <em>
+      A value that satisfies 
+      <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isProblem(x) {
+  return x instanceof Problem;
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        isProblem()
+      </span>
+    </em>
+  
+    </div>
+  
+        </div>
+      
+
+    <a name="clause.types/NamespaceObj"></a>
+    
+        <div class="card">
+          <div class="card-header inline-headers">
+            
+      <h6>NamespaceObj</h6>&#xA0;
+        <span class="tag tag-primary">
+          shape
+        </span>
+      
+          </div>
+        
+    <div class="card-block">
+      
+      TODO
+    </div>
+  
+        </div>
+      
+
+    <a name="clause.types/NamespacePath"></a>
+    
+        <div class="card">
+          <div class="card-header inline-headers">
+            
+      <h6>NamespacePath</h6>&#xA0;
+        <span class="tag tag-primary">
+          predicate
+        </span>
+      
+          </div>
+        
+    <div class="card-block">
+      
+    <em>
+      A value that satisfies 
+      <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isNamespacePath(x) {
+  return isStr(x) &amp;&amp; /^\/?[a-zA-Z0-9\-_\.]*\/([a-zA-Z0-9\-_]+)$/.test(x);
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        isNamespacePath()
+      </span>
+    </em>
+  
+    </div>
+  
+        </div>
+      
+
+    <a name="clause.types/ClauseLabel"></a>
+    
+        <div class="card">
+          <div class="card-header inline-headers">
+            
+      <h6>ClauseLabel</h6>&#xA0;
+        <span class="tag tag-primary">
+          predicate
+        </span>
+      
+          </div>
+        
+    <div class="card-block">
+      
+    <em>
+      A value that satisfies 
+      <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isClauseName(x) {
+  return isStr(x);
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        isClauseName()
+      </span>
+    </em>
+  
+    </div>
+  
+        </div>
+      
+
+    <a name="clause.types/SExpression"></a>
+    
+        <div class="card">
+          <div class="card-header inline-headers">
+            
+      <h6>SExpression</h6>&#xA0;
+        <span class="tag tag-primary">
+          wall
+        </span>
+      
+          </div>
+        
+    <div class="card-block">
+      
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="clause-type">
+      
+    <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
+    &lt;pre&gt;cat( &quot;head&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;, &quot;params&quot;, zeroOrMore( or( &quot;label&quot;, isString, &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, &quot;paramsObj&quot;, and( instanceOf(ParamsMap), mapOf(  ) ), &quot;optionsObj&quot;, isPlainObject, &quot;recursive&quot;, instanceOf(Recursive) ) ) )&lt;/pre&gt;
+  " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
+      a concatenation (cat) of
+    </span>
+  
+    </legend>
+    
+    <div class="card-block">
+      <p class="card-title">
+        Should be <em>an ordered list</em> of the following:
+      </p>
+    </div>
+    <div class="list-group list-group-flush list-for-cat">
+      
+        <fieldset class="list-group-item card card-outline-info">
+          <legend class="clause-type">
+          
+            <span class="tag tag-default">Part 1</span>
+            <span class="lead font-italic text-primary">
+              &#x201C;head&#x201D;</span>          
+          
+          </legend>
+          <div class="row">
+            <div class="col-md-12">
+              
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="clause-type">
+      <span class="tag tag-info">satisfies clause</span>
+    </legend>
+    
+    <div class="card-block">
+      A value that is of
+      <a href="#clause.types/Expression" data-path="clause.types/Expression">clause.types/Expression</a>
+    </div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </fieldset>
+     
+        <fieldset class="list-group-item card card-outline-info">
+          <legend class="clause-type">
+          
+            <span class="tag tag-default">Part 2</span>
+            <span class="lead font-italic text-primary">
+              &#x201C;params&#x201D;</span>          
+          
+          </legend>
+          <div class="row">
+            <div class="col-md-12">
+              
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="clause-type">
+      
+    <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
+    &lt;pre&gt;zeroOrMore( or( &quot;label&quot;, isString, &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, &quot;paramsObj&quot;, and( instanceOf(ParamsMap), mapOf(  ) ), &quot;optionsObj&quot;, isPlainObject, &quot;recursive&quot;, instanceOf(Recursive) ) )&lt;/pre&gt;
+  " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
+      zero or more of (*)
+    </span>
+  
+    </legend>
+    
+    <div class="card-block">
+      
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="clause-type">
+      
+    <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
+    &lt;pre&gt;or( &quot;label&quot;, isString, &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, &quot;paramsObj&quot;, and( instanceOf(ParamsMap), mapOf(  ) ), &quot;optionsObj&quot;, isPlainObject, &quot;recursive&quot;, instanceOf(Recursive) )&lt;/pre&gt;
+  " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
+      either one of (or)
+    </span>
+  
+    </legend>
+    
+    <div class="card-block">
+      <p class="card-title">
+      
+      
+        Should be <em>one of</em> the following:
+      </p>
+    </div>
+    <div class="list-group list-group-flush list-for-or">
+      
+        <fieldset class="list-group-item card-outline-info">
+          <legend class="clause-type">
+            <span class="tag tag-default">
+                Option 1
+            </span>
+            
+                <span class="lead font-italic text-primary">
+                  &#x201C;label&#x201D;
+                </span>
+            
+          </legend>
+          <div class="row">
+            <div class="col-md-12">
+            
+            
+            
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              
+    
+    
+    <fieldset class="card card-outline-primary">
+    <legend class="clause-type">
+      
+    <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
+    &lt;pre&gt;isString&lt;/pre&gt;
+  " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
+      satisfies predicate
+    </span>
+  
+    </legend>
+    
+    <div class="card-block">
+      
+    <em>
+      A value that satisfies 
+      <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isString(x) {
+  return x !== null &amp;&amp; x !== undefined &amp;&amp; x.constructor === String;
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        isString()
+      </span>
+    </em>
+  
+    </div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </fieldset>
+    
+        <fieldset class="list-group-item card-outline-info">
+          <legend class="clause-type">
+            <span class="tag tag-default">
+                Option 2
+            </span>
+            
+                <span class="lead font-italic text-primary">
+                  &#x201C;sExpression&#x201D;
+                </span>
+            
+          </legend>
+          <div class="row">
+            <div class="col-md-12">
+            
+            
+            
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="clause-type">
+      <span class="tag tag-info">satisfies clause</span>
+    </legend>
+    
+    <div class="card-block">
+      A value that is of
+      <a href="#clause.types/SExpression" data-path="clause.types/SExpression">clause.types/SExpression</a>
+    </div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </fieldset>
+    
+        <fieldset class="list-group-item card-outline-info">
+          <legend class="clause-type">
+            <span class="tag tag-default">
+                Option 3
+            </span>
+            
+                <span class="lead font-italic text-primary">
+                  &#x201C;paramsObj&#x201D;
+                </span>
+            
+          </legend>
+          <div class="row">
+            <div class="col-md-12">
+            
+            
+            
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="clause-type">
+      
+    <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
+    &lt;pre&gt;and( instanceOf(ParamsMap), mapOf(  ) )&lt;/pre&gt;
+  " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
+      <span class="tag tag-info">and</span>
+    </span>
+  
+    </legend>
+    
+    <div class="card-block">
+      <p class="card-title">
+        Should satisfy <em>all</em> of the following expression:
+      </p>
+    </div>
+    <div class="list-group list-group-flush list-for-cat">
+      
+        <fieldset class="list-group-item card-outline-info">
+          <legend class="clause-type">
+            <span class="tag tag-default">Condition 1 </span>
+          </legend>
+          <div class="row">
+            <div class="col-md-12">
+              
+    
+    
+    <fieldset class="card card-outline-primary">
+    <legend class="clause-type">
+      
+    <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
+    &lt;pre&gt;instanceOf(ParamsMap)&lt;/pre&gt;
+  " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
+      satisfies predicate
+    </span>
+  
+    </legend>
+    
+    <div class="card-block">
+      
+    <em>
+      A value that satisfies 
+      <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function instanceOf_ParamsMap(){ return action.apply(this, arguments); }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        instanceOf(ParamsMap)()
+      </span>
+    </em>
+  
+    </div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </fieldset>
+     
+        <fieldset class="list-group-item card-outline-info">
+          <legend class="clause-type">
+            <span class="tag tag-default">Condition 2 </span>
+          </legend>
+          <div class="row">
+            <div class="col-md-12">
+              
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="clause-type">
+      
+    <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
+    &lt;pre&gt;mapOf(  )&lt;/pre&gt;
+  " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
+      <span class="tag tag-info">map_of</span>
+    </span>
+  
+    </legend>
+    
+    <div class="card-block">
+      
+      TODO
+    </div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </fieldset>
+    
+    </div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </fieldset>
+    
+        <fieldset class="list-group-item card-outline-info">
+          <legend class="clause-type">
+            <span class="tag tag-default">
+                Option 4
+            </span>
+            
+                <span class="lead font-italic text-primary">
+                  &#x201C;optionsObj&#x201D;
+                </span>
+            
+          </legend>
+          <div class="row">
+            <div class="col-md-12">
+            
+            
+            
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              
+    
+    
+    <fieldset class="card card-outline-primary">
+    <legend class="clause-type">
+      
+    <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
+    &lt;pre&gt;isPlainObject&lt;/pre&gt;
+  " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
+      satisfies predicate
+    </span>
+  
+    </legend>
+    
+    <div class="card-block">
+      
+    <em>
+      A value that satisfies 
+      <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isPlainObject(x) {
+  // Basic check for Type object that&apos;s not null
+  if (isObj(x)) {
+
+    // If Object.getPrototypeOf supported, use it
+    if (typeof Object.getPrototypeOf == &apos;function&apos;) {
+      var proto = Object.getPrototypeOf(x);
+      return proto === Object.prototype || proto === null;
+    }
+
+    // Otherwise, use internal class
+    // This should be reliable as if getPrototypeOf not supported, is pre-ES5
+    return Object.prototype.toString.call(x) == &apos;[object Object]&apos;;
+  }
+
+  // Not an object
+  return false;
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        isPlainObject()
+      </span>
+    </em>
+  
+    </div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </fieldset>
+    
+        <fieldset class="list-group-item card-outline-info">
+          <legend class="clause-type">
+            <span class="tag tag-default">
+                Option 5
+            </span>
+            
+                <span class="lead font-italic text-primary">
+                  &#x201C;recursive&#x201D;
+                </span>
+            
+          </legend>
+          <div class="row">
+            <div class="col-md-12">
+            
+            
+            
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              
+    
+    
+    <fieldset class="card card-outline-primary">
+    <legend class="clause-type">
+      
+    <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
+    &lt;pre&gt;instanceOf(Recursive)&lt;/pre&gt;
+  " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
+      satisfies predicate
+    </span>
+  
+    </legend>
+    
+    <div class="card-block">
+      
+    <em>
+      A value that satisfies 
+      <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function instanceOf_Recursive(){ return action.apply(this, arguments); }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        instanceOf(Recursive)()
+      </span>
+    </em>
+  
+    </div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </fieldset>
+    
+    </div>
+  
+    </fieldset>
+    
+      TODO
+    </div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </fieldset>
+    
+    </div>
+  
+    </fieldset>
+    
+      TODO
     </div>
   
         </div>

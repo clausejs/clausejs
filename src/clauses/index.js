@@ -7,6 +7,7 @@ import { any, ExprClause, CatFnClause, OrFnClause, AndFnClause,
 import { WallFnClause } from '../core/wall';
 import { ShapeFnClause, MapOfFnClause } from '../core/regex';
 import { isNamespacePath, GetNSFnClause, NamespaceFnClause, MetaFnClause, SetNSFnClause, NamespaceObjClause, ResolveFnClause } from './namespace.types';
+import { SExpressionClause } from '../utils/sExpression';
 
 // TODO
 // const C = Clause.withRegistry(nsObj);
@@ -20,6 +21,11 @@ const DescribeFnClause = fclause( {
     } ) ),
     'space', C.zeroOrOne( C.isNatInt ) ),
   ret: isStr,
+} );
+
+const SExpressionFnClause = fclause( {
+  args: cat( 'expression', C( 'clause.types/Expression' ) ),
+  ret: SExpressionClause
 } );
 
 const SingleArgPredClause = () => fclause( {
@@ -127,6 +133,7 @@ C( 'clause.utils/enforce', EnforceFnClause );
 C( 'clause.utils/conform', ConformFnClause );
 C( 'clause.utils/delayed', DelayedFnClause );
 C( 'clause.utils/describe', DescribeFnClause );
+C( 'clause.utils/sExpression', SExpressionFnClause );
 
 C( 'clause.preds/not', NotFnClause );
 C( 'clause.preds/isObj', SingleArgPredClause() );
@@ -153,6 +160,7 @@ C( '/clause.namespace/resolve', ResolveFnClause );
 C( '/clause.namespace/meta', MetaFnClause );
 
 C( 'clause.types/Expression', ExprClause );
+C( 'clause.types/Primitive', PrimitiveClause );
 C( 'clause.types/Clause', ClauseClause );
 C( 'clause.types/FClause', FclauseClause );
 C( 'clause.types/Predicate', PredClause );
@@ -162,6 +170,6 @@ C( 'clause.types/Problem', isProblem );
 C( 'clause.types/NamespaceObj', NamespaceObjClause );
 C( 'clause.types/NamespacePath', isNamespacePath );
 C( 'clause.types/ClauseLabel', isClauseName );
-C( 'clause.types/Primitive', PrimitiveClause );
+C( 'clause.types/SExpression', SExpressionClause );
 
 export default C.getRegistry();

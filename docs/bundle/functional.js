@@ -415,22 +415,22 @@ var oAssign = __webpack_require__(4);
 var Clause = __webpack_require__(1);
 var isClause = __webpack_require__(5);
 var isPred = __webpack_require__(10);
-var isExpr = __webpack_require__(37);
+var isExpr = __webpack_require__(38);
 var clauseFromAlts = __webpack_require__(7);
 var isProblem = __webpack_require__(0);
-var isClauseName = __webpack_require__(36);
+var isClauseName = __webpack_require__(37);
 var namedFn = __webpack_require__(14);
 var isClauseRef = __webpack_require__(13);
 var isDelayedClause = __webpack_require__(22);
-var c = __webpack_require__(44);
+var c = __webpack_require__(45);
 var coerceIntoClause = __webpack_require__(9);
 var fclause = __webpack_require__(18);
 var walk = __webpack_require__(16);
 
 var isObj = __webpack_require__(20);
 var isStr = __webpack_require__(6);
-var oneOf = __webpack_require__(33);
-var not = __webpack_require__(32);
+var oneOf = __webpack_require__(34);
+var not = __webpack_require__(33);
 
 var clauseClause = coerceIntoClause(isClause);
 var nameClause = coerceIntoClause(isClauseName);
@@ -945,7 +945,7 @@ module.exports = function isUndefined(x) {
 "use strict";
 
 
-var ClauseRef = __webpack_require__(38);
+var ClauseRef = __webpack_require__(39);
 // TODO
 function isClauseRef(x) {
   return x instanceof ClauseRef;
@@ -985,21 +985,21 @@ var _require = __webpack_require__(8),
     keys = _require.keys,
     mapOf = _require.mapOf;
 
-var nullable = __webpack_require__(50);
-var undefinable = __webpack_require__(51);
-var maybe = __webpack_require__(45);
+var nullable = __webpack_require__(51);
+var undefinable = __webpack_require__(52);
+var maybe = __webpack_require__(46);
 
-var _require2 = __webpack_require__(42),
+var _require2 = __webpack_require__(43),
     wall = _require2.wall;
 
-var equals = __webpack_require__(28);
+var equals = __webpack_require__(29);
 
 var sCat = function sCat(str) {
   return regex.cat.apply(null, Array.prototype.slice.call(str).map(equals));
 };
 
 var other = {
-  any: __webpack_require__(43),
+  any: __webpack_require__(44),
   fclause: __webpack_require__(18),
   wall: wall, clause: wall,
   nullable: nullable, undefinable: undefinable, maybe: maybe,
@@ -1094,26 +1094,26 @@ module.exports = walk;
 "use strict";
 
 
-var isNum = __webpack_require__(31);
-var isNatInt = __webpack_require__(53);
-var isInt = __webpack_require__(30);
-var isBool = __webpack_require__(39);
+var isNum = __webpack_require__(32);
+var isNatInt = __webpack_require__(54);
+var isInt = __webpack_require__(31);
+var isBool = __webpack_require__(40);
 var isFn = __webpack_require__(11);
 var isObj = __webpack_require__(20);
-var isPlainObj = __webpack_require__(54);
-var equals = __webpack_require__(28);
-var oneOf = __webpack_require__(33);
+var isPlainObj = __webpack_require__(55);
+var equals = __webpack_require__(29);
+var oneOf = __webpack_require__(34);
 var isStr = __webpack_require__(6);
-var isDate = __webpack_require__(52);
-var not = __webpack_require__(32);
-var instanceOf = __webpack_require__(29);
-var isUuid = __webpack_require__(55);
+var isDate = __webpack_require__(53);
+var not = __webpack_require__(33);
+var instanceOf = __webpack_require__(30);
+var isUuid = __webpack_require__(56);
 var isArray = Array.isArray;
 
 var e = {
   isNull: __webpack_require__(19),
   isUndefined: __webpack_require__(12),
-  notEmpty: __webpack_require__(56),
+  notEmpty: __webpack_require__(57),
   isBool: isBool, isBoolean: isBool,
   isFn: isFn, isFunction: isFn,
   isNum: isNum, isNumber: isNum,
@@ -1222,8 +1222,8 @@ module.exports = conform;
 "use strict";
 
 
-var DelayedClause = __webpack_require__(27);
-var instanceOf = __webpack_require__(29);
+var DelayedClause = __webpack_require__(28);
+var instanceOf = __webpack_require__(30);
 
 //TODO
 module.exports = instanceOf(DelayedClause);
@@ -1364,25 +1364,256 @@ module.exports = function deref(clause) {
 "use strict";
 
 
+var _sExpression = __webpack_require__(27);
+
+var _sExpression2 = _interopRequireDefault(_sExpression);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 module.exports = {
   conform: __webpack_require__(21),
-  isValid: __webpack_require__(63),
-  isNamespacePath: __webpack_require__(62),
-  identity: __webpack_require__(35),
+  isValid: __webpack_require__(64),
+  isNamespacePath: __webpack_require__(63),
+  identity: __webpack_require__(36),
   isProblem: __webpack_require__(0),
-  delayed: __webpack_require__(34),
-  enforce: __webpack_require__(58),
-  isExpr: __webpack_require__(37),
+  delayed: __webpack_require__(35),
+  enforce: __webpack_require__(59),
+  isExpr: __webpack_require__(38),
   isClause: __webpack_require__(5),
-  isFclause: __webpack_require__(61),
+  isFclause: __webpack_require__(62),
   isClauseRef: __webpack_require__(13),
-  describe: __webpack_require__(40),
+  describe: __webpack_require__(41),
   deref: __webpack_require__(25),
-  isClauseName: __webpack_require__(36)
+  isClauseName: __webpack_require__(37),
+  sExpression: _sExpression2.default
 };
 
 /***/ },
 /* 27 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var fnName = __webpack_require__(3);
+var clauseFromAlts = __webpack_require__(7);
+var oAssign = __webpack_require__(4);
+
+var _require = __webpack_require__(15),
+    wall = _require.wall,
+    any = _require.any,
+    zeroOrMore = _require.zeroOrMore,
+    and = _require.and,
+    cat = _require.cat,
+    or = _require.or,
+    ExprClause = _require.ExprClause,
+    mapOf = _require.mapOf,
+    maybe = _require.maybe;
+
+var delayed = __webpack_require__(35);
+var coerceIntoClause = __webpack_require__(9);
+
+var _require2 = __webpack_require__(17),
+    isStr = _require2.isStr,
+    isPlainObj = _require2.isPlainObj,
+    instanceOf = _require2.instanceOf;
+
+function Recursive(expression) {
+  this.isRecursive = true;
+  this.expression = expression;
+}
+
+function ParamsMap(map) {
+  oAssign(this, map);
+}
+
+var ParamsMapC = and(instanceOf(ParamsMap), mapOf(any, maybe(or('paramList', zeroOrMore(delayed(function () {
+  return ParamItemClause;
+})), 'paramMap', delayed(function () {
+  return ParamsMapC;
+}), 'singleParam', delayed(function () {
+  return ParamItemClause;
+})))));
+
+var ParamItemClause = or('label', isStr, 'sExpression', delayed(function () {
+  return SExpressionClause;
+}), 'paramsObj', ParamsMapC, 'optionsObj', isPlainObj, 'recursive', instanceOf(Recursive));
+
+var SExpressionClause = wall(cat('head', ExprClause, 'params', zeroOrMore(ParamItemClause)));
+
+var singleArgParamGenerator = function singleArgParamGenerator(repo, _ref) {
+  var enclosedClause = _ref.opts.enclosedClause;
+  return [_createSExpr(repo, enclosedClause)];
+};
+
+var multipleArgParamGenerator = function multipleArgParamGenerator(repo, _ref2) {
+  var named = _ref2.opts.named,
+      exprs = _ref2.exprs,
+      type = _ref2.type;
+
+  if (exprs.length === 0) {
+    //empty case
+    return [];
+  } else if (named) {
+    var r = exprs.reduce(function (acc, _ref3) {
+      var name = _ref3.name,
+          expr = _ref3.expr;
+      return acc.concat(['"' + name + '"', _createSExpr(repo, expr)]);
+    }, []);
+    return r;
+  } else {
+    return exprs.reduce(function (acc, _ref4) {
+      var expr = _ref4.expr;
+      return acc.concat([_createSExpr(repo, expr)]);
+    }, []);
+  }
+};
+
+var sParamsConverters = {
+  'PRED': function PRED(repo, _ref5) {
+    var predicate = _ref5.opts.predicate;
+    return [fnName(predicate) + '()'];
+  },
+  'WALL': function WALL(repo, _ref6) {
+    var enclosedClause = _ref6.opts.enclosedClause;
+    return [_createSExpr(repo, enclosedClause)];
+  },
+  'AND': function AND(repo, _ref7) {
+    var conformedExprs = _ref7.opts.conformedExprs;
+    return conformedExprs.map(clauseFromAlts).map(function (c) {
+      return _createSExpr(repo, c);
+    });
+  },
+  'CAT': multipleArgParamGenerator,
+  'OR': multipleArgParamGenerator,
+  'Z_OR_M': singleArgParamGenerator,
+  'O_OR_M': singleArgParamGenerator,
+  'Z_OR_O': singleArgParamGenerator,
+  'COLL_OF': singleArgParamGenerator,
+  'ANY': function ANY() {
+    return [];
+  },
+  // TODO
+  'MAP_OF': function MAP_OF() {
+    return [];
+  },
+  // TODO
+  'SHAPE': function SHAPE(repo, _ref8) {
+    var _ref8$opts$conformedA = _ref8.opts.conformedArgs.shapeArgs,
+        _ref8$opts$conformedA2 = _ref8$opts$conformedA.optionalFields;
+    _ref8$opts$conformedA2 = _ref8$opts$conformedA2 === undefined ? {} : _ref8$opts$conformedA2;
+    var opt = _ref8$opts$conformedA2.opt,
+        optional = _ref8$opts$conformedA2.optional,
+        _ref8$opts$conformedA3 = _ref8$opts$conformedA.requiredFields;
+    _ref8$opts$conformedA3 = _ref8$opts$conformedA3 === undefined ? {} : _ref8$opts$conformedA3;
+    var req = _ref8$opts$conformedA3.req,
+        required = _ref8$opts$conformedA3.required;
+    return oAssign(new ParamsMap(), req || required ? {
+      required: _fieldDefToFrags(repo, req || required)
+    } : {}, opt || optional ? {
+      optional: _fieldDefToFrags(repo, opt || optional)
+    } : {});
+  },
+  'FCLAUSE': function FCLAUSE(repo, _ref9) {
+    var _ref9$opts = _ref9.opts,
+        args = _ref9$opts.args,
+        ret = _ref9$opts.ret,
+        fn = _ref9$opts.fn;
+    return oAssign(new ParamsMap(), args ? { args: _createSExpr(repo, args) } : {}, ret ? { ret: _createSExpr(repo, ret) } : {}, fn ? { fn: [fnName(fn) + '()'] } : {});
+  }
+};
+
+function _fieldDefToFrags(repo, _ref10) {
+  var _ref10$fieldDefs = _ref10.fieldDefs;
+  _ref10$fieldDefs = _ref10$fieldDefs === undefined ? {} : _ref10$fieldDefs;
+  var fields = _ref10$fieldDefs.fields,
+      keyList = _ref10.keyList;
+
+  if (fields) {
+    var r = new ParamsMap();
+    for (var key in fields) {
+      if (fields.hasOwnProperty(key)) {
+        var _fields$key = fields[key],
+            keyValExprPair = _fields$key.keyValExprPair,
+            valExpressionOnly = _fields$key.valExpressionOnly;
+
+        if (keyValExprPair) {
+          var keyExpression = keyValExprPair.keyExpression,
+              valExpression = keyValExprPair.valExpression;
+
+          oAssign(r, _defineProperty({}, key, new ParamsMap({
+            '<keyExpression>': _createSExpr(repo, clauseFromAlts(keyExpression)),
+            '<valExpression>': _createSExpr(repo, clauseFromAlts(valExpression))
+          })));
+        } else if (valExpressionOnly) {
+          oAssign(r, _defineProperty({}, key, _createSExpr(repo, clauseFromAlts(valExpressionOnly))));
+        }
+      }
+    }
+    return r;
+  } else if (keyList) {
+    return keyList;
+  } else {
+    throw '!';
+  }
+}
+
+function _params(repo, clause) {
+  var converter = sParamsConverters[clause.type];
+  if (!converter) {
+    console.error(clause);
+    throw new Error('Unsupported clause type ' + clause.type + '.');
+  } else {
+    var r = converter(repo, clause);
+    return r;
+  }
+}
+
+function _createSExpr(repo, expr) {
+  if (_exists(repo, expr)) {
+    return new Recursive(expr);
+  }
+  var coercedExpr = coerceIntoClause(expr),
+      realExpr = void 0,
+      newRepo = repo;
+  if (coercedExpr.type === 'DELAYED' || coercedExpr.type === 'CLAUSE_REF') {
+    realExpr = coercedExpr.get();
+    return _createSExpr(repo, realExpr);
+  } else {
+    realExpr = coercedExpr;
+    newRepo = _addToRepo(repo, coercedExpr);
+  }
+  var params = _params(newRepo, realExpr);
+  return [realExpr].concat(params);
+}
+
+function _addToRepo(repo, expr) {
+  if (!_exists(repo, expr)) {
+    return repo.concat([expr]);
+  }
+}
+
+function _exists(repo, piece) {
+  return repo.indexOf(piece) >= 0;
+}
+
+function sExpression(expr) {
+  var repo = [];
+  return _createSExpr(repo, expr);
+}
+
+exports.default = sExpression;
+exports.SExpressionClause = SExpressionClause;
+exports.ParamItemClause = ParamItemClause;
+
+/***/ },
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1418,7 +1649,7 @@ DelayedClause.prototype = Object.create(Clause.prototype);
 module.exports = DelayedClause;
 
 /***/ },
-/* 28 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1431,7 +1662,7 @@ module.exports = function equals(test) {
 };
 
 /***/ },
-/* 29 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1459,7 +1690,7 @@ module.exports = function instanceOf(t) {
 };
 
 /***/ },
-/* 30 */
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1476,7 +1707,7 @@ function isInt(x) {
 module.exports = isInt;
 
 /***/ },
-/* 31 */
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1489,7 +1720,7 @@ function isNum(x) {
 module.exports = isNum;
 
 /***/ },
-/* 32 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1515,7 +1746,7 @@ function not(pred) {
 module.exports = not;
 
 /***/ },
-/* 33 */
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1541,13 +1772,13 @@ module.exports = function oneOf() {
 };
 
 /***/ },
-/* 34 */
+/* 35 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var DelayedClause = __webpack_require__(27);
+var DelayedClause = __webpack_require__(28);
 
 function delayed(getFn) {
   return new DelayedClause({ getFn: getFn });
@@ -1556,7 +1787,7 @@ function delayed(getFn) {
 module.exports = delayed;
 
 /***/ },
-/* 35 */
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1569,7 +1800,7 @@ function identity(x) {
 module.exports = identity;
 
 /***/ },
-/* 36 */
+/* 37 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1583,7 +1814,7 @@ module.exports = function isClauseName(x) {
 };
 
 /***/ },
-/* 37 */
+/* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1601,7 +1832,7 @@ function isExpr(x) {
 module.exports = isExpr;
 
 /***/ },
-/* 38 */
+/* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1625,7 +1856,7 @@ ClauseRef.prototype = Object.create(Clause.prototype);
 module.exports = ClauseRef;
 
 /***/ },
-/* 39 */
+/* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1638,22 +1869,22 @@ function isBool(x) {
 module.exports = isBool;
 
 /***/ },
-/* 40 */
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _sExpression = __webpack_require__(64);
+var _sExpression = __webpack_require__(27);
 
 var _sExpression2 = _interopRequireDefault(_sExpression);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var humanReadable = __webpack_require__(60);
+var humanReadable = __webpack_require__(61);
 var isStr = __webpack_require__(6);
 var isProblem = __webpack_require__(0);
-var handle = __webpack_require__(59);
+var handle = __webpack_require__(60);
 var clauseFromAlts = __webpack_require__(7);
 var fnName = __webpack_require__(3);
 var stringifyWithFnName = __webpack_require__(23);
@@ -1785,7 +2016,7 @@ function _walkConcat(frags) {
 module.exports = describe;
 
 /***/ },
-/* 41 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1902,7 +2133,7 @@ module.exports = {
 };
 
 /***/ },
-/* 42 */
+/* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1943,14 +2174,14 @@ module.exports = {
 };
 
 /***/ },
-/* 43 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var Clause = __webpack_require__(1);
-var identity = __webpack_require__(35);
+var identity = __webpack_require__(36);
 var CLAUSE_TYPE_ANY = 'ANY';
 
 function any() {
@@ -1964,7 +2195,7 @@ function any() {
 module.exports = any;
 
 /***/ },
-/* 44 */
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1981,7 +2212,7 @@ module.exports = {
 };
 
 /***/ },
-/* 45 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2000,13 +2231,13 @@ function maybe(clause) {
 module.exports = maybe;
 
 /***/ },
-/* 46 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var fragment = __webpack_require__(47);
+var fragment = __webpack_require__(48);
 var Clause = __webpack_require__(1);
 var deref = __webpack_require__(25);
 
@@ -2111,7 +2342,7 @@ var compile = function compile(expr) {
 module.exports = compile;
 
 /***/ },
-/* 47 */
+/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2314,7 +2545,7 @@ build.ROOT = function ROOT(frag) {
 module.exports = build;
 
 /***/ },
-/* 48 */
+/* 49 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2610,7 +2841,7 @@ function _coerceToProperType(t, arr) {
 module.exports = getMatch;
 
 /***/ },
-/* 49 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2785,7 +3016,7 @@ function _getChain(nfa, finalState, inputType) {
 module.exports = simulate;
 
 /***/ },
-/* 50 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2803,7 +3034,7 @@ function nullable(clause) {
 module.exports = nullable;
 
 /***/ },
-/* 51 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2821,7 +3052,7 @@ function undefinable(clause) {
 module.exports = undefinable;
 
 /***/ },
-/* 52 */
+/* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2832,13 +3063,13 @@ module.exports = function isDate(date) {
 };
 
 /***/ },
-/* 53 */
+/* 54 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var isInt = __webpack_require__(30);
+var isInt = __webpack_require__(31);
 
 function isNatInt(x) {
   return isInt(x) && x >= 0.0;
@@ -2847,7 +3078,7 @@ function isNatInt(x) {
 module.exports = isNatInt;
 
 /***/ },
-/* 54 */
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2877,7 +3108,7 @@ function isPlainObject(x) {
 module.exports = isPlainObject;
 
 /***/ },
-/* 55 */
+/* 56 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2888,7 +3119,7 @@ module.exports = function isUuid(x) {
 };
 
 /***/ },
-/* 56 */
+/* 57 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2905,7 +3136,7 @@ module.exports = function notEmpty(x) {
 };
 
 /***/ },
-/* 57 */
+/* 58 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2921,7 +3152,7 @@ function betterThrow(problem) {
 module.exports = betterThrow;
 
 /***/ },
-/* 58 */
+/* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2940,7 +3171,7 @@ module.exports = function enforce(clause, x) {
 };
 
 /***/ },
-/* 59 */
+/* 60 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2969,7 +3200,7 @@ function handle(alts, handlerMap, unknownCaseHandler) {
 module.exports = handle;
 
 /***/ },
-/* 60 */
+/* 61 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3006,7 +3237,7 @@ function humanReadable(expr) {
 module.exports = humanReadable;
 
 /***/ },
-/* 61 */
+/* 62 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3021,7 +3252,7 @@ function isFclause(x) {
 module.exports = isFclause;
 
 /***/ },
-/* 62 */
+/* 63 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3036,7 +3267,7 @@ function isNamespacePath(x) {
 module.exports = isNamespacePath;
 
 /***/ },
-/* 63 */
+/* 64 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3060,230 +3291,6 @@ function isValid(pred, x) {
 }
 
 module.exports = isValid;
-
-/***/ },
-/* 64 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var fnName = __webpack_require__(3);
-var clauseFromAlts = __webpack_require__(7);
-var oAssign = __webpack_require__(4);
-
-var _require = __webpack_require__(15),
-    wall = _require.wall,
-    any = _require.any,
-    zeroOrMore = _require.zeroOrMore,
-    and = _require.and,
-    cat = _require.cat,
-    or = _require.or,
-    ExprClause = _require.ExprClause,
-    mapOf = _require.mapOf,
-    maybe = _require.maybe;
-
-var delayed = __webpack_require__(34);
-var coerceIntoClause = __webpack_require__(9);
-
-var _require2 = __webpack_require__(17),
-    isStr = _require2.isStr,
-    isPlainObj = _require2.isPlainObj,
-    instanceOf = _require2.instanceOf;
-
-function Recursive(expression) {
-  this.isRecursive = true;
-  this.expression = expression;
-}
-
-function ParamsMap(map) {
-  oAssign(this, map);
-}
-
-var ParamsMapC = and(instanceOf(ParamsMap), mapOf(any, maybe(or('paramList', zeroOrMore(delayed(function () {
-  return ParamItemClause;
-})), 'paramMap', delayed(function () {
-  return ParamsMapC;
-}), 'singleParam', delayed(function () {
-  return ParamItemClause;
-})))));
-
-var ParamItemClause = or('label', isStr, 'sExpression', delayed(function () {
-  return SExpressionClause;
-}), 'paramsObj', ParamsMapC, 'optionsObj', isPlainObj, 'recursive', instanceOf(Recursive));
-
-var SExpressionClause = wall(cat('head', ExprClause, 'params', zeroOrMore(ParamItemClause)));
-
-var singleArgParamGenerator = function singleArgParamGenerator(repo, _ref) {
-  var enclosedClause = _ref.opts.enclosedClause;
-  return [_createSExpr(repo, enclosedClause)];
-};
-
-var multipleArgParamGenerator = function multipleArgParamGenerator(repo, _ref2) {
-  var named = _ref2.opts.named,
-      exprs = _ref2.exprs,
-      type = _ref2.type;
-
-  if (exprs.length === 0) {
-    //empty case
-    return [];
-  } else if (named) {
-    var r = exprs.reduce(function (acc, _ref3) {
-      var name = _ref3.name,
-          expr = _ref3.expr;
-      return acc.concat(['"' + name + '"', _createSExpr(repo, expr)]);
-    }, []);
-    return r;
-  } else {
-    return exprs.reduce(function (acc, _ref4) {
-      var expr = _ref4.expr;
-      return acc.concat([_createSExpr(repo, expr)]);
-    }, []);
-  }
-};
-
-var sParamsConverters = {
-  'PRED': function PRED(repo, _ref5) {
-    var predicate = _ref5.opts.predicate;
-    return [fnName(predicate) + '()'];
-  },
-  'WALL': function WALL(repo, _ref6) {
-    var enclosedClause = _ref6.opts.enclosedClause;
-    return [_createSExpr(repo, enclosedClause)];
-  },
-  'AND': function AND(repo, _ref7) {
-    var conformedExprs = _ref7.opts.conformedExprs;
-    return conformedExprs.map(clauseFromAlts).map(function (c) {
-      return _createSExpr(repo, c);
-    });
-  },
-  'CAT': multipleArgParamGenerator,
-  'OR': multipleArgParamGenerator,
-  'Z_OR_M': singleArgParamGenerator,
-  'O_OR_M': singleArgParamGenerator,
-  'Z_OR_O': singleArgParamGenerator,
-  'COLL_OF': singleArgParamGenerator,
-  'ANY': function ANY() {
-    return [];
-  },
-  // TODO
-  'MAP_OF': function MAP_OF() {
-    return [];
-  },
-  // TODO
-  'SHAPE': function SHAPE(repo, _ref8) {
-    var _ref8$opts$conformedA = _ref8.opts.conformedArgs.shapeArgs,
-        _ref8$opts$conformedA2 = _ref8$opts$conformedA.optionalFields;
-    _ref8$opts$conformedA2 = _ref8$opts$conformedA2 === undefined ? {} : _ref8$opts$conformedA2;
-    var opt = _ref8$opts$conformedA2.opt,
-        optional = _ref8$opts$conformedA2.optional,
-        _ref8$opts$conformedA3 = _ref8$opts$conformedA.requiredFields;
-    _ref8$opts$conformedA3 = _ref8$opts$conformedA3 === undefined ? {} : _ref8$opts$conformedA3;
-    var req = _ref8$opts$conformedA3.req,
-        required = _ref8$opts$conformedA3.required;
-    return oAssign(new ParamsMap(), req || required ? {
-      required: _fieldDefToFrags(repo, req || required)
-    } : {}, opt || optional ? {
-      optional: _fieldDefToFrags(repo, opt || optional)
-    } : {});
-  },
-  'FCLAUSE': function FCLAUSE(repo, _ref9) {
-    var _ref9$opts = _ref9.opts,
-        args = _ref9$opts.args,
-        ret = _ref9$opts.ret,
-        fn = _ref9$opts.fn;
-    return oAssign(new ParamsMap(), args ? { args: _createSExpr(repo, args) } : {}, ret ? { ret: _createSExpr(repo, ret) } : {}, fn ? { fn: [fnName(fn) + '()'] } : {});
-  }
-};
-
-function _fieldDefToFrags(repo, _ref10) {
-  var _ref10$fieldDefs = _ref10.fieldDefs;
-  _ref10$fieldDefs = _ref10$fieldDefs === undefined ? {} : _ref10$fieldDefs;
-  var fields = _ref10$fieldDefs.fields,
-      keyList = _ref10.keyList;
-
-  if (fields) {
-    var r = new ParamsMap();
-    for (var key in fields) {
-      if (fields.hasOwnProperty(key)) {
-        var _fields$key = fields[key],
-            keyValExprPair = _fields$key.keyValExprPair,
-            valExpressionOnly = _fields$key.valExpressionOnly;
-
-        if (keyValExprPair) {
-          var keyExpression = keyValExprPair.keyExpression,
-              valExpression = keyValExprPair.valExpression;
-
-          oAssign(r, _defineProperty({}, key, new ParamsMap({
-            '<keyExpression>': _createSExpr(repo, clauseFromAlts(keyExpression)),
-            '<valExpression>': _createSExpr(repo, clauseFromAlts(valExpression))
-          })));
-        } else if (valExpressionOnly) {
-          oAssign(r, _defineProperty({}, key, _createSExpr(repo, clauseFromAlts(valExpressionOnly))));
-        }
-      }
-    }
-    return r;
-  } else if (keyList) {
-    return keyList;
-  } else {
-    throw '!';
-  }
-}
-
-function _params(repo, clause) {
-  var converter = sParamsConverters[clause.type];
-  if (!converter) {
-    console.error(clause);
-    throw new Error('Unsupported clause type ' + clause.type + '.');
-  } else {
-    var r = converter(repo, clause);
-    return r;
-  }
-}
-
-function _createSExpr(repo, expr) {
-  if (_exists(repo, expr)) {
-    return new Recursive(expr);
-  }
-  var coercedExpr = coerceIntoClause(expr),
-      realExpr = void 0,
-      newRepo = repo;
-  if (coercedExpr.type === 'DELAYED' || coercedExpr.type === 'CLAUSE_REF') {
-    realExpr = coercedExpr.get();
-    return _createSExpr(repo, realExpr);
-  } else {
-    realExpr = coercedExpr;
-    newRepo = _addToRepo(repo, coercedExpr);
-  }
-  var params = _params(newRepo, realExpr);
-  return [realExpr].concat(params);
-}
-
-function _addToRepo(repo, expr) {
-  if (!_exists(repo, expr)) {
-    return repo.concat([expr]);
-  }
-}
-
-function _exists(repo, piece) {
-  return repo.indexOf(piece) >= 0;
-}
-
-function sExpression(expr) {
-  var repo = [];
-  return _createSExpr(repo, expr);
-}
-
-exports.default = sExpression;
-exports.SExpressionClause = SExpressionClause;
-exports.ParamItemClause = ParamItemClause;
 
 /***/ },
 /* 65 */
@@ -3434,7 +3441,7 @@ module.exports = clauseRefWalker;
 
 var Problem = __webpack_require__(2);
 var isProblem = __webpack_require__(0);
-var isNum = __webpack_require__(31);
+var isNum = __webpack_require__(32);
 
 function collOfWalker(clause, walkFn) {
   var expr = clause.exprs[0];
@@ -3535,7 +3542,7 @@ var isProblem = __webpack_require__(0);
 var Problem = __webpack_require__(2);
 var functionName = __webpack_require__(3);
 var namedFn = __webpack_require__(14);
-var betterThrow = __webpack_require__(57);
+var betterThrow = __webpack_require__(58);
 
 function fclauseWalker(clause, walkFn) {
   var _clause$opts = clause.opts,
@@ -3751,9 +3758,9 @@ module.exports = mapOfWalker;
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var simulate = __webpack_require__(49);
-var getMatch = __webpack_require__(48);
-var compile = __webpack_require__(46);
+var simulate = __webpack_require__(50);
+var getMatch = __webpack_require__(49);
+var compile = __webpack_require__(47);
 var Problem = __webpack_require__(2);
 
 function nfaWalker(clause, walkFn) {
@@ -4183,7 +4190,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var oAssign = __webpack_require__(4);
-var ClauseRef = __webpack_require__(38);
+var ClauseRef = __webpack_require__(39);
 
 var _require = __webpack_require__(15),
     cat = _require.cat,
@@ -4193,9 +4200,9 @@ var _require = __webpack_require__(15),
 
 var isClause = __webpack_require__(5);
 var isPred = __webpack_require__(10);
-var isBool = __webpack_require__(39);
+var isBool = __webpack_require__(40);
 var walk = __webpack_require__(16);
-var resolveWithRegistry = __webpack_require__(41);
+var resolveWithRegistry = __webpack_require__(42);
 var coerceIntoClause = __webpack_require__(9);
 var oPath = __webpack_require__(80);
 
