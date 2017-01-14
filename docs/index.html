@@ -252,7 +252,7 @@
           </li><li>
             <a href="#clause.types/FClause" data-path="clause.types/FClause">FClause</a>
           </li><li>
-            <a href="#clause.types/Predicate" data-path="clause.types/Predicate">Predicate</a>
+            <a href="#clause.types/Predicate" data-path="clause.types/Predicate">Predicate()</a>
           </li><li>
             <a href="#clause.types/DelayedClause" data-path="clause.types/DelayedClause">DelayedClause</a>
           </li><li>
@@ -5018,13 +5018,13 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
               
     
     
-    <fieldset class="card card-outline-primary">
+    <fieldset class="card card-outline-info">
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;&lt;a href=&quot;#clause.types/Predicate&quot; data-path=&quot;clause.types/Predicate&quot;&gt;Predicate&lt;/a&gt;&lt;/pre&gt;
-  " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      [pred] satisfies predicate
+  " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
+      [fclause] a function
     </span>
   
     </legend>
@@ -8392,12 +8392,26 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-primary">
     <legend class="clause-type">
-      <span class="tag tag-info">[clause]</span>
+      
+    <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
+    &lt;pre&gt;isPred&lt;/pre&gt;
+  " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
+      [pred] satisfies predicate
+    </span>
+  
     </legend>
     
     <div class="card-block">
-      A value of type
-      <a href="#clause.types/Predicate" data-path="clause.types/Predicate">clause.types/Predicate</a>
+      
+    <em>
+      A value that satisfies 
+      <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isPred(x) {
+  return isFn(x);
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        isPred()
+      </span>
+    </em>
+  
     </div>
   
     </fieldset>
@@ -8820,25 +8834,118 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         <div class="card">
           <div class="card-header inline-headers">
             
-      <h6>Predicate</h6>&#xA0;
+      <h6>Predicate()</h6>&#xA0;
         <span class="tag tag-primary">
-          predicate
+          function
         </span>
       
           </div>
         
+    <dl class="card-block">
+    <dt>Syntax</dt><dd>
+      <blockquote class="blockquote">
+        <small>
+          <em class="text-muted">
+            
+    <pre>fclause( { args: cat( &quot;x&quot;, any(  ) ), ret: isBool } )</pre>
+  
+          </em>
+        </small>
+      </blockquote>
+    </dd>
+<dt>Synopsis</dt><dd><ul><em>Predicate(x)</em></ul></dd>
+<dt>Argument Clause</dt><dd>
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="clause-type">
+      
+    <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
+    &lt;pre&gt;cat( &quot;x&quot;, any(  ) )&lt;/pre&gt;
+  " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
+      [cat] a sequence of
+    </span>
+  
+    </legend>
+    
+    <div class="card-block">
+      <p class="card-title">
+        Should be <em>an ordered list</em> of the following:
+      </p>
+    </div>
+    <div class="list-group list-group-flush list-for-cat">
+      
+        <fieldset class="list-group-item card card-outline-info">
+          <legend class="clause-type">
+          
+            <span class="tag tag-default">Part 1</span>
+            <span class="lead font-italic text-primary">
+              &#x201C;x&#x201D;</span>          
+          
+          </legend>
+          <div class="row">
+            <div class="col-md-12">
+              
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="clause-type">
+      
+    <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
+    &lt;pre&gt;any(  )&lt;/pre&gt;
+  " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
+      <span class="tag tag-info">[any]</span>
+    </span>
+  
+    </legend>
+    
+    <div class="card-block">Any value.</div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </fieldset>
+    
+    </div>
+  
+    </fieldset>
+    </dd>
+<dt>Return Value Clause</dt><dd>
+    
+    
+    <fieldset class="card card-outline-primary">
+    <legend class="clause-type">
+      
+    <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
+    &lt;pre&gt;isBool&lt;/pre&gt;
+  " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
+      [pred] satisfies predicate
+    </span>
+  
+    </legend>
+    
     <div class="card-block">
       
     <em>
       A value that satisfies 
-      <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isPred(x) {
-  return isFn(x);
+      <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isBool(x) {
+  return typeof x === &apos;boolean&apos;;
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
-        isPred()
+        isBool()
       </span>
     </em>
   
     </div>
+  
+    </fieldset>
+    </dd>
+    </dl>
   
         </div>
       
@@ -8860,7 +8967,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <em>
       A value that satisfies 
       <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function instanceOf_DelayedClause(){ return action.apply(this, arguments); }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
-        instanceOf(DelayedClause)()
+        instanceOf_DelayedClause_()
       </span>
     </em>
   
@@ -9021,7 +9128,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat( &quot;head&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;, &quot;params&quot;, zeroOrMore( or( &quot;label&quot;, isString, &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, &quot;paramsObj&quot;, and( instanceOf(ParamsMap), mapOf(  ) ), &quot;optionsObj&quot;, isPlainObject, &quot;recursive&quot;, instanceOf(Recursive) ) ) )&lt;/pre&gt;
+    &lt;pre&gt;cat( &quot;head&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;, &quot;params&quot;, zeroOrMore( or( &quot;label&quot;, isString, &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, &quot;paramsObj&quot;, and( instanceOf_ParamsMap_, mapOf(  ) ), &quot;optionsObj&quot;, isPlainObject, &quot;recursive&quot;, instanceOf_Recursive_ ) ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -9091,7 +9198,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;zeroOrMore( or( &quot;label&quot;, isString, &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, &quot;paramsObj&quot;, and( instanceOf(ParamsMap), mapOf(  ) ), &quot;optionsObj&quot;, isPlainObject, &quot;recursive&quot;, instanceOf(Recursive) ) )&lt;/pre&gt;
+    &lt;pre&gt;zeroOrMore( or( &quot;label&quot;, isString, &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, &quot;paramsObj&quot;, and( instanceOf_ParamsMap_, mapOf(  ) ), &quot;optionsObj&quot;, isPlainObject, &quot;recursive&quot;, instanceOf_Recursive_ ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [*] zero or more
     </span>
@@ -9106,7 +9213,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;or( &quot;label&quot;, isString, &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, &quot;paramsObj&quot;, and( instanceOf(ParamsMap), mapOf(  ) ), &quot;optionsObj&quot;, isPlainObject, &quot;recursive&quot;, instanceOf(Recursive) )&lt;/pre&gt;
+    &lt;pre&gt;or( &quot;label&quot;, isString, &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, &quot;paramsObj&quot;, and( instanceOf_ParamsMap_, mapOf(  ) ), &quot;optionsObj&quot;, isPlainObject, &quot;recursive&quot;, instanceOf_Recursive_ )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [or] either one of
     </span>
@@ -9241,7 +9348,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;and( instanceOf(ParamsMap), mapOf(  ) )&lt;/pre&gt;
+    &lt;pre&gt;and( instanceOf_ParamsMap_, mapOf(  ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       <span class="tag tag-info">[and]</span>
     </span>
@@ -9268,7 +9375,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;instanceOf(ParamsMap)&lt;/pre&gt;
+    &lt;pre&gt;instanceOf_ParamsMap_&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
       [pred] satisfies predicate
     </span>
@@ -9280,7 +9387,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <em>
       A value that satisfies 
       <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function instanceOf_ParamsMap(){ return action.apply(this, arguments); }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
-        instanceOf(ParamsMap)()
+        instanceOf_ParamsMap_()
       </span>
     </em>
   
@@ -9426,7 +9533,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;instanceOf(Recursive)&lt;/pre&gt;
+    &lt;pre&gt;instanceOf_Recursive_&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
       [pred] satisfies predicate
     </span>
@@ -9438,7 +9545,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <em>
       A value that satisfies 
       <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function instanceOf_Recursive(){ return action.apply(this, arguments); }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
-        instanceOf(Recursive)()
+        instanceOf_Recursive_()
       </span>
     </em>
   

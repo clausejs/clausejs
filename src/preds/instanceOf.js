@@ -13,7 +13,7 @@ module.exports = function instanceOf( t ) {
   }
 
   fn.__predToString = () => {
-    return `instanceOf(${n || '(anonymous_type)'})`;
+    return `instanceOf_${n || 'anonymous_type'}_`;
   }
 
   return fn;

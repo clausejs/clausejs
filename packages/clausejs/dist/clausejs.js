@@ -1683,7 +1683,7 @@ module.exports = function instanceOf(t) {
   }
 
   fn.__predToString = function () {
-    return 'instanceOf(' + (n || '(anonymous_type)') + ')';
+    return 'instanceOf_' + (n || 'anonymous_type') + '_';
   };
 
   return fn;

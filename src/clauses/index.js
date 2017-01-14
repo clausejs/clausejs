@@ -2,7 +2,7 @@ import C, { fclause, cat, or, shape, isStr, isBool,
   isFclause, isClauseName,
   isArray, isFn, and, isNum, isNull, isUndefined, isProblem } from '../';
 import { any, ExprClause, CatFnClause, OrFnClause, AndFnClause,
-  CollOfClause, collOf, ClauseClause, PredClause, DelayedClauseClause, ClauseRefClause,
+  CollOfClause, collOf, ClauseClause, DelayedClauseClause, ClauseRefClause,
   ZeroOrMoreFnClause, OneOrMoreFnClause, ZeroOrOneFnClause } from '../core';
 import { WallFnClause } from '../core/wall';
 import { ShapeFnClause, MapOfFnClause } from '../core/regex';
@@ -11,6 +11,11 @@ import { SExpressionClause } from '../utils/sExpression';
 
 // TODO
 // const C = Clause.withRegistry(nsObj);
+
+const PredClause = fclause( {
+  args: cat( 'x', any() ),
+  ret: isBool
+} );
 
 const DescribeFnClause = fclause( {
   args: cat(
