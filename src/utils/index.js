@@ -12,4 +12,5 @@ module.exports = {
   isClauseRef: require( './isClauseRef' ),
   describe: require( './describe' ),
   deref: require( './deref' ),
+  isClauseName: require( './isClauseName' ),
 };

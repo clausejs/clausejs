@@ -1,5 +1,5 @@
 import C, { fclause, cat, or, shape, isStr, isBool,
-  isFclause,
+  isFclause, isClauseName,
   isArray, isFn, and, isNum, isNull, isUndefined, isProblem } from '../';
 import { any, ExprClause, CatFnClause, OrFnClause, AndFnClause,
   CollOfClause, collOf, ClauseClause, PredClause, DelayedClauseClause, ClauseRefClause,
@@ -161,6 +161,7 @@ C( 'clause.types/ClauseReference', ClauseRefClause );
 C( 'clause.types/Problem', isProblem );
 C( 'clause.types/NamespaceObj', NamespaceObjClause );
 C( 'clause.types/NamespacePath', isNamespacePath );
+C( 'clause.types/ClauseLabel', isClauseName );
 C( 'clause.types/Primitive', PrimitiveClause );
 
 export default C.getRegistry();

@@ -45,15 +45,16 @@ var SExpressionClause = wall(
 var singleArgParamGenerator = ( repo, { opts: { enclosedClause } } ) =>
   [ _createSExpr( repo, enclosedClause ) ];
 
-var multipleArgParamGenerator = ( repo, { opts: { named }, exprs } ) => {
+var multipleArgParamGenerator = ( repo, { opts: { named }, exprs, type } ) => {
   if ( exprs.length === 0 ) {
   //empty case
     return [];
   } else if ( named ) {
-    return exprs.reduce(
+    const r = exprs.reduce(
       ( acc, { name, expr } ) =>
         acc.concat( [ `"${name}"`, _createSExpr( repo, expr ) ] )
         , [] );
+    return r;
   } else {
     return exprs.reduce(
       ( acc, { expr } ) => acc.concat( [ _createSExpr( repo, expr ) ] ),
@@ -65,7 +66,7 @@ var sParamsConverters = {
   'PRED': ( repo, { opts: { predicate } } ) => [ `${fnName( predicate )}()` ],
   'WALL': ( repo, { opts: { enclosedClause } } ) => [ _createSExpr( repo, enclosedClause ) ],
   'AND': ( repo, { opts: { conformedExprs } } ) =>
-    conformedExprs.map( clauseFromAlts ),
+    conformedExprs.map( clauseFromAlts ).map( ( c ) => _createSExpr( repo, c ) ),
   'CAT': multipleArgParamGenerator,
   'OR': multipleArgParamGenerator,
   'Z_OR_M': singleArgParamGenerator,
@@ -101,10 +102,10 @@ function _fieldDefToFrags( repo, { fieldDefs: { fields } = {}, keyList } ) {
         if ( keyValExprPair ) {
           let { keyExpression, valExpression } = keyValExprPair;
           oAssign( r, {
-            [ key ]: {
+            [ key ]: new ParamsMap( {
               '<keyExpression>': _createSExpr( repo, clauseFromAlts( keyExpression ) ),
               '<valExpression>': _createSExpr( repo, clauseFromAlts( valExpression ) ),
-            }
+            } )
           } );
         } else if ( valExpressionOnly ) {
           oAssign( r, {
@@ -127,7 +128,8 @@ function _params( repo, clause ) {
     console.error( clause );
     throw new Error( `Unsupported clause type ${clause.type}.` );
   } else {
-    return converter( repo, clause );
+    const r = converter( repo, clause );
+    return r;
   }
 }
 
