@@ -4359,7 +4359,7 @@ function genForExpression(globalReg, exprName, expr, meta) {
 
   return '\n    ' + (exprName && path ? '<a name="' + path + '"></a>' : '') + '\n    ' + _wrapCard({
     header: header,
-    legend: !path ? _tagFor(expr, globalReg, path) : '<span class="tag tag-info">satisfies clause</span>',
+    legend: !path ? _tagFor(expr, globalReg, path) : '<span class="tag tag-info">[clause]</span>',
     borderlabel: _labelFor(expr)
   })(docstr);
 }
@@ -4413,23 +4413,23 @@ function _typeFor(expr) {
   var lowerT = _rawTypeFor(expr);
   switch (lowerT) {
     case 'pred':
-      return 'satisfies predicate';
+      return '[pred] satisfies predicate';
     case 'fclause':
-      return 'a function (fclause)';
+      return '[fclause] a function';
     case 'z_or_m':
-      return 'zero or more of (*)';
+      return '[*] zero or more';
     case 'o_or_m':
-      return 'one or more of (+)';
+      return '[+] one or more';
     case 'z_or_o':
-      return 'optional (?)';
+      return '[?] optional';
     case 'coll_of':
-      return 'a collection of (collOf)';
+      return '[collOf] a collection of';
     case 'cat':
-      return 'a concatenation (cat) of';
+      return '[cat] a sequence of';
     case 'or':
-      return 'either one of (or)';
+      return '[or] either one of';
     default:
-      return '<span class="tag tag-info">' + lowerT + '</span>';
+      return '<span class="tag tag-info">[' + lowerT + ']</span>';
   }
 }
 
@@ -4454,7 +4454,7 @@ function _genAnyClause() {
 
 function _genClauseRef(globalReg, exprName, path, expr, meta) {
   var p = path || expr.ref;
-  return '\n    <div class="card-block">\n      A value that is of\n      ' + _clauseRefLink(p)(function (p) {
+  return '\n    <div class="card-block">\n      A value of type\n      ' + _clauseRefLink(p)(function (p) {
     return p;
   }) + '\n    </div>\n  ';
 }

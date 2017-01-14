@@ -357,7 +357,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;or( &quot;register&quot;, cat( &quot;nsPath&quot;, &lt;a href=&quot;#clause.types/NamespacePath&quot; data-path=&quot;clause.types/NamespacePath&quot;&gt;NamespacePath&lt;/a&gt;, &quot;expression&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; ), &quot;retrieve&quot;, cat( &quot;nsPath&quot;, &lt;a href=&quot;#clause.types/NamespacePath&quot; data-path=&quot;clause.types/NamespacePath&quot;&gt;NamespacePath&lt;/a&gt; ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      either one of (or)
+      [or] either one of
     </span>
   
     </legend>
@@ -402,7 +402,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &quot;nsPath&quot;, &lt;a href=&quot;#clause.types/NamespacePath&quot; data-path=&quot;clause.types/NamespacePath&quot;&gt;NamespacePath&lt;/a&gt;, &quot;expression&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -434,11 +434,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-primary">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">clause.types/NamespacePath</a>
     </div>
   
@@ -468,11 +468,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-info">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/Expression" data-path="clause.types/Expression">clause.types/Expression</a>
     </div>
   
@@ -521,7 +521,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &quot;nsPath&quot;, &lt;a href=&quot;#clause.types/NamespacePath&quot; data-path=&quot;clause.types/NamespacePath&quot;&gt;NamespacePath&lt;/a&gt; )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -553,11 +553,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-primary">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">clause.types/NamespacePath</a>
     </div>
   
@@ -617,7 +617,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;and( cat( &quot;expressions&quot;, or( &quot;withLabels&quot;, or( zeroOrMore( cat( &quot;name&quot;, &lt;a href=&quot;#clause.types/ClauseLabel&quot; data-path=&quot;clause.types/ClauseLabel&quot;&gt;ClauseLabel&lt;/a&gt;, &quot;comment&quot;, zeroOrOne( isString ), &quot;expr&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; ) ), collOf( cat( &quot;name&quot;, &lt;a href=&quot;#clause.types/ClauseLabel&quot; data-path=&quot;clause.types/ClauseLabel&quot;&gt;ClauseLabel&lt;/a&gt;, &quot;comment&quot;, zeroOrOne( isString ), &quot;expr&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; ) ) ), &quot;withoutLabels&quot;, zeroOrMore( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; ) ), &quot;options&quot;, zeroOrOne( isOptionObject ) ), noDupelicateLabels )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      <span class="tag tag-info">and</span>
+      <span class="tag tag-info">[and]</span>
     </span>
   
     </legend>
@@ -644,7 +644,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &quot;expressions&quot;, or( &quot;withLabels&quot;, or( zeroOrMore( cat( &quot;name&quot;, &lt;a href=&quot;#clause.types/ClauseLabel&quot; data-path=&quot;clause.types/ClauseLabel&quot;&gt;ClauseLabel&lt;/a&gt;, &quot;comment&quot;, zeroOrOne( isString ), &quot;expr&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; ) ), collOf( cat( &quot;name&quot;, &lt;a href=&quot;#clause.types/ClauseLabel&quot; data-path=&quot;clause.types/ClauseLabel&quot;&gt;ClauseLabel&lt;/a&gt;, &quot;comment&quot;, zeroOrOne( isString ), &quot;expr&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; ) ) ), &quot;withoutLabels&quot;, zeroOrMore( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; ) ), &quot;options&quot;, zeroOrOne( isOptionObject ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -680,7 +680,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;or( &quot;withLabels&quot;, or( zeroOrMore( cat( &quot;name&quot;, &lt;a href=&quot;#clause.types/ClauseLabel&quot; data-path=&quot;clause.types/ClauseLabel&quot;&gt;ClauseLabel&lt;/a&gt;, &quot;comment&quot;, zeroOrOne( isString ), &quot;expr&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; ) ), collOf( cat( &quot;name&quot;, &lt;a href=&quot;#clause.types/ClauseLabel&quot; data-path=&quot;clause.types/ClauseLabel&quot;&gt;ClauseLabel&lt;/a&gt;, &quot;comment&quot;, zeroOrOne( isString ), &quot;expr&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; ) ) ), &quot;withoutLabels&quot;, zeroOrMore( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      either one of (or)
+      [or] either one of
     </span>
   
     </legend>
@@ -723,7 +723,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;or( zeroOrMore( cat( &quot;name&quot;, &lt;a href=&quot;#clause.types/ClauseLabel&quot; data-path=&quot;clause.types/ClauseLabel&quot;&gt;ClauseLabel&lt;/a&gt;, &quot;comment&quot;, zeroOrOne( isString ), &quot;expr&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; ) ), collOf( cat( &quot;name&quot;, &lt;a href=&quot;#clause.types/ClauseLabel&quot; data-path=&quot;clause.types/ClauseLabel&quot;&gt;ClauseLabel&lt;/a&gt;, &quot;comment&quot;, zeroOrOne( isString ), &quot;expr&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; ) ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      either one of (or)
+      [or] either one of
     </span>
   
     </legend>
@@ -762,7 +762,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;zeroOrMore( cat( &quot;name&quot;, &lt;a href=&quot;#clause.types/ClauseLabel&quot; data-path=&quot;clause.types/ClauseLabel&quot;&gt;ClauseLabel&lt;/a&gt;, &quot;comment&quot;, zeroOrOne( isString ), &quot;expr&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      zero or more of (*)
+      [*] zero or more
     </span>
   
     </legend>
@@ -777,7 +777,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &quot;name&quot;, &lt;a href=&quot;#clause.types/ClauseLabel&quot; data-path=&quot;clause.types/ClauseLabel&quot;&gt;ClauseLabel&lt;/a&gt;, &quot;comment&quot;, zeroOrOne( isString ), &quot;expr&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -809,11 +809,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-primary">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/ClauseLabel" data-path="clause.types/ClauseLabel">clause.types/ClauseLabel</a>
     </div>
   
@@ -847,7 +847,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;zeroOrOne( isString )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      optional (?)
+      [?] optional
     </span>
   
     </legend>
@@ -862,7 +862,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;isString&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -911,11 +911,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-info">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/Expression" data-path="clause.types/Expression">clause.types/Expression</a>
     </div>
   
@@ -963,7 +963,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;collOf( cat( &quot;name&quot;, &lt;a href=&quot;#clause.types/ClauseLabel&quot; data-path=&quot;clause.types/ClauseLabel&quot;&gt;ClauseLabel&lt;/a&gt;, &quot;comment&quot;, zeroOrOne( isString ), &quot;expr&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a collection of (collOf)
+      [collOf] a collection of
     </span>
   
     </legend>
@@ -978,7 +978,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &quot;name&quot;, &lt;a href=&quot;#clause.types/ClauseLabel&quot; data-path=&quot;clause.types/ClauseLabel&quot;&gt;ClauseLabel&lt;/a&gt;, &quot;comment&quot;, zeroOrOne( isString ), &quot;expr&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -1010,11 +1010,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-primary">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/ClauseLabel" data-path="clause.types/ClauseLabel">clause.types/ClauseLabel</a>
     </div>
   
@@ -1048,7 +1048,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;zeroOrOne( isString )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      optional (?)
+      [?] optional
     </span>
   
     </legend>
@@ -1063,7 +1063,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;isString&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -1112,11 +1112,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-info">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/Expression" data-path="clause.types/Expression">clause.types/Expression</a>
     </div>
   
@@ -1176,7 +1176,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;zeroOrMore( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      zero or more of (*)
+      [*] zero or more
     </span>
   
     </legend>
@@ -1187,11 +1187,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-info">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/Expression" data-path="clause.types/Expression">clause.types/Expression</a>
     </div>
   
@@ -1238,7 +1238,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;zeroOrOne( isOptionObject )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      optional (?)
+      [?] optional
     </span>
   
     </legend>
@@ -1253,7 +1253,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;isOptionObject&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -1305,7 +1305,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;noDupelicateLabels&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -1350,11 +1350,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-primary">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/Clause" data-path="clause.types/Clause">clause.types/Clause</a>
     </div>
   
@@ -1399,7 +1399,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;and( cat( &quot;expressions&quot;, or( &quot;withLabels&quot;, or( zeroOrMore( cat( &quot;name&quot;, &lt;a href=&quot;#clause.types/ClauseLabel&quot; data-path=&quot;clause.types/ClauseLabel&quot;&gt;ClauseLabel&lt;/a&gt;, &quot;comment&quot;, zeroOrOne( isString ), &quot;expr&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; ) ), collOf( cat( &quot;name&quot;, &lt;a href=&quot;#clause.types/ClauseLabel&quot; data-path=&quot;clause.types/ClauseLabel&quot;&gt;ClauseLabel&lt;/a&gt;, &quot;comment&quot;, zeroOrOne( isString ), &quot;expr&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; ) ) ), &quot;withoutLabels&quot;, zeroOrMore( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; ) ), &quot;options&quot;, zeroOrOne( isOptionObject ) ), noDupelicateLabels )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      <span class="tag tag-info">and</span>
+      <span class="tag tag-info">[and]</span>
     </span>
   
     </legend>
@@ -1426,7 +1426,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &quot;expressions&quot;, or( &quot;withLabels&quot;, or( zeroOrMore( cat( &quot;name&quot;, &lt;a href=&quot;#clause.types/ClauseLabel&quot; data-path=&quot;clause.types/ClauseLabel&quot;&gt;ClauseLabel&lt;/a&gt;, &quot;comment&quot;, zeroOrOne( isString ), &quot;expr&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; ) ), collOf( cat( &quot;name&quot;, &lt;a href=&quot;#clause.types/ClauseLabel&quot; data-path=&quot;clause.types/ClauseLabel&quot;&gt;ClauseLabel&lt;/a&gt;, &quot;comment&quot;, zeroOrOne( isString ), &quot;expr&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; ) ) ), &quot;withoutLabels&quot;, zeroOrMore( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; ) ), &quot;options&quot;, zeroOrOne( isOptionObject ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -1462,7 +1462,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;or( &quot;withLabels&quot;, or( zeroOrMore( cat( &quot;name&quot;, &lt;a href=&quot;#clause.types/ClauseLabel&quot; data-path=&quot;clause.types/ClauseLabel&quot;&gt;ClauseLabel&lt;/a&gt;, &quot;comment&quot;, zeroOrOne( isString ), &quot;expr&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; ) ), collOf( cat( &quot;name&quot;, &lt;a href=&quot;#clause.types/ClauseLabel&quot; data-path=&quot;clause.types/ClauseLabel&quot;&gt;ClauseLabel&lt;/a&gt;, &quot;comment&quot;, zeroOrOne( isString ), &quot;expr&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; ) ) ), &quot;withoutLabels&quot;, zeroOrMore( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      either one of (or)
+      [or] either one of
     </span>
   
     </legend>
@@ -1505,7 +1505,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;or( zeroOrMore( cat( &quot;name&quot;, &lt;a href=&quot;#clause.types/ClauseLabel&quot; data-path=&quot;clause.types/ClauseLabel&quot;&gt;ClauseLabel&lt;/a&gt;, &quot;comment&quot;, zeroOrOne( isString ), &quot;expr&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; ) ), collOf( cat( &quot;name&quot;, &lt;a href=&quot;#clause.types/ClauseLabel&quot; data-path=&quot;clause.types/ClauseLabel&quot;&gt;ClauseLabel&lt;/a&gt;, &quot;comment&quot;, zeroOrOne( isString ), &quot;expr&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; ) ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      either one of (or)
+      [or] either one of
     </span>
   
     </legend>
@@ -1544,7 +1544,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;zeroOrMore( cat( &quot;name&quot;, &lt;a href=&quot;#clause.types/ClauseLabel&quot; data-path=&quot;clause.types/ClauseLabel&quot;&gt;ClauseLabel&lt;/a&gt;, &quot;comment&quot;, zeroOrOne( isString ), &quot;expr&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      zero or more of (*)
+      [*] zero or more
     </span>
   
     </legend>
@@ -1559,7 +1559,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &quot;name&quot;, &lt;a href=&quot;#clause.types/ClauseLabel&quot; data-path=&quot;clause.types/ClauseLabel&quot;&gt;ClauseLabel&lt;/a&gt;, &quot;comment&quot;, zeroOrOne( isString ), &quot;expr&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -1591,11 +1591,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-primary">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/ClauseLabel" data-path="clause.types/ClauseLabel">clause.types/ClauseLabel</a>
     </div>
   
@@ -1629,7 +1629,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;zeroOrOne( isString )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      optional (?)
+      [?] optional
     </span>
   
     </legend>
@@ -1644,7 +1644,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;isString&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -1693,11 +1693,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-info">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/Expression" data-path="clause.types/Expression">clause.types/Expression</a>
     </div>
   
@@ -1745,7 +1745,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;collOf( cat( &quot;name&quot;, &lt;a href=&quot;#clause.types/ClauseLabel&quot; data-path=&quot;clause.types/ClauseLabel&quot;&gt;ClauseLabel&lt;/a&gt;, &quot;comment&quot;, zeroOrOne( isString ), &quot;expr&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a collection of (collOf)
+      [collOf] a collection of
     </span>
   
     </legend>
@@ -1760,7 +1760,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &quot;name&quot;, &lt;a href=&quot;#clause.types/ClauseLabel&quot; data-path=&quot;clause.types/ClauseLabel&quot;&gt;ClauseLabel&lt;/a&gt;, &quot;comment&quot;, zeroOrOne( isString ), &quot;expr&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -1792,11 +1792,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-primary">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/ClauseLabel" data-path="clause.types/ClauseLabel">clause.types/ClauseLabel</a>
     </div>
   
@@ -1830,7 +1830,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;zeroOrOne( isString )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      optional (?)
+      [?] optional
     </span>
   
     </legend>
@@ -1845,7 +1845,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;isString&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -1894,11 +1894,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-info">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/Expression" data-path="clause.types/Expression">clause.types/Expression</a>
     </div>
   
@@ -1958,7 +1958,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;zeroOrMore( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      zero or more of (*)
+      [*] zero or more
     </span>
   
     </legend>
@@ -1969,11 +1969,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-info">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/Expression" data-path="clause.types/Expression">clause.types/Expression</a>
     </div>
   
@@ -2020,7 +2020,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;zeroOrOne( isOptionObject )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      optional (?)
+      [?] optional
     </span>
   
     </legend>
@@ -2035,7 +2035,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;isOptionObject&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -2087,7 +2087,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;noDupelicateLabels&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -2132,11 +2132,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-primary">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/Clause" data-path="clause.types/Clause">clause.types/Clause</a>
     </div>
   
@@ -2181,7 +2181,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &quot;expr&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;, &quot;opts&quot;, zeroOrOne( isObject ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -2213,11 +2213,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-info">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/Expression" data-path="clause.types/Expression">clause.types/Expression</a>
     </div>
   
@@ -2251,7 +2251,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;zeroOrOne( isObject )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      optional (?)
+      [?] optional
     </span>
   
     </legend>
@@ -2266,7 +2266,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;isObject&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -2304,11 +2304,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-primary">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/Clause" data-path="clause.types/Clause">clause.types/Clause</a>
     </div>
   
@@ -2353,7 +2353,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &quot;expr&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;, &quot;opts&quot;, zeroOrOne( isObject ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -2385,11 +2385,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-info">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/Expression" data-path="clause.types/Expression">clause.types/Expression</a>
     </div>
   
@@ -2423,7 +2423,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;zeroOrOne( isObject )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      optional (?)
+      [?] optional
     </span>
   
     </legend>
@@ -2438,7 +2438,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;isObject&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -2476,11 +2476,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-primary">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/Clause" data-path="clause.types/Clause">clause.types/Clause</a>
     </div>
   
@@ -2525,7 +2525,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &quot;expr&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;, &quot;opts&quot;, zeroOrOne( isObject ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -2557,11 +2557,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-info">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/Expression" data-path="clause.types/Expression">clause.types/Expression</a>
     </div>
   
@@ -2595,7 +2595,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;zeroOrOne( isObject )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      optional (?)
+      [?] optional
     </span>
   
     </legend>
@@ -2610,7 +2610,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;isObject&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -2648,11 +2648,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-primary">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/Clause" data-path="clause.types/Clause">clause.types/Clause</a>
     </div>
   
@@ -2697,7 +2697,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;oneOrMore( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      one or more of (+)
+      [+] one or more
     </span>
   
     </legend>
@@ -2708,11 +2708,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-info">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/Expression" data-path="clause.types/Expression">clause.types/Expression</a>
     </div>
   
@@ -2728,11 +2728,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-primary">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/Clause" data-path="clause.types/Clause">clause.types/Clause</a>
     </div>
   
@@ -2777,7 +2777,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &quot;expr&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;, &quot;opts&quot;, zeroOrOne( isObject ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -2809,11 +2809,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-info">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/Expression" data-path="clause.types/Expression">clause.types/Expression</a>
     </div>
   
@@ -2847,7 +2847,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;zeroOrOne( isObject )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      optional (?)
+      [?] optional
     </span>
   
     </legend>
@@ -2862,7 +2862,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;isObject&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -2900,11 +2900,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-primary">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/Clause" data-path="clause.types/Clause">clause.types/Clause</a>
     </div>
   
@@ -2949,7 +2949,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &quot;keyExpression&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;, &quot;valExpression&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -2981,11 +2981,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-info">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/Expression" data-path="clause.types/Expression">clause.types/Expression</a>
     </div>
   
@@ -3015,11 +3015,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-info">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/Expression" data-path="clause.types/Expression">clause.types/Expression</a>
     </div>
   
@@ -3038,11 +3038,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-primary">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/Clause" data-path="clause.types/Clause">clause.types/Clause</a>
     </div>
   
@@ -3087,7 +3087,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &quot;shapeArgs&quot;, shape( { optional: { requiredFields: { &amp;lt;keyExpression&amp;gt;: oneOf(&quot;req&quot;, &quot;required&quot;), &amp;lt;valExpression&amp;gt;: or( &quot;keyList&quot;, zeroOrMore( isPropName ), &quot;fieldDefs&quot;, shape( { optional: { fields: { &amp;lt;keyExpression&amp;gt;: isString, &amp;lt;valExpression&amp;gt;: or( &quot;valExpressionOnly&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;, &quot;keyValExprPair&quot;, cat( &quot;keyExpression&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;, &quot;valExpression&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; ) ) } } } ) ) }, optionalFields: { &amp;lt;keyExpression&amp;gt;: oneOf(&quot;opt&quot;, &quot;optional&quot;), &amp;lt;valExpression&amp;gt;: or( &quot;keyList&quot;, zeroOrMore( isPropName ), &quot;fieldDefs&quot;, shape( { optional: { fields: { &amp;lt;keyExpression&amp;gt;: isString, &amp;lt;valExpression&amp;gt;: or( &quot;valExpressionOnly&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;, &quot;keyValExprPair&quot;, cat( &quot;keyExpression&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;, &quot;valExpression&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; ) ) } } } ) ) } } } ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -3123,7 +3123,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;shape( { optional: { requiredFields: { &amp;lt;keyExpression&amp;gt;: oneOf(&quot;req&quot;, &quot;required&quot;), &amp;lt;valExpression&amp;gt;: or( &quot;keyList&quot;, zeroOrMore( isPropName ), &quot;fieldDefs&quot;, shape( { optional: { fields: { &amp;lt;keyExpression&amp;gt;: isString, &amp;lt;valExpression&amp;gt;: or( &quot;valExpressionOnly&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;, &quot;keyValExprPair&quot;, cat( &quot;keyExpression&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;, &quot;valExpression&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; ) ) } } } ) ) }, optionalFields: { &amp;lt;keyExpression&amp;gt;: oneOf(&quot;opt&quot;, &quot;optional&quot;), &amp;lt;valExpression&amp;gt;: or( &quot;keyList&quot;, zeroOrMore( isPropName ), &quot;fieldDefs&quot;, shape( { optional: { fields: { &amp;lt;keyExpression&amp;gt;: isString, &amp;lt;valExpression&amp;gt;: or( &quot;valExpressionOnly&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;, &quot;keyValExprPair&quot;, cat( &quot;keyExpression&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;, &quot;valExpression&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; ) ) } } } ) ) } } } )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      <span class="tag tag-info">shape</span>
+      <span class="tag tag-info">[shape]</span>
     </span>
   
     </legend>
@@ -3148,11 +3148,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-primary">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/Clause" data-path="clause.types/Clause">clause.types/Clause</a>
     </div>
   
@@ -3192,11 +3192,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-primary">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/Clause" data-path="clause.types/Clause">clause.types/Clause</a>
     </div>
   
@@ -3241,7 +3241,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -3269,11 +3269,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-info">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/Expression" data-path="clause.types/Expression">clause.types/Expression</a>
     </div>
   
@@ -3292,11 +3292,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-info">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/Expression" data-path="clause.types/Expression">clause.types/Expression</a>
     </div>
   
@@ -3341,7 +3341,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( shape( { optional: { args: and( isArray, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; ), ret: &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;, fn: fclause( { args: cat( &quot;conformedArguments&quot;, zeroOrMore( any ), &quot;conformedReturnValue&quot;, any ), ret: any } ) } } ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -3373,7 +3373,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;shape( { optional: { args: and( isArray, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; ), ret: &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;, fn: fclause( { args: cat( &quot;conformedArguments&quot;, zeroOrMore( any ), &quot;conformedReturnValue&quot;, any ), ret: any } ) } } )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      <span class="tag tag-info">shape</span>
+      <span class="tag tag-info">[shape]</span>
     </span>
   
     </legend>
@@ -3432,7 +3432,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -3460,11 +3460,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-info">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/Expression" data-path="clause.types/Expression">clause.types/Expression</a>
     </div>
   
@@ -3483,11 +3483,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-primary">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/Clause" data-path="clause.types/Clause">clause.types/Clause</a>
     </div>
   
@@ -3532,7 +3532,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -3560,11 +3560,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-info">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/Expression" data-path="clause.types/Expression">clause.types/Expression</a>
     </div>
   
@@ -3583,11 +3583,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-primary">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/Clause" data-path="clause.types/Clause">clause.types/Clause</a>
     </div>
   
@@ -3632,7 +3632,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -3660,11 +3660,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-info">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/Expression" data-path="clause.types/Expression">clause.types/Expression</a>
     </div>
   
@@ -3683,11 +3683,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-primary">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/Clause" data-path="clause.types/Clause">clause.types/Clause</a>
     </div>
   
@@ -3741,7 +3741,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &quot;string&quot;, isString )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -3777,7 +3777,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;isString&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -3810,11 +3810,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-primary">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/Clause" data-path="clause.types/Clause">clause.types/Clause</a>
     </div>
   
@@ -3859,7 +3859,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &quot;expression&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;, &quot;valueToCheck&quot;, any(  ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -3891,11 +3891,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-info">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/Expression" data-path="clause.types/Expression">clause.types/Expression</a>
     </div>
   
@@ -3929,7 +3929,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;any(  )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      <span class="tag tag-info">any</span>
+      <span class="tag tag-info">[any]</span>
     </span>
   
     </legend>
@@ -3955,7 +3955,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;isUndefined&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -4014,7 +4014,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &quot;expression&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;, &quot;valueToConform&quot;, any(  ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -4046,11 +4046,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-info">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/Expression" data-path="clause.types/Expression">clause.types/Expression</a>
     </div>
   
@@ -4084,7 +4084,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;any(  )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      <span class="tag tag-info">any</span>
+      <span class="tag tag-info">[any]</span>
     </span>
   
     </legend>
@@ -4110,7 +4110,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;or( &quot;conformedValue&quot;, any(  ), &quot;problem&quot;, &lt;a href=&quot;#clause.types/Problem&quot; data-path=&quot;clause.types/Problem&quot;&gt;Problem&lt;/a&gt; )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      either one of (or)
+      [or] either one of
     </span>
   
     </legend>
@@ -4153,7 +4153,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;any(  )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      <span class="tag tag-info">any</span>
+      <span class="tag tag-info">[any]</span>
     </span>
   
     </legend>
@@ -4195,13 +4195,13 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;&lt;a href=&quot;#clause.types/Problem&quot; data-path=&quot;clause.types/Problem&quot;&gt;Problem&lt;/a&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/Problem" data-path="clause.types/Problem">clause.types/Problem</a>
     </div>
   
@@ -4254,7 +4254,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &quot;getFn&quot;, fclause( { ret: &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; } ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -4290,7 +4290,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;fclause( { ret: &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; } )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a function (fclause)
+      [fclause] a function
     </span>
   
     </legend>
@@ -4301,11 +4301,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-info">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/Expression" data-path="clause.types/Expression">clause.types/Expression</a>
     </div>
   
@@ -4328,11 +4328,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-primary">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/DelayedClause" data-path="clause.types/DelayedClause">clause.types/DelayedClause</a>
     </div>
   
@@ -4378,7 +4378,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &quot;expression&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;, &quot;replacer&quot;, zeroOrOne( fclause( { args: cat( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; ), ret: or( isUndefined, isNull, collOf( isString ) ) } ) ), &quot;space&quot;, zeroOrOne( isNatInt ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -4414,13 +4414,13 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;&lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      either one of (or)
+      [or] either one of
     </span>
   
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/Expression" data-path="clause.types/Expression">clause.types/Expression</a>
     </div>
   
@@ -4454,7 +4454,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;zeroOrOne( fclause( { args: cat( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; ), ret: or( isUndefined, isNull, collOf( isString ) ) } ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      optional (?)
+      [?] optional
     </span>
   
     </legend>
@@ -4469,7 +4469,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;fclause( { args: cat( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; ), ret: or( isUndefined, isNull, collOf( isString ) ) } )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a function (fclause)
+      [fclause] a function
     </span>
   
     </legend>
@@ -4485,7 +4485,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -4513,11 +4513,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-info">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/Expression" data-path="clause.types/Expression">clause.types/Expression</a>
     </div>
   
@@ -4540,7 +4540,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;or( isUndefined, isNull, collOf( isString ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      either one of (or)
+      [or] either one of
     </span>
   
     </legend>
@@ -4579,7 +4579,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;isUndefined&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -4628,7 +4628,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;isNull&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -4677,7 +4677,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;collOf( isString )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a collection of (collOf)
+      [collOf] a collection of
     </span>
   
     </legend>
@@ -4692,7 +4692,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;isString&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -4762,7 +4762,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;zeroOrOne( isNatInt )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      optional (?)
+      [?] optional
     </span>
   
     </legend>
@@ -4777,7 +4777,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;isNatInt&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -4819,7 +4819,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;isString&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -4878,7 +4878,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &quot;expression&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -4914,13 +4914,13 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;&lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      either one of (or)
+      [or] either one of
     </span>
   
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/Expression" data-path="clause.types/Expression">clause.types/Expression</a>
     </div>
   
@@ -4939,11 +4939,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-info">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/SExpression" data-path="clause.types/SExpression">clause.types/SExpression</a>
     </div>
   
@@ -4988,7 +4988,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &quot;predicateToNegate&quot;, &lt;a href=&quot;#clause.types/Predicate&quot; data-path=&quot;clause.types/Predicate&quot;&gt;Predicate&lt;/a&gt; )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -5024,13 +5024,13 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;&lt;a href=&quot;#clause.types/Predicate&quot; data-path=&quot;clause.types/Predicate&quot;&gt;Predicate&lt;/a&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/Predicate" data-path="clause.types/Predicate">clause.types/Predicate</a>
     </div>
   
@@ -5053,7 +5053,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;fclause( { args: cat( &quot;x&quot;, any(  ) ), ret: isBool } )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a function (fclause)
+      [fclause] a function
     </span>
   
     </legend>
@@ -5069,7 +5069,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &quot;x&quot;, any(  ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -5105,7 +5105,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;any(  )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      <span class="tag tag-info">any</span>
+      <span class="tag tag-info">[any]</span>
     </span>
   
     </legend>
@@ -5131,7 +5131,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;isBool&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -5194,7 +5194,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &quot;x&quot;, any(  ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -5230,7 +5230,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;any(  )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      <span class="tag tag-info">any</span>
+      <span class="tag tag-info">[any]</span>
     </span>
   
     </legend>
@@ -5256,7 +5256,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;isBool&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -5315,7 +5315,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &quot;x&quot;, any(  ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -5351,7 +5351,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;any(  )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      <span class="tag tag-info">any</span>
+      <span class="tag tag-info">[any]</span>
     </span>
   
     </legend>
@@ -5377,7 +5377,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;isBool&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -5436,7 +5436,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &quot;x&quot;, any(  ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -5472,7 +5472,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;any(  )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      <span class="tag tag-info">any</span>
+      <span class="tag tag-info">[any]</span>
     </span>
   
     </legend>
@@ -5498,7 +5498,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;isBool&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -5557,7 +5557,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &quot;x&quot;, any(  ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -5593,7 +5593,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;any(  )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      <span class="tag tag-info">any</span>
+      <span class="tag tag-info">[any]</span>
     </span>
   
     </legend>
@@ -5619,7 +5619,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;isBool&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -5678,7 +5678,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &quot;x&quot;, any(  ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -5714,7 +5714,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;any(  )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      <span class="tag tag-info">any</span>
+      <span class="tag tag-info">[any]</span>
     </span>
   
     </legend>
@@ -5740,7 +5740,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;isBool&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -5799,7 +5799,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &quot;x&quot;, any(  ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -5835,7 +5835,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;any(  )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      <span class="tag tag-info">any</span>
+      <span class="tag tag-info">[any]</span>
     </span>
   
     </legend>
@@ -5861,7 +5861,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;isBool&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -5920,7 +5920,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &quot;x&quot;, any(  ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -5956,7 +5956,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;any(  )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      <span class="tag tag-info">any</span>
+      <span class="tag tag-info">[any]</span>
     </span>
   
     </legend>
@@ -5982,7 +5982,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;isBool&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -6041,7 +6041,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &quot;x&quot;, any(  ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -6077,7 +6077,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;any(  )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      <span class="tag tag-info">any</span>
+      <span class="tag tag-info">[any]</span>
     </span>
   
     </legend>
@@ -6103,7 +6103,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;isBool&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -6162,7 +6162,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &quot;x&quot;, any(  ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -6198,7 +6198,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;any(  )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      <span class="tag tag-info">any</span>
+      <span class="tag tag-info">[any]</span>
     </span>
   
     </legend>
@@ -6224,7 +6224,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;isBool&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -6283,7 +6283,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &quot;x&quot;, any(  ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -6319,7 +6319,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;any(  )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      <span class="tag tag-info">any</span>
+      <span class="tag tag-info">[any]</span>
     </span>
   
     </legend>
@@ -6345,7 +6345,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;isBool&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -6404,7 +6404,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &quot;x&quot;, any(  ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -6440,7 +6440,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;any(  )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      <span class="tag tag-info">any</span>
+      <span class="tag tag-info">[any]</span>
     </span>
   
     </legend>
@@ -6466,7 +6466,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;isBool&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -6525,7 +6525,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &quot;x&quot;, any(  ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -6561,7 +6561,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;any(  )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      <span class="tag tag-info">any</span>
+      <span class="tag tag-info">[any]</span>
     </span>
   
     </legend>
@@ -6587,7 +6587,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;isBool&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -6646,7 +6646,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &quot;x&quot;, any(  ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -6682,7 +6682,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;any(  )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      <span class="tag tag-info">any</span>
+      <span class="tag tag-info">[any]</span>
     </span>
   
     </legend>
@@ -6708,7 +6708,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;isBool&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -6767,7 +6767,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &quot;x&quot;, or( isString, any ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -6803,7 +6803,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;or( isString, any )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      either one of (or)
+      [or] either one of
     </span>
   
     </legend>
@@ -6842,7 +6842,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;isString&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -6891,7 +6891,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;any&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -6940,7 +6940,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;isBool&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -6999,7 +6999,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &quot;valueOptions&quot;, collOf( &lt;a href=&quot;#clause.types/Primitive&quot; data-path=&quot;clause.types/Primitive&quot;&gt;Primitive&lt;/a&gt; ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -7035,7 +7035,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;collOf( &lt;a href=&quot;#clause.types/Primitive&quot; data-path=&quot;clause.types/Primitive&quot;&gt;Primitive&lt;/a&gt; )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a collection of (collOf)
+      [collOf] a collection of
     </span>
   
     </legend>
@@ -7050,13 +7050,13 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;&lt;a href=&quot;#clause.types/Primitive&quot; data-path=&quot;clause.types/Primitive&quot;&gt;Primitive&lt;/a&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      either one of (or)
+      [or] either one of
     </span>
   
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/Primitive" data-path="clause.types/Primitive">clause.types/Primitive</a>
     </div>
   
@@ -7084,7 +7084,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;fclause( { args: cat( &quot;x&quot;, any(  ) ), ret: isBool } )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a function (fclause)
+      [fclause] a function
     </span>
   
     </legend>
@@ -7100,7 +7100,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &quot;x&quot;, any(  ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -7136,7 +7136,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;any(  )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      <span class="tag tag-info">any</span>
+      <span class="tag tag-info">[any]</span>
     </span>
   
     </legend>
@@ -7162,7 +7162,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;isBool&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -7225,7 +7225,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &quot;valueToCompareWith&quot;, any(  ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -7261,7 +7261,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;any(  )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      <span class="tag tag-info">any</span>
+      <span class="tag tag-info">[any]</span>
     </span>
   
     </legend>
@@ -7287,7 +7287,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;fclause( { args: cat( &quot;x&quot;, any(  ) ), ret: isBool } )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a function (fclause)
+      [fclause] a function
     </span>
   
     </legend>
@@ -7303,7 +7303,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &quot;x&quot;, any(  ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -7339,7 +7339,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;any(  )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      <span class="tag tag-info">any</span>
+      <span class="tag tag-info">[any]</span>
     </span>
   
     </legend>
@@ -7365,7 +7365,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;isBool&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -7428,7 +7428,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &quot;instanceType&quot;, isFunction )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -7464,7 +7464,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;isFunction&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -7503,7 +7503,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;fclause( { args: cat( &quot;x&quot;, any(  ) ), ret: isBool } )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a function (fclause)
+      [fclause] a function
     </span>
   
     </legend>
@@ -7519,7 +7519,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &quot;x&quot;, any(  ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -7555,7 +7555,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;any(  )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      <span class="tag tag-info">any</span>
+      <span class="tag tag-info">[any]</span>
     </span>
   
     </legend>
@@ -7581,7 +7581,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;isBool&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -7644,7 +7644,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &quot;nsPath&quot;, &lt;a href=&quot;#clause.types/NamespacePath&quot; data-path=&quot;clause.types/NamespacePath&quot;&gt;NamespacePath&lt;/a&gt;, &quot;expression&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -7676,11 +7676,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-primary">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">clause.types/NamespacePath</a>
     </div>
   
@@ -7710,11 +7710,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-info">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/Expression" data-path="clause.types/Expression">clause.types/Expression</a>
     </div>
   
@@ -7737,7 +7737,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;isBool&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -7796,7 +7796,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &quot;nsPath&quot;, &lt;a href=&quot;#clause.types/NamespacePath&quot; data-path=&quot;clause.types/NamespacePath&quot;&gt;NamespacePath&lt;/a&gt; )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -7828,11 +7828,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-primary">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">clause.types/NamespacePath</a>
     </div>
   
@@ -7851,11 +7851,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-info">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/Expression" data-path="clause.types/Expression">clause.types/Expression</a>
     </div>
   
@@ -7900,7 +7900,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &quot;expression&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;, &quot;registry&quot;, zeroOrOne( isObject ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -7932,11 +7932,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-info">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/Expression" data-path="clause.types/Expression">clause.types/Expression</a>
     </div>
   
@@ -7970,7 +7970,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;zeroOrOne( isObject )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      optional (?)
+      [?] optional
     </span>
   
     </legend>
@@ -7985,7 +7985,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;isObject&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -8023,11 +8023,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-primary">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">clause.types/NamespacePath</a>
     </div>
   
@@ -8072,7 +8072,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &quot;source&quot;, or( &quot;namespacePath&quot;, &lt;a href=&quot;#clause.types/NamespacePath&quot; data-path=&quot;clause.types/NamespacePath&quot;&gt;NamespacePath&lt;/a&gt;, &quot;expression&quot;, isExpr ), &quot;metaObj&quot;, isObject )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -8108,7 +8108,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;or( &quot;namespacePath&quot;, &lt;a href=&quot;#clause.types/NamespacePath&quot; data-path=&quot;clause.types/NamespacePath&quot;&gt;NamespacePath&lt;/a&gt;, &quot;expression&quot;, isExpr )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      either one of (or)
+      [or] either one of
     </span>
   
     </legend>
@@ -8147,11 +8147,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-primary">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">clause.types/NamespacePath</a>
     </div>
   
@@ -8190,7 +8190,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;isExpr&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -8246,7 +8246,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;isObject&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -8283,7 +8283,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;isExpr&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -8353,11 +8353,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-primary">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/Clause" data-path="clause.types/Clause">clause.types/Clause</a>
     </div>
   
@@ -8392,11 +8392,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-primary">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/Predicate" data-path="clause.types/Predicate">clause.types/Predicate</a>
     </div>
   
@@ -8431,11 +8431,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-primary">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/DelayedClause" data-path="clause.types/DelayedClause">clause.types/DelayedClause</a>
     </div>
   
@@ -8470,11 +8470,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-primary">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/ClauseReference" data-path="clause.types/ClauseReference">clause.types/ClauseReference</a>
     </div>
   
@@ -8534,7 +8534,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;isString&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -8583,7 +8583,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;isNum&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -8632,7 +8632,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;isBool&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -8681,7 +8681,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;isNull&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -8730,7 +8730,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;isUndefined&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -9023,7 +9023,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( &quot;head&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;, &quot;params&quot;, zeroOrMore( or( &quot;label&quot;, isString, &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, &quot;paramsObj&quot;, and( instanceOf(ParamsMap), mapOf(  ) ), &quot;optionsObj&quot;, isPlainObject, &quot;recursive&quot;, instanceOf(Recursive) ) ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      a concatenation (cat) of
+      [cat] a sequence of
     </span>
   
     </legend>
@@ -9055,11 +9055,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-info">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/Expression" data-path="clause.types/Expression">clause.types/Expression</a>
     </div>
   
@@ -9093,7 +9093,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;zeroOrMore( or( &quot;label&quot;, isString, &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, &quot;paramsObj&quot;, and( instanceOf(ParamsMap), mapOf(  ) ), &quot;optionsObj&quot;, isPlainObject, &quot;recursive&quot;, instanceOf(Recursive) ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      zero or more of (*)
+      [*] zero or more
     </span>
   
     </legend>
@@ -9108,7 +9108,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;or( &quot;label&quot;, isString, &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, &quot;paramsObj&quot;, and( instanceOf(ParamsMap), mapOf(  ) ), &quot;optionsObj&quot;, isPlainObject, &quot;recursive&quot;, instanceOf(Recursive) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      either one of (or)
+      [or] either one of
     </span>
   
     </legend>
@@ -9151,7 +9151,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;isString&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -9200,11 +9200,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <fieldset class="card card-outline-info">
     <legend class="clause-type">
-      <span class="tag tag-info">satisfies clause</span>
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      A value that is of
+      A value of type
       <a href="#clause.types/SExpression" data-path="clause.types/SExpression">clause.types/SExpression</a>
     </div>
   
@@ -9243,7 +9243,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;and( instanceOf(ParamsMap), mapOf(  ) )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      <span class="tag tag-info">and</span>
+      <span class="tag tag-info">[and]</span>
     </span>
   
     </legend>
@@ -9270,7 +9270,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;instanceOf(ParamsMap)&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -9307,7 +9307,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;mapOf(  )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      <span class="tag tag-info">map_of</span>
+      <span class="tag tag-info">[map_of]</span>
     </span>
   
     </legend>
@@ -9360,7 +9360,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;isPlainObject&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
@@ -9428,7 +9428,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;instanceOf(Recursive)&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      satisfies predicate
+      [pred] satisfies predicate
     </span>
   
     </legend>
