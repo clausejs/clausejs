@@ -227,10 +227,13 @@ Documentation website: http://clause.js.org
 
 ## Subprojects
 
-WIP.
+WIP:
 
 - [`clausejs-docgen`](packages/clausejs-docgen): Automatic documentation generation based on function clauses
 - [`clausejs-react`](packages/clausejs-react): More robust props validation for your React apps. A replacement for `React.PropTypes`
+
+Coming soon:
+
 - [`clausejs-gen`](packages/clausejs-gen): Generative/Property-based Testing
 - [`clausejs-diff`](packages/clausejs-diff): (Coming soon) clause version diffing that detects breaking changes.
 
