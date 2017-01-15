@@ -636,7 +636,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         ), 
         &quot;withoutLabels&quot;, zeroOrMore( <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> )
       ), 
-      &quot;options&quot;, zeroOrOne( isOptionObject )
+      &quot;options&quot;, zeroOrOne( isPlainObject )
     ), 
     noDupelicateLabels
   ), 
@@ -672,7 +672,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       ), 
       &quot;withoutLabels&quot;, zeroOrMore( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; )
     ), 
-    &quot;options&quot;, zeroOrOne( isOptionObject )
+    &quot;options&quot;, zeroOrOne( isPlainObject )
   ), 
   noDupelicateLabels
 )&lt;/pre&gt;
@@ -718,7 +718,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     ), 
     &quot;withoutLabels&quot;, zeroOrMore( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; )
   ), 
-  &quot;options&quot;, zeroOrOne( isOptionObject )
+  &quot;options&quot;, zeroOrOne( isPlainObject )
 )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
@@ -1354,7 +1354,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;zeroOrOne( isOptionObject )&lt;/pre&gt;
+    &lt;pre&gt;zeroOrOne( isPlainObject )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [?] optional
     </span>
@@ -1369,7 +1369,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;isOptionObject&lt;/pre&gt;
+    &lt;pre&gt;isPlainObject&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
       [pred] satisfies predicate
     </span>
@@ -1380,10 +1380,25 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       
     <em>
       A value that satisfies 
-      <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isOptionObject(x) {
-  return isObj(x) &amp;&amp; !isExpr(x);
+      <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isPlainObject(x) {
+  // Basic check for Type object that&apos;s not null
+  if (isObj(x)) {
+
+    // If Object.getPrototypeOf supported, use it
+    if (typeof Object.getPrototypeOf == &apos;function&apos;) {
+      var proto = Object.getPrototypeOf(x);
+      return proto === Object.prototype || proto === null;
+    }
+
+    // Otherwise, use internal class
+    // This should be reliable as if getPrototypeOf not supported, is pre-ES5
+    return Object.prototype.toString.call(x) == &apos;[object Object]&apos;;
+  }
+
+  // Not an object
+  return false;
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
-        isOptionObject()
+        isPlainObject()
       </span>
     </em>
   
@@ -1519,7 +1534,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         ), 
         &quot;withoutLabels&quot;, zeroOrMore( <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> )
       ), 
-      &quot;options&quot;, zeroOrOne( isOptionObject )
+      &quot;options&quot;, zeroOrOne( isPlainObject )
     ), 
     noDupelicateLabels
   ), 
@@ -1555,7 +1570,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       ), 
       &quot;withoutLabels&quot;, zeroOrMore( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; )
     ), 
-    &quot;options&quot;, zeroOrOne( isOptionObject )
+    &quot;options&quot;, zeroOrOne( isPlainObject )
   ), 
   noDupelicateLabels
 )&lt;/pre&gt;
@@ -1601,7 +1616,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     ), 
     &quot;withoutLabels&quot;, zeroOrMore( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; )
   ), 
-  &quot;options&quot;, zeroOrOne( isOptionObject )
+  &quot;options&quot;, zeroOrOne( isPlainObject )
 )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
@@ -2237,7 +2252,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;zeroOrOne( isOptionObject )&lt;/pre&gt;
+    &lt;pre&gt;zeroOrOne( isPlainObject )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [?] optional
     </span>
@@ -2252,7 +2267,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;isOptionObject&lt;/pre&gt;
+    &lt;pre&gt;isPlainObject&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
       [pred] satisfies predicate
     </span>
@@ -2263,10 +2278,25 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       
     <em>
       A value that satisfies 
-      <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isOptionObject(x) {
-  return isObj(x) &amp;&amp; !isExpr(x);
+      <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isPlainObject(x) {
+  // Basic check for Type object that&apos;s not null
+  if (isObj(x)) {
+
+    // If Object.getPrototypeOf supported, use it
+    if (typeof Object.getPrototypeOf == &apos;function&apos;) {
+      var proto = Object.getPrototypeOf(x);
+      return proto === Object.prototype || proto === null;
+    }
+
+    // Otherwise, use internal class
+    // This should be reliable as if getPrototypeOf not supported, is pre-ES5
+    return Object.prototype.toString.call(x) == &apos;[object Object]&apos;;
+  }
+
+  // Not an object
+  return false;
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
-        isOptionObject()
+        isPlainObject()
       </span>
     </em>
   
@@ -3342,17 +3372,35 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   &lt;args&gt;: cat( &quot;shapeArgs&quot;, shape( {
     &lt;optional&gt;: {
       &quot;requiredFields&quot;: {
-        &lt;keyExpression&gt;: oneOf(&quot;req&quot;, &quot;required&quot;), 
-        &lt;valExpression&gt;: or(
+        &lt;key&gt;: oneOf(&quot;req&quot;, &quot;required&quot;), 
+        &lt;val&gt;: or(
           &quot;keyList&quot;, zeroOrMore( isPropName ), 
-          &quot;fieldDefs&quot;, mapOf()
+          &quot;fieldDefs&quot;, mapOf( {
+            &lt;key&gt;: isString, 
+            &lt;val&gt;: or(
+              &quot;valExpressionOnly&quot;, <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, 
+              &quot;keyValExprPair&quot;, cat(
+                &quot;keyExpression&quot;, <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, 
+                &quot;valExpression&quot;, <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>
+              )
+            )
+          } )
         )
       }, 
       &quot;optionalFields&quot;: {
-        &lt;keyExpression&gt;: oneOf(&quot;opt&quot;, &quot;optional&quot;), 
-        &lt;valExpression&gt;: or(
+        &lt;key&gt;: oneOf(&quot;opt&quot;, &quot;optional&quot;), 
+        &lt;val&gt;: or(
           &quot;keyList&quot;, zeroOrMore( isPropName ), 
-          &quot;fieldDefs&quot;, mapOf()
+          &quot;fieldDefs&quot;, mapOf( {
+            &lt;key&gt;: isString, 
+            &lt;val&gt;: or(
+              &quot;valExpressionOnly&quot;, <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, 
+              &quot;keyValExprPair&quot;, cat(
+                &quot;keyExpression&quot;, <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, 
+                &quot;valExpression&quot;, <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>
+              )
+            )
+          } )
         )
       }
     }
@@ -3375,17 +3423,35 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     &lt;pre&gt;cat( &quot;shapeArgs&quot;, shape( {
   &amp;lt;optional&amp;gt;: {
     &quot;requiredFields&quot;: {
-      &amp;lt;keyExpression&amp;gt;: oneOf(&quot;req&quot;, &quot;required&quot;), 
-      &amp;lt;valExpression&amp;gt;: or(
+      &amp;lt;key&amp;gt;: oneOf(&quot;req&quot;, &quot;required&quot;), 
+      &amp;lt;val&amp;gt;: or(
         &quot;keyList&quot;, zeroOrMore( isPropName ), 
-        &quot;fieldDefs&quot;, mapOf()
+        &quot;fieldDefs&quot;, mapOf( {
+          &amp;lt;key&amp;gt;: isString, 
+          &amp;lt;val&amp;gt;: or(
+            &quot;valExpressionOnly&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;, 
+            &quot;keyValExprPair&quot;, cat(
+              &quot;keyExpression&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;, 
+              &quot;valExpression&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;
+            )
+          )
+        } )
       )
     }, 
     &quot;optionalFields&quot;: {
-      &amp;lt;keyExpression&amp;gt;: oneOf(&quot;opt&quot;, &quot;optional&quot;), 
-      &amp;lt;valExpression&amp;gt;: or(
+      &amp;lt;key&amp;gt;: oneOf(&quot;opt&quot;, &quot;optional&quot;), 
+      &amp;lt;val&amp;gt;: or(
         &quot;keyList&quot;, zeroOrMore( isPropName ), 
-        &quot;fieldDefs&quot;, mapOf()
+        &quot;fieldDefs&quot;, mapOf( {
+          &amp;lt;key&amp;gt;: isString, 
+          &amp;lt;val&amp;gt;: or(
+            &quot;valExpressionOnly&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;, 
+            &quot;keyValExprPair&quot;, cat(
+              &quot;keyExpression&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;, 
+              &quot;valExpression&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;
+            )
+          )
+        } )
       )
     }
   }
@@ -3428,17 +3494,35 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     &lt;pre&gt;shape( {
   &amp;lt;optional&amp;gt;: {
     &quot;requiredFields&quot;: {
-      &amp;lt;keyExpression&amp;gt;: oneOf(&quot;req&quot;, &quot;required&quot;), 
-      &amp;lt;valExpression&amp;gt;: or(
+      &amp;lt;key&amp;gt;: oneOf(&quot;req&quot;, &quot;required&quot;), 
+      &amp;lt;val&amp;gt;: or(
         &quot;keyList&quot;, zeroOrMore( isPropName ), 
-        &quot;fieldDefs&quot;, mapOf()
+        &quot;fieldDefs&quot;, mapOf( {
+          &amp;lt;key&amp;gt;: isString, 
+          &amp;lt;val&amp;gt;: or(
+            &quot;valExpressionOnly&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;, 
+            &quot;keyValExprPair&quot;, cat(
+              &quot;keyExpression&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;, 
+              &quot;valExpression&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;
+            )
+          )
+        } )
       )
     }, 
     &quot;optionalFields&quot;: {
-      &amp;lt;keyExpression&amp;gt;: oneOf(&quot;opt&quot;, &quot;optional&quot;), 
-      &amp;lt;valExpression&amp;gt;: or(
+      &amp;lt;key&amp;gt;: oneOf(&quot;opt&quot;, &quot;optional&quot;), 
+      &amp;lt;val&amp;gt;: or(
         &quot;keyList&quot;, zeroOrMore( isPropName ), 
-        &quot;fieldDefs&quot;, mapOf()
+        &quot;fieldDefs&quot;, mapOf( {
+          &amp;lt;key&amp;gt;: isString, 
+          &amp;lt;val&amp;gt;: or(
+            &quot;valExpressionOnly&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;, 
+            &quot;keyValExprPair&quot;, cat(
+              &quot;keyExpression&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;, 
+              &quot;valExpression&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;
+            )
+          )
+        } )
       )
     }
   }
@@ -8661,11 +8745,11 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   &lt;args&gt;: cat(
     &quot;source&quot;, or(
       &quot;namespacePath&quot;, <a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">NamespacePath</a>, 
-      &quot;expression&quot;, isExpr
+      &quot;expression&quot;, <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>
     ), 
     &quot;metaObj&quot;, isObject
   ), 
-  &lt;ret&gt;: isExpr
+  &lt;ret&gt;: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>
 } )</pre>
   
           </em>
@@ -8683,7 +8767,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     &lt;pre&gt;cat(
   &quot;source&quot;, or(
     &quot;namespacePath&quot;, &lt;a href=&quot;#clause.types/NamespacePath&quot; data-path=&quot;clause.types/NamespacePath&quot;&gt;NamespacePath&lt;/a&gt;, 
-    &quot;expression&quot;, isExpr
+    &quot;expression&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;
   ), 
   &quot;metaObj&quot;, isObject
 )&lt;/pre&gt;
@@ -8724,7 +8808,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;or(
   &quot;namespacePath&quot;, &lt;a href=&quot;#clause.types/NamespacePath&quot; data-path=&quot;clause.types/NamespacePath&quot;&gt;NamespacePath&lt;/a&gt;, 
-  &quot;expression&quot;, isExpr
+  &quot;expression&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;
 )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [or] either one of
@@ -8803,28 +8887,14 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
               
     
     
-    <fieldset class="card card-outline-primary">
+    <fieldset class="card card-outline-info">
     <legend class="clause-type">
-      
-    <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;isExpr&lt;/pre&gt;
-  " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      [pred] satisfies predicate
-    </span>
-  
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      
-    <em>
-      A value that satisfies 
-      <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isExpr(x) {
-  return isPred(x) || isClause(x) || isClauseRef(x) || isDelayedClause(x);
-}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
-        isExpr()
-      </span>
-    </em>
-  
+      A value of type
+      <a href="#clause.types/Expression" data-path="clause.types/Expression">clause.types/Expression</a>
     </div>
   
     </fieldset>
@@ -8896,28 +8966,14 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
 <dt>Return Value Clause</dt><dd>
     
     
-    <fieldset class="card card-outline-primary">
+    <fieldset class="card card-outline-info">
     <legend class="clause-type">
-      
-    <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;isExpr&lt;/pre&gt;
-  " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
-      [pred] satisfies predicate
-    </span>
-  
+      <span class="tag tag-info">[clause]</span>
     </legend>
     
     <div class="card-block">
-      
-    <em>
-      A value that satisfies 
-      <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isExpr(x) {
-  return isPred(x) || isClause(x) || isClauseRef(x) || isDelayedClause(x);
-}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
-        isExpr()
-      </span>
-    </em>
-  
+      A value of type
+      <a href="#clause.types/Expression" data-path="clause.types/Expression">clause.types/Expression</a>
     </div>
   
     </fieldset>
@@ -9408,10 +9464,8 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       
     <em>
       A value that satisfies 
-      <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isClause(x) {
-  return x instanceof Clause;
-}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
-        isClause()
+      <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function instanceOf_Clause(){ return action.apply(this, arguments); }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        instanceOf_Clause_()
       </span>
     </em>
   
@@ -9759,11 +9813,31 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, 
         &quot;quotedParamsMap&quot;, and(
           instanceOf_QuotedParamsMap_, 
-          mapOf()
+          mapOf( {
+            &amp;lt;key&amp;gt;: any, 
+            &amp;lt;val&amp;gt;: or(
+              isNull, 
+              isUndefined, 
+              or(
+                &quot;keyList&quot;, zeroOrMore( isString ), 
+                &quot;singleParam&quot;, &amp;lt;recursive&amp;gt;: or
+              )
+            )
+          } )
         ), 
         &quot;unquotedParamsMap&quot;, and(
           instanceOf_UnquotedParamsMap_, 
-          mapOf()
+          mapOf( {
+            &amp;lt;key&amp;gt;: any, 
+            &amp;lt;val&amp;gt;: or(
+              isNull, 
+              isUndefined, 
+              or(
+                &quot;keyList&quot;, zeroOrMore( isString ), 
+                &quot;singleParam&quot;, &amp;lt;recursive&amp;gt;: or
+              )
+            )
+          } )
         ), 
         &quot;optionsObj&quot;, isPlainObject, 
         &quot;recursive&quot;, instanceOf_Recursive_
@@ -9773,11 +9847,31 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, 
       &quot;quotedParamsMap&quot;, and(
         instanceOf_QuotedParamsMap_, 
-        mapOf()
+        mapOf( {
+          &amp;lt;key&amp;gt;: any, 
+          &amp;lt;val&amp;gt;: or(
+            isNull, 
+            isUndefined, 
+            or(
+              &quot;keyList&quot;, zeroOrMore( isString ), 
+              &quot;singleParam&quot;, &amp;lt;recursive&amp;gt;: or
+            )
+          )
+        } )
       ), 
       &quot;unquotedParamsMap&quot;, and(
         instanceOf_UnquotedParamsMap_, 
-        mapOf()
+        mapOf( {
+          &amp;lt;key&amp;gt;: any, 
+          &amp;lt;val&amp;gt;: or(
+            isNull, 
+            isUndefined, 
+            or(
+              &quot;keyList&quot;, zeroOrMore( isString ), 
+              &quot;singleParam&quot;, &amp;lt;recursive&amp;gt;: or
+            )
+          )
+        } )
       ), 
       &quot;optionsObj&quot;, isPlainObject, 
       &quot;recursive&quot;, instanceOf_Recursive_
@@ -9860,11 +9954,31 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, 
       &quot;quotedParamsMap&quot;, and(
         instanceOf_QuotedParamsMap_, 
-        mapOf()
+        mapOf( {
+          &amp;lt;key&amp;gt;: any, 
+          &amp;lt;val&amp;gt;: or(
+            isNull, 
+            isUndefined, 
+            or(
+              &quot;keyList&quot;, zeroOrMore( isString ), 
+              &quot;singleParam&quot;, &amp;lt;recursive&amp;gt;: or
+            )
+          )
+        } )
       ), 
       &quot;unquotedParamsMap&quot;, and(
         instanceOf_UnquotedParamsMap_, 
-        mapOf()
+        mapOf( {
+          &amp;lt;key&amp;gt;: any, 
+          &amp;lt;val&amp;gt;: or(
+            isNull, 
+            isUndefined, 
+            or(
+              &quot;keyList&quot;, zeroOrMore( isString ), 
+              &quot;singleParam&quot;, &amp;lt;recursive&amp;gt;: or
+            )
+          )
+        } )
       ), 
       &quot;optionsObj&quot;, isPlainObject, 
       &quot;recursive&quot;, instanceOf_Recursive_
@@ -9874,11 +9988,31 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, 
     &quot;quotedParamsMap&quot;, and(
       instanceOf_QuotedParamsMap_, 
-      mapOf()
+      mapOf( {
+        &amp;lt;key&amp;gt;: any, 
+        &amp;lt;val&amp;gt;: or(
+          isNull, 
+          isUndefined, 
+          or(
+            &quot;keyList&quot;, zeroOrMore( isString ), 
+            &quot;singleParam&quot;, &amp;lt;recursive&amp;gt;: or
+          )
+        )
+      } )
     ), 
     &quot;unquotedParamsMap&quot;, and(
       instanceOf_UnquotedParamsMap_, 
-      mapOf()
+      mapOf( {
+        &amp;lt;key&amp;gt;: any, 
+        &amp;lt;val&amp;gt;: or(
+          isNull, 
+          isUndefined, 
+          or(
+            &quot;keyList&quot;, zeroOrMore( isString ), 
+            &quot;singleParam&quot;, &amp;lt;recursive&amp;gt;: or
+          )
+        )
+      } )
     ), 
     &quot;optionsObj&quot;, isPlainObject, 
     &quot;recursive&quot;, instanceOf_Recursive_
@@ -9932,11 +10066,31 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, 
     &quot;quotedParamsMap&quot;, and(
       instanceOf_QuotedParamsMap_, 
-      mapOf()
+      mapOf( {
+        &amp;lt;key&amp;gt;: any, 
+        &amp;lt;val&amp;gt;: or(
+          isNull, 
+          isUndefined, 
+          or(
+            &quot;keyList&quot;, zeroOrMore( isString ), 
+            &quot;singleParam&quot;, &amp;lt;recursive&amp;gt;: or
+          )
+        )
+      } )
     ), 
     &quot;unquotedParamsMap&quot;, and(
       instanceOf_UnquotedParamsMap_, 
-      mapOf()
+      mapOf( {
+        &amp;lt;key&amp;gt;: any, 
+        &amp;lt;val&amp;gt;: or(
+          isNull, 
+          isUndefined, 
+          or(
+            &quot;keyList&quot;, zeroOrMore( isString ), 
+            &quot;singleParam&quot;, &amp;lt;recursive&amp;gt;: or
+          )
+        )
+      } )
     ), 
     &quot;optionsObj&quot;, isPlainObject, 
     &quot;recursive&quot;, instanceOf_Recursive_
@@ -9962,11 +10116,31 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, 
     &quot;quotedParamsMap&quot;, and(
       instanceOf_QuotedParamsMap_, 
-      mapOf()
+      mapOf( {
+        &amp;lt;key&amp;gt;: any, 
+        &amp;lt;val&amp;gt;: or(
+          isNull, 
+          isUndefined, 
+          or(
+            &quot;keyList&quot;, zeroOrMore( isString ), 
+            &quot;singleParam&quot;, &amp;lt;recursive&amp;gt;: or
+          )
+        )
+      } )
     ), 
     &quot;unquotedParamsMap&quot;, and(
       instanceOf_UnquotedParamsMap_, 
-      mapOf()
+      mapOf( {
+        &amp;lt;key&amp;gt;: any, 
+        &amp;lt;val&amp;gt;: or(
+          isNull, 
+          isUndefined, 
+          or(
+            &quot;keyList&quot;, zeroOrMore( isString ), 
+            &quot;singleParam&quot;, &amp;lt;recursive&amp;gt;: or
+          )
+        )
+      } )
     ), 
     &quot;optionsObj&quot;, isPlainObject, 
     &quot;recursive&quot;, instanceOf_Recursive_
@@ -10059,11 +10233,31 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, 
   &quot;quotedParamsMap&quot;, and(
     instanceOf_QuotedParamsMap_, 
-    mapOf()
+    mapOf( {
+      &amp;lt;key&amp;gt;: any, 
+      &amp;lt;val&amp;gt;: or(
+        isNull, 
+        isUndefined, 
+        or(
+          &quot;keyList&quot;, zeroOrMore( isString ), 
+          &quot;singleParam&quot;, &amp;lt;recursive&amp;gt;: or
+        )
+      )
+    } )
   ), 
   &quot;unquotedParamsMap&quot;, and(
     instanceOf_UnquotedParamsMap_, 
-    mapOf()
+    mapOf( {
+      &amp;lt;key&amp;gt;: any, 
+      &amp;lt;val&amp;gt;: or(
+        isNull, 
+        isUndefined, 
+        or(
+          &quot;keyList&quot;, zeroOrMore( isString ), 
+          &quot;singleParam&quot;, &amp;lt;recursive&amp;gt;: or
+        )
+      )
+    } )
   ), 
   &quot;optionsObj&quot;, isPlainObject, 
   &quot;recursive&quot;, instanceOf_Recursive_
@@ -10151,7 +10345,26 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;and(
   instanceOf_QuotedParamsMap_, 
-  mapOf()
+  mapOf( {
+    &amp;lt;key&amp;gt;: any, 
+    &amp;lt;val&amp;gt;: or(
+      isNull, 
+      isUndefined, 
+      or(
+        &quot;keyList&quot;, zeroOrMore( isString ), 
+        &quot;singleParam&quot;, or(
+          &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, 
+          &quot;quotedParamsMap&quot;, &amp;lt;recursive&amp;gt;: and, 
+          &quot;unquotedParamsMap&quot;, and(
+            instanceOf_UnquotedParamsMap_, 
+            &amp;lt;recursive&amp;gt;: mapOf
+          ), 
+          &quot;optionsObj&quot;, isPlainObject, 
+          &quot;recursive&quot;, instanceOf_Recursive_
+        )
+      )
+    )
+  } )
 )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       <span class="tag tag-info">[and]</span>
@@ -10216,7 +10429,29 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;mapOf()&lt;/pre&gt;
+    &lt;pre&gt;mapOf( {
+  &amp;lt;key&amp;gt;: any, 
+  &amp;lt;val&amp;gt;: or(
+    isNull, 
+    isUndefined, 
+    or(
+      &quot;keyList&quot;, zeroOrMore( isString ), 
+      &quot;singleParam&quot;, or(
+        &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, 
+        &quot;quotedParamsMap&quot;, and(
+          instanceOf_QuotedParamsMap_, 
+          &amp;lt;recursive&amp;gt;: mapOf
+        ), 
+        &quot;unquotedParamsMap&quot;, and(
+          instanceOf_UnquotedParamsMap_, 
+          &amp;lt;recursive&amp;gt;: mapOf
+        ), 
+        &quot;optionsObj&quot;, isPlainObject, 
+        &quot;recursive&quot;, instanceOf_Recursive_
+      )
+    )
+  )
+} )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       <span class="tag tag-info">[map_of]</span>
     </span>
@@ -10271,7 +10506,26 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;and(
   instanceOf_UnquotedParamsMap_, 
-  mapOf()
+  mapOf( {
+    &amp;lt;key&amp;gt;: any, 
+    &amp;lt;val&amp;gt;: or(
+      isNull, 
+      isUndefined, 
+      or(
+        &quot;keyList&quot;, zeroOrMore( isString ), 
+        &quot;singleParam&quot;, or(
+          &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, 
+          &quot;quotedParamsMap&quot;, and(
+            instanceOf_QuotedParamsMap_, 
+            &amp;lt;recursive&amp;gt;: mapOf
+          ), 
+          &quot;unquotedParamsMap&quot;, &amp;lt;recursive&amp;gt;: and, 
+          &quot;optionsObj&quot;, isPlainObject, 
+          &quot;recursive&quot;, instanceOf_Recursive_
+        )
+      )
+    )
+  } )
 )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       <span class="tag tag-info">[and]</span>
@@ -10336,7 +10590,29 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;mapOf()&lt;/pre&gt;
+    &lt;pre&gt;mapOf( {
+  &amp;lt;key&amp;gt;: any, 
+  &amp;lt;val&amp;gt;: or(
+    isNull, 
+    isUndefined, 
+    or(
+      &quot;keyList&quot;, zeroOrMore( isString ), 
+      &quot;singleParam&quot;, or(
+        &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, 
+        &quot;quotedParamsMap&quot;, and(
+          instanceOf_QuotedParamsMap_, 
+          &amp;lt;recursive&amp;gt;: mapOf
+        ), 
+        &quot;unquotedParamsMap&quot;, and(
+          instanceOf_UnquotedParamsMap_, 
+          &amp;lt;recursive&amp;gt;: mapOf
+        ), 
+        &quot;optionsObj&quot;, isPlainObject, 
+        &quot;recursive&quot;, instanceOf_Recursive_
+      )
+    )
+  )
+} )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       <span class="tag tag-info">[map_of]</span>
     </span>
@@ -10533,11 +10809,31 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, 
   &quot;quotedParamsMap&quot;, and(
     instanceOf_QuotedParamsMap_, 
-    mapOf()
+    mapOf( {
+      &amp;lt;key&amp;gt;: any, 
+      &amp;lt;val&amp;gt;: or(
+        isNull, 
+        isUndefined, 
+        or(
+          &quot;keyList&quot;, zeroOrMore( isString ), 
+          &quot;singleParam&quot;, &amp;lt;recursive&amp;gt;: or
+        )
+      )
+    } )
   ), 
   &quot;unquotedParamsMap&quot;, and(
     instanceOf_UnquotedParamsMap_, 
-    mapOf()
+    mapOf( {
+      &amp;lt;key&amp;gt;: any, 
+      &amp;lt;val&amp;gt;: or(
+        isNull, 
+        isUndefined, 
+        or(
+          &quot;keyList&quot;, zeroOrMore( isString ), 
+          &quot;singleParam&quot;, &amp;lt;recursive&amp;gt;: or
+        )
+      )
+    } )
   ), 
   &quot;optionsObj&quot;, isPlainObject, 
   &quot;recursive&quot;, instanceOf_Recursive_
@@ -10560,11 +10856,31 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, 
   &quot;quotedParamsMap&quot;, and(
     instanceOf_QuotedParamsMap_, 
-    mapOf()
+    mapOf( {
+      &amp;lt;key&amp;gt;: any, 
+      &amp;lt;val&amp;gt;: or(
+        isNull, 
+        isUndefined, 
+        or(
+          &quot;keyList&quot;, zeroOrMore( isString ), 
+          &quot;singleParam&quot;, &amp;lt;recursive&amp;gt;: or
+        )
+      )
+    } )
   ), 
   &quot;unquotedParamsMap&quot;, and(
     instanceOf_UnquotedParamsMap_, 
-    mapOf()
+    mapOf( {
+      &amp;lt;key&amp;gt;: any, 
+      &amp;lt;val&amp;gt;: or(
+        isNull, 
+        isUndefined, 
+        or(
+          &quot;keyList&quot;, zeroOrMore( isString ), 
+          &quot;singleParam&quot;, &amp;lt;recursive&amp;gt;: or
+        )
+      )
+    } )
   ), 
   &quot;optionsObj&quot;, isPlainObject, 
   &quot;recursive&quot;, instanceOf_Recursive_
@@ -10652,7 +10968,26 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;and(
   instanceOf_QuotedParamsMap_, 
-  mapOf()
+  mapOf( {
+    &amp;lt;key&amp;gt;: any, 
+    &amp;lt;val&amp;gt;: or(
+      isNull, 
+      isUndefined, 
+      or(
+        &quot;keyList&quot;, zeroOrMore( isString ), 
+        &quot;singleParam&quot;, or(
+          &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, 
+          &quot;quotedParamsMap&quot;, &amp;lt;recursive&amp;gt;: and, 
+          &quot;unquotedParamsMap&quot;, and(
+            instanceOf_UnquotedParamsMap_, 
+            &amp;lt;recursive&amp;gt;: mapOf
+          ), 
+          &quot;optionsObj&quot;, isPlainObject, 
+          &quot;recursive&quot;, instanceOf_Recursive_
+        )
+      )
+    )
+  } )
 )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       <span class="tag tag-info">[and]</span>
@@ -10717,7 +11052,29 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;mapOf()&lt;/pre&gt;
+    &lt;pre&gt;mapOf( {
+  &amp;lt;key&amp;gt;: any, 
+  &amp;lt;val&amp;gt;: or(
+    isNull, 
+    isUndefined, 
+    or(
+      &quot;keyList&quot;, zeroOrMore( isString ), 
+      &quot;singleParam&quot;, or(
+        &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, 
+        &quot;quotedParamsMap&quot;, and(
+          instanceOf_QuotedParamsMap_, 
+          &amp;lt;recursive&amp;gt;: mapOf
+        ), 
+        &quot;unquotedParamsMap&quot;, and(
+          instanceOf_UnquotedParamsMap_, 
+          &amp;lt;recursive&amp;gt;: mapOf
+        ), 
+        &quot;optionsObj&quot;, isPlainObject, 
+        &quot;recursive&quot;, instanceOf_Recursive_
+      )
+    )
+  )
+} )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       <span class="tag tag-info">[map_of]</span>
     </span>
@@ -10772,7 +11129,26 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;and(
   instanceOf_UnquotedParamsMap_, 
-  mapOf()
+  mapOf( {
+    &amp;lt;key&amp;gt;: any, 
+    &amp;lt;val&amp;gt;: or(
+      isNull, 
+      isUndefined, 
+      or(
+        &quot;keyList&quot;, zeroOrMore( isString ), 
+        &quot;singleParam&quot;, or(
+          &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, 
+          &quot;quotedParamsMap&quot;, and(
+            instanceOf_QuotedParamsMap_, 
+            &amp;lt;recursive&amp;gt;: mapOf
+          ), 
+          &quot;unquotedParamsMap&quot;, &amp;lt;recursive&amp;gt;: and, 
+          &quot;optionsObj&quot;, isPlainObject, 
+          &quot;recursive&quot;, instanceOf_Recursive_
+        )
+      )
+    )
+  } )
 )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       <span class="tag tag-info">[and]</span>
@@ -10837,7 +11213,29 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;mapOf()&lt;/pre&gt;
+    &lt;pre&gt;mapOf( {
+  &amp;lt;key&amp;gt;: any, 
+  &amp;lt;val&amp;gt;: or(
+    isNull, 
+    isUndefined, 
+    or(
+      &quot;keyList&quot;, zeroOrMore( isString ), 
+      &quot;singleParam&quot;, or(
+        &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, 
+        &quot;quotedParamsMap&quot;, and(
+          instanceOf_QuotedParamsMap_, 
+          &amp;lt;recursive&amp;gt;: mapOf
+        ), 
+        &quot;unquotedParamsMap&quot;, and(
+          instanceOf_UnquotedParamsMap_, 
+          &amp;lt;recursive&amp;gt;: mapOf
+        ), 
+        &quot;optionsObj&quot;, isPlainObject, 
+        &quot;recursive&quot;, instanceOf_Recursive_
+      )
+    )
+  )
+} )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       <span class="tag tag-info">[map_of]</span>
     </span>

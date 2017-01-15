@@ -8,7 +8,6 @@ module.exports = {
   isProblem: require( './isProblem' ),
   delayed: require( './delayed' ),
   enforce: require( './enforce' ),
-  isExpr: require( './isExpr' ),
   isClause: require( './isClause' ),
   isFclause: require( './isFclause' ),
   isClauseRef: require( './isClauseRef' ),

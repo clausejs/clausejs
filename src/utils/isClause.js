@@ -1,7 +1,6 @@
 var Clause = require( '../models/Clause' );
+var instanceOf = require( '../preds/instanceOf' );
 
-function isClause( x ) {
-  return x instanceof Clause;
-}
+var isClause = instanceOf( Clause );
 
 module.exports = isClause;

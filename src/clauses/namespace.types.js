@@ -1,6 +1,7 @@
 import { or, cat, fclause, shape, zeroOrOne, ExprClause } from '../core';
-import { delayed, isNamespacePath, isExpr, isClauseRef } from '../utils';
+import { delayed, isNamespacePath, isClauseRef } from '../utils';
 import { isObj, isBool } from '../preds';
+const isExpr = require( '../utils/isExpr' );
 
 var ExprOrPartialRefMapClause =
  // or(
@@ -38,10 +39,10 @@ const MetaFnClause = fclause( {
   args: cat( 'source',
             or(
               'namespacePath', isNamespacePath,
-              'expression', isExpr
+              'expression', ExprClause
             ),
             'metaObj', isObj ),
-  ret: isExpr,
+  ret: ExprClause,
 } );
 
 const ResolveFnClause = fclause( {

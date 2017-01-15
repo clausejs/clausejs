@@ -6,7 +6,7 @@ var Clause = require( '../src/models/Clause' );
 var isClause = require( '../src/utils/isClause' );
 var identity = C.identity;
 
-describe( 'fclause', function() {
+describe( 'fclause', () => {
 
   it( 'empty clause', () => {
     var EmptyFclause = C.fclause( {} );

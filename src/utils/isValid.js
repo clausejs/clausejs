@@ -3,13 +3,13 @@ var isPred = require( './isPred' );
 var isClause = require( './isClause' );
 var conform = require( './conform' );
 
-function isValid( pred, x ) {
-  if ( !pred ) {
+function isValid( expr, x ) {
+  if ( !expr ) {
     throw new Error( 'Clause is required' );
-  } else if ( isClause( pred ) ) {
-    return !( isProblem( conform( pred, x ) ) );
-  } else if ( isPred( pred ) ) {
-    return pred( x );
+  } else if ( isClause( expr ) ) {
+    return !( isProblem( conform( expr, x ) ) );
+  } else if ( isPred( expr ) ) {
+    return expr( x );
   } else {
     return true;
   }
