@@ -17,10 +17,12 @@ var SampleClause = cat(
             world: isObj,
           }
         } ),
-        'showNum', cat( isNum, or( isBool, isObj ) ) ),
-        'third', zeroOrMore( C.delayed( () => SampleClause ) )
+        'showNum', cat( isNum, or( isBool, isObj ) )
+      ),
+    'third', zeroOrMore( C.delayed( () => SampleClause ) )
   );
 
-var r = describe( SampleClause );
+
+var r = describe( SampleClause, null, 2 );
 
 console.log( r );

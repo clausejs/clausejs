@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 102);
+/******/ 	return __webpack_require__(__webpack_require__.s = 103);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -227,7 +227,7 @@ if (function test() {}.name !== 'test') {
   var fToString = Function.prototype.toString;
   var pMatch = String.prototype.match;
   var pReplace = String.prototype.replace;
-  var s = __webpack_require__(65);
+  var s = __webpack_require__(66);
   var reName = new RegExp('^[' + s + ']*(?:function|class)[' + s + ']*\\*?[' + s + ']+([\\w\\$]+)[' + s + ']*', 'i');
   _getFnName = function getName(fn) {
     var name = pMatch.call(pReplace.call(fToString.call(fn), STRIP_COMMENTS, ' '), reName);
@@ -1017,17 +1017,17 @@ module.exports = r;
 
 
 var oAssign = __webpack_require__(4);
-var nfaWalker = __webpack_require__(73);
-var anyWalker = __webpack_require__(67);
-var predWalker = __webpack_require__(74);
-var wallWalker = __webpack_require__(76);
-var fclauseWalker = __webpack_require__(71);
-var shapeWalker = __webpack_require__(75);
-var andWalker = __webpack_require__(66);
-var collOfWalker = __webpack_require__(69);
-var mapOfWalker = __webpack_require__(72);
-var clauseRefWalker = __webpack_require__(68);
-var delayedClauseWalker = __webpack_require__(70);
+var nfaWalker = __webpack_require__(74);
+var anyWalker = __webpack_require__(68);
+var predWalker = __webpack_require__(75);
+var wallWalker = __webpack_require__(77);
+var fclauseWalker = __webpack_require__(72);
+var shapeWalker = __webpack_require__(76);
+var andWalker = __webpack_require__(67);
+var collOfWalker = __webpack_require__(70);
+var mapOfWalker = __webpack_require__(73);
+var clauseRefWalker = __webpack_require__(69);
+var delayedClauseWalker = __webpack_require__(71);
 var coerceIntoClause = __webpack_require__(9);
 var isProblem = __webpack_require__(0);
 
@@ -1429,23 +1429,31 @@ function Recursive(expression) {
   this.expression = expression;
 }
 
-function ParamsMap(map) {
+function QuotedParamsMap(map) {
   oAssign(this, map);
 }
 
-var ParamsMapC = and(instanceOf(ParamsMap), mapOf(any, maybe(or('paramList', zeroOrMore(delayed(function () {
-  return ParamItemClause;
-})), 'paramMap', delayed(function () {
-  return ParamsMapC;
-}), 'singleParam', delayed(function () {
-  return ParamItemClause;
-})))));
+function UnquotedParamsMap(map) {
+  oAssign(this, map);
+}
 
-var ParamItemClause = or('label', isStr, 'sExpression', delayed(function () {
+var ParamsMapC = mapOf(any, maybe(or('keyList', zeroOrMore(delayed(function () {
+  return ParamLabelClause;
+})), 'singleParam', delayed(function () {
+  return ParamItemClause;
+}))));
+
+var QuotedParamsMapC = and(instanceOf(QuotedParamsMap), ParamsMapC);
+
+var UnquotedParamsMapC = and(instanceOf(UnquotedParamsMap), ParamsMapC);
+
+var ParamItemClause = or('sExpression', delayed(function () {
   return SExpressionClause;
-}), 'paramsObj', ParamsMapC, 'optionsObj', isPlainObj, 'recursive', instanceOf(Recursive));
+}), 'quotedParamsMap', QuotedParamsMapC, 'unquotedParamsMap', UnquotedParamsMapC, 'optionsObj', isPlainObj, 'recursive', instanceOf(Recursive));
 
-var SExpressionClause = wall(cat('head', ExprClause, 'params', zeroOrMore(ParamItemClause)));
+var ParamLabelClause = isStr;
+
+var SExpressionClause = wall(cat('head', ExprClause, 'params', or('labelled', zeroOrMore(cat('label', ParamLabelClause, 'item', ParamItemClause)), 'unlabelled', zeroOrMore(ParamItemClause))));
 
 var singleArgParamGenerator = function singleArgParamGenerator(repo, _ref) {
   var enclosedClause = _ref.opts.enclosedClause;
@@ -1454,8 +1462,7 @@ var singleArgParamGenerator = function singleArgParamGenerator(repo, _ref) {
 
 var multipleArgParamGenerator = function multipleArgParamGenerator(repo, _ref2) {
   var named = _ref2.opts.named,
-      exprs = _ref2.exprs,
-      type = _ref2.type;
+      exprs = _ref2.exprs;
 
   if (exprs.length === 0) {
     //empty case
@@ -1476,16 +1483,15 @@ var multipleArgParamGenerator = function multipleArgParamGenerator(repo, _ref2) 
 };
 
 var sParamsConverters = {
-  'PRED': function PRED(repo, _ref5) {
-    var predicate = _ref5.opts.predicate;
-    return [fnName(predicate) + '()'];
+  'PRED': function PRED() {
+    return [];
   },
-  'WALL': function WALL(repo, _ref6) {
-    var enclosedClause = _ref6.opts.enclosedClause;
+  'WALL': function WALL(repo, _ref5) {
+    var enclosedClause = _ref5.opts.enclosedClause;
     return [_createSExpr(repo, enclosedClause)];
   },
-  'AND': function AND(repo, _ref7) {
-    var conformedExprs = _ref7.opts.conformedExprs;
+  'AND': function AND(repo, _ref6) {
+    var conformedExprs = _ref6.opts.conformedExprs;
     return conformedExprs.map(clauseFromAlts).map(function (c) {
       return _createSExpr(repo, c);
     });
@@ -1504,39 +1510,39 @@ var sParamsConverters = {
     return [];
   },
   // TODO
-  'SHAPE': function SHAPE(repo, _ref8) {
-    var _ref8$opts$conformedA = _ref8.opts.conformedArgs.shapeArgs,
-        _ref8$opts$conformedA2 = _ref8$opts$conformedA.optionalFields;
-    _ref8$opts$conformedA2 = _ref8$opts$conformedA2 === undefined ? {} : _ref8$opts$conformedA2;
-    var opt = _ref8$opts$conformedA2.opt,
-        optional = _ref8$opts$conformedA2.optional,
-        _ref8$opts$conformedA3 = _ref8$opts$conformedA.requiredFields;
-    _ref8$opts$conformedA3 = _ref8$opts$conformedA3 === undefined ? {} : _ref8$opts$conformedA3;
-    var req = _ref8$opts$conformedA3.req,
-        required = _ref8$opts$conformedA3.required;
-    return oAssign(new ParamsMap(), req || required ? {
+  'SHAPE': function SHAPE(repo, _ref7) {
+    var _ref7$opts$conformedA = _ref7.opts.conformedArgs.shapeArgs,
+        _ref7$opts$conformedA2 = _ref7$opts$conformedA.optionalFields;
+    _ref7$opts$conformedA2 = _ref7$opts$conformedA2 === undefined ? {} : _ref7$opts$conformedA2;
+    var opt = _ref7$opts$conformedA2.opt,
+        optional = _ref7$opts$conformedA2.optional,
+        _ref7$opts$conformedA3 = _ref7$opts$conformedA.requiredFields;
+    _ref7$opts$conformedA3 = _ref7$opts$conformedA3 === undefined ? {} : _ref7$opts$conformedA3;
+    var req = _ref7$opts$conformedA3.req,
+        required = _ref7$opts$conformedA3.required;
+    return oAssign(new UnquotedParamsMap(), req || required ? {
       required: _fieldDefToFrags(repo, req || required)
     } : {}, opt || optional ? {
       optional: _fieldDefToFrags(repo, opt || optional)
     } : {});
   },
-  'FCLAUSE': function FCLAUSE(repo, _ref9) {
-    var _ref9$opts = _ref9.opts,
-        args = _ref9$opts.args,
-        ret = _ref9$opts.ret,
-        fn = _ref9$opts.fn;
-    return oAssign(new ParamsMap(), args ? { args: _createSExpr(repo, args) } : {}, ret ? { ret: _createSExpr(repo, ret) } : {}, fn ? { fn: [fnName(fn) + '()'] } : {});
+  'FCLAUSE': function FCLAUSE(repo, _ref8) {
+    var _ref8$opts = _ref8.opts,
+        args = _ref8$opts.args,
+        ret = _ref8$opts.ret,
+        fn = _ref8$opts.fn;
+    return oAssign(new UnquotedParamsMap(), args ? { args: _createSExpr(repo, args) } : {}, ret ? { ret: _createSExpr(repo, ret) } : {}, fn ? { fn: [fnName(fn) + '()'] } : {});
   }
 };
 
-function _fieldDefToFrags(repo, _ref10) {
-  var _ref10$fieldDefs = _ref10.fieldDefs;
-  _ref10$fieldDefs = _ref10$fieldDefs === undefined ? {} : _ref10$fieldDefs;
-  var fields = _ref10$fieldDefs.fields,
-      keyList = _ref10.keyList;
+function _fieldDefToFrags(repo, _ref9) {
+  var _ref9$fieldDefs = _ref9.fieldDefs;
+  _ref9$fieldDefs = _ref9$fieldDefs === undefined ? {} : _ref9$fieldDefs;
+  var fields = _ref9$fieldDefs.fields,
+      keyList = _ref9.keyList;
 
   if (fields) {
-    var r = new ParamsMap();
+    var r = new QuotedParamsMap();
     for (var key in fields) {
       if (fields.hasOwnProperty(key)) {
         var _fields$key = fields[key],
@@ -1547,9 +1553,9 @@ function _fieldDefToFrags(repo, _ref10) {
           var keyExpression = keyValExprPair.keyExpression,
               valExpression = keyValExprPair.valExpression;
 
-          oAssign(r, _defineProperty({}, key, new ParamsMap({
-            '<keyExpression>': _createSExpr(repo, clauseFromAlts(keyExpression)),
-            '<valExpression>': _createSExpr(repo, clauseFromAlts(valExpression))
+          oAssign(r, _defineProperty({}, key, new UnquotedParamsMap({
+            'keyExpression': _createSExpr(repo, clauseFromAlts(keyExpression)),
+            'valExpression': _createSExpr(repo, clauseFromAlts(valExpression))
           })));
         } else if (valExpressionOnly) {
           oAssign(r, _defineProperty({}, key, _createSExpr(repo, clauseFromAlts(valExpressionOnly))));
@@ -1560,7 +1566,7 @@ function _fieldDefToFrags(repo, _ref10) {
   } else if (keyList) {
     return keyList;
   } else {
-    throw '!';
+    throw '!w';
   }
 }
 
@@ -1611,6 +1617,9 @@ function sExpression(expr) {
 exports.default = sExpression;
 exports.SExpressionClause = SExpressionClause;
 exports.ParamItemClause = ParamItemClause;
+exports.Recursive = Recursive;
+exports.QuotedParamsMap = QuotedParamsMap;
+exports.UnquotedParamsMap = UnquotedParamsMap;
 
 /***/ },
 /* 28 */
@@ -1888,6 +1897,11 @@ var handle = __webpack_require__(60);
 var clauseFromAlts = __webpack_require__(7);
 var fnName = __webpack_require__(3);
 var stringifyWithFnName = __webpack_require__(23);
+var repeat = __webpack_require__(65);
+
+var NEW_LINE = function NEW_LINE() {};
+var INDENT_IN = function INDENT_IN() {};
+var INDENT_OUT = function INDENT_OUT() {};
 
 function describe(expr, replacer, space) {
   var sexpr = (0, _sExpression2.default)(expr);
@@ -1896,14 +1910,14 @@ function describe(expr, replacer, space) {
     console.error(cSexpr);
     throw new Error('The given expression is not a valid expression.');
   }
+  var strFragments = _strFragments(cSexpr, replacer);
   var level = 0;
-  var strFragments = _strFragments(cSexpr, replacer, level, space);
-  var r = _walkConcat(strFragments);
+  var r = _walkConcat(strFragments, level, space);
 
   return r;
 }
 
-function _strFragments(_ref, replacer, level, space) {
+function _strFragments(_ref, replacer) {
   var headAlt = _ref.head,
       params = _ref.params;
 
@@ -1918,17 +1932,38 @@ function _strFragments(_ref, replacer, level, space) {
     return ['' + fnName(head.opts.predicate)];
   }
   var label = humanReadable(head);
-  var paramFrags = void 0;
-  if (params) {
-    paramFrags = params.map(function (p) {
-      return _fragmentParamAlts(p, replacer);
-    });
-  } else {
-    paramFrags = [];
-  }
-  var commaedParamFrags = interpose(paramFrags, [', ']);
+  var commaedParamFrags = void 0;
 
-  return [label, '( '].concat(commaedParamFrags).concat(' )');
+  if (params) {
+    var labelled = params.labelled,
+        unlabelled = params.unlabelled,
+        keyList = params.keyList;
+
+    if (labelled) {
+      var paramFrags = labelled.reduce(function (acc, _ref2) {
+        var label = _ref2.label,
+            item = _ref2.item;
+        return acc.concat([[label, ', ', _fragmentParamAlts(item, replacer)]]);
+      }, []);
+      commaedParamFrags = interpose(paramFrags, [', ', NEW_LINE]);
+    } else if (unlabelled) {
+      var _paramFrags = unlabelled.map(function (p) {
+        return _fragmentParamAlts(p, replacer);
+      });
+      commaedParamFrags = interpose(_paramFrags, [', ']);
+    } else if (keyList) {
+      var _paramFrags2 = keyList;
+      commaedParamFrags = interpose(_paramFrags2, [', ']);
+    } else {
+      // console.error( params );
+      // throw '!z';
+      commaedParamFrags = [];
+    }
+  } else {
+    commaedParamFrags = [];
+  }
+
+  return [label, '('].concat(commaedParamFrags.length > 1 ? [INDENT_IN, NEW_LINE] : [' ']).concat(commaedParamFrags).concat(commaedParamFrags.length > 1 ? [INDENT_OUT, NEW_LINE] : [' ']).concat([')']);
 }
 
 function interpose(arr, interArr) {
@@ -1936,13 +1971,17 @@ function interpose(arr, interArr) {
     return arr;
   } else {
     return arr.reduce(function (acc, curr, idx) {
-      if (idx < arr.length - 1) {
+      if (idx < arr.length - 1 && !_isSpecial(curr)) {
         return acc.concat([curr]).concat(interArr);
       } else {
         return acc.concat([curr]);
       }
     }, []);
   }
+}
+
+function _isSpecial(x) {
+  return x === NEW_LINE || x === INDENT_IN || x === INDENT_OUT;
 }
 
 function _fragmentParamAlts(pAlts, replacer) {
@@ -1953,44 +1992,43 @@ function _fragmentParamAlts(pAlts, replacer) {
     'sExpression': function sExpression(expr) {
       return _strFragments(expr, replacer);
     },
-    'paramsObj': function paramsObj(o) {
-      return _fragmentParamsObj(o, replacer);
+    'quotedParamsMap': function quotedParamsMap(o) {
+      return _fragmentParamsObj(o, replacer, true);
+    },
+    'unquotedParamsMap': function unquotedParamsMap(o) {
+      return _fragmentParamsObj(o, replacer, false);
     },
     'optionsObj': function optionsObj(o) {
       return stringifyWithFnName(o);
     },
-    'recursive': function recursive(_ref2) {
-      var expression = _ref2.expression;
+    'recursive': function recursive(_ref3) {
+      var expression = _ref3.expression;
       return ['<recursive>: ', humanReadable(expression)];
     }
   }, function () {
-    throw '!';
+    throw '!s';
   });
   return r;
 }
 
-function _fragmentParamsObj(pObj, replacer) {
-  var r = [];
-  r.push('{ ');
+function _fragmentParamsObj(pObj, replacer, quote) {
+  var r = ['{', INDENT_IN, NEW_LINE];
   var body = [];
   for (var label in pObj) {
     if (pObj.hasOwnProperty(label)) {
       var item = [];
-      item.push(label + ': ');
+      item.push(quote ? '"' + label + '": ' : '<' + label + '>: ');
       var r1 = handle(pObj[label], {
-        'paramList': function paramList(list) {
-          return ['[ '].concat(interpose(list.map(function (f) {
-            return _fragmentParamAlts(f, replacer);
+        'keyList': function keyList(list) {
+          return ['[ '].concat(interpose(list.map(function (i) {
+            return '"' + i + '"';
           }), [', '])).concat(' ]');
         },
         'singleParam': function singleParam(p) {
           return _fragmentParamAlts(p, replacer);
-        },
-        'paramMap': function paramMap(m) {
-          return _fragmentParamsObj(m, replacer);
         }
       }, function () {
-        throw '!';
+        throw '!e';
       });
       if (r1) {
         item.push(r1);
@@ -1998,19 +2036,38 @@ function _fragmentParamsObj(pObj, replacer) {
       }
     }
   }
-  body = interpose(body, ', ');
-  r = r.concat(body).concat([' }']);
+  body = interpose(body, [', ', NEW_LINE]);
+  r = r.concat(body).concat([INDENT_OUT, NEW_LINE, '}']);
   return r;
 }
 
-function _walkConcat(frags) {
-  return frags.map(function (f) {
-    if (isStr(f)) {
-      return f;
-    } else if (Array.isArray(f)) {
-      return _walkConcat(f);
+function _walkConcat(frags, level, space) {
+  var newLevel = level;
+  var justNewLine = false;
+  return frags.reduce(function (acc, f) {
+    if (justNewLine) {
+      justNewLine = false;
+      acc = acc.concat(repeat(space * newLevel, ' ').join(''));
     }
-  }).join('');
+    if (isStr(f)) {
+      return acc.concat(f);
+    } else if (Array.isArray(f)) {
+      return acc.concat(_walkConcat(f, newLevel, space));
+    } else if (f === NEW_LINE) {
+      if (space > 0) {
+        justNewLine = true;
+        return acc.concat('\n');
+      }
+    } else if (f === INDENT_IN) {
+      newLevel += 1;
+    } else if (f === INDENT_OUT) {
+      newLevel -= 1;
+    } else {
+      console.error(f);
+      throw '!3';
+    }
+    return acc;
+  }, '');
 }
 
 module.exports = describe;
@@ -3220,9 +3277,6 @@ function humanReadable(expr) {
   if (isStr(expr)) {
     return expr;
   }
-  if (!expr) {
-    debugger;
-  }
   if (expr.type) {
     if (dict[expr.type]) {
       return dict[expr.type];
@@ -3299,6 +3353,24 @@ module.exports = isValid;
 "use strict";
 
 
+function repeat(n, x) {
+  var arr = [],
+      i;
+  for (i = 0; i < n; i++) {
+    arr.push(x);
+  }
+  return arr;
+}
+
+module.exports = repeat;
+
+/***/ },
+/* 66 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 var whiteSpaces = [0x0009, // Tab
 0x000a, // Line Feed
 0x000b, // Vertical Tab
@@ -3334,7 +3406,7 @@ module.exports = whiteSpaces.reduce(function (acc, item) {
 }, '');
 
 /***/ },
-/* 66 */
+/* 67 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3389,7 +3461,7 @@ function andWalker(clause, walkFn) {
 module.exports = andWalker;
 
 /***/ },
-/* 67 */
+/* 68 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3409,7 +3481,7 @@ function walkThroughAny(x) {
 module.exports = anyWalker;
 
 /***/ },
-/* 68 */
+/* 69 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3433,7 +3505,7 @@ function clauseRefWalker(clauseRef, walkFn) {
 module.exports = clauseRefWalker;
 
 /***/ },
-/* 69 */
+/* 70 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3509,7 +3581,7 @@ function collOfWalker(clause, walkFn) {
 module.exports = collOfWalker;
 
 /***/ },
-/* 70 */
+/* 71 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3532,7 +3604,7 @@ function delayedClauseWalker(delayedClause, walkFn) {
 module.exports = delayedClauseWalker;
 
 /***/ },
-/* 71 */
+/* 72 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3688,7 +3760,7 @@ function fclauseWalker(clause, walkFn) {
 module.exports = fclauseWalker;
 
 /***/ },
-/* 72 */
+/* 73 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3750,7 +3822,7 @@ function mapOfWalker(clause, walkFn) {
 module.exports = mapOfWalker;
 
 /***/ },
-/* 73 */
+/* 74 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3812,7 +3884,7 @@ function nfaWalker(clause, walkFn) {
 module.exports = nfaWalker;
 
 /***/ },
-/* 74 */
+/* 75 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3844,7 +3916,7 @@ function predWalker(clause) {
 module.exports = predWalker;
 
 /***/ },
-/* 75 */
+/* 76 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4146,7 +4218,7 @@ function _conformNamedOrExpr(x, alts, walkFn, walkOpts) {
 module.exports = shapeWalker;
 
 /***/ },
-/* 76 */
+/* 77 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4171,7 +4243,7 @@ function wallWalker(wallClause, walkFn) {
 module.exports = wallWalker;
 
 /***/ },
-/* 77 */
+/* 78 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4180,7 +4252,7 @@ module.exports = wallWalker;
 module.exports = '0.0.23';
 
 /***/ },
-/* 78 */
+/* 79 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4204,7 +4276,7 @@ var isBool = __webpack_require__(40);
 var walk = __webpack_require__(16);
 var resolveWithRegistry = __webpack_require__(42);
 var coerceIntoClause = __webpack_require__(9);
-var oPath = __webpack_require__(80);
+var oPath = __webpack_require__(81);
 
 var _require2 = __webpack_require__(26),
     isNamespacePath = _require2.isNamespacePath,
@@ -4380,10 +4452,10 @@ exports.clearRegistry = clearRegistry;
 exports.meta = meta;
 exports.resolve = resolve;
 exports.default = namespaceGetOrSet;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(81)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(82)))
 
 /***/ },
-/* 79 */
+/* 80 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4393,7 +4465,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _namespace = __webpack_require__(78);
+var _namespace = __webpack_require__(79);
 
 var _namespace2 = _interopRequireDefault(_namespace);
 
@@ -4414,13 +4486,13 @@ var models = {
 
 var r = oAssign(_namespace2.default, { resolve: _namespace.resolve }, ops, utils, models, predicates);
 
-r.VERSION = __webpack_require__(77);
+r.VERSION = __webpack_require__(78);
 
 module.exports = r;
 exports.default = r;
 
 /***/ },
-/* 80 */
+/* 81 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4493,7 +4565,7 @@ function getKey(key) {
 module.exports = { get: get, set: set };
 
 /***/ },
-/* 81 */
+/* 82 */
 /***/ function(module, exports) {
 
 var g;
@@ -4518,7 +4590,7 @@ module.exports = g;
 
 
 /***/ },
-/* 82 */
+/* 83 */
 /***/ function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -14744,11 +14816,11 @@ return jQuery;
 
 
 /***/ },
-/* 83 */,
 /* 84 */,
 /* 85 */,
 /* 86 */,
-/* 87 */
+/* 87 */,
+/* 88 */
 /***/ function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! tether 1.4.0 */
@@ -16565,9 +16637,9 @@ return Tether;
 
 
 /***/ },
-/* 88 */,
 /* 89 */,
-/* 90 */
+/* 90 */,
+/* 91 */
 /***/ function(module, exports) {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -16769,7 +16841,7 @@ var Popover = function ($) {
 module.exports = Popover;
 
 /***/ },
-/* 91 */
+/* 92 */
 /***/ function(module, exports) {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -17369,7 +17441,7 @@ var Tooltip = function ($) {
 module.exports = Tooltip;
 
 /***/ },
-/* 92 */
+/* 93 */
 /***/ function(module, exports) {
 
 /**
@@ -17533,7 +17605,6 @@ var Util = function ($) {
 module.exports = Util;
 
 /***/ },
-/* 93 */,
 /* 94 */,
 /* 95 */,
 /* 96 */,
@@ -17542,21 +17613,22 @@ module.exports = Util;
 /* 99 */,
 /* 100 */,
 /* 101 */,
-/* 102 */
+/* 102 */,
+/* 103 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _jquery = __webpack_require__(82);
+var _jquery = __webpack_require__(83);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _tether = __webpack_require__(87);
+var _tether = __webpack_require__(88);
 
 var _tether2 = _interopRequireDefault(_tether);
 
-var _src = __webpack_require__(79);
+var _src = __webpack_require__(80);
 
 var _src2 = _interopRequireDefault(_src);
 
@@ -17568,9 +17640,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // HLJS.registerLanguage( 'javascript', require( 'highlight.js/lib/languages/javascript' ) );
 window.$ = window.jQuery = _jquery2.default;
 window.Tether = _tether2.default;
-window.Util = __webpack_require__(92);
-window.Tooltip = __webpack_require__(91);
-window.Popover = __webpack_require__(90);
+window.Util = __webpack_require__(93);
+window.Tooltip = __webpack_require__(92);
+window.Popover = __webpack_require__(91);
 
 (0, _jquery2.default)(function () {
 

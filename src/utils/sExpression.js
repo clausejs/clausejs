@@ -11,41 +11,58 @@ function Recursive( expression ) {
   this.expression = expression;
 }
 
-function ParamsMap( map ) {
+function QuotedParamsMap( map ) {
   oAssign( this, map );
 }
 
-var ParamsMapC = and(
-  instanceOf( ParamsMap ),
-  mapOf(
+function UnquotedParamsMap( map ) {
+  oAssign( this, map );
+}
+
+const ParamsMapC = mapOf(
     any,
     maybe( or(
-      'paramList', zeroOrMore( delayed( () => ParamItemClause ) ),
-      'paramMap', delayed( () => ParamsMapC ),
+      'keyList', zeroOrMore( delayed( () => ParamLabelClause ) ),
       'singleParam', delayed( () => ParamItemClause )
     ) )
-  )
+  );
+
+var QuotedParamsMapC = and(
+  instanceOf( QuotedParamsMap ),
+  ParamsMapC
+);
+
+var UnquotedParamsMapC = and(
+  instanceOf( UnquotedParamsMap ),
+  ParamsMapC
 );
 
 var ParamItemClause = or(
-  'label', isStr,
   'sExpression', delayed( () => SExpressionClause ),
-  'paramsObj', ParamsMapC,
+  'quotedParamsMap', QuotedParamsMapC,
+  'unquotedParamsMap', UnquotedParamsMapC,
   'optionsObj', isPlainObj,
   'recursive', instanceOf( Recursive )
 );
 
+var ParamLabelClause = isStr;
+
 var SExpressionClause = wall(
   cat(
     'head', ExprClause,
-    'params', zeroOrMore( ParamItemClause )
+    'params', or(
+      'labelled', zeroOrMore( cat(
+        'label', ParamLabelClause,
+        'item', ParamItemClause ) ),
+      'unlabelled', zeroOrMore( ParamItemClause )
+    )
   )
 );
 
 var singleArgParamGenerator = ( repo, { opts: { enclosedClause } } ) =>
   [ _createSExpr( repo, enclosedClause ) ];
 
-var multipleArgParamGenerator = ( repo, { opts: { named }, exprs, type } ) => {
+var multipleArgParamGenerator = ( repo, { opts: { named }, exprs } ) => {
   if ( exprs.length === 0 ) {
   //empty case
     return [];
@@ -63,7 +80,7 @@ var multipleArgParamGenerator = ( repo, { opts: { named }, exprs, type } ) => {
 };
 
 var sParamsConverters = {
-  'PRED': ( repo, { opts: { predicate } } ) => [ `${fnName( predicate )}()` ],
+  'PRED': ( ) => [ ],
   'WALL': ( repo, { opts: { enclosedClause } } ) => [ _createSExpr( repo, enclosedClause ) ],
   'AND': ( repo, { opts: { conformedExprs } } ) =>
     conformedExprs.map( clauseFromAlts ).map( ( c ) => _createSExpr( repo, c ) ),
@@ -78,7 +95,7 @@ var sParamsConverters = {
   'MAP_OF': () => [],
   // TODO
   'SHAPE': ( repo, { opts: { conformedArgs: { shapeArgs: { optionalFields: { opt, optional } = {}, requiredFields: { req, required } = {} } } } } ) =>
-    oAssign( new ParamsMap(),
+    oAssign( new UnquotedParamsMap(),
       ( req || required ) ? {
         required: _fieldDefToFrags( repo, req || required ),
       } : {},
@@ -87,7 +104,7 @@ var sParamsConverters = {
       } : {}
     ),
   'FCLAUSE': ( repo, { opts: { args, ret, fn } } ) =>
-    oAssign( new ParamsMap(),
+    oAssign( new UnquotedParamsMap(),
     args ? { args: _createSExpr( repo, args ) } : {},
     ret ? { ret: _createSExpr( repo, ret ) } : {},
     fn ? { fn: [ `${fnName( fn )}()` ] } : {} )
@@ -95,16 +112,16 @@ var sParamsConverters = {
 
 function _fieldDefToFrags( repo, { fieldDefs: { fields } = {}, keyList } ) {
   if ( fields ) {
-    let r = new ParamsMap();
+    let r = new QuotedParamsMap();
     for ( let key in fields ) {
       if ( fields.hasOwnProperty( key ) ) {
         const { keyValExprPair, valExpressionOnly } = fields[ key ];
         if ( keyValExprPair ) {
           let { keyExpression, valExpression } = keyValExprPair;
           oAssign( r, {
-            [ key ]: new ParamsMap( {
-              '<keyExpression>': _createSExpr( repo, clauseFromAlts( keyExpression ) ),
-              '<valExpression>': _createSExpr( repo, clauseFromAlts( valExpression ) ),
+            [ key ]: new UnquotedParamsMap( {
+              'keyExpression': _createSExpr( repo, clauseFromAlts( keyExpression ) ),
+              'valExpression': _createSExpr( repo, clauseFromAlts( valExpression ) ),
             } )
           } );
         } else if ( valExpressionOnly ) {
@@ -118,7 +135,7 @@ function _fieldDefToFrags( repo, { fieldDefs: { fields } = {}, keyList } ) {
   } else if ( keyList ) {
     return keyList;
   } else {
-    throw '!';
+    throw '!w';
   }
 }
 
@@ -169,4 +186,4 @@ function sExpression( expr ) {
 }
 
 export default sExpression;
-export { SExpressionClause, ParamItemClause };
+export { SExpressionClause, ParamItemClause, Recursive, QuotedParamsMap, UnquotedParamsMap };

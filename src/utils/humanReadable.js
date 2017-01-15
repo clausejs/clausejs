@@ -12,9 +12,6 @@ function humanReadable( expr ) {
   if ( isStr( expr ) ) {
     return expr;
   }
-  if ( !expr ) {
-    debugger;
-  }
   if ( expr.type ) {
     if ( dict[ expr.type ] ) {
       return dict[ expr.type ];
