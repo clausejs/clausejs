@@ -1,6 +1,6 @@
-import { or, cat, fclause, shape, zeroOrOne, ExprClause } from '../core';
+import { or, cat, fclause, shape, zeroOrOne, ExprClause, maybe } from '../core';
 import { delayed, isNamespacePath, isClauseRef } from '../utils';
-import { isObj, isBool } from '../preds';
+import { isObj, isBool, isUndefined } from '../preds';
 const isExpr = require( '../utils/isExpr' );
 
 var ExprOrPartialRefMapClause =
@@ -35,14 +35,25 @@ const NamespaceFnClause = fclause( {
     ),
 } );
 
-const MetaFnClause = fclause( {
+const SetMetaFnClause = fclause( {
   args: cat( 'source',
             or(
               'namespacePath', isNamespacePath,
               'expression', ExprClause
             ),
-            'metaObj', isObj ),
-  ret: ExprClause,
+            'metaObj', isObj,
+            'registry', zeroOrOne( isObj ) ),
+  ret: isUndefined,
+} );
+
+const GetMetaFnClause = fclause( {
+  args: cat(
+    'source', or(
+      'namespacePath', isNamespacePath,
+      'expression', ExprClause
+    ),
+    'registry', zeroOrOne( isObj ) ),
+  ret: maybe( isObj )
 } );
 
 const ResolveFnClause = fclause( {
@@ -68,7 +79,7 @@ const NamespaceObjClause = shape( {
 export {
   isClauseRef, SetNSFnClause, GetNSFnClause,
   NamespaceFnClause,
-  isNamespacePath, MetaFnClause,
+  isNamespacePath, SetMetaFnClause, GetMetaFnClause,
   ResolveFnClause,
   NamespaceObjClause
 };

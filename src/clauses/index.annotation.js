@@ -1,7 +1,8 @@
-import { meta as M } from '../';
+import { setMeta as M } from '../';
 
 M( '/clause', {
   'name': 'C',
+  'showAsFunction': true,
   'comment': 'Convenient method that combines C.get() and C.set() into one function to get or set clauses from the global registry.',
   'examples': [
     'C("awesomeapp/TodoItem", TodoItemClause)',
@@ -22,18 +23,25 @@ M( '/clause', {
   },
 } );
 
-M( '/clause/get', {
-  'name': 'C.get'
+M( 'clause.namespace/get', {
 } );
 
-M( '/clause/set', {
-  'name': 'C.set'
+M( 'clause.namespace/set', {
+} );
+
+M( 'clause.compose/cat', {
+} );
+
+M( 'clause.compose/or', {
+} );
+
+M( 'clause.compose/zeroOrMore', {
 } );
 
 M( 'clause.compose.string/sCat', {
   examples: `
 var StrClause = C.cat('part1', C.zeroOrMore(C.sCat('foo')),
-                      'part2.5', C.zeroOrMore(C.sCat('weeee')),
+                      'part2.5', C.zeroOrMore(C.sCat('i am optional')),
                       'part2', C.zeroOrMore(C.sCat('bar')));
 
 C.conform(StrClause, 'foofoofoobarbar');

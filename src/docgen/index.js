@@ -1,4 +1,5 @@
 import { NamespaceObjClause } from '../clauses/namespace.types';
+import { getMeta } from '../namespace';
 import fnName from '../utils/fnName';
 import isPred from '../utils/isPred';
 import isClause from '../utils/isClause';
@@ -28,7 +29,11 @@ function genCot( registry ) {
         .map( ( [ p, n, ref ] ) =>
           `<li>
             ${_clauseRefLink( `${p}/${n}` )(
-              ( p ) => _stylizeName( deref( ref ), _unanbiguousName( p ) )
+              ( p ) =>
+                _stylizeName(
+                  deref( ref ),
+                  _getAlias( registry, p ) || _unanbiguousName( p ) ),
+                  getMeta( p, registry )
             )}
           </li>` )
         .join( '' )}
@@ -36,6 +41,11 @@ function genCot( registry ) {
     </dd>
     ` ).join( '' )}
   </dl>`
+}
+
+function _getAlias( reg, p ) {
+  var meta = getMeta( p, reg );
+  return meta && meta.name;
 }
 
 function _walk( globalReg, prefix, currentFrag, creg ) {
@@ -113,8 +123,9 @@ const typeTable = {
   'CAT': 'cat sequence',
 }
 
-function _stylizeName( expr, name ) {
-  if ( expr.type === 'FCLAUSE' ) {
+function _stylizeName( expr, name, meta ) {
+  if ( expr.type === 'FCLAUSE' && name[ 0 ] === name[ 0 ].toLowerCase() ||
+    ( meta && meta.showAsFunction ) ) {
     return `${name}()`;
   } else {
     return name;

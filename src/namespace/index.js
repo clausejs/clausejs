@@ -10,7 +10,8 @@ var coerceIntoClause = require( '../utils/coerceIntoClause' );
 var oPath = require( './simpleObjectPath' );
 
 var { isNamespacePath, isClauseRef } = require( '../utils' );
-var { GetNSFnClause, SetNSFnClause, NamespaceFnClause, MetaFnClause } = require( '../clauses/namespace.types' );
+const { GetNSFnClause, SetNSFnClause, NamespaceFnClause,
+  SetMetaFnClause, GetMetaFnClause } = require( '../clauses/namespace.types' );
 var reg;
 
 var _get = fclause( {
@@ -117,16 +118,34 @@ function clearRegistry() {
   reg = global[ K ] = {};
 }
 
-const meta = MetaFnClause.instrumentConformed(
-  function meta( { source: { namespacePath, expression }, metaObj } ) {
+const setMeta = SetMetaFnClause.instrumentConformed(
+  function setMeta( { source: { namespacePath, expression }, metaObj, registry } ) {
+    if ( !registry ) {
+      registry = reg;
+    }
     if ( namespacePath ) {
-      var nObj = oPath.get( reg, _slashToDot( namespacePath ) );
+      var nObj = oPath.get( registry, _slashToDot( namespacePath ) );
       var currMeta = nObj && nObj[ '.meta' ];
-      oPath.set( reg, _slashToDot( namespacePath ), oAssign( {}, nObj, { '.meta': oAssign( {}, currMeta, metaObj ) } ) );
-      return _get( namespacePath );
+      oPath.set( registry, _slashToDot( namespacePath ), oAssign( {}, nObj, { '.meta': oAssign( {}, currMeta, metaObj ) } ) );
     } else if ( expression ) {
       const clause = coerceIntoClause( expression );
       clause.meta = oAssign( clause.meta, metaObj );
+    }
+  }
+);
+
+const getMeta = GetMetaFnClause.instrumentConformed(
+  function getMeta( { source: { namespacePath, expression }, registry } ) {
+    if ( !registry ) {
+      registry = reg;
+    }
+    if ( namespacePath ) {
+      let nObj = oPath.get( registry, _slashToDot( namespacePath ) );
+      let meta = nObj && nObj[ '.meta' ];
+      return meta;
+    } else if ( expression ) {
+      const clause = coerceIntoClause( expression );
+      return clause.meta;
     }
   }
 );
@@ -157,9 +176,9 @@ namespaceGetOrSet.get = GetNSFnClause.instrumentConformed( getNamespacePath );
 namespaceGetOrSet.set = SetNSFnClause.instrumentConformed( setNamespacePath );
 namespaceGetOrSet.clearRegistry = clearRegistry;
 namespaceGetOrSet.getRegistry = getRegistry;
-namespaceGetOrSet.meta = meta;
+namespaceGetOrSet.setMeta = setMeta;
 
 export {
-  getRegistry, clearRegistry, meta,
+  getRegistry, clearRegistry, setMeta, getMeta,
   resolve };
 export default namespaceGetOrSet;

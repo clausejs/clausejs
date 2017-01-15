@@ -6,7 +6,9 @@ import { any, ExprClause, CatFnClause, OrFnClause, AndFnClause,
   ZeroOrMoreFnClause, OneOrMoreFnClause, ZeroOrOneFnClause } from '../core';
 import { WallFnClause } from '../core/wall';
 import { ShapeFnClause, MapOfFnClause } from '../core/regex';
-import { isNamespacePath, GetNSFnClause, NamespaceFnClause, MetaFnClause, SetNSFnClause, NamespaceObjClause, ResolveFnClause } from './namespace.types';
+import { isNamespacePath, GetNSFnClause, NamespaceFnClause,
+  GetMetaFnClause, SetMetaFnClause, SetNSFnClause,
+   NamespaceObjClause, ResolveFnClause } from './namespace.types';
 import { SExpressionClause } from '../utils/sExpression';
 
 // TODO
@@ -163,7 +165,8 @@ C( 'clause.preds/instanceOf', InstanceOfFnClause );
 C( '/clause.namespace/set', SetNSFnClause );
 C( '/clause.namespace/get', GetNSFnClause );
 C( '/clause.namespace/resolve', ResolveFnClause );
-C( '/clause.namespace/meta', MetaFnClause );
+C( '/clause.namespace/setMeta', SetMetaFnClause );
+C( '/clause.namespace/getMeta', GetMetaFnClause );
 
 C( 'clause.types/Expression', ExprClause );
 C( 'clause.types/Primitive', PrimitiveClause );

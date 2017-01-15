@@ -102,7 +102,7 @@
     <dd>
       <ul>
       <li>
-            <a href="#/clause" data-path="/clause">clause()</a>
+            <a href="#/clause" data-path="/clause">C()</a>
           </li>
       </ul>
     </dd>
@@ -169,7 +169,7 @@
           </li><li>
             <a href="#clause.utils/delayed" data-path="clause.utils/delayed">delayed()</a>
           </li><li>
-            <a href="#clause.utils/describe" data-path="clause.utils/describe">describe()</a>
+            <a href="#clause.utils/describe" data-path="clause.utils/describe">C.describe</a>
           </li><li>
             <a href="#clause.utils/sExpression" data-path="clause.utils/sExpression">sExpression()</a>
           </li>
@@ -233,7 +233,9 @@
           </li><li>
             <a href="#clause.namespace/resolve" data-path="clause.namespace/resolve">resolve()</a>
           </li><li>
-            <a href="#clause.namespace/meta" data-path="clause.namespace/meta">meta()</a>
+            <a href="#clause.namespace/setMeta" data-path="clause.namespace/setMeta">setMeta()</a>
+          </li><li>
+            <a href="#clause.namespace/getMeta" data-path="clause.namespace/getMeta">getMeta()</a>
           </li>
       </ul>
     </dd>
@@ -252,7 +254,7 @@
           </li><li>
             <a href="#clause.types/FClause" data-path="clause.types/FClause">FClause</a>
           </li><li>
-            <a href="#clause.types/Predicate" data-path="clause.types/Predicate">Predicate()</a>
+            <a href="#clause.types/Predicate" data-path="clause.types/Predicate">Predicate</a>
           </li><li>
             <a href="#clause.types/DelayedClause" data-path="clause.types/DelayedClause">DelayedClause</a>
           </li><li>
@@ -349,7 +351,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         </small>
       </blockquote>
     </dd>
-<dt>Synopsis</dt><dd><ul><li>&#x201C;register&#x201D;:<div><ul><em>C(<a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">nsPath</a>, expression)</em></ul></div></li><li>&#x201C;retrieve&#x201D;:<div><ul><em>C(<a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">nsPath</a>)</em></ul></div></li></ul></dd>
+<dt>Synopsis</dt><dd><ul><li>&#x201C;register&#x201D;:<div><ul><em>C()(<a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">nsPath</a>, expression)</em></ul></div></li><li>&#x201C;retrieve&#x201D;:<div><ul><em>C()(<a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">nsPath</a>)</em></ul></div></li></ul></dd>
 <dt>Examples</dt><dd>
       <pre><code>C(&quot;awesomeapp/TodoItem&quot;, TodoItemClause)</code></pre>
     
@@ -4195,7 +4197,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
 <dt>Examples</dt><dd>
       <pre><code>
 var StrClause = C.cat(&apos;part1&apos;, C.zeroOrMore(C.sCat(&apos;foo&apos;)),
-                      &apos;part2.5&apos;, C.zeroOrMore(C.sCat(&apos;weeee&apos;)),
+                      &apos;part2.5&apos;, C.zeroOrMore(C.sCat(&apos;i am optional&apos;)),
                       &apos;part2&apos;, C.zeroOrMore(C.sCat(&apos;bar&apos;)));
 
 C.conform(StrClause, &apos;foofoofoobarbar&apos;);
@@ -4879,7 +4881,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         <div class="card">
           <div class="card-header inline-headers">
             
-      <h6>C.describe()</h6>&#xA0;
+      <h6>C.describe</h6>&#xA0;
         <span class="tag tag-primary">
           function
         </span>
@@ -8723,12 +8725,12 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         </div>
       
 
-    <a name="clause.namespace/meta"></a>
+    <a name="clause.namespace/setMeta"></a>
     
         <div class="card">
           <div class="card-header inline-headers">
             
-      <h6>meta()</h6>&#xA0;
+      <h6>setMeta()</h6>&#xA0;
         <span class="tag tag-primary">
           function
         </span>
@@ -8747,16 +8749,17 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       &quot;namespacePath&quot;, <a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">NamespacePath</a>, 
       &quot;expression&quot;, <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>
     ), 
-    &quot;metaObj&quot;, isObject
+    &quot;metaObj&quot;, isObject, 
+    &quot;registry&quot;, zeroOrOne( isObject )
   ), 
-  &lt;ret&gt;: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>
+  &lt;ret&gt;: isUndefined
 } )</pre>
   
           </em>
         </small>
       </blockquote>
     </dd>
-<dt>Synopsis</dt><dd><ul><em>meta(source, metaObj)</em></ul></dd>
+<dt>Synopsis</dt><dd><ul><em>setMeta(source, metaObj, registry)</em></ul></dd>
 <dt>Argument Clause</dt><dd>
     
     
@@ -8769,7 +8772,8 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     &quot;namespacePath&quot;, &lt;a href=&quot;#clause.types/NamespacePath&quot; data-path=&quot;clause.types/NamespacePath&quot;&gt;NamespacePath&lt;/a&gt;, 
     &quot;expression&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;
   ), 
-  &quot;metaObj&quot;, isObject
+  &quot;metaObj&quot;, isObject, 
+  &quot;registry&quot;, zeroOrOne( isObject )
 )&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
@@ -8958,12 +8962,279 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
             </div>
           </div>
         </fieldset>
+     
+        <fieldset class="list-group-item card card-outline-info">
+          <legend class="clause-type">
+          
+            <span class="tag tag-default">Part 3</span>
+            <span class="lead font-italic text-primary">
+              &#x201C;registry&#x201D;</span>          
+          
+          </legend>
+          <div class="row">
+            <div class="col-md-12">
+              
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="clause-type">
+      
+    <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
+    &lt;pre&gt;zeroOrOne( isObject )&lt;/pre&gt;
+  " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
+      [?] optional
+    </span>
+  
+    </legend>
+    
+    <div class="card-block">
+      
+    
+    
+    <fieldset class="card card-outline-primary">
+    <legend class="clause-type">
+      
+    <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
+    &lt;pre&gt;isObject&lt;/pre&gt;
+  " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
+      [pred] satisfies predicate
+    </span>
+  
+    </legend>
+    
+    <div class="card-block">
+      
+    <em>
+      A value that satisfies 
+      <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isObject(x) {
+  return (typeof x === &apos;undefined&apos; ? &apos;undefined&apos; : _typeof(x)) === &apos;object&apos; &amp;&amp; x !== null;
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        isObject()
+      </span>
+    </em>
+  
+    </div>
+  
+    </fieldset>
+    
+      TODO
+    </div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </fieldset>
     
     </div>
   
     </fieldset>
     </dd>
 <dt>Return Value Clause</dt><dd>
+    
+    
+    <fieldset class="card card-outline-primary">
+    <legend class="clause-type">
+      
+    <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
+    &lt;pre&gt;isUndefined&lt;/pre&gt;
+  " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
+      [pred] satisfies predicate
+    </span>
+  
+    </legend>
+    
+    <div class="card-block">
+      
+    <em>
+      A value that satisfies 
+      <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isUndefined(x) {
+  return x === undefined;
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        isUndefined()
+      </span>
+    </em>
+  
+    </div>
+  
+    </fieldset>
+    </dd>
+    </dl>
+  
+        </div>
+      
+
+    <a name="clause.namespace/getMeta"></a>
+    
+        <div class="card">
+          <div class="card-header inline-headers">
+            
+      <h6>getMeta()</h6>&#xA0;
+        <span class="tag tag-primary">
+          function
+        </span>
+      
+          </div>
+        
+    <dl class="card-block">
+    <dt>Syntax</dt><dd>
+      <blockquote class="blockquote">
+        <small>
+          <em class="text-muted">
+            
+    <pre>fclause( {
+  &lt;args&gt;: cat(
+    &quot;source&quot;, or(
+      &quot;namespacePath&quot;, <a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">NamespacePath</a>, 
+      &quot;expression&quot;, <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>
+    ), 
+    &quot;registry&quot;, zeroOrOne( isObject )
+  ), 
+  &lt;ret&gt;: or(
+    isNull, 
+    isUndefined, 
+    isObject
+  )
+} )</pre>
+  
+          </em>
+        </small>
+      </blockquote>
+    </dd>
+<dt>Synopsis</dt><dd><ul><em>getMeta(source, registry)</em></ul></dd>
+<dt>Argument Clause</dt><dd>
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="clause-type">
+      
+    <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
+    &lt;pre&gt;cat(
+  &quot;source&quot;, or(
+    &quot;namespacePath&quot;, &lt;a href=&quot;#clause.types/NamespacePath&quot; data-path=&quot;clause.types/NamespacePath&quot;&gt;NamespacePath&lt;/a&gt;, 
+    &quot;expression&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;
+  ), 
+  &quot;registry&quot;, zeroOrOne( isObject )
+)&lt;/pre&gt;
+  " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
+      [cat] a sequence of
+    </span>
+  
+    </legend>
+    
+    <div class="card-block">
+      <p class="card-title">
+        Should be <em>an ordered list</em> of the following:
+      </p>
+    </div>
+    <div class="list-group list-group-flush list-for-cat">
+      
+        <fieldset class="list-group-item card card-outline-info">
+          <legend class="clause-type">
+          
+            <span class="tag tag-default">Part 1</span>
+            <span class="lead font-italic text-primary">
+              &#x201C;source&#x201D;</span>          
+          
+          </legend>
+          <div class="row">
+            <div class="col-md-12">
+              
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="clause-type">
+      
+    <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
+    &lt;pre&gt;or(
+  &quot;namespacePath&quot;, &lt;a href=&quot;#clause.types/NamespacePath&quot; data-path=&quot;clause.types/NamespacePath&quot;&gt;NamespacePath&lt;/a&gt;, 
+  &quot;expression&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;
+)&lt;/pre&gt;
+  " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
+      [or] either one of
+    </span>
+  
+    </legend>
+    
+    <div class="card-block">
+      <p class="card-title">
+      
+      
+        Should be <em>one of</em> the following:
+      </p>
+    </div>
+    <div class="list-group list-group-flush list-for-or">
+      
+        <fieldset class="list-group-item card-outline-info">
+          <legend class="clause-type">
+            <span class="tag tag-default">
+                Option 1
+            </span>
+            
+                <span class="lead font-italic text-primary">
+                  &#x201C;namespacePath&#x201D;
+                </span>
+            
+          </legend>
+          <div class="row">
+            <div class="col-md-12">
+            
+            
+            
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              
+    
+    
+    <fieldset class="card card-outline-primary">
+    <legend class="clause-type">
+      <span class="tag tag-info">[clause]</span>
+    </legend>
+    
+    <div class="card-block">
+      A value of type
+      <a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">clause.types/NamespacePath</a>
+    </div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </fieldset>
+    
+        <fieldset class="list-group-item card-outline-info">
+          <legend class="clause-type">
+            <span class="tag tag-default">
+                Option 2
+            </span>
+            
+                <span class="lead font-italic text-primary">
+                  &#x201C;expression&#x201D;
+                </span>
+            
+          </legend>
+          <div class="row">
+            <div class="col-md-12">
+            
+            
+            
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              
     
     
     <fieldset class="card card-outline-info">
@@ -8974,6 +9245,268 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <div class="card-block">
       A value of type
       <a href="#clause.types/Expression" data-path="clause.types/Expression">clause.types/Expression</a>
+    </div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </fieldset>
+    
+    </div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </fieldset>
+     
+        <fieldset class="list-group-item card card-outline-info">
+          <legend class="clause-type">
+          
+            <span class="tag tag-default">Part 2</span>
+            <span class="lead font-italic text-primary">
+              &#x201C;registry&#x201D;</span>          
+          
+          </legend>
+          <div class="row">
+            <div class="col-md-12">
+              
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="clause-type">
+      
+    <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
+    &lt;pre&gt;zeroOrOne( isObject )&lt;/pre&gt;
+  " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
+      [?] optional
+    </span>
+  
+    </legend>
+    
+    <div class="card-block">
+      
+    
+    
+    <fieldset class="card card-outline-primary">
+    <legend class="clause-type">
+      
+    <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
+    &lt;pre&gt;isObject&lt;/pre&gt;
+  " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
+      [pred] satisfies predicate
+    </span>
+  
+    </legend>
+    
+    <div class="card-block">
+      
+    <em>
+      A value that satisfies 
+      <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isObject(x) {
+  return (typeof x === &apos;undefined&apos; ? &apos;undefined&apos; : _typeof(x)) === &apos;object&apos; &amp;&amp; x !== null;
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        isObject()
+      </span>
+    </em>
+  
+    </div>
+  
+    </fieldset>
+    
+      TODO
+    </div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </fieldset>
+    
+    </div>
+  
+    </fieldset>
+    </dd>
+<dt>Return Value Clause</dt><dd>
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="clause-type">
+      
+    <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
+    &lt;pre&gt;or(
+  isNull, 
+  isUndefined, 
+  isObject
+)&lt;/pre&gt;
+  " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
+      [or] either one of
+    </span>
+  
+    </legend>
+    
+    <div class="card-block">
+      <p class="card-title">
+      
+      
+        Should be <em>one of</em> the following:
+      </p>
+    </div>
+    <div class="list-group list-group-flush list-for-or">
+      
+        <fieldset class="list-group-item card-outline-info">
+          <legend class="clause-type">
+            <span class="tag tag-default">
+                Option 1
+            </span>
+            
+          </legend>
+          <div class="row">
+            <div class="col-md-12">
+            
+            
+            
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              
+    
+    
+    <fieldset class="card card-outline-primary">
+    <legend class="clause-type">
+      
+    <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
+    &lt;pre&gt;isNull&lt;/pre&gt;
+  " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
+      [pred] satisfies predicate
+    </span>
+  
+    </legend>
+    
+    <div class="card-block">
+      
+    <em>
+      A value that satisfies 
+      <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isNull(x) {
+  return x === null;
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        isNull()
+      </span>
+    </em>
+  
+    </div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </fieldset>
+    
+        <fieldset class="list-group-item card-outline-info">
+          <legend class="clause-type">
+            <span class="tag tag-default">
+                Option 2
+            </span>
+            
+          </legend>
+          <div class="row">
+            <div class="col-md-12">
+            
+            
+            
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              
+    
+    
+    <fieldset class="card card-outline-primary">
+    <legend class="clause-type">
+      
+    <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
+    &lt;pre&gt;isUndefined&lt;/pre&gt;
+  " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
+      [pred] satisfies predicate
+    </span>
+  
+    </legend>
+    
+    <div class="card-block">
+      
+    <em>
+      A value that satisfies 
+      <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isUndefined(x) {
+  return x === undefined;
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        isUndefined()
+      </span>
+    </em>
+  
+    </div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </fieldset>
+    
+        <fieldset class="list-group-item card-outline-info">
+          <legend class="clause-type">
+            <span class="tag tag-default">
+                Option 3
+            </span>
+            
+          </legend>
+          <div class="row">
+            <div class="col-md-12">
+            
+            
+            
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              
+    
+    
+    <fieldset class="card card-outline-primary">
+    <legend class="clause-type">
+      
+    <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
+    &lt;pre&gt;isObject&lt;/pre&gt;
+  " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
+      [pred] satisfies predicate
+    </span>
+  
+    </legend>
+    
+    <div class="card-block">
+      
+    <em>
+      A value that satisfies 
+      <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isObject(x) {
+  return (typeof x === &apos;undefined&apos; ? &apos;undefined&apos; : _typeof(x)) === &apos;object&apos; &amp;&amp; x !== null;
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        isObject()
+      </span>
+    </em>
+  
+    </div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </fieldset>
+    
     </div>
   
     </fieldset>
@@ -9507,7 +10040,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         <div class="card">
           <div class="card-header inline-headers">
             
-      <h6>Predicate()</h6>&#xA0;
+      <h6>Predicate</h6>&#xA0;
         <span class="tag tag-primary">
           function
         </span>
@@ -11409,9 +11942,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     </div>
   
         </div>
-      
-
-</section>
+      </section>
       </p></div>
     </div>
     <footer class="text-sm-center">
