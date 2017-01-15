@@ -110,12 +110,12 @@ var sParamsConverters = {
     fn ? { fn: [ `${fnName( fn )}()` ] } : {} )
 }
 
-function _fieldDefToFrags( repo, { fieldDefs: { fields } = {}, keyList } ) {
-  if ( fields ) {
+function _fieldDefToFrags( repo, { fieldDefs, keyList } ) {
+  if ( fieldDefs ) {
     let r = new QuotedParamsMap();
-    for ( let key in fields ) {
-      if ( fields.hasOwnProperty( key ) ) {
-        const { keyValExprPair, valExpressionOnly } = fields[ key ];
+    for ( let key in fieldDefs ) {
+      if ( fieldDefs.hasOwnProperty( key ) ) {
+        const { keyValExprPair, valExpressionOnly } = fieldDefs[ key ];
         if ( keyValExprPair ) {
           let { keyExpression, valExpression } = keyValExprPair;
           oAssign( r, {

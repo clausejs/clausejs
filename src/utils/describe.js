@@ -58,7 +58,7 @@ function _strFragments(
     } else if ( unlabelled ) {
       let paramFrags = unlabelled.map( ( p ) =>
         _fragmentParamAlts( p, replacer ) );
-      commaedParamFrags = interpose( paramFrags, [ ', ' ] );
+      commaedParamFrags = interpose( paramFrags, [ ', ', NEW_LINE ] );
     } else if ( keyList ) {
       let paramFrags = keyList;
       commaedParamFrags = interpose( paramFrags, [ ', ' ] );
@@ -73,10 +73,10 @@ function _strFragments(
 
   return [ label, '(' ]
     .concat( commaedParamFrags.length > 1 ?
-      [ INDENT_IN, NEW_LINE, ] : [ ' ' ] )
+      [ INDENT_IN, NEW_LINE, ] : [ commaedParamFrags.length === 0 ? '' : ' ' ] )
     .concat( commaedParamFrags )
     .concat( commaedParamFrags.length > 1 ?
-      [ INDENT_OUT, NEW_LINE, ] : [ ' ' ] )
+      [ INDENT_OUT, NEW_LINE, ] : [ commaedParamFrags.length === 0 ? '' : ' ' ] )
     .concat( [ ')' ] );
 }
 

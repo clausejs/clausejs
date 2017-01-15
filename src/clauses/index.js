@@ -57,11 +57,11 @@ const SCatFnClause = fclause( {
 const FclauseFnClause = fclause( {
   args: cat( shape( {
     optional: {
-      args: and( isArray, C( 'clause.types/Expression' ) ),
-      ret: C( 'clause.types/Expression' ),
-      fn: fclause( {
+      'args': and( isArray, C( 'clause.types/Expression' ) ),
+      'ret': C( 'clause.types/Expression' ),
+      'fn': fclause( {
         args: cat(
-          'conformedArguments', C.zeroOrMore( any ),
+          'conformedArguments', any,
           'conformedReturnValue', any
         ),
         ret: any
@@ -109,6 +109,7 @@ const ConformFnClause = fclause( {
 
 const DelayedFnClause = fclause( {
   args: cat( 'getFn', fclause( {
+    args: cat(),
     ret: ExprClause,
   } ) ),
   ret: DelayedClauseClause,

@@ -73,9 +73,9 @@ function shapeWalker( clause, walkFn ) {
     }
 
     function processFieldDefs_mut( fieldDefs ) {
-      fieldLoop: for ( var name in fieldDefs.fields ) {
-        if ( fieldDefs.fields.hasOwnProperty( name ) ) {
-          var keyValAlts = fieldDefs.fields[ name ];
+      fieldLoop: for ( var name in fieldDefs ) {
+        if ( fieldDefs.hasOwnProperty( name ) ) {
+          var keyValAlts = fieldDefs[ name ];
           var { noop, problem, singleMatch, groupMatch } = getFieldGuide( x, name, keyValAlts, walkFn, walkOpts );
           if ( problem ) {
             problems.push( [ name, problem ] );
@@ -146,8 +146,8 @@ function _genKeyConformer( reqClauses, optClause, walkFn, walkOpts ) {
 
       if ( fieldDefs ) {
         reqNames = [];
-        for ( var name in fieldDefs.fields ) {
-          if ( fieldDefs.fields.hasOwnProperty( name ) ) {
+        for ( var name in fieldDefs ) {
+          if ( fieldDefs.hasOwnProperty( name ) ) {
             reqNames.push( name );
           }
         }
@@ -160,11 +160,11 @@ function _genKeyConformer( reqClauses, optClause, walkFn, walkOpts ) {
       for ( var i = 0; i < reqNames.length; i++ ) {
         var reqName = reqNames[ i ];
         //key clause
-        if ( fieldDefs && fieldDefs.fields[ reqName ].keyValExprPair ) {
+        if ( fieldDefs && fieldDefs[ reqName ].keyValExprPair ) {
           var found = false;
           keyTrav: for ( var kk in x ) {
             if ( x.hasOwnProperty( kk ) ) {
-              var rr = _conformNamedOrExpr( kk, fieldDefs.fields[ reqName ].keyValExprPair.keyExpression, walkFn, walkOpts );
+              var rr = _conformNamedOrExpr( kk, fieldDefs[ reqName ].keyValExprPair.keyExpression, walkFn, walkOpts );
               if ( !isProblem( rr ) ) {
                 //found a match
                 found = true;
@@ -175,10 +175,10 @@ function _genKeyConformer( reqClauses, optClause, walkFn, walkOpts ) {
           if ( !found ) {
             missingKeys.push( reqName );
           }
-        } else if ( fieldDefs && fieldDefs.fields[ reqName ].valExpressionOnly ) {
+        } else if ( fieldDefs && fieldDefs[ reqName ].valExpressionOnly ) {
           //key clause
           if ( x.hasOwnProperty( reqName ) ) {
-            var rrr = _conformNamedOrExpr( x[ reqName ], fieldDefs.fields[ reqName ].valExpressionOnly, walkFn, walkOpts );
+            var rrr = _conformNamedOrExpr( x[ reqName ], fieldDefs[ reqName ].valExpressionOnly, walkFn, walkOpts );
             if ( isProblem( rrr ) ) {
               //found a match
               missingKeys.push( reqName );

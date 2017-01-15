@@ -620,7 +620,7 @@ function genMultiArgOp(type) {
       // empty case
       s = new Clause({
         type: type,
-        exprs: [] });
+        exprs: [], opts: {} });
       s.conform = function conform(x) {
         return walk(s, x, { conform: true });
       };
@@ -668,26 +668,12 @@ function isPropName(x) {
 var TYPE_SHAPE = 'SHAPE';
 var TYPE_MAP_OF = 'MAP_OF';
 
-var FieldDefs = shapeOp({
-  shapeArgs: {
-    optionalFields: {
-      opt: {
-        fieldDefs: {
-          fields: {
-            'fields': {
-              keyValExprPair: {
-                keyExpression: {
-                  clause: coerceIntoClause(isStr)
-                },
-                valExpression: {
-                  clause: orOp(_labelled(['valExpressionOnly', 'clause', ExprClause], ['keyValExprPair', 'clause', catOp(_labelled(['keyExpression', 'clause', ExprClause], ['valExpression', 'clause', ExprClause]))]))
-                }
-              }
-            }
-          }
-        }
-      }
-    }
+var FieldDefs = mapOfOp({
+  keyExpression: {
+    clause: coerceIntoClause(isStr)
+  },
+  valExpression: {
+    clause: orOp(_labelled(['valExpressionOnly', 'clause', ExprClause], ['keyValExprPair', 'clause', catOp(_labelled(['keyExpression', 'clause', ExprClause], ['valExpression', 'clause', ExprClause]))]))
   }
 });
 
@@ -702,25 +688,23 @@ var ShapeArgs = shapeOp({
     optionalFields: {
       opt: {
         fieldDefs: {
-          fields: {
-            'requiredFields': {
-              keyValExprPair: {
-                keyExpression: {
-                  pred: oneOf('req', 'required')
-                },
-                valExpression: {
-                  clause: KeyArrayOrFieldDefs
-                }
+          'requiredFields': {
+            keyValExprPair: {
+              keyExpression: {
+                pred: oneOf('req', 'required')
+              },
+              valExpression: {
+                clause: KeyArrayOrFieldDefs
               }
-            },
-            'optionalFields': {
-              keyValExprPair: {
-                keyExpression: {
-                  pred: oneOf('opt', 'optional')
-                },
-                valExpression: {
-                  clause: KeyArrayOrFieldDefs
-                }
+            }
+          },
+          'optionalFields': {
+            keyValExprPair: {
+              keyExpression: {
+                pred: oneOf('opt', 'optional')
+              },
+              valExpression: {
+                clause: KeyArrayOrFieldDefs
               }
             }
           }
@@ -826,9 +810,7 @@ module.exports = core;
 //   shapeArgs: {
 //     req: {
 //       fieldDefs: {
-//         fields: {
-//           'a': { valExpressionOnly: { pred: isStr } }
-//         }
+//         'a': { valExpressionOnly: { pred: isStr } }
 //       }
 //     }
 //   }
@@ -1536,18 +1518,16 @@ var sParamsConverters = {
 };
 
 function _fieldDefToFrags(repo, _ref9) {
-  var _ref9$fieldDefs = _ref9.fieldDefs;
-  _ref9$fieldDefs = _ref9$fieldDefs === undefined ? {} : _ref9$fieldDefs;
-  var fields = _ref9$fieldDefs.fields,
+  var fieldDefs = _ref9.fieldDefs,
       keyList = _ref9.keyList;
 
-  if (fields) {
+  if (fieldDefs) {
     var r = new QuotedParamsMap();
-    for (var key in fields) {
-      if (fields.hasOwnProperty(key)) {
-        var _fields$key = fields[key],
-            keyValExprPair = _fields$key.keyValExprPair,
-            valExpressionOnly = _fields$key.valExpressionOnly;
+    for (var key in fieldDefs) {
+      if (fieldDefs.hasOwnProperty(key)) {
+        var _fieldDefs$key = fieldDefs[key],
+            keyValExprPair = _fieldDefs$key.keyValExprPair,
+            valExpressionOnly = _fieldDefs$key.valExpressionOnly;
 
         if (keyValExprPair) {
           var keyExpression = keyValExprPair.keyExpression,
@@ -1950,7 +1930,7 @@ function _strFragments(_ref, replacer) {
       var _paramFrags = unlabelled.map(function (p) {
         return _fragmentParamAlts(p, replacer);
       });
-      commaedParamFrags = interpose(_paramFrags, [', ']);
+      commaedParamFrags = interpose(_paramFrags, [', ', NEW_LINE]);
     } else if (keyList) {
       var _paramFrags2 = keyList;
       commaedParamFrags = interpose(_paramFrags2, [', ']);
@@ -1963,7 +1943,7 @@ function _strFragments(_ref, replacer) {
     commaedParamFrags = [];
   }
 
-  return [label, '('].concat(commaedParamFrags.length > 1 ? [INDENT_IN, NEW_LINE] : [' ']).concat(commaedParamFrags).concat(commaedParamFrags.length > 1 ? [INDENT_OUT, NEW_LINE] : [' ']).concat([')']);
+  return [label, '('].concat(commaedParamFrags.length > 1 ? [INDENT_IN, NEW_LINE] : [commaedParamFrags.length === 0 ? '' : ' ']).concat(commaedParamFrags).concat(commaedParamFrags.length > 1 ? [INDENT_OUT, NEW_LINE] : [commaedParamFrags.length === 0 ? '' : ' ']).concat([')']);
 }
 
 function interpose(arr, interArr) {
@@ -4005,9 +3985,9 @@ function shapeWalker(clause, walkFn) {
     }
 
     function processFieldDefs_mut(fieldDefs) {
-      fieldLoop: for (var name in fieldDefs.fields) {
-        if (fieldDefs.fields.hasOwnProperty(name)) {
-          var keyValAlts = fieldDefs.fields[name];
+      fieldLoop: for (var name in fieldDefs) {
+        if (fieldDefs.hasOwnProperty(name)) {
+          var keyValAlts = fieldDefs[name];
 
           var _getFieldGuide = getFieldGuide(x, name, keyValAlts, walkFn, walkOpts),
               noop = _getFieldGuide.noop,
@@ -4098,8 +4078,8 @@ function _genKeyConformer(reqClauses, optClause, walkFn, walkOpts) {
 
       if (fieldDefs) {
         reqNames = [];
-        for (var name in fieldDefs.fields) {
-          if (fieldDefs.fields.hasOwnProperty(name)) {
+        for (var name in fieldDefs) {
+          if (fieldDefs.hasOwnProperty(name)) {
             reqNames.push(name);
           }
         }
@@ -4112,11 +4092,11 @@ function _genKeyConformer(reqClauses, optClause, walkFn, walkOpts) {
       for (var i = 0; i < reqNames.length; i++) {
         var reqName = reqNames[i];
         //key clause
-        if (fieldDefs && fieldDefs.fields[reqName].keyValExprPair) {
+        if (fieldDefs && fieldDefs[reqName].keyValExprPair) {
           var found = false;
           keyTrav: for (var kk in x) {
             if (x.hasOwnProperty(kk)) {
-              var rr = _conformNamedOrExpr(kk, fieldDefs.fields[reqName].keyValExprPair.keyExpression, walkFn, walkOpts);
+              var rr = _conformNamedOrExpr(kk, fieldDefs[reqName].keyValExprPair.keyExpression, walkFn, walkOpts);
               if (!isProblem(rr)) {
                 //found a match
                 found = true;
@@ -4127,10 +4107,10 @@ function _genKeyConformer(reqClauses, optClause, walkFn, walkOpts) {
           if (!found) {
             missingKeys.push(reqName);
           }
-        } else if (fieldDefs && fieldDefs.fields[reqName].valExpressionOnly) {
+        } else if (fieldDefs && fieldDefs[reqName].valExpressionOnly) {
           //key clause
           if (x.hasOwnProperty(reqName)) {
-            var rrr = _conformNamedOrExpr(x[reqName], fieldDefs.fields[reqName].valExpressionOnly, walkFn, walkOpts);
+            var rrr = _conformNamedOrExpr(x[reqName], fieldDefs[reqName].valExpressionOnly, walkFn, walkOpts);
             if (isProblem(rrr)) {
               //found a match
               missingKeys.push(reqName);

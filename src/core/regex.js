@@ -239,7 +239,7 @@ function genMultiArgOp( type ) {
       // empty case
       s = new Clause( {
         type,
-        exprs: [] } );
+        exprs: [], opts: {} } );
       s.conform = function conform( x ) {
         return walk( s, x, { conform: true } );
       };
@@ -288,37 +288,22 @@ function isPropName( x ) {
 var TYPE_SHAPE = 'SHAPE';
 var TYPE_MAP_OF = 'MAP_OF';
 
-var FieldDefs = shapeOp( {
-  shapeArgs: {
-    optionalFields: {
-      opt: {
-        fieldDefs: {
-          fields: {
-            'fields':
-            {
-              keyValExprPair: {
-                keyExpression: {
-                  clause: coerceIntoClause( isStr ),
-                },
-                valExpression: {
-                  clause: orOp( _labelled(
-                    [ 'valExpressionOnly', 'clause', ExprClause ],
-                    [
-                      'keyValExprPair', 'clause',
-                      catOp( _labelled(
-                        [ 'keyExpression', 'clause', ExprClause ],
-                        [ 'valExpression', 'clause', ExprClause ]
-                      ) )
-                    ]
-                  ) )
-                },
-              }
-            },
-          }
-        }
-      }
-    },
-  }
+var FieldDefs = mapOfOp( {
+  keyExpression: {
+    clause: coerceIntoClause( isStr ),
+  },
+  valExpression: {
+    clause: orOp( _labelled(
+      [ 'valExpressionOnly', 'clause', ExprClause ],
+      [
+        'keyValExprPair', 'clause',
+        catOp( _labelled(
+          [ 'keyExpression', 'clause', ExprClause ],
+          [ 'valExpression', 'clause', ExprClause ]
+        ) )
+      ]
+    ) )
+  },
 } );
 
 
@@ -336,28 +321,26 @@ var ShapeArgs = shapeOp( {
     optionalFields: {
       opt: {
         fieldDefs: {
-          fields: {
-            'requiredFields': {
-              keyValExprPair: {
-                keyExpression: {
-                  pred: oneOf( 'req', 'required' ),
-                },
-                valExpression: {
-                  clause: KeyArrayOrFieldDefs
-                },
+          'requiredFields': {
+            keyValExprPair: {
+              keyExpression: {
+                pred: oneOf( 'req', 'required' ),
+              },
+              valExpression: {
+                clause: KeyArrayOrFieldDefs
               },
             },
-            'optionalFields': {
-              keyValExprPair: {
-                keyExpression: {
-                  pred: oneOf( 'opt', 'optional' ),
-                },
-                valExpression: {
-                  clause: KeyArrayOrFieldDefs
-                },
+          },
+          'optionalFields': {
+            keyValExprPair: {
+              keyExpression: {
+                pred: oneOf( 'opt', 'optional' ),
+              },
+              valExpression: {
+                clause: KeyArrayOrFieldDefs
               },
             },
-          }
+          },
         }
       }
     },
@@ -467,9 +450,7 @@ module.exports = core;
 //   shapeArgs: {
 //     req: {
 //       fieldDefs: {
-//         fields: {
-//           'a': { valExpressionOnly: { pred: isStr } }
-//         }
+//         'a': { valExpressionOnly: { pred: isStr } }
 //       }
 //     }
 //   }
