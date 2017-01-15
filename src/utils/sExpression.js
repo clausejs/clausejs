@@ -3,6 +3,7 @@ var clauseFromAlts = require( './clauseFromAlts' );
 var oAssign = require( '../utils/objectAssign' );
 const { wall, any, zeroOrMore, and, cat, or, ExprClause, mapOf, maybe } = require( '../core' );
 const delayed = require( './delayed' );
+const handle = require( './handle' );
 const coerceIntoClause = require( './coerceIntoClause' );
 const { isStr, isPlainObj, instanceOf } = require( '../preds' );
 
@@ -91,9 +92,7 @@ var sParamsConverters = {
   'Z_OR_O': singleArgParamGenerator,
   'COLL_OF': singleArgParamGenerator,
   'ANY': () => [],
-  // TODO
-  'MAP_OF': () => [],
-  // TODO
+  'MAP_OF': ( repo, { opts } ) => _handleKeyValExprPair( repo, opts ),
   'SHAPE': ( repo, { opts: { conformedArgs: { shapeArgs: { optionalFields: { opt, optional } = {}, requiredFields: { req, required } = {} } } } } ) =>
     oAssign( new UnquotedParamsMap(),
       ( req || required ) ? {
@@ -115,20 +114,15 @@ function _fieldDefToFrags( repo, { fieldDefs, keyList } ) {
     let r = new QuotedParamsMap();
     for ( let key in fieldDefs ) {
       if ( fieldDefs.hasOwnProperty( key ) ) {
-        const { keyValExprPair, valExpressionOnly } = fieldDefs[ key ];
-        if ( keyValExprPair ) {
-          let { keyExpression, valExpression } = keyValExprPair;
-          oAssign( r, {
-            [ key ]: new UnquotedParamsMap( {
-              'keyExpression': _createSExpr( repo, clauseFromAlts( keyExpression ) ),
-              'valExpression': _createSExpr( repo, clauseFromAlts( valExpression ) ),
-            } )
-          } );
-        } else if ( valExpressionOnly ) {
-          oAssign( r, {
-            [ key ]: _createSExpr( repo, clauseFromAlts( valExpressionOnly ) )
-          } )
-        }
+        let val = handle( fieldDefs[ key ], {
+          'keyValExprPair': ( pair ) => _handleKeyValExprPair( repo, pair ),
+          'valExpressionOnly': ( expr ) => _createSExpr( repo, clauseFromAlts( expr ) )
+        }, () => {
+          throw '!g';
+        } );
+        oAssign( r, {
+          [ key ]: val
+        } );
       }
     }
     return r;
@@ -137,6 +131,13 @@ function _fieldDefToFrags( repo, { fieldDefs, keyList } ) {
   } else {
     throw '!w';
   }
+}
+
+function _handleKeyValExprPair( repo, { keyExpression, valExpression } ) {
+  return new UnquotedParamsMap( {
+    'key': _createSExpr( repo, clauseFromAlts( keyExpression ) ),
+    'val': _createSExpr( repo, clauseFromAlts( valExpression ) ),
+  } );
 }
 
 function _params( repo, clause ) {
