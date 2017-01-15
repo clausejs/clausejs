@@ -2,7 +2,6 @@ var oAssign = require( '../utils/objectAssign' );
 var Clause = require( '../models/Clause' );
 var isClause = require( '../utils/isClause' );
 var isPred = require( '../utils/isPred' );
-var isExpr = require( '../utils/isExpr' );
 var clauseFromAlts = require( '../utils/clauseFromAlts' );
 var isProblem = require( '../utils/isProblem' );
 var isClauseName = require( '../utils/isClauseName' );
@@ -17,7 +16,7 @@ var walk = require( '../walk' );
 var isObj = require( '../preds/isObj' );
 var isStr = require( '../preds/isStr' );
 var oneOf = require( '../preds/oneOf' );
-var not = require( '../preds/not' );
+var isPlainObj = require( '../preds/isPlainObj' );
 
 var clauseClause = coerceIntoClause( isClause );
 var nameClause = coerceIntoClause( isClauseName );
@@ -106,14 +105,10 @@ var MultipleArgClause = catOp( _labelled(
     'options', 'clause',
     zeroOrOneOp( {
       expr:
-        { pred: isOptionObject }
+        { pred: isPlainObj }
     } )
   ]
 ) );
-
-function isOptionObject( x ) {
-  return isObj( x ) && !isExpr( x );
-}
 
 function andOp( exprs ) {
   var andS = new Clause( {
