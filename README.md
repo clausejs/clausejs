@@ -1,6 +1,6 @@
 # Clause
 
-A practical & powerful JavaScript library for data validation, conformation, documentation and property-based testing (WIP).
+A powerful, expressive & practical JavaScript library for defining and verifying your JS app contract. Also facilitates with bug discovery, debugging & data parsing.
 
  [![Build Status](https://travis-ci.org/clausejs/clausejs.svg?branch=master)](https://travis-ci.org/clausejs/clausejs) [![npm version](https://badge.fury.io/js/clausejs.svg)](https://badge.fury.io/js/clausejs)  [![Dependencies](https://david-dm.org/clausejs/clausejs.svg)](https://david-dm.org/clausejs/clausejs)  [![Size Gzipped](http://img.badgesize.io/clausejs/clausejs/master/packages/clausejs/dist/clausejs.min.js?compression=gzip&label=min%2Bgzipped)](packages/clausejs/dist)  [![Open Source Love](https://badges.frapsoft.com/os/mit/mit.svg?v=102)](https://github.com/ellerbrock/open-source-badge/)  [![Discussion](https://img.shields.io/gitter/room/TechnologyAdvice/Stardust.svg)](https://gitter.im/clausejs/clausejs)
 
@@ -11,7 +11,7 @@ A practical & powerful JavaScript library for data validation, conformation, doc
 
 Clause enables you to:
 
-- Build your data validation rules (clauses) with simple predicate functions and composable logical expressions such as `and`, `any`, `shape`, `collOf`, `mapOf` as well as regex-like clause-composing operators such as concatenation(`cat`), `or`(`|`), `oneOrMore`(`+`), `zeroOrMore`(`*`), `zeroOrOne`(`?`), etc
+- Build your data validation rules (clauses) with simple predicate functions and composable logical expressions such as `and`, `any`, `shape`, `collOf`, `mapOf`, `maybe` as well as regex-like clause-composing operators such as concatenation(`cat`), `or`(`|`), `oneOrMore`(`+`), `zeroOrMore`(`*`), `zeroOrOne`(`?`), etc
 - Validate and make assertions about your data with your clauses
 - Define complex clauses for your functions' arguments, return value and the relation between them
 - Conform (parse) your data/arguments for writing simpler code
@@ -29,11 +29,11 @@ Clause's primary goal is to allow you to create *the defining contract* for your
 By writing clauses for your data and functions *only once*, you can get a lot of leverage out your effort, including
 
 - Clearly defined specifications for your app's functions and data structures
-- Mathematically sound, plain-old-object style contracts that can be compared against previous and future versions to **detect breaking changes**
 - Type and behavior checking **at runtime** for data and functions (some compile-time analysis may also be possible in the future)
-- Convenient **data conformation** that simplifies your code for complex data and parameter parsing
+- Convenient **data conformation (parsing)** that simplifies your code for complex data and parameter parsing
+- Mathematically sound, plain-object style contracts that can be compared against previous and future versions to **detect breaking changes** (coming soon)
 - **Automatic generation of API documentation** for your app (via [clausejs-docgen](packages/clausejs-docgen), WIP)
-- **Automatic generation of property-based test cases** for your functions (via [clausejs-gen](packages/clausejs-gen), coming soon)
+- **Automatic generation of property-based test coverage** for your functions (via [clausejs-gen](packages/clausejs-gen), coming soon)
 
 Also worth looking at are videos on rationale for clojure.spec (and, by extension, Clause).
 
@@ -45,9 +45,9 @@ Also worth looking at are videos on rationale for clojure.spec (and, by extensio
 
 Alpha.
 
-- Feedback and suggestions [are welcome](https://github.com/clausejs/clausejs/issues/new).
 - Most core functions of Clause have gone through many iterations of bug fixing and are stablizing.
 - Some aspects of the API's are subject to change and improvement based on [developer feedback](/../../issues/).
+- Feedback and suggestions [are welcome](https://github.com/clausejs/clausejs/issues/new).
 
 ## Quick Examples
 
