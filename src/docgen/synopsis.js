@@ -1,9 +1,10 @@
-const { cat, or, zeroOrMore, oneOrMore, fclause, any, and, wall, ExprClause, collOf } = require( '../core' );
-const { isStr, isNum, isObj, isBool, instanceOf } = require( '../preds' );
+const { cat, or, zeroOrOne, maybe, oneOrMore, fclause, any, and, wall, ExprClause, collOf } = require( '../core' );
+const { isStr, isNum, isInt, isObj, isBool, instanceOf } = require( '../preds' );
 const { conform, isClause, deref, delayed } = require( '../utils' );
 const C = require( '../' );
+const clauseFromAlts = require( '../utils/clauseFromAlts' );
 const fnName = require( '../utils/fnName' );
-
+import sExpression, { genSExpressionClause, ParamItemClause, SExpressionClause } from '../utils/sExpression';
 
 //     ----'first'-----  --------'second'---------
 // fn( (isStr, isBool)+, (isObj | (isNum, isBool)) )
@@ -15,47 +16,75 @@ const fnName = require( '../utils/fnName' );
 //                       ---(showNum)--
 // fn( (isStr, isBool)+, isNum, isBool )
 
+
+
 // fn( { <required>: [ 'propA': isNum, <propB: beginsWithS>: any ], <optional>: [  ] } )
 
 // cat('first', oneOrMore(cat (isStr, isBool), 'second': {...}  ))
 
 // console.log( conform( sample, [ 'hello', true, 'abc', false, 32, false ] ) );
 
-function AltHeadNode( name ) {
-  this.name = name;
+function AltHeadNode( label, clause ) {
+  this.label = label;
+  this.clause = clause;
 }
 
-function PartHeadNode( name ) {
-  this.name = name;
+function PartHeadNode( label, clause ) {
+  this.label = label;
+  this.clause = clause;
 }
 
-var HeadNodeC = wall( or(
-  ExprClause,
-  instanceOf( AltHeadNode ),
-  instanceOf( PartHeadNode )
-) );
-
-var ParamNodeC = wall( or(
-  isStr,
-  delayed( () => SExpressionC )
-) );
-
-var SExpressionC = wall( cat(
-  HeadNodeC,
-  zeroOrMore( ParamNodeC )
-) );
-
-var _toSExpression = fclause( {
-  args: cat( ExprClause ),
-  ret: SExpressionC,
-} ).instrument( function _toSExpression( clause ) {
-} );
+var PartialableSExprClause = genSExpressionClause(
+  or(
+    'expression', ExprClause,
+    'altNode', instanceOf( AltHeadNode ),
+    'partNode', instanceOf( PartHeadNode )
+  )
+);
 
 var synopsis = fclause( {
-  args: cat( ExprClause )
-} ).instrument( function synopsis( clause ) {
-  var sexp = _toSExpression( clause );
+  args: cat( ExprClause, zeroOrOne( isInt ) )
+} ).instrument( function synopsis( clause, maxNoCases ) {
+  const sExpr = sExpression( clause );
+  const cSExpr = conform( ParamItemClause, sExpr );
+  const pivots = _findPivots( cSExpr );
+  console.log( pivots );
+
 } );
+
+// A "pivot" is an "or" clause
+function _findPivots(
+  { sExpression, quotedParamsMap, unquotedParamsMap } ) {
+  let r = [];
+
+  if ( sExpression ) {
+    let { head: headAlts, params: { labelled, unlabelled } = {} } = sExpression;
+    const head = clauseFromAlts( headAlts );
+    if ( _isPivot( head ) ) {
+      r.push( head );
+    }
+    const items = labelled || unlabelled || [];
+    const pivotsFromParams = items.reduce(
+    ( acc, { item } ) => acc.concat( _findPivots( item ) )
+  , [] );
+    r = r.concat( pivotsFromParams );
+  } else if ( quotedParamsMap || unquotedParamsMap ) {
+    let m = quotedParamsMap || unquotedParamsMap;
+    for ( let key in m ) {
+      if ( m.hasOwnProperty( key ) ) {
+        let { singleParam } = m[ key ];
+        if ( singleParam ) {
+          r = r.concat( _findPivots( singleParam ) );
+        }
+      }
+    }
+  }
+  return r;
+}
+
+function _isPivot( expr ) {
+  return expr.type === 'OR';
+}
 
 module.exports = {
   synopsis,

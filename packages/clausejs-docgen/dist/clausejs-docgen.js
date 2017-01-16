@@ -1364,6 +1364,10 @@ var _sExpression = __webpack_require__(28);
 
 var _sExpression2 = _interopRequireDefault(_sExpression);
 
+var _describe = __webpack_require__(43);
+
+var _describe2 = _interopRequireDefault(_describe);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 module.exports = {
@@ -1377,9 +1381,9 @@ module.exports = {
   isClause: __webpack_require__(5),
   isFclause: __webpack_require__(64),
   isClauseRef: __webpack_require__(14),
-  describe: __webpack_require__(43),
   deref: __webpack_require__(27),
   isClauseName: __webpack_require__(40),
+  describe: _describe2.default,
   sExpression: _sExpression2.default
 };
 
@@ -1465,7 +1469,11 @@ var ParamItemClause = or('sExpression', delayed(function () {
 
 var ParamLabelClause = isStr;
 
-var SExpressionClause = wall(cat('head', ExprClause, 'params', or('labelled', zeroOrMore(cat('label', ParamLabelClause, 'item', ParamItemClause)), 'unlabelled', zeroOrMore(ParamItemClause))));
+function genSExpressionClause(headClause) {
+  return wall(cat('head', headClause, 'params', or('labelled', zeroOrMore(cat('label', ParamLabelClause, 'item', ParamItemClause)), 'unlabelled', zeroOrMore(cat('item', ParamItemClause)))));
+}
+
+var SExpressionClause = genSExpressionClause(ExprClause);
 
 var singleArgParamGenerator = function singleArgParamGenerator(repo, _ref) {
   var enclosedClause = _ref.opts.enclosedClause;
@@ -1635,6 +1643,7 @@ exports.ParamItemClause = ParamItemClause;
 exports.Recursive = Recursive;
 exports.QuotedParamsMap = QuotedParamsMap;
 exports.UnquotedParamsMap = UnquotedParamsMap;
+exports.genSExpressionClause = genSExpressionClause;
 
 /***/ },
 /* 29 */
@@ -2230,6 +2239,11 @@ module.exports = {
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.isSpecial = exports.interpose = exports.INDENT_OUT = exports.INDENT_IN = exports.NEW_LINE = exports.fragsToStr = undefined;
+
 var _sExpression = __webpack_require__(28);
 
 var _sExpression2 = _interopRequireDefault(_sExpression);
@@ -2258,7 +2272,7 @@ function describe(expr, replacer, space) {
   }
   var strFragments = _strFragments(cSexpr, replacer);
   var level = 0;
-  var r = _walkConcat(strFragments, level, space);
+  var r = fragsToStr(strFragments, level, space);
 
   return r;
 }
@@ -2293,8 +2307,9 @@ function _strFragments(_ref, replacer) {
       }, []);
       commaedParamFrags = interpose(paramFrags, [', ', NEW_LINE]);
     } else if (unlabelled) {
-      var _paramFrags = unlabelled.map(function (p) {
-        return _fragmentParamAlts(p, replacer);
+      var _paramFrags = unlabelled.map(function (_ref3) {
+        var item = _ref3.item;
+        return _fragmentParamAlts(item, replacer);
       });
       commaedParamFrags = interpose(_paramFrags, [', ', NEW_LINE]);
     } else if (keyList) {
@@ -2317,7 +2332,7 @@ function interpose(arr, interArr) {
     return arr;
   } else {
     return arr.reduce(function (acc, curr, idx) {
-      if (idx < arr.length - 1 && !_isSpecial(curr)) {
+      if (idx < arr.length - 1 && !isSpecial(curr)) {
         return acc.concat([curr]).concat(interArr);
       } else {
         return acc.concat([curr]);
@@ -2326,7 +2341,7 @@ function interpose(arr, interArr) {
   }
 }
 
-function _isSpecial(x) {
+function isSpecial(x) {
   return x === NEW_LINE || x === INDENT_IN || x === INDENT_OUT;
 }
 
@@ -2347,8 +2362,8 @@ function _fragmentParamAlts(pAlts, replacer) {
     'optionsObj': function optionsObj(o) {
       return stringifyWithFnName(o);
     },
-    'recursive': function recursive(_ref3) {
-      var expression = _ref3.expression;
+    'recursive': function recursive(_ref4) {
+      var expression = _ref4.expression;
       return ['<recursive>: ', humanReadable(expression)];
     }
   }, function () {
@@ -2387,7 +2402,7 @@ function _fragmentParamsObj(pObj, replacer, quote) {
   return r;
 }
 
-function _walkConcat(frags, level, space) {
+function fragsToStr(frags, level, space) {
   var newLevel = level;
   var justNewLine = false;
   return frags.reduce(function (acc, f) {
@@ -2398,7 +2413,7 @@ function _walkConcat(frags, level, space) {
     if (isStr(f)) {
       return acc.concat(f);
     } else if (Array.isArray(f)) {
-      return acc.concat(_walkConcat(f, newLevel, space));
+      return acc.concat(fragsToStr(f, newLevel, space));
     } else if (f === NEW_LINE) {
       if (space > 0) {
         justNewLine = true;
@@ -2416,7 +2431,13 @@ function _walkConcat(frags, level, space) {
   }, '');
 }
 
-module.exports = describe;
+exports.default = describe;
+exports.fragsToStr = fragsToStr;
+exports.NEW_LINE = NEW_LINE;
+exports.INDENT_IN = INDENT_IN;
+exports.INDENT_OUT = INDENT_OUT;
+exports.interpose = interpose;
+exports.isSpecial = isSpecial;
 
 /***/ },
 /* 44 */
@@ -4615,8 +4636,8 @@ function genCot(registry) {
           n = _ref2[1],
           ref = _ref2[2];
 
-      return '<li>\n            ' + _clauseRefLink(p + '/' + n)(function (p) {
-        return _getAlias(registry, p) || _stylizeName((0, _deref2.default)(ref), _unanbiguousName(p));
+      return '<li>\n            ' + _clauseRefLink(p + '/' + n)(function (pn) {
+        return _stylizeName((0, _deref2.default)(ref), _getAlias(registry, pn) || _unanbiguousName(pn), (0, _namespace2.getMeta)(pn, registry));
       }) + '\n          </li>';
     }).join('') + '\n      </ul>\n    </dd>\n    ';
   }).join('') + '\n  </dl>';
@@ -4700,8 +4721,8 @@ var typeTable = {
   'CAT': 'cat sequence'
 };
 
-function _stylizeName(expr, name) {
-  if (expr.type === 'FCLAUSE' && name[0] === name[0].toLowerCase()) {
+function _stylizeName(expr, name, meta) {
+  if (expr.type === 'FCLAUSE' && name[0] === name[0].toLowerCase() || meta && meta.showAsFunction) {
     return name + '()';
   } else {
     return name;
@@ -5137,9 +5158,6 @@ function _genFclause(globalReg, exprName, clause, path) {
   if (comment) {
     frags.push([null, comment]);
   }
-  if (exprName && path) {
-    frags.push(['Syntax', '\n      <blockquote class="blockquote">\n        <small>\n          <em class="text-muted">\n            ' + _syntax(clause, globalReg, path) + '\n          </em>\n        </small>\n      </blockquote>\n    ']);
-  }
   if (argsClause) {
     frags.push(['Synopsis', _synopsis(exprName, clause, globalReg, meta)]);
   }
@@ -5147,6 +5165,9 @@ function _genFclause(globalReg, exprName, clause, path) {
     frags.push(['Examples', examples.map(function (e) {
       return '\n      <pre><code>' + e + '</code></pre>\n    ';
     }).join('\n')]);
+  }
+  if (exprName && path) {
+    frags.push(['Syntax', '\n    <blockquote class="blockquote">\n      <small>\n        <em class="text-muted">\n          ' + _syntax(clause, globalReg, path) + '\n        </em>\n      </small>\n    </blockquote>\n  ']);
   }
   if (argsClause) {
     frags.push(['Argument Clause', genForExpression(globalReg, null, argsClause, meta && meta.args)]);

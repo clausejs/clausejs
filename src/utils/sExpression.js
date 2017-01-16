@@ -48,17 +48,23 @@ var ParamItemClause = or(
 
 var ParamLabelClause = isStr;
 
-var SExpressionClause = wall(
-  cat(
-    'head', ExprClause,
-    'params', or(
-      'labelled', zeroOrMore( cat(
-        'label', ParamLabelClause,
-        'item', ParamItemClause ) ),
-      'unlabelled', zeroOrMore( ParamItemClause )
+function genSExpressionClause( headClause ) {
+  return wall(
+    cat(
+      'head', headClause,
+      'params', or(
+        'labelled', zeroOrMore( cat(
+          'label', ParamLabelClause,
+          'item', ParamItemClause ) ),
+        'unlabelled', zeroOrMore( cat(
+          'item', ParamItemClause
+        ) )
+      )
     )
-  )
-);
+  );
+}
+
+var SExpressionClause = genSExpressionClause( ExprClause );
 
 var singleArgParamGenerator = ( repo, { opts: { enclosedClause } } ) =>
   [ _createSExpr( repo, enclosedClause ) ];
@@ -187,4 +193,6 @@ function sExpression( expr ) {
 }
 
 export default sExpression;
-export { SExpressionClause, ParamItemClause, Recursive, QuotedParamsMap, UnquotedParamsMap };
+export { SExpressionClause, ParamItemClause,
+  Recursive, QuotedParamsMap, UnquotedParamsMap,
+  genSExpressionClause };

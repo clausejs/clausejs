@@ -21,7 +21,7 @@ function describe( expr, replacer, space ) {
   }
   const strFragments = _strFragments( cSexpr, replacer );
   const level = 0;
-  const r = _walkConcat( strFragments, level, space );
+  const r = fragsToStr( strFragments, level, space );
 
   return r;
 }
@@ -56,8 +56,8 @@ function _strFragments(
      );
       commaedParamFrags = interpose( paramFrags, [ ', ', NEW_LINE ] )
     } else if ( unlabelled ) {
-      let paramFrags = unlabelled.map( ( p ) =>
-        _fragmentParamAlts( p, replacer ) );
+      let paramFrags = unlabelled.map( ( { item } ) =>
+        _fragmentParamAlts( item, replacer ) );
       commaedParamFrags = interpose( paramFrags, [ ', ', NEW_LINE ] );
     } else if ( keyList ) {
       let paramFrags = keyList;
@@ -85,7 +85,7 @@ function interpose( arr, interArr ) {
     return arr;
   } else {
     return arr.reduce( ( acc, curr, idx ) => {
-      if ( idx < arr.length - 1 && !_isSpecial( curr ) ) {
+      if ( idx < arr.length - 1 && !isSpecial( curr ) ) {
         return acc.concat( [ curr ] ).concat( interArr );
       } else {
         return acc.concat( [ curr ] );
@@ -94,7 +94,7 @@ function interpose( arr, interArr ) {
   }
 }
 
-function _isSpecial( x ) {
+function isSpecial( x ) {
   return x === NEW_LINE || x === INDENT_IN || x === INDENT_OUT;
 }
 
@@ -144,7 +144,7 @@ function _fragmentParamsObj( pObj, replacer, quote ) {
   return r;
 }
 
-function _walkConcat( frags, level, space ) {
+function fragsToStr( frags, level, space ) {
   let newLevel = level;
   let justNewLine = false;
   return frags.reduce( ( acc, f ) => {
@@ -155,7 +155,7 @@ function _walkConcat( frags, level, space ) {
     if ( isStr( f ) ) {
       return acc.concat( f );
     } else if ( Array.isArray( f ) ) {
-      return acc.concat( _walkConcat( f, newLevel, space ) );
+      return acc.concat( fragsToStr( f, newLevel, space ) );
     } else if ( f === NEW_LINE ) {
       if ( space > 0 ) {
         justNewLine = true;
@@ -173,4 +173,5 @@ function _walkConcat( frags, level, space ) {
   }, '' );
 }
 
-module.exports = describe;
+export default describe;
+export { fragsToStr, NEW_LINE, INDENT_IN, INDENT_OUT, interpose, isSpecial };

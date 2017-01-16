@@ -16,7 +16,7 @@ Clause enables you to:
 - Define complex clauses for your functions' arguments, return value and the relation between them
 - Conform (parse) your data/arguments for writing simpler code
 
-Clause started as a JavaScript port of [clojure.spec](http://clojure.org/about/spec). As time progresses Clause will evolve with its own improvements and advancements that are particular to the JavaScript language and its ecosystem.
+Clause is heavily inspired by [clojure.spec](http://clojure.org/about/spec), but will be evolving on its own to better suite the needs of JavaScript community.
 
 ## Why Clause
 

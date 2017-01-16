@@ -1,4 +1,5 @@
 import sExpression from './sExpression';
+import describe from './describe';
 
 module.exports = {
   conform: require( './conform' ),
@@ -11,8 +12,8 @@ module.exports = {
   isClause: require( './isClause' ),
   isFclause: require( './isFclause' ),
   isClauseRef: require( './isClauseRef' ),
-  describe: require( './describe' ),
   deref: require( './deref' ),
   isClauseName: require( './isClauseName' ),
+  describe,
   sExpression,
 };

@@ -6,7 +6,8 @@ M( '/clause', {
   'comment': 'Convenient method that combines C.get() and C.set() into one function to get or set clauses from the global registry.',
   'examples': [
     'C("awesomeapp/TodoItem", TodoItemClause)',
-    'C("awesomeapp/TodoItem")'
+    `var ref = C("awesomeapp/TodoItem");
+ref.get()`
   ],
   'args': {
     'register': {
@@ -58,6 +59,5 @@ M( 'clause.types/Expression', {
 } );
 
 M( 'clause.utils/describe', {
-  'name': 'C.describe',
   'comment': 'Returns an abbreviated description of the clause as a simple tree structure.',
 } );

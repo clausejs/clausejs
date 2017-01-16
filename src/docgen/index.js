@@ -29,11 +29,11 @@ function genCot( registry ) {
         .map( ( [ p, n, ref ] ) =>
           `<li>
             ${_clauseRefLink( `${p}/${n}` )(
-              ( p ) =>
+              ( pn ) =>
                 _stylizeName(
                   deref( ref ),
-                  _getAlias( registry, p ) || _unanbiguousName( p ) ),
-                  getMeta( p, registry )
+                  _getAlias( registry, pn ) || _unanbiguousName( pn ),
+                  getMeta( pn, registry ) )
             )}
           </li>` )
         .join( '' )}
@@ -640,17 +640,6 @@ function _genFclause( globalReg, exprName, clause, path, meta = {} ) {
   if ( comment ) {
     frags.push( [ null, comment ] );
   }
-  if ( exprName && path ) {
-    frags.push( [ 'Syntax', `
-      <blockquote class="blockquote">
-        <small>
-          <em class="text-muted">
-            ${_syntax( clause, globalReg, path )}
-          </em>
-        </small>
-      </blockquote>
-    ` ] );
-  }
   if ( argsClause ) {
     frags.push( [ 'Synopsis', _synopsis( exprName, clause, globalReg, meta ) ] );
   }
@@ -658,6 +647,17 @@ function _genFclause( globalReg, exprName, clause, path, meta = {} ) {
     frags.push( [ 'Examples', examples.map( ( e ) => `
       <pre><code>${e}</code></pre>
     ` ).join( '\n' ) ] );
+  }
+  if ( exprName && path ) {
+    frags.push( [ 'Syntax', `
+    <blockquote class="blockquote">
+      <small>
+        <em class="text-muted">
+          ${_syntax( clause, globalReg, path )}
+        </em>
+      </small>
+    </blockquote>
+  ` ] );
   }
   if ( argsClause ) {
     frags.push( [ 'Argument Clause', genForExpression( globalReg, null, argsClause, meta && meta.args ) ] );

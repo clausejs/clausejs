@@ -14,13 +14,13 @@ describe( 'describe', () => {
   } );
 
   it( 'new line and indentation', () => {
-    var NamedClause = C.cat( 'zz', C.isFn, 'bb', C.isObj, 'cc', C.isFn, 'aa', C.isObj );
+    var NamedClause = C.cat( 'zz', C.isFn, 'bb', C.or( C.isObj, C.isNum ), 'cc', C.isFn, 'aa', C.isObj );
 
     [ 10, 20, 30, 40 ].forEach( ( n ) => {
       const rNamedClause = C.describe( NamedClause, null, n );
       const pattern = repeat( n, ' ' ).join( '' );
-      expect( _countOccurences( rNamedClause, pattern ) ).to.equal( 4 );
-      expect( _countOccurences( rNamedClause, '\n' ) ).to.equal( 5 );
+      expect( _countOccurences( rNamedClause, pattern ) ).to.equal( 9 );
+      expect( _countOccurences( rNamedClause, '\n' ) ).to.equal( 8 );
     } );
   } );
 } );
