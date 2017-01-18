@@ -16,4 +16,5 @@ module.exports = {
   isClauseName: require( './isClauseName' ),
   describe,
   sExpression,
+  handle: require( './handle' ),
 };

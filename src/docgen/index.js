@@ -7,7 +7,9 @@ import { isStr, isObj } from '../preds';
 import describe from '../utils/describe';
 import deref from '../utils/deref';
 import { resolve, getDefList } from '../namespace/resolve';
+import synopsis from './synopsis';
 const clauseFromAlts = require( '../utils/clauseFromAlts' );
+
 
 function gen( registry ) {
   var conformedReg = NamespaceObjClause.conform( registry );
@@ -384,93 +386,6 @@ function _genCatClause( globalReg, exprName, path, expr, meta ) {
 //   return r;
 // }
 
-function _synopsis( exprName, fclause, globalReg, meta ) {
-  var r = synopsisArray( [], [], exprName, fclause, globalReg, meta, [] );
-  var h = _synopsisToHtml( r );
-  return h;
-}
-
-function _synopsisToHtml( arr ) {
-  let h;
-  if ( Array.isArray( arr ) ) {
-    h = arr.map( _synopsisToHtml ).join( '' );
-    h = `<ul>${h}</ul>`;
-  } else if ( isObj( arr ) ) {
-    var nameItemPairs = [];
-    for ( var name in arr ) {
-      nameItemPairs.push( [ name, arr[ name ] ] );
-    }
-    h = nameItemPairs.map( ( [ name, item ] ) => {
-      return `<li>&ldquo;${name}&rdquo;:<div>${_synopsisToHtml( item )}</div></li>`
-    } ).join( '' );
-    h = `<ul>${h}</ul>`;
-  } else if ( isStr( arr ) ) {
-    h = arr;
-  }
-  return h;
-
-}
-
-function synopsisArray( prefixes, suffixes, exprName, clause, globalReg, meta, defs ) {
-  if ( !clause ) {
-    return prefixes.concat( suffixes );
-  } else if ( clause.type == 'FCLAUSE' ) {
-    let fnName = meta && meta.name || exprName;
-
-    return synopsisArray( [ fnName, '(' ], [ ')' ], null, clause.opts.args, globalReg, meta && meta.args, defs );
-    // return {
-    //   register: [
-    //     'S(', 'nsPath', ', ', 'expression', ')'
-    //   ],
-    //   retrieve: [
-    //     'var ', 'expression', ' = ', 'S(', 'nsPath', ', ', 'expression', ')'
-    //   ],
-    // };
-  } else if ( clause.type === 'OR' ) {
-    var { named } = clause.opts;
-    let obj;
-    if ( named ) {
-      obj = {};
-      for ( let eAlt of clause.exprs ) {
-        obj[ eAlt.name ] = synopsisArray( prefixes, suffixes, null, eAlt.expr, globalReg, meta && meta[ eAlt.name ], defs );
-      }
-    } else {
-      obj = [];
-      for ( let eAlt of clause.exprs ) {
-        obj.push( synopsisArray( prefixes, suffixes, null, eAlt.expr, globalReg, meta && meta[ eAlt.name ], defs ) );
-      }
-    }
-    return obj;
-  } else if ( clause.type === 'CAT' ) {
-    var { named } = clause.opts;
-    let obj = [];
-    for ( let i = 0; i < clause.exprs.length; i++ ) {
-      let eAlt = clause.exprs[ i ];
-      let path = resolve( eAlt.expr, globalReg );
-      if ( named ) {
-        obj.push( path ? _clauseRefLink( path )( () => eAlt.name ) : eAlt.name );
-      } else {
-        if ( path ) {
-          obj.push( _clauseRefLink( path )( _unanbiguousName ) );
-        }
-      }
-      if ( i < clause.exprs.length - 1 ) {
-        obj.push( ', ' );
-      }
-    }
-
-    return [ '<em>' ]
-      .concat( prefixes )
-      .concat( obj )
-      .concat( suffixes )
-      .concat( [ '</em>' ] );
-  } else {
-    console.error( 'Handler still missing for synopsis type ', clause );
-    // throw '!';
-    return clause.type;
-  }
-
-}
 
 function _clauseRefLink( p ) {
   return pGenFn =>
@@ -641,7 +556,12 @@ function _genFclause( globalReg, exprName, clause, path, meta = {} ) {
     frags.push( [ null, comment ] );
   }
   if ( argsClause ) {
-    frags.push( [ 'Synopsis', _synopsis( exprName, clause, globalReg, meta ) ] );
+    frags.push( [
+      'Synopsis',
+      `<ul>
+        ${synopsis( clause ).map( ( s ) => `<li>${s}</li>` ).join( '' )}
+      </ul>`
+    ] );
   }
   if ( examples ) {
     frags.push( [ 'Examples', examples.map( ( e ) => `

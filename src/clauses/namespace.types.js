@@ -28,11 +28,13 @@ const SetNSFnClause = fclause( {
   ret: isBool,
 } );
 
+const NamespaceArgsCLause = or(
+  'register', SetArgClause,
+  'retrieve', GetArgClause
+);
+
 const NamespaceFnClause = fclause( {
-  args: or(
-      'register', SetArgClause,
-      'retrieve', GetArgClause
-    ),
+  args: NamespaceArgsCLause
 } );
 
 const SetMetaFnClause = fclause( {
@@ -81,5 +83,5 @@ export {
   NamespaceFnClause,
   isNamespacePath, SetMetaFnClause, GetMetaFnClause,
   ResolveFnClause,
-  NamespaceObjClause
+  NamespaceObjClause,
 };

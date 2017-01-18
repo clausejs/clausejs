@@ -1,6 +1,6 @@
 # Clause
 
-A powerful, expressive & practical JavaScript library for defining and verifying your JS app contract. Also facilitates with bug discovery, debugging & data parsing.
+A powerful & practical JavaScript library for defining and verifying your JS app contract. Also facilitates with bug discovery, debugging & data parsing.
 
  [![Build Status](https://travis-ci.org/clausejs/clausejs.svg?branch=master)](https://travis-ci.org/clausejs/clausejs) [![npm version](https://badge.fury.io/js/clausejs.svg)](https://badge.fury.io/js/clausejs)  [![Dependencies](https://david-dm.org/clausejs/clausejs.svg)](https://david-dm.org/clausejs/clausejs)  [![Size Gzipped](http://img.badgesize.io/clausejs/clausejs/master/packages/clausejs/dist/clausejs.min.js?compression=gzip&label=min%2Bgzipped)](packages/clausejs/dist)  [![Open Source Love](https://badges.frapsoft.com/os/mit/mit.svg?v=102)](https://github.com/ellerbrock/open-source-badge/)  [![Discussion](https://img.shields.io/gitter/room/TechnologyAdvice/Stardust.svg)](https://gitter.im/clausejs/clausejs)
 
@@ -260,3 +260,5 @@ Clause API for the most part is kept similar to clojure.spec, except for some di
 - Both origin of the idea and API are heavily inspired by Rich Hickey et, al.'s [clojure.spec](http://clojure.org/about/clause).
 - Some aspects of the design are drawn by Scheme's [contract system](https://docs.racket-lang.org/guide/contracts.html).
 - NFA clause matching inspired by Thompson NFA regex matching algorithm, and is based on [afader's implementation](https://github.com/afader/thompson-regex-js).
+- [tcomb](https://github.com/gcanti/tcomb)
+- [React's PropTypes](https://facebook.github.io/react/docs/typechecking-with-proptypes.html)

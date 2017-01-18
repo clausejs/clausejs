@@ -26,9 +26,18 @@ function describe( expr, replacer, space ) {
   return r;
 }
 
-function _strFragments(
-  { head: headAlt, params }, replacer ) {
-  const head = clauseFromAlts( headAlt );
+function _strFragments( cSExpr, replacer ) {
+  return strFragments( ( { head: headAlts, params } ) => {
+    return { head: clauseFromAlts( headAlts ), params };
+  }, cSExpr, replacer );
+}
+
+function strFragments(
+  headAltsHandler, cNode, replacer ) {
+  const { head, params } = headAltsHandler( cNode );
+  if ( !head ) {
+    return [];
+  }
   if ( replacer ) {
     let interceptR = replacer( head );
     if ( interceptR ) {
@@ -49,7 +58,7 @@ function _strFragments(
             acc.concat( [
               [ label,
                 ', ',
-                _fragmentParamAlts( item, replacer )
+                _fragmentParamAlts( headAltsHandler, item, replacer )
               ],
             ] ),
         []
@@ -57,7 +66,7 @@ function _strFragments(
       commaedParamFrags = interpose( paramFrags, [ ', ', NEW_LINE ] )
     } else if ( unlabelled ) {
       let paramFrags = unlabelled.map( ( { item } ) =>
-        _fragmentParamAlts( item, replacer ) );
+        _fragmentParamAlts( headAltsHandler, item, replacer ) );
       commaedParamFrags = interpose( paramFrags, [ ', ', NEW_LINE ] );
     } else if ( keyList ) {
       let paramFrags = keyList;
@@ -98,12 +107,12 @@ function isSpecial( x ) {
   return x === NEW_LINE || x === INDENT_IN || x === INDENT_OUT;
 }
 
-function _fragmentParamAlts( pAlts, replacer ) {
+function _fragmentParamAlts( headAltsHandler, pAlts, replacer ) {
   const r = handle( pAlts, {
     'label': ( lbl ) => lbl,
-    'sExpression': ( expr ) => _strFragments( expr, replacer ),
-    'quotedParamsMap': ( o ) => _fragmentParamsObj( o, replacer, true ),
-    'unquotedParamsMap': ( o ) => _fragmentParamsObj( o, replacer, false ),
+    'sExpression': ( expr ) => strFragments( headAltsHandler, expr, replacer ),
+    'quotedParamsMap': ( o ) => _fragmentParamsObj( headAltsHandler, o, replacer, true ),
+    'unquotedParamsMap': ( o ) => _fragmentParamsObj( headAltsHandler, o, replacer, false ),
     'optionsObj': ( o ) => stringifyWithFnName( o ),
     'recursive': ( { expression } ) => [
       '<recursive>: ',
@@ -115,7 +124,7 @@ function _fragmentParamAlts( pAlts, replacer ) {
   return r;
 }
 
-function _fragmentParamsObj( pObj, replacer, quote ) {
+function _fragmentParamsObj( headAltsHandler, pObj, replacer, quote ) {
   var r = [ '{', INDENT_IN, NEW_LINE, ];
   let body = [];
   for ( let label in pObj ) {
@@ -129,7 +138,7 @@ function _fragmentParamsObj( pObj, replacer, quote ) {
             .concat( ' ]' );
         },
         'singleParam': ( p ) =>
-          _fragmentParamAlts( p, replacer )
+          _fragmentParamAlts( headAltsHandler, p, replacer )
       }, () => {
         throw '!e';
       } );
@@ -174,4 +183,4 @@ function fragsToStr( frags, level, space ) {
 }
 
 export default describe;
-export { fragsToStr, NEW_LINE, INDENT_IN, INDENT_OUT, interpose, isSpecial };
+export { strFragments, fragsToStr, NEW_LINE, INDENT_IN, INDENT_OUT, interpose, isSpecial };

@@ -20,51 +20,52 @@ function UnquotedParamsMap( map ) {
   oAssign( this, map );
 }
 
-const ParamsMapC = mapOf(
-    any,
-    maybe( or(
-      'keyList', zeroOrMore( delayed( () => ParamLabelClause ) ),
-      'singleParam', delayed( () => ParamItemClause )
-    ) )
-  );
-
-var QuotedParamsMapC = and(
-  instanceOf( QuotedParamsMap ),
-  ParamsMapC
-);
-
-var UnquotedParamsMapC = and(
-  instanceOf( UnquotedParamsMap ),
-  ParamsMapC
-);
-
-var ParamItemClause = or(
-  'sExpression', delayed( () => SExpressionClause ),
-  'quotedParamsMap', QuotedParamsMapC,
-  'unquotedParamsMap', UnquotedParamsMapC,
-  'optionsObj', isPlainObj,
-  'recursive', instanceOf( Recursive )
-);
-
 var ParamLabelClause = isStr;
 
-function genSExpressionClause( headClause ) {
-  return wall(
+function genClauses( headClause ) {
+  var paramItemC = or(
+    'sExpression', delayed( () => sExprC ),
+    'quotedParamsMap', delayed( () => QuotedParamsMapC ),
+    'unquotedParamsMap', delayed( () => UnquotedParamsMapC ),
+    'optionsObj', isPlainObj,
+    'recursive', instanceOf( Recursive )
+  );
+  var sExprC = wall(
     cat(
       'head', headClause,
       'params', or(
         'labelled', zeroOrMore( cat(
           'label', ParamLabelClause,
-          'item', ParamItemClause ) ),
+          'item', delayed( () => paramItemC ) ) ),
         'unlabelled', zeroOrMore( cat(
-          'item', ParamItemClause
+          'item', delayed( () => paramItemC )
         ) )
       )
     )
   );
+  const ParamsMapC = mapOf(
+    any,
+    maybe( or(
+      'keyList', zeroOrMore( delayed( () => ParamLabelClause ) ),
+      'singleParam', delayed( () => paramItemC )
+    ) )
+  );
+
+  var QuotedParamsMapC = and(
+    instanceOf( QuotedParamsMap ),
+    delayed( () => ParamsMapC )
+  );
+
+  var UnquotedParamsMapC = and(
+    instanceOf( UnquotedParamsMap ),
+    delayed( () => ParamsMapC )
+  );
+
+  return [ sExprC, paramItemC ];
 }
 
-var SExpressionClause = genSExpressionClause( ExprClause );
+var [ SExpressionClause, ParamItemClause ] =
+  genClauses( ExprClause );
 
 var singleArgParamGenerator = ( repo, { opts: { enclosedClause } } ) =>
   [ _createSExpr( repo, enclosedClause ) ];
@@ -195,4 +196,4 @@ function sExpression( expr ) {
 export default sExpression;
 export { SExpressionClause, ParamItemClause,
   Recursive, QuotedParamsMap, UnquotedParamsMap,
-  genSExpressionClause };
+  genClauses };
