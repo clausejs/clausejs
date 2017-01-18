@@ -37,9 +37,9 @@
     "url": "https://github.com/clausejs/clausejs/issues"
   },
   "homepage": "https://github.com/clausejs/clausejs#readme",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
+    "babel-cli": "^6.18.0",
     "babel-core": "6.21.0",
     "babel-eslint": "^7.1.1",
     "babel-loader": "6.2.10",
