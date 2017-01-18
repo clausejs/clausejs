@@ -389,10 +389,6 @@ module.exports = function clauseFromAlts(alts) {
     return alts.clause;
   } else if (alts.pred) {
     return coerceIntoClause(alts.pred);
-  } else if (alts.clauseRef) {
-    return alts.clauseRef;
-  } else if (alts.delayedClause) {
-    return alts.delayedClause;
   } else {
     console.error('unsupported:', alts);
     throw 'Not implemented';
@@ -477,7 +473,7 @@ function _unlabelled() {
   };
 }
 
-var ExprClause = orOp(_labelled(['clause', 'clause', ClauseClause], ['pred', 'clause', PredClause], ['delayedClause', 'clause', DelayedClauseClause], ['clauseRef', 'clause', ClauseRefClause]));
+var ExprClause = orOp(_labelled(['clause', 'clause', ClauseClause], ['pred', 'clause', PredClause]));
 
 var NameExprOptionalComment = catOp(_labelled(['name', 'clause', nameClause], ['comment', 'clause', zeroOrOneOp({ expr: { pred: isStr } })], ['expr', 'clause', ExprClause]));
 
@@ -1414,6 +1410,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var fnName = __webpack_require__(3);
@@ -1463,17 +1461,24 @@ var QuotedParamsMapC = and(instanceOf(QuotedParamsMap), ParamsMapC);
 
 var UnquotedParamsMapC = and(instanceOf(UnquotedParamsMap), ParamsMapC);
 
-var ParamItemClause = or('sExpression', delayed(function () {
-  return SExpressionClause;
-}), 'quotedParamsMap', QuotedParamsMapC, 'unquotedParamsMap', UnquotedParamsMapC, 'optionsObj', isPlainObj, 'recursive', instanceOf(Recursive));
-
 var ParamLabelClause = isStr;
 
-function genSExpressionClause(headClause) {
-  return wall(cat('head', headClause, 'params', or('labelled', zeroOrMore(cat('label', ParamLabelClause, 'item', ParamItemClause)), 'unlabelled', zeroOrMore(cat('item', ParamItemClause)))));
+function genClauses(headClause) {
+  var paramItemC = or('sExpression', delayed(function () {
+    return sExprC;
+  }), 'quotedParamsMap', QuotedParamsMapC, 'unquotedParamsMap', UnquotedParamsMapC, 'optionsObj', isPlainObj, 'recursive', instanceOf(Recursive));
+  var sExprC = wall(cat('head', headClause, 'params', or('labelled', zeroOrMore(cat('label', ParamLabelClause, 'item', delayed(function () {
+    return paramItemC;
+  }))), 'unlabelled', zeroOrMore(cat('item', delayed(function () {
+    return paramItemC;
+  }))))));
+  return [sExprC, paramItemC];
 }
 
-var SExpressionClause = genSExpressionClause(ExprClause);
+var _genClauses = genClauses(ExprClause),
+    _genClauses2 = _slicedToArray(_genClauses, 2),
+    SExpressionClause = _genClauses2[0],
+    ParamItemClause = _genClauses2[1];
 
 var singleArgParamGenerator = function singleArgParamGenerator(repo, _ref) {
   var enclosedClause = _ref.opts.enclosedClause;
@@ -1643,7 +1648,7 @@ exports.ParamItemClause = ParamItemClause;
 exports.Recursive = Recursive;
 exports.QuotedParamsMap = QuotedParamsMap;
 exports.UnquotedParamsMap = UnquotedParamsMap;
-exports.genSExpressionClause = genSExpressionClause;
+exports.genClauses = genClauses;
 
 /***/ },
 /* 29 */

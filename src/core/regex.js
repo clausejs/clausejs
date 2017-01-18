@@ -61,10 +61,8 @@ function _unlabelled() {
 
 var ExprClause = orOp( _labelled(
     [ 'clause', 'clause', ClauseClause ],
-    [ 'pred', 'clause', PredClause ],
-    [ 'delayedClause', 'clause', DelayedClauseClause ],
-    [ 'clauseRef', 'clause', ClauseRefClause ]
-   ) );
+    [ 'pred', 'clause', PredClause ]
+  ) );
 
 var NameExprOptionalComment = catOp( _labelled(
     [ 'name', 'clause', nameClause ],
