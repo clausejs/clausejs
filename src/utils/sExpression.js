@@ -20,7 +20,11 @@ function UnquotedParamsMap( map ) {
   oAssign( this, map );
 }
 
-var ParamLabelClause = isStr;
+function Quoted( val ) {
+  this.value = val;
+}
+
+var ParamLabelClause = or( 'str', isStr, 'quoted', instanceOf( Quoted ) );
 
 function genClauses( headClause ) {
   var paramItemC = or(
@@ -77,7 +81,7 @@ var multipleArgParamGenerator = ( repo, { opts: { named }, exprs } ) => {
   } else if ( named ) {
     const r = exprs.reduce(
       ( acc, { name, expr } ) =>
-        acc.concat( [ `"${name}"`, _createSExpr( repo, expr ) ] )
+        acc.concat( [ new Quoted( name ), _createSExpr( repo, expr ) ] )
         , [] );
     return r;
   } else {

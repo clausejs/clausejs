@@ -56,7 +56,7 @@ function strFragments(
       let paramFrags = labelled.reduce(
         ( acc, { label, item } ) =>
             acc.concat( [
-              [ label,
+              [ _processLabel( label ),
                 ', ',
                 _fragmentParamAlts( headAltsHandler, item, replacer )
               ],
@@ -109,7 +109,7 @@ function isSpecial( x ) {
 
 function _fragmentParamAlts( headAltsHandler, pAlts, replacer ) {
   const r = handle( pAlts, {
-    'label': ( lbl ) => lbl,
+    'label': _processLabel,
     'sExpression': ( expr ) => strFragments( headAltsHandler, expr, replacer ),
     'quotedParamsMap': ( o ) => _fragmentParamsObj( headAltsHandler, o, replacer, true ),
     'unquotedParamsMap': ( o ) => _fragmentParamsObj( headAltsHandler, o, replacer, false ),
@@ -122,6 +122,14 @@ function _fragmentParamAlts( headAltsHandler, pAlts, replacer ) {
     throw '!s';
   } );
   return r;
+}
+
+function _processLabel( { str, quoted } ) {
+  if ( str ) {
+    return str;
+  } else if ( quoted ) {
+    return `"${quoted.value}"`;
+  }
 }
 
 function _fragmentParamsObj( headAltsHandler, pObj, replacer, quote ) {
