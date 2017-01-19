@@ -559,7 +559,11 @@ function _genFclause( globalReg, exprName, clause, path, meta = {} ) {
     frags.push( [
       'Synopsis',
       `<ul>
-        ${synopsis( clause ).map( ( s ) => `<li>${s}</li>` ).join( '' )}
+        ${
+        synopsis( clause, 4, _refExprFn( globalReg, path ) )
+          .map( ( s ) => `<li>${unescape( _encode( s ) )}</li>` )
+          .join( '' )
+        }
       </ul>`
     ] );
   }

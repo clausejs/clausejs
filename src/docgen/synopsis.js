@@ -1,13 +1,15 @@
 const { cat, or, shape, zeroOrOne, maybe, oneOrMore, fclause, any, and, wall, ExprClause, collOf } = require( '../core' );
-const { isStr, isNum, isInt, isObj, isBool, instanceOf } = require( '../preds' );
+const { isStr, isFn, isNum, isInt, isObj, isBool, instanceOf } = require( '../preds' );
 const { conform, isClause, deref, delayed } = require( '../utils' );
 const C = require( '../' );
 const oAssign = require( '../utils/objectAssign' );
 const clauseFromAlts = require( '../utils/clauseFromAlts' );
 const fnName = require( '../utils/fnName' );
+const stringifyWithFnName = require( '../utils/stringifyWithFnName' );
 import sExpression, { genClauses, ParamItemClause,
  UnquotedParamsMap, QuotedParamsMap } from '../utils/sExpression';
-import { strFragments, fragsToStr } from '../utils/describe';
+import { fragsToStr, interpose, humanReadable,
+  INDENT_IN, NEW_LINE, INDENT_OUT } from '../utils/describe';
 const handle = require( '../utils/handle' );
 
 //     ----'first'-----  --------'second'---------
@@ -49,29 +51,137 @@ var [ PartialableSExprClause, PartialableParamItemClause ] = genClauses(
 );
 
 var synopsis = fclause( {
-  args: cat( ExprClause, zeroOrOne( isInt ) )
-} ).instrument( function synopsis( clause ) {
+  args: cat( ExprClause, zeroOrOne( isInt ), zeroOrOne( maybe( isFn ) ) )
+} ).instrument( function synopsis( clause, limit = 4, replacer ) {
   const sExpr = sExpression( clause );
   const cSExpr = conform( ParamItemClause, sExpr );
-  const pivots = _findPivots( cSExpr );
+  const pivots = _findPivots( cSExpr, replacer );
+
   const expanded = pivots.reduce( ( cases, pivot ) => {
     const r = cases.reduce( ( acc, currCase ) => {
-      const { cases } = _expand( currCase, pivot );
-      return acc.concat( cases );
+      if ( acc.length > limit ) {
+        return acc;
+      } else {
+        const { cases } = _expand( currCase, pivot );
+        return acc.concat( cases );
+      }
     }, [] );
     return r;
   }, [ sExpr ] );
-  const results = expanded.map( _describeCase );
+  const results = expanded.map( ( cc ) => _describeCase( cc, replacer ) );
   return results;
 } );
 
-function _describeCase( c ) {
+
+function strFragments(
+  headAltsHandler, cNode, replacer ) {
+  const { head, params } = headAltsHandler( cNode );
+  if ( !head ) {
+    return [];
+  }
+  if ( replacer ) {
+    let interceptR = replacer( head );
+    if ( interceptR ) {
+      return interceptR;
+    }
+  }
+  if ( head.type === 'PRED' ) {
+    return [ `${fnName( head.opts.predicate )}` ];
+  }
+  const label = humanReadable( head );
+  let commaedParamFrags;
+
+  if ( params ) {
+    const { labelled, unlabelled, keyList } = params;
+    if ( labelled ) {
+      let paramFrags = labelled.reduce(
+        ( acc, { label, item } ) =>
+            acc.concat( [
+              [ label,
+                ', ',
+                _fragmentParamAlts( headAltsHandler, item, replacer )
+              ],
+            ] ),
+        []
+     );
+      commaedParamFrags = interpose( paramFrags, [ ', ', NEW_LINE ] )
+    } else if ( unlabelled ) {
+      let paramFrags = unlabelled.map( ( { item } ) =>
+        _fragmentParamAlts( headAltsHandler, item, replacer ) );
+      commaedParamFrags = interpose( paramFrags, [ ', ', NEW_LINE ] );
+    } else if ( keyList ) {
+      let paramFrags = keyList;
+      commaedParamFrags = interpose( paramFrags, [ ', ' ] );
+    } else {
+      // console.error( params );
+      // throw '!z';
+      commaedParamFrags = [];
+    }
+  } else {
+    commaedParamFrags = [];
+  }
+
+  return [ label, '(' ]
+    .concat( commaedParamFrags.length > 1 ?
+      [ INDENT_IN, NEW_LINE, ] : [ commaedParamFrags.length === 0 ? '' : ' ' ] )
+    .concat( commaedParamFrags )
+    .concat( commaedParamFrags.length > 1 ?
+      [ INDENT_OUT, NEW_LINE, ] : [ commaedParamFrags.length === 0 ? '' : ' ' ] )
+    .concat( [ ')' ] );
+}
+
+function _fragmentParamAlts( headAltsHandler, pAlts, replacer ) {
+  const r = handle( pAlts, {
+    'label': ( lbl ) => lbl,
+    'sExpression': ( expr ) => strFragments( headAltsHandler, expr, replacer ),
+    'quotedParamsMap': ( o ) => _fragmentParamsObj( headAltsHandler, o, replacer, true ),
+    'unquotedParamsMap': ( o ) => _fragmentParamsObj( headAltsHandler, o, replacer, false ),
+    'optionsObj': ( o ) => stringifyWithFnName( o ),
+    'recursive': ( { expression } ) => [
+      '<recursive>: ',
+      humanReadable( expression )
+    ]
+  }, () => {
+    throw '!s';
+  } );
+  return r;
+}
+
+function _fragmentParamsObj( headAltsHandler, pObj, replacer, quote ) {
+  var r = [ '{', INDENT_IN, NEW_LINE, ];
+  let body = [];
+  for ( let label in pObj ) {
+    if ( pObj.hasOwnProperty( label ) ) {
+      let item = [];
+      item.push( quote ? `"${label}": ` : `<${label}>: ` );
+      var r1 = handle( pObj[ label ], {
+        'keyList': ( list ) => {
+          return [ '[ ' ].concat(
+            interpose( list.map( ( i ) => `"${i}"` ), [ ', ' ] ) )
+            .concat( ' ]' );
+        },
+        'singleParam': ( p ) =>
+          _fragmentParamAlts( headAltsHandler, p, replacer )
+      }, () => {
+        throw '!e';
+      } );
+      if ( r1 ) {
+        item.push( r1 );
+        body.push( item );
+      }
+    }
+  }
+  body = interpose( body, [ ', ', NEW_LINE ] );
+  r = r.concat( body ).concat( [ INDENT_OUT, NEW_LINE, '}' ] );
+  return r;
+}
+
+function _describeCase( c, replacer ) {
   const cc = conform( PartialableSExprClause, c );
   if ( C.isProblem( cc ) ) {
-    debugger;
     throw '!!';
   }
-  const fragments = _strFragments( cc );
+  const fragments = _strFragments( cc, replacer );
   const r = fragsToStr( fragments, 0, 0 );
   return r;
 }
@@ -206,9 +316,13 @@ function _fold(
 }
 
 // A "pivot" is an "or" clause
-function _findPivots( cSExpr ) {
+function _findPivots( cSExpr, replacer ) {
   return _fold( ( acc, item ) => {
-    if ( _isPivot( item ) ) {
+    var replaced;
+    if ( replacer ) {
+      replaced = replacer( item );
+    }
+    if ( !replaced && _isPivot( item ) ) {
       return acc.concat( [ item ] );
     } else {
       return acc;
@@ -242,5 +356,7 @@ export default synopsis;
 //   args: SampleClause
 // } );
 
-// var r = synopsis( SampleFnClause );
+// import { TestClause } from '../core/regex';
+
+// var r = synopsis( TestClause );
 // console.log( r );

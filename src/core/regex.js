@@ -350,6 +350,37 @@ var MapOfFnClause = fclause( {
   ret: isClause,
 } );
 
+var TestClause = shapeOp( {
+  shapeArgs: {
+    optionalFields: {
+      opt: {
+        fieldDefs: {
+          'requiredFields': {
+            keyValExprPair: {
+              keyExpression: {
+                pred: oneOf( 'req', 'required' ),
+              },
+              valExpression: {
+                clause: KeyArrayOrFieldDefs
+              },
+            },
+          },
+          'optionalFields': {
+            keyValExprPair: {
+              keyExpression: {
+                pred: oneOf( 'opt', 'optional' ),
+              },
+              valExpression: {
+                clause: KeyArrayOrFieldDefs
+              },
+            },
+          },
+        }
+      }
+    },
+  }
+} );
+
 var ShapeFnClause = fclause( {
   args: catOp( _labelled(
       [ 'shapeArgs', 'clause', ShapeArgs ]
@@ -427,6 +458,7 @@ var core = {
   mapOf,
   ShapeFnClause,
   MapOfFnClause,
+  // TestClause,
 };
 
 core[ 'alt' ] = core.or;

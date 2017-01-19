@@ -183,4 +183,4 @@ function fragsToStr( frags, level, space ) {
 }
 
 export default describe;
-export { strFragments, fragsToStr, NEW_LINE, INDENT_IN, INDENT_OUT, interpose, isSpecial };
+export { humanReadable, fragsToStr, NEW_LINE, INDENT_IN, INDENT_OUT, interpose, isSpecial };
