@@ -1498,7 +1498,11 @@ function UnquotedParamsMap(map) {
   oAssign(this, map);
 }
 
-var ParamLabelClause = isStr;
+function Quoted(val) {
+  this.value = val;
+}
+
+var ParamLabelClause = or('str', isStr, 'quoted', instanceOf(Quoted));
 
 function genClauses(headClause) {
   var paramItemC = or('sExpression', delayed(function () {
@@ -1551,7 +1555,7 @@ var multipleArgParamGenerator = function multipleArgParamGenerator(repo, _ref2) 
     var r = exprs.reduce(function (acc, _ref3) {
       var name = _ref3.name,
           expr = _ref3.expr;
-      return acc.concat(['"' + name + '"', _createSExpr(repo, expr)]);
+      return acc.concat([new Quoted(name), _createSExpr(repo, expr)]);
     }, []);
     return r;
   } else {
@@ -1804,7 +1808,7 @@ function strFragments(headAltsHandler, cNode, replacer) {
       var paramFrags = labelled.reduce(function (acc, _ref2) {
         var label = _ref2.label,
             item = _ref2.item;
-        return acc.concat([[label, ', ', _fragmentParamAlts(headAltsHandler, item, replacer)]]);
+        return acc.concat([[_processLabel(label), ', ', _fragmentParamAlts(headAltsHandler, item, replacer)]]);
       }, []);
       commaedParamFrags = interpose(paramFrags, [', ', NEW_LINE]);
     } else if (unlabelled) {
@@ -1848,9 +1852,7 @@ function isSpecial(x) {
 
 function _fragmentParamAlts(headAltsHandler, pAlts, replacer) {
   var r = handle(pAlts, {
-    'label': function label(lbl) {
-      return lbl;
-    },
+    'label': _processLabel,
     'sExpression': function sExpression(expr) {
       return strFragments(headAltsHandler, expr, replacer);
     },
@@ -1871,6 +1873,17 @@ function _fragmentParamAlts(headAltsHandler, pAlts, replacer) {
     throw '!s';
   });
   return r;
+}
+
+function _processLabel(_ref5) {
+  var str = _ref5.str,
+      quoted = _ref5.quoted;
+
+  if (str) {
+    return str;
+  } else if (quoted) {
+    return '"' + quoted.value + '"';
+  }
 }
 
 function _fragmentParamsObj(headAltsHandler, pObj, replacer, quote) {
@@ -4782,7 +4795,7 @@ var _genClauses = (0, _sExpression.genClauses)(or('expression', ExprClause, 'alt
 var synopsis = fclause({
   args: cat(ExprClause, zeroOrOne(isInt), zeroOrOne(maybe(isFn)))
 }).instrument(function synopsis(clause) {
-  var limit = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 4;
+  var limit = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 20;
   var replacer = arguments[2];
 
   var sExpr = (0, _sExpression2.default)(clause);
@@ -4826,32 +4839,81 @@ function strFragments(headAltsHandler, cNode, replacer) {
     return ['' + fnName(head.opts.predicate)];
   }
   var label = (0, _describe.humanReadable)(head);
-  if (head.type === 'FCLAUSE') {
-    label = 'fn';
-  }
+
   var commaedParamFrags = void 0;
+  if (head.type === 'FCLAUSE') {
+    var _params$unlabelled = _slicedToArray(params.unlabelled, 1),
+        _params$unlabelled$0$ = _params$unlabelled[0].item.unquotedParamsMap,
+        _params$unlabelled$0$2 = _params$unlabelled$0$.args;
 
-  if (params) {
+    _params$unlabelled$0$2 = _params$unlabelled$0$2 === undefined ? {} : _params$unlabelled$0$2;
+    var args = _params$unlabelled$0$2.singleParam,
+        _params$unlabelled$0$3 = _params$unlabelled$0$.ret;
+    _params$unlabelled$0$3 = _params$unlabelled$0$3 === undefined ? {} : _params$unlabelled$0$3;
+    var ret = _params$unlabelled$0$3.singleParam;
+
+    return [].concat(args ? _fragmentParamAlts(headAltsHandler, args, replacer) : []).concat([' → ']).concat(ret ? _fragmentParamAlts(headAltsHandler, ret, replacer) : []);
+  } else if (head.type === 'CAT') {
     var labelled = params.labelled,
-        unlabelled = params.unlabelled,
-        keyList = params.keyList;
+        unlabelled = params.unlabelled;
 
+    var _commaedParamFrags = [];
     if (labelled) {
       var paramFrags = labelled.reduce(function (acc, _ref) {
         var label = _ref.label,
             item = _ref.item;
-        return acc.concat([[label, ', ', _fragmentParamAlts(headAltsHandler, item, replacer)]]);
+        return acc.concat([[_processLabel(label), ': ', _fragmentParamAlts(headAltsHandler, item, replacer)]]);
       }, []);
-      commaedParamFrags = (0, _describe.interpose)(paramFrags, [', ', _describe.NEW_LINE]);
+      _commaedParamFrags = (0, _describe.interpose)(paramFrags, [', ', _describe.NEW_LINE]);
     } else if (unlabelled) {
       var _paramFrags = unlabelled.map(function (_ref2) {
         var item = _ref2.item;
         return _fragmentParamAlts(headAltsHandler, item, replacer);
       });
-      commaedParamFrags = (0, _describe.interpose)(_paramFrags, [', ', _describe.NEW_LINE]);
+      _commaedParamFrags = (0, _describe.interpose)(_paramFrags, [', ', _describe.NEW_LINE]);
+    }
+    return ['('].concat(_commaedParamFrags).concat([')']);
+  } else if (head.type === 'Z_OR_M') {
+    var _params$unlabelled2 = _slicedToArray(params.unlabelled, 1),
+        item = _params$unlabelled2[0].item;
+
+    var processed = _fragmentParamAlts(headAltsHandler, item, replacer);
+    return ['{', processed, '}'].concat('*');
+  } else if (head.type === 'O_OR_M') {
+    var _params$unlabelled3 = _slicedToArray(params.unlabelled, 1),
+        _item = _params$unlabelled3[0].item;
+
+    var _processed = _fragmentParamAlts(headAltsHandler, _item, replacer);
+    return ['{', _processed, '}'].concat('+');
+  } else if (head.type === 'Z_OR_O') {
+    var _params$unlabelled4 = _slicedToArray(params.unlabelled, 1),
+        _item2 = _params$unlabelled4[0].item;
+
+    var _processed2 = _fragmentParamAlts(headAltsHandler, _item2, replacer);
+    return ['{', _processed2, '}'].concat('?');
+  }
+
+  if (params) {
+    var _labelled = params.labelled,
+        _unlabelled = params.unlabelled,
+        keyList = params.keyList;
+
+    if (_labelled) {
+      var _paramFrags2 = _labelled.reduce(function (acc, _ref3) {
+        var label = _ref3.label,
+            item = _ref3.item;
+        return acc.concat([[_processLabel(label), ', ', _fragmentParamAlts(headAltsHandler, item, replacer)]]);
+      }, []);
+      commaedParamFrags = (0, _describe.interpose)(_paramFrags2, [', ', _describe.NEW_LINE]);
+    } else if (_unlabelled) {
+      var _paramFrags3 = _unlabelled.map(function (_ref4) {
+        var item = _ref4.item;
+        return _fragmentParamAlts(headAltsHandler, item, replacer);
+      });
+      commaedParamFrags = (0, _describe.interpose)(_paramFrags3, [', ', _describe.NEW_LINE]);
     } else if (keyList) {
-      var _paramFrags2 = keyList;
-      commaedParamFrags = (0, _describe.interpose)(_paramFrags2, [', ']);
+      var _paramFrags4 = keyList;
+      commaedParamFrags = (0, _describe.interpose)(_paramFrags4, [', ']);
     } else {
       // console.error( params );
       // throw '!z';
@@ -4864,16 +4926,34 @@ function strFragments(headAltsHandler, cNode, replacer) {
   return [label, '('].concat(commaedParamFrags.length > 1 ? [_describe.INDENT_IN, _describe.NEW_LINE] : [commaedParamFrags.length === 0 ? '' : ' ']).concat(commaedParamFrags).concat(commaedParamFrags.length > 1 ? [_describe.INDENT_OUT, _describe.NEW_LINE] : [commaedParamFrags.length === 0 ? '' : ' ']).concat([')']);
 }
 
+function _processLabel(_ref5) {
+  var str = _ref5.str,
+      quoted = _ref5.quoted;
+
+  if (str) {
+    return str;
+  } else if (quoted) {
+    return quoted.value;
+  }
+}
+
 function _fragmentParamAlts(headAltsHandler, pAlts, replacer) {
   var r = handle(pAlts, {
-    'label': function label(lbl) {
-      return lbl;
+    'label': function label(_ref6) {
+      var str = _ref6.str,
+          _label = _ref6.label;
+
+      if (str) {
+        return str;
+      } else if (_label) {
+        return '"' + _label.value + '"';
+      }
     },
     'sExpression': function sExpression(expr) {
       return strFragments(headAltsHandler, expr, replacer);
     },
     'quotedParamsMap': function quotedParamsMap(o) {
-      return _fragmentParamsObj(headAltsHandler, o, replacer, true);
+      return _fragmentParamsObj(headAltsHandler, o, replacer, false);
     },
     'unquotedParamsMap': function unquotedParamsMap(o) {
       return _fragmentParamsObj(headAltsHandler, o, replacer, false);
@@ -4881,8 +4961,8 @@ function _fragmentParamAlts(headAltsHandler, pAlts, replacer) {
     'optionsObj': function optionsObj(o) {
       return stringifyWithFnName(o);
     },
-    'recursive': function recursive(_ref3) {
-      var expression = _ref3.expression;
+    'recursive': function recursive(_ref7) {
+      var expression = _ref7.expression;
       return ['<recursive>: ', (0, _describe.humanReadable)(expression)];
     }
   }, function () {
@@ -4891,13 +4971,13 @@ function _fragmentParamAlts(headAltsHandler, pAlts, replacer) {
   return r;
 }
 
-function _fragmentParamsObj(headAltsHandler, pObj, replacer, quote) {
+function _fragmentParamsObj(headAltsHandler, pObj, replacer) {
   var r = ['{', _describe.INDENT_IN, _describe.NEW_LINE];
   var body = [];
   for (var label in pObj) {
     if (pObj.hasOwnProperty(label)) {
       var item = [];
-      item.push(quote ? '"' + label + '": ' : '<' + label + '>: ');
+      item.push(label);
       var r1 = handle(pObj[label], {
         'keyList': function keyList(list) {
           return ['[ '].concat((0, _describe.interpose)(list.map(function (i) {
@@ -4939,8 +5019,8 @@ function _handler(alts) {
     'expression': function expression(e) {
       return { head: clauseFromAlts(e), params: params };
     },
-    'altNode': function altNode(_ref4) {
-      var enclosed = _ref4.enclosed;
+    'altNode': function altNode(_ref8) {
+      var enclosed = _ref8.enclosed;
       return handle(enclosed, {
         'sExpression': _handler
       }, function () {});
@@ -5059,9 +5139,9 @@ function _expand(currCase, pivot) {
 
 function _makeAlts(pivot, params) {
   if (pivot.opts.named) {
-    return pivot.exprs.map(function (_ref5, idx) {
-      var name = _ref5.name,
-          expr = _ref5.expr;
+    return pivot.exprs.map(function (_ref9, idx) {
+      var name = _ref9.name,
+          expr = _ref9.expr;
       return [new AltHeadNode(name, pivot, params[idx * 2 + 1])];
     });
   } else {
@@ -5088,10 +5168,10 @@ function _makeAltCaseMap(item, map, key) {
   return r;
 }
 
-function _fold(reducer, _ref6, init, replacer) {
-  var sExpression = _ref6.sExpression,
-      quotedParamsMap = _ref6.quotedParamsMap,
-      unquotedParamsMap = _ref6.unquotedParamsMap;
+function _fold(reducer, _ref10, init, replacer) {
+  var sExpression = _ref10.sExpression,
+      quotedParamsMap = _ref10.quotedParamsMap,
+      unquotedParamsMap = _ref10.unquotedParamsMap;
 
   var r = init;
 
@@ -5113,8 +5193,8 @@ function _fold(reducer, _ref6, init, replacer) {
     r = reducer(r, head);
 
     var items = labelled || unlabelled || [];
-    r = items.reduce(function (acc, _ref7) {
-      var item = _ref7.item;
+    r = items.reduce(function (acc, _ref11) {
+      var item = _ref11.item;
       return _fold(reducer, item, acc, replacer);
     }, r);
   } else if (quotedParamsMap || unquotedParamsMap) {
@@ -5404,7 +5484,7 @@ function escapeHtml(text) {
 }
 
 function _tagFor(expr, globalReg, path) {
-  return '\n    <span \n      role="button"\n      data-toggle="popover"\n      data-trigger="focus hover"\n      data-html="true"\n      data-content="' + escapeHtml(_syntax(expr, globalReg, path)) + '"\n      data-container="body"\n      data-animation="false"\n      data-delay="500"\n      class="tag tag-' + _labelFor(expr) + '">\n      ' + _typeFor(expr) + '\n    </span>\n  ';
+  return '\n    <span \n      role="button"\n      data-toggle="popover"\n      data-trigger="focus hover"\n      data-html="true"\n      data-content="' + escapeHtml(_description(expr, globalReg, path)) + '"\n      data-container="body"\n      data-animation="false"\n      data-delay="500"\n      class="tag tag-' + _labelFor(expr) + '">\n      ' + _typeFor(expr) + '\n    </span>\n  ';
 }
 
 function _rawTypeFor(expr) {
@@ -5507,7 +5587,7 @@ function _clauseRefLink(p) {
   };
 }
 
-function _syntax(expr, globalReg, currPath) {
+function _description(expr, globalReg, currPath) {
   // return ``;
   return '\n    <pre>' + unescape(_encode((0, _describe2.default)(expr, _refExprFn(globalReg, currPath), 2))) + '</pre>\n  ';
 }
@@ -5623,7 +5703,7 @@ function _genFclause(globalReg, exprName, clause, path) {
     frags.push([null, comment]);
   }
   if (argsClause) {
-    frags.push(['Synopsis', '<ul>\n        ' + (0, _synopsis2.default)(clause, 4, _refExprFn(globalReg, path)).map(function (s) {
+    frags.push(['Syntax', '<ul>\n        ' + (0, _synopsis2.default)(clause, 20, _refExprFn(globalReg, path)).map(function (s) {
       return '<li>' + unescape(_encode(s)) + '</li>';
     }).join('') + '\n      </ul>']);
   }
@@ -5633,13 +5713,13 @@ function _genFclause(globalReg, exprName, clause, path) {
     }).join('\n')]);
   }
   if (exprName && path) {
-    frags.push(['Syntax', '\n    <blockquote class="blockquote">\n      <small>\n        <em class="text-muted">\n          ' + _syntax(clause, globalReg, path) + '\n        </em>\n      </small>\n    </blockquote>\n  ']);
+    frags.push(['Clause Description', '\n    <blockquote class="blockquote">\n      <small>\n        <em class="text-muted">\n          ' + _description(clause, globalReg, path) + '\n        </em>\n      </small>\n    </blockquote>\n  ']);
   }
   if (argsClause) {
-    frags.push(['Argument Clause', genForExpression(globalReg, null, argsClause, meta && meta.args)]);
+    frags.push(['Argument Clause Graph', genForExpression(globalReg, null, argsClause, meta && meta.args)]);
   }
   if (retClause) {
-    frags.push(['Return Value Clause', genForExpression(globalReg, null, retClause, meta && meta.ret)]);
+    frags.push(['Return Value Clause Graph', genForExpression(globalReg, null, retClause, meta && meta.ret)]);
   }if (fn) {
     frags.push(['Argument-return value relation', '<pre>' + (0, _fnName2.default)(fn) + '</pre>']);
   }

@@ -7,7 +7,7 @@ import { isStr, isObj } from '../preds';
 import describe from '../utils/describe';
 import deref from '../utils/deref';
 import { resolve, getDefList } from '../namespace/resolve';
-import synopsis from './synopsis';
+import syntax from './synopsis';
 const clauseFromAlts = require( '../utils/clauseFromAlts' );
 
 
@@ -232,7 +232,7 @@ function _tagFor( expr, globalReg, path ) {
       data-toggle="popover"
       data-trigger="focus hover"
       data-html="true"
-      data-content="${escapeHtml( _syntax( expr, globalReg, path ) )}"
+      data-content="${escapeHtml( _description( expr, globalReg, path ) )}"
       data-container="body"
       data-animation="false"
       data-delay="500"
@@ -392,7 +392,7 @@ function _clauseRefLink( p ) {
     `<a href="#${p}" data-path="${p}">${pGenFn( p )}</a>`;
 }
 
-function _syntax( expr, globalReg, currPath ) {
+function _description( expr, globalReg, currPath ) {
   // return ``;
   return `
     <pre>${unescape( _encode( describe( expr, _refExprFn( globalReg, currPath ), 2 ) ) )}</pre>
@@ -557,10 +557,10 @@ function _genFclause( globalReg, exprName, clause, path, meta = {} ) {
   }
   if ( argsClause ) {
     frags.push( [
-      'Synopsis',
+      'Syntax',
       `<ul>
         ${
-        synopsis( clause, 4, _refExprFn( globalReg, path ) )
+        syntax( clause, 20, _refExprFn( globalReg, path ) )
           .map( ( s ) => `<li>${unescape( _encode( s ) )}</li>` )
           .join( '' )
         }
@@ -573,21 +573,21 @@ function _genFclause( globalReg, exprName, clause, path, meta = {} ) {
     ` ).join( '\n' ) ] );
   }
   if ( exprName && path ) {
-    frags.push( [ 'Syntax', `
+    frags.push( [ 'Clause Description', `
     <blockquote class="blockquote">
       <small>
         <em class="text-muted">
-          ${_syntax( clause, globalReg, path )}
+          ${_description( clause, globalReg, path )}
         </em>
       </small>
     </blockquote>
   ` ] );
   }
   if ( argsClause ) {
-    frags.push( [ 'Argument Clause', genForExpression( globalReg, null, argsClause, meta && meta.args ) ] );
+    frags.push( [ 'Argument Clause Graph', genForExpression( globalReg, null, argsClause, meta && meta.args ) ] );
   }
   if ( retClause ) {
-    frags.push( [ 'Return Value Clause', genForExpression( globalReg, null, retClause, meta && meta.ret ) ] );
+    frags.push( [ 'Return Value Clause Graph', genForExpression( globalReg, null, retClause, meta && meta.ret ) ] );
   } if ( fn ) {
     frags.push( [ 'Argument-return value relation', `<pre>${fnName( fn )}</pre>` ] );
   }

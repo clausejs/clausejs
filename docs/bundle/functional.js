@@ -1498,7 +1498,11 @@ function UnquotedParamsMap(map) {
   oAssign(this, map);
 }
 
-var ParamLabelClause = isStr;
+function Quoted(val) {
+  this.value = val;
+}
+
+var ParamLabelClause = or('str', isStr, 'quoted', instanceOf(Quoted));
 
 function genClauses(headClause) {
   var paramItemC = or('sExpression', delayed(function () {
@@ -1551,7 +1555,7 @@ var multipleArgParamGenerator = function multipleArgParamGenerator(repo, _ref2) 
     var r = exprs.reduce(function (acc, _ref3) {
       var name = _ref3.name,
           expr = _ref3.expr;
-      return acc.concat(['"' + name + '"', _createSExpr(repo, expr)]);
+      return acc.concat([new Quoted(name), _createSExpr(repo, expr)]);
     }, []);
     return r;
   } else {
@@ -1804,7 +1808,7 @@ function strFragments(headAltsHandler, cNode, replacer) {
       var paramFrags = labelled.reduce(function (acc, _ref2) {
         var label = _ref2.label,
             item = _ref2.item;
-        return acc.concat([[label, ', ', _fragmentParamAlts(headAltsHandler, item, replacer)]]);
+        return acc.concat([[_processLabel(label), ', ', _fragmentParamAlts(headAltsHandler, item, replacer)]]);
       }, []);
       commaedParamFrags = interpose(paramFrags, [', ', NEW_LINE]);
     } else if (unlabelled) {
@@ -1848,9 +1852,7 @@ function isSpecial(x) {
 
 function _fragmentParamAlts(headAltsHandler, pAlts, replacer) {
   var r = handle(pAlts, {
-    'label': function label(lbl) {
-      return lbl;
-    },
+    'label': _processLabel,
     'sExpression': function sExpression(expr) {
       return strFragments(headAltsHandler, expr, replacer);
     },
@@ -1871,6 +1873,17 @@ function _fragmentParamAlts(headAltsHandler, pAlts, replacer) {
     throw '!s';
   });
   return r;
+}
+
+function _processLabel(_ref5) {
+  var str = _ref5.str,
+      quoted = _ref5.quoted;
+
+  if (str) {
+    return str;
+  } else if (quoted) {
+    return '"' + quoted.value + '"';
+  }
 }
 
 function _fragmentParamsObj(headAltsHandler, pObj, replacer, quote) {

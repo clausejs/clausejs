@@ -52,7 +52,7 @@ var [ PartialableSExprClause, PartialableParamItemClause ] = genClauses(
 
 var synopsis = fclause( {
   args: cat( ExprClause, zeroOrOne( isInt ), zeroOrOne( maybe( isFn ) ) )
-} ).instrument( function synopsis( clause, limit = 4, replacer ) {
+} ).instrument( function synopsis( clause, limit = 20, replacer ) {
   const sExpr = sExpression( clause );
   const cSExpr = conform( ParamItemClause, sExpr );
   const pivots = _findPivots( cSExpr, replacer );
@@ -73,9 +73,9 @@ var synopsis = fclause( {
 } );
 
 
-function strFragments(
-  headAltsHandler, cNode, replacer ) {
-  const { head, params } = headAltsHandler( cNode );
+function _strFragments(
+   label, cNode, replacer ) {
+  const { head, params } = _handler( cNode );
   if ( !head ) {
     return [];
   }
@@ -88,11 +88,64 @@ function strFragments(
   if ( head.type === 'PRED' ) {
     return [ `${fnName( head.opts.predicate )}` ];
   }
-  let label = humanReadable( head );
-  if ( head.type === 'FCLAUSE' ) {
-    label = 'fn';
-  }
+  let nodeLabel = humanReadable( head );
+
   let commaedParamFrags;
+  if ( head.type === 'FCLAUSE' ) {
+    let { unlabelled:
+      [ { item: {
+          unquotedParamsMap: {
+            args: { singleParam: args } = {},
+            ret: { singleParam: ret } = {} } } } ] } = params;
+    return [ ]
+        .concat( args ? _fragmentParamAlts( null, args, replacer ) : [] )
+        .concat( [ ' → ' ] )
+        .concat( ret ? _fragmentParamAlts( null, ret, replacer ) : [ 'any' ] );
+  } else if ( head.type === 'CAT' ) {
+    let { labelled, unlabelled } = params;
+    let commaedParamFrags = [];
+    if ( labelled ) {
+      let paramFrags = labelled.reduce(
+        ( acc, { label, item } ) => {
+          const lblStr = _processLabel( label );
+          return acc.concat( [
+            [ _fragmentParamAlts( lblStr, item, replacer ) ],
+          ] )
+        },
+        []
+     );
+      commaedParamFrags = interpose( paramFrags, [ ', ', NEW_LINE ] )
+    } else if ( unlabelled ) {
+      let paramFrags = unlabelled.map( ( { item } ) =>
+        _fragmentParamAlts( null, item, replacer ) );
+      commaedParamFrags = interpose( paramFrags, [ ', ', NEW_LINE ] );
+    }
+    return [ '(' ]
+        .concat( commaedParamFrags )
+        .concat( [ ')' ] );
+  } else if ( head.type === 'Z_OR_M' ) {
+    let { unlabelled: [ { item } ] } = params;
+    let processed = _fragmentParamAlts( null, item, replacer );
+    return [ '{', processed, '}' ]
+      .concat( '*' );
+  } else if ( head.type === 'O_OR_M' ) {
+    let { unlabelled: [ { item } ] } = params;
+    let processed = _fragmentParamAlts( null, item, replacer );
+    return [ '{', processed, '}' ]
+      .concat( '+' );
+  } else if ( head.type === 'Z_OR_O' ) {
+    let { unlabelled: [ { item } ] } = params;
+    let processed = _fragmentParamAlts( null, item, replacer );
+    return [ '{', processed, '}' ]
+      .concat( '?' );
+  } else if ( head.type === 'COLL_OF' ) {
+    let { unlabelled: [ { item } ] } = params;
+    let processed = _fragmentParamAlts( null, item, replacer );
+    return [ '[', processed, ']' ]
+      .concat( '*' );
+  } else if ( head.type === 'ANY' ) {
+    return [ 'any' ];
+  }
 
   if ( params ) {
     const { labelled, unlabelled, keyList } = params;
@@ -100,9 +153,9 @@ function strFragments(
       let paramFrags = labelled.reduce(
         ( acc, { label, item } ) =>
             acc.concat( [
-              [ label,
+              [ _processLabel( label ),
                 ', ',
-                _fragmentParamAlts( headAltsHandler, item, replacer )
+                _fragmentParamAlts( null, item, replacer )
               ],
             ] ),
         []
@@ -110,7 +163,7 @@ function strFragments(
       commaedParamFrags = interpose( paramFrags, [ ', ', NEW_LINE ] )
     } else if ( unlabelled ) {
       let paramFrags = unlabelled.map( ( { item } ) =>
-        _fragmentParamAlts( headAltsHandler, item, replacer ) );
+        _fragmentParamAlts( null, item, replacer ) );
       commaedParamFrags = interpose( paramFrags, [ ', ', NEW_LINE ] );
     } else if ( keyList ) {
       let paramFrags = keyList;
@@ -124,7 +177,7 @@ function strFragments(
     commaedParamFrags = [];
   }
 
-  return [ label, '(' ]
+  return [ nodeLabel, '(' ]
     .concat( commaedParamFrags.length > 1 ?
       [ INDENT_IN, NEW_LINE, ] : [ commaedParamFrags.length === 0 ? '' : ' ' ] )
     .concat( commaedParamFrags )
@@ -133,30 +186,40 @@ function strFragments(
     .concat( [ ')' ] );
 }
 
-function _fragmentParamAlts( headAltsHandler, pAlts, replacer ) {
+
+function _processLabel( { str, quoted } ) {
+  if ( str ) {
+    return str;
+  } else if ( quoted ) {
+    return quoted.value;
+  }
+}
+
+function _fragmentParamAlts( label, pAlts, replacer ) {
   const r = handle( pAlts, {
-    'label': ( lbl ) => lbl,
-    'sExpression': ( expr ) => strFragments( headAltsHandler, expr, replacer ),
-    'quotedParamsMap': ( o ) => _fragmentParamsObj( headAltsHandler, o, replacer, true ),
-    'unquotedParamsMap': ( o ) => _fragmentParamsObj( headAltsHandler, o, replacer, false ),
+    'label': _processLabel,
+    'sExpression': ( expr ) => _strFragments( label, expr, replacer ),
+    'quotedParamsMap': ( o ) => _fragmentParamsObj( o, replacer, false ),
+    'unquotedParamsMap': ( o ) => _fragmentParamsObj( o, replacer, false ),
     'optionsObj': ( o ) => stringifyWithFnName( o ),
     'recursive': ( { expression } ) => [
       '<recursive>: ',
       humanReadable( expression )
     ]
-  }, () => {
+  }, ( e ) => {
+    console.error( e );
     throw '!s';
   } );
   return r;
 }
 
-function _fragmentParamsObj( headAltsHandler, pObj, replacer, quote ) {
+function _fragmentParamsObj( pObj, replacer ) {
   var r = [ '{', INDENT_IN, NEW_LINE, ];
   let body = [];
   for ( let label in pObj ) {
     if ( pObj.hasOwnProperty( label ) ) {
       let item = [];
-      item.push( quote ? `"${label}": ` : `<${label}>: ` );
+      item.push( label );
       var r1 = handle( pObj[ label ], {
         'keyList': ( list ) => {
           return [ '[ ' ].concat(
@@ -164,7 +227,7 @@ function _fragmentParamsObj( headAltsHandler, pObj, replacer, quote ) {
             .concat( ' ]' );
         },
         'singleParam': ( p ) =>
-          _fragmentParamAlts( headAltsHandler, p, replacer )
+          _fragmentParamAlts( null, p, replacer )
       }, () => {
         throw '!e';
       } );
@@ -184,7 +247,7 @@ function _describeCase( c, replacer ) {
   if ( C.isProblem( cc ) ) {
     throw '!!';
   }
-  const fragments = _strFragments( cc, replacer );
+  const fragments = _strFragments( null, cc, replacer );
   const r = fragsToStr( fragments, 0, 0 );
   return r;
 }
@@ -200,10 +263,6 @@ function _handler( alts ) {
   }, () => {
     throw '3';
   } )
-}
-
-function _strFragments( cSExpr, replacer ) {
-  return strFragments( _handler, cSExpr, replacer );
 }
 
 function _expand( currCase, pivot ) {
