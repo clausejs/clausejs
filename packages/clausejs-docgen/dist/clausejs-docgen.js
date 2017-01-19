@@ -1391,7 +1391,7 @@ var GetArgClause = (0, _core.cat)('nsPath', _utils.isNamespacePath);
 
 var GetNSFnClause = (0, _core.fclause)({
   args: GetArgClause,
-  ret: _core.ExprClause
+  ret: _utils.isClauseRef
 });
 
 var SetArgClause = (0, _core.cat)('nsPath', _utils.isNamespacePath, 'expression', ExprOrPartialRefMapClause);
@@ -1404,7 +1404,8 @@ var SetNSFnClause = (0, _core.fclause)({
 var NamespaceArgsCLause = (0, _core.or)('register', SetArgClause, 'retrieve', GetArgClause);
 
 var NamespaceFnClause = (0, _core.fclause)({
-  args: NamespaceArgsCLause
+  args: NamespaceArgsCLause,
+  ret: (0, _core.or)(_preds.isUndefined, _utils.isClauseRef)
 });
 
 var SetMetaFnClause = (0, _core.fclause)({
@@ -4821,10 +4822,16 @@ var synopsis = fclause({
   return results;
 });
 
-function strFragments(headAltsHandler, cNode, replacer) {
-  var _headAltsHandler = headAltsHandler(cNode),
-      head = _headAltsHandler.head,
-      params = _headAltsHandler.params;
+function _strFragments(label, cNode, replacer) {
+  var result = [];
+
+  if (label) {
+    result = result.concat([label, ': ']);
+  }
+
+  var _handler2 = _handler(cNode),
+      head = _handler2.head,
+      params = _handler2.params;
 
   if (!head) {
     return [];
@@ -4832,13 +4839,13 @@ function strFragments(headAltsHandler, cNode, replacer) {
   if (replacer) {
     var interceptR = replacer(head);
     if (interceptR) {
-      return interceptR;
+      return result.concat(interceptR);
     }
   }
   if (head.type === 'PRED') {
     return ['' + fnName(head.opts.predicate)];
   }
-  var label = (0, _describe.humanReadable)(head);
+  var nodeLabel = (0, _describe.humanReadable)(head);
 
   var commaedParamFrags = void 0;
   if (head.type === 'FCLAUSE') {
@@ -4852,7 +4859,7 @@ function strFragments(headAltsHandler, cNode, replacer) {
     _params$unlabelled$0$3 = _params$unlabelled$0$3 === undefined ? {} : _params$unlabelled$0$3;
     var ret = _params$unlabelled$0$3.singleParam;
 
-    return [].concat(args ? _fragmentParamAlts(headAltsHandler, args, replacer) : []).concat([' → ']).concat(ret ? _fragmentParamAlts(headAltsHandler, ret, replacer) : []);
+    return [].concat(args ? _fragmentParamAlts(null, args, replacer) : []).concat([' → ']).concat(ret ? _fragmentParamAlts(null, ret, replacer) : ['any']);
   } else if (head.type === 'CAT') {
     var labelled = params.labelled,
         unlabelled = params.unlabelled;
@@ -4862,58 +4869,88 @@ function strFragments(headAltsHandler, cNode, replacer) {
       var paramFrags = labelled.reduce(function (acc, _ref) {
         var label = _ref.label,
             item = _ref.item;
-        return acc.concat([[_processLabel(label), ': ', _fragmentParamAlts(headAltsHandler, item, replacer)]]);
+
+        var lblStr = _processLabel(label);
+        return acc.concat([[_fragmentParamAlts(lblStr, item, replacer)]]);
       }, []);
       _commaedParamFrags = (0, _describe.interpose)(paramFrags, [', ', _describe.NEW_LINE]);
     } else if (unlabelled) {
       var _paramFrags = unlabelled.map(function (_ref2) {
         var item = _ref2.item;
-        return _fragmentParamAlts(headAltsHandler, item, replacer);
+        return _fragmentParamAlts(null, item, replacer);
       });
       _commaedParamFrags = (0, _describe.interpose)(_paramFrags, [', ', _describe.NEW_LINE]);
     }
-    return ['('].concat(_commaedParamFrags).concat([')']);
+    return result.concat(['(']).concat(_commaedParamFrags).concat([')']);
+  } else if (head.type === 'OR') {
+    var _labelled = params.labelled,
+        _unlabelled = params.unlabelled;
+
+    var _commaedParamFrags2 = [];
+    if (_labelled) {
+      var _paramFrags2 = _labelled.reduce(function (acc, _ref3) {
+        var item = _ref3.item;
+
+        return acc.concat([[_fragmentParamAlts(null, item, replacer)]]);
+      }, []);
+      _commaedParamFrags2 = (0, _describe.interpose)(_paramFrags2, [' | ', _describe.NEW_LINE]);
+    } else if (_unlabelled) {
+      var _paramFrags3 = _unlabelled.map(function (_ref4) {
+        var item = _ref4.item;
+        return _fragmentParamAlts(null, item, replacer);
+      });
+      _commaedParamFrags2 = (0, _describe.interpose)(_paramFrags3, [' | ', _describe.NEW_LINE]);
+    }
+    return result.concat(['{']).concat(_commaedParamFrags2).concat(['}']);
   } else if (head.type === 'Z_OR_M') {
     var _params$unlabelled2 = _slicedToArray(params.unlabelled, 1),
         item = _params$unlabelled2[0].item;
 
-    var processed = _fragmentParamAlts(headAltsHandler, item, replacer);
-    return ['{', processed, '}'].concat('*');
+    var processed = _fragmentParamAlts(null, item, replacer);
+    return ['('].concat(result).concat([processed, ')']).concat('*');
   } else if (head.type === 'O_OR_M') {
     var _params$unlabelled3 = _slicedToArray(params.unlabelled, 1),
         _item = _params$unlabelled3[0].item;
 
-    var _processed = _fragmentParamAlts(headAltsHandler, _item, replacer);
-    return ['{', _processed, '}'].concat('+');
+    var _processed = _fragmentParamAlts(null, _item, replacer);
+    return ['('].concat(result).concat([_processed, ')']).concat('+');
   } else if (head.type === 'Z_OR_O') {
     var _params$unlabelled4 = _slicedToArray(params.unlabelled, 1),
         _item2 = _params$unlabelled4[0].item;
 
-    var _processed2 = _fragmentParamAlts(headAltsHandler, _item2, replacer);
-    return ['{', _processed2, '}'].concat('?');
+    var _processed2 = _fragmentParamAlts(null, _item2, replacer);
+    return ['('].concat(result).concat([_processed2, ')']).concat('?');
+  } else if (head.type === 'COLL_OF') {
+    var _params$unlabelled5 = _slicedToArray(params.unlabelled, 1),
+        _item3 = _params$unlabelled5[0].item;
+
+    var _processed3 = _fragmentParamAlts(null, _item3, replacer);
+    return ['['].concat(result).concat([_processed3, ']*']);
+  } else if (head.type === 'ANY') {
+    return result.concat(['any']);
   }
 
   if (params) {
-    var _labelled = params.labelled,
-        _unlabelled = params.unlabelled,
+    var _labelled2 = params.labelled,
+        _unlabelled2 = params.unlabelled,
         keyList = params.keyList;
 
-    if (_labelled) {
-      var _paramFrags2 = _labelled.reduce(function (acc, _ref3) {
-        var label = _ref3.label,
-            item = _ref3.item;
-        return acc.concat([[_processLabel(label), ', ', _fragmentParamAlts(headAltsHandler, item, replacer)]]);
+    if (_labelled2) {
+      var _paramFrags4 = _labelled2.reduce(function (acc, _ref5) {
+        var label = _ref5.label,
+            item = _ref5.item;
+        return acc.concat([[_processLabel(label), ', ', _fragmentParamAlts(null, item, replacer)]]);
       }, []);
-      commaedParamFrags = (0, _describe.interpose)(_paramFrags2, [', ', _describe.NEW_LINE]);
-    } else if (_unlabelled) {
-      var _paramFrags3 = _unlabelled.map(function (_ref4) {
-        var item = _ref4.item;
-        return _fragmentParamAlts(headAltsHandler, item, replacer);
+      commaedParamFrags = (0, _describe.interpose)(_paramFrags4, [', ', _describe.NEW_LINE]);
+    } else if (_unlabelled2) {
+      var _paramFrags5 = _unlabelled2.map(function (_ref6) {
+        var item = _ref6.item;
+        return _fragmentParamAlts(null, item, replacer);
       });
-      commaedParamFrags = (0, _describe.interpose)(_paramFrags3, [', ', _describe.NEW_LINE]);
+      commaedParamFrags = (0, _describe.interpose)(_paramFrags5, [', ', _describe.NEW_LINE]);
     } else if (keyList) {
-      var _paramFrags4 = keyList;
-      commaedParamFrags = (0, _describe.interpose)(_paramFrags4, [', ']);
+      var _paramFrags6 = keyList;
+      commaedParamFrags = (0, _describe.interpose)(_paramFrags6, [', ']);
     } else {
       // console.error( params );
       // throw '!z';
@@ -4923,12 +4960,12 @@ function strFragments(headAltsHandler, cNode, replacer) {
     commaedParamFrags = [];
   }
 
-  return [label, '('].concat(commaedParamFrags.length > 1 ? [_describe.INDENT_IN, _describe.NEW_LINE] : [commaedParamFrags.length === 0 ? '' : ' ']).concat(commaedParamFrags).concat(commaedParamFrags.length > 1 ? [_describe.INDENT_OUT, _describe.NEW_LINE] : [commaedParamFrags.length === 0 ? '' : ' ']).concat([')']);
+  return [nodeLabel, '('].concat(commaedParamFrags.length > 1 ? [_describe.INDENT_IN, _describe.NEW_LINE] : [commaedParamFrags.length === 0 ? '' : ' ']).concat(commaedParamFrags).concat(commaedParamFrags.length > 1 ? [_describe.INDENT_OUT, _describe.NEW_LINE] : [commaedParamFrags.length === 0 ? '' : ' ']).concat([')']);
 }
 
-function _processLabel(_ref5) {
-  var str = _ref5.str,
-      quoted = _ref5.quoted;
+function _processLabel(_ref7) {
+  var str = _ref7.str,
+      quoted = _ref7.quoted;
 
   if (str) {
     return str;
@@ -4937,41 +4974,33 @@ function _processLabel(_ref5) {
   }
 }
 
-function _fragmentParamAlts(headAltsHandler, pAlts, replacer) {
+function _fragmentParamAlts(label, pAlts, replacer) {
   var r = handle(pAlts, {
-    'label': function label(_ref6) {
-      var str = _ref6.str,
-          _label = _ref6.label;
-
-      if (str) {
-        return str;
-      } else if (_label) {
-        return '"' + _label.value + '"';
-      }
-    },
+    'label': _processLabel,
     'sExpression': function sExpression(expr) {
-      return strFragments(headAltsHandler, expr, replacer);
+      return _strFragments(label, expr, replacer);
     },
     'quotedParamsMap': function quotedParamsMap(o) {
-      return _fragmentParamsObj(headAltsHandler, o, replacer, false);
+      return _fragmentParamsObj(o, replacer, false);
     },
     'unquotedParamsMap': function unquotedParamsMap(o) {
-      return _fragmentParamsObj(headAltsHandler, o, replacer, false);
+      return _fragmentParamsObj(o, replacer, false);
     },
     'optionsObj': function optionsObj(o) {
       return stringifyWithFnName(o);
     },
-    'recursive': function recursive(_ref7) {
-      var expression = _ref7.expression;
+    'recursive': function recursive(_ref8) {
+      var expression = _ref8.expression;
       return ['<recursive>: ', (0, _describe.humanReadable)(expression)];
     }
-  }, function () {
+  }, function (e) {
+    console.error(e);
     throw '!s';
   });
   return r;
 }
 
-function _fragmentParamsObj(headAltsHandler, pObj, replacer) {
+function _fragmentParamsObj(pObj, replacer) {
   var r = ['{', _describe.INDENT_IN, _describe.NEW_LINE];
   var body = [];
   for (var label in pObj) {
@@ -4985,7 +5014,7 @@ function _fragmentParamsObj(headAltsHandler, pObj, replacer) {
           }), [', '])).concat(' ]');
         },
         'singleParam': function singleParam(p) {
-          return _fragmentParamAlts(headAltsHandler, p, replacer);
+          return _fragmentParamAlts(null, p, replacer);
         }
       }, function () {
         throw '!e';
@@ -5006,7 +5035,7 @@ function _describeCase(c, replacer) {
   if (C.isProblem(cc)) {
     throw '!!';
   }
-  var fragments = _strFragments(cc, replacer);
+  var fragments = _strFragments(null, cc, replacer);
   var r = (0, _describe.fragsToStr)(fragments, 0, 0);
   return r;
 }
@@ -5019,8 +5048,8 @@ function _handler(alts) {
     'expression': function expression(e) {
       return { head: clauseFromAlts(e), params: params };
     },
-    'altNode': function altNode(_ref8) {
-      var enclosed = _ref8.enclosed;
+    'altNode': function altNode(_ref9) {
+      var enclosed = _ref9.enclosed;
       return handle(enclosed, {
         'sExpression': _handler
       }, function () {});
@@ -5028,10 +5057,6 @@ function _handler(alts) {
   }, function () {
     throw '3';
   });
-}
-
-function _strFragments(cSExpr, replacer) {
-  return strFragments(_handler, cSExpr, replacer);
 }
 
 function _expand(currCase, pivot) {
@@ -5139,9 +5164,9 @@ function _expand(currCase, pivot) {
 
 function _makeAlts(pivot, params) {
   if (pivot.opts.named) {
-    return pivot.exprs.map(function (_ref9, idx) {
-      var name = _ref9.name,
-          expr = _ref9.expr;
+    return pivot.exprs.map(function (_ref10, idx) {
+      var name = _ref10.name,
+          expr = _ref10.expr;
       return [new AltHeadNode(name, pivot, params[idx * 2 + 1])];
     });
   } else {
@@ -5168,43 +5193,58 @@ function _makeAltCaseMap(item, map, key) {
   return r;
 }
 
-function _fold(reducer, _ref10, init, replacer) {
-  var sExpression = _ref10.sExpression,
-      quotedParamsMap = _ref10.quotedParamsMap,
-      unquotedParamsMap = _ref10.unquotedParamsMap;
+function _fold(reducer, _ref11, init, replacer, inFclause) {
+  var sExpression = _ref11.sExpression,
+      quotedParamsMap = _ref11.quotedParamsMap,
+      unquotedParamsMap = _ref11.unquotedParamsMap;
 
   var r = init;
 
   if (sExpression) {
-    var headAlts = sExpression.head,
-        _sExpression$params = sExpression.params;
-    _sExpression$params = _sExpression$params === undefined ? {} : _sExpression$params;
-    var labelled = _sExpression$params.labelled,
-        unlabelled = _sExpression$params.unlabelled;
-
-    var head = clauseFromAlts(headAlts);
     var replaced;
-    if (replacer) {
-      replaced = replacer(head);
-      if (replaced) {
-        return r;
-      }
-    }
-    r = reducer(r, head);
 
-    var items = labelled || unlabelled || [];
-    r = items.reduce(function (acc, _ref11) {
-      var item = _ref11.item;
-      return _fold(reducer, item, acc, replacer);
-    }, r);
+    var _ret5 = function () {
+      var headAlts = sExpression.head,
+          _sExpression$params = sExpression.params;
+      _sExpression$params = _sExpression$params === undefined ? {} : _sExpression$params;
+      var labelled = _sExpression$params.labelled,
+          unlabelled = _sExpression$params.unlabelled;
+
+      var head = clauseFromAlts(headAlts);
+
+      if (replacer) {
+        replaced = replacer(head);
+        if (replaced) {
+          return {
+            v: r
+          };
+        }
+      }
+      r = reducer(r, head);
+
+      var items = labelled || unlabelled || [];
+      r = items.reduce(function (acc, _ref12) {
+        var item = _ref12.item;
+
+        if (head.type === 'FCLAUSE') {
+          return _fold(reducer, item, acc, replacer, true);
+        } else {
+          return _fold(reducer, item, acc, replacer);
+        }
+      }, r);
+    }();
+
+    if ((typeof _ret5 === 'undefined' ? 'undefined' : _typeof(_ret5)) === "object") return _ret5.v;
   } else if (quotedParamsMap || unquotedParamsMap) {
     var m = quotedParamsMap || unquotedParamsMap;
     for (var key in m) {
       if (m.hasOwnProperty(key)) {
-        var singleParam = m[key].singleParam;
+        if (!(inFclause && unquotedParamsMap && key === 'ret')) {
+          var singleParam = m[key].singleParam;
 
-        if (singleParam) {
-          r = _fold(reducer, singleParam, r, replacer);
+          if (singleParam) {
+            r = _fold(reducer, singleParam, r, replacer, inFclause);
+          }
         }
       }
     }
@@ -5292,9 +5332,9 @@ var _deref2 = _interopRequireDefault(_deref);
 
 var _resolve = __webpack_require__(43);
 
-var _synopsis = __webpack_require__(84);
+var _syntax = __webpack_require__(84);
 
-var _synopsis2 = _interopRequireDefault(_synopsis);
+var _syntax2 = _interopRequireDefault(_syntax);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5703,7 +5743,7 @@ function _genFclause(globalReg, exprName, clause, path) {
     frags.push([null, comment]);
   }
   if (argsClause) {
-    frags.push(['Syntax', '<ul>\n        ' + (0, _synopsis2.default)(clause, 20, _refExprFn(globalReg, path)).map(function (s) {
+    frags.push(['Syntax', '<ul>\n        ' + (0, _syntax2.default)(clause, 20, _refExprFn(globalReg, path)).map(function (s) {
       return '<li>' + unescape(_encode(s)) + '</li>';
     }).join('') + '\n      </ul>']);
   }
@@ -5738,7 +5778,8 @@ function _genFclause(globalReg, exprName, clause, path) {
 var fns = {
   gen: gen,
   genForExpression: genForExpression,
-  genCot: genCot
+  genCot: genCot,
+  syntax: _syntax2.default
 };
 module.exports = fns;
 module.exports.default = fns;

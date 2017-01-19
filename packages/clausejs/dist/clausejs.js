@@ -1391,7 +1391,7 @@ var GetArgClause = (0, _core.cat)('nsPath', _utils.isNamespacePath);
 
 var GetNSFnClause = (0, _core.fclause)({
   args: GetArgClause,
-  ret: _core.ExprClause
+  ret: _utils.isClauseRef
 });
 
 var SetArgClause = (0, _core.cat)('nsPath', _utils.isNamespacePath, 'expression', ExprOrPartialRefMapClause);
@@ -1404,7 +1404,8 @@ var SetNSFnClause = (0, _core.fclause)({
 var NamespaceArgsCLause = (0, _core.or)('register', SetArgClause, 'retrieve', GetArgClause);
 
 var NamespaceFnClause = (0, _core.fclause)({
-  args: NamespaceArgsCLause
+  args: NamespaceArgsCLause,
+  ret: (0, _core.or)(_preds.isUndefined, _utils.isClauseRef)
 });
 
 var SetMetaFnClause = (0, _core.fclause)({

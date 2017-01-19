@@ -1,6 +1,6 @@
-import C, { fclause, cat, or, shape, isStr, isBool,
+import C, { fclause, cat, or, shape, isStr, isBool, isObj,
   isFclause, isClauseName,
-  isArray, isFn, and, isNum, isNull, isUndefined, isProblem } from '../';
+  isArray, isFn, and, isNum, isNull, isUndefined, isProblem, isPlainObj } from '../';
 import { any, ExprClause, CatFnClause, OrFnClause, AndFnClause,
   CollOfClause, collOf, ClauseClause, DelayedClauseClause, ClauseRefClause,
   ZeroOrMoreFnClause, OneOrMoreFnClause, ZeroOrOneFnClause } from '../core';
@@ -41,7 +41,7 @@ const SingleArgPredClause = () => fclause( {
 } );
 
 const IsUuidFnClause = fclause( {
-  args: cat( 'x', or( isStr, any ) ),
+  args: cat( 'x', isStr ),
   ret: isBool,
 } );
 
@@ -180,5 +180,12 @@ C( 'clause.types/NamespaceObj', NamespaceObjClause );
 C( 'clause.types/NamespacePath', isNamespacePath );
 C( 'clause.types/ClauseLabel', isClauseName );
 C( 'clause.types/SExpression', SExpressionClause );
+C( 'clause.types/String', isStr );
+C( 'clause.types/Bool', isBool );
+C( 'clause.types/Number', isNum );
+C( 'clause.types/Object', isObj );
+C( 'clause.types/PlainObject', isPlainObj );
+C( 'clause.types/Undefined', isUndefined );
+C( 'clause.types/Null', isNull );
 
 export default C.getRegistry();

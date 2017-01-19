@@ -3,11 +3,11 @@ import { getMeta } from '../namespace';
 import fnName from '../utils/fnName';
 import isPred from '../utils/isPred';
 import isClause from '../utils/isClause';
-import { isStr, isObj } from '../preds';
+import { isStr } from '../preds';
 import describe from '../utils/describe';
 import deref from '../utils/deref';
 import { resolve, getDefList } from '../namespace/resolve';
-import syntax from './synopsis';
+import syntax from './syntax';
 const clauseFromAlts = require( '../utils/clauseFromAlts' );
 
 
@@ -608,6 +608,7 @@ var fns = {
   gen,
   genForExpression,
   genCot,
+  syntax,
 };
 module.exports = fns;
 module.exports.default = fns;

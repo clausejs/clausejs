@@ -16,7 +16,7 @@ const GetArgClause = cat( 'nsPath', isNamespacePath );
 
 const GetNSFnClause = fclause( {
   args: GetArgClause,
-  ret: ExprClause,
+  ret: isClauseRef,
 } );
 
 const SetArgClause = cat(
@@ -34,7 +34,8 @@ const NamespaceArgsCLause = or(
 );
 
 const NamespaceFnClause = fclause( {
-  args: NamespaceArgsCLause
+  args: NamespaceArgsCLause,
+  ret: or( isUndefined, isClauseRef )
 } );
 
 const SetMetaFnClause = fclause( {

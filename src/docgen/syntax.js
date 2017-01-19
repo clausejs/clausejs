@@ -75,6 +75,11 @@ var synopsis = fclause( {
 
 function _strFragments(
    label, cNode, replacer ) {
+  let result = [];
+
+  if ( label ) {
+    result = result.concat( [ label, ': ' ] );
+  }
   const { head, params } = _handler( cNode );
   if ( !head ) {
     return [];
@@ -82,7 +87,7 @@ function _strFragments(
   if ( replacer ) {
     let interceptR = replacer( head );
     if ( interceptR ) {
-      return interceptR;
+      return result.concat( interceptR );
     }
   }
   if ( head.type === 'PRED' ) {
@@ -120,31 +125,58 @@ function _strFragments(
         _fragmentParamAlts( null, item, replacer ) );
       commaedParamFrags = interpose( paramFrags, [ ', ', NEW_LINE ] );
     }
-    return [ '(' ]
+    return result.concat( [ '(' ] )
         .concat( commaedParamFrags )
         .concat( [ ')' ] );
+  } else if ( head.type === 'OR' ) {
+    let { labelled, unlabelled } = params;
+    let commaedParamFrags = [];
+    if ( labelled ) {
+      let paramFrags = labelled.reduce(
+        ( acc, { item } ) => {
+          return acc.concat( [
+            [ _fragmentParamAlts( null, item, replacer ) ],
+          ] )
+        },
+        []
+     );
+      commaedParamFrags = interpose( paramFrags, [ ' | ', NEW_LINE ] )
+    } else if ( unlabelled ) {
+      let paramFrags = unlabelled.map( ( { item } ) =>
+        _fragmentParamAlts( null, item, replacer ) );
+      commaedParamFrags = interpose( paramFrags, [ ' | ', NEW_LINE ] );
+    }
+    return result.concat( [ '{' ] )
+        .concat( commaedParamFrags )
+        .concat( [ '}' ] );
   } else if ( head.type === 'Z_OR_M' ) {
     let { unlabelled: [ { item } ] } = params;
     let processed = _fragmentParamAlts( null, item, replacer );
-    return [ '{', processed, '}' ]
+    return [ '(' ].concat( result )
+      .concat( [ processed, ')' ] )
       .concat( '*' );
   } else if ( head.type === 'O_OR_M' ) {
     let { unlabelled: [ { item } ] } = params;
     let processed = _fragmentParamAlts( null, item, replacer );
-    return [ '{', processed, '}' ]
+    return [ '(' ]
+      .concat( result )
+      .concat( [ processed, ')' ] )
       .concat( '+' );
   } else if ( head.type === 'Z_OR_O' ) {
     let { unlabelled: [ { item } ] } = params;
     let processed = _fragmentParamAlts( null, item, replacer );
-    return [ '{', processed, '}' ]
+    return [ '(' ]
+      .concat( result )
+      .concat( [ processed, ')' ] )
       .concat( '?' );
   } else if ( head.type === 'COLL_OF' ) {
     let { unlabelled: [ { item } ] } = params;
     let processed = _fragmentParamAlts( null, item, replacer );
-    return [ '[', processed, ']' ]
-      .concat( '*' );
+    return [ '[' ]
+      .concat( result )
+      .concat( [ processed, ']*' ] );
   } else if ( head.type === 'ANY' ) {
-    return [ 'any' ];
+    return result.concat( [ 'any' ] );
   }
 
   if ( params ) {
@@ -352,7 +384,8 @@ function _makeAltCaseMap( item, map, key ) {
 function _fold(
   reducer, { sExpression, quotedParamsMap, unquotedParamsMap },
   init,
-  replacer ) {
+  replacer,
+  inFclause ) {
   let r = init;
 
   if ( sExpression ) {
@@ -369,15 +402,23 @@ function _fold(
 
     const items = labelled || unlabelled || [];
     r = items.reduce(
-    ( acc, { item } ) => _fold( reducer, item, acc, replacer )
+    ( acc, { item } ) => {
+      if ( head.type === 'FCLAUSE' ) {
+        return _fold( reducer, item, acc, replacer, true )
+      } else {
+        return _fold( reducer, item, acc, replacer )
+      }
+    }
   , r );
   } else if ( quotedParamsMap || unquotedParamsMap ) {
     let m = quotedParamsMap || unquotedParamsMap;
     for ( let key in m ) {
       if ( m.hasOwnProperty( key ) ) {
-        let { singleParam } = m[ key ];
-        if ( singleParam ) {
-          r = _fold( reducer, singleParam, r, replacer );
+        if ( !( inFclause && unquotedParamsMap && key === 'ret' ) ) {
+          let { singleParam } = m[ key ];
+          if ( singleParam ) {
+            r = _fold( reducer, singleParam, r, replacer, inFclause );
+          }
         }
       }
     }
