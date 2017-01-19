@@ -88,7 +88,10 @@ function strFragments(
   if ( head.type === 'PRED' ) {
     return [ `${fnName( head.opts.predicate )}` ];
   }
-  const label = humanReadable( head );
+  let label = humanReadable( head );
+  if ( head.type === 'FCLAUSE' ) {
+    label = 'fn';
+  }
   let commaedParamFrags;
 
   if ( params ) {
@@ -288,18 +291,26 @@ function _makeAltCaseMap( item, map, key ) {
 }
 
 function _fold(
-  reducer, { sExpression, quotedParamsMap, unquotedParamsMap }, init ) {
+  reducer, { sExpression, quotedParamsMap, unquotedParamsMap },
+  init,
+  replacer ) {
   let r = init;
 
   if ( sExpression ) {
     let { head: headAlts, params: { labelled, unlabelled } = {} } = sExpression;
     const head = clauseFromAlts( headAlts );
-
+    var replaced;
+    if ( replacer ) {
+      replaced = replacer( head );
+      if ( replaced ) {
+        return r;
+      }
+    }
     r = reducer( r, head );
 
     const items = labelled || unlabelled || [];
     r = items.reduce(
-    ( acc, { item } ) => _fold( reducer, item, acc )
+    ( acc, { item } ) => _fold( reducer, item, acc, replacer )
   , r );
   } else if ( quotedParamsMap || unquotedParamsMap ) {
     let m = quotedParamsMap || unquotedParamsMap;
@@ -307,7 +318,7 @@ function _fold(
       if ( m.hasOwnProperty( key ) ) {
         let { singleParam } = m[ key ];
         if ( singleParam ) {
-          r = _fold( reducer, singleParam, r );
+          r = _fold( reducer, singleParam, r, replacer );
         }
       }
     }
@@ -318,16 +329,12 @@ function _fold(
 // A "pivot" is an "or" clause
 function _findPivots( cSExpr, replacer ) {
   return _fold( ( acc, item ) => {
-    var replaced;
-    if ( replacer ) {
-      replaced = replacer( item );
-    }
-    if ( !replaced && _isPivot( item ) ) {
+    if ( _isPivot( item ) && acc.indexOf( item ) < 0 ) {
       return acc.concat( [ item ] );
     } else {
       return acc;
     }
-  }, cSExpr, [] );
+  }, cSExpr, [], replacer );
 }
 
 function _isPivot( expr ) {

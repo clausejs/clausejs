@@ -4826,6 +4826,9 @@ function strFragments(headAltsHandler, cNode, replacer) {
     return ['' + fnName(head.opts.predicate)];
   }
   var label = (0, _describe.humanReadable)(head);
+  if (head.type === 'FCLAUSE') {
+    label = 'fn';
+  }
   var commaedParamFrags = void 0;
 
   if (params) {
@@ -5085,7 +5088,7 @@ function _makeAltCaseMap(item, map, key) {
   return r;
 }
 
-function _fold(reducer, _ref6, init) {
+function _fold(reducer, _ref6, init, replacer) {
   var sExpression = _ref6.sExpression,
       quotedParamsMap = _ref6.quotedParamsMap,
       unquotedParamsMap = _ref6.unquotedParamsMap;
@@ -5100,13 +5103,19 @@ function _fold(reducer, _ref6, init) {
         unlabelled = _sExpression$params.unlabelled;
 
     var head = clauseFromAlts(headAlts);
-
+    var replaced;
+    if (replacer) {
+      replaced = replacer(head);
+      if (replaced) {
+        return r;
+      }
+    }
     r = reducer(r, head);
 
     var items = labelled || unlabelled || [];
     r = items.reduce(function (acc, _ref7) {
       var item = _ref7.item;
-      return _fold(reducer, item, acc);
+      return _fold(reducer, item, acc, replacer);
     }, r);
   } else if (quotedParamsMap || unquotedParamsMap) {
     var m = quotedParamsMap || unquotedParamsMap;
@@ -5115,7 +5124,7 @@ function _fold(reducer, _ref6, init) {
         var singleParam = m[key].singleParam;
 
         if (singleParam) {
-          r = _fold(reducer, singleParam, r);
+          r = _fold(reducer, singleParam, r, replacer);
         }
       }
     }
@@ -5126,16 +5135,12 @@ function _fold(reducer, _ref6, init) {
 // A "pivot" is an "or" clause
 function _findPivots(cSExpr, replacer) {
   return _fold(function (acc, item) {
-    var replaced;
-    if (replacer) {
-      replaced = replacer(item);
-    }
-    if (!replaced && _isPivot(item)) {
+    if (_isPivot(item) && acc.indexOf(item) < 0) {
       return acc.concat([item]);
     } else {
       return acc;
     }
-  }, cSExpr, []);
+  }, cSExpr, [], replacer);
 }
 
 function _isPivot(expr) {
