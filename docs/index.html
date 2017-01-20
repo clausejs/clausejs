@@ -173,6 +173,8 @@
           </li><li>
             <a href="#clause.utils/sExpression" data-path="clause.utils/sExpression">sExpression()</a>
           </li><li>
+            <a href="#clause.utils/match" data-path="clause.utils/match">match()</a>
+          </li><li>
             <a href="#clause.utils/isProblem" data-path="clause.utils/isProblem">isProblem()</a>
           </li>
       </ul>
@@ -5962,6 +5964,170 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <div class="card-block">
       A value of type
       <a href="#clause.types/SExpression" data-path="clause.types/SExpression">clause.types/SExpression</a>
+    </div>
+  
+    </fieldset>
+    
+  </div>
+</dd>
+    </dl>
+  
+        </div>
+      
+
+    <a name="clause.utils/match"></a>
+    
+        <div class="card">
+          <div class="card-header inline-headers">
+            
+      <h6>match()</h6>&#xA0;
+        <span class="tag tag-primary">
+          function
+        </span>
+      
+          </div>
+        
+    <dl class="card-block">
+    <dt>Syntax</dt><dd><ul>
+        <li>( keyValMap: <a href="#clause.types/Object" data-path="clause.types/Object">Object</a>, handlers: &lt; <a href="#clause.types/String" data-path="clause.types/String">String</a>, ( any ) &#x2192; any &gt; ) &#x2192; any</li>
+      </ul></dd>
+<dt>Clause Description</dt><dd>
+    <blockquote class="blockquote">
+      <small>
+        <em class="text-muted">
+          
+    <pre>fclause( {
+  &lt;args&gt;: cat(
+    &quot;keyValMap&quot;, <a href="#clause.types/Object" data-path="clause.types/Object">Object</a>, 
+    &quot;handlers&quot;, mapOf( {
+      &lt;key&gt;: <a href="#clause.types/String" data-path="clause.types/String">String</a>, 
+      &lt;val&gt;: fclause( {
+        &lt;args&gt;: cat( &quot;val&quot;, any ), 
+        &lt;ret&gt;: any
+      } )
+    } )
+  )
+} )</pre>
+  
+        </em>
+      </small>
+    </blockquote>
+  </dd>
+<dt>Argument Clause Graph</dt><dd><p>
+     <button class="btn btn-sm btn-info" type="button" data-toggle="collapse" data-target="#match-args-graph" aria-expanded="false" aria-controls="collapseExample">
+      Show Graph &#xBB;
+    </button>
+  </p>
+  <div class="collapse" id="match-args-graph">
+    
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="clause-type">
+      
+    <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
+    &lt;pre&gt;cat(
+  &quot;keyValMap&quot;, &lt;a href=&quot;#clause.types/Object&quot; data-path=&quot;clause.types/Object&quot;&gt;Object&lt;/a&gt;, 
+  &quot;handlers&quot;, mapOf( {
+    &amp;lt;key&amp;gt;: &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt;, 
+    &amp;lt;val&amp;gt;: fclause( {
+      &amp;lt;args&amp;gt;: cat( &quot;val&quot;, any ), 
+      &amp;lt;ret&amp;gt;: any
+    } )
+  } )
+)&lt;/pre&gt;
+  " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
+      [cat] a sequence of
+    </span>
+  
+    </legend>
+    
+    <div class="card-block">
+      <p class="card-title">
+        Should be <em>an ordered list</em> of the following:
+      </p>
+    </div>
+    <div class="list-group list-group-flush list-for-cat">
+      
+        <fieldset class="list-group-item card card-outline-info">
+          <legend class="clause-type">
+          
+            <span class="tag tag-default">Part 1</span>
+            <span class="lead font-italic text-primary">
+              &#x201C;keyValMap&#x201D;</span>          
+          
+          </legend>
+          <div class="row">
+            <div class="col-md-12">
+              
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              
+    
+    
+    <fieldset class="card card-outline-primary">
+    <legend class="clause-type">
+      <span class="tag tag-info">[clause]</span>
+    </legend>
+    
+    <div class="card-block">
+      A value of type
+      <a href="#clause.types/Object" data-path="clause.types/Object">clause.types/Object</a>
+    </div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </fieldset>
+     
+        <fieldset class="list-group-item card card-outline-info">
+          <legend class="clause-type">
+          
+            <span class="tag tag-default">Part 2</span>
+            <span class="lead font-italic text-primary">
+              &#x201C;handlers&#x201D;</span>          
+          
+          </legend>
+          <div class="row">
+            <div class="col-md-12">
+              
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="clause-type">
+      
+    <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
+    &lt;pre&gt;mapOf( {
+  &amp;lt;key&amp;gt;: &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt;, 
+  &amp;lt;val&amp;gt;: fclause( {
+    &amp;lt;args&amp;gt;: cat( &quot;val&quot;, any ), 
+    &amp;lt;ret&amp;gt;: any
+  } )
+} )&lt;/pre&gt;
+  " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
+      <span class="tag tag-info">[map_of]</span>
+    </span>
+  
+    </legend>
+    
+    <div class="card-block">
+      
+    </div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </fieldset>
+    
     </div>
   
     </fieldset>

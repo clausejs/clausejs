@@ -3,7 +3,7 @@ var clauseFromAlts = require( './clauseFromAlts' );
 var oAssign = require( '../utils/objectAssign' );
 const { wall, any, zeroOrMore, and, cat, or, ExprClause, mapOf, maybe } = require( '../core' );
 const delayed = require( './delayed' );
-const handle = require( './handle' );
+const match = require( './match' );
 const coerceIntoClause = require( './coerceIntoClause' );
 const { isStr, isPlainObj, instanceOf } = require( '../preds' );
 
@@ -125,7 +125,7 @@ function _fieldDefToFrags( repo, { fieldDefs, keyList } ) {
     let r = new QuotedParamsMap();
     for ( let key in fieldDefs ) {
       if ( fieldDefs.hasOwnProperty( key ) ) {
-        let val = handle( fieldDefs[ key ], {
+        let val = match( fieldDefs[ key ], {
           'keyValExprPair': ( pair ) => _handleKeyValExprPair( repo, pair ),
           'valExpressionOnly': ( expr ) => _createSExpr( repo, clauseFromAlts( expr ) )
         }, () => {

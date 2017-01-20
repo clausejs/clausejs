@@ -1,4 +1,4 @@
-import C, { fclause, cat, or, shape, isStr, isBool, isObj,
+import C, { fclause, cat, or, shape, isStr, mapOf, isBool, isObj,
   isFclause, isClauseName,
   isArray, isFn, and, isNum, isNull, isUndefined, isProblem, isPlainObj } from '../';
 import { any, ExprClause, CatFnClause, OrFnClause, AndFnClause,
@@ -33,6 +33,16 @@ const DescribeFnClause = fclause( {
 const SExpressionFnClause = fclause( {
   args: cat( 'expression', C( 'clause.types/Expression' ) ),
   ret: SExpressionClause
+} );
+
+const MatchFnClause = fclause( { 
+  args: cat( 
+    'keyValMap', isObj, 
+    'handlers', mapOf(isStr, fclause( {
+      args: cat('val', any),
+      ret: any,
+    } ) )
+  )
 } );
 
 const SingleArgPredClause = () => fclause( {
@@ -142,6 +152,7 @@ C( 'clause.utils/enforce', EnforceFnClause );
 C( 'clause.utils/conform', ConformFnClause );
 C( 'clause.utils/describe', DescribeFnClause );
 C( 'clause.utils/sExpression', SExpressionFnClause );
+C( 'clause.utils/match', MatchFnClause );
 C( 'clause.utils/isProblem', SingleArgPredClause() );
 
 C( 'clause.preds/not', NotFnClause );

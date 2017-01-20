@@ -2,7 +2,7 @@ import sExpression, { SExpressionClause } from './sExpression';
 const humanReadable = require( './humanReadable' );
 const isStr = require( '../preds/isStr' );
 const isProblem = require( './isProblem' );
-const handle = require( './handle' );
+const match = require( './match' );
 const clauseFromAlts = require( './clauseFromAlts' );
 const fnName = require( './fnName' );
 const stringifyWithFnName = require( '../utils/stringifyWithFnName' );
@@ -108,7 +108,7 @@ function isSpecial( x ) {
 }
 
 function _fragmentParamAlts( headAltsHandler, pAlts, replacer ) {
-  const r = handle( pAlts, {
+  const r = match( pAlts, {
     'label': _processLabel,
     'sExpression': ( expr ) => strFragments( headAltsHandler, expr, replacer ),
     'quotedParamsMap': ( o ) => _fragmentParamsObj( headAltsHandler, o, replacer, true ),
@@ -139,7 +139,7 @@ function _fragmentParamsObj( headAltsHandler, pObj, replacer, quote ) {
     if ( pObj.hasOwnProperty( label ) ) {
       let item = [];
       item.push( quote ? `"${label}": ` : `<${label}>: ` );
-      var r1 = handle( pObj[ label ], {
+      var r1 = match( pObj[ label ], {
         'keyList': ( list ) => {
           return [ '[ ' ].concat(
             interpose( list.map( ( i ) => `"${i}"` ), [ ', ' ] ) )
