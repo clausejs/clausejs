@@ -738,9 +738,31 @@ ref.get()</code></pre>
           </div>
         
     <dl class="card-block">
-    <dt>Syntax</dt><dd><ul>
+    <dd>Given a set of expressions or a set of label+expression pairs, returns a regex op that matches all values in an iterable. If labels are given, returns a map that groups values by these labels. Returns a Problem if no match is found.</dd>
+<dt>Syntax</dt><dd><ul>
         <li>( expressions: { ( ( name: <a href="#clause.types/ClauseLabel" data-path="clause.types/ClauseLabel">ClauseLabel</a>, ( comment: <a href="#clause.types/String" data-path="clause.types/String">String</a> )?, expr: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) )* | [ ( name: <a href="#clause.types/ClauseLabel" data-path="clause.types/ClauseLabel">ClauseLabel</a>, ( comment: <a href="#clause.types/String" data-path="clause.types/String">String</a> )?, expr: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) ]* }, ( options: <a href="#clause.types/PlainObject" data-path="clause.types/PlainObject">PlainObject</a> )? ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li><li>( ( expressions: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> )*, ( options: <a href="#clause.types/PlainObject" data-path="clause.types/PlainObject">PlainObject</a> )? ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
       </ul></dd>
+<dt>Examples</dt><dd>
+      <pre><code>var CatClause = C.cat(C.isStr, C.isNum, C.isBool);
+C.conform( CatClause, [&quot;a&quot;, 2, true] )</code></pre>
+    
+
+      <pre><code>var LabelledCatClause = C.cat(
+  &apos;first&apos;, C.isStr, 
+  &apos;second&apos;, C.isNum, 
+  &apos;third&apos;, C.isBool
+);
+C.conform( LabelledCatClause, [&quot;a&quot;, 2, true] )</code></pre>
+    
+
+      <pre><code>// equivalent to the above
+var LabelledCatClause = C.cat([
+  [ &apos;first&apos;, C.isStr ], 
+  [ &apos;second&apos;, C.isNum ], 
+  [ &apos;third&apos;, C.isBool ]
+]);
+C.conform( LabelledCatClause, [&quot;a&quot;, 2, true] )</code></pre>
+    </dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
       <small>
@@ -1105,7 +1127,6 @@ ref.get()</code></pre>
   
     </fieldset>
     
-      TODO
     </div>
   
     </fieldset>
@@ -1152,7 +1173,6 @@ ref.get()</code></pre>
   
     </fieldset>
     
-      TODO
     </div>
   
     </fieldset>
@@ -1300,7 +1320,6 @@ ref.get()</code></pre>
   
     </fieldset>
     
-      TODO
     </div>
   
     </fieldset>
@@ -1347,7 +1366,6 @@ ref.get()</code></pre>
   
     </fieldset>
     
-      TODO
     </div>
   
     </fieldset>
@@ -1414,7 +1432,6 @@ ref.get()</code></pre>
   
     </fieldset>
     
-      TODO
     </div>
   
     </fieldset>
@@ -1476,7 +1493,6 @@ ref.get()</code></pre>
   
     </fieldset>
     
-      TODO
     </div>
   
     </fieldset>
@@ -1581,9 +1597,23 @@ ref.get()</code></pre>
           </div>
         
     <dl class="card-block">
-    <dt>Syntax</dt><dd><ul>
+    <dd>Given a set of expressions or a set of label+expression pairs, returns a regex op that matches a value with either one of the expressions. If labels are given, returns a map with a single key that indicates the matching label.</dd>
+<dt>Syntax</dt><dd><ul>
         <li>( expressions: { ( ( name: <a href="#clause.types/ClauseLabel" data-path="clause.types/ClauseLabel">ClauseLabel</a>, ( comment: <a href="#clause.types/String" data-path="clause.types/String">String</a> )?, expr: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) )* | [ ( name: <a href="#clause.types/ClauseLabel" data-path="clause.types/ClauseLabel">ClauseLabel</a>, ( comment: <a href="#clause.types/String" data-path="clause.types/String">String</a> )?, expr: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) ]* }, ( options: <a href="#clause.types/PlainObject" data-path="clause.types/PlainObject">PlainObject</a> )? ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li><li>( ( expressions: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> )*, ( options: <a href="#clause.types/PlainObject" data-path="clause.types/PlainObject">PlainObject</a> )? ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
       </ul></dd>
+<dt>Examples</dt><dd>
+      <pre><code>var OrClause = C.or(C.isStr, C.isNum);
+C.conform( OrClause, &quot;a&quot; )</code></pre>
+    
+
+      <pre><code>var LabelledOrClause = C.or(&apos;option1&apos;, C.isStr, &apos;option2&apos;, C.isNum );
+C.conform( LabelledOrClause, 2 )</code></pre>
+    
+
+      <pre><code>// equivalent to the above
+var LabelledOrClause = C.or([[&apos;option1&apos;, C.isStr], [&apos;option2&apos;, C.isNum]] );
+C.conform( LabelledOrClause, 2 )</code></pre>
+    </dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
       <small>
@@ -1948,7 +1978,6 @@ ref.get()</code></pre>
   
     </fieldset>
     
-      TODO
     </div>
   
     </fieldset>
@@ -1995,7 +2024,6 @@ ref.get()</code></pre>
   
     </fieldset>
     
-      TODO
     </div>
   
     </fieldset>
@@ -2143,7 +2171,6 @@ ref.get()</code></pre>
   
     </fieldset>
     
-      TODO
     </div>
   
     </fieldset>
@@ -2190,7 +2217,6 @@ ref.get()</code></pre>
   
     </fieldset>
     
-      TODO
     </div>
   
     </fieldset>
@@ -2257,7 +2283,6 @@ ref.get()</code></pre>
   
     </fieldset>
     
-      TODO
     </div>
   
     </fieldset>
@@ -2319,7 +2344,6 @@ ref.get()</code></pre>
   
     </fieldset>
     
-      TODO
     </div>
   
     </fieldset>
@@ -2424,9 +2448,25 @@ ref.get()</code></pre>
           </div>
         
     <dl class="card-block">
-    <dt>Syntax</dt><dd><ul>
+    <dd>Given a single expression, returns a regex op that matches zero or more values in an iterable. Returns a Problem if there are no matches.</dd>
+<dt>Syntax</dt><dd><ul>
         <li>( expr: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, ( opts: <a href="#clause.types/Object" data-path="clause.types/Object">Object</a> )? ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
       </ul></dd>
+<dt>Examples</dt><dd>
+      <pre><code>var ZOMClause = C.zeroOrMore(C.isStr);
+C.conform( ZOMClause, [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;] )</code></pre>
+    
+
+      <pre><code>C.conform( ZOMClause, [] )</code></pre>
+    
+
+      <pre><code>var CombinedClause = C.cat( 
+  &quot;babbles&quot;, C.zeroOrMore(C.oneOf(&quot;foo&quot;, &quot;bar&quot;, &quot;baz&quot;)),
+  &quot;truths&quot;, C.zeroOrMore(C.isBool),
+  &quot;counts&quot;, C.zeroOrMore(C.isNatInt)
+);
+C.conform( CombinedClause, [&quot;foo&quot;, &quot;foo&quot;, &quot;bar&quot;, 2, 3 , 4] )</code></pre>
+    </dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
       <small>
@@ -2547,7 +2587,6 @@ ref.get()</code></pre>
   
     </fieldset>
     
-      TODO
     </div>
   
     </fieldset>
@@ -2593,9 +2632,25 @@ ref.get()</code></pre>
           </div>
         
     <dl class="card-block">
-    <dt>Syntax</dt><dd><ul>
+    <dd>Given a single expression, returns a regex op that matches one or more values in an iterable. Returns a Problem if there are no matches.</dd>
+<dt>Syntax</dt><dd><ul>
         <li>( expr: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, ( opts: <a href="#clause.types/Object" data-path="clause.types/Object">Object</a> )? ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
       </ul></dd>
+<dt>Examples</dt><dd>
+      <pre><code>var OOMClause = C.oneOrMore(C.equals(&quot;hello&quot;));
+C.conform( OOMClause, [ &quot;hello&quot;, &quot;hello&quot;, &quot;hello&quot; ] )</code></pre>
+    
+
+      <pre><code>C.isValid( OOMClause, [] )</code></pre>
+    
+
+      <pre><code>var CombinedClause = C.cat( 
+  &quot;babbles&quot;, C.oneOrMore(C.oneOf(&quot;foo&quot;, &quot;bar&quot;, &quot;baz&quot;)),
+  &quot;truths&quot;, C.oneOrMore(C.isBool),
+  &quot;counts&quot;, C.oneOrMore(C.isNatInt)
+);
+C.conform( CombinedClause, [&quot;foo&quot;, &quot;foo&quot;, &quot;bar&quot;, false, true, 2, 3 , 4] )</code></pre>
+    </dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
       <small>
@@ -2716,7 +2771,6 @@ ref.get()</code></pre>
   
     </fieldset>
     
-      TODO
     </div>
   
     </fieldset>
@@ -2762,9 +2816,25 @@ ref.get()</code></pre>
           </div>
         
     <dl class="card-block">
-    <dt>Syntax</dt><dd><ul>
+    <dd>Given a single expression, returns a regex op that matches zero or one values in an iterable. Returns a Problem if there are no matches.</dd>
+<dt>Syntax</dt><dd><ul>
         <li>( expr: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, ( opts: <a href="#clause.types/Object" data-path="clause.types/Object">Object</a> )? ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
       </ul></dd>
+<dt>Examples</dt><dd>
+      <pre><code>var ZOOClause = C.zeroOrOne( C.equals( &quot;hello&quot; ) );
+C.conform( ZOOClause, [ &quot;hello&quot; ] )</code></pre>
+    
+
+      <pre><code>C.conform( ZOOClause, [] )</code></pre>
+    
+
+      <pre><code>var CombinedClause = C.cat( 
+  &quot;the babble&quot;, C.zeroOrOne( C.oneOf(&quot;foo&quot;, &quot;bar&quot;, &quot;baz&quot;) ),
+  &quot;the truth&quot;, C.zeroOrOne( C.isBool ),
+  &quot;the count&quot;, C.zeroOrOne( C.isNatInt )
+);
+C.conform( CombinedClause, [&quot;foo&quot;, 4] )</code></pre>
+    </dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
       <small>
@@ -2885,7 +2955,6 @@ ref.get()</code></pre>
   
     </fieldset>
     
-      TODO
     </div>
   
     </fieldset>
@@ -2931,9 +3000,26 @@ ref.get()</code></pre>
           </div>
         
     <dl class="card-block">
-    <dt>Syntax</dt><dd><ul>
+    <dd>Given a list of expressions, returns a clause that matches a value with all the expressions. Successive conformed value propagates to the rest of the expressions.</dd>
+<dt>Syntax</dt><dd><ul>
         <li>( <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> )+ &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
       </ul></dd>
+<dt>Examples</dt><dd>
+      <pre><code>var AndClause = C.and( C.isStr, (s) =&gt; s.length &gt; 5 );
+C.conform( AndClause, &quot;abcdefgh&quot; )</code></pre>
+    
+
+      <pre><code>var PropagatingAndClause = C.and( 
+  C.cat( 
+    &quot;first&quot;, C.isStr, 
+    &quot;second&quot;, C.zeroOrMore( C.isNum )
+  ),
+  ({ second }) =&gt; second.length &gt; 4 ) 
+C.isValid( PropagatingAndClause, [ &quot;foo&quot;, 2, 3, 4, 5, 6 ] )</code></pre>
+    
+
+      <pre><code>C.isValid( PropagatingAndClause, [ &quot;foo&quot;, 2, 3 ] )</code></pre>
+    </dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
       <small>
@@ -2978,7 +3064,6 @@ ref.get()</code></pre>
   
     </fieldset>
     
-      TODO
     </div>
   
     </fieldset>
@@ -3139,7 +3224,6 @@ ref.get()</code></pre>
   
     </fieldset>
     
-      TODO
     </div>
   
     </fieldset>
@@ -3508,7 +3592,6 @@ ref.get()</code></pre>
     
     <div class="card-block">
       
-      TODO
     </div>
   
     </fieldset>
@@ -3805,7 +3888,6 @@ ref.get()</code></pre>
     
     <div class="card-block">
       
-      TODO
     </div>
   
     </fieldset>
@@ -5204,7 +5286,6 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     
-      TODO
     </div>
   
     </fieldset>
@@ -5221,7 +5302,6 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     
-      TODO
     </div>
   
     </fieldset>
@@ -5289,7 +5369,6 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     
-      TODO
     </div>
   
     </fieldset>
@@ -7424,7 +7503,6 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     
-      TODO
     </div>
   
     </fieldset>
@@ -7974,9 +8052,13 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
           </div>
         
     <dl class="card-block">
-    <dt>Syntax</dt><dd><ul>
+    <dd>Registers a clause in to global clause registry.</dd>
+<dt>Syntax</dt><dd><ul>
         <li>( nsPath: <a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">NamespacePath</a>, expression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
       </ul></dd>
+<dt>Examples</dt><dd>
+      <pre><code>C(&quot;awesomeapp/TodoItem&quot;, TodoItemClause)</code></pre>
+    </dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
       <small>
@@ -8123,9 +8205,16 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
           </div>
         
     <dl class="card-block">
-    <dt>Syntax</dt><dd><ul>
+    <dd>Gets a clause reference from global clause registry.</dd>
+<dt>Syntax</dt><dd><ul>
         <li>( nsPath: <a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">NamespacePath</a> ) &#x2192; <a href="#clause.types/ClauseReference" data-path="clause.types/ClauseReference">ClauseReference</a></li>
       </ul></dd>
+<dt>Examples</dt><dd>
+      <pre><code>C(&quot;awesomeapp/TodoItem&quot;)</code></pre>
+    
+
+      <pre><code>C(&quot;awesomeapp/TodoItem&quot;).get()</code></pre>
+    </dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
       <small>
@@ -8355,7 +8444,6 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     
-      TODO
     </div>
   
     </fieldset>
@@ -8659,7 +8747,6 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     
-      TODO
     </div>
   
     </fieldset>
@@ -8931,7 +9018,6 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     
-      TODO
     </div>
   
     </fieldset>
@@ -9464,7 +9550,6 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <div class="card-block">
       
-      TODO
     </div>
   
         </div>
@@ -10353,7 +10438,6 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <div class="card-block">
       
-      TODO
     </div>
   
     </fieldset>
@@ -10520,7 +10604,6 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <div class="card-block">
       
-      TODO
     </div>
   
     </fieldset>
@@ -10639,7 +10722,6 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     
-      TODO
     </div>
   
     </fieldset>
@@ -11045,7 +11127,6 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <div class="card-block">
       
-      TODO
     </div>
   
     </fieldset>
@@ -11212,7 +11293,6 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <div class="card-block">
       
-      TODO
     </div>
   
     </fieldset>
@@ -11331,7 +11411,6 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     
-      TODO
     </div>
   
     </fieldset>
@@ -11352,7 +11431,6 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   
     </fieldset>
     
-      TODO
     </div>
   
         </div>

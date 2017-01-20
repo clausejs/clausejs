@@ -1,6 +1,6 @@
 # Clause
 
-A powerful & practical JavaScript library for defining and verifying your JS app contract. Also facilitates with bug discovery, debugging & data parsing.
+A powerful, expressive & practical JavaScript library for defining and verifying your JS app contract. Also facilitates with bug discovery, debugging & data parsing.
 
  [![Build Status](https://travis-ci.org/clausejs/clausejs.svg?branch=master)](https://travis-ci.org/clausejs/clausejs) [![npm version](https://badge.fury.io/js/clausejs.svg)](https://badge.fury.io/js/clausejs)  [![Dependencies](https://david-dm.org/clausejs/clausejs.svg)](https://david-dm.org/clausejs/clausejs)  [![Size Gzipped](http://img.badgesize.io/clausejs/clausejs/master/packages/clausejs/dist/clausejs.min.js?compression=gzip&label=min%2Bgzipped)](packages/clausejs/dist)  [![Open Source Love](https://badges.frapsoft.com/os/mit/mit.svg?v=102)](https://github.com/ellerbrock/open-source-badge/)  [![Discussion](https://img.shields.io/gitter/room/TechnologyAdvice/Stardust.svg)](https://gitter.im/clausejs/clausejs)
 
@@ -46,16 +46,16 @@ Also worth looking at are videos on rationale for clojure.spec (and, by extensio
 Alpha.
 
 - Most core functions of Clause have gone through many iterations of bug fixing and are stablizing.
-- Some aspects of the API's are subject to change and improvement based on [developer feedback](/../../issues/).
+- Some aspects of the implementation, such as object models are still subject to change based on [developer feedback](/../../issues/).
 - Feedback and suggestions [are welcome](https://github.com/clausejs/clausejs/issues/new).
 
 ## Quick Examples
 
-#### Regex Ops
+#### Regex Ops & conformation
 
 ```js
 
-// In browser environment, Clause will automatically expose "C" as a global variable
+// In browser environment, Clause will by default expose "C" as a global variable
 var C = require('clausejs');
 
 var MyClause = C.cat( C.oneOrMore(C.isNum), C.zeroOrOne( C.isObj ) );
@@ -71,11 +71,13 @@ var MyLabelledClause = C.cat(
     "myNumbers", C.oneOrMore(C.isNum),
     "myObject", C.zeroOrOne( C.isObj )
   );
-S
+
 MyLabelledClause.conform( [ 1, 2, 3, { a: 1 } ] );
 //=> { myNumbers: [ 1, 2, 3 ], myObject: { a: 1 } }
 
 ```
+
+(Notice how the returned results are grouped by the labels specified in the `cat` clause.)
 
 #### Clause Registry
 
@@ -143,6 +145,7 @@ myProtectedFn(1, 2, 3, 'hello'); // Throws a "Problem" due to mismatched argumen
 
 // Step 1: we write a "barebone" function with our core logic,
 // which consumes the conformed arguments as a single object.
+// This will make sense in a second.
 function __sumIsOdd( conformedArgs ) {
   // (Here "conformedArgs" stores the value of the conformed object
   // as we illustrated above.)
@@ -158,16 +161,16 @@ function __sumIsOdd( conformedArgs ) {
 }
 
 // Step 2: wrap the barebone function with C.instrumentConformed()
-var sumIsOdd = MyFnClause.instrumentConformed(__sumIsOdd);
+var sumIsOdd = MyFnClause.instrmentConformed(__sumIsOdd);
 
 // Let's try our new super function!
-sumIsOdd( 1, 1, 1 ); // true: sum is odd
-sumIsOdd( 2, 2, 2 ); // false: sum is even
-sumIsOdd( 1, 1, 1, {} ); // true (remember the optional trailing isObj we defined above?)
-sumIsOdd( 2, 2, 2, null ); // throws a "Problem" because arguments do not conform
-sumIsOdd( 2, 2, 2, {}, {} ); // same as above
+sumIsOdd( 1, 1, 1 ); //=> true: sum is odd
+sumIsOdd( 2, 2, 2 ); //=> false: sum is even
+sumIsOdd( 1, 1, 1, {} ); //=> true (remember the optional trailing isObj we defined above?)
+sumIsOdd( 2, 2, 2, null ); //=> throws a "Problem" because arguments do not conform
+sumIsOdd( 2, 2, 2, {}, {} ); //=> same as above
 ```
-For more advanced features and concepts, refer to [documentation site](https://clause.js.org).
+For advanced features and concepts, refer to [documentation site](https://clause.js.org).
 
 ## More Examples
 
@@ -249,13 +252,14 @@ Clause API for the most part is kept similar to clojure.spec, except for some di
 
 ### Why don't you call it "spec"?
 
-"Spec" already carries a different meaning in the JavaScript community, which is strongly associated with unit tests. While introducing this library to developers with the term "spec", I was often met a blank stare along with a commment like "I already know how to write a spec, so what's the point?" I then quickly realized that a new term needs to be coined to refect some of the vastly different concepts introduced by Clause.
+"Spec" already carries a different meaning in the JavaScript community, which is strongly associated with unit tests. While introducing this library to developers with the term "spec", 
+I was often met with a confused look along with a commment such as "I already know how to write a spec, so what's the point?" I then quickly realized that a new term needs to be coined to refect some of the vastly different concepts introduced in Clause.
 
 ## Community
 
 [![Discussion](https://img.shields.io/gitter/room/TechnologyAdvice/Stardust.svg)](https://gitter.im/clausejs/clausejs)
 
-## Credit, Inspirations & Prior work
+## Prior art
 
 - Both origin of the idea and API are heavily inspired by Rich Hickey et, al.'s [clojure.spec](http://clojure.org/about/clause).
 - Some aspects of the design are drawn by Scheme's [contract system](https://docs.racket-lang.org/guide/contracts.html).

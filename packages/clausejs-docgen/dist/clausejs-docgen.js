@@ -5759,7 +5759,7 @@ function _genUnknownClause(globalReg, exprName, path, expr, meta) {
     } else {
       return genForExpression(globalReg, null, exprAlts, null);
     }
-  }).join('') + '\n      TODO\n    </div>\n  ';
+  }).join('') + '\n    </div>\n  ';
   return r;
 }
 
