@@ -3101,9 +3101,31 @@ C.isValid( PropagatingAndClause, [ &quot;foo&quot;, 2, 3, 4, 5, 6 ] )</code></pr
           </div>
         
     <dl class="card-block">
-    <dt>Syntax</dt><dd><ul>
+    <dd>Given a single expression, returns a clause that matches all values in an iterable with the given expression. </dd>
+<dt>Syntax</dt><dd><ul>
         <li>( expr: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, ( opts: <a href="#clause.types/Object" data-path="clause.types/Object">Object</a> )? ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
       </ul></dd>
+<dt>Examples</dt><dd>
+      <pre><code>var CollOfStrClause = C.collOf(C.isStr);
+C.conform( CollOfStrClause, [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;] )</code></pre>
+    
+
+      <pre><code>C.conform( CollOfStrClause, [] )</code></pre>
+    
+
+      <pre><code> // notice the difference in behavior from C.zeroOrOne
+var CombinedCollOfClause = C.cat( 
+  &quot;babbles&quot;, C.collOf(C.oneOf(&quot;foo&quot;, &quot;bar&quot;, &quot;baz&quot;)),
+  &quot;truths&quot;, C.collOf(C.isBool),
+  &quot;counts&quot;, C.collOf(C.isNatInt)
+);
+C.isValid( CombinedCollOfClause, [[&quot;foo&quot;, &quot;foo&quot;, &quot;bar&quot;], [], [2, 3 , 4]] )</code></pre>
+    
+
+      <pre><code>// invalid because collOf does not mix with regex ops like zeroOrMore
+    // collOf(...) here is equivalent to wall(zeroOrMore(...))
+    C.isValid( CombinedCollOfClause, [&quot;foo&quot;, &quot;foo&quot;, &quot;bar&quot;, 2, 3 , 4] )</code></pre>
+    </dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
       <small>
@@ -3269,9 +3291,16 @@ C.isValid( PropagatingAndClause, [ &quot;foo&quot;, 2, 3, 4, 5, 6 ] )</code></pr
           </div>
         
     <dl class="card-block">
-    <dt>Syntax</dt><dd><ul>
+    <dd>Given a pair of expressions, returns a clause that matches an object all of whose keys matches the first expression and all of whose values matches the second expression.</dd>
+<dt>Syntax</dt><dd><ul>
         <li>( keyExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, valExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
       </ul></dd>
+<dt>Examples</dt><dd>
+      <pre><code>var AbilityMapClause = C.mapOf(
+      (key) =&gt; key.indexOf(&quot;can&quot;) === 0,
+      C.isBool );
+C.isValid( AbilityMapClause, { canFly: true, canSwim: true, canDance: false } )</code></pre>
+    </dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
       <small>
@@ -3418,9 +3447,54 @@ C.isValid( PropagatingAndClause, [ &quot;foo&quot;, 2, 3, 4, 5, 6 ] )</code></pr
           </div>
         
     <dl class="card-block">
-    <dt>Syntax</dt><dd><ul>
+    <dd>Given an object with two optional properties &quot;required&quot; and &quot;optional&quot;, returns a clause that matches an object all of whose keys matches the expressions defined in &quot;required&quot; object and some of whose values matches the expressions defined in &quot;optional&quot; objects.</dd>
+<dt>Syntax</dt><dd><ul>
         <li>( shapeArgs: { requiredFields?: &lt; oneOf(&quot;req&quot;, &quot;required&quot;), ( isPropName )* &gt;, optionalFields?: &lt; oneOf(&quot;opt&quot;, &quot;optional&quot;), { ( isPropName )* | &lt; <a href="#clause.types/String" data-path="clause.types/String">String</a>, <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> &gt; } &gt; } ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li><li>( shapeArgs: { requiredFields?: &lt; oneOf(&quot;req&quot;, &quot;required&quot;), ( isPropName )* &gt;, optionalFields?: &lt; oneOf(&quot;opt&quot;, &quot;optional&quot;), { ( isPropName )* | &lt; <a href="#clause.types/String" data-path="clause.types/String">String</a>, ( keyExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, valExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) &gt; } &gt; } ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li><li>( shapeArgs: { requiredFields?: &lt; oneOf(&quot;req&quot;, &quot;required&quot;), &lt; <a href="#clause.types/String" data-path="clause.types/String">String</a>, <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> &gt; &gt;, optionalFields?: &lt; oneOf(&quot;opt&quot;, &quot;optional&quot;), { ( isPropName )* | &lt; <a href="#clause.types/String" data-path="clause.types/String">String</a>, { <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> | ( keyExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, valExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) } &gt; } &gt; } ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li><li>( shapeArgs: { requiredFields?: &lt; oneOf(&quot;req&quot;, &quot;required&quot;), &lt; <a href="#clause.types/String" data-path="clause.types/String">String</a>, ( keyExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, valExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) &gt; &gt;, optionalFields?: &lt; oneOf(&quot;opt&quot;, &quot;optional&quot;), { ( isPropName )* | &lt; <a href="#clause.types/String" data-path="clause.types/String">String</a>, { <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> | ( keyExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, valExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) } &gt; } &gt; } ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
       </ul></dd>
+<dt>Examples</dt><dd>
+      <pre><code>var ShapeClause = C.shape( { 
+  required: [&quot;key1&quot;, &quot;key2&quot;, &quot;key3&quot;], 
+  optional: [&quot;key4&quot;],
+  } );
+C.isValid( ShapeClause, { key1: true, key2: 2, key3: &quot;ss&quot;, key4: false } )</code></pre>
+    
+
+      <pre><code>C.isValid( ShapeClause, { key1: true, key2: 2 } )</code></pre>
+    
+
+      <pre><code>var ShapeClause2 = C.shape( { 
+  required: {
+    key1: C.isStr,
+    key2: C.isNatInt,
+  }, 
+  optional: [&quot;key5&quot;],
+  } );
+C.isValid( ShapeClause2, { key1: true, key2: 2, key5: false } )</code></pre>
+    
+
+      <pre><code>C.isValid( ShapeClause2, { key1: &quot;not bool&quot;, key2: 2, key5: false } )</code></pre>
+    
+
+      <pre><code>// key group conformation
+var ShapeClause3 = C.shape( { 
+  required: {
+    abilityGroup: [ 
+      // key expression
+      (key) =&gt; key.indexOf(&apos;can&apos;) === 0,
+      // value expression
+      C.isBool
+    ],
+    someKey: C.isNatInt,
+  }, 
+  optional: [&quot;key5&quot;],
+  } );
+C.conform( ShapeClause3, { 
+  canDance: true, 
+  canFly: true, 
+  canSwim: false, 
+  someKey: 999 
+} )</code></pre>
+    </dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
       <small>
@@ -3683,9 +3757,24 @@ C.isValid( PropagatingAndClause, [ &quot;foo&quot;, 2, 3, 4, 5, 6 ] )</code></pr
           </div>
         
     <dl class="card-block">
-    <dt>Syntax</dt><dd><ul>
+    <dd>Given a single expression, returns a clause that does not regex-mix with the parent clause. Useful for validating a list inside another list in the sequence.</dd>
+<dt>Syntax</dt><dd><ul>
         <li>( <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) &#x2192; <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a></li>
       </ul></dd>
+<dt>Examples</dt><dd>
+      <pre><code>var FreeMixClause = C.cat( C.oneOrMore( C.isNum ) );
+C.isValid( FreeMixClause, [2, 3, 4] )</code></pre>
+    
+
+      <pre><code>C.isValid( FreeMixClause, [ [2, 3, 4] ] )</code></pre>
+    
+
+      <pre><code> var WalledClause = C.cat( C.wall( C.oneOrMore( C.isNum ) ) );;
+C.isValid( WalledClause, [2, 3, 4] )</code></pre>
+    
+
+      <pre><code>C.isValid( WalledClause, [ [2, 3, 4] ] )</code></pre>
+    </dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
       <small>
@@ -4403,11 +4492,11 @@ C.isValid( PropagatingAndClause, [ &quot;foo&quot;, 2, 3, 4, 5, 6 ] )</code></pr
       </ul></dd>
 <dt>Examples</dt><dd>
       <pre><code>
-var StrClause = C.cat(&apos;part1&apos;, C.zeroOrMore(C.sCat(&apos;foo&apos;)),
-                      &apos;part2.5&apos;, C.zeroOrMore(C.sCat(&apos;i am optional&apos;)),
-                      &apos;part2&apos;, C.zeroOrMore(C.sCat(&apos;bar&apos;)));
+var StrClause = C.cat(&apos;greetings&apos;, C.zeroOrMore(C.sCat(&apos;hello&apos;)),
+                      &apos;substence&apos;, C.zeroOrMore(C.sCat(&apos;i am optional&apos;)),
+                      &apos;farewell&apos;, C.zeroOrMore(C.sCat(&apos;bye&apos;)));
 
-C.conform(StrClause, &apos;foofoofoobarbar&apos;);
+C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
 </code></pre>
     </dd>
 <dt>Clause Description</dt><dd>

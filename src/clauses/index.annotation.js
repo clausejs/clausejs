@@ -103,7 +103,6 @@ C.conform( CombinedClause, ["foo", 4] )`,
   ]
 } );
 
-
 M( 'clause.compose/and', {
   comment: 'Given a list of expressions, returns a clause that matches a value with all the expressions. Successive conformed value propagates to the rest of the expressions.',
   examples: [
@@ -120,6 +119,87 @@ C.isValid( PropagatingAndClause, [ "foo", 2, 3, 4, 5, 6 ] )`,
   ]
 } );
 
+M( 'clause.compose/collOf', {
+  comment: 'Given a single expression, returns a clause that matches all values in an iterable with the given expression. ',
+  examples: [
+    `var CollOfStrClause = C.collOf(C.isStr);
+C.conform( CollOfStrClause, ["a", "b", "c"] )`,
+    'C.conform( CollOfStrClause, [] )',
+    ` // notice the difference in behavior from C.zeroOrOne
+var CombinedCollOfClause = C.cat( 
+  "babbles", C.collOf(C.oneOf("foo", "bar", "baz")),
+  "truths", C.collOf(C.isBool),
+  "counts", C.collOf(C.isNatInt)
+);
+C.isValid( CombinedCollOfClause, [["foo", "foo", "bar"], [], [2, 3 , 4]] )`,
+    `// invalid because collOf does not mix with regex ops like zeroOrMore
+    // collOf(...) here is equivalent to wall(zeroOrMore(...))
+    C.isValid( CombinedCollOfClause, ["foo", "foo", "bar", 2, 3 , 4] )`
+  ]
+} );
+
+M( 'clause.compose/mapOf', {
+  comment: 'Given a pair of expressions, returns a clause that matches an object all of whose keys matches the first expression and all of whose values matches the second expression.',
+  examples: [
+    `var AbilityMapClause = C.mapOf(
+      (key) => key.indexOf("can") === 0,
+      C.isBool );
+C.isValid( AbilityMapClause, { canFly: true, canSwim: true, canDance: false } )`,
+  ]
+} );
+
+M( 'clause.compose/shape', {
+  comment: 'Given an object with two optional properties "required" and "optional", returns a clause that matches an object all of whose keys matches the expressions defined in "required" object and some of whose values matches the expressions defined in "optional" objects.',
+  examples: [
+    `var ShapeClause = C.shape( { 
+  required: ["key1", "key2", "key3"], 
+  optional: ["key4"],
+  } );
+C.isValid( ShapeClause, { key1: true, key2: 2, key3: "ss", key4: false } )`,
+    'C.isValid( ShapeClause, { key1: true, key2: 2 } )',
+    `var ShapeClause2 = C.shape( { 
+  required: {
+    key1: C.isStr,
+    key2: C.isNatInt,
+  }, 
+  optional: ["key5"],
+  } );
+C.isValid( ShapeClause2, { key1: true, key2: 2, key5: false } )`,
+    'C.isValid( ShapeClause2, { key1: "not bool", key2: 2, key5: false } )',
+    `// key group conformation
+var ShapeClause3 = C.shape( { 
+  required: {
+    abilityGroup: [ 
+      // key expression
+      (key) => key.indexOf('can') === 0,
+      // value expression
+      C.isBool
+    ],
+    someKey: C.isNatInt,
+  }, 
+  optional: ["key5"],
+  } );
+C.conform( ShapeClause3, { 
+  canDance: true, 
+  canFly: true, 
+  canSwim: false, 
+  someKey: 999 
+} )`,
+  ]
+} );
+
+M( 'clause.compose/wall', {
+  comment: 'Given a single expression, returns a clause that does not regex-mix with the parent clause. Useful for validating a list inside another list in the sequence.',
+  examples: [
+    `var FreeMixClause = C.cat( C.oneOrMore( C.isNum ) );
+C.isValid( FreeMixClause, [2, 3, 4] )`,
+    'C.isValid( FreeMixClause, [ [2, 3, 4] ] )',
+    ` var WalledClause = C.cat( C.wall( C.oneOrMore( C.isNum ) ) );;
+C.isValid( WalledClause, [2, 3, 4] )`,
+    'C.isValid( WalledClause, [ [2, 3, 4] ] )',
+  ]
+} );
+
 M( 'clause.namespace/get', {
   comment: 'Gets a clause reference from global clause registry.',
   examples: [
@@ -133,22 +213,13 @@ M( 'clause.namespace/set', {
   examples: [ 'C("awesomeapp/TodoItem", TodoItemClause)' ]
 } );
 
-M( 'clause.compose/cat', {
-} );
-
-M( 'clause.compose/or', {
-} );
-
-M( 'clause.compose/zeroOrMore', {
-} );
-
 M( 'clause.compose.string/sCat', {
   examples: `
-var StrClause = C.cat('part1', C.zeroOrMore(C.sCat('foo')),
-                      'part2.5', C.zeroOrMore(C.sCat('i am optional')),
-                      'part2', C.zeroOrMore(C.sCat('bar')));
+var StrClause = C.cat('greetings', C.zeroOrMore(C.sCat('hello')),
+                      'substence', C.zeroOrMore(C.sCat('i am optional')),
+                      'farewell', C.zeroOrMore(C.sCat('bye')));
 
-C.conform(StrClause, 'foofoofoobarbar');
+C.conform(StrClause, 'hellohellobyebyebyebye');
 ` } );
 
 M( 'clause.types/NamespacePath', {

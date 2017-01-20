@@ -136,6 +136,8 @@
       retVal = r.value;
     } else if ( r instanceof Empty ) {
       retVal = _coerceToProperType( inputType, [] );
+    } else if ( r instanceof Nothing ) {
+      retVal = null;
     } else {
       retVal = r;
     }
