@@ -4913,7 +4913,7 @@ function _strFragments(label, cNode, replacer) {
       });
       _commaedParamFrags = (0, _describe.interpose)(_paramFrags, [', ', _describe.NEW_LINE]);
     }
-    return result.concat(['(']).concat(_commaedParamFrags).concat([')']);
+    return result.concat(['( ']).concat(_commaedParamFrags).concat([' )']);
   } else if (head.type === 'OR') {
     var _labelled = params.labelled,
         _unlabelled = params.unlabelled;
@@ -4933,71 +4933,109 @@ function _strFragments(label, cNode, replacer) {
       });
       _commaedParamFrags2 = (0, _describe.interpose)(_paramFrags3, [' | ', _describe.NEW_LINE]);
     }
-    return result.concat(['{']).concat(_commaedParamFrags2).concat(['}']);
+    return result.concat(['{ ']).concat(_commaedParamFrags2).concat([' }']);
   } else if (head.type === 'Z_OR_M') {
     var _params$unlabelled2 = _slicedToArray(params.unlabelled, 1),
         item = _params$unlabelled2[0].item;
 
     var processed = _fragmentParamAlts(null, item, replacer);
-    return ['('].concat(result).concat([processed, ')']).concat('*');
+    return ['( '].concat(result).concat([processed, ' )*']);
   } else if (head.type === 'O_OR_M') {
     var _params$unlabelled3 = _slicedToArray(params.unlabelled, 1),
         _item = _params$unlabelled3[0].item;
 
     var _processed = _fragmentParamAlts(null, _item, replacer);
-    return ['('].concat(result).concat([_processed, ')']).concat('+');
+    return ['( '].concat(result).concat([_processed, ' )+']);
   } else if (head.type === 'Z_OR_O') {
     var _params$unlabelled4 = _slicedToArray(params.unlabelled, 1),
         _item2 = _params$unlabelled4[0].item;
 
     var _processed2 = _fragmentParamAlts(null, _item2, replacer);
-    return ['('].concat(result).concat([_processed2, ')']).concat('?');
+    return ['( '].concat(result).concat([_processed2, ' )?']);
   } else if (head.type === 'COLL_OF') {
     var _params$unlabelled5 = _slicedToArray(params.unlabelled, 1),
         _item3 = _params$unlabelled5[0].item;
 
     var _processed3 = _fragmentParamAlts(null, _item3, replacer);
-    return ['['].concat(result).concat([_processed3, ']*']);
+    return ['[ '].concat(result).concat([_processed3, ' ]*']);
   } else if (head.type === 'ANY') {
     return result.concat(['any']);
-  }
+  } else if (head.type === 'SHAPE') {
+    var r = params.unlabelled[0].item.unquotedParamsMap;
 
-  if (params) {
-    var _labelled2 = params.labelled,
-        _unlabelled2 = params.unlabelled,
-        keyList = params.keyList;
+    var _params$unlabelled6 = _slicedToArray(params.unlabelled, 1),
+        _params$unlabelled6$ = _params$unlabelled6[0].item.unquotedParamsMap,
+        _params$unlabelled6$$ = _params$unlabelled6$.required;
 
-    if (_labelled2) {
-      var _paramFrags4 = _labelled2.reduce(function (acc, _ref5) {
-        var label = _ref5.label,
-            item = _ref5.item;
-        return acc.concat([[_processLabel(label), ', ', _fragmentParamAlts(null, item, replacer)]]);
-      }, []);
-      commaedParamFrags = (0, _describe.interpose)(_paramFrags4, [', ', _describe.NEW_LINE]);
-    } else if (_unlabelled2) {
-      var _paramFrags5 = _unlabelled2.map(function (_ref6) {
-        var item = _ref6.item;
-        return _fragmentParamAlts(null, item, replacer);
-      });
-      commaedParamFrags = (0, _describe.interpose)(_paramFrags5, [', ', _describe.NEW_LINE]);
-    } else if (keyList) {
-      var _paramFrags6 = keyList;
-      commaedParamFrags = (0, _describe.interpose)(_paramFrags6, [', ']);
-    } else {
-      // console.error( params );
-      // throw '!z';
-      commaedParamFrags = [];
+    _params$unlabelled6$$ = _params$unlabelled6$$ === undefined ? { singleParam: {} } : _params$unlabelled6$$;
+    var required = _params$unlabelled6$$.singleParam.quotedParamsMap,
+        _params$unlabelled6$$2 = _params$unlabelled6$.optional;
+    _params$unlabelled6$$2 = _params$unlabelled6$$2 === undefined ? { singleParam: {} } : _params$unlabelled6$$2;
+    var optional = _params$unlabelled6$$2.singleParam.quotedParamsMap;
+
+    var items = [];
+    if (required) {
+      for (var key in required) {
+        var r1 = handle(required[key], {
+          'keyList': function keyList(list) {
+            return ['[ '].concat((0, _describe.interpose)(list.map(function (i) {
+              return '"' + i + '"';
+            }), [', '])).concat(' ]');
+          },
+          'singleParam': function singleParam(p) {
+            return _fragmentParamAlts(null, p, replacer);
+          }
+        }, function () {
+          throw '!e';
+        });
+        if (r1) {
+          items = items.concat([[key + '*: ', r1]]);
+        }
+      }
     }
-  } else {
-    commaedParamFrags = [];
-  }
+    if (optional) {
+      for (var _key in optional) {
+        var _r = handle(optional[_key], {
+          'keyList': function keyList(list) {
+            return ['[ '].concat((0, _describe.interpose)(list.map(function (i) {
+              return '"' + i + '"';
+            }), [', '])).concat(' ]');
+          },
+          'singleParam': function singleParam(p) {
+            return _fragmentParamAlts(null, p, replacer);
+          }
+        }, function () {
+          throw '!e';
+        });
+        if (_r) {
+          items = items.concat([[_key + '?: ', _r]]);
+        }
+      }
+    }
+    var commaSepartedItems = (0, _describe.interpose)(items, [', ']);
+    return result.concat(['{ ']).concat(commaSepartedItems).concat([' }']);
+  } else if (head.type === 'AND') {
+    // TODO: just a temporary hack that takes the first expression
+    // need more design decisions
+    return _fragmentParamAlts(label, params.unlabelled[0].item, replacer);
+  } else if (head.type === 'MAP_OF') {
+    var _params$unlabelled7 = _slicedToArray(params.unlabelled, 1),
+        _params$unlabelled7$ = _params$unlabelled7[0].item.unquotedParamsMap,
+        keyExprAlts = _params$unlabelled7$.key.singleParam,
+        valExprAlts = _params$unlabelled7$.val.singleParam;
 
-  return [nodeLabel, '('].concat(commaedParamFrags.length > 1 ? [_describe.INDENT_IN, _describe.NEW_LINE] : [commaedParamFrags.length === 0 ? '' : ' ']).concat(commaedParamFrags).concat(commaedParamFrags.length > 1 ? [_describe.INDENT_OUT, _describe.NEW_LINE] : [commaedParamFrags.length === 0 ? '' : ' ']).concat([')']);
+    var _items = [].concat(_fragmentParamAlts(null, keyExprAlts, replacer)).concat([', ']).concat(_fragmentParamAlts(null, valExprAlts, replacer));
+
+    return result.concat(['< ']).concat(_items).concat([' >']);
+  } else {
+    console.error(head);
+    throw 'not supported';
+  }
 }
 
-function _processLabel(_ref7) {
-  var str = _ref7.str,
-      quoted = _ref7.quoted;
+function _processLabel(_ref5) {
+  var str = _ref5.str,
+      quoted = _ref5.quoted;
 
   if (str) {
     return str;
@@ -5021,8 +5059,8 @@ function _fragmentParamAlts(label, pAlts, replacer) {
     'optionsObj': function optionsObj(o) {
       return stringifyWithFnName(o);
     },
-    'recursive': function recursive(_ref8) {
-      var expression = _ref8.expression;
+    'recursive': function recursive(_ref6) {
+      var expression = _ref6.expression;
       return ['<recursive>: ', (0, _describe.humanReadable)(expression)];
     }
   }, function (e) {
@@ -5033,32 +5071,42 @@ function _fragmentParamAlts(label, pAlts, replacer) {
 }
 
 function _fragmentParamsObj(pObj, replacer) {
-  var r = ['{', _describe.INDENT_IN, _describe.NEW_LINE];
+  var r = ['< ', _describe.INDENT_IN, _describe.NEW_LINE];
   var body = [];
-  for (var label in pObj) {
-    if (pObj.hasOwnProperty(label)) {
-      var item = [];
-      item.push(label);
-      var r1 = handle(pObj[label], {
-        'keyList': function keyList(list) {
-          return ['[ '].concat((0, _describe.interpose)(list.map(function (i) {
-            return '"' + i + '"';
-          }), [', '])).concat(' ]');
-        },
-        'singleParam': function singleParam(p) {
-          return _fragmentParamAlts(null, p, replacer);
-        }
-      }, function () {
-        throw '!e';
-      });
-      if (r1) {
-        item.push(r1);
-        body.push(item);
-      }
+  var keyExprAlts = pObj.key,
+      valExprAlts = pObj.val;
+
+  var keyR = handle(keyExprAlts, {
+    'keyList': function keyList(list) {
+      return ['[ '].concat((0, _describe.interpose)(list.map(function (i) {
+        return '"' + i + '"';
+      }), [', '])).concat(' ]');
+    },
+    'singleParam': function singleParam(p) {
+      return _fragmentParamAlts(null, p, replacer);
     }
-  }
+  }, function () {
+    throw '!e';
+  });
+
+  var valR = handle(valExprAlts, {
+    'keyList': function keyList(list) {
+      return ['[ '].concat((0, _describe.interpose)(list.map(function (i) {
+        return '"' + i + '"';
+      }), [', '])).concat(' ]');
+    },
+    'singleParam': function singleParam(p) {
+      return _fragmentParamAlts(null, p, replacer);
+    }
+  }, function () {
+    throw '!e';
+  });
+
+  body.push([keyR]);
+  body.push([valR]);
+
   body = (0, _describe.interpose)(body, [', ', _describe.NEW_LINE]);
-  r = r.concat(body).concat([_describe.INDENT_OUT, _describe.NEW_LINE, '}']);
+  r = r.concat(body).concat([_describe.INDENT_OUT, _describe.NEW_LINE, ' >']);
   return r;
 }
 
@@ -5080,8 +5128,8 @@ function _handler(alts) {
     'expression': function expression(e) {
       return { head: clauseFromAlts(e), params: params };
     },
-    'altNode': function altNode(_ref9) {
-      var enclosed = _ref9.enclosed;
+    'altNode': function altNode(_ref7) {
+      var enclosed = _ref7.enclosed;
       return handle(enclosed, {
         'sExpression': _handler
       }, function () {});
@@ -5196,9 +5244,9 @@ function _expand(currCase, pivot) {
 
 function _makeAlts(pivot, params) {
   if (pivot.opts.named) {
-    return pivot.exprs.map(function (_ref10, idx) {
-      var name = _ref10.name,
-          expr = _ref10.expr;
+    return pivot.exprs.map(function (_ref8, idx) {
+      var name = _ref8.name,
+          expr = _ref8.expr;
       return [new AltHeadNode(name, pivot, params[idx * 2 + 1])];
     });
   } else {
@@ -5225,10 +5273,10 @@ function _makeAltCaseMap(item, map, key) {
   return r;
 }
 
-function _fold(reducer, _ref11, init, replacer, inFclause) {
-  var sExpression = _ref11.sExpression,
-      quotedParamsMap = _ref11.quotedParamsMap,
-      unquotedParamsMap = _ref11.unquotedParamsMap;
+function _fold(reducer, _ref9, init, replacer, inFclause) {
+  var sExpression = _ref9.sExpression,
+      quotedParamsMap = _ref9.quotedParamsMap,
+      unquotedParamsMap = _ref9.unquotedParamsMap;
 
   var r = init;
 
@@ -5255,8 +5303,8 @@ function _fold(reducer, _ref11, init, replacer, inFclause) {
       r = reducer(r, head);
 
       var items = labelled || unlabelled || [];
-      r = items.reduce(function (acc, _ref12) {
-        var item = _ref12.item;
+      r = items.reduce(function (acc, _ref10) {
+        var item = _ref10.item;
 
         if (head.type === 'FCLAUSE') {
           return _fold(reducer, item, acc, replacer, true);

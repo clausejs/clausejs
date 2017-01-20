@@ -349,7 +349,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <dl class="card-block">
     <dd>Convenient method that combines C.get() and C.set() into one function to get or set clauses from the global registry.</dd>
 <dt>Syntax</dt><dd><ul>
-        <li>(nsPath: <a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">NamespacePath</a>, expression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>) &#x2192; {<a href="#clause.types/Undefined" data-path="clause.types/Undefined">Undefined</a> | <a href="#clause.types/ClauseReference" data-path="clause.types/ClauseReference">ClauseReference</a>}</li><li>(nsPath: <a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">NamespacePath</a>) &#x2192; {<a href="#clause.types/Undefined" data-path="clause.types/Undefined">Undefined</a> | <a href="#clause.types/ClauseReference" data-path="clause.types/ClauseReference">ClauseReference</a>}</li>
+        <li>( nsPath: <a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">NamespacePath</a>, expression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) &#x2192; { <a href="#clause.types/Undefined" data-path="clause.types/Undefined">Undefined</a> | <a href="#clause.types/ClauseReference" data-path="clause.types/ClauseReference">ClauseReference</a> }</li><li>( nsPath: <a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">NamespacePath</a> ) &#x2192; { <a href="#clause.types/Undefined" data-path="clause.types/Undefined">Undefined</a> | <a href="#clause.types/ClauseReference" data-path="clause.types/ClauseReference">ClauseReference</a> }</li>
       </ul></dd>
 <dt>Examples</dt><dd>
       <pre><code>C(&quot;awesomeapp/TodoItem&quot;, TodoItemClause)</code></pre>
@@ -739,7 +739,7 @@ ref.get()</code></pre>
         
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>and((expressions: {((name: <a href="#clause.types/ClauseLabel" data-path="clause.types/ClauseLabel">ClauseLabel</a>, (comment: <a href="#clause.types/String" data-path="clause.types/String">String</a>)?, expr: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>))* | [(name: <a href="#clause.types/ClauseLabel" data-path="clause.types/ClauseLabel">ClauseLabel</a>, (comment: <a href="#clause.types/String" data-path="clause.types/String">String</a>)?, expr: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>)]*}, (options: <a href="#clause.types/PlainObject" data-path="clause.types/PlainObject">PlainObject</a>)?), noDupelicateLabels) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li><li>and(((expressions: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>)*, (options: <a href="#clause.types/PlainObject" data-path="clause.types/PlainObject">PlainObject</a>)?), noDupelicateLabels) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
+        <li>( expressions: { ( ( name: <a href="#clause.types/ClauseLabel" data-path="clause.types/ClauseLabel">ClauseLabel</a>, ( comment: <a href="#clause.types/String" data-path="clause.types/String">String</a> )?, expr: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) )* | [ ( name: <a href="#clause.types/ClauseLabel" data-path="clause.types/ClauseLabel">ClauseLabel</a>, ( comment: <a href="#clause.types/String" data-path="clause.types/String">String</a> )?, expr: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) ]* }, ( options: <a href="#clause.types/PlainObject" data-path="clause.types/PlainObject">PlainObject</a> )? ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li><li>( ( expressions: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> )*, ( options: <a href="#clause.types/PlainObject" data-path="clause.types/PlainObject">PlainObject</a> )? ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
       </ul></dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
@@ -1582,7 +1582,7 @@ ref.get()</code></pre>
         
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>and((expressions: {((name: <a href="#clause.types/ClauseLabel" data-path="clause.types/ClauseLabel">ClauseLabel</a>, (comment: <a href="#clause.types/String" data-path="clause.types/String">String</a>)?, expr: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>))* | [(name: <a href="#clause.types/ClauseLabel" data-path="clause.types/ClauseLabel">ClauseLabel</a>, (comment: <a href="#clause.types/String" data-path="clause.types/String">String</a>)?, expr: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>)]*}, (options: <a href="#clause.types/PlainObject" data-path="clause.types/PlainObject">PlainObject</a>)?), noDupelicateLabels) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li><li>and(((expressions: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>)*, (options: <a href="#clause.types/PlainObject" data-path="clause.types/PlainObject">PlainObject</a>)?), noDupelicateLabels) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
+        <li>( expressions: { ( ( name: <a href="#clause.types/ClauseLabel" data-path="clause.types/ClauseLabel">ClauseLabel</a>, ( comment: <a href="#clause.types/String" data-path="clause.types/String">String</a> )?, expr: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) )* | [ ( name: <a href="#clause.types/ClauseLabel" data-path="clause.types/ClauseLabel">ClauseLabel</a>, ( comment: <a href="#clause.types/String" data-path="clause.types/String">String</a> )?, expr: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) ]* }, ( options: <a href="#clause.types/PlainObject" data-path="clause.types/PlainObject">PlainObject</a> )? ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li><li>( ( expressions: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> )*, ( options: <a href="#clause.types/PlainObject" data-path="clause.types/PlainObject">PlainObject</a> )? ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
       </ul></dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
@@ -2425,7 +2425,7 @@ ref.get()</code></pre>
         
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>(expr: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, (opts: <a href="#clause.types/Object" data-path="clause.types/Object">Object</a>)?) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
+        <li>( expr: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, ( opts: <a href="#clause.types/Object" data-path="clause.types/Object">Object</a> )? ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
       </ul></dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
@@ -2594,7 +2594,7 @@ ref.get()</code></pre>
         
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>(expr: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, (opts: <a href="#clause.types/Object" data-path="clause.types/Object">Object</a>)?) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
+        <li>( expr: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, ( opts: <a href="#clause.types/Object" data-path="clause.types/Object">Object</a> )? ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
       </ul></dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
@@ -2763,7 +2763,7 @@ ref.get()</code></pre>
         
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>(expr: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, (opts: <a href="#clause.types/Object" data-path="clause.types/Object">Object</a>)?) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
+        <li>( expr: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, ( opts: <a href="#clause.types/Object" data-path="clause.types/Object">Object</a> )? ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
       </ul></dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
@@ -2932,7 +2932,7 @@ ref.get()</code></pre>
         
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>(<a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>)+ &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
+        <li>( <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> )+ &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
       </ul></dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
@@ -3017,7 +3017,7 @@ ref.get()</code></pre>
         
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>(expr: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, (opts: <a href="#clause.types/Object" data-path="clause.types/Object">Object</a>)?) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
+        <li>( expr: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, ( opts: <a href="#clause.types/Object" data-path="clause.types/Object">Object</a> )? ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
       </ul></dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
@@ -3186,7 +3186,7 @@ ref.get()</code></pre>
         
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>(keyExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, valExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
+        <li>( keyExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, valExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
       </ul></dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
@@ -3335,7 +3335,7 @@ ref.get()</code></pre>
         
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>(shape( {optional{requiredFields{keyoneOf(&quot;req&quot;, &quot;required&quot;), val(isPropName)*}, optionalFields{keyoneOf(&quot;opt&quot;, &quot;optional&quot;), val{(isPropName)* | mapOf( {key<a href="#clause.types/String" data-path="clause.types/String">String</a>, val<a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>} )}}}} )) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li><li>(shape( {optional{requiredFields{keyoneOf(&quot;req&quot;, &quot;required&quot;), val(isPropName)*}, optionalFields{keyoneOf(&quot;opt&quot;, &quot;optional&quot;), val{(isPropName)* | mapOf( {key<a href="#clause.types/String" data-path="clause.types/String">String</a>, val(keyExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, valExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>)} )}}}} )) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li><li>(shape( {optional{requiredFields{keyoneOf(&quot;req&quot;, &quot;required&quot;), valmapOf( {key<a href="#clause.types/String" data-path="clause.types/String">String</a>, val<a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>} )}, optionalFields{keyoneOf(&quot;opt&quot;, &quot;optional&quot;), val{(isPropName)* | mapOf( {key<a href="#clause.types/String" data-path="clause.types/String">String</a>, val{<a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> | (keyExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, valExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>)}} )}}}} )) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li><li>(shape( {optional{requiredFields{keyoneOf(&quot;req&quot;, &quot;required&quot;), valmapOf( {key<a href="#clause.types/String" data-path="clause.types/String">String</a>, val(keyExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, valExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>)} )}, optionalFields{keyoneOf(&quot;opt&quot;, &quot;optional&quot;), val{(isPropName)* | mapOf( {key<a href="#clause.types/String" data-path="clause.types/String">String</a>, val{<a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> | (keyExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, valExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>)}} )}}}} )) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
+        <li>( shapeArgs: { requiredFields?: &lt; oneOf(&quot;req&quot;, &quot;required&quot;), ( isPropName )* &gt;, optionalFields?: &lt; oneOf(&quot;opt&quot;, &quot;optional&quot;), { ( isPropName )* | &lt; <a href="#clause.types/String" data-path="clause.types/String">String</a>, <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> &gt; } &gt; } ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li><li>( shapeArgs: { requiredFields?: &lt; oneOf(&quot;req&quot;, &quot;required&quot;), ( isPropName )* &gt;, optionalFields?: &lt; oneOf(&quot;opt&quot;, &quot;optional&quot;), { ( isPropName )* | &lt; <a href="#clause.types/String" data-path="clause.types/String">String</a>, ( keyExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, valExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) &gt; } &gt; } ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li><li>( shapeArgs: { requiredFields?: &lt; oneOf(&quot;req&quot;, &quot;required&quot;), &lt; <a href="#clause.types/String" data-path="clause.types/String">String</a>, <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> &gt; &gt;, optionalFields?: &lt; oneOf(&quot;opt&quot;, &quot;optional&quot;), { ( isPropName )* | &lt; <a href="#clause.types/String" data-path="clause.types/String">String</a>, { <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> | ( keyExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, valExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) } &gt; } &gt; } ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li><li>( shapeArgs: { requiredFields?: &lt; oneOf(&quot;req&quot;, &quot;required&quot;), &lt; <a href="#clause.types/String" data-path="clause.types/String">String</a>, ( keyExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, valExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) &gt; &gt;, optionalFields?: &lt; oneOf(&quot;opt&quot;, &quot;optional&quot;), { ( isPropName )* | &lt; <a href="#clause.types/String" data-path="clause.types/String">String</a>, { <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> | ( keyExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, valExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) } &gt; } &gt; } ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
       </ul></dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
@@ -3601,7 +3601,7 @@ ref.get()</code></pre>
         
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>(<a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>) &#x2192; <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a></li>
+        <li>( <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) &#x2192; <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a></li>
       </ul></dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
@@ -3706,7 +3706,7 @@ ref.get()</code></pre>
         
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>(shape( {optional{argsand(isArray, <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>), ret<a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, fn(any, any) &#x2192; any}} )) &#x2192; any</li>
+        <li>( { args?: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, ret?: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, fn?: ( any, any ) &#x2192; any } ) &#x2192; any</li>
       </ul></dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
@@ -3716,10 +3716,7 @@ ref.get()</code></pre>
     <pre>fclause( {
   &lt;args&gt;: cat( shape( {
     &lt;optional&gt;: {
-      &quot;args&quot;: and(
-        isArray, 
-        <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>
-      ), 
+      &quot;args&quot;: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, 
       &quot;ret&quot;: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, 
       &quot;fn&quot;: fclause( {
         &lt;args&gt;: cat(
@@ -3745,10 +3742,7 @@ ref.get()</code></pre>
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;cat( shape( {
   &amp;lt;optional&amp;gt;: {
-    &quot;args&quot;: and(
-      isArray, 
-      &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;
-    ), 
+    &quot;args&quot;: &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;, 
     &quot;ret&quot;: &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;, 
     &quot;fn&quot;: fclause( {
       &amp;lt;args&amp;gt;: cat(
@@ -3792,10 +3786,7 @@ ref.get()</code></pre>
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre&gt;shape( {
   &amp;lt;optional&amp;gt;: {
-    &quot;args&quot;: and(
-      isArray, 
-      &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;
-    ), 
+    &quot;args&quot;: &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;, 
     &quot;ret&quot;: &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;, 
     &quot;fn&quot;: fclause( {
       &amp;lt;args&amp;gt;: cat(
@@ -3846,7 +3837,7 @@ ref.get()</code></pre>
         
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>(<a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
+        <li>( <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
       </ul></dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
@@ -3951,7 +3942,7 @@ ref.get()</code></pre>
         
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>(<a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
+        <li>( <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
       </ul></dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
@@ -4056,7 +4047,7 @@ ref.get()</code></pre>
         
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>(<a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
+        <li>( <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
       </ul></dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
@@ -4161,7 +4152,7 @@ ref.get()</code></pre>
         
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>(() &#x2192; <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>) &#x2192; <a href="#clause.types/DelayedClause" data-path="clause.types/DelayedClause">DelayedClause</a></li>
+        <li>( (  ) &#x2192; <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) &#x2192; <a href="#clause.types/DelayedClause" data-path="clause.types/DelayedClause">DelayedClause</a></li>
       </ul></dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
@@ -4238,7 +4229,7 @@ ref.get()</code></pre>
     
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>() &#x2192; <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a></li>
+        <li>(  ) &#x2192; <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a></li>
       </ul></dd>
 <dt>Argument Clause Graph</dt><dd>
     
@@ -4326,7 +4317,7 @@ ref.get()</code></pre>
         
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>(string: <a href="#clause.types/String" data-path="clause.types/String">String</a>) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
+        <li>( string: <a href="#clause.types/String" data-path="clause.types/String">String</a> ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
       </ul></dd>
 <dt>Examples</dt><dd>
       <pre><code>
@@ -4444,7 +4435,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>(expression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, valueToCheck: any) &#x2192; <a href="#clause.types/Undefined" data-path="clause.types/Undefined">Undefined</a></li>
+        <li>( expression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, valueToCheck: any ) &#x2192; <a href="#clause.types/Undefined" data-path="clause.types/Undefined">Undefined</a></li>
       </ul></dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
@@ -4596,7 +4587,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>(expression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, valueToConform: any) &#x2192; {any | <a href="#clause.types/Problem" data-path="clause.types/Problem">Problem</a>}</li>
+        <li>( expression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, valueToConform: any ) &#x2192; { any | <a href="#clause.types/Problem" data-path="clause.types/Problem">Problem</a> }</li>
       </ul></dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
@@ -4854,7 +4845,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <dl class="card-block">
     <dd>Returns an abbreviated description of the clause as a simple tree structure.</dd>
 <dt>Syntax</dt><dd><ul>
-        <li>(expression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, (replacer: (<a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>) &#x2192; {<a href="#clause.types/Undefined" data-path="clause.types/Undefined">Undefined</a> | <a href="#clause.types/Null" data-path="clause.types/Null">Null</a> | [<a href="#clause.types/String" data-path="clause.types/String">String</a>]*})?, (space: isNatInt)?) &#x2192; <a href="#clause.types/String" data-path="clause.types/String">String</a></li>
+        <li>( expression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, ( replacer: ( <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) &#x2192; { <a href="#clause.types/Undefined" data-path="clause.types/Undefined">Undefined</a> | <a href="#clause.types/Null" data-path="clause.types/Null">Null</a> | [ <a href="#clause.types/String" data-path="clause.types/String">String</a> ]* } )?, ( space: isNatInt )? ) &#x2192; <a href="#clause.types/String" data-path="clause.types/String">String</a></li>
       </ul></dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
@@ -5013,7 +5004,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>(<a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>) &#x2192; {<a href="#clause.types/Undefined" data-path="clause.types/Undefined">Undefined</a> | <a href="#clause.types/Null" data-path="clause.types/Null">Null</a> | [<a href="#clause.types/String" data-path="clause.types/String">String</a>]*}</li>
+        <li>( <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) &#x2192; { <a href="#clause.types/Undefined" data-path="clause.types/Undefined">Undefined</a> | <a href="#clause.types/Null" data-path="clause.types/Null">Null</a> | [ <a href="#clause.types/String" data-path="clause.types/String">String</a> ]* }</li>
       </ul></dd>
 <dt>Argument Clause Graph</dt><dd>
     
@@ -5345,7 +5336,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>(expression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>) &#x2192; <a href="#clause.types/SExpression" data-path="clause.types/SExpression">SExpression</a></li>
+        <li>( expression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) &#x2192; <a href="#clause.types/SExpression" data-path="clause.types/SExpression">SExpression</a></li>
       </ul></dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
@@ -5460,7 +5451,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>(x: any) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
+        <li>( x: any ) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
       </ul></dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
@@ -5572,7 +5563,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>(predicateToNegate: <a href="#clause.types/Predicate" data-path="clause.types/Predicate">Predicate</a>) &#x2192; (x: any) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
+        <li>( predicateToNegate: <a href="#clause.types/Predicate" data-path="clause.types/Predicate">Predicate</a> ) &#x2192; ( x: any ) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
       </ul></dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
@@ -5675,7 +5666,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>(x: any) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
+        <li>( x: any ) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
       </ul></dd>
 <dt>Argument Clause Graph</dt><dd>
     
@@ -5777,7 +5768,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>(x: any) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
+        <li>( x: any ) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
       </ul></dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
@@ -5889,7 +5880,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>(x: any) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
+        <li>( x: any ) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
       </ul></dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
@@ -6001,7 +5992,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>(x: any) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
+        <li>( x: any ) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
       </ul></dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
@@ -6113,7 +6104,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>(x: any) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
+        <li>( x: any ) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
       </ul></dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
@@ -6225,7 +6216,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>(x: any) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
+        <li>( x: any ) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
       </ul></dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
@@ -6337,7 +6328,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>(x: any) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
+        <li>( x: any ) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
       </ul></dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
@@ -6449,7 +6440,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>(x: any) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
+        <li>( x: any ) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
       </ul></dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
@@ -6561,7 +6552,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>(x: any) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
+        <li>( x: any ) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
       </ul></dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
@@ -6673,7 +6664,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>(x: any) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
+        <li>( x: any ) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
       </ul></dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
@@ -6785,7 +6776,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>(x: any) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
+        <li>( x: any ) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
       </ul></dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
@@ -6897,7 +6888,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>(x: any) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
+        <li>( x: any ) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
       </ul></dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
@@ -7009,7 +7000,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>(x: any) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
+        <li>( x: any ) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
       </ul></dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
@@ -7121,7 +7112,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>(x: any) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
+        <li>( x: any ) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
       </ul></dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
@@ -7233,7 +7224,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>(x: <a href="#clause.types/String" data-path="clause.types/String">String</a>) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
+        <li>( x: <a href="#clause.types/String" data-path="clause.types/String">String</a> ) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
       </ul></dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
@@ -7342,7 +7333,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>([valueOptions: <a href="#clause.types/Primitive" data-path="clause.types/Primitive">Primitive</a>]*) &#x2192; (x: any) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
+        <li>( [ valueOptions: <a href="#clause.types/Primitive" data-path="clause.types/Primitive">Primitive</a> ]* ) &#x2192; ( x: any ) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
       </ul></dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
@@ -7465,7 +7456,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>(x: any) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
+        <li>( x: any ) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
       </ul></dd>
 <dt>Argument Clause Graph</dt><dd>
     
@@ -7567,7 +7558,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>(valueToCompareWith: any) &#x2192; (x: any) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
+        <li>( valueToCompareWith: any ) &#x2192; ( x: any ) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
       </ul></dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
@@ -7667,7 +7658,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>(x: any) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
+        <li>( x: any ) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
       </ul></dd>
 <dt>Argument Clause Graph</dt><dd>
     
@@ -7769,7 +7760,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>(isFunction) &#x2192; (x: any) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
+        <li>( isFunction ) &#x2192; ( x: any ) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
       </ul></dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
@@ -7882,7 +7873,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>(x: any) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
+        <li>( x: any ) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
       </ul></dd>
 <dt>Argument Clause Graph</dt><dd>
     
@@ -7984,7 +7975,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>(nsPath: <a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">NamespacePath</a>, expression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
+        <li>( nsPath: <a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">NamespacePath</a>, expression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
       </ul></dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
@@ -8133,7 +8124,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>(nsPath: <a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">NamespacePath</a>) &#x2192; <a href="#clause.types/ClauseReference" data-path="clause.types/ClauseReference">ClauseReference</a></li>
+        <li>( nsPath: <a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">NamespacePath</a> ) &#x2192; <a href="#clause.types/ClauseReference" data-path="clause.types/ClauseReference">ClauseReference</a></li>
       </ul></dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
@@ -8242,7 +8233,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>(expression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, (registry: <a href="#clause.types/Object" data-path="clause.types/Object">Object</a>)?) &#x2192; <a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">NamespacePath</a></li>
+        <li>( expression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, ( registry: <a href="#clause.types/Object" data-path="clause.types/Object">Object</a> )? ) &#x2192; <a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">NamespacePath</a></li>
       </ul></dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
@@ -8411,7 +8402,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>(source: <a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">NamespacePath</a>, metaObj: <a href="#clause.types/Object" data-path="clause.types/Object">Object</a>, (registry: <a href="#clause.types/Object" data-path="clause.types/Object">Object</a>)?) &#x2192; <a href="#clause.types/Undefined" data-path="clause.types/Undefined">Undefined</a></li><li>(source: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, metaObj: <a href="#clause.types/Object" data-path="clause.types/Object">Object</a>, (registry: <a href="#clause.types/Object" data-path="clause.types/Object">Object</a>)?) &#x2192; <a href="#clause.types/Undefined" data-path="clause.types/Undefined">Undefined</a></li>
+        <li>( source: <a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">NamespacePath</a>, metaObj: <a href="#clause.types/Object" data-path="clause.types/Object">Object</a>, ( registry: <a href="#clause.types/Object" data-path="clause.types/Object">Object</a> )? ) &#x2192; <a href="#clause.types/Undefined" data-path="clause.types/Undefined">Undefined</a></li><li>( source: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, metaObj: <a href="#clause.types/Object" data-path="clause.types/Object">Object</a>, ( registry: <a href="#clause.types/Object" data-path="clause.types/Object">Object</a> )? ) &#x2192; <a href="#clause.types/Undefined" data-path="clause.types/Undefined">Undefined</a></li>
       </ul></dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
@@ -8715,7 +8706,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>(source: <a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">NamespacePath</a>, (registry: <a href="#clause.types/Object" data-path="clause.types/Object">Object</a>)?) &#x2192; {<a href="#clause.types/Null" data-path="clause.types/Null">Null</a> | <a href="#clause.types/Undefined" data-path="clause.types/Undefined">Undefined</a> | <a href="#clause.types/Object" data-path="clause.types/Object">Object</a>}</li><li>(source: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, (registry: <a href="#clause.types/Object" data-path="clause.types/Object">Object</a>)?) &#x2192; {<a href="#clause.types/Null" data-path="clause.types/Null">Null</a> | <a href="#clause.types/Undefined" data-path="clause.types/Undefined">Undefined</a> | <a href="#clause.types/Object" data-path="clause.types/Object">Object</a>}</li>
+        <li>( source: <a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">NamespacePath</a>, ( registry: <a href="#clause.types/Object" data-path="clause.types/Object">Object</a> )? ) &#x2192; { <a href="#clause.types/Null" data-path="clause.types/Null">Null</a> | <a href="#clause.types/Undefined" data-path="clause.types/Undefined">Undefined</a> | <a href="#clause.types/Object" data-path="clause.types/Object">Object</a> }</li><li>( source: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, ( registry: <a href="#clause.types/Object" data-path="clause.types/Object">Object</a> )? ) &#x2192; { <a href="#clause.types/Null" data-path="clause.types/Null">Null</a> | <a href="#clause.types/Undefined" data-path="clause.types/Undefined">Undefined</a> | <a href="#clause.types/Object" data-path="clause.types/Object">Object</a> }</li>
       </ul></dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
@@ -9307,7 +9298,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>(x: any) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
+        <li>( x: any ) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
       </ul></dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">

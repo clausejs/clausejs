@@ -59,7 +59,7 @@ const SCatFnClause = fclause( {
 const FclauseFnClause = fclause( {
   args: cat( shape( {
     optional: {
-      'args': and( isArray, C( 'clause.types/Expression' ) ),
+      'args': C( 'clause.types/Expression' ),
       'ret': C( 'clause.types/Expression' ),
       'fn': fclause( {
         args: cat(
