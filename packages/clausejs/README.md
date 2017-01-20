@@ -82,7 +82,7 @@ MyLabelledClause.conform( [ 1, 2, 3, { a: 1 } ] );
 ```js
 // Clause comes with an application-wide global clause registry.
 C.set("myApp/myLabelledClause", MyLabelledClause); // defines a clause in the registry
-S("myApp/myLabelledClause"); // returns the same clause above (MyLabelledClause)
+C("myApp/myLabelledClause"); // returns the same clause above (MyLabelledClause)
 ```
 
 #### Object Shapes
@@ -107,7 +107,7 @@ var MyObjClause = C.shape({
     },
     optional: {
         // you can also arbitrarily compose new clauses from registered clauses
-        myObj: S("myApp/myLabelledClause")
+        myObj: C("myApp/myLabelledClause")
     }
 });
 
@@ -172,7 +172,6 @@ For more advanced features and concepts, refer to [documentation site](https://c
 ## More Examples
 
 - [Simple example in browser](examples/simple.html)
-- [Experiment on clausing promises](examples/promise/index.js)
 - [Codebreaker game example](examples/codebreaker/index.js)
 
 In addition, there are plenty of examples in test files under [`/test`](test/).
