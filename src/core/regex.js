@@ -299,7 +299,6 @@ var FieldDefs = mapOfOp( {
   },
 } );
 
-
 var KeyOnlyArray = zeroOrMoreOp( {
   expr: { pred: isPropName }
 } );
@@ -458,7 +457,6 @@ var core = {
   mapOf,
   ShapeFnClause,
   MapOfFnClause,
-  // TestClause,
 };
 
 core[ 'alt' ] = core.or;
