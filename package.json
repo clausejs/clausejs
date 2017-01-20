@@ -11,7 +11,7 @@
     "dev-docsite": "webpack-dev-server --content-base ./docs --inline --host 0.0.0.0",
     "test": "mocha --compilers js:babel-register",
     "test:watch": "mocha --compilers js:babel-register --watch",
-    "build": "cross-env CLAUSEJS_ENV=production webpack && cross-env NODE_ENV=production CLAUSEJS_ENV=production MINIFY_ME=1 webpack -p && npm run build-docsite",
+    "build": "cross-env CLAUSEJS_ENV=production webpack && cross-env CLAUSEJS_ENV=production MINIFY_ME=1 webpack && npm run build-docsite",
     "build-docsite": "babel-node scripts/build-docs.js",
     "lint": "eslint ./src"
   },
