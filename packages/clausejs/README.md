@@ -170,7 +170,7 @@ sumIsOdd( 1, 1, 1, {} ); //=> true (remember the optional trailing isObj we defi
 sumIsOdd( 2, 2, 2, null ); //=> throws a "Problem" because arguments do not conform
 sumIsOdd( 2, 2, 2, {}, {} ); //=> same as above
 ```
-For advanced features and concepts, refer to [documentation site](https://clause.js.org).
+For more examples, advanced features and concepts, refer to [documentation site](https://clause.js.org).
 
 ## More Examples
 

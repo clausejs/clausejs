@@ -767,7 +767,7 @@ C.conform( CatClause, [&quot;a&quot;, 2, true] )</code></pre>
 
       <pre><code>var LabelledCatClause = C.cat(
   &apos;first&apos;, C.isStr, 
-  &apos;second&apos;, C.isNum, 
+  &apos;second&apos;, &apos;this is an optional comment&apos;, C.isNum, 
   &apos;third&apos;, C.isBool
 );
 C.conform( LabelledCatClause, [&quot;a&quot;, 2, true] )</code></pre>
@@ -776,7 +776,7 @@ C.conform( LabelledCatClause, [&quot;a&quot;, 2, true] )</code></pre>
       <pre><code>// equivalent to the above
 var LabelledCatClause = C.cat([
   [ &apos;first&apos;, C.isStr ], 
-  [ &apos;second&apos;, C.isNum ], 
+  [ &apos;second&apos;, &apos;this is an optional comment&apos;, C.isNum ], 
   [ &apos;third&apos;, C.isBool ]
 ]);
 C.conform( LabelledCatClause, [&quot;a&quot;, 2, true] )</code></pre>

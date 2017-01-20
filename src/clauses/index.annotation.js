@@ -31,14 +31,14 @@ M( 'clause.compose/cat', {
 C.conform( CatClause, ["a", 2, true] )`,
     `var LabelledCatClause = C.cat(
   'first', C.isStr, 
-  'second', C.isNum, 
+  'second', 'this is an optional comment', C.isNum, 
   'third', C.isBool
 );
 C.conform( LabelledCatClause, ["a", 2, true] )`,
     `// equivalent to the above
 var LabelledCatClause = C.cat([
   [ 'first', C.isStr ], 
-  [ 'second', C.isNum ], 
+  [ 'second', 'this is an optional comment', C.isNum ], 
   [ 'third', C.isBool ]
 ]);
 C.conform( LabelledCatClause, ["a", 2, true] )`,
