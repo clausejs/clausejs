@@ -11,6 +11,7 @@ window.Tether = tether;
 window.Util = require( 'exports-loader?Util!bootstrap/js/dist/util' );
 window.Tooltip = require( 'exports-loader?Tooltip!bootstrap/js/dist/tooltip' );
 window.Popover = require( 'exports-loader?Popover!bootstrap/js/dist/popover' );
+require( 'bootstrap/js/dist/collapse' );
 
 $( () => {
 

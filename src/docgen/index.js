@@ -583,10 +583,14 @@ function _genFclause( globalReg, exprName, clause, path, meta = {} ) {
   ` ] );
   }
   if ( argsClause ) {
-    frags.push( [ 'Argument Clause Graph', genForExpression( globalReg, null, argsClause, meta && meta.args ) ] );
+    frags.push( [ 'Argument Clause Graph',
+      _wrapWithCollapsible( `${exprName}-args-graph`, genForExpression( globalReg, null, argsClause, meta && meta.args ) )
+    ] );
   }
   if ( retClause ) {
-    frags.push( [ 'Return Value Clause Graph', genForExpression( globalReg, null, retClause, meta && meta.ret ) ] );
+    frags.push( [ 'Return Value Clause Graph',
+      _wrapWithCollapsible( `${exprName}-ret-graph`, genForExpression( globalReg, null, retClause, meta && meta.ret ) )
+    ] );
   } if ( fn ) {
     frags.push( [ 'Argument-return value relation', `<pre>${fnName( fn )}</pre>` ] );
   }
@@ -600,6 +604,18 @@ function _genFclause( globalReg, exprName, clause, path, meta = {} ) {
     </dl>
   `;
   return r;
+}
+
+function _wrapWithCollapsible( contentId, content ) {
+  return `<p>
+     <button class="btn btn-sm btn-info" type="button" data-toggle="collapse" data-target="#${contentId}" aria-expanded="false" aria-controls="collapseExample">
+      Show Graph \u00BB
+    </button>
+  </p>
+  <div class="collapse" id="${contentId}">
+    ${content}
+  </div>
+`;
 }
 
 
