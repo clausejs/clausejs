@@ -59,12 +59,12 @@ Alpha.
 var C = require('clausejs');
 
 var MyClause = C.cat( C.oneOrMore(C.isNum), C.zeroOrOne( C.isObj ) );
-C.isValid(MyClause, [ 1, 2, 3, { a: 1 } ]); // true
-C.isValid(MyClause,  [ 1, 2, 3 ]); // true
-C.isValid(MyClause,  [ 1, 2, 3, null ]); // false: the trailing element does not satisfy our clause
-C.isValid(MyClause,  [ 1, 2, 3, { a: 1 }, { } ]); // false: extra trailing element
+C.isValid(MyClause, [ 1, 2, 3, { a: 1 } ]); //=> true
+C.isValid(MyClause,  [ 1, 2, 3 ]); //=> true
+C.isValid(MyClause,  [ 1, 2, 3, null ]); //=> false: the trailing element does not satisfy our clause
+C.isValid(MyClause,  [ 1, 2, 3, { a: 1 }, { } ]); //=> false: extra trailing element
 C.conform(MyClause, [ 1, 2, 3, null ]);
-// returns a "Problem" object with detailed explanation why validation failed
+//=> a "Problem" object with detailed explanation why validation failed
 
 // Next, we redefine the above concatenation clause, with a label for each part.
 var MyLabelledClause = C.cat(
@@ -73,7 +73,7 @@ var MyLabelledClause = C.cat(
   );
 S
 MyLabelledClause.conform( [ 1, 2, 3, { a: 1 } ] );
-// { myNumbers: [ 1, 2, 3 ], myObject: { a: 1 } }
+//=> { myNumbers: [ 1, 2, 3 ], myObject: { a: 1 } }
 
 ```
 
@@ -81,7 +81,7 @@ MyLabelledClause.conform( [ 1, 2, 3, { a: 1 } ] );
 
 ```js
 // Clause comes with an application-wide global clause registry.
-C.set("myApp/myLabelledClause", MyLabelledClause); // defines a clause in the registry
+C("myApp/myLabelledClause", MyLabelledClause); // defines a clause in the registry
 C("myApp/myLabelledClause"); // returns the same clause above (MyLabelledClause)
 ```
 
@@ -217,9 +217,10 @@ npm run test
 
 Documentation website: http://clause.js.org
 
-## Performance
+## Performance & Reliability
 
 - [![Size Minified](http://img.badgesize.io/clausejs/clausejs/master/packages/clausejs/dist/clausejs.min.js?label=min)](packages/clausejs/dist) [![Size Gzipped](http://img.badgesize.io/clausejs/clausejs/master/packages/clausejs/dist/clausejs.min.js?compression=gzip&label=min%2Bgzipped)](packages/clausejs/dist)
+- No external dependencies
 - Clause is mostly self-contained and has very few external dependencies.
 - Clause uses NFA algorithm for regex parsing, which means it's generally pretty fast in handling complex regex operations.
 - Clause's implementation is optimized in such a way that it avoid long chains of recursive function calls and makes as few redundant path visits as possible.
