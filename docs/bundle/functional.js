@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 104);
+/******/ 	return __webpack_require__(__webpack_require__.s = 105);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -141,6 +141,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 var PAREN_PAIRS = '❰❮❬❨❪﹙₍₎﹚❫❩❭❯❱';
 var stringifyWithFnName = __webpack_require__(20);
+var lazyDefine = __webpack_require__(69);
 
 function Problem(val, failsPredicate, subproblems, msg) {
   var _this = this;
@@ -158,7 +159,10 @@ function Problem(val, failsPredicate, subproblems, msg) {
   this.shortMessage = msg;
   this.subproblems = subproblems;
 
-  this.message = _constructMessage(this, 0);
+  lazyDefine(this, 'message', function () {
+    return _constructMessage(_this, 0);
+  });
+
   this.toString = function () {
     return _this.message;
   };
@@ -227,7 +231,7 @@ if (function test() {}.name !== 'test') {
   var fToString = Function.prototype.toString;
   var pMatch = String.prototype.match;
   var pReplace = String.prototype.replace;
-  var s = __webpack_require__(70);
+  var s = __webpack_require__(71);
   var reName = new RegExp('^[' + s + ']*(?:function|class)[' + s + ']*\\*?[' + s + ']+([\\w\\$]+)[' + s + ']*', 'i');
   _getFnName = function getName(fn) {
     var name = pMatch.call(pReplace.call(fToString.call(fn), STRIP_COMMENTS, ' '), reName);
@@ -1067,17 +1071,17 @@ module.exports = getNamedFn;
 
 
 var oAssign = __webpack_require__(4);
-var nfaWalker = __webpack_require__(78);
-var anyWalker = __webpack_require__(72);
-var predWalker = __webpack_require__(79);
-var wallWalker = __webpack_require__(81);
-var fclauseWalker = __webpack_require__(76);
-var shapeWalker = __webpack_require__(80);
-var andWalker = __webpack_require__(71);
-var collOfWalker = __webpack_require__(74);
-var mapOfWalker = __webpack_require__(77);
-var clauseRefWalker = __webpack_require__(73);
-var delayedClauseWalker = __webpack_require__(75);
+var nfaWalker = __webpack_require__(79);
+var anyWalker = __webpack_require__(73);
+var predWalker = __webpack_require__(80);
+var wallWalker = __webpack_require__(82);
+var fclauseWalker = __webpack_require__(77);
+var shapeWalker = __webpack_require__(81);
+var andWalker = __webpack_require__(72);
+var collOfWalker = __webpack_require__(75);
+var mapOfWalker = __webpack_require__(78);
+var clauseRefWalker = __webpack_require__(74);
+var delayedClauseWalker = __webpack_require__(76);
 var coerceIntoClause = __webpack_require__(9);
 var isProblem = __webpack_require__(0);
 
@@ -1751,7 +1755,7 @@ var handle = __webpack_require__(19);
 var clauseFromAlts = __webpack_require__(6);
 var fnName = __webpack_require__(3);
 var stringifyWithFnName = __webpack_require__(20);
-var repeat = __webpack_require__(69);
+var repeat = __webpack_require__(70);
 
 var NEW_LINE = function NEW_LINE() {};
 var INDENT_IN = function INDENT_IN() {};
@@ -2180,7 +2184,7 @@ exports.setMeta = setMeta;
 exports.getMeta = getMeta;
 exports.resolve = resolve;
 exports.default = namespaceGetOrSet;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(82)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(83)))
 
 /***/ },
 /* 32 */
@@ -3781,6 +3785,34 @@ module.exports = isValid;
 "use strict";
 
 
+module.exports = function (obj, prop, fn) {
+  var define = function define(value) {
+    return Object.defineProperty(obj, prop, { value: value, enumerable: true, writable: true });
+  };
+
+  Object.defineProperty(obj, prop, {
+    configurable: true,
+    enumerable: true,
+    get: function get() {
+      var ret = fn();
+      define(ret);
+      return ret;
+    },
+    set: function set(val) {
+      define(val);
+    }
+  });
+
+  return obj;
+};
+
+/***/ },
+/* 70 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 function repeat(n, x) {
   var arr = [],
       i;
@@ -3793,7 +3825,7 @@ function repeat(n, x) {
 module.exports = repeat;
 
 /***/ },
-/* 70 */
+/* 71 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3834,7 +3866,7 @@ module.exports = whiteSpaces.reduce(function (acc, item) {
 }, '');
 
 /***/ },
-/* 71 */
+/* 72 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3889,7 +3921,7 @@ function andWalker(clause, walkFn) {
 module.exports = andWalker;
 
 /***/ },
-/* 72 */
+/* 73 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3909,7 +3941,7 @@ function walkThroughAny(x) {
 module.exports = anyWalker;
 
 /***/ },
-/* 73 */
+/* 74 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3933,7 +3965,7 @@ function clauseRefWalker(clauseRef, walkFn) {
 module.exports = clauseRefWalker;
 
 /***/ },
-/* 74 */
+/* 75 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4009,7 +4041,7 @@ function collOfWalker(clause, walkFn) {
 module.exports = collOfWalker;
 
 /***/ },
-/* 75 */
+/* 76 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4032,7 +4064,7 @@ function delayedClauseWalker(delayedClause, walkFn) {
 module.exports = delayedClauseWalker;
 
 /***/ },
-/* 76 */
+/* 77 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4188,7 +4220,7 @@ function fclauseWalker(clause, walkFn) {
 module.exports = fclauseWalker;
 
 /***/ },
-/* 77 */
+/* 78 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4250,7 +4282,7 @@ function mapOfWalker(clause, walkFn) {
 module.exports = mapOfWalker;
 
 /***/ },
-/* 78 */
+/* 79 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4312,7 +4344,7 @@ function nfaWalker(clause, walkFn) {
 module.exports = nfaWalker;
 
 /***/ },
-/* 79 */
+/* 80 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4344,7 +4376,7 @@ function predWalker(clause) {
 module.exports = predWalker;
 
 /***/ },
-/* 80 */
+/* 81 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4646,7 +4678,7 @@ function _conformNamedOrExpr(x, alts, walkFn, walkOpts) {
 module.exports = shapeWalker;
 
 /***/ },
-/* 81 */
+/* 82 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4671,7 +4703,7 @@ function wallWalker(wallClause, walkFn) {
 module.exports = wallWalker;
 
 /***/ },
-/* 82 */
+/* 83 */
 /***/ function(module, exports) {
 
 var g;
@@ -4696,7 +4728,7 @@ module.exports = g;
 
 
 /***/ },
-/* 83 */
+/* 84 */
 /***/ function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -14922,12 +14954,12 @@ return jQuery;
 
 
 /***/ },
-/* 84 */,
 /* 85 */,
 /* 86 */,
 /* 87 */,
 /* 88 */,
-/* 89 */
+/* 89 */,
+/* 90 */
 /***/ function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! tether 1.4.0 */
@@ -16744,9 +16776,9 @@ return Tether;
 
 
 /***/ },
-/* 90 */,
 /* 91 */,
-/* 92 */
+/* 92 */,
+/* 93 */
 /***/ function(module, exports) {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -16948,7 +16980,7 @@ var Popover = function ($) {
 module.exports = Popover;
 
 /***/ },
-/* 93 */
+/* 94 */
 /***/ function(module, exports) {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -17548,7 +17580,7 @@ var Tooltip = function ($) {
 module.exports = Tooltip;
 
 /***/ },
-/* 94 */
+/* 95 */
 /***/ function(module, exports) {
 
 /**
@@ -17712,7 +17744,6 @@ var Util = function ($) {
 module.exports = Util;
 
 /***/ },
-/* 95 */,
 /* 96 */,
 /* 97 */,
 /* 98 */,
@@ -17721,17 +17752,18 @@ module.exports = Util;
 /* 101 */,
 /* 102 */,
 /* 103 */,
-/* 104 */
+/* 104 */,
+/* 105 */
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _jquery = __webpack_require__(83);
+var _jquery = __webpack_require__(84);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _tether = __webpack_require__(89);
+var _tether = __webpack_require__(90);
 
 var _tether2 = _interopRequireDefault(_tether);
 
@@ -17747,9 +17779,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // HLJS.registerLanguage( 'javascript', require( 'highlight.js/lib/languages/javascript' ) );
 window.$ = window.jQuery = _jquery2.default;
 window.Tether = _tether2.default;
-window.Util = __webpack_require__(94);
-window.Tooltip = __webpack_require__(93);
-window.Popover = __webpack_require__(92);
+window.Util = __webpack_require__(95);
+window.Tooltip = __webpack_require__(94);
+window.Popover = __webpack_require__(93);
 
 (0, _jquery2.default)(function () {
 

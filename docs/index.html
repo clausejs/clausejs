@@ -142,6 +142,8 @@
             <a href="#clause.compose/undefinable" data-path="clause.compose/undefinable">undefinable()</a>
           </li><li>
             <a href="#clause.compose/maybe" data-path="clause.compose/maybe">maybe()</a>
+          </li><li>
+            <a href="#clause.compose/delayed" data-path="clause.compose/delayed">delayed()</a>
           </li>
       </ul>
     </dd>
@@ -167,11 +169,11 @@
           </li><li>
             <a href="#clause.utils/conform" data-path="clause.utils/conform">conform()</a>
           </li><li>
-            <a href="#clause.utils/delayed" data-path="clause.utils/delayed">delayed()</a>
-          </li><li>
             <a href="#clause.utils/describe" data-path="clause.utils/describe">describe()</a>
           </li><li>
             <a href="#clause.utils/sExpression" data-path="clause.utils/sExpression">sExpression()</a>
+          </li><li>
+            <a href="#clause.utils/isProblem" data-path="clause.utils/isProblem">isProblem()</a>
           </li>
       </ul>
     </dd>
@@ -248,9 +250,9 @@
       <li>
             <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>
           </li><li>
-            <a href="#clause.types/Primitive" data-path="clause.types/Primitive">Primitive</a>
-          </li><li>
             <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a>
+          </li><li>
+            <a href="#clause.types/Problem" data-path="clause.types/Problem">Problem</a>
           </li><li>
             <a href="#clause.types/FClause" data-path="clause.types/FClause">FClause</a>
           </li><li>
@@ -260,8 +262,6 @@
           </li><li>
             <a href="#clause.types/ClauseReference" data-path="clause.types/ClauseReference">ClauseReference</a>
           </li><li>
-            <a href="#clause.types/Problem" data-path="clause.types/Problem">Problem</a>
-          </li><li>
             <a href="#clause.types/NamespaceObj" data-path="clause.types/NamespaceObj">NamespaceObj</a>
           </li><li>
             <a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">NamespacePath</a>
@@ -269,6 +269,8 @@
             <a href="#clause.types/ClauseLabel" data-path="clause.types/ClauseLabel">ClauseLabel</a>
           </li><li>
             <a href="#clause.types/SExpression" data-path="clause.types/SExpression">SExpression</a>
+          </li><li>
+            <a href="#clause.types/Primitive" data-path="clause.types/Primitive">Primitive</a>
           </li><li>
             <a href="#clause.types/String" data-path="clause.types/String">String</a>
           </li><li>
@@ -4144,6 +4146,171 @@ ref.get()</code></pre>
   
         </div>
       
+
+    <a name="clause.compose/delayed"></a>
+    
+        <div class="card">
+          <div class="card-header inline-headers">
+            
+      <h6>delayed()</h6>&#xA0;
+        <span class="tag tag-primary">
+          function
+        </span>
+      
+          </div>
+        
+    <dl class="card-block">
+    <dt>Syntax</dt><dd><ul>
+        <li>(() &#x2192; <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>) &#x2192; <a href="#clause.types/DelayedClause" data-path="clause.types/DelayedClause">DelayedClause</a></li>
+      </ul></dd>
+<dt>Clause Description</dt><dd>
+    <blockquote class="blockquote">
+      <small>
+        <em class="text-muted">
+          
+    <pre>fclause( {
+  &lt;args&gt;: cat( &quot;getFn&quot;, fclause( {
+    &lt;args&gt;: cat(), 
+    &lt;ret&gt;: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>
+  } ) ), 
+  &lt;ret&gt;: <a href="#clause.types/DelayedClause" data-path="clause.types/DelayedClause">DelayedClause</a>
+} )</pre>
+  
+        </em>
+      </small>
+    </blockquote>
+  </dd>
+<dt>Argument Clause Graph</dt><dd>
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="clause-type">
+      
+    <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
+    &lt;pre&gt;cat( &quot;getFn&quot;, fclause( {
+  &amp;lt;args&amp;gt;: cat(), 
+  &amp;lt;ret&amp;gt;: &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;
+} ) )&lt;/pre&gt;
+  " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
+      [cat] a sequence of
+    </span>
+  
+    </legend>
+    
+    <div class="card-block">
+      <p class="card-title">
+        Should be <em>an ordered list</em> of the following:
+      </p>
+    </div>
+    <div class="list-group list-group-flush list-for-cat">
+      
+        <fieldset class="list-group-item card card-outline-info">
+          <legend class="clause-type">
+          
+            <span class="tag tag-default">Part 1</span>
+            <span class="lead font-italic text-primary">
+              &#x201C;getFn&#x201D;</span>          
+          
+          </legend>
+          <div class="row">
+            <div class="col-md-12">
+              
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="clause-type">
+      
+    <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
+    &lt;pre&gt;fclause( {
+  &amp;lt;args&amp;gt;: cat(), 
+  &amp;lt;ret&amp;gt;: &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;
+} )&lt;/pre&gt;
+  " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
+      [fclause] a function
+    </span>
+  
+    </legend>
+    
+    <dl class="card-block">
+    <dt>Syntax</dt><dd><ul>
+        <li>() &#x2192; <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a></li>
+      </ul></dd>
+<dt>Argument Clause Graph</dt><dd>
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="clause-type">
+      
+    <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
+    &lt;pre&gt;cat()&lt;/pre&gt;
+  " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
+      [cat] a sequence of
+    </span>
+  
+    </legend>
+    
+    <div class="card-block">
+      <p class="card-title">
+        Should be <em>an ordered list</em> of the following:
+      </p>
+    </div>
+    <div class="list-group list-group-flush list-for-cat">
+      
+    </div>
+  
+    </fieldset>
+    </dd>
+<dt>Return Value Clause Graph</dt><dd>
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="clause-type">
+      <span class="tag tag-info">[clause]</span>
+    </legend>
+    
+    <div class="card-block">
+      A value of type
+      <a href="#clause.types/Expression" data-path="clause.types/Expression">clause.types/Expression</a>
+    </div>
+  
+    </fieldset>
+    </dd>
+    </dl>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </fieldset>
+    
+    </div>
+  
+    </fieldset>
+    </dd>
+<dt>Return Value Clause Graph</dt><dd>
+    
+    
+    <fieldset class="card card-outline-primary">
+    <legend class="clause-type">
+      <span class="tag tag-info">[clause]</span>
+    </legend>
+    
+    <div class="card-block">
+      A value of type
+      <a href="#clause.types/DelayedClause" data-path="clause.types/DelayedClause">clause.types/DelayedClause</a>
+    </div>
+  
+    </fieldset>
+    </dd>
+    </dl>
+  
+        </div>
+      
 <h3>clause.compose.string/</h3><hr>
     <a name="clause.compose.string/sCat"></a>
     
@@ -4663,171 +4830,6 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
           </div>
         </fieldset>
     
-    </div>
-  
-    </fieldset>
-    </dd>
-    </dl>
-  
-        </div>
-      
-
-    <a name="clause.utils/delayed"></a>
-    
-        <div class="card">
-          <div class="card-header inline-headers">
-            
-      <h6>delayed()</h6>&#xA0;
-        <span class="tag tag-primary">
-          function
-        </span>
-      
-          </div>
-        
-    <dl class="card-block">
-    <dt>Syntax</dt><dd><ul>
-        <li>(() &#x2192; <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>) &#x2192; <a href="#clause.types/DelayedClause" data-path="clause.types/DelayedClause">DelayedClause</a></li>
-      </ul></dd>
-<dt>Clause Description</dt><dd>
-    <blockquote class="blockquote">
-      <small>
-        <em class="text-muted">
-          
-    <pre>fclause( {
-  &lt;args&gt;: cat( &quot;getFn&quot;, fclause( {
-    &lt;args&gt;: cat(), 
-    &lt;ret&gt;: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>
-  } ) ), 
-  &lt;ret&gt;: <a href="#clause.types/DelayedClause" data-path="clause.types/DelayedClause">DelayedClause</a>
-} )</pre>
-  
-        </em>
-      </small>
-    </blockquote>
-  </dd>
-<dt>Argument Clause Graph</dt><dd>
-    
-    
-    <fieldset class="card card-outline-info">
-    <legend class="clause-type">
-      
-    <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat( &quot;getFn&quot;, fclause( {
-  &amp;lt;args&amp;gt;: cat(), 
-  &amp;lt;ret&amp;gt;: &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;
-} ) )&lt;/pre&gt;
-  " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      [cat] a sequence of
-    </span>
-  
-    </legend>
-    
-    <div class="card-block">
-      <p class="card-title">
-        Should be <em>an ordered list</em> of the following:
-      </p>
-    </div>
-    <div class="list-group list-group-flush list-for-cat">
-      
-        <fieldset class="list-group-item card card-outline-info">
-          <legend class="clause-type">
-          
-            <span class="tag tag-default">Part 1</span>
-            <span class="lead font-italic text-primary">
-              &#x201C;getFn&#x201D;</span>          
-          
-          </legend>
-          <div class="row">
-            <div class="col-md-12">
-              
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              
-    
-    
-    <fieldset class="card card-outline-info">
-    <legend class="clause-type">
-      
-    <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;fclause( {
-  &amp;lt;args&amp;gt;: cat(), 
-  &amp;lt;ret&amp;gt;: &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;
-} )&lt;/pre&gt;
-  " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      [fclause] a function
-    </span>
-  
-    </legend>
-    
-    <dl class="card-block">
-    <dt>Syntax</dt><dd><ul>
-        <li>() &#x2192; <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a></li>
-      </ul></dd>
-<dt>Argument Clause Graph</dt><dd>
-    
-    
-    <fieldset class="card card-outline-info">
-    <legend class="clause-type">
-      
-    <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat()&lt;/pre&gt;
-  " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      [cat] a sequence of
-    </span>
-  
-    </legend>
-    
-    <div class="card-block">
-      <p class="card-title">
-        Should be <em>an ordered list</em> of the following:
-      </p>
-    </div>
-    <div class="list-group list-group-flush list-for-cat">
-      
-    </div>
-  
-    </fieldset>
-    </dd>
-<dt>Return Value Clause Graph</dt><dd>
-    
-    
-    <fieldset class="card card-outline-info">
-    <legend class="clause-type">
-      <span class="tag tag-info">[clause]</span>
-    </legend>
-    
-    <div class="card-block">
-      A value of type
-      <a href="#clause.types/Expression" data-path="clause.types/Expression">clause.types/Expression</a>
-    </div>
-  
-    </fieldset>
-    </dd>
-    </dl>
-  
-    </fieldset>
-    
-            </div>
-          </div>
-        </fieldset>
-    
-    </div>
-  
-    </fieldset>
-    </dd>
-<dt>Return Value Clause Graph</dt><dd>
-    
-    
-    <fieldset class="card card-outline-primary">
-    <legend class="clause-type">
-      <span class="tag tag-info">[clause]</span>
-    </legend>
-    
-    <div class="card-block">
-      A value of type
-      <a href="#clause.types/DelayedClause" data-path="clause.types/DelayedClause">clause.types/DelayedClause</a>
     </div>
   
     </fieldset>
@@ -5435,6 +5437,118 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     <div class="card-block">
       A value of type
       <a href="#clause.types/SExpression" data-path="clause.types/SExpression">clause.types/SExpression</a>
+    </div>
+  
+    </fieldset>
+    </dd>
+    </dl>
+  
+        </div>
+      
+
+    <a name="clause.utils/isProblem"></a>
+    
+        <div class="card">
+          <div class="card-header inline-headers">
+            
+      <h6>isProblem()</h6>&#xA0;
+        <span class="tag tag-primary">
+          function
+        </span>
+      
+          </div>
+        
+    <dl class="card-block">
+    <dt>Syntax</dt><dd><ul>
+        <li>(x: any) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
+      </ul></dd>
+<dt>Clause Description</dt><dd>
+    <blockquote class="blockquote">
+      <small>
+        <em class="text-muted">
+          
+    <pre>fclause( {
+  &lt;args&gt;: cat( &quot;x&quot;, any() ), 
+  &lt;ret&gt;: <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a>
+} )</pre>
+  
+        </em>
+      </small>
+    </blockquote>
+  </dd>
+<dt>Argument Clause Graph</dt><dd>
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="clause-type">
+      
+    <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
+    &lt;pre&gt;cat( &quot;x&quot;, any() )&lt;/pre&gt;
+  " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
+      [cat] a sequence of
+    </span>
+  
+    </legend>
+    
+    <div class="card-block">
+      <p class="card-title">
+        Should be <em>an ordered list</em> of the following:
+      </p>
+    </div>
+    <div class="list-group list-group-flush list-for-cat">
+      
+        <fieldset class="list-group-item card card-outline-info">
+          <legend class="clause-type">
+          
+            <span class="tag tag-default">Part 1</span>
+            <span class="lead font-italic text-primary">
+              &#x201C;x&#x201D;</span>          
+          
+          </legend>
+          <div class="row">
+            <div class="col-md-12">
+              
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="clause-type">
+      
+    <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
+    &lt;pre&gt;any()&lt;/pre&gt;
+  " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
+      <span class="tag tag-info">[any]</span>
+    </span>
+  
+    </legend>
+    
+    <div class="card-block">Any value.</div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </fieldset>
+    
+    </div>
+  
+    </fieldset>
+    </dd>
+<dt>Return Value Clause Graph</dt><dd>
+    
+    
+    <fieldset class="card card-outline-primary">
+    <legend class="clause-type">
+      <span class="tag tag-info">[clause]</span>
+    </legend>
+    
+    <div class="card-block">
+      A value of type
+      <a href="#clause.types/Bool" data-path="clause.types/Bool">clause.types/Bool</a>
     </div>
   
     </fieldset>
@@ -9097,206 +9211,6 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
         </div>
       
 
-    <a name="clause.types/Primitive"></a>
-    
-        <div class="card">
-          <div class="card-header inline-headers">
-            
-      <h6>Primitive</h6>&#xA0;
-        <span class="tag tag-primary">
-          or
-        </span>
-      
-          </div>
-        
-    <div class="card-block">
-      <p class="card-title">
-      
-        Should be <em>one of</em> the following:
-      </p>
-    </div>
-    <div class="list-group list-group-flush list-for-or">
-      
-        <fieldset class="list-group-item card-outline-info">
-          <legend class="clause-type">
-            <span class="tag tag-default">
-                Option 1
-            </span>
-            
-          </legend>
-          <div class="row">
-            <div class="col-md-12">
-            
-            
-            
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              
-    
-    
-    <fieldset class="card card-outline-primary">
-    <legend class="clause-type">
-      <span class="tag tag-info">[clause]</span>
-    </legend>
-    
-    <div class="card-block">
-      A value of type
-      <a href="#clause.types/String" data-path="clause.types/String">clause.types/String</a>
-    </div>
-  
-    </fieldset>
-    
-            </div>
-          </div>
-        </fieldset>
-    
-        <fieldset class="list-group-item card-outline-info">
-          <legend class="clause-type">
-            <span class="tag tag-default">
-                Option 2
-            </span>
-            
-          </legend>
-          <div class="row">
-            <div class="col-md-12">
-            
-            
-            
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              
-    
-    
-    <fieldset class="card card-outline-primary">
-    <legend class="clause-type">
-      <span class="tag tag-info">[clause]</span>
-    </legend>
-    
-    <div class="card-block">
-      A value of type
-      <a href="#clause.types/Number" data-path="clause.types/Number">clause.types/Number</a>
-    </div>
-  
-    </fieldset>
-    
-            </div>
-          </div>
-        </fieldset>
-    
-        <fieldset class="list-group-item card-outline-info">
-          <legend class="clause-type">
-            <span class="tag tag-default">
-                Option 3
-            </span>
-            
-          </legend>
-          <div class="row">
-            <div class="col-md-12">
-            
-            
-            
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              
-    
-    
-    <fieldset class="card card-outline-primary">
-    <legend class="clause-type">
-      <span class="tag tag-info">[clause]</span>
-    </legend>
-    
-    <div class="card-block">
-      A value of type
-      <a href="#clause.types/Bool" data-path="clause.types/Bool">clause.types/Bool</a>
-    </div>
-  
-    </fieldset>
-    
-            </div>
-          </div>
-        </fieldset>
-    
-        <fieldset class="list-group-item card-outline-info">
-          <legend class="clause-type">
-            <span class="tag tag-default">
-                Option 4
-            </span>
-            
-          </legend>
-          <div class="row">
-            <div class="col-md-12">
-            
-            
-            
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              
-    
-    
-    <fieldset class="card card-outline-primary">
-    <legend class="clause-type">
-      <span class="tag tag-info">[clause]</span>
-    </legend>
-    
-    <div class="card-block">
-      A value of type
-      <a href="#clause.types/Null" data-path="clause.types/Null">clause.types/Null</a>
-    </div>
-  
-    </fieldset>
-    
-            </div>
-          </div>
-        </fieldset>
-    
-        <fieldset class="list-group-item card-outline-info">
-          <legend class="clause-type">
-            <span class="tag tag-default">
-                Option 5
-            </span>
-            
-          </legend>
-          <div class="row">
-            <div class="col-md-12">
-            
-            
-            
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              
-    
-    
-    <fieldset class="card card-outline-primary">
-    <legend class="clause-type">
-      <span class="tag tag-info">[clause]</span>
-    </legend>
-    
-    <div class="card-block">
-      A value of type
-      <a href="#clause.types/Undefined" data-path="clause.types/Undefined">clause.types/Undefined</a>
-    </div>
-  
-    </fieldset>
-    
-            </div>
-          </div>
-        </fieldset>
-    
-    </div>
-  
-        </div>
-      
-
     <a name="clause.types/Clause"></a>
     
         <div class="card">
@@ -9315,6 +9229,34 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
       A value that satisfies 
       <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function instanceOf_Clause(){ return action.apply(this, arguments); }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         instanceOf_Clause_()
+      </span>
+    </em>
+  
+    </div>
+  
+        </div>
+      
+
+    <a name="clause.types/Problem"></a>
+    
+        <div class="card">
+          <div class="card-header inline-headers">
+            
+      <h6>Problem</h6>&#xA0;
+        <span class="tag tag-primary">
+          predicate
+        </span>
+      
+          </div>
+        
+    <div class="card-block">
+      
+    <em>
+      A value that satisfies 
+      <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isProblem(x) {
+  return x instanceof Problem;
+}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+        isProblem()
       </span>
     </em>
   
@@ -9509,34 +9451,6 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
   return x instanceof ClauseRef;
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         isClauseRef()
-      </span>
-    </em>
-  
-    </div>
-  
-        </div>
-      
-
-    <a name="clause.types/Problem"></a>
-    
-        <div class="card">
-          <div class="card-header inline-headers">
-            
-      <h6>Problem</h6>&#xA0;
-        <span class="tag tag-primary">
-          predicate
-        </span>
-      
-          </div>
-        
-    <div class="card-block">
-      
-    <em>
-      A value that satisfies 
-      <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isProblem(x) {
-  return x instanceof Problem;
-}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
-        isProblem()
       </span>
     </em>
   
@@ -11448,6 +11362,206 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
     </fieldset>
     
       TODO
+    </div>
+  
+        </div>
+      
+
+    <a name="clause.types/Primitive"></a>
+    
+        <div class="card">
+          <div class="card-header inline-headers">
+            
+      <h6>Primitive</h6>&#xA0;
+        <span class="tag tag-primary">
+          or
+        </span>
+      
+          </div>
+        
+    <div class="card-block">
+      <p class="card-title">
+      
+        Should be <em>one of</em> the following:
+      </p>
+    </div>
+    <div class="list-group list-group-flush list-for-or">
+      
+        <fieldset class="list-group-item card-outline-info">
+          <legend class="clause-type">
+            <span class="tag tag-default">
+                Option 1
+            </span>
+            
+          </legend>
+          <div class="row">
+            <div class="col-md-12">
+            
+            
+            
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              
+    
+    
+    <fieldset class="card card-outline-primary">
+    <legend class="clause-type">
+      <span class="tag tag-info">[clause]</span>
+    </legend>
+    
+    <div class="card-block">
+      A value of type
+      <a href="#clause.types/String" data-path="clause.types/String">clause.types/String</a>
+    </div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </fieldset>
+    
+        <fieldset class="list-group-item card-outline-info">
+          <legend class="clause-type">
+            <span class="tag tag-default">
+                Option 2
+            </span>
+            
+          </legend>
+          <div class="row">
+            <div class="col-md-12">
+            
+            
+            
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              
+    
+    
+    <fieldset class="card card-outline-primary">
+    <legend class="clause-type">
+      <span class="tag tag-info">[clause]</span>
+    </legend>
+    
+    <div class="card-block">
+      A value of type
+      <a href="#clause.types/Number" data-path="clause.types/Number">clause.types/Number</a>
+    </div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </fieldset>
+    
+        <fieldset class="list-group-item card-outline-info">
+          <legend class="clause-type">
+            <span class="tag tag-default">
+                Option 3
+            </span>
+            
+          </legend>
+          <div class="row">
+            <div class="col-md-12">
+            
+            
+            
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              
+    
+    
+    <fieldset class="card card-outline-primary">
+    <legend class="clause-type">
+      <span class="tag tag-info">[clause]</span>
+    </legend>
+    
+    <div class="card-block">
+      A value of type
+      <a href="#clause.types/Bool" data-path="clause.types/Bool">clause.types/Bool</a>
+    </div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </fieldset>
+    
+        <fieldset class="list-group-item card-outline-info">
+          <legend class="clause-type">
+            <span class="tag tag-default">
+                Option 4
+            </span>
+            
+          </legend>
+          <div class="row">
+            <div class="col-md-12">
+            
+            
+            
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              
+    
+    
+    <fieldset class="card card-outline-primary">
+    <legend class="clause-type">
+      <span class="tag tag-info">[clause]</span>
+    </legend>
+    
+    <div class="card-block">
+      A value of type
+      <a href="#clause.types/Null" data-path="clause.types/Null">clause.types/Null</a>
+    </div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </fieldset>
+    
+        <fieldset class="list-group-item card-outline-info">
+          <legend class="clause-type">
+            <span class="tag tag-default">
+                Option 5
+            </span>
+            
+          </legend>
+          <div class="row">
+            <div class="col-md-12">
+            
+            
+            
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              
+    
+    
+    <fieldset class="card card-outline-primary">
+    <legend class="clause-type">
+      <span class="tag tag-info">[clause]</span>
+    </legend>
+    
+    <div class="card-block">
+      A value of type
+      <a href="#clause.types/Undefined" data-path="clause.types/Undefined">clause.types/Undefined</a>
+    </div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </fieldset>
+    
     </div>
   
         </div>

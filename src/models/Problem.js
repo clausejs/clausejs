@@ -1,5 +1,6 @@
 const PAREN_PAIRS = '❰❮❬❨❪﹙₍₎﹚❫❩❭❯❱';
 const stringifyWithFnName = require( '../utils/stringifyWithFnName' );
+const lazyDefine = require( '../utils/lazyDefine' );
 
 function Problem( val, failsPredicate, subproblems, msg ) {
   this.isProblem = true;
@@ -15,7 +16,8 @@ function Problem( val, failsPredicate, subproblems, msg ) {
   this.shortMessage = msg;
   this.subproblems = subproblems;
 
-  this.message = _constructMessage( this, 0 );
+  lazyDefine( this, 'message', () => _constructMessage( this, 0 ) );
+
   this.toString = () => this.message;
 }
 

@@ -134,14 +134,15 @@ C( 'clause.compose/fclause', FclauseFnClause );
 C( 'clause.compose/nullable', clauseTransformFnClause() );
 C( 'clause.compose/undefinable', clauseTransformFnClause() );
 C( 'clause.compose/maybe', clauseTransformFnClause() );
+C( 'clause.compose/delayed', DelayedFnClause );
 
 C( 'clause.compose.string/sCat', SCatFnClause );
 
 C( 'clause.utils/enforce', EnforceFnClause );
 C( 'clause.utils/conform', ConformFnClause );
-C( 'clause.utils/delayed', DelayedFnClause );
 C( 'clause.utils/describe', DescribeFnClause );
 C( 'clause.utils/sExpression', SExpressionFnClause );
+C( 'clause.utils/isProblem', SingleArgPredClause() );
 
 C( 'clause.preds/not', NotFnClause );
 C( 'clause.preds/isObj', SingleArgPredClause() );
@@ -169,17 +170,17 @@ C( '/clause.namespace/setMeta', SetMetaFnClause );
 C( '/clause.namespace/getMeta', GetMetaFnClause );
 
 C( 'clause.types/Expression', ExprClause );
-C( 'clause.types/Primitive', PrimitiveClause );
 C( 'clause.types/Clause', ClauseClause );
+C( 'clause.types/Problem', isProblem );
 C( 'clause.types/FClause', FclauseClause );
 C( 'clause.types/Predicate', PredClause );
 C( 'clause.types/DelayedClause', DelayedClauseClause );
 C( 'clause.types/ClauseReference', ClauseRefClause );
-C( 'clause.types/Problem', isProblem );
 C( 'clause.types/NamespaceObj', NamespaceObjClause );
 C( 'clause.types/NamespacePath', isNamespacePath );
 C( 'clause.types/ClauseLabel', isClauseName );
 C( 'clause.types/SExpression', SExpressionClause );
+C( 'clause.types/Primitive', PrimitiveClause );
 C( 'clause.types/String', isStr );
 C( 'clause.types/Bool', isBool );
 C( 'clause.types/Number', isNum );
