@@ -29,6 +29,7 @@ M( 'clause.compose/cat', {
   examples: [
     `var CatClause = C.cat(C.isStr, C.isNum, C.isBool);
 C.conform( CatClause, ["a", 2, true] )`,
+    'C.conform( CatClause, ["a", false, "b"] )',
     `var LabelledCatClause = C.cat(
   'first', C.isStr, 
   'second', 'this is an optional comment', C.isNum, 
@@ -38,7 +39,7 @@ C.conform( LabelledCatClause, ["a", 2, true] )`,
     `// equivalent to the above
 var LabelledCatClause = C.cat([
   [ 'first', C.isStr ], 
-  [ 'second', 'this is an optional comment', C.isNum ], 
+  [ 'second', 'this is an optional comment on second', C.isNum ], 
   [ 'third', C.isBool ]
 ]);
 C.conform( LabelledCatClause, ["a", 2, true] )`,

@@ -98,7 +98,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_104__;
 "use strict";
 
 
-var _ClauseComponent = __webpack_require__(91);
+var _ClauseComponent = __webpack_require__(93);
 
 var _ClauseComponent2 = _interopRequireDefault(_ClauseComponent);
 
@@ -179,7 +179,7 @@ module.exports.default = fromBaseClass;
 
 /***/ },
 
-/***/ 91:
+/***/ 93:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
