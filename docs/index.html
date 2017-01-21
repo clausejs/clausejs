@@ -2510,10 +2510,10 @@ C.conform( LabelledOrClause, 2 )</code></pre>
 C.isValid( ZOMClause, [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;] )</code></pre>
     
 
-      <pre><code>C.isValid( ZOMClause, [] )</code></pre>
+      <pre><code>C.isValid( ZOMClause, [&quot;a&quot;, &quot;b&quot;, 3] )</code></pre>
     
 
-      <pre><code>C.isValid( ZOMClause, [&quot;a&quot;, &quot;b&quot;, 3] )</code></pre>
+      <pre><code>C.isValid( ZOMClause, [] )</code></pre>
     
 
       <pre><code>var CombinedClause = C.cat( 
@@ -2521,7 +2521,16 @@ C.isValid( ZOMClause, [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;] )</code></pr
   &quot;truths&quot;, C.zeroOrMore(C.isBool),
   &quot;counts&quot;, C.zeroOrMore(C.isNatInt)
 );
-C.conform( CombinedClause, [&quot;foo&quot;, &quot;foo&quot;, &quot;bar&quot;, 2, 3 , 4] )</code></pre>
+C.conform( CombinedClause, [&quot;foo&quot;, &quot;foo&quot;, &quot;bar&quot;,true,  2, 3 , 4] )</code></pre>
+    
+
+      <pre><code>C.isValid( CombinedClause, [&quot;foo&quot;, &quot;foo&quot;, &quot;bar&quot;, 2, 3 , 4] )</code></pre>
+    
+
+      <pre><code>C.isValid( CombinedClause, [ 2, 3 , 4 ] )</code></pre>
+    
+
+      <pre><code>C.isValid( CombinedClause, [ ] )</code></pre>
     </dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
@@ -2710,10 +2719,10 @@ C.conform( CombinedClause, [&quot;foo&quot;, &quot;foo&quot;, &quot;bar&quot;, 2
       </ul></dd>
 <dt>Examples</dt><dd>
       <pre><code>var OOMClause = C.oneOrMore(C.equals(&quot;hello&quot;));
-C.conform( OOMClause, [ &quot;hello&quot;, &quot;hello&quot;, &quot;hello&quot; ] )</code></pre>
+C.isValid( OOMClause, [ &quot;hello&quot;, &quot;hello&quot;, &quot;hello&quot; ] )</code></pre>
     
 
-      <pre><code>C.isValid( OOMClause, [] )</code></pre>
+      <pre><code>C.isValid( OOMClause, [ &quot;hello&quot;, &quot;hello&quot;, &quot;hello&quot; ] )</code></pre>
     
 
       <pre><code>var CombinedClause = C.cat( 
@@ -2721,7 +2730,10 @@ C.conform( OOMClause, [ &quot;hello&quot;, &quot;hello&quot;, &quot;hello&quot; 
   &quot;truths&quot;, C.oneOrMore(C.isBool),
   &quot;counts&quot;, C.oneOrMore(C.isNatInt)
 );
-C.conform( CombinedClause, [&quot;foo&quot;, &quot;foo&quot;, &quot;bar&quot;, false, true, 2, 3 , 4] )</code></pre>
+C.conform( CombinedClause, [&quot;foo&quot;, &quot;foo&quot;, &quot;baz&quot;, false, true, 2, 3 ] )</code></pre>
+    
+
+      <pre><code>C.isValid( CombinedClause, [false, true, 2, 3 ] )</code></pre>
     </dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
@@ -2910,10 +2922,10 @@ C.conform( CombinedClause, [&quot;foo&quot;, &quot;foo&quot;, &quot;bar&quot;, f
       </ul></dd>
 <dt>Examples</dt><dd>
       <pre><code>var ZOOClause = C.zeroOrOne( C.equals( &quot;hello&quot; ) );
-C.conform( ZOOClause, [ &quot;hello&quot; ] )</code></pre>
+C.isValid( ZOOClause, [ &quot;hello&quot; ] )</code></pre>
     
 
-      <pre><code>C.conform( ZOOClause, [] )</code></pre>
+      <pre><code>C.isValid( ZOOClause, [] )</code></pre>
     
 
       <pre><code>var CombinedClause = C.cat( 
@@ -3110,7 +3122,10 @@ C.conform( CombinedClause, [&quot;foo&quot;, 4] )</code></pre>
       </ul></dd>
 <dt>Examples</dt><dd>
       <pre><code>var AndClause = C.and( C.isStr, (s) =&gt; s.length &gt; 5 );
-C.conform( AndClause, &quot;abcdefgh&quot; )</code></pre>
+C.isValid( AndClause, &quot;abcdefgh&quot; )</code></pre>
+    
+
+      <pre><code>C.isValid( AndClause, &quot;abc&quot; )</code></pre>
     
 
       <pre><code>var PropagatingAndClause = C.and( 

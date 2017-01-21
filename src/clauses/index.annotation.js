@@ -64,14 +64,17 @@ M( 'clause.compose/zeroOrMore', {
   examples: [
     `var ZOMClause = C.zeroOrMore(C.isBool);
 C.isValid( ZOMClause, ["a", "b", "c"] )`,
-    'C.isValid( ZOMClause, [] )',
     'C.isValid( ZOMClause, ["a", "b", 3] )',
+    'C.isValid( ZOMClause, [] )',
     `var CombinedClause = C.cat( 
   "babbles", C.zeroOrMore(C.oneOf("foo", "bar", "baz")),
   "truths", C.zeroOrMore(C.isBool),
   "counts", C.zeroOrMore(C.isNatInt)
 );
-C.conform( CombinedClause, ["foo", "foo", "bar", 2, 3 , 4] )`,
+C.conform( CombinedClause, ["foo", "foo", "bar",true,  2, 3 , 4] )`,
+    'C.isValid( CombinedClause, ["foo", "foo", "bar", 2, 3 , 4] )',
+    'C.isValid( CombinedClause, [ 2, 3 , 4 ] )',
+    'C.isValid( CombinedClause, [ ] )',
   ]
 } );
 
@@ -79,14 +82,15 @@ M( 'clause.compose/oneOrMore', {
   comment: 'Given a single expression, returns a regex op that matches one or more values in an iterable. Returns a Problem if there are no matches.',
   examples: [
     `var OOMClause = C.oneOrMore(C.equals("hello"));
-C.conform( OOMClause, [ "hello", "hello", "hello" ] )`,
-    'C.isValid( OOMClause, [] )',
+C.isValid( OOMClause, [ "hello", "hello", "hello" ] )`,
+    'C.isValid( OOMClause, [ "hello", "hello", "hello" ] )',
     `var CombinedClause = C.cat( 
   "babbles", C.oneOrMore(C.oneOf("foo", "bar", "baz")),
   "truths", C.oneOrMore(C.isBool),
   "counts", C.oneOrMore(C.isNatInt)
 );
-C.conform( CombinedClause, ["foo", "foo", "bar", false, true, 2, 3 , 4] )`,
+C.conform( CombinedClause, ["foo", "foo", "baz", false, true, 2, 3 ] )`,
+    'C.isValid( CombinedClause, [false, true, 2, 3 ] )',
   ]
 } );
 
@@ -94,8 +98,8 @@ M( 'clause.compose/zeroOrOne', {
   comment: 'Given a single expression, returns a regex op that matches zero or one values in an iterable. Returns a Problem if there are no matches.',
   examples: [
     `var ZOOClause = C.zeroOrOne( C.equals( "hello" ) );
-C.conform( ZOOClause, [ "hello" ] )`,
-    'C.conform( ZOOClause, [] )',
+C.isValid( ZOOClause, [ "hello" ] )`,
+    'C.isValid( ZOOClause, [] )',
     `var CombinedClause = C.cat( 
   "the babble", C.zeroOrOne( C.oneOf("foo", "bar", "baz") ),
   "the truth", C.zeroOrOne( C.isBool ),
@@ -109,7 +113,8 @@ M( 'clause.compose/and', {
   comment: 'Given a list of expressions, returns a clause that matches a value with all the expressions. Successive conformed value propagates to the rest of the expressions.',
   examples: [
     `var AndClause = C.and( C.isStr, (s) => s.length > 5 );
-C.conform( AndClause, "abcdefgh" )`,
+C.isValid( AndClause, "abcdefgh" )`,
+    'C.isValid( AndClause, "abc" )',
     `var PropagatingAndClause = C.and( 
   C.cat( 
     "first", C.isStr, 
