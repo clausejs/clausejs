@@ -10,7 +10,7 @@ import sExpression, { genClauses, ParamItemClause,
  UnquotedParamsMap, QuotedParamsMap } from '../utils/sExpression';
 import { fragsToStr, interpose, humanReadable,
   INDENT_IN, NEW_LINE, INDENT_OUT } from '../utils/describe';
-const handle = require( '../utils/handle' );
+const match = require( '../utils/match' );
 
 //     ----'first'-----  --------'second'---------
 // fn( (isStr, isBool)+, (isObj | (isNum, isBool)) )
@@ -185,7 +185,7 @@ function _strFragments(
     let items = [];
     if ( required ) {
       for ( let key in required ) {
-        let r1 = handle( required[ key ], {
+        let r1 = match( required[ key ], {
           'keyList': ( list ) => {
             return [ '[ ' ].concat(
               interpose( list.map( ( i ) => `"${i}"` ), [ ', ' ] ) )
@@ -203,7 +203,7 @@ function _strFragments(
     }
     if ( optional ) {
       for ( let key in optional ) {
-        let r1 = handle( optional[ key ], {
+        let r1 = match( optional[ key ], {
           'keyList': ( list ) => {
             return [ '[ ' ].concat(
               interpose( list.map( ( i ) => `"${i}"` ), [ ', ' ] ) )
@@ -258,7 +258,7 @@ function _processLabel( { str, quoted } ) {
 }
 
 function _fragmentParamAlts( label, pAlts, replacer ) {
-  const r = handle( pAlts, {
+  const r = match( pAlts, {
     'label': _processLabel,
     'sExpression': ( expr ) => _strFragments( label, expr, replacer ),
     'quotedParamsMap': ( o ) => _fragmentParamsObj( o, replacer, false ),
@@ -279,7 +279,7 @@ function _fragmentParamsObj( pObj, replacer ) {
   var r = [ '< ', INDENT_IN, NEW_LINE, ];
   let body = [];
   let { key: keyExprAlts, val: valExprAlts } = pObj;
-  var keyR = handle( keyExprAlts, {
+  var keyR = match( keyExprAlts, {
     'keyList': ( list ) => {
       return [ '[ ' ].concat(
         interpose( list.map( ( i ) => `"${i}"` ), [ ', ' ] ) )
@@ -291,7 +291,7 @@ function _fragmentParamsObj( pObj, replacer ) {
     throw '!e';
   } );
 
-  var valR = handle( valExprAlts, {
+  var valR = match( valExprAlts, {
     'keyList': ( list ) => {
       return [ '[ ' ].concat(
         interpose( list.map( ( i ) => `"${i}"` ), [ ', ' ] ) )
@@ -323,10 +323,10 @@ function _describeCase( c, replacer ) {
 
 function _handler( alts ) {
   const { head: headAlts, params } = alts;
-  return handle( headAlts, {
+  return match( headAlts, {
     'expression': ( e ) => ( { head: clauseFromAlts( e ), params } ),
     'altNode': ( { enclosed } ) =>
-      handle( enclosed, {
+      match( enclosed, {
         'sExpression': _handler,
       }, () => {} )
   }, () => {

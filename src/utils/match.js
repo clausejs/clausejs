@@ -3,7 +3,7 @@
  *
  */
 
-function handle( alts, handlerMap, unknownCaseHandler ) {
+function match( alts, handlerMap, unknownCaseHandler ) {
   for ( var label in alts ) {
     // should iterate only once
     if ( alts.hasOwnProperty( label ) && handlerMap.hasOwnProperty( label ) ) {
@@ -18,4 +18,4 @@ function handle( alts, handlerMap, unknownCaseHandler ) {
   throw new Error( 'No cases present in the given object' );
 }
 
-module.exports = handle;
+module.exports = match;

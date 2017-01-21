@@ -1173,7 +1173,7 @@ module.exports = {
   isClauseName: __webpack_require__(42),
   describe: _describe2.default,
   sExpression: _sExpression2.default,
-  handle: __webpack_require__(19)
+  match: __webpack_require__(19)
 };
 
 /***/ },
@@ -1188,7 +1188,7 @@ module.exports = {
  *
  */
 
-function handle(alts, handlerMap, unknownCaseHandler) {
+function match(alts, handlerMap, unknownCaseHandler) {
   for (var label in alts) {
     // should iterate only once
     if (alts.hasOwnProperty(label) && handlerMap.hasOwnProperty(label)) {
@@ -1203,7 +1203,7 @@ function handle(alts, handlerMap, unknownCaseHandler) {
   throw new Error('No cases present in the given object');
 }
 
-module.exports = handle;
+module.exports = match;
 
 /***/ },
 /* 20 */
@@ -1482,7 +1482,7 @@ var _require = __webpack_require__(11),
     maybe = _require.maybe;
 
 var delayed = __webpack_require__(40);
-var handle = __webpack_require__(19);
+var match = __webpack_require__(19);
 var coerceIntoClause = __webpack_require__(9);
 
 var _require2 = __webpack_require__(12),
@@ -1631,7 +1631,7 @@ function _fieldDefToFrags(repo, _ref10) {
     var r = new QuotedParamsMap();
     for (var key in fieldDefs) {
       if (fieldDefs.hasOwnProperty(key)) {
-        var val = handle(fieldDefs[key], {
+        var val = match(fieldDefs[key], {
           'keyValExprPair': function keyValExprPair(pair) {
             return _handleKeyValExprPair(repo, pair);
           },
@@ -1751,7 +1751,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var humanReadable = __webpack_require__(64);
 var isStr = __webpack_require__(7);
 var isProblem = __webpack_require__(0);
-var handle = __webpack_require__(19);
+var match = __webpack_require__(19);
 var clauseFromAlts = __webpack_require__(6);
 var fnName = __webpack_require__(3);
 var stringifyWithFnName = __webpack_require__(20);
@@ -1856,7 +1856,7 @@ function isSpecial(x) {
 }
 
 function _fragmentParamAlts(headAltsHandler, pAlts, replacer) {
-  var r = handle(pAlts, {
+  var r = match(pAlts, {
     'label': _processLabel,
     'sExpression': function sExpression(expr) {
       return strFragments(headAltsHandler, expr, replacer);
@@ -1898,7 +1898,7 @@ function _fragmentParamsObj(headAltsHandler, pObj, replacer, quote) {
     if (pObj.hasOwnProperty(label)) {
       var item = [];
       item.push(quote ? '"' + label + '": ' : '<' + label + '>: ');
-      var r1 = handle(pObj[label], {
+      var r1 = match(pObj[label], {
         'keyList': function keyList(list) {
           return ['[ '].concat(interpose(list.map(function (i) {
             return '"' + i + '"';
