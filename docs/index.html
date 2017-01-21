@@ -762,10 +762,10 @@ ref.get()</code></pre>
       </ul></dd>
 <dt>Examples</dt><dd>
       <pre><code>var CatClause = C.cat(C.isStr, C.isNum, C.isBool);
-C.conform( CatClause, [&quot;a&quot;, 2, true] )</code></pre>
+C.isValid( CatClause, [&quot;a&quot;, 2, true] )</code></pre>
     
 
-      <pre><code>C.conform( CatClause, [&quot;a&quot;, false, &quot;b&quot;] )</code></pre>
+      <pre><code>C.isValid( CatClause, [&quot;a&quot;, false, &quot;b&quot;] )</code></pre>
     
 
       <pre><code>var LabelledCatClause = C.cat(
@@ -779,7 +779,7 @@ C.conform( LabelledCatClause, [&quot;a&quot;, 2, true] )</code></pre>
       <pre><code>// equivalent to the above
 var LabelledCatClause = C.cat([
   [ &apos;first&apos;, C.isStr ], 
-  [ &apos;second&apos;, &apos;this is an optional comment&apos;, C.isNum ], 
+  [ &apos;second&apos;, &apos;this is an optional comment on second&apos;, C.isNum ], 
   [ &apos;third&apos;, C.isBool ]
 ]);
 C.conform( LabelledCatClause, [&quot;a&quot;, 2, true] )</code></pre>
@@ -2506,11 +2506,14 @@ C.conform( LabelledOrClause, 2 )</code></pre>
         <li>( expr: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, ( opts: <a href="#clause.types/Object" data-path="clause.types/Object">Object</a> )? ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
       </ul></dd>
 <dt>Examples</dt><dd>
-      <pre><code>var ZOMClause = C.zeroOrMore(C.isStr);
-C.conform( ZOMClause, [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;] )</code></pre>
+      <pre><code>var ZOMClause = C.zeroOrMore(C.isBool);
+C.isValid( ZOMClause, [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;] )</code></pre>
     
 
-      <pre><code>C.conform( ZOMClause, [] )</code></pre>
+      <pre><code>C.isValid( ZOMClause, [] )</code></pre>
+    
+
+      <pre><code>C.isValid( ZOMClause, [&quot;a&quot;, &quot;b&quot;, 3] )</code></pre>
     
 
       <pre><code>var CombinedClause = C.cat( 

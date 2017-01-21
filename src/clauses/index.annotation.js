@@ -28,8 +28,8 @@ M( 'clause.compose/cat', {
   comment: 'Given a set of expressions or a set of label+expression pairs, returns a regex op that matches all values in an iterable. If labels are given, returns a map that groups values by these labels. Returns a Problem if no match is found.',
   examples: [
     `var CatClause = C.cat(C.isStr, C.isNum, C.isBool);
-C.conform( CatClause, ["a", 2, true] )`,
-    'C.conform( CatClause, ["a", false, "b"] )',
+C.isValid( CatClause, ["a", 2, true] )`,
+    'C.isValid( CatClause, ["a", false, "b"] )',
     `var LabelledCatClause = C.cat(
   'first', C.isStr, 
   'second', 'this is an optional comment', C.isNum, 
@@ -62,9 +62,10 @@ C.conform( LabelledOrClause, 2 )`,
 M( 'clause.compose/zeroOrMore', {
   comment: 'Given a single expression, returns a regex op that matches zero or more values in an iterable. Returns a Problem if there are no matches.',
   examples: [
-    `var ZOMClause = C.zeroOrMore(C.isStr);
-C.conform( ZOMClause, ["a", "b", "c"] )`,
-    'C.conform( ZOMClause, [] )',
+    `var ZOMClause = C.zeroOrMore(C.isBool);
+C.isValid( ZOMClause, ["a", "b", "c"] )`,
+    'C.isValid( ZOMClause, [] )',
+    'C.isValid( ZOMClause, ["a", "b", 3] )',
     `var CombinedClause = C.cat( 
   "babbles", C.zeroOrMore(C.oneOf("foo", "bar", "baz")),
   "truths", C.zeroOrMore(C.isBool),
