@@ -205,7 +205,7 @@ M( 'clause.compose/any', {
   examples: [
     'C.isValid(C.any(), 123)',
     'C.isValid(C.any(), true)',
-    'C.isValid(C.any(), "ssaa")',
+    'C.isValid(C.any(), ["sass"])',
     'C.isValid(C.any(), null)',
     'C.isValid(C.any(), undefined)',
   ]
@@ -237,21 +237,25 @@ M( 'clause.compose/fclause', {
   ),
   ret: C.isNatInt
 } );
-var headCount = MyFnSpec.instrument( 
-  function () { return Array.from(arguments).filter((s) => C.isStr(s)).length; } 
+var nameCount = MyFnSpec.instrument( 
+  function _nameCount() { return Array.from(arguments).filter((s) => C.isStr(s)).length; } 
 );
-headCount("john", 23, true, "mary", 25, "bob", 34);
+nameCount("john", 23, true, "mary", 25, "bob", 34);
 `,
     `// invalid: missing name
-    headCount("john", 23, true, 24, false);`,
+    nameCount("john", 23, true, 24, false);`,
     `var averageAge = MyFnSpec.instrumentConformed( 
   function (cprofiles) { // "c" stands for "conformed"
-    const sumOfAges = cprofiles
+    // cprofiles example:
+    // [ { name: "john", age: 4, isMember: true }, { name: "mary", age: 23 }, { name: "bob", age: 102 } ]
+    var sumOfAges = cprofiles
       .map( ( { age } ) => age )
       .reduce( (acc, c) => c + acc, 0 );
     return sumOfAges / cprofiles.length;
   }
 );
+
+// cprofile below conforms into 
 averageAge("john", 4, true, "mary", 23, "bob", 102);`
   ]
 } );
