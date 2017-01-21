@@ -3133,8 +3133,12 @@ C.isValid( AndClause, &quot;abcdefgh&quot; )</code></pre>
     &quot;first&quot;, C.isStr, 
     &quot;second&quot;, C.zeroOrMore( C.isNum )
   ),
+  // &quot;second&quot; propagated from conformed results of the previous clause
   ({ second }) =&gt; second.length &gt; 4 ) 
 C.isValid( PropagatingAndClause, [ &quot;foo&quot;, 2, 3, 4, 5, 6 ] )</code></pre>
+    
+
+      <pre><code>C.conform( PropagatingAndClause, [ &quot;foo&quot;, 2, 3, 4, 5, 6 ] )</code></pre>
     
 
       <pre><code>C.isValid( PropagatingAndClause, [ &quot;foo&quot;, 2, 3 ] )</code></pre>
@@ -3451,6 +3455,12 @@ C.isValid( CombinedCollOfClause, [[&quot;foo&quot;, &quot;foo&quot;, &quot;bar&q
       (key) =&gt; key.indexOf(&quot;can&quot;) === 0,
       C.isBool );
 C.isValid( AbilityMapClause, { canFly: true, canSwim: true, canDance: false } )</code></pre>
+    
+
+      <pre><code>C.isValid( AbilityMapClause, { canFly: true, canSwim: true, canSwim: &quot;huh?&quot; } )</code></pre>
+    
+
+      <pre><code>C.isValid( AbilityMapClause, { meNotValid: true, canSwim: true } )</code></pre>
     </dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">

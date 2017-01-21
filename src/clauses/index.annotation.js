@@ -120,8 +120,10 @@ C.isValid( AndClause, "abcdefgh" )`,
     "first", C.isStr, 
     "second", C.zeroOrMore( C.isNum )
   ),
+  // "second" propagated from conformed results of the previous clause
   ({ second }) => second.length > 4 ) 
 C.isValid( PropagatingAndClause, [ "foo", 2, 3, 4, 5, 6 ] )`,
+    'C.conform( PropagatingAndClause, [ "foo", 2, 3, 4, 5, 6 ] )',
     'C.isValid( PropagatingAndClause, [ "foo", 2, 3 ] )',
   ]
 } );
@@ -152,6 +154,8 @@ M( 'clause.compose/mapOf', {
       (key) => key.indexOf("can") === 0,
       C.isBool );
 C.isValid( AbilityMapClause, { canFly: true, canSwim: true, canDance: false } )`,
+    'C.isValid( AbilityMapClause, { canFly: true, canSwim: true, canSwim: "huh?" } )',
+    'C.isValid( AbilityMapClause, { meNotValid: true, canSwim: true } )',
   ]
 } );
 
