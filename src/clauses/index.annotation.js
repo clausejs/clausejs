@@ -154,7 +154,7 @@ M( 'clause.compose/mapOf', {
       (key) => key.indexOf("can") === 0,
       C.isBool );
 C.isValid( AbilityMapClause, { canFly: true, canSwim: true, canDance: false } )`,
-    'C.isValid( AbilityMapClause, { canFly: true, canSwim: true, canSwim: "huh?" } )',
+    'C.isValid( AbilityMapClause, { canFly: true, canSwim: true, canDance: "huh?" } )',
     'C.isValid( AbilityMapClause, { meNotValid: true, canSwim: true } )',
   ]
 } );
@@ -167,10 +167,11 @@ M( 'clause.compose/shape', {
   optional: ["key4"],
   } );
 C.isValid( ShapeClause, { key1: true, key2: 2, key3: "ss", key4: false } )`,
+    'C.isValid( ShapeClause, { key1: true, key2: 2, key3: "ss" } )',
     'C.isValid( ShapeClause, { key1: true, key2: 2 } )',
     `var ShapeClause2 = C.shape( { 
   required: {
-    key1: C.isStr,
+    key1: C.isBool,
     key2: C.isNatInt,
   }, 
   optional: ["key5"],
@@ -196,6 +197,17 @@ C.conform( ShapeClause3, {
   canSwim: false, 
   someKey: 999 
 } )`,
+  ]
+} );
+
+M( 'clause.compose/any', {
+  comment: 'Returns a clause that matches any value.',
+  examples: [
+    'C.isValid(C.any(), 123)',
+    'C.isValid(C.any(), true)',
+    'C.isValid(C.any(), "ssaa")',
+    'C.isValid(C.any(), null)',
+    'C.isValid(C.any(), undefined)',
   ]
 } );
 

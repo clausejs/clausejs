@@ -3457,7 +3457,7 @@ C.isValid( CombinedCollOfClause, [[&quot;foo&quot;, &quot;foo&quot;, &quot;bar&q
 C.isValid( AbilityMapClause, { canFly: true, canSwim: true, canDance: false } )</code></pre>
     
 
-      <pre><code>C.isValid( AbilityMapClause, { canFly: true, canSwim: true, canSwim: &quot;huh?&quot; } )</code></pre>
+      <pre><code>C.isValid( AbilityMapClause, { canFly: true, canSwim: true, canDance: &quot;huh?&quot; } )</code></pre>
     
 
       <pre><code>C.isValid( AbilityMapClause, { meNotValid: true, canSwim: true } )</code></pre>
@@ -3636,12 +3636,15 @@ C.isValid( AbilityMapClause, { canFly: true, canSwim: true, canDance: false } )<
 C.isValid( ShapeClause, { key1: true, key2: 2, key3: &quot;ss&quot;, key4: false } )</code></pre>
     
 
+      <pre><code>C.isValid( ShapeClause, { key1: true, key2: 2, key3: &quot;ss&quot; } )</code></pre>
+    
+
       <pre><code>C.isValid( ShapeClause, { key1: true, key2: 2 } )</code></pre>
     
 
       <pre><code>var ShapeClause2 = C.shape( { 
   required: {
-    key1: C.isStr,
+    key1: C.isBool,
     key2: C.isNatInt,
   }, 
   optional: [&quot;key5&quot;],
@@ -3904,7 +3907,23 @@ C.conform( ShapeClause3, {
           </div>
         
     <dl class="card-block">
-    <dt>Clause Description</dt><dd>
+    <dd>Returns a clause that matches any value.</dd>
+<dt>Examples</dt><dd>
+      <pre><code>C.isValid(C.any(), 123)</code></pre>
+    
+
+      <pre><code>C.isValid(C.any(), true)</code></pre>
+    
+
+      <pre><code>C.isValid(C.any(), &quot;ssaa&quot;)</code></pre>
+    
+
+      <pre><code>C.isValid(C.any(), null)</code></pre>
+    
+
+      <pre><code>C.isValid(C.any(), undefined)</code></pre>
+    </dd>
+<dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
       <small>
         <em class="text-muted">
