@@ -154,7 +154,7 @@
     <dd>
       <ul>
       <li>
-            <a href="#clause.compose.string/sCat" data-path="clause.compose.string/sCat">sCat()</a>
+            <a href="#clause.compose.string/scat" data-path="clause.compose.string/scat">scat()</a>
           </li>
       </ul>
     </dd>
@@ -367,14 +367,14 @@ C.conform( ShapeClause3, {
 C.conform(ArrayClause, [&apos;foo&apos;, &apos;foo&apos;, &apos;foo&apos;, &apos;bar&apos;, &apos;bar&apos;]);
 </code></pre>
 <h4 id="string">String</h4>
-<pre><code class="js language-js">var StrClause = C.cat(&apos;foos&apos;, C.oneOrMore(C.sCat(&apos;foo&apos;)),
-                      &apos;bars&apos;, C.oneOrMore(C.sCat(&apos;bar&apos;)));
+<pre><code class="js language-js">var StrClause = C.cat(&apos;foos&apos;, C.oneOrMore(C.scat(&apos;foo&apos;)),
+                      &apos;bars&apos;, C.oneOrMore(C.scat(&apos;bar&apos;)));
 
 C.conform(StrClause, &apos;foofoofoobarbar&apos;);
 </code></pre>
 <p>Notice that in the first clause, we use <code>C.equals()</code> to treat
  the string as a single entity, whereas in the second, we use
- <code>C.sCat()</code> to indicate that each character in the string is 
+ <code>C.scat()</code> to indicate that each character in the string is 
  part of the collection that we run regex ops on.</p></section>
         <h3>API</h3>
         <p><em>Work in progress. </em></p>
@@ -4889,12 +4889,12 @@ averageAge(&quot;john&quot;, 4, true, &quot;mary&quot;, 23, &quot;bob&quot;, 102
         </div>
       
 <h3>clause.compose.string/</h3><hr>
-    <a name="clause.compose.string/sCat"></a>
+    <a name="clause.compose.string/scat"></a>
     
         <div class="card">
           <div class="card-header inline-headers">
             
-      <h6>sCat()</h6>&#xA0;
+      <h6>scat()</h6>&#xA0;
         <span class="tag tag-primary">
           function
         </span>
@@ -4907,9 +4907,9 @@ averageAge(&quot;john&quot;, 4, true, &quot;mary&quot;, 23, &quot;bob&quot;, 102
       </ul></dd>
 <dt>Examples</dt><dd>
       <pre><code>
-var StrClause = C.cat(&apos;greetings&apos;, C.zeroOrMore(C.sCat(&apos;hello&apos;)),
-                      &apos;substence&apos;, C.zeroOrMore(C.sCat(&apos;i am optional&apos;)),
-                      &apos;farewell&apos;, C.zeroOrMore(C.sCat(&apos;bye&apos;)));
+var StrClause = C.cat(&apos;greetings&apos;, C.zeroOrMore(C.scat(&apos;hello&apos;)),
+                      &apos;substence&apos;, C.zeroOrMore(C.scat(&apos;i am optional&apos;)),
+                      &apos;farewell&apos;, C.zeroOrMore(C.scat(&apos;bye&apos;)));
 
 C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
 </code></pre>
@@ -4929,11 +4929,11 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     </blockquote>
   </dd>
 <dt>Argument Clause Graph</dt><dd><p>
-     <button class="btn btn-sm btn-info" type="button" data-toggle="collapse" data-target="#sCat-args-graph" aria-expanded="false" aria-controls="collapseExample">
+     <button class="btn btn-sm btn-info" type="button" data-toggle="collapse" data-target="#scat-args-graph" aria-expanded="false" aria-controls="collapseExample">
       Show Graph &#xBB;
     </button>
   </p>
-  <div class="collapse" id="sCat-args-graph">
+  <div class="collapse" id="scat-args-graph">
     
     
     
@@ -4996,11 +4996,11 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
   </div>
 </dd>
 <dt>Return Value Clause Graph</dt><dd><p>
-     <button class="btn btn-sm btn-info" type="button" data-toggle="collapse" data-target="#sCat-ret-graph" aria-expanded="false" aria-controls="collapseExample">
+     <button class="btn btn-sm btn-info" type="button" data-toggle="collapse" data-target="#scat-ret-graph" aria-expanded="false" aria-controls="collapseExample">
       Show Graph &#xBB;
     </button>
   </p>
-  <div class="collapse" id="sCat-ret-graph">
+  <div class="collapse" id="scat-ret-graph">
     
     
     

@@ -146,7 +146,7 @@ C( 'clause.compose/undefinable', clauseTransformFnClause() );
 C( 'clause.compose/maybe', clauseTransformFnClause() );
 C( 'clause.compose/delayed', DelayedFnClause );
 
-C( 'clause.compose.string/sCat', SCatFnClause );
+C( 'clause.compose.string/scat', SCatFnClause );
 
 C( 'clause.utils/enforce', EnforceFnClause );
 C( 'clause.utils/conform', ConformFnClause );

@@ -943,7 +943,7 @@ var _require2 = __webpack_require__(46),
 
 var equals = __webpack_require__(34);
 
-var sCat = function sCat(str) {
+var scat = function scat(str) {
   return regex.cat.apply(null, Array.prototype.slice.call(str).map(equals));
 };
 
@@ -952,7 +952,7 @@ var other = {
   fclause: __webpack_require__(21),
   wall: wall, clause: wall,
   nullable: nullable, undefinable: undefinable, maybe: maybe,
-  sCat: sCat
+  scat: scat
 };
 
 var r = oAssign({}, regex, { shape: shape, keys: keys, mapOf: mapOf }, other);

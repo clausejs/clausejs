@@ -7,7 +7,7 @@ var maybe = require( './maybe' );
 var { wall } = require( './wall' );
 var equals = require( '../preds/equals' );
 
-var sCat = function( str ) {
+var scat = function( str ) {
   return regex.cat.apply( null, Array.prototype.slice.call( str ).map( equals ) );
 };
 
@@ -16,7 +16,7 @@ var other = {
   fclause: require( './fclause' ),
   wall, clause: wall,
   nullable, undefinable, maybe,
-  sCat,
+  scat,
 };
 
 var r = oAssign( {},
