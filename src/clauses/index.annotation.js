@@ -200,6 +200,39 @@ C.isValid( WalledClause, [2, 3, 4] )`,
   ]
 } );
 
+M( 'clause.compose/fclause', {
+  comment: 'Given an object that contains "args", "ret" and "fn" expressions (all optionally), returns a spec whose instrument function takes a function and validates its arguments and return value during run time and whose instrumentConformed function takes a function that takes conformed arguments.',
+  examples: [
+    `var MyFnSpec = C.fclause( {
+  args: C.zeroOrMore(
+    C.cat(
+      'name', C.isStr,
+      'age', C.isNatInt,
+      // optional field
+      'isMember', C.zeroOrOne( C.isBool )
+    )
+  ),
+  ret: C.isNatInt
+} );
+var headCount = MyFnSpec.instrument( 
+  function () { return Array.from(arguments).filter((s) => C.isStr(s)).length; } 
+);
+headCount("john", 23, true, "mary", 25, "bob", 34);
+`,
+    `// invalid: missing name
+    headCount("john", 23, true, 24, false);`,
+    `var averageAge = MyFnSpec.instrumentConformed( 
+  function (cprofiles) { // "c" stands for "conformed"
+    const sumOfAges = cprofiles
+      .map( ( { age } ) => age )
+      .reduce( (acc, c) => c + acc, 0 );
+    return sumOfAges / cprofiles.length;
+  }
+);
+averageAge("john", 4, true, "mary", 23, "bob", 102);`
+  ]
+} );
+
 M( 'clause.namespace/get', {
   comment: 'Gets a clause reference from global clause registry.',
   examples: [

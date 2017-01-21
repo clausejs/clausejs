@@ -220,7 +220,7 @@ function escapeHtml( text ) {
     '\'': '&#039;'
   };
 
-  return text.replace( /[&<>"']/g, function( m ) {
+  return text.replace( /[&<>"']/g, ( m ) => {
     return map[ m ];
   } );
 }
