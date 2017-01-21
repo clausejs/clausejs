@@ -310,12 +310,58 @@
 <p>To put it plainly, as a developer you expect your data to be of certain &quot;shape&quot;.</p>
 <p>You define the shape of the data with clauses.</p>
 <p>To &quot;conform&quot; your data with your clauses is to shape it in a way that is <em>better organized</em>, making it easier for your code to consume.</p>
-<p>[TODO: more write-up]</p></section>
+<p>In order for conformation to work, one must specify a label for each part of your spec definition (example to follow below).</p>
+<p>There are 3 ways that data can be conformed with Clause:</p>
+<h4 id="catconformationonarraysandstrings">Cat Conformation (on arrays and strings)</h4>
+<pre><code class="js language-js">var MyCatClause = C.cat(
+  &apos;first&apos;, C.isStr, 
+  &apos;second&apos;, C.isNum, 
+  &apos;third&apos;, C.isBool
+);
+C.conform( MyCatClause, [&quot;a&quot;, 2, true] )
+</code></pre>
+<p>In addition to arrays, strings can also be conformed with <code>scat</code>.</p>
+<pre><code class="js language-js">var StrClause = C.cat(&apos;greetings&apos;, C.zeroOrMore(C.scat(&apos;hello&apos;)),
+                      &apos;substence&apos;, C.zeroOrMore(C.scat(&apos;i am optional&apos;)),
+                      &apos;farewell&apos;, C.zeroOrMore(C.scat(&apos;bye&apos;)));
+
+C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
+</code></pre>
+<h3 id="orconformation">Or Conformation</h3>
+<pre><code class="js language-js">var MyOrClause = C.or(&apos;option1&apos;, C.isStr, &apos;option2&apos;, C.isNum );
+C.conform( MyOrClause, 2 )
+</code></pre>
+<h4 id="shapeconformation">Shape Conformation</h4>
+<pre><code class="js language-js">var ShapeClause3 = C.shape( { 
+  required: {
+    abilityGroup: [ 
+      // key expression
+      (key) =&gt; key.indexOf(&apos;can&apos;) === 0,
+      // value expression
+      C.isBool
+    ],
+    someKey: C.isNatInt,
+  }, 
+  optional: [&quot;key5&quot;],
+  } );
+
+C.conform( ShapeClause3, { 
+  canDance: true, 
+  canFly: true, 
+  canSwim: false, 
+  someKey: 999 
+} )
+</code></pre>
+<p>Notice that for all the examples given above, a label is supplied for each conformed parts.</p>
+<h4 id="usematchtosimplfycode">Use <code>match()</code> to simplfy code</h4>
+<p>In conjunction with conformation, <code>C.match()</code> can be used to simplify case handling. For example,</p>
+<pre><code class="js language-js">// TODO give example
+</code></pre></section>
         <section id="iterable" class="markdown-article" markdown-path="iterable.md"><h3 id="regexlikeoperationsoniterables">Regex-like Operations on Iterables</h3>
 <p>Both array and string are treated as iterables in Clause, which means both types can be the subject of regex-like operations.</p>
 <p>For example, both of the following clause definitions are valid:</p>
 <h4 id="array">Array</h4>
-<pre><code>var ArrayClause = C.cat(&apos;foos&apos;, C.oneOrMore(C.equal(&apos;foo&apos;)),
+<pre><code class="js language-js">var ArrayClause = C.cat(&apos;foos&apos;, C.oneOrMore(C.equal(&apos;foo&apos;)),
                         &apos;bars&apos;, C.oneOrMore(C.equal(&apos;bar&apos;)));
 
 C.conform(ArrayClause, [&apos;foo&apos;, &apos;foo&apos;, &apos;foo&apos;, &apos;bar&apos;, &apos;bar&apos;]);
@@ -770,7 +816,7 @@ C.isValid( CatClause, [&quot;a&quot;, 2, true] )</code></pre>
 
       <pre><code>var LabelledCatClause = C.cat(
   &apos;first&apos;, C.isStr, 
-  &apos;second&apos;, &apos;this is an optional comment&apos;, C.isNum, 
+  &apos;second&apos;, C.isNum, 
   &apos;third&apos;, C.isBool
 );
 C.conform( LabelledCatClause, [&quot;a&quot;, 2, true] )</code></pre>
@@ -2506,11 +2552,11 @@ C.conform( LabelledOrClause, 2 )</code></pre>
         <li>( expr: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, ( opts: <a href="#clause.types/Object" data-path="clause.types/Object">Object</a> )? ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
       </ul></dd>
 <dt>Examples</dt><dd>
-      <pre><code>var ZOMClause = C.zeroOrMore(C.isBool);
-C.isValid( ZOMClause, [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;] )</code></pre>
+      <pre><code>var ZOMClause = C.zeroOrMore(C.isNum);
+C.isValid( ZOMClause, [1, 2, 3] )</code></pre>
     
 
-      <pre><code>C.isValid( ZOMClause, [&quot;a&quot;, &quot;b&quot;, 3] )</code></pre>
+      <pre><code>C.isValid( ZOMClause, [1, 2, &quot;3&quot;] )</code></pre>
     
 
       <pre><code>C.isValid( ZOMClause, [] )</code></pre>
@@ -2521,7 +2567,7 @@ C.isValid( ZOMClause, [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;] )</code></pr
   &quot;truths&quot;, C.zeroOrMore(C.isBool),
   &quot;counts&quot;, C.zeroOrMore(C.isNatInt)
 );
-C.conform( CombinedClause, [&quot;foo&quot;, &quot;foo&quot;, &quot;bar&quot;,true,  2, 3 , 4] )</code></pre>
+C.conform( CombinedClause, [&quot;foo&quot;, &quot;foo&quot;, &quot;bar&quot;, true,  2, 3 , 4] )</code></pre>
     
 
       <pre><code>C.isValid( CombinedClause, [&quot;foo&quot;, &quot;foo&quot;, &quot;bar&quot;, 2, 3 , 4] )</code></pre>
@@ -4118,17 +4164,24 @@ C.isValid( WalledClause, [2, 3, 4] )</code></pre>
         <li>( { args?: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, ret?: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, fn?: ( any, any ) &#x2192; any } ) &#x2192; any</li>
       </ul></dd>
 <dt>Examples</dt><dd>
-      <pre><code>var MyFnSpec = C.fclause( {
-  args: C.zeroOrMore(
-    C.cat(
-      &apos;name&apos;, C.isStr,
-      &apos;age&apos;, C.isNatInt,
-      // optional field
-      &apos;isMember&apos;, C.zeroOrOne( C.isBool )
-    )
-  ),
-  ret: C.isNatInt
+      <pre><code>// first, we define a cat clause
+var FnArgsClause = C.zeroOrMore(
+   C.cat(
+     &apos;name&apos;, C.isStr,
+     &apos;age&apos;, C.isNatInt,
+     // optional field
+     &apos;isMember&apos;, C.zeroOrOne( C.isBool )
+   )
+ );
+C.conform(FnArgsClause, [&quot;john&quot;, 23, true, &quot;mary&quot;, 25, &quot;bob&quot;, 34])</code></pre>
+    
+
+      <pre><code>// next, we define a fclause with args as the cat clause defined above
+var MyFnSpec = C.fclause( {
+ args: FnArgsClause,
+ ret: C.isNatInt
 } );
+
 var nameCount = MyFnSpec.instrument( 
   function _nameCount() { return Array.from(arguments).filter((s) =&gt; C.isStr(s)).length; } 
 );

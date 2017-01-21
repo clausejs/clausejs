@@ -32,7 +32,7 @@ C.isValid( CatClause, ["a", 2, true] )`,
     'C.isValid( CatClause, ["a", false, "b"] )',
     `var LabelledCatClause = C.cat(
   'first', C.isStr, 
-  'second', 'this is an optional comment', C.isNum, 
+  'second', C.isNum, 
   'third', C.isBool
 );
 C.conform( LabelledCatClause, ["a", 2, true] )`,
@@ -62,16 +62,16 @@ C.conform( LabelledOrClause, 2 )`,
 M( 'clause.compose/zeroOrMore', {
   comment: 'Given a single expression, returns a regex op that matches zero or more values in an iterable. Returns a Problem if there are no matches.',
   examples: [
-    `var ZOMClause = C.zeroOrMore(C.isBool);
-C.isValid( ZOMClause, ["a", "b", "c"] )`,
-    'C.isValid( ZOMClause, ["a", "b", 3] )',
+    `var ZOMClause = C.zeroOrMore(C.isNum);
+C.isValid( ZOMClause, [1, 2, 3] )`,
+    'C.isValid( ZOMClause, [1, 2, "3"] )',
     'C.isValid( ZOMClause, [] )',
     `var CombinedClause = C.cat( 
   "babbles", C.zeroOrMore(C.oneOf("foo", "bar", "baz")),
   "truths", C.zeroOrMore(C.isBool),
   "counts", C.zeroOrMore(C.isNatInt)
 );
-C.conform( CombinedClause, ["foo", "foo", "bar",true,  2, 3 , 4] )`,
+C.conform( CombinedClause, ["foo", "foo", "bar", true,  2, 3 , 4] )`,
     'C.isValid( CombinedClause, ["foo", "foo", "bar", 2, 3 , 4] )',
     'C.isValid( CombinedClause, [ 2, 3 , 4 ] )',
     'C.isValid( CombinedClause, [ ] )',
@@ -226,17 +226,22 @@ C.isValid( WalledClause, [2, 3, 4] )`,
 M( 'clause.compose/fclause', {
   comment: 'Given an object that contains "args", "ret" and "fn" expressions (all optionally), returns a spec whose instrument function takes a function and validates its arguments and return value during run time and whose instrumentConformed function takes a function that takes conformed arguments.',
   examples: [
-    `var MyFnSpec = C.fclause( {
-  args: C.zeroOrMore(
-    C.cat(
-      'name', C.isStr,
-      'age', C.isNatInt,
-      // optional field
-      'isMember', C.zeroOrOne( C.isBool )
-    )
-  ),
-  ret: C.isNatInt
+    `// first, we define a cat clause
+var FnArgsClause = C.zeroOrMore(
+   C.cat(
+     'name', C.isStr,
+     'age', C.isNatInt,
+     // optional field
+     'isMember', C.zeroOrOne( C.isBool )
+   )
+ );
+C.conform(FnArgsClause, ["john", 23, true, "mary", 25, "bob", 34])`,
+    `// next, we define a fclause with args as the cat clause defined above
+var MyFnSpec = C.fclause( {
+ args: FnArgsClause,
+ ret: C.isNatInt
 } );
+
 var nameCount = MyFnSpec.instrument( 
   function _nameCount() { return Array.from(arguments).filter((s) => C.isStr(s)).length; } 
 );

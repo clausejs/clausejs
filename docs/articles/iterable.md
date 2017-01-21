@@ -6,7 +6,7 @@ For example, both of the following clause definitions are valid:
 
 #### Array
 
-```
+```js
 var ArrayClause = C.cat('foos', C.oneOrMore(C.equal('foo')),
                         'bars', C.oneOrMore(C.equal('bar')));
 
