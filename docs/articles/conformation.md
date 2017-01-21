@@ -10,7 +10,7 @@ In order for conformation to work, one must specify a label for each part of you
 
 There are 3 ways that data can be conformed with Clause:
 
-#### Cat Conformation (on arrays and strings)
+##### `cat` Conformation (on arrays and strings)
 
 ```js
 var MyCatClause = C.cat(
@@ -31,14 +31,14 @@ var StrClause = C.cat('greetings', C.zeroOrMore(C.scat('hello')),
 C.conform(StrClause, 'hellohellobyebyebyebye');
 ```
 
-### Or Conformation
+##### `or` Conformation
 
 ```js
 var MyOrClause = C.or('option1', C.isStr, 'option2', C.isNum );
 C.conform( MyOrClause, 2 )
 ```
 
-#### Shape Conformation
+##### `shape` Conformation
 
 ```js
 var ShapeClause3 = C.shape( { 
@@ -64,7 +64,7 @@ C.conform( ShapeClause3, {
 
 Notice that for all the examples given above, a label is supplied for each conformed parts.
 
-#### Use `match()` to simplfy code
+##### Use `match()` to simplfy code
 
 In conjunction with conformation, `C.match()` can be used to simplify case handling. For example,
 

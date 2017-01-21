@@ -312,7 +312,7 @@
 <p>To &quot;conform&quot; your data with your clauses is to shape it in a way that is <em>better organized</em>, making it easier for your code to consume.</p>
 <p>In order for conformation to work, one must specify a label for each part of your spec definition (example to follow below).</p>
 <p>There are 3 ways that data can be conformed with Clause:</p>
-<h4 id="catconformationonarraysandstrings">Cat Conformation (on arrays and strings)</h4>
+<h5 id="catconformationonarraysandstrings"><code>cat</code> Conformation (on arrays and strings)</h5>
 <pre><code class="js language-js">var MyCatClause = C.cat(
   &apos;first&apos;, C.isStr, 
   &apos;second&apos;, C.isNum, 
@@ -327,11 +327,11 @@ C.conform( MyCatClause, [&quot;a&quot;, 2, true] )
 
 C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
 </code></pre>
-<h3 id="orconformation">Or Conformation</h3>
+<h5 id="orconformation"><code>or</code> Conformation</h5>
 <pre><code class="js language-js">var MyOrClause = C.or(&apos;option1&apos;, C.isStr, &apos;option2&apos;, C.isNum );
 C.conform( MyOrClause, 2 )
 </code></pre>
-<h4 id="shapeconformation">Shape Conformation</h4>
+<h5 id="shapeconformation"><code>shape</code> Conformation</h5>
 <pre><code class="js language-js">var ShapeClause3 = C.shape( { 
   required: {
     abilityGroup: [ 
@@ -353,7 +353,7 @@ C.conform( ShapeClause3, {
 } )
 </code></pre>
 <p>Notice that for all the examples given above, a label is supplied for each conformed parts.</p>
-<h4 id="usematchtosimplfycode">Use <code>match()</code> to simplfy code</h4>
+<h5 id="usematchtosimplfycode">Use <code>match()</code> to simplfy code</h5>
 <p>In conjunction with conformation, <code>C.match()</code> can be used to simplify case handling. For example,</p>
 <pre><code class="js language-js">// TODO give example
 </code></pre></section>
