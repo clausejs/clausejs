@@ -28746,13 +28746,13 @@ __webpack_require__(90);
 
   (0, _jquery2.default)('.launch-code-examples').click(function (e) {
     var name = (0, _jquery2.default)(e.target).data('name');
-    window.klipse_settings.selector_eval_js = '.code-examples[data-name=' + name + '] pre code';
+    window.klipse_settings.selector_es2017 = '.code-examples[data-name=' + name + '] pre code';
     window.klipse.plugin.init(window.klipse.run.plugin_prod.plugin.settings());
   });
 });
 
 window.klipse_settings = {
-  selector_eval_js: '.noop-doesnt-exist pre code', // css selector for the html elements you want to klipsify
+  selector_es2017: '.noop-doesnt-exist pre code', // css selector for the html elements you want to klipsify
   codemirror_options_in: {
     indentUnit: 2,
     lineWrapping: false,
@@ -28773,7 +28773,7 @@ window.klipse_settings = {
     required: ['title']
   });
 
-  window.klipse_settings.selector_eval_js = '.markdown-article pre code';
+  window.klipse_settings.selector_es2017 = '.markdown-article pre code';
   window.klipse.plugin.init(window.klipse.run.plugin_prod.plugin.settings());
 });
 
