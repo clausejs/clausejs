@@ -129,11 +129,11 @@ const DelayedFnClause = fclause( {
 
 C( '/clause', NamespaceFnClause );
 
-C( 'clause.compose/cat', CatFnClause );
-C( 'clause.compose/or', OrFnClause );
-C( 'clause.compose/zeroOrMore', ZeroOrMoreFnClause );
-C( 'clause.compose/oneOrMore', OneOrMoreFnClause );
-C( 'clause.compose/zeroOrOne', ZeroOrOneFnClause );
+C( 'clause.compose.regex/cat', CatFnClause );
+C( 'clause.compose.regex/or', OrFnClause );
+C( 'clause.compose.regex/zeroOrMore', ZeroOrMoreFnClause );
+C( 'clause.compose.regex/oneOrMore', OneOrMoreFnClause );
+C( 'clause.compose.regex/zeroOrOne', ZeroOrOneFnClause );
 C( 'clause.compose/and', AndFnClause );
 C( 'clause.compose/collOf', CollOfClause );
 C( 'clause.compose/mapOf', MapOfFnClause );

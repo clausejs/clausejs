@@ -24,7 +24,7 @@ ref.get()`
   },
 } );
 
-M( 'clause.compose/cat', {
+M( 'clause.compose.regex/cat', {
   comment: 'Given a set of expressions or a set of label+expression pairs, returns a regex op that matches all values in an iterable. If labels are given, returns a map that groups values by these labels. Returns a Problem if no match is found.',
   examples: [
     `var CatClause = C.cat(C.isStr, C.isNum, C.isBool);
@@ -46,7 +46,7 @@ C.conform( LabelledCatClause, ["a", 2, true] )`,
   ]
 } );
 
-M( 'clause.compose/or', {
+M( 'clause.compose.regex/or', {
   comment: 'Given a set of expressions or a set of label+expression pairs, returns a regex op that matches a value with either one of the expressions. If labels are given, returns a map with a single key that indicates the matching label.',
   examples: [
     `var OrClause = C.or(C.isStr, C.isNum);
@@ -59,7 +59,7 @@ C.conform( LabelledOrClause, 2 )`,
   ]
 } );
 
-M( 'clause.compose/zeroOrMore', {
+M( 'clause.compose.regex/zeroOrMore', {
   comment: 'Given a single expression, returns a regex op that matches zero or more values in an iterable. Returns a Problem if there are no matches.',
   examples: [
     `var ZOMClause = C.zeroOrMore(C.isNum);
@@ -78,7 +78,7 @@ C.conform( CombinedClause, ["foo", "foo", "bar", true,  2, 3 , 4] )`,
   ]
 } );
 
-M( 'clause.compose/oneOrMore', {
+M( 'clause.compose.regex/oneOrMore', {
   comment: 'Given a single expression, returns a regex op that matches one or more values in an iterable. Returns a Problem if there are no matches.',
   examples: [
     `var OOMClause = C.oneOrMore(C.equals("hello"));
@@ -94,7 +94,7 @@ C.conform( CombinedClause, ["foo", "foo", "baz", false, true, 2, 3 ] )`,
   ]
 } );
 
-M( 'clause.compose/zeroOrOne', {
+M( 'clause.compose.regex/zeroOrOne', {
   comment: 'Given a single expression, returns a regex op that matches zero or one values in an iterable. Returns a Problem if there are no matches.',
   examples: [
     `var ZOOClause = C.zeroOrOne( C.equals( "hello" ) );
