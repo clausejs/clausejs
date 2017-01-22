@@ -134,6 +134,7 @@ C( 'clause.compose.regex/or', OrFnClause );
 C( 'clause.compose.regex/zeroOrMore', ZeroOrMoreFnClause );
 C( 'clause.compose.regex/oneOrMore', OneOrMoreFnClause );
 C( 'clause.compose.regex/zeroOrOne', ZeroOrOneFnClause );
+C( 'clause.compose.string/scat', SCatFnClause );
 C( 'clause.compose/and', AndFnClause );
 C( 'clause.compose/collOf', CollOfClause );
 C( 'clause.compose/mapOf', MapOfFnClause );
@@ -145,8 +146,6 @@ C( 'clause.compose/delayed', DelayedFnClause );
 C( 'clause.compose/nullable', clauseTransformFnClause() );
 C( 'clause.compose/undefinable', clauseTransformFnClause() );
 C( 'clause.compose/maybe', clauseTransformFnClause() );
-
-C( 'clause.compose.string/scat', SCatFnClause );
 
 C( 'clause.utils/enforce', EnforceFnClause );
 C( 'clause.utils/conform', ConformFnClause );
