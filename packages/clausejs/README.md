@@ -24,7 +24,7 @@ Clause is heavily inspired by [clojure.spec](http://clojure.org/about/spec), but
 >
 > — *C. A. R. Hoare, Hints on Programming Language Design*
 
-Clause's primary goal is to allow you to create *the defining contract* for your JavaScript project.
+Clause's primary goal is to allow you to create *the definitive contract* for your JavaScript project.
 
 By writing clauses for your data and functions *only once*, you can get a lot of leverage out your effort, including
 
@@ -259,10 +259,12 @@ I was often met with a confused look along with a commment such as "I already kn
 
 [![Discussion](https://img.shields.io/gitter/room/TechnologyAdvice/Stardust.svg)](https://gitter.im/clausejs/clausejs)
 
-## Prior art
+## Prior art & related work
 
 - Both origin of the idea and API are heavily inspired by Rich Hickey et, al.'s [clojure.spec](http://clojure.org/about/clause).
 - Some aspects of the design are drawn by Scheme's [contract system](https://docs.racket-lang.org/guide/contracts.html).
 - NFA clause matching inspired by Thompson NFA regex matching algorithm, and is based on [afader's implementation](https://github.com/afader/thompson-regex-js).
-- [tcomb](https://github.com/gcanti/tcomb)
 - [React's PropTypes](https://facebook.github.io/react/docs/typechecking-with-proptypes.html)
+
+- [js.spec], another attempt at bringing the power of clojure.spec to JavaScript (https://github.com/prayerslayer/js.spec)
+- [tcomb](https://github.com/gcanti/tcomb)
