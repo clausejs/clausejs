@@ -2566,7 +2566,7 @@ exports.default = r;
 "use strict";
 
 
-module.exports = '0.0.25';
+module.exports = '0.1.0';
 
 /***/ },
 /* 46 */
