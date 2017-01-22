@@ -267,5 +267,5 @@ I was often met with a confused look along with a commment such as "I already kn
 - NFA clause matching inspired by Thompson NFA regex matching algorithm, and is based on [afader's implementation](https://github.com/afader/thompson-regex-js).
 - [React's PropTypes](https://facebook.github.io/react/docs/typechecking-with-proptypes.html)
 
-- [js.spec], another attempt at bringing the power of clojure.spec to JavaScript (https://github.com/prayerslayer/js.spec)
+- [js.spec](https://github.com/prayerslayer/js.spec), another attempt at bringing the power of clojure.spec to JavaScript
 - [tcomb](https://github.com/gcanti/tcomb)
