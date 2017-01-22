@@ -932,7 +932,9 @@ var regex = __webpack_require__(8);
 var _require = __webpack_require__(8),
     shape = _require.shape,
     keys = _require.keys,
-    mapOf = _require.mapOf;
+    mapOf = _require.mapOf,
+    cat = _require.cat,
+    fclause = _require.fclause;
 
 var nullable = __webpack_require__(54);
 var undefinable = __webpack_require__(55);
@@ -944,7 +946,7 @@ var _require2 = __webpack_require__(46),
 var equals = __webpack_require__(34);
 
 var scat = function scat(str) {
-  return regex.cat.apply(null, Array.prototype.slice.call(str).map(equals));
+  return cat.apply(null, Array.prototype.slice.call(str).map(equals));
 };
 
 var other = {
@@ -955,7 +957,10 @@ var other = {
   scat: scat
 };
 
-var r = oAssign({}, regex, { shape: shape, keys: keys, mapOf: mapOf }, other);
+var r = oAssign({}, regex, {
+  shape: shape, keys: keys, mapOf: mapOf,
+  fspec: fclause
+}, other);
 module.exports = r;
 
 /***/ },
@@ -5711,7 +5716,7 @@ function _clauseRefLink(p) {
 
 function _description(expr, globalReg, currPath) {
   // return ``;
-  return '\n    <pre>' + unescape(_encode((0, _describe2.default)(expr, _refExprFn(globalReg, currPath), 2))) + '</pre>\n  ';
+  return '\n    <pre class="clause-description"><code class="clause">' + unescape(_encode((0, _describe2.default)(expr, _refExprFn(globalReg, currPath), 2))) + '</code></pre>\n  ';
 }
 
 function _encode(str) {
@@ -5779,9 +5784,9 @@ function _genOrClause(globalReg, exprName, path, expr, meta) {
       examples = [examples];
     }
 
-    return '\n        <fieldset class="list-group-item card-outline-' + _labelFor(expr) + '">\n          <legend class="clause-type">\n            <span class="tag tag-default">\n                Option ' + (idx + 1) + '\n            </span>\n            ' + (name ? '\n                <span class="lead font-italic text-primary">\n                  &ldquo;' + name + '&rdquo;\n                </span>\n            ' : '') + '\n          </legend>\n          <div class="row">\n            <div class="col-md-12">\n            ' + (comment ? '<div>' + comment + '</div>' : '') + '\n            \n            ' + (examples ? '<h6>Examples: </h6>' + examples.map(function (e) {
-      return '\n              <pre><code>' + e + '</code></pre>\n            ';
-    }).join('\n') : '') + '\n            </div>\n          </div>\n          <div class="row">\n            <div class="col-md-12">\n              ' + genForExpression(globalReg, null, altE, meta && meta[name]) + '\n            </div>\n          </div>\n        </fieldset>\n    ';
+    return '\n        <fieldset class="list-group-item card-outline-' + _labelFor(expr) + '">\n          <legend class="clause-type">\n            <span class="tag tag-default">\n                Option ' + (idx + 1) + '\n            </span>\n            ' + (name ? '\n                <span class="lead font-italic text-primary">\n                  &ldquo;' + name + '&rdquo;\n                </span>\n            ' : '') + '\n          </legend>\n          <div class="row">\n            <div class="col-md-12">\n            ' + (comment ? '<div>' + comment + '</div>' : '') + '\n            \n            ' + (examples ? '\n              <h6>Examples: </h6>\n                <div class="code-examples">\n                  ' + examples.map(function (e) {
+      return '\n                    <pre><code>' + e + '</code></pre>\n                  ';
+    }).join('\n') + '\n                </div>\n            ' : '') + '\n            </div>\n          </div>\n          <div class="row">\n            <div class="col-md-12">\n              ' + genForExpression(globalReg, null, altE, meta && meta[name]) + '\n            </div>\n          </div>\n        </fieldset>\n    ';
   });
 
   var r = '\n    <div class="card-block">\n      <p class="card-title">\n      ' + (exprName ? '' : '\n      ') + '\n        Should be <em>one of</em> the following:\n      </p>\n    </div>\n    <div class="list-group list-group-flush list-for-or">\n      ' + altDefs.join('') + '\n    </div>\n  ';
@@ -5830,9 +5835,9 @@ function _genFclause(globalReg, exprName, clause, path) {
     }).join('') + '\n      </ul>']);
   }
   if (examples) {
-    frags.push(['Examples', examples.map(function (e) {
-      return '\n      <pre><code>' + e + '</code></pre>\n    ';
-    }).join('\n')]);
+    frags.push(['Examples  <button class="btn btn-info btn-sm launch-code-examples" data-name="' + exprName + '">\n          Live Eval\n        </button>', '\n      <div class="code-examples" data-name="' + exprName + '">\n        ' + examples.map(function (e) {
+      return '\n            <pre><code>' + e + '</code></pre>\n          ';
+    }).join('') + '\n      </div>\n    ']);
   }
   if (exprName && path) {
     frags.push(['Clause Description', '\n    <blockquote class="blockquote">\n      <small>\n        <em class="text-muted">\n          ' + _description(clause, globalReg, path) + '\n        </em>\n      </small>\n    </blockquote>\n  ']);

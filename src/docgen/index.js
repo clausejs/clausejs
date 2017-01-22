@@ -395,7 +395,7 @@ function _clauseRefLink( p ) {
 function _description( expr, globalReg, currPath ) {
   // return ``;
   return `
-    <pre>${unescape( _encode( describe( expr, _refExprFn( globalReg, currPath ), 2 ) ) )}</pre>
+    <pre class="clause-description"><code class="clause">${unescape( _encode( describe( expr, _refExprFn( globalReg, currPath ), 2 ) ) )}</code></pre>
   `;
 }
 
@@ -499,9 +499,14 @@ function _genOrClause( globalReg, exprName, path, expr, meta ) {
             <div class="col-md-12">
             ${comment ? `<div>${ comment }</div>` : ''}
             
-            ${examples ? '<h6>Examples: </h6>' + examples.map( ( e ) => `
-              <pre><code>${e}</code></pre>
-            ` ).join( '\n' ) : ''}
+            ${examples ? `
+              <h6>Examples: </h6>
+                <div class="code-examples">
+                  ${examples.map( ( e ) => `
+                    <pre><code>${e}</code></pre>
+                  ` ).join( '\n' )}
+                </div>
+            ` : ''}
             </div>
           </div>
           <div class="row">
@@ -567,9 +572,15 @@ function _genFclause( globalReg, exprName, clause, path, meta = {} ) {
     ] );
   }
   if ( examples ) {
-    frags.push( [ 'Examples', examples.map( ( e ) => `
-      <pre><code>${e}</code></pre>
-    ` ).join( '\n' ) ] );
+    frags.push( [ `Examples  <button class="btn btn-info btn-sm launch-code-examples" data-name="${exprName}">
+          Live Eval
+        </button>`, `
+      <div class="code-examples" data-name="${exprName}">
+        ${examples.map( ( e ) => `
+            <pre><code>${e}</code></pre>
+          ` ).join( '' )}
+      </div>
+    ` ] );
   }
   if ( exprName && path ) {
     frags.push( [ 'Clause Description', `

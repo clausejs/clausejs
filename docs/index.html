@@ -91,7 +91,7 @@
         <h6>Concepts</h6>
         <ul>
           <li><a href="#conformation">Conformation?</a></li>
-          <li><a href="#iterable">Regex Ops &amp; Iterables</a></li>
+          <li><a href="#iterable">Regex Ops on Iterables</a></li>
         </ul>
         <h6>API</h6>
         <div id="cot"><dl>
@@ -298,7 +298,7 @@
         <hr>
         <img src="./media/clausejs.svg" class="float-sm-right">
         <p>(
-          API docs and the index table are auto-generated with <a href="https://github.com/clausejs/clausejs/tree/master/packages/clausejs-docgen">spec-docgen</a>.
+          API docs and the index table are auto-generated with <a href="https://github.com/clausejs/clausejs/tree/master/packages/clausejs-docgen">clausejs-docgen</a>.
         <br>
           To contribute to API notes &amp; examples, make a pull request to <a href="https://github.com/clausejs/clausejs/blob/master/src/clauses/index.annotation.js">annotation source files here</a>.)
         </p>
@@ -310,7 +310,7 @@
 <p>To put it plainly, as a developer you expect your data to be of certain &quot;shape&quot;.</p>
 <p>You define the shape of the data with clauses.</p>
 <p>To &quot;conform&quot; your data with your clauses is to shape it in a way that is <em>better organized</em>, making it easier for your code to consume.</p>
-<p>In order for conformation to work, one must specify a label for each part of your spec definition (example to follow below).</p>
+<p>In order for conformation to work, one must specify a label for each part of your clause definition (example to follow below).</p>
 <p>There are 3 ways that data can be conformed with Clause:</p>
 <h5 id="catconformationonarraysandstrings"><code>cat</code> Conformation (on arrays and strings)</h5>
 <pre><code class="js language-js">var MyCatClause = C.cat(
@@ -399,19 +399,24 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
 <dt>Syntax</dt><dd><ul>
         <li>( nsPath: <a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">NamespacePath</a>, expression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) &#x2192; { <a href="#clause.types/Undefined" data-path="clause.types/Undefined">Undefined</a> | <a href="#clause.types/ClauseReference" data-path="clause.types/ClauseReference">ClauseReference</a> }</li><li>( nsPath: <a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">NamespacePath</a> ) &#x2192; { <a href="#clause.types/Undefined" data-path="clause.types/Undefined">Undefined</a> | <a href="#clause.types/ClauseReference" data-path="clause.types/ClauseReference">ClauseReference</a> }</li>
       </ul></dd>
-<dt>Examples</dt><dd>
-      <pre><code>C(&quot;awesomeapp/TodoItem&quot;, TodoItemClause)</code></pre>
-    
-
-      <pre><code>var ref = C(&quot;awesomeapp/TodoItem&quot;);
+<dt>Examples  <button class="btn btn-info btn-sm launch-code-examples" data-name="clause">
+          Live Eval
+        </button></dt><dd>
+      <div class="code-examples" data-name="clause">
+        
+            <pre><code>C(&quot;awesomeapp/TodoItem&quot;, TodoItemClause)</code></pre>
+          
+            <pre><code>var ref = C(&quot;awesomeapp/TodoItem&quot;);
 ref.get()</code></pre>
+          
+      </div>
     </dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
       <small>
         <em class="text-muted">
           
-    <pre>fclause( {
+    <pre class="clause-description"><code class="clause">fclause( {
   &lt;args&gt;: or(
     &quot;register&quot;, cat(
       &quot;nsPath&quot;, <a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">NamespacePath</a>, 
@@ -423,7 +428,7 @@ ref.get()</code></pre>
     <a href="#clause.types/Undefined" data-path="clause.types/Undefined">Undefined</a>, 
     <a href="#clause.types/ClauseReference" data-path="clause.types/ClauseReference">ClauseReference</a>
   )
-} )</pre>
+} )</code></pre>
   
         </em>
       </small>
@@ -442,13 +447,13 @@ ref.get()</code></pre>
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;or(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;or(
   &quot;register&quot;, cat(
     &quot;nsPath&quot;, &lt;a href=&quot;#clause.types/NamespacePath&quot; data-path=&quot;clause.types/NamespacePath&quot;&gt;NamespacePath&lt;/a&gt;, 
     &quot;expression&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;
   ), 
   &quot;retrieve&quot;, cat( &quot;nsPath&quot;, &lt;a href=&quot;#clause.types/NamespacePath&quot; data-path=&quot;clause.types/NamespacePath&quot;&gt;NamespacePath&lt;/a&gt; )
-)&lt;/pre&gt;
+)&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [or] either one of
     </span>
@@ -479,8 +484,13 @@ ref.get()</code></pre>
             <div class="col-md-12">
             <div>Put the given expression onto the given path in the global clause registry.</div>
             
-            <h6>Examples: </h6>
-              <pre><code>C(&quot;awesomeapp/TodoItem&quot;, TodoItemClause)</code></pre>
+            
+              <h6>Examples: </h6>
+                <div class="code-examples">
+                  
+                    <pre><code>C(&quot;awesomeapp/TodoItem&quot;, TodoItemClause)</code></pre>
+                  
+                </div>
             
             </div>
           </div>
@@ -493,10 +503,10 @@ ref.get()</code></pre>
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat(
   &quot;nsPath&quot;, &lt;a href=&quot;#clause.types/NamespacePath&quot; data-path=&quot;clause.types/NamespacePath&quot;&gt;NamespacePath&lt;/a&gt;, 
   &quot;expression&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;
-)&lt;/pre&gt;
+)&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -601,8 +611,13 @@ ref.get()</code></pre>
             <div class="col-md-12">
             <div>Retrieves an expression from the given namespace path, or returns null if not found.</div>
             
-            <h6>Examples: </h6>
-              <pre><code>C(&quot;awesomeapp/TodoItem&quot;)</code></pre>
+            
+              <h6>Examples: </h6>
+                <div class="code-examples">
+                  
+                    <pre><code>C(&quot;awesomeapp/TodoItem&quot;)</code></pre>
+                  
+                </div>
             
             </div>
           </div>
@@ -615,7 +630,7 @@ ref.get()</code></pre>
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat( &quot;nsPath&quot;, &lt;a href=&quot;#clause.types/NamespacePath&quot; data-path=&quot;clause.types/NamespacePath&quot;&gt;NamespacePath&lt;/a&gt; )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat( &quot;nsPath&quot;, &lt;a href=&quot;#clause.types/NamespacePath&quot; data-path=&quot;clause.types/NamespacePath&quot;&gt;NamespacePath&lt;/a&gt; )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -690,10 +705,10 @@ ref.get()</code></pre>
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;or(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;or(
   &lt;a href=&quot;#clause.types/Undefined&quot; data-path=&quot;clause.types/Undefined&quot;&gt;Undefined&lt;/a&gt;, 
   &lt;a href=&quot;#clause.types/ClauseReference&quot; data-path=&quot;clause.types/ClauseReference&quot;&gt;ClauseReference&lt;/a&gt;
-)&lt;/pre&gt;
+)&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [or] either one of
     </span>
@@ -806,36 +821,39 @@ ref.get()</code></pre>
 <dt>Syntax</dt><dd><ul>
         <li>( expressions: { ( ( name: <a href="#clause.types/ClauseLabel" data-path="clause.types/ClauseLabel">ClauseLabel</a>, ( comment: <a href="#clause.types/String" data-path="clause.types/String">String</a> )?, expr: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) )* | [ ( name: <a href="#clause.types/ClauseLabel" data-path="clause.types/ClauseLabel">ClauseLabel</a>, ( comment: <a href="#clause.types/String" data-path="clause.types/String">String</a> )?, expr: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) ]* }, ( options: <a href="#clause.types/PlainObject" data-path="clause.types/PlainObject">PlainObject</a> )? ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li><li>( ( expressions: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> )*, ( options: <a href="#clause.types/PlainObject" data-path="clause.types/PlainObject">PlainObject</a> )? ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
       </ul></dd>
-<dt>Examples</dt><dd>
-      <pre><code>var CatClause = C.cat(C.isStr, C.isNum, C.isBool);
+<dt>Examples  <button class="btn btn-info btn-sm launch-code-examples" data-name="cat">
+          Live Eval
+        </button></dt><dd>
+      <div class="code-examples" data-name="cat">
+        
+            <pre><code>var CatClause = C.cat(C.isStr, C.isNum, C.isBool);
 C.isValid( CatClause, [&quot;a&quot;, 2, true] )</code></pre>
-    
-
-      <pre><code>C.isValid( CatClause, [&quot;a&quot;, false, &quot;b&quot;] )</code></pre>
-    
-
-      <pre><code>var LabelledCatClause = C.cat(
+          
+            <pre><code>C.isValid( CatClause, [&quot;a&quot;, false, &quot;b&quot;] )</code></pre>
+          
+            <pre><code>var LabelledCatClause = C.cat(
   &apos;first&apos;, C.isStr, 
   &apos;second&apos;, C.isNum, 
   &apos;third&apos;, C.isBool
 );
 C.conform( LabelledCatClause, [&quot;a&quot;, 2, true] )</code></pre>
-    
-
-      <pre><code>// equivalent to the above
+          
+            <pre><code>// equivalent to the above
 var LabelledCatClause = C.cat([
   [ &apos;first&apos;, C.isStr ], 
   [ &apos;second&apos;, &apos;this is an optional comment on second&apos;, C.isNum ], 
   [ &apos;third&apos;, C.isBool ]
 ]);
 C.conform( LabelledCatClause, [&quot;a&quot;, 2, true] )</code></pre>
+          
+      </div>
     </dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
       <small>
         <em class="text-muted">
           
-    <pre>fclause( {
+    <pre class="clause-description"><code class="clause">fclause( {
   &lt;args&gt;: and(
     cat(
       &quot;expressions&quot;, or(
@@ -858,7 +876,7 @@ C.conform( LabelledCatClause, [&quot;a&quot;, 2, true] )</code></pre>
     noDupelicateLabels
   ), 
   &lt;ret&gt;: <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a>
-} )</pre>
+} )</code></pre>
   
         </em>
       </small>
@@ -877,7 +895,7 @@ C.conform( LabelledCatClause, [&quot;a&quot;, 2, true] )</code></pre>
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;and(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;and(
   cat(
     &quot;expressions&quot;, or(
       &quot;withLabels&quot;, or(
@@ -897,7 +915,7 @@ C.conform( LabelledCatClause, [&quot;a&quot;, 2, true] )</code></pre>
     &quot;options&quot;, zeroOrOne( &lt;a href=&quot;#clause.types/PlainObject&quot; data-path=&quot;clause.types/PlainObject&quot;&gt;PlainObject&lt;/a&gt; )
   ), 
   noDupelicateLabels
-)&lt;/pre&gt;
+)&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       <span class="tag tag-info">[and]</span>
     </span>
@@ -924,7 +942,7 @@ C.conform( LabelledCatClause, [&quot;a&quot;, 2, true] )</code></pre>
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat(
   &quot;expressions&quot;, or(
     &quot;withLabels&quot;, or(
       zeroOrMore( cat(
@@ -941,7 +959,7 @@ C.conform( LabelledCatClause, [&quot;a&quot;, 2, true] )</code></pre>
     &quot;withoutLabels&quot;, zeroOrMore( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; )
   ), 
   &quot;options&quot;, zeroOrOne( &lt;a href=&quot;#clause.types/PlainObject&quot; data-path=&quot;clause.types/PlainObject&quot;&gt;PlainObject&lt;/a&gt; )
-)&lt;/pre&gt;
+)&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -977,7 +995,7 @@ C.conform( LabelledCatClause, [&quot;a&quot;, 2, true] )</code></pre>
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;or(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;or(
   &quot;withLabels&quot;, or(
     zeroOrMore( cat(
       &quot;name&quot;, &lt;a href=&quot;#clause.types/ClauseLabel&quot; data-path=&quot;clause.types/ClauseLabel&quot;&gt;ClauseLabel&lt;/a&gt;, 
@@ -991,7 +1009,7 @@ C.conform( LabelledCatClause, [&quot;a&quot;, 2, true] )</code></pre>
     ) )
   ), 
   &quot;withoutLabels&quot;, zeroOrMore( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; )
-)&lt;/pre&gt;
+)&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [or] either one of
     </span>
@@ -1034,7 +1052,7 @@ C.conform( LabelledCatClause, [&quot;a&quot;, 2, true] )</code></pre>
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;or(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;or(
   zeroOrMore( cat(
     &quot;name&quot;, &lt;a href=&quot;#clause.types/ClauseLabel&quot; data-path=&quot;clause.types/ClauseLabel&quot;&gt;ClauseLabel&lt;/a&gt;, 
     &quot;comment&quot;, zeroOrOne( &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt; ), 
@@ -1045,7 +1063,7 @@ C.conform( LabelledCatClause, [&quot;a&quot;, 2, true] )</code></pre>
     &quot;comment&quot;, zeroOrOne( &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt; ), 
     &quot;expr&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;
   ) )
-)&lt;/pre&gt;
+)&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [or] either one of
     </span>
@@ -1084,11 +1102,11 @@ C.conform( LabelledCatClause, [&quot;a&quot;, 2, true] )</code></pre>
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;zeroOrMore( cat(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;zeroOrMore( cat(
   &quot;name&quot;, &lt;a href=&quot;#clause.types/ClauseLabel&quot; data-path=&quot;clause.types/ClauseLabel&quot;&gt;ClauseLabel&lt;/a&gt;, 
   &quot;comment&quot;, zeroOrOne( &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt; ), 
   &quot;expr&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;
-) )&lt;/pre&gt;
+) )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [*] zero or more
     </span>
@@ -1103,11 +1121,11 @@ C.conform( LabelledCatClause, [&quot;a&quot;, 2, true] )</code></pre>
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat(
   &quot;name&quot;, &lt;a href=&quot;#clause.types/ClauseLabel&quot; data-path=&quot;clause.types/ClauseLabel&quot;&gt;ClauseLabel&lt;/a&gt;, 
   &quot;comment&quot;, zeroOrOne( &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt; ), 
   &quot;expr&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;
-)&lt;/pre&gt;
+)&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -1177,7 +1195,7 @@ C.conform( LabelledCatClause, [&quot;a&quot;, 2, true] )</code></pre>
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;zeroOrOne( &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt; )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;zeroOrOne( &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt; )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [?] optional
     </span>
@@ -1277,11 +1295,11 @@ C.conform( LabelledCatClause, [&quot;a&quot;, 2, true] )</code></pre>
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;collOf( cat(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;collOf( cat(
   &quot;name&quot;, &lt;a href=&quot;#clause.types/ClauseLabel&quot; data-path=&quot;clause.types/ClauseLabel&quot;&gt;ClauseLabel&lt;/a&gt;, 
   &quot;comment&quot;, zeroOrOne( &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt; ), 
   &quot;expr&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;
-) )&lt;/pre&gt;
+) )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [collOf] a collection of
     </span>
@@ -1296,11 +1314,11 @@ C.conform( LabelledCatClause, [&quot;a&quot;, 2, true] )</code></pre>
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat(
   &quot;name&quot;, &lt;a href=&quot;#clause.types/ClauseLabel&quot; data-path=&quot;clause.types/ClauseLabel&quot;&gt;ClauseLabel&lt;/a&gt;, 
   &quot;comment&quot;, zeroOrOne( &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt; ), 
   &quot;expr&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;
-)&lt;/pre&gt;
+)&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -1370,7 +1388,7 @@ C.conform( LabelledCatClause, [&quot;a&quot;, 2, true] )</code></pre>
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;zeroOrOne( &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt; )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;zeroOrOne( &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt; )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [?] optional
     </span>
@@ -1482,7 +1500,7 @@ C.conform( LabelledCatClause, [&quot;a&quot;, 2, true] )</code></pre>
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;zeroOrMore( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;zeroOrMore( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [*] zero or more
     </span>
@@ -1543,7 +1561,7 @@ C.conform( LabelledCatClause, [&quot;a&quot;, 2, true] )</code></pre>
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;zeroOrOne( &lt;a href=&quot;#clause.types/PlainObject&quot; data-path=&quot;clause.types/PlainObject&quot;&gt;PlainObject&lt;/a&gt; )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;zeroOrOne( &lt;a href=&quot;#clause.types/PlainObject&quot; data-path=&quot;clause.types/PlainObject&quot;&gt;PlainObject&lt;/a&gt; )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [?] optional
     </span>
@@ -1595,7 +1613,7 @@ C.conform( LabelledCatClause, [&quot;a&quot;, 2, true] )</code></pre>
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;noDupelicateLabels&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;noDupelicateLabels&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
       [pred] satisfies predicate
     </span>
@@ -1684,25 +1702,29 @@ C.conform( LabelledCatClause, [&quot;a&quot;, 2, true] )</code></pre>
 <dt>Syntax</dt><dd><ul>
         <li>( expressions: { ( ( name: <a href="#clause.types/ClauseLabel" data-path="clause.types/ClauseLabel">ClauseLabel</a>, ( comment: <a href="#clause.types/String" data-path="clause.types/String">String</a> )?, expr: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) )* | [ ( name: <a href="#clause.types/ClauseLabel" data-path="clause.types/ClauseLabel">ClauseLabel</a>, ( comment: <a href="#clause.types/String" data-path="clause.types/String">String</a> )?, expr: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) ]* }, ( options: <a href="#clause.types/PlainObject" data-path="clause.types/PlainObject">PlainObject</a> )? ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li><li>( ( expressions: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> )*, ( options: <a href="#clause.types/PlainObject" data-path="clause.types/PlainObject">PlainObject</a> )? ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
       </ul></dd>
-<dt>Examples</dt><dd>
-      <pre><code>var OrClause = C.or(C.isStr, C.isNum);
+<dt>Examples  <button class="btn btn-info btn-sm launch-code-examples" data-name="or">
+          Live Eval
+        </button></dt><dd>
+      <div class="code-examples" data-name="or">
+        
+            <pre><code>var OrClause = C.or(C.isStr, C.isNum);
 C.conform( OrClause, &quot;a&quot; )</code></pre>
-    
-
-      <pre><code>var LabelledOrClause = C.or(&apos;option1&apos;, C.isStr, &apos;option2&apos;, C.isNum );
+          
+            <pre><code>var LabelledOrClause = C.or(&apos;option1&apos;, C.isStr, &apos;option2&apos;, C.isNum );
 C.conform( LabelledOrClause, 2 )</code></pre>
-    
-
-      <pre><code>// equivalent to the above
+          
+            <pre><code>// equivalent to the above
 var LabelledOrClause = C.or([[&apos;option1&apos;, C.isStr], [&apos;option2&apos;, C.isNum]] );
 C.conform( LabelledOrClause, 2 )</code></pre>
+          
+      </div>
     </dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
       <small>
         <em class="text-muted">
           
-    <pre>fclause( {
+    <pre class="clause-description"><code class="clause">fclause( {
   &lt;args&gt;: and(
     cat(
       &quot;expressions&quot;, or(
@@ -1725,7 +1747,7 @@ C.conform( LabelledOrClause, 2 )</code></pre>
     noDupelicateLabels
   ), 
   &lt;ret&gt;: <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a>
-} )</pre>
+} )</code></pre>
   
         </em>
       </small>
@@ -1744,7 +1766,7 @@ C.conform( LabelledOrClause, 2 )</code></pre>
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;and(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;and(
   cat(
     &quot;expressions&quot;, or(
       &quot;withLabels&quot;, or(
@@ -1764,7 +1786,7 @@ C.conform( LabelledOrClause, 2 )</code></pre>
     &quot;options&quot;, zeroOrOne( &lt;a href=&quot;#clause.types/PlainObject&quot; data-path=&quot;clause.types/PlainObject&quot;&gt;PlainObject&lt;/a&gt; )
   ), 
   noDupelicateLabels
-)&lt;/pre&gt;
+)&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       <span class="tag tag-info">[and]</span>
     </span>
@@ -1791,7 +1813,7 @@ C.conform( LabelledOrClause, 2 )</code></pre>
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat(
   &quot;expressions&quot;, or(
     &quot;withLabels&quot;, or(
       zeroOrMore( cat(
@@ -1808,7 +1830,7 @@ C.conform( LabelledOrClause, 2 )</code></pre>
     &quot;withoutLabels&quot;, zeroOrMore( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; )
   ), 
   &quot;options&quot;, zeroOrOne( &lt;a href=&quot;#clause.types/PlainObject&quot; data-path=&quot;clause.types/PlainObject&quot;&gt;PlainObject&lt;/a&gt; )
-)&lt;/pre&gt;
+)&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -1844,7 +1866,7 @@ C.conform( LabelledOrClause, 2 )</code></pre>
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;or(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;or(
   &quot;withLabels&quot;, or(
     zeroOrMore( cat(
       &quot;name&quot;, &lt;a href=&quot;#clause.types/ClauseLabel&quot; data-path=&quot;clause.types/ClauseLabel&quot;&gt;ClauseLabel&lt;/a&gt;, 
@@ -1858,7 +1880,7 @@ C.conform( LabelledOrClause, 2 )</code></pre>
     ) )
   ), 
   &quot;withoutLabels&quot;, zeroOrMore( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; )
-)&lt;/pre&gt;
+)&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [or] either one of
     </span>
@@ -1901,7 +1923,7 @@ C.conform( LabelledOrClause, 2 )</code></pre>
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;or(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;or(
   zeroOrMore( cat(
     &quot;name&quot;, &lt;a href=&quot;#clause.types/ClauseLabel&quot; data-path=&quot;clause.types/ClauseLabel&quot;&gt;ClauseLabel&lt;/a&gt;, 
     &quot;comment&quot;, zeroOrOne( &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt; ), 
@@ -1912,7 +1934,7 @@ C.conform( LabelledOrClause, 2 )</code></pre>
     &quot;comment&quot;, zeroOrOne( &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt; ), 
     &quot;expr&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;
   ) )
-)&lt;/pre&gt;
+)&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [or] either one of
     </span>
@@ -1951,11 +1973,11 @@ C.conform( LabelledOrClause, 2 )</code></pre>
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;zeroOrMore( cat(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;zeroOrMore( cat(
   &quot;name&quot;, &lt;a href=&quot;#clause.types/ClauseLabel&quot; data-path=&quot;clause.types/ClauseLabel&quot;&gt;ClauseLabel&lt;/a&gt;, 
   &quot;comment&quot;, zeroOrOne( &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt; ), 
   &quot;expr&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;
-) )&lt;/pre&gt;
+) )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [*] zero or more
     </span>
@@ -1970,11 +1992,11 @@ C.conform( LabelledOrClause, 2 )</code></pre>
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat(
   &quot;name&quot;, &lt;a href=&quot;#clause.types/ClauseLabel&quot; data-path=&quot;clause.types/ClauseLabel&quot;&gt;ClauseLabel&lt;/a&gt;, 
   &quot;comment&quot;, zeroOrOne( &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt; ), 
   &quot;expr&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;
-)&lt;/pre&gt;
+)&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -2044,7 +2066,7 @@ C.conform( LabelledOrClause, 2 )</code></pre>
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;zeroOrOne( &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt; )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;zeroOrOne( &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt; )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [?] optional
     </span>
@@ -2144,11 +2166,11 @@ C.conform( LabelledOrClause, 2 )</code></pre>
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;collOf( cat(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;collOf( cat(
   &quot;name&quot;, &lt;a href=&quot;#clause.types/ClauseLabel&quot; data-path=&quot;clause.types/ClauseLabel&quot;&gt;ClauseLabel&lt;/a&gt;, 
   &quot;comment&quot;, zeroOrOne( &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt; ), 
   &quot;expr&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;
-) )&lt;/pre&gt;
+) )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [collOf] a collection of
     </span>
@@ -2163,11 +2185,11 @@ C.conform( LabelledOrClause, 2 )</code></pre>
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat(
   &quot;name&quot;, &lt;a href=&quot;#clause.types/ClauseLabel&quot; data-path=&quot;clause.types/ClauseLabel&quot;&gt;ClauseLabel&lt;/a&gt;, 
   &quot;comment&quot;, zeroOrOne( &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt; ), 
   &quot;expr&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;
-)&lt;/pre&gt;
+)&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -2237,7 +2259,7 @@ C.conform( LabelledOrClause, 2 )</code></pre>
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;zeroOrOne( &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt; )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;zeroOrOne( &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt; )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [?] optional
     </span>
@@ -2349,7 +2371,7 @@ C.conform( LabelledOrClause, 2 )</code></pre>
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;zeroOrMore( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;zeroOrMore( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [*] zero or more
     </span>
@@ -2410,7 +2432,7 @@ C.conform( LabelledOrClause, 2 )</code></pre>
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;zeroOrOne( &lt;a href=&quot;#clause.types/PlainObject&quot; data-path=&quot;clause.types/PlainObject&quot;&gt;PlainObject&lt;/a&gt; )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;zeroOrOne( &lt;a href=&quot;#clause.types/PlainObject&quot; data-path=&quot;clause.types/PlainObject&quot;&gt;PlainObject&lt;/a&gt; )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [?] optional
     </span>
@@ -2462,7 +2484,7 @@ C.conform( LabelledOrClause, 2 )</code></pre>
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;noDupelicateLabels&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;noDupelicateLabels&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
       [pred] satisfies predicate
     </span>
@@ -2551,45 +2573,45 @@ C.conform( LabelledOrClause, 2 )</code></pre>
 <dt>Syntax</dt><dd><ul>
         <li>( expr: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, ( opts: <a href="#clause.types/Object" data-path="clause.types/Object">Object</a> )? ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
       </ul></dd>
-<dt>Examples</dt><dd>
-      <pre><code>var ZOMClause = C.zeroOrMore(C.isNum);
+<dt>Examples  <button class="btn btn-info btn-sm launch-code-examples" data-name="zeroOrMore">
+          Live Eval
+        </button></dt><dd>
+      <div class="code-examples" data-name="zeroOrMore">
+        
+            <pre><code>var ZOMClause = C.zeroOrMore(C.isNum);
 C.isValid( ZOMClause, [1, 2, 3] )</code></pre>
-    
-
-      <pre><code>C.isValid( ZOMClause, [1, 2, &quot;3&quot;] )</code></pre>
-    
-
-      <pre><code>C.isValid( ZOMClause, [] )</code></pre>
-    
-
-      <pre><code>var CombinedClause = C.cat( 
+          
+            <pre><code>C.isValid( ZOMClause, [1, 2, &quot;3&quot;] )</code></pre>
+          
+            <pre><code>C.isValid( ZOMClause, [] )</code></pre>
+          
+            <pre><code>var CombinedClause = C.cat( 
   &quot;babbles&quot;, C.zeroOrMore(C.oneOf(&quot;foo&quot;, &quot;bar&quot;, &quot;baz&quot;)),
   &quot;truths&quot;, C.zeroOrMore(C.isBool),
   &quot;counts&quot;, C.zeroOrMore(C.isNatInt)
 );
 C.conform( CombinedClause, [&quot;foo&quot;, &quot;foo&quot;, &quot;bar&quot;, true,  2, 3 , 4] )</code></pre>
-    
-
-      <pre><code>C.isValid( CombinedClause, [&quot;foo&quot;, &quot;foo&quot;, &quot;bar&quot;, 2, 3 , 4] )</code></pre>
-    
-
-      <pre><code>C.isValid( CombinedClause, [ 2, 3 , 4 ] )</code></pre>
-    
-
-      <pre><code>C.isValid( CombinedClause, [ ] )</code></pre>
+          
+            <pre><code>C.isValid( CombinedClause, [&quot;foo&quot;, &quot;foo&quot;, &quot;bar&quot;, 2, 3 , 4] )</code></pre>
+          
+            <pre><code>C.isValid( CombinedClause, [ 2, 3 , 4 ] )</code></pre>
+          
+            <pre><code>C.isValid( CombinedClause, [ ] )</code></pre>
+          
+      </div>
     </dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
       <small>
         <em class="text-muted">
           
-    <pre>fclause( {
+    <pre class="clause-description"><code class="clause">fclause( {
   &lt;args&gt;: cat(
     &quot;expr&quot;, <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, 
     &quot;opts&quot;, zeroOrOne( <a href="#clause.types/Object" data-path="clause.types/Object">Object</a> )
   ), 
   &lt;ret&gt;: <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a>
-} )</pre>
+} )</code></pre>
   
         </em>
       </small>
@@ -2608,10 +2630,10 @@ C.conform( CombinedClause, [&quot;foo&quot;, &quot;foo&quot;, &quot;bar&quot;, t
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat(
   &quot;expr&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;, 
   &quot;opts&quot;, zeroOrOne( &lt;a href=&quot;#clause.types/Object&quot; data-path=&quot;clause.types/Object&quot;&gt;Object&lt;/a&gt; )
-)&lt;/pre&gt;
+)&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -2681,7 +2703,7 @@ C.conform( CombinedClause, [&quot;foo&quot;, &quot;foo&quot;, &quot;bar&quot;, t
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;zeroOrOne( &lt;a href=&quot;#clause.types/Object&quot; data-path=&quot;clause.types/Object&quot;&gt;Object&lt;/a&gt; )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;zeroOrOne( &lt;a href=&quot;#clause.types/Object&quot; data-path=&quot;clause.types/Object&quot;&gt;Object&lt;/a&gt; )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [?] optional
     </span>
@@ -2763,36 +2785,39 @@ C.conform( CombinedClause, [&quot;foo&quot;, &quot;foo&quot;, &quot;bar&quot;, t
 <dt>Syntax</dt><dd><ul>
         <li>( expr: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, ( opts: <a href="#clause.types/Object" data-path="clause.types/Object">Object</a> )? ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
       </ul></dd>
-<dt>Examples</dt><dd>
-      <pre><code>var OOMClause = C.oneOrMore(C.equals(&quot;hello&quot;));
+<dt>Examples  <button class="btn btn-info btn-sm launch-code-examples" data-name="oneOrMore">
+          Live Eval
+        </button></dt><dd>
+      <div class="code-examples" data-name="oneOrMore">
+        
+            <pre><code>var OOMClause = C.oneOrMore(C.equals(&quot;hello&quot;));
 C.isValid( OOMClause, [ &quot;hello&quot;, &quot;hello&quot;, &quot;hello&quot; ] )</code></pre>
-    
-
-      <pre><code>C.isValid( OOMClause, [ &quot;hello&quot;, &quot;hello&quot;, &quot;hello&quot; ] )</code></pre>
-    
-
-      <pre><code>var CombinedClause = C.cat( 
+          
+            <pre><code>C.isValid( OOMClause, [ &quot;hello&quot;, &quot;hello&quot;, &quot;hello&quot; ] )</code></pre>
+          
+            <pre><code>var CombinedClause = C.cat( 
   &quot;babbles&quot;, C.oneOrMore(C.oneOf(&quot;foo&quot;, &quot;bar&quot;, &quot;baz&quot;)),
   &quot;truths&quot;, C.oneOrMore(C.isBool),
   &quot;counts&quot;, C.oneOrMore(C.isNatInt)
 );
 C.conform( CombinedClause, [&quot;foo&quot;, &quot;foo&quot;, &quot;baz&quot;, false, true, 2, 3 ] )</code></pre>
-    
-
-      <pre><code>C.isValid( CombinedClause, [false, true, 2, 3 ] )</code></pre>
+          
+            <pre><code>C.isValid( CombinedClause, [false, true, 2, 3 ] )</code></pre>
+          
+      </div>
     </dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
       <small>
         <em class="text-muted">
           
-    <pre>fclause( {
+    <pre class="clause-description"><code class="clause">fclause( {
   &lt;args&gt;: cat(
     &quot;expr&quot;, <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, 
     &quot;opts&quot;, zeroOrOne( <a href="#clause.types/Object" data-path="clause.types/Object">Object</a> )
   ), 
   &lt;ret&gt;: <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a>
-} )</pre>
+} )</code></pre>
   
         </em>
       </small>
@@ -2811,10 +2836,10 @@ C.conform( CombinedClause, [&quot;foo&quot;, &quot;foo&quot;, &quot;baz&quot;, f
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat(
   &quot;expr&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;, 
   &quot;opts&quot;, zeroOrOne( &lt;a href=&quot;#clause.types/Object&quot; data-path=&quot;clause.types/Object&quot;&gt;Object&lt;/a&gt; )
-)&lt;/pre&gt;
+)&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -2884,7 +2909,7 @@ C.conform( CombinedClause, [&quot;foo&quot;, &quot;foo&quot;, &quot;baz&quot;, f
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;zeroOrOne( &lt;a href=&quot;#clause.types/Object&quot; data-path=&quot;clause.types/Object&quot;&gt;Object&lt;/a&gt; )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;zeroOrOne( &lt;a href=&quot;#clause.types/Object&quot; data-path=&quot;clause.types/Object&quot;&gt;Object&lt;/a&gt; )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [?] optional
     </span>
@@ -2966,33 +2991,37 @@ C.conform( CombinedClause, [&quot;foo&quot;, &quot;foo&quot;, &quot;baz&quot;, f
 <dt>Syntax</dt><dd><ul>
         <li>( expr: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, ( opts: <a href="#clause.types/Object" data-path="clause.types/Object">Object</a> )? ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
       </ul></dd>
-<dt>Examples</dt><dd>
-      <pre><code>var ZOOClause = C.zeroOrOne( C.equals( &quot;hello&quot; ) );
+<dt>Examples  <button class="btn btn-info btn-sm launch-code-examples" data-name="zeroOrOne">
+          Live Eval
+        </button></dt><dd>
+      <div class="code-examples" data-name="zeroOrOne">
+        
+            <pre><code>var ZOOClause = C.zeroOrOne( C.equals( &quot;hello&quot; ) );
 C.isValid( ZOOClause, [ &quot;hello&quot; ] )</code></pre>
-    
-
-      <pre><code>C.isValid( ZOOClause, [] )</code></pre>
-    
-
-      <pre><code>var CombinedClause = C.cat( 
+          
+            <pre><code>C.isValid( ZOOClause, [] )</code></pre>
+          
+            <pre><code>var CombinedClause = C.cat( 
   &quot;the babble&quot;, C.zeroOrOne( C.oneOf(&quot;foo&quot;, &quot;bar&quot;, &quot;baz&quot;) ),
   &quot;the truth&quot;, C.zeroOrOne( C.isBool ),
   &quot;the count&quot;, C.zeroOrOne( C.isNatInt )
 );
 C.conform( CombinedClause, [&quot;foo&quot;, 4] )</code></pre>
+          
+      </div>
     </dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
       <small>
         <em class="text-muted">
           
-    <pre>fclause( {
+    <pre class="clause-description"><code class="clause">fclause( {
   &lt;args&gt;: cat(
     &quot;expr&quot;, <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, 
     &quot;opts&quot;, zeroOrOne( <a href="#clause.types/Object" data-path="clause.types/Object">Object</a> )
   ), 
   &lt;ret&gt;: <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a>
-} )</pre>
+} )</code></pre>
   
         </em>
       </small>
@@ -3011,10 +3040,10 @@ C.conform( CombinedClause, [&quot;foo&quot;, 4] )</code></pre>
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat(
   &quot;expr&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;, 
   &quot;opts&quot;, zeroOrOne( &lt;a href=&quot;#clause.types/Object&quot; data-path=&quot;clause.types/Object&quot;&gt;Object&lt;/a&gt; )
-)&lt;/pre&gt;
+)&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -3084,7 +3113,7 @@ C.conform( CombinedClause, [&quot;foo&quot;, 4] )</code></pre>
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;zeroOrOne( &lt;a href=&quot;#clause.types/Object&quot; data-path=&quot;clause.types/Object&quot;&gt;Object&lt;/a&gt; )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;zeroOrOne( &lt;a href=&quot;#clause.types/Object&quot; data-path=&quot;clause.types/Object&quot;&gt;Object&lt;/a&gt; )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [?] optional
     </span>
@@ -3166,15 +3195,17 @@ C.conform( CombinedClause, [&quot;foo&quot;, 4] )</code></pre>
 <dt>Syntax</dt><dd><ul>
         <li>( <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> )+ &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
       </ul></dd>
-<dt>Examples</dt><dd>
-      <pre><code>var AndClause = C.and( C.isStr, (s) =&gt; s.length &gt; 5 );
+<dt>Examples  <button class="btn btn-info btn-sm launch-code-examples" data-name="and">
+          Live Eval
+        </button></dt><dd>
+      <div class="code-examples" data-name="and">
+        
+            <pre><code>var AndClause = C.and( C.isStr, (s) =&gt; s.length &gt; 5 );
 C.isValid( AndClause, &quot;abcdefgh&quot; )</code></pre>
-    
-
-      <pre><code>C.isValid( AndClause, &quot;abc&quot; )</code></pre>
-    
-
-      <pre><code>var PropagatingAndClause = C.and( 
+          
+            <pre><code>C.isValid( AndClause, &quot;abc&quot; )</code></pre>
+          
+            <pre><code>var PropagatingAndClause = C.and( 
   C.cat( 
     &quot;first&quot;, C.isStr, 
     &quot;second&quot;, C.zeroOrMore( C.isNum )
@@ -3182,22 +3213,22 @@ C.isValid( AndClause, &quot;abcdefgh&quot; )</code></pre>
   // &quot;second&quot; propagated from conformed results of the previous clause
   ({ second }) =&gt; second.length &gt; 4 ) 
 C.isValid( PropagatingAndClause, [ &quot;foo&quot;, 2, 3, 4, 5, 6 ] )</code></pre>
-    
-
-      <pre><code>C.conform( PropagatingAndClause, [ &quot;foo&quot;, 2, 3, 4, 5, 6 ] )</code></pre>
-    
-
-      <pre><code>C.isValid( PropagatingAndClause, [ &quot;foo&quot;, 2, 3 ] )</code></pre>
+          
+            <pre><code>C.conform( PropagatingAndClause, [ &quot;foo&quot;, 2, 3, 4, 5, 6 ] )</code></pre>
+          
+            <pre><code>C.isValid( PropagatingAndClause, [ &quot;foo&quot;, 2, 3 ] )</code></pre>
+          
+      </div>
     </dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
       <small>
         <em class="text-muted">
           
-    <pre>fclause( {
+    <pre class="clause-description"><code class="clause">fclause( {
   &lt;args&gt;: oneOrMore( <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ), 
   &lt;ret&gt;: <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a>
-} )</pre>
+} )</code></pre>
   
         </em>
       </small>
@@ -3216,7 +3247,7 @@ C.isValid( PropagatingAndClause, [ &quot;foo&quot;, 2, 3, 4, 5, 6 ] )</code></pr
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;oneOrMore( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;oneOrMore( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [+] one or more
     </span>
@@ -3290,39 +3321,42 @@ C.isValid( PropagatingAndClause, [ &quot;foo&quot;, 2, 3, 4, 5, 6 ] )</code></pr
 <dt>Syntax</dt><dd><ul>
         <li>( expr: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, ( opts: <a href="#clause.types/Object" data-path="clause.types/Object">Object</a> )? ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
       </ul></dd>
-<dt>Examples</dt><dd>
-      <pre><code>var CollOfStrClause = C.collOf(C.isStr);
+<dt>Examples  <button class="btn btn-info btn-sm launch-code-examples" data-name="collOf">
+          Live Eval
+        </button></dt><dd>
+      <div class="code-examples" data-name="collOf">
+        
+            <pre><code>var CollOfStrClause = C.collOf(C.isStr);
 C.conform( CollOfStrClause, [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;] )</code></pre>
-    
-
-      <pre><code>C.conform( CollOfStrClause, [] )</code></pre>
-    
-
-      <pre><code> // notice the difference in behavior from C.zeroOrOne
+          
+            <pre><code>C.conform( CollOfStrClause, [] )</code></pre>
+          
+            <pre><code> // notice the difference in behavior from C.zeroOrOne
 var CombinedCollOfClause = C.cat( 
   &quot;babbles&quot;, C.collOf(C.oneOf(&quot;foo&quot;, &quot;bar&quot;, &quot;baz&quot;)),
   &quot;truths&quot;, C.collOf(C.isBool),
   &quot;counts&quot;, C.collOf(C.isNatInt)
 );
 C.isValid( CombinedCollOfClause, [[&quot;foo&quot;, &quot;foo&quot;, &quot;bar&quot;], [], [2, 3 , 4]] )</code></pre>
-    
-
-      <pre><code>// invalid because collOf does not mix with regex ops like zeroOrMore
-    // collOf(...) here is equivalent to wall(zeroOrMore(...))
-    C.isValid( CombinedCollOfClause, [&quot;foo&quot;, &quot;foo&quot;, &quot;bar&quot;, 2, 3 , 4] )</code></pre>
+          
+            <pre><code>// invalid because collOf does not mix with regex ops like zeroOrMore
+// collOf(...) here is equivalent to wall(zeroOrMore(...))
+C.isValid( CombinedCollOfClause, [&quot;foo&quot;, &quot;foo&quot;, &quot;bar&quot;, 2, 3 , 4] )</code></pre>
+          
+      </div>
     </dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
       <small>
         <em class="text-muted">
           
-    <pre>fclause( {
+    <pre class="clause-description"><code class="clause">fclause( {
   &lt;args&gt;: cat(
     &quot;expr&quot;, <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, 
     &quot;opts&quot;, zeroOrOne( <a href="#clause.types/Object" data-path="clause.types/Object">Object</a> )
   ), 
   &lt;ret&gt;: <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a>
-} )</pre>
+} )</code></pre>
   
         </em>
       </small>
@@ -3341,10 +3375,10 @@ C.isValid( CombinedCollOfClause, [[&quot;foo&quot;, &quot;foo&quot;, &quot;bar&q
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat(
   &quot;expr&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;, 
   &quot;opts&quot;, zeroOrOne( &lt;a href=&quot;#clause.types/Object&quot; data-path=&quot;clause.types/Object&quot;&gt;Object&lt;/a&gt; )
-)&lt;/pre&gt;
+)&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -3414,7 +3448,7 @@ C.isValid( CombinedCollOfClause, [[&quot;foo&quot;, &quot;foo&quot;, &quot;bar&q
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;zeroOrOne( &lt;a href=&quot;#clause.types/Object&quot; data-path=&quot;clause.types/Object&quot;&gt;Object&lt;/a&gt; )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;zeroOrOne( &lt;a href=&quot;#clause.types/Object&quot; data-path=&quot;clause.types/Object&quot;&gt;Object&lt;/a&gt; )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [?] optional
     </span>
@@ -3496,30 +3530,34 @@ C.isValid( CombinedCollOfClause, [[&quot;foo&quot;, &quot;foo&quot;, &quot;bar&q
 <dt>Syntax</dt><dd><ul>
         <li>( keyExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, valExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
       </ul></dd>
-<dt>Examples</dt><dd>
-      <pre><code>var AbilityMapClause = C.mapOf(
+<dt>Examples  <button class="btn btn-info btn-sm launch-code-examples" data-name="mapOf">
+          Live Eval
+        </button></dt><dd>
+      <div class="code-examples" data-name="mapOf">
+        
+            <pre><code>var AbilityMapClause = C.mapOf(
       (key) =&gt; key.indexOf(&quot;can&quot;) === 0,
       C.isBool );
 C.isValid( AbilityMapClause, { canFly: true, canSwim: true, canDance: false } )</code></pre>
-    
-
-      <pre><code>C.isValid( AbilityMapClause, { canFly: true, canSwim: true, canDance: &quot;huh?&quot; } )</code></pre>
-    
-
-      <pre><code>C.isValid( AbilityMapClause, { meNotValid: true, canSwim: true } )</code></pre>
+          
+            <pre><code>C.isValid( AbilityMapClause, { canFly: true, canSwim: true, canDance: &quot;huh?&quot; } )</code></pre>
+          
+            <pre><code>C.isValid( AbilityMapClause, { meNotValid: true, canSwim: true } )</code></pre>
+          
+      </div>
     </dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
       <small>
         <em class="text-muted">
           
-    <pre>fclause( {
+    <pre class="clause-description"><code class="clause">fclause( {
   &lt;args&gt;: cat(
     &quot;keyExpression&quot;, <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, 
     &quot;valExpression&quot;, <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>
   ), 
   &lt;ret&gt;: <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a>
-} )</pre>
+} )</code></pre>
   
         </em>
       </small>
@@ -3538,10 +3576,10 @@ C.isValid( AbilityMapClause, { canFly: true, canSwim: true, canDance: false } )<
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat(
   &quot;keyExpression&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;, 
   &quot;valExpression&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;
-)&lt;/pre&gt;
+)&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -3674,21 +3712,22 @@ C.isValid( AbilityMapClause, { canFly: true, canSwim: true, canDance: false } )<
 <dt>Syntax</dt><dd><ul>
         <li>( shapeArgs: { requiredFields?: &lt; oneOf(&quot;req&quot;, &quot;required&quot;), ( isPropName )* &gt;, optionalFields?: &lt; oneOf(&quot;opt&quot;, &quot;optional&quot;), { ( isPropName )* | &lt; <a href="#clause.types/String" data-path="clause.types/String">String</a>, <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> &gt; } &gt; } ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li><li>( shapeArgs: { requiredFields?: &lt; oneOf(&quot;req&quot;, &quot;required&quot;), ( isPropName )* &gt;, optionalFields?: &lt; oneOf(&quot;opt&quot;, &quot;optional&quot;), { ( isPropName )* | &lt; <a href="#clause.types/String" data-path="clause.types/String">String</a>, ( keyExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, valExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) &gt; } &gt; } ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li><li>( shapeArgs: { requiredFields?: &lt; oneOf(&quot;req&quot;, &quot;required&quot;), &lt; <a href="#clause.types/String" data-path="clause.types/String">String</a>, <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> &gt; &gt;, optionalFields?: &lt; oneOf(&quot;opt&quot;, &quot;optional&quot;), { ( isPropName )* | &lt; <a href="#clause.types/String" data-path="clause.types/String">String</a>, { <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> | ( keyExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, valExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) } &gt; } &gt; } ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li><li>( shapeArgs: { requiredFields?: &lt; oneOf(&quot;req&quot;, &quot;required&quot;), &lt; <a href="#clause.types/String" data-path="clause.types/String">String</a>, ( keyExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, valExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) &gt; &gt;, optionalFields?: &lt; oneOf(&quot;opt&quot;, &quot;optional&quot;), { ( isPropName )* | &lt; <a href="#clause.types/String" data-path="clause.types/String">String</a>, { <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> | ( keyExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, valExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) } &gt; } &gt; } ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
       </ul></dd>
-<dt>Examples</dt><dd>
-      <pre><code>var ShapeClause = C.shape( { 
+<dt>Examples  <button class="btn btn-info btn-sm launch-code-examples" data-name="shape">
+          Live Eval
+        </button></dt><dd>
+      <div class="code-examples" data-name="shape">
+        
+            <pre><code>var ShapeClause = C.shape( { 
   required: [&quot;key1&quot;, &quot;key2&quot;, &quot;key3&quot;], 
   optional: [&quot;key4&quot;],
   } );
 C.isValid( ShapeClause, { key1: true, key2: 2, key3: &quot;ss&quot;, key4: false } )</code></pre>
-    
-
-      <pre><code>C.isValid( ShapeClause, { key1: true, key2: 2, key3: &quot;ss&quot; } )</code></pre>
-    
-
-      <pre><code>C.isValid( ShapeClause, { key1: true, key2: 2 } )</code></pre>
-    
-
-      <pre><code>var ShapeClause2 = C.shape( { 
+          
+            <pre><code>C.isValid( ShapeClause, { key1: true, key2: 2, key3: &quot;ss&quot; } )</code></pre>
+          
+            <pre><code>C.isValid( ShapeClause, { key1: true, key2: 2 } )</code></pre>
+          
+            <pre><code>var ShapeClause2 = C.shape( { 
   required: {
     key1: C.isBool,
     key2: C.isNatInt,
@@ -3696,12 +3735,10 @@ C.isValid( ShapeClause, { key1: true, key2: 2, key3: &quot;ss&quot;, key4: false
   optional: [&quot;key5&quot;],
   } );
 C.isValid( ShapeClause2, { key1: true, key2: 2, key5: false } )</code></pre>
-    
-
-      <pre><code>C.isValid( ShapeClause2, { key1: &quot;not bool&quot;, key2: 2, key5: false } )</code></pre>
-    
-
-      <pre><code>// key group conformation
+          
+            <pre><code>C.isValid( ShapeClause2, { key1: &quot;not bool&quot;, key2: 2, key5: false } )</code></pre>
+          
+            <pre><code>// key group conformation
 var ShapeClause3 = C.shape( { 
   required: {
     abilityGroup: [ 
@@ -3720,13 +3757,15 @@ C.conform( ShapeClause3, {
   canSwim: false, 
   someKey: 999 
 } )</code></pre>
+          
+      </div>
     </dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
       <small>
         <em class="text-muted">
           
-    <pre>fclause( {
+    <pre class="clause-description"><code class="clause">fclause( {
   &lt;args&gt;: cat( &quot;shapeArgs&quot;, shape( {
     &lt;optional&gt;: {
       &quot;requiredFields&quot;: {
@@ -3764,7 +3803,7 @@ C.conform( ShapeClause3, {
     }
   } ) ), 
   &lt;ret&gt;: <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a>
-} )</pre>
+} )</code></pre>
   
         </em>
       </small>
@@ -3783,7 +3822,7 @@ C.conform( ShapeClause3, {
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat( &quot;shapeArgs&quot;, shape( {
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat( &quot;shapeArgs&quot;, shape( {
   &amp;lt;optional&amp;gt;: {
     &quot;requiredFields&quot;: {
       &amp;lt;key&amp;gt;: oneOf(&quot;req&quot;, &quot;required&quot;), 
@@ -3818,7 +3857,7 @@ C.conform( ShapeClause3, {
       )
     }
   }
-} ) )&lt;/pre&gt;
+} ) )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -3854,7 +3893,7 @@ C.conform( ShapeClause3, {
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;shape( {
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;shape( {
   &amp;lt;optional&amp;gt;: {
     &quot;requiredFields&quot;: {
       &amp;lt;key&amp;gt;: oneOf(&quot;req&quot;, &quot;required&quot;), 
@@ -3889,7 +3928,7 @@ C.conform( ShapeClause3, {
       )
     }
   }
-} )&lt;/pre&gt;
+} )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       <span class="tag tag-info">[shape]</span>
     </span>
@@ -3954,29 +3993,31 @@ C.conform( ShapeClause3, {
         
     <dl class="card-block">
     <dd>Returns a clause that matches any value.</dd>
-<dt>Examples</dt><dd>
-      <pre><code>C.isValid(C.any(), 123)</code></pre>
-    
-
-      <pre><code>C.isValid(C.any(), true)</code></pre>
-    
-
-      <pre><code>C.isValid(C.any(), [&quot;sass&quot;])</code></pre>
-    
-
-      <pre><code>C.isValid(C.any(), null)</code></pre>
-    
-
-      <pre><code>C.isValid(C.any(), undefined)</code></pre>
+<dt>Examples  <button class="btn btn-info btn-sm launch-code-examples" data-name="any">
+          Live Eval
+        </button></dt><dd>
+      <div class="code-examples" data-name="any">
+        
+            <pre><code>C.isValid(C.any(), 123)</code></pre>
+          
+            <pre><code>C.isValid(C.any(), true)</code></pre>
+          
+            <pre><code>C.isValid(C.any(), [&quot;sass&quot;])</code></pre>
+          
+            <pre><code>C.isValid(C.any(), null)</code></pre>
+          
+            <pre><code>C.isValid(C.any(), undefined)</code></pre>
+          
+      </div>
     </dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
       <small>
         <em class="text-muted">
           
-    <pre>fclause( {
+    <pre class="clause-description"><code class="clause">fclause( {
   &lt;ret&gt;: <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a>
-} )</pre>
+} )</code></pre>
   
         </em>
       </small>
@@ -4027,29 +4068,32 @@ C.conform( ShapeClause3, {
 <dt>Syntax</dt><dd><ul>
         <li>( <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) &#x2192; <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a></li>
       </ul></dd>
-<dt>Examples</dt><dd>
-      <pre><code>var FreeMixClause = C.cat( C.oneOrMore( C.isNum ) );
+<dt>Examples  <button class="btn btn-info btn-sm launch-code-examples" data-name="wall">
+          Live Eval
+        </button></dt><dd>
+      <div class="code-examples" data-name="wall">
+        
+            <pre><code>var FreeMixClause = C.cat( C.oneOrMore( C.isNum ) );
 C.isValid( FreeMixClause, [2, 3, 4] )</code></pre>
-    
-
-      <pre><code>C.isValid( FreeMixClause, [ [2, 3, 4] ] )</code></pre>
-    
-
-      <pre><code> var WalledClause = C.cat( C.wall( C.oneOrMore( C.isNum ) ) );;
+          
+            <pre><code>C.isValid( FreeMixClause, [ [2, 3, 4] ] )</code></pre>
+          
+            <pre><code> var WalledClause = C.cat( C.wall( C.oneOrMore( C.isNum ) ) );;
 C.isValid( WalledClause, [2, 3, 4] )</code></pre>
-    
-
-      <pre><code>C.isValid( WalledClause, [ [2, 3, 4] ] )</code></pre>
+          
+            <pre><code>C.isValid( WalledClause, [ [2, 3, 4] ] )</code></pre>
+          
+      </div>
     </dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
       <small>
         <em class="text-muted">
           
-    <pre>fclause( {
+    <pre class="clause-description"><code class="clause">fclause( {
   &lt;args&gt;: cat( <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ), 
   &lt;ret&gt;: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>
-} )</pre>
+} )</code></pre>
   
         </em>
       </small>
@@ -4068,7 +4112,7 @@ C.isValid( WalledClause, [2, 3, 4] )</code></pre>
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -4159,12 +4203,16 @@ C.isValid( WalledClause, [2, 3, 4] )</code></pre>
           </div>
         
     <dl class="card-block">
-    <dd>Given an object that contains &quot;args&quot;, &quot;ret&quot; and &quot;fn&quot; expressions (all optionally), returns a spec whose instrument function takes a function and validates its arguments and return value during run time and whose instrumentConformed function takes a function that takes conformed arguments.</dd>
+    <dd>Given an object that contains &quot;args&quot;, &quot;ret&quot; and &quot;fn&quot; expressions (all optionally), returns a clause whose instrument function takes a function and validates its arguments and return value during run time and whose instrumentConformed function takes a function that takes conformed arguments.</dd>
 <dt>Syntax</dt><dd><ul>
         <li>( { args?: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, ret?: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, fn?: ( any, any ) &#x2192; any } ) &#x2192; any</li>
       </ul></dd>
-<dt>Examples</dt><dd>
-      <pre><code>// first, we define a cat clause
+<dt>Examples  <button class="btn btn-info btn-sm launch-code-examples" data-name="fclause">
+          Live Eval
+        </button></dt><dd>
+      <div class="code-examples" data-name="fclause">
+        
+            <pre><code>// first, we define a cat clause
 var FnArgsClause = C.zeroOrMore(
    C.cat(
      &apos;name&apos;, C.isStr,
@@ -4174,9 +4222,8 @@ var FnArgsClause = C.zeroOrMore(
    )
  );
 C.conform(FnArgsClause, [&quot;john&quot;, 23, true, &quot;mary&quot;, 25, &quot;bob&quot;, 34])</code></pre>
-    
-
-      <pre><code>// next, we define a fclause with args as the cat clause defined above
+          
+            <pre><code>// next, we define a fclause with args as the cat clause defined above
 var MyFnSpec = C.fclause( {
  args: FnArgsClause,
  ret: C.isNatInt
@@ -4187,13 +4234,11 @@ var nameCount = MyFnSpec.instrument(
 );
 nameCount(&quot;john&quot;, 23, true, &quot;mary&quot;, 25, &quot;bob&quot;, 34);
 </code></pre>
-    
-
-      <pre><code>// invalid: missing name
+          
+            <pre><code>// invalid: missing name
     nameCount(&quot;john&quot;, 23, true, 24, false);</code></pre>
-    
-
-      <pre><code>var averageAge = MyFnSpec.instrumentConformed( 
+          
+            <pre><code>var averageAge = MyFnSpec.instrumentConformed( 
   function (cprofiles) { // &quot;c&quot; stands for &quot;conformed&quot;
     // cprofiles example:
     // [ { name: &quot;john&quot;, age: 4, isMember: true }, { name: &quot;mary&quot;, age: 23 }, { name: &quot;bob&quot;, age: 102 } ]
@@ -4206,13 +4251,15 @@ nameCount(&quot;john&quot;, 23, true, &quot;mary&quot;, 25, &quot;bob&quot;, 34)
 
 // cprofile below conforms into 
 averageAge(&quot;john&quot;, 4, true, &quot;mary&quot;, 23, &quot;bob&quot;, 102);</code></pre>
+          
+      </div>
     </dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
       <small>
         <em class="text-muted">
           
-    <pre>fclause( {
+    <pre class="clause-description"><code class="clause">fclause( {
   &lt;args&gt;: cat( shape( {
     &lt;optional&gt;: {
       &quot;args&quot;: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, 
@@ -4226,7 +4273,7 @@ averageAge(&quot;john&quot;, 4, true, &quot;mary&quot;, 23, &quot;bob&quot;, 102
       } )
     }
   } ) )
-} )</pre>
+} )</code></pre>
   
         </em>
       </small>
@@ -4245,7 +4292,7 @@ averageAge(&quot;john&quot;, 4, true, &quot;mary&quot;, 23, &quot;bob&quot;, 102
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat( shape( {
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat( shape( {
   &amp;lt;optional&amp;gt;: {
     &quot;args&quot;: &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;, 
     &quot;ret&quot;: &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;, 
@@ -4257,7 +4304,7 @@ averageAge(&quot;john&quot;, 4, true, &quot;mary&quot;, 23, &quot;bob&quot;, 102
       &amp;lt;ret&amp;gt;: any
     } )
   }
-} ) )&lt;/pre&gt;
+} ) )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -4289,7 +4336,7 @@ averageAge(&quot;john&quot;, 4, true, &quot;mary&quot;, 23, &quot;bob&quot;, 102
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;shape( {
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;shape( {
   &amp;lt;optional&amp;gt;: {
     &quot;args&quot;: &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;, 
     &quot;ret&quot;: &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;, 
@@ -4301,7 +4348,7 @@ averageAge(&quot;john&quot;, 4, true, &quot;mary&quot;, 23, &quot;bob&quot;, 102
       &amp;lt;ret&amp;gt;: any
     } )
   }
-} )&lt;/pre&gt;
+} )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       <span class="tag tag-info">[shape]</span>
     </span>
@@ -4350,10 +4397,10 @@ averageAge(&quot;john&quot;, 4, true, &quot;mary&quot;, 23, &quot;bob&quot;, 102
       <small>
         <em class="text-muted">
           
-    <pre>fclause( {
+    <pre class="clause-description"><code class="clause">fclause( {
   &lt;args&gt;: cat( <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ), 
   &lt;ret&gt;: <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a>
-} )</pre>
+} )</code></pre>
   
         </em>
       </small>
@@ -4372,7 +4419,7 @@ averageAge(&quot;john&quot;, 4, true, &quot;mary&quot;, 23, &quot;bob&quot;, 102
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -4471,10 +4518,10 @@ averageAge(&quot;john&quot;, 4, true, &quot;mary&quot;, 23, &quot;bob&quot;, 102
       <small>
         <em class="text-muted">
           
-    <pre>fclause( {
+    <pre class="clause-description"><code class="clause">fclause( {
   &lt;args&gt;: cat( <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ), 
   &lt;ret&gt;: <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a>
-} )</pre>
+} )</code></pre>
   
         </em>
       </small>
@@ -4493,7 +4540,7 @@ averageAge(&quot;john&quot;, 4, true, &quot;mary&quot;, 23, &quot;bob&quot;, 102
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -4592,10 +4639,10 @@ averageAge(&quot;john&quot;, 4, true, &quot;mary&quot;, 23, &quot;bob&quot;, 102
       <small>
         <em class="text-muted">
           
-    <pre>fclause( {
+    <pre class="clause-description"><code class="clause">fclause( {
   &lt;args&gt;: cat( <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ), 
   &lt;ret&gt;: <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a>
-} )</pre>
+} )</code></pre>
   
         </em>
       </small>
@@ -4614,7 +4661,7 @@ averageAge(&quot;john&quot;, 4, true, &quot;mary&quot;, 23, &quot;bob&quot;, 102
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -4713,13 +4760,13 @@ averageAge(&quot;john&quot;, 4, true, &quot;mary&quot;, 23, &quot;bob&quot;, 102
       <small>
         <em class="text-muted">
           
-    <pre>fclause( {
+    <pre class="clause-description"><code class="clause">fclause( {
   &lt;args&gt;: cat( &quot;getFn&quot;, fclause( {
     &lt;args&gt;: cat(), 
     &lt;ret&gt;: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>
   } ) ), 
   &lt;ret&gt;: <a href="#clause.types/DelayedClause" data-path="clause.types/DelayedClause">DelayedClause</a>
-} )</pre>
+} )</code></pre>
   
         </em>
       </small>
@@ -4738,10 +4785,10 @@ averageAge(&quot;john&quot;, 4, true, &quot;mary&quot;, 23, &quot;bob&quot;, 102
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat( &quot;getFn&quot;, fclause( {
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat( &quot;getFn&quot;, fclause( {
   &amp;lt;args&amp;gt;: cat(), 
   &amp;lt;ret&amp;gt;: &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;
-} ) )&lt;/pre&gt;
+} ) )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -4777,10 +4824,10 @@ averageAge(&quot;john&quot;, 4, true, &quot;mary&quot;, 23, &quot;bob&quot;, 102
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;fclause( {
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;fclause( {
   &amp;lt;args&amp;gt;: cat(), 
   &amp;lt;ret&amp;gt;: &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;
-} )&lt;/pre&gt;
+} )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [fclause] a function
     </span>
@@ -4804,7 +4851,7 @@ averageAge(&quot;john&quot;, 4, true, &quot;mary&quot;, 23, &quot;bob&quot;, 102
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat()&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat()&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -4905,24 +4952,30 @@ averageAge(&quot;john&quot;, 4, true, &quot;mary&quot;, 23, &quot;bob&quot;, 102
     <dt>Syntax</dt><dd><ul>
         <li>( string: <a href="#clause.types/String" data-path="clause.types/String">String</a> ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
       </ul></dd>
-<dt>Examples</dt><dd>
-      <pre><code>
+<dt>Examples  <button class="btn btn-info btn-sm launch-code-examples" data-name="scat">
+          Live Eval
+        </button></dt><dd>
+      <div class="code-examples" data-name="scat">
+        
+            <pre><code>
 var StrClause = C.cat(&apos;greetings&apos;, C.zeroOrMore(C.scat(&apos;hello&apos;)),
                       &apos;substence&apos;, C.zeroOrMore(C.scat(&apos;i am optional&apos;)),
                       &apos;farewell&apos;, C.zeroOrMore(C.scat(&apos;bye&apos;)));
 
 C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
 </code></pre>
+          
+      </div>
     </dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
       <small>
         <em class="text-muted">
           
-    <pre>fclause( {
+    <pre class="clause-description"><code class="clause">fclause( {
   &lt;args&gt;: cat( &quot;string&quot;, <a href="#clause.types/String" data-path="clause.types/String">String</a> ), 
   &lt;ret&gt;: <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a>
-} )</pre>
+} )</code></pre>
   
         </em>
       </small>
@@ -4941,7 +4994,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat( &quot;string&quot;, &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt; )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat( &quot;string&quot;, &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt; )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -5044,13 +5097,13 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
       <small>
         <em class="text-muted">
           
-    <pre>fclause( {
+    <pre class="clause-description"><code class="clause">fclause( {
   &lt;args&gt;: cat(
     &quot;expression&quot;, <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, 
     &quot;valueToCheck&quot;, any()
   ), 
   &lt;ret&gt;: <a href="#clause.types/Undefined" data-path="clause.types/Undefined">Undefined</a>
-} )</pre>
+} )</code></pre>
   
         </em>
       </small>
@@ -5069,10 +5122,10 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat(
   &quot;expression&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;, 
   &quot;valueToCheck&quot;, any()
-)&lt;/pre&gt;
+)&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -5142,7 +5195,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;any()&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;any()&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       <span class="tag tag-info">[any]</span>
     </span>
@@ -5212,7 +5265,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
       <small>
         <em class="text-muted">
           
-    <pre>fclause( {
+    <pre class="clause-description"><code class="clause">fclause( {
   &lt;args&gt;: cat(
     &quot;expression&quot;, <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, 
     &quot;valueToConform&quot;, any()
@@ -5221,7 +5274,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     &quot;conformedValue&quot;, any(), 
     &quot;problem&quot;, <a href="#clause.types/Problem" data-path="clause.types/Problem">Problem</a>
   )
-} )</pre>
+} )</code></pre>
   
         </em>
       </small>
@@ -5240,10 +5293,10 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat(
   &quot;expression&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;, 
   &quot;valueToConform&quot;, any()
-)&lt;/pre&gt;
+)&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -5313,7 +5366,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;any()&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;any()&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       <span class="tag tag-info">[any]</span>
     </span>
@@ -5347,10 +5400,10 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;or(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;or(
   &quot;conformedValue&quot;, any(), 
   &quot;problem&quot;, &lt;a href=&quot;#clause.types/Problem&quot; data-path=&quot;clause.types/Problem&quot;&gt;Problem&lt;/a&gt;
-)&lt;/pre&gt;
+)&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [or] either one of
     </span>
@@ -5393,7 +5446,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;any()&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;any()&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       <span class="tag tag-info">[any]</span>
     </span>
@@ -5435,7 +5488,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;&lt;a href=&quot;#clause.types/Problem&quot; data-path=&quot;clause.types/Problem&quot;&gt;Problem&lt;/a&gt;&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;&lt;a href=&quot;#clause.types/Problem&quot; data-path=&quot;clause.types/Problem&quot;&gt;Problem&lt;/a&gt;&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
       [pred] satisfies predicate
     </span>
@@ -5486,7 +5539,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
       <small>
         <em class="text-muted">
           
-    <pre>fclause( {
+    <pre class="clause-description"><code class="clause">fclause( {
   &lt;args&gt;: cat(
     &quot;expression&quot;, <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, 
     &quot;replacer&quot;, zeroOrOne( fclause( {
@@ -5500,7 +5553,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     &quot;space&quot;, zeroOrOne( isNatInt )
   ), 
   &lt;ret&gt;: <a href="#clause.types/String" data-path="clause.types/String">String</a>
-} )</pre>
+} )</code></pre>
   
         </em>
       </small>
@@ -5519,7 +5572,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat(
   &quot;expression&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;, 
   &quot;replacer&quot;, zeroOrOne( fclause( {
     &amp;lt;args&amp;gt;: cat( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; ), 
@@ -5530,7 +5583,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     )
   } ) ), 
   &quot;space&quot;, zeroOrOne( isNatInt )
-)&lt;/pre&gt;
+)&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -5566,7 +5619,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;&lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;&lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [or] either one of
     </span>
@@ -5606,14 +5659,14 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;zeroOrOne( fclause( {
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;zeroOrOne( fclause( {
   &amp;lt;args&amp;gt;: cat( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; ), 
   &amp;lt;ret&amp;gt;: or(
     &lt;a href=&quot;#clause.types/Undefined&quot; data-path=&quot;clause.types/Undefined&quot;&gt;Undefined&lt;/a&gt;, 
     &lt;a href=&quot;#clause.types/Null&quot; data-path=&quot;clause.types/Null&quot;&gt;Null&lt;/a&gt;, 
     collOf( &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt; )
   )
-} ) )&lt;/pre&gt;
+} ) )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [?] optional
     </span>
@@ -5628,14 +5681,14 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;fclause( {
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;fclause( {
   &amp;lt;args&amp;gt;: cat( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; ), 
   &amp;lt;ret&amp;gt;: or(
     &lt;a href=&quot;#clause.types/Undefined&quot; data-path=&quot;clause.types/Undefined&quot;&gt;Undefined&lt;/a&gt;, 
     &lt;a href=&quot;#clause.types/Null&quot; data-path=&quot;clause.types/Null&quot;&gt;Null&lt;/a&gt;, 
     collOf( &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt; )
   )
-} )&lt;/pre&gt;
+} )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [fclause] a function
     </span>
@@ -5659,7 +5712,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -5722,11 +5775,11 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;or(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;or(
   &lt;a href=&quot;#clause.types/Undefined&quot; data-path=&quot;clause.types/Undefined&quot;&gt;Undefined&lt;/a&gt;, 
   &lt;a href=&quot;#clause.types/Null&quot; data-path=&quot;clause.types/Null&quot;&gt;Null&lt;/a&gt;, 
   collOf( &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt; )
-)&lt;/pre&gt;
+)&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [or] either one of
     </span>
@@ -5835,7 +5888,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;collOf( &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt; )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;collOf( &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt; )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [collOf] a collection of
     </span>
@@ -5906,7 +5959,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;zeroOrOne( isNatInt )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;zeroOrOne( isNatInt )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [?] optional
     </span>
@@ -5921,7 +5974,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;isNatInt&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;isNatInt&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
       [pred] satisfies predicate
     </span>
@@ -6006,10 +6059,10 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
       <small>
         <em class="text-muted">
           
-    <pre>fclause( {
+    <pre class="clause-description"><code class="clause">fclause( {
   &lt;args&gt;: cat( &quot;expression&quot;, <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ), 
   &lt;ret&gt;: <a href="#clause.types/SExpression" data-path="clause.types/SExpression">SExpression</a>
-} )</pre>
+} )</code></pre>
   
         </em>
       </small>
@@ -6028,7 +6081,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat( &quot;expression&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat( &quot;expression&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -6064,7 +6117,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;&lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;&lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [or] either one of
     </span>
@@ -6137,7 +6190,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
       <small>
         <em class="text-muted">
           
-    <pre>fclause( {
+    <pre class="clause-description"><code class="clause">fclause( {
   &lt;args&gt;: cat(
     &quot;keyValMap&quot;, <a href="#clause.types/Object" data-path="clause.types/Object">Object</a>, 
     &quot;handlers&quot;, mapOf( {
@@ -6148,7 +6201,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
       } )
     } )
   )
-} )</pre>
+} )</code></pre>
   
         </em>
       </small>
@@ -6167,7 +6220,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat(
   &quot;keyValMap&quot;, &lt;a href=&quot;#clause.types/Object&quot; data-path=&quot;clause.types/Object&quot;&gt;Object&lt;/a&gt;, 
   &quot;handlers&quot;, mapOf( {
     &amp;lt;key&amp;gt;: &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt;, 
@@ -6176,7 +6229,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
       &amp;lt;ret&amp;gt;: any
     } )
   } )
-)&lt;/pre&gt;
+)&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -6246,13 +6299,13 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;mapOf( {
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;mapOf( {
   &amp;lt;key&amp;gt;: &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt;, 
   &amp;lt;val&amp;gt;: fclause( {
     &amp;lt;args&amp;gt;: cat( &quot;val&quot;, any ), 
     &amp;lt;ret&amp;gt;: any
   } )
-} )&lt;/pre&gt;
+} )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       <span class="tag tag-info">[map_of]</span>
     </span>
@@ -6301,10 +6354,10 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
       <small>
         <em class="text-muted">
           
-    <pre>fclause( {
+    <pre class="clause-description"><code class="clause">fclause( {
   &lt;args&gt;: cat( &quot;x&quot;, any() ), 
   &lt;ret&gt;: <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a>
-} )</pre>
+} )</code></pre>
   
         </em>
       </small>
@@ -6323,7 +6376,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat( &quot;x&quot;, any() )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat( &quot;x&quot;, any() )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -6359,7 +6412,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;any()&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;any()&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       <span class="tag tag-info">[any]</span>
     </span>
@@ -6429,13 +6482,13 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
       <small>
         <em class="text-muted">
           
-    <pre>fclause( {
+    <pre class="clause-description"><code class="clause">fclause( {
   &lt;args&gt;: cat( &quot;predicateToNegate&quot;, <a href="#clause.types/Predicate" data-path="clause.types/Predicate">Predicate</a> ), 
   &lt;ret&gt;: fclause( {
     &lt;args&gt;: cat( &quot;x&quot;, any() ), 
     &lt;ret&gt;: <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a>
   } )
-} )</pre>
+} )</code></pre>
   
         </em>
       </small>
@@ -6454,7 +6507,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat( &quot;predicateToNegate&quot;, &lt;a href=&quot;#clause.types/Predicate&quot; data-path=&quot;clause.types/Predicate&quot;&gt;Predicate&lt;/a&gt; )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat( &quot;predicateToNegate&quot;, &lt;a href=&quot;#clause.types/Predicate&quot; data-path=&quot;clause.types/Predicate&quot;&gt;Predicate&lt;/a&gt; )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -6490,7 +6543,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;&lt;a href=&quot;#clause.types/Predicate&quot; data-path=&quot;clause.types/Predicate&quot;&gt;Predicate&lt;/a&gt;&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;&lt;a href=&quot;#clause.types/Predicate&quot; data-path=&quot;clause.types/Predicate&quot;&gt;Predicate&lt;/a&gt;&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [fclause] a function
     </span>
@@ -6527,10 +6580,10 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;fclause( {
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;fclause( {
   &amp;lt;args&amp;gt;: cat( &quot;x&quot;, any() ), 
   &amp;lt;ret&amp;gt;: &lt;a href=&quot;#clause.types/Bool&quot; data-path=&quot;clause.types/Bool&quot;&gt;Bool&lt;/a&gt;
-} )&lt;/pre&gt;
+} )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [fclause] a function
     </span>
@@ -6554,7 +6607,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat( &quot;x&quot;, any() )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat( &quot;x&quot;, any() )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -6590,7 +6643,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;any()&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;any()&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       <span class="tag tag-info">[any]</span>
     </span>
@@ -6666,10 +6719,10 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
       <small>
         <em class="text-muted">
           
-    <pre>fclause( {
+    <pre class="clause-description"><code class="clause">fclause( {
   &lt;args&gt;: cat( &quot;x&quot;, any() ), 
   &lt;ret&gt;: <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a>
-} )</pre>
+} )</code></pre>
   
         </em>
       </small>
@@ -6688,7 +6741,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat( &quot;x&quot;, any() )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat( &quot;x&quot;, any() )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -6724,7 +6777,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;any()&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;any()&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       <span class="tag tag-info">[any]</span>
     </span>
@@ -6794,10 +6847,10 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
       <small>
         <em class="text-muted">
           
-    <pre>fclause( {
+    <pre class="clause-description"><code class="clause">fclause( {
   &lt;args&gt;: cat( &quot;x&quot;, any() ), 
   &lt;ret&gt;: <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a>
-} )</pre>
+} )</code></pre>
   
         </em>
       </small>
@@ -6816,7 +6869,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat( &quot;x&quot;, any() )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat( &quot;x&quot;, any() )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -6852,7 +6905,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;any()&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;any()&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       <span class="tag tag-info">[any]</span>
     </span>
@@ -6922,10 +6975,10 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
       <small>
         <em class="text-muted">
           
-    <pre>fclause( {
+    <pre class="clause-description"><code class="clause">fclause( {
   &lt;args&gt;: cat( &quot;x&quot;, any() ), 
   &lt;ret&gt;: <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a>
-} )</pre>
+} )</code></pre>
   
         </em>
       </small>
@@ -6944,7 +6997,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat( &quot;x&quot;, any() )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat( &quot;x&quot;, any() )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -6980,7 +7033,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;any()&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;any()&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       <span class="tag tag-info">[any]</span>
     </span>
@@ -7050,10 +7103,10 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
       <small>
         <em class="text-muted">
           
-    <pre>fclause( {
+    <pre class="clause-description"><code class="clause">fclause( {
   &lt;args&gt;: cat( &quot;x&quot;, any() ), 
   &lt;ret&gt;: <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a>
-} )</pre>
+} )</code></pre>
   
         </em>
       </small>
@@ -7072,7 +7125,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat( &quot;x&quot;, any() )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat( &quot;x&quot;, any() )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -7108,7 +7161,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;any()&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;any()&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       <span class="tag tag-info">[any]</span>
     </span>
@@ -7178,10 +7231,10 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
       <small>
         <em class="text-muted">
           
-    <pre>fclause( {
+    <pre class="clause-description"><code class="clause">fclause( {
   &lt;args&gt;: cat( &quot;x&quot;, any() ), 
   &lt;ret&gt;: <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a>
-} )</pre>
+} )</code></pre>
   
         </em>
       </small>
@@ -7200,7 +7253,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat( &quot;x&quot;, any() )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat( &quot;x&quot;, any() )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -7236,7 +7289,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;any()&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;any()&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       <span class="tag tag-info">[any]</span>
     </span>
@@ -7306,10 +7359,10 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
       <small>
         <em class="text-muted">
           
-    <pre>fclause( {
+    <pre class="clause-description"><code class="clause">fclause( {
   &lt;args&gt;: cat( &quot;x&quot;, any() ), 
   &lt;ret&gt;: <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a>
-} )</pre>
+} )</code></pre>
   
         </em>
       </small>
@@ -7328,7 +7381,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat( &quot;x&quot;, any() )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat( &quot;x&quot;, any() )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -7364,7 +7417,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;any()&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;any()&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       <span class="tag tag-info">[any]</span>
     </span>
@@ -7434,10 +7487,10 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
       <small>
         <em class="text-muted">
           
-    <pre>fclause( {
+    <pre class="clause-description"><code class="clause">fclause( {
   &lt;args&gt;: cat( &quot;x&quot;, any() ), 
   &lt;ret&gt;: <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a>
-} )</pre>
+} )</code></pre>
   
         </em>
       </small>
@@ -7456,7 +7509,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat( &quot;x&quot;, any() )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat( &quot;x&quot;, any() )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -7492,7 +7545,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;any()&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;any()&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       <span class="tag tag-info">[any]</span>
     </span>
@@ -7562,10 +7615,10 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
       <small>
         <em class="text-muted">
           
-    <pre>fclause( {
+    <pre class="clause-description"><code class="clause">fclause( {
   &lt;args&gt;: cat( &quot;x&quot;, any() ), 
   &lt;ret&gt;: <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a>
-} )</pre>
+} )</code></pre>
   
         </em>
       </small>
@@ -7584,7 +7637,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat( &quot;x&quot;, any() )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat( &quot;x&quot;, any() )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -7620,7 +7673,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;any()&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;any()&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       <span class="tag tag-info">[any]</span>
     </span>
@@ -7690,10 +7743,10 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
       <small>
         <em class="text-muted">
           
-    <pre>fclause( {
+    <pre class="clause-description"><code class="clause">fclause( {
   &lt;args&gt;: cat( &quot;x&quot;, any() ), 
   &lt;ret&gt;: <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a>
-} )</pre>
+} )</code></pre>
   
         </em>
       </small>
@@ -7712,7 +7765,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat( &quot;x&quot;, any() )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat( &quot;x&quot;, any() )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -7748,7 +7801,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;any()&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;any()&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       <span class="tag tag-info">[any]</span>
     </span>
@@ -7818,10 +7871,10 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
       <small>
         <em class="text-muted">
           
-    <pre>fclause( {
+    <pre class="clause-description"><code class="clause">fclause( {
   &lt;args&gt;: cat( &quot;x&quot;, any() ), 
   &lt;ret&gt;: <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a>
-} )</pre>
+} )</code></pre>
   
         </em>
       </small>
@@ -7840,7 +7893,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat( &quot;x&quot;, any() )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat( &quot;x&quot;, any() )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -7876,7 +7929,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;any()&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;any()&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       <span class="tag tag-info">[any]</span>
     </span>
@@ -7946,10 +7999,10 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
       <small>
         <em class="text-muted">
           
-    <pre>fclause( {
+    <pre class="clause-description"><code class="clause">fclause( {
   &lt;args&gt;: cat( &quot;x&quot;, any() ), 
   &lt;ret&gt;: <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a>
-} )</pre>
+} )</code></pre>
   
         </em>
       </small>
@@ -7968,7 +8021,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat( &quot;x&quot;, any() )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat( &quot;x&quot;, any() )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -8004,7 +8057,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;any()&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;any()&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       <span class="tag tag-info">[any]</span>
     </span>
@@ -8074,10 +8127,10 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
       <small>
         <em class="text-muted">
           
-    <pre>fclause( {
+    <pre class="clause-description"><code class="clause">fclause( {
   &lt;args&gt;: cat( &quot;x&quot;, any() ), 
   &lt;ret&gt;: <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a>
-} )</pre>
+} )</code></pre>
   
         </em>
       </small>
@@ -8096,7 +8149,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat( &quot;x&quot;, any() )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat( &quot;x&quot;, any() )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -8132,7 +8185,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;any()&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;any()&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       <span class="tag tag-info">[any]</span>
     </span>
@@ -8202,10 +8255,10 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
       <small>
         <em class="text-muted">
           
-    <pre>fclause( {
+    <pre class="clause-description"><code class="clause">fclause( {
   &lt;args&gt;: cat( &quot;x&quot;, any() ), 
   &lt;ret&gt;: <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a>
-} )</pre>
+} )</code></pre>
   
         </em>
       </small>
@@ -8224,7 +8277,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat( &quot;x&quot;, any() )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat( &quot;x&quot;, any() )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -8260,7 +8313,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;any()&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;any()&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       <span class="tag tag-info">[any]</span>
     </span>
@@ -8330,10 +8383,10 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
       <small>
         <em class="text-muted">
           
-    <pre>fclause( {
+    <pre class="clause-description"><code class="clause">fclause( {
   &lt;args&gt;: cat( &quot;x&quot;, <a href="#clause.types/String" data-path="clause.types/String">String</a> ), 
   &lt;ret&gt;: <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a>
-} )</pre>
+} )</code></pre>
   
         </em>
       </small>
@@ -8352,7 +8405,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat( &quot;x&quot;, &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt; )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat( &quot;x&quot;, &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt; )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -8455,13 +8508,13 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
       <small>
         <em class="text-muted">
           
-    <pre>fclause( {
+    <pre class="clause-description"><code class="clause">fclause( {
   &lt;args&gt;: cat( &quot;valueOptions&quot;, collOf( <a href="#clause.types/Primitive" data-path="clause.types/Primitive">Primitive</a> ) ), 
   &lt;ret&gt;: fclause( {
     &lt;args&gt;: cat( &quot;x&quot;, any() ), 
     &lt;ret&gt;: <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a>
   } )
-} )</pre>
+} )</code></pre>
   
         </em>
       </small>
@@ -8480,7 +8533,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat( &quot;valueOptions&quot;, collOf( &lt;a href=&quot;#clause.types/Primitive&quot; data-path=&quot;clause.types/Primitive&quot;&gt;Primitive&lt;/a&gt; ) )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat( &quot;valueOptions&quot;, collOf( &lt;a href=&quot;#clause.types/Primitive&quot; data-path=&quot;clause.types/Primitive&quot;&gt;Primitive&lt;/a&gt; ) )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -8516,7 +8569,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;collOf( &lt;a href=&quot;#clause.types/Primitive&quot; data-path=&quot;clause.types/Primitive&quot;&gt;Primitive&lt;/a&gt; )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;collOf( &lt;a href=&quot;#clause.types/Primitive&quot; data-path=&quot;clause.types/Primitive&quot;&gt;Primitive&lt;/a&gt; )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [collOf] a collection of
     </span>
@@ -8531,7 +8584,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;&lt;a href=&quot;#clause.types/Primitive&quot; data-path=&quot;clause.types/Primitive&quot;&gt;Primitive&lt;/a&gt;&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;&lt;a href=&quot;#clause.types/Primitive&quot; data-path=&quot;clause.types/Primitive&quot;&gt;Primitive&lt;/a&gt;&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [or] either one of
     </span>
@@ -8572,10 +8625,10 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;fclause( {
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;fclause( {
   &amp;lt;args&amp;gt;: cat( &quot;x&quot;, any() ), 
   &amp;lt;ret&amp;gt;: &lt;a href=&quot;#clause.types/Bool&quot; data-path=&quot;clause.types/Bool&quot;&gt;Bool&lt;/a&gt;
-} )&lt;/pre&gt;
+} )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [fclause] a function
     </span>
@@ -8599,7 +8652,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat( &quot;x&quot;, any() )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat( &quot;x&quot;, any() )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -8635,7 +8688,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;any()&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;any()&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       <span class="tag tag-info">[any]</span>
     </span>
@@ -8711,13 +8764,13 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
       <small>
         <em class="text-muted">
           
-    <pre>fclause( {
+    <pre class="clause-description"><code class="clause">fclause( {
   &lt;args&gt;: cat( &quot;valueToCompareWith&quot;, any() ), 
   &lt;ret&gt;: fclause( {
     &lt;args&gt;: cat( &quot;x&quot;, any() ), 
     &lt;ret&gt;: <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a>
   } )
-} )</pre>
+} )</code></pre>
   
         </em>
       </small>
@@ -8736,7 +8789,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat( &quot;valueToCompareWith&quot;, any() )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat( &quot;valueToCompareWith&quot;, any() )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -8772,7 +8825,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;any()&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;any()&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       <span class="tag tag-info">[any]</span>
     </span>
@@ -8806,10 +8859,10 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;fclause( {
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;fclause( {
   &amp;lt;args&amp;gt;: cat( &quot;x&quot;, any() ), 
   &amp;lt;ret&amp;gt;: &lt;a href=&quot;#clause.types/Bool&quot; data-path=&quot;clause.types/Bool&quot;&gt;Bool&lt;/a&gt;
-} )&lt;/pre&gt;
+} )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [fclause] a function
     </span>
@@ -8833,7 +8886,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat( &quot;x&quot;, any() )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat( &quot;x&quot;, any() )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -8869,7 +8922,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;any()&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;any()&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       <span class="tag tag-info">[any]</span>
     </span>
@@ -8945,13 +8998,13 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
       <small>
         <em class="text-muted">
           
-    <pre>fclause( {
+    <pre class="clause-description"><code class="clause">fclause( {
   &lt;args&gt;: cat( &quot;instanceType&quot;, isFunction ), 
   &lt;ret&gt;: fclause( {
     &lt;args&gt;: cat( &quot;x&quot;, any() ), 
     &lt;ret&gt;: <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a>
   } )
-} )</pre>
+} )</code></pre>
   
         </em>
       </small>
@@ -8970,7 +9023,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat( &quot;instanceType&quot;, isFunction )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat( &quot;instanceType&quot;, isFunction )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -9006,7 +9059,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;isFunction&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;isFunction&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
       [pred] satisfies predicate
     </span>
@@ -9053,10 +9106,10 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;fclause( {
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;fclause( {
   &amp;lt;args&amp;gt;: cat( &quot;x&quot;, any() ), 
   &amp;lt;ret&amp;gt;: &lt;a href=&quot;#clause.types/Bool&quot; data-path=&quot;clause.types/Bool&quot;&gt;Bool&lt;/a&gt;
-} )&lt;/pre&gt;
+} )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [fclause] a function
     </span>
@@ -9080,7 +9133,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat( &quot;x&quot;, any() )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat( &quot;x&quot;, any() )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -9116,7 +9169,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;any()&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;any()&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       <span class="tag tag-info">[any]</span>
     </span>
@@ -9188,21 +9241,27 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
 <dt>Syntax</dt><dd><ul>
         <li>( nsPath: <a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">NamespacePath</a>, expression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) &#x2192; <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a></li>
       </ul></dd>
-<dt>Examples</dt><dd>
-      <pre><code>C(&quot;awesomeapp/TodoItem&quot;, TodoItemClause)</code></pre>
+<dt>Examples  <button class="btn btn-info btn-sm launch-code-examples" data-name="set">
+          Live Eval
+        </button></dt><dd>
+      <div class="code-examples" data-name="set">
+        
+            <pre><code>C(&quot;awesomeapp/TodoItem&quot;, TodoItemClause)</code></pre>
+          
+      </div>
     </dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
       <small>
         <em class="text-muted">
           
-    <pre>fclause( {
+    <pre class="clause-description"><code class="clause">fclause( {
   &lt;args&gt;: cat(
     &quot;nsPath&quot;, <a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">NamespacePath</a>, 
     &quot;expression&quot;, <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>
   ), 
   &lt;ret&gt;: <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a>
-} )</pre>
+} )</code></pre>
   
         </em>
       </small>
@@ -9221,10 +9280,10 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat(
   &quot;nsPath&quot;, &lt;a href=&quot;#clause.types/NamespacePath&quot; data-path=&quot;clause.types/NamespacePath&quot;&gt;NamespacePath&lt;/a&gt;, 
   &quot;expression&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;
-)&lt;/pre&gt;
+)&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -9357,21 +9416,26 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
 <dt>Syntax</dt><dd><ul>
         <li>( nsPath: <a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">NamespacePath</a> ) &#x2192; <a href="#clause.types/ClauseReference" data-path="clause.types/ClauseReference">ClauseReference</a></li>
       </ul></dd>
-<dt>Examples</dt><dd>
-      <pre><code>C(&quot;awesomeapp/TodoItem&quot;)</code></pre>
-    
-
-      <pre><code>C(&quot;awesomeapp/TodoItem&quot;).get()</code></pre>
+<dt>Examples  <button class="btn btn-info btn-sm launch-code-examples" data-name="get">
+          Live Eval
+        </button></dt><dd>
+      <div class="code-examples" data-name="get">
+        
+            <pre><code>C(&quot;awesomeapp/TodoItem&quot;)</code></pre>
+          
+            <pre><code>C(&quot;awesomeapp/TodoItem&quot;).get()</code></pre>
+          
+      </div>
     </dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
       <small>
         <em class="text-muted">
           
-    <pre>fclause( {
+    <pre class="clause-description"><code class="clause">fclause( {
   &lt;args&gt;: cat( &quot;nsPath&quot;, <a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">NamespacePath</a> ), 
   &lt;ret&gt;: <a href="#clause.types/ClauseReference" data-path="clause.types/ClauseReference">ClauseReference</a>
-} )</pre>
+} )</code></pre>
   
         </em>
       </small>
@@ -9390,7 +9454,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat( &quot;nsPath&quot;, &lt;a href=&quot;#clause.types/NamespacePath&quot; data-path=&quot;clause.types/NamespacePath&quot;&gt;NamespacePath&lt;/a&gt; )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat( &quot;nsPath&quot;, &lt;a href=&quot;#clause.types/NamespacePath&quot; data-path=&quot;clause.types/NamespacePath&quot;&gt;NamespacePath&lt;/a&gt; )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -9493,13 +9557,13 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
       <small>
         <em class="text-muted">
           
-    <pre>fclause( {
+    <pre class="clause-description"><code class="clause">fclause( {
   &lt;args&gt;: cat(
     &quot;expression&quot;, <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, 
     &quot;registry&quot;, zeroOrOne( <a href="#clause.types/Object" data-path="clause.types/Object">Object</a> )
   ), 
   &lt;ret&gt;: <a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">NamespacePath</a>
-} )</pre>
+} )</code></pre>
   
         </em>
       </small>
@@ -9518,10 +9582,10 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat(
   &quot;expression&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;, 
   &quot;registry&quot;, zeroOrOne( &lt;a href=&quot;#clause.types/Object&quot; data-path=&quot;clause.types/Object&quot;&gt;Object&lt;/a&gt; )
-)&lt;/pre&gt;
+)&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -9591,7 +9655,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;zeroOrOne( &lt;a href=&quot;#clause.types/Object&quot; data-path=&quot;clause.types/Object&quot;&gt;Object&lt;/a&gt; )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;zeroOrOne( &lt;a href=&quot;#clause.types/Object&quot; data-path=&quot;clause.types/Object&quot;&gt;Object&lt;/a&gt; )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [?] optional
     </span>
@@ -9677,7 +9741,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
       <small>
         <em class="text-muted">
           
-    <pre>fclause( {
+    <pre class="clause-description"><code class="clause">fclause( {
   &lt;args&gt;: cat(
     &quot;source&quot;, or(
       &quot;namespacePath&quot;, <a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">NamespacePath</a>, 
@@ -9687,7 +9751,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     &quot;registry&quot;, zeroOrOne( <a href="#clause.types/Object" data-path="clause.types/Object">Object</a> )
   ), 
   &lt;ret&gt;: <a href="#clause.types/Undefined" data-path="clause.types/Undefined">Undefined</a>
-} )</pre>
+} )</code></pre>
   
         </em>
       </small>
@@ -9706,14 +9770,14 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat(
   &quot;source&quot;, or(
     &quot;namespacePath&quot;, &lt;a href=&quot;#clause.types/NamespacePath&quot; data-path=&quot;clause.types/NamespacePath&quot;&gt;NamespacePath&lt;/a&gt;, 
     &quot;expression&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;
   ), 
   &quot;metaObj&quot;, &lt;a href=&quot;#clause.types/Object&quot; data-path=&quot;clause.types/Object&quot;&gt;Object&lt;/a&gt;, 
   &quot;registry&quot;, zeroOrOne( &lt;a href=&quot;#clause.types/Object&quot; data-path=&quot;clause.types/Object&quot;&gt;Object&lt;/a&gt; )
-)&lt;/pre&gt;
+)&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -9749,10 +9813,10 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;or(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;or(
   &quot;namespacePath&quot;, &lt;a href=&quot;#clause.types/NamespacePath&quot; data-path=&quot;clause.types/NamespacePath&quot;&gt;NamespacePath&lt;/a&gt;, 
   &quot;expression&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;
-)&lt;/pre&gt;
+)&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [or] either one of
     </span>
@@ -9910,7 +9974,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;zeroOrOne( &lt;a href=&quot;#clause.types/Object&quot; data-path=&quot;clause.types/Object&quot;&gt;Object&lt;/a&gt; )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;zeroOrOne( &lt;a href=&quot;#clause.types/Object&quot; data-path=&quot;clause.types/Object&quot;&gt;Object&lt;/a&gt; )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [?] optional
     </span>
@@ -9996,7 +10060,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
       <small>
         <em class="text-muted">
           
-    <pre>fclause( {
+    <pre class="clause-description"><code class="clause">fclause( {
   &lt;args&gt;: cat(
     &quot;source&quot;, or(
       &quot;namespacePath&quot;, <a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">NamespacePath</a>, 
@@ -10009,7 +10073,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <a href="#clause.types/Undefined" data-path="clause.types/Undefined">Undefined</a>, 
     <a href="#clause.types/Object" data-path="clause.types/Object">Object</a>
   )
-} )</pre>
+} )</code></pre>
   
         </em>
       </small>
@@ -10028,13 +10092,13 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat(
   &quot;source&quot;, or(
     &quot;namespacePath&quot;, &lt;a href=&quot;#clause.types/NamespacePath&quot; data-path=&quot;clause.types/NamespacePath&quot;&gt;NamespacePath&lt;/a&gt;, 
     &quot;expression&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;
   ), 
   &quot;registry&quot;, zeroOrOne( &lt;a href=&quot;#clause.types/Object&quot; data-path=&quot;clause.types/Object&quot;&gt;Object&lt;/a&gt; )
-)&lt;/pre&gt;
+)&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -10070,10 +10134,10 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;or(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;or(
   &quot;namespacePath&quot;, &lt;a href=&quot;#clause.types/NamespacePath&quot; data-path=&quot;clause.types/NamespacePath&quot;&gt;NamespacePath&lt;/a&gt;, 
   &quot;expression&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;
-)&lt;/pre&gt;
+)&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [or] either one of
     </span>
@@ -10197,7 +10261,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;zeroOrOne( &lt;a href=&quot;#clause.types/Object&quot; data-path=&quot;clause.types/Object&quot;&gt;Object&lt;/a&gt; )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;zeroOrOne( &lt;a href=&quot;#clause.types/Object&quot; data-path=&quot;clause.types/Object&quot;&gt;Object&lt;/a&gt; )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [?] optional
     </span>
@@ -10247,11 +10311,11 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;or(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;or(
   &lt;a href=&quot;#clause.types/Null&quot; data-path=&quot;clause.types/Null&quot;&gt;Null&lt;/a&gt;, 
   &lt;a href=&quot;#clause.types/Undefined&quot; data-path=&quot;clause.types/Undefined&quot;&gt;Undefined&lt;/a&gt;, 
   &lt;a href=&quot;#clause.types/Object&quot; data-path=&quot;clause.types/Object&quot;&gt;Object&lt;/a&gt;
-)&lt;/pre&gt;
+)&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [or] either one of
     </span>
@@ -10469,7 +10533,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;isPred&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;isPred&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
       [pred] satisfies predicate
     </span>
@@ -10603,10 +10667,10 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
       <small>
         <em class="text-muted">
           
-    <pre>fclause( {
+    <pre class="clause-description"><code class="clause">fclause( {
   &lt;args&gt;: cat( &quot;x&quot;, any() ), 
   &lt;ret&gt;: <a href="#clause.types/Bool" data-path="clause.types/Bool">Bool</a>
-} )</pre>
+} )</code></pre>
   
         </em>
       </small>
@@ -10625,7 +10689,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat( &quot;x&quot;, any() )&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat( &quot;x&quot;, any() )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -10661,7 +10725,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;any()&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;any()&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       <span class="tag tag-info">[any]</span>
     </span>
@@ -10859,7 +10923,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat(
   &quot;head&quot;, &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt;, 
   &quot;params&quot;, or(
     &quot;labelled&quot;, zeroOrMore( cat(
@@ -10947,7 +11011,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
       &quot;recursive&quot;, instanceOf_Recursive_
     ) ) )
   )
-)&lt;/pre&gt;
+)&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -11017,7 +11081,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;or(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;or(
   &quot;labelled&quot;, zeroOrMore( cat(
     &quot;label&quot;, or(
       &quot;str&quot;, &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt;, 
@@ -11102,7 +11166,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     &quot;optionsObj&quot;, &lt;a href=&quot;#clause.types/PlainObject&quot; data-path=&quot;clause.types/PlainObject&quot;&gt;PlainObject&lt;/a&gt;, 
     &quot;recursive&quot;, instanceOf_Recursive_
   ) ) )
-)&lt;/pre&gt;
+)&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [or] either one of
     </span>
@@ -11145,7 +11209,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;zeroOrMore( cat(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;zeroOrMore( cat(
   &quot;label&quot;, or(
     &quot;str&quot;, &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt;, 
     &quot;quoted&quot;, instanceOf_Quoted_
@@ -11189,7 +11253,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     &quot;optionsObj&quot;, &lt;a href=&quot;#clause.types/PlainObject&quot; data-path=&quot;clause.types/PlainObject&quot;&gt;PlainObject&lt;/a&gt;, 
     &quot;recursive&quot;, instanceOf_Recursive_
   )
-) )&lt;/pre&gt;
+) )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [*] zero or more
     </span>
@@ -11204,7 +11268,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat(
   &quot;label&quot;, or(
     &quot;str&quot;, &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt;, 
     &quot;quoted&quot;, instanceOf_Quoted_
@@ -11248,7 +11312,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     &quot;optionsObj&quot;, &lt;a href=&quot;#clause.types/PlainObject&quot; data-path=&quot;clause.types/PlainObject&quot;&gt;PlainObject&lt;/a&gt;, 
     &quot;recursive&quot;, instanceOf_Recursive_
   )
-)&lt;/pre&gt;
+)&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -11284,10 +11348,10 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;or(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;or(
   &quot;str&quot;, &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt;, 
   &quot;quoted&quot;, instanceOf_Quoted_
-)&lt;/pre&gt;
+)&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [or] either one of
     </span>
@@ -11369,7 +11433,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;instanceOf_Quoted_&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;instanceOf_Quoted_&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
       [pred] satisfies predicate
     </span>
@@ -11423,7 +11487,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;or(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;or(
   &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, 
   &quot;quotedParamsMap&quot;, and(
     instanceOf_QuotedParamsMap_, 
@@ -11461,7 +11525,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
   ), 
   &quot;optionsObj&quot;, &lt;a href=&quot;#clause.types/PlainObject&quot; data-path=&quot;clause.types/PlainObject&quot;&gt;PlainObject&lt;/a&gt;, 
   &quot;recursive&quot;, instanceOf_Recursive_
-)&lt;/pre&gt;
+)&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [or] either one of
     </span>
@@ -11543,7 +11607,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;and(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;and(
   instanceOf_QuotedParamsMap_, 
   mapOf( {
     &amp;lt;key&amp;gt;: any, 
@@ -11568,7 +11632,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
       )
     )
   } )
-)&lt;/pre&gt;
+)&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       <span class="tag tag-info">[and]</span>
     </span>
@@ -11595,7 +11659,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;instanceOf_QuotedParamsMap_&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;instanceOf_QuotedParamsMap_&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
       [pred] satisfies predicate
     </span>
@@ -11632,7 +11696,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;mapOf( {
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;mapOf( {
   &amp;lt;key&amp;gt;: any, 
   &amp;lt;val&amp;gt;: or(
     &lt;a href=&quot;#clause.types/Null&quot; data-path=&quot;clause.types/Null&quot;&gt;Null&lt;/a&gt;, 
@@ -11657,7 +11721,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
       )
     )
   )
-} )&lt;/pre&gt;
+} )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       <span class="tag tag-info">[map_of]</span>
     </span>
@@ -11709,7 +11773,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;and(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;and(
   instanceOf_UnquotedParamsMap_, 
   mapOf( {
     &amp;lt;key&amp;gt;: any, 
@@ -11734,7 +11798,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
       )
     )
   } )
-)&lt;/pre&gt;
+)&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       <span class="tag tag-info">[and]</span>
     </span>
@@ -11761,7 +11825,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;instanceOf_UnquotedParamsMap_&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;instanceOf_UnquotedParamsMap_&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
       [pred] satisfies predicate
     </span>
@@ -11798,7 +11862,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;mapOf( {
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;mapOf( {
   &amp;lt;key&amp;gt;: any, 
   &amp;lt;val&amp;gt;: or(
     &lt;a href=&quot;#clause.types/Null&quot; data-path=&quot;clause.types/Null&quot;&gt;Null&lt;/a&gt;, 
@@ -11823,7 +11887,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
       )
     )
   )
-} )&lt;/pre&gt;
+} )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       <span class="tag tag-info">[map_of]</span>
     </span>
@@ -11914,7 +11978,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;instanceOf_Recursive_&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;instanceOf_Recursive_&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
       [pred] satisfies predicate
     </span>
@@ -11985,7 +12049,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;zeroOrMore( cat( &quot;item&quot;, or(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;zeroOrMore( cat( &quot;item&quot;, or(
   &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, 
   &quot;quotedParamsMap&quot;, and(
     instanceOf_QuotedParamsMap_, 
@@ -12023,7 +12087,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
   ), 
   &quot;optionsObj&quot;, &lt;a href=&quot;#clause.types/PlainObject&quot; data-path=&quot;clause.types/PlainObject&quot;&gt;PlainObject&lt;/a&gt;, 
   &quot;recursive&quot;, instanceOf_Recursive_
-) ) )&lt;/pre&gt;
+) ) )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [*] zero or more
     </span>
@@ -12038,7 +12102,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;cat( &quot;item&quot;, or(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat( &quot;item&quot;, or(
   &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, 
   &quot;quotedParamsMap&quot;, and(
     instanceOf_QuotedParamsMap_, 
@@ -12076,7 +12140,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
   ), 
   &quot;optionsObj&quot;, &lt;a href=&quot;#clause.types/PlainObject&quot; data-path=&quot;clause.types/PlainObject&quot;&gt;PlainObject&lt;/a&gt;, 
   &quot;recursive&quot;, instanceOf_Recursive_
-) )&lt;/pre&gt;
+) )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
     </span>
@@ -12112,7 +12176,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;or(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;or(
   &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, 
   &quot;quotedParamsMap&quot;, and(
     instanceOf_QuotedParamsMap_, 
@@ -12150,7 +12214,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
   ), 
   &quot;optionsObj&quot;, &lt;a href=&quot;#clause.types/PlainObject&quot; data-path=&quot;clause.types/PlainObject&quot;&gt;PlainObject&lt;/a&gt;, 
   &quot;recursive&quot;, instanceOf_Recursive_
-)&lt;/pre&gt;
+)&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [or] either one of
     </span>
@@ -12232,7 +12296,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;and(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;and(
   instanceOf_QuotedParamsMap_, 
   mapOf( {
     &amp;lt;key&amp;gt;: any, 
@@ -12257,7 +12321,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
       )
     )
   } )
-)&lt;/pre&gt;
+)&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       <span class="tag tag-info">[and]</span>
     </span>
@@ -12284,7 +12348,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;instanceOf_QuotedParamsMap_&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;instanceOf_QuotedParamsMap_&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
       [pred] satisfies predicate
     </span>
@@ -12321,7 +12385,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;mapOf( {
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;mapOf( {
   &amp;lt;key&amp;gt;: any, 
   &amp;lt;val&amp;gt;: or(
     &lt;a href=&quot;#clause.types/Null&quot; data-path=&quot;clause.types/Null&quot;&gt;Null&lt;/a&gt;, 
@@ -12346,7 +12410,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
       )
     )
   )
-} )&lt;/pre&gt;
+} )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       <span class="tag tag-info">[map_of]</span>
     </span>
@@ -12398,7 +12462,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;and(
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;and(
   instanceOf_UnquotedParamsMap_, 
   mapOf( {
     &amp;lt;key&amp;gt;: any, 
@@ -12423,7 +12487,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
       )
     )
   } )
-)&lt;/pre&gt;
+)&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       <span class="tag tag-info">[and]</span>
     </span>
@@ -12450,7 +12514,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;instanceOf_UnquotedParamsMap_&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;instanceOf_UnquotedParamsMap_&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
       [pred] satisfies predicate
     </span>
@@ -12487,7 +12551,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;mapOf( {
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;mapOf( {
   &amp;lt;key&amp;gt;: any, 
   &amp;lt;val&amp;gt;: or(
     &lt;a href=&quot;#clause.types/Null&quot; data-path=&quot;clause.types/Null&quot;&gt;Null&lt;/a&gt;, 
@@ -12512,7 +12576,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
       )
     )
   )
-} )&lt;/pre&gt;
+} )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       <span class="tag tag-info">[map_of]</span>
     </span>
@@ -12603,7 +12667,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre&gt;instanceOf_Recursive_&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;instanceOf_Recursive_&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
       [pred] satisfies predicate
     </span>
@@ -13089,6 +13153,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
    <script src="docs/bundle/content.js"></script>
   <script src="bundle/functional.min.js"></script>
   <script src="docs/bundle/functional.js"></script>
+  <script src="./vendor/klipse_plugin.min.js"></script>
 
   <link rel="stylesheet" type="text/css" href="./vendor/codemirror.css">
 

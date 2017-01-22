@@ -142,8 +142,8 @@ var CombinedCollOfClause = C.cat(
 );
 C.isValid( CombinedCollOfClause, [["foo", "foo", "bar"], [], [2, 3 , 4]] )`,
     `// invalid because collOf does not mix with regex ops like zeroOrMore
-    // collOf(...) here is equivalent to wall(zeroOrMore(...))
-    C.isValid( CombinedCollOfClause, ["foo", "foo", "bar", 2, 3 , 4] )`
+// collOf(...) here is equivalent to wall(zeroOrMore(...))
+C.isValid( CombinedCollOfClause, ["foo", "foo", "bar", 2, 3 , 4] )`
   ]
 } );
 
@@ -224,7 +224,7 @@ C.isValid( WalledClause, [2, 3, 4] )`,
 } );
 
 M( 'clause.compose/fclause', {
-  comment: 'Given an object that contains "args", "ret" and "fn" expressions (all optionally), returns a spec whose instrument function takes a function and validates its arguments and return value during run time and whose instrumentConformed function takes a function that takes conformed arguments.',
+  comment: 'Given an object that contains "args", "ret" and "fn" expressions (all optionally), returns a clause whose instrument function takes a function and validates its arguments and return value during run time and whose instrumentConformed function takes a function that takes conformed arguments.',
   examples: [
     `// first, we define a cat clause
 var FnArgsClause = C.zeroOrMore(

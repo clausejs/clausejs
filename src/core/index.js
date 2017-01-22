@@ -1,6 +1,8 @@
 var oAssign = require( '../utils/objectAssign' );
 var regex = require( './regex' );
-var { shape, keys, mapOf, } = require( './regex' );
+var { shape, keys, mapOf, cat,
+  fclause
+ } = require( './regex' );
 var nullable = require( './nullable' );
 var undefinable = require( './undefinable' );
 var maybe = require( './maybe' );
@@ -8,7 +10,7 @@ var { wall } = require( './wall' );
 var equals = require( '../preds/equals' );
 
 var scat = function( str ) {
-  return regex.cat.apply( null, Array.prototype.slice.call( str ).map( equals ) );
+  return cat.apply( null, Array.prototype.slice.call( str ).map( equals ) );
 };
 
 var other = {
@@ -21,6 +23,9 @@ var other = {
 
 var r = oAssign( {},
   regex,
-  { shape, keys, mapOf },
+  {
+    shape, keys, mapOf,
+    fspec: fclause
+  },
   other );
 module.exports = r;

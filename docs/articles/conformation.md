@@ -6,7 +6,7 @@ You define the shape of the data with clauses.
 
 To "conform" your data with your clauses is to shape it in a way that is <em>better organized</em>, making it easier for your code to consume.
 
-In order for conformation to work, one must specify a label for each part of your spec definition (example to follow below).
+In order for conformation to work, one must specify a label for each part of your clause definition (example to follow below).
 
 There are 3 ways that data can be conformed with Clause:
 

@@ -932,7 +932,9 @@ var regex = __webpack_require__(8);
 var _require = __webpack_require__(8),
     shape = _require.shape,
     keys = _require.keys,
-    mapOf = _require.mapOf;
+    mapOf = _require.mapOf,
+    cat = _require.cat,
+    fclause = _require.fclause;
 
 var nullable = __webpack_require__(54);
 var undefinable = __webpack_require__(55);
@@ -944,7 +946,7 @@ var _require2 = __webpack_require__(46),
 var equals = __webpack_require__(34);
 
 var scat = function scat(str) {
-  return regex.cat.apply(null, Array.prototype.slice.call(str).map(equals));
+  return cat.apply(null, Array.prototype.slice.call(str).map(equals));
 };
 
 var other = {
@@ -955,7 +957,10 @@ var other = {
   scat: scat
 };
 
-var r = oAssign({}, regex, { shape: shape, keys: keys, mapOf: mapOf }, other);
+var r = oAssign({}, regex, {
+  shape: shape, keys: keys, mapOf: mapOf,
+  fspec: fclause
+}, other);
 module.exports = r;
 
 /***/ },
