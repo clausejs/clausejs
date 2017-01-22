@@ -15,6 +15,7 @@ Clause enables you to:
 - Validate and make assertions about your data with your clauses
 - Define complex clauses for your functions' arguments, return value and the relation between them
 - Conform (parse) your data/arguments for writing simpler code
+- Create types that are *recursively* defined
 
 Clause is heavily inspired by [clojure.spec](http://clojure.org/about/spec), but will be evolving on its own to better suite the needs of JavaScript community.
 

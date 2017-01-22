@@ -92,7 +92,7 @@
         <ul>
           <li><a href="#conformation">Conformation?</a></li>
           <li><a href="#iterable">Regex Ops on Iterables</a></li>
-          <li><a href="#delayed-clause">Delayed &amp; Recursive Clause</a></li>
+          <li><a href="#delayed-clause">Delayed &amp; Namespaced Clauses</a></li>
         </ul>
         <h6>API</h6>
         <div id="cot"><dl>
@@ -386,7 +386,39 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
  the string as a single entity, whereas in the second, we use
  <code>C.scat()</code> to indicate that each character in the string is 
  part of the collection that we run regex ops on.</p></section>
-        <section id="iterable" class="markdown-article" markdown-path="delayed.md"></section>
+        <section id="delayed-clause" class="markdown-article" markdown-path="delayed.md"><h3 id="delayednamespacedclauses">Delayed &amp; Namespaced clauses</h3>
+<p>Delayed &amp; Namespaced clauses are useful when composing recursively defined clauses. </p>
+<p>For example, suppose we want to write clause for binary trees. A binary tree node contains a left node and a right node, which in turn is also a binary tree node. </p>
+<p>There are two ways to represent this structure with Clause. </p>
+<h5 id="delayedclause">Delayed Clause</h5>
+<pre><code class="js language-js">var BinaryTreeClause = C.maybe( C.wall(
+  C.cat(
+    &apos;nodeName&apos;, C.isStr, 
+    &apos;leftNode&apos;, C.delayed( () =&gt; BinaryTreeClause ),
+    &apos;rightNode&apos;, C.delayed( () =&gt; BinaryTreeClause )
+  )
+) );
+
+C.isValid(
+  BinaryTreeClause, 
+  [&apos;john&apos;, [&apos;bob&apos;, [&apos;alice&apos;, null, null], null], [&apos;sam&apos;, null, [&apos;jane&apos;, null, null]]]
+);
+</code></pre>
+<h5 id="namespacedclause">Namespaced Clause</h5>
+<p>Alternatively, you may also use a namespaced clause to achieve the same effect by giving the tree node a global name in the registry:</p>
+<pre><code class="js language-js">C(&apos;myapp/BinaryTreeNode&apos;, C.maybe( C.wall(
+  C.cat(
+    &apos;nodeName&apos;, C.isStr, 
+    &apos;leftNode&apos;, C( &apos;myapp/BinaryTreeNode&apos; ),
+    &apos;rightNode&apos;, C( &apos;myapp/BinaryTreeNode&apos; )
+) ) ) );
+
+C.isValid(
+  C( &apos;myapp/BinaryTreeNode&apos; ), 
+  [&apos;john&apos;, [&apos;bob&apos;, [&apos;alice&apos;, null, null], null], [&apos;sam&apos;, null, [&apos;jane&apos;, null, null]]]
+);
+</code></pre>
+<p>Another added benefit for this approach is that <code>C( &apos;myapp/BinaryTreeNode&apos; )</code> will be exposed as a global reference which you can use anywhere in your app.</p></section>
         <h3>API</h3>
         <p><em>Work in progress. </em></p>
   <p>Below is a set of auto-generated API reference by
