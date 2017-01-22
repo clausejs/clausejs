@@ -1,10 +1,10 @@
-### Delayed & Namespaced clauses
+### Delayed & Namespaced Clauses
 
-Delayed & Namespaced clauses are useful when composing recursively defined clauses. 
+Delayed & namespaced clauses are useful when composing recursively defined clauses. 
 
 For example, suppose we want to write clause for binary trees. A binary tree node contains a left node and a right node, which in turn is also a binary tree node. 
 
-There are two ways to represent this structure with Clause. 
+There are two ways to represent such structure with Clause. 
 
 ##### Delayed Clause
 

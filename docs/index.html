@@ -353,7 +353,7 @@ C.conform( MyOrClause, 2 )
     ],
     someKey: C.isNatInt,
   }, 
-  optional: [&quot;key5&quot;],
+  optional: [&quot;somekey&quot;],
   } );
 
 C.conform( ShapeClause3, { 
@@ -363,11 +363,7 @@ C.conform( ShapeClause3, {
   someKey: 999 
 } )
 </code></pre>
-<p>Notice that for all the examples given above, a label is supplied for each conformed parts.</p>
-<h5 id="usematchtosimplfycode">Use <code>match()</code> to simplfy code</h5>
-<p>In conjunction with conformation, <code>C.match()</code> can be used to simplify case handling. For example,</p>
-<pre><code class="js language-js">// TODO give example
-</code></pre></section>
+<p>Notice that for all the examples given above, a label is supplied for each conformed parts.</p></section>
         <section id="iterable" class="markdown-article" markdown-path="iterable.md"><h3 id="regexlikeoperationsoniterables">Regex-like Operations on Iterables</h3>
 <p>Both array and string are treated as iterables in Clause, which means both types can be the subject of regex-like operations.</p>
 <p>For example, both of the following clause definitions are valid:</p>
@@ -387,10 +383,10 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
  the string as a single entity, whereas in the second, we use
  <code>C.scat()</code> to indicate that each character in the string is 
  part of the collection that we run regex ops on.</p></section>
-        <section id="delayed-clause" class="markdown-article" markdown-path="delayed.md"><h3 id="delayednamespacedclauses">Delayed &amp; Namespaced clauses</h3>
-<p>Delayed &amp; Namespaced clauses are useful when composing recursively defined clauses. </p>
+        <section id="delayed-clause" class="markdown-article" markdown-path="delayed.md"><h3 id="delayednamespacedclauses">Delayed &amp; Namespaced Clauses</h3>
+<p>Delayed &amp; namespaced clauses are useful when composing recursively defined clauses. </p>
 <p>For example, suppose we want to write clause for binary trees. A binary tree node contains a left node and a right node, which in turn is also a binary tree node. </p>
-<p>There are two ways to represent this structure with Clause. </p>
+<p>There are two ways to represent such structure with Clause. </p>
 <h5 id="delayedclause">Delayed Clause</h5>
 <pre><code class="js language-js">var BinaryTreeClause = C.maybe( C.wall(
   C.cat(

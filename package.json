@@ -57,6 +57,7 @@
     "expose-loader": "^0.7.1",
     "highlight.js": "^9.9.0",
     "lodash": "4.17.4",
+    "markdown-include": "^0.4.3",
     "mocha": "^3.0.2",
     "mocha-testcheck": "0.1.2",
     "raw-loader": "^0.5.1",

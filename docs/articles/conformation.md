@@ -51,7 +51,7 @@ var ShapeClause3 = C.shape( {
     ],
     someKey: C.isNatInt,
   }, 
-  optional: ["key5"],
+  optional: ["somekey"],
   } );
 
 C.conform( ShapeClause3, { 
@@ -63,11 +63,3 @@ C.conform( ShapeClause3, {
 ```
 
 Notice that for all the examples given above, a label is supplied for each conformed parts.
-
-##### Use `match()` to simplfy code
-
-In conjunction with conformation, `C.match()` can be used to simplify case handling. For example,
-
-```js
-// TODO give example
-```

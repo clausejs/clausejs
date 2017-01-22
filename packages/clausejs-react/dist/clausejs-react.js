@@ -7,7 +7,7 @@
 		exports["C"] = factory(require("clausejs"), require("react"));
 	else
 		root["C"] = factory(root["C"], root["React"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_112__, __WEBPACK_EXTERNAL_MODULE_113__) {
+})(this, function(__WEBPACK_EXTERNAL_MODULE_113__, __WEBPACK_EXTERNAL_MODULE_114__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -73,17 +73,10 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 117);
+/******/ 	return __webpack_require__(__webpack_require__.s = 118);
 /******/ })
 /************************************************************************/
 /******/ ({
-
-/***/ 112:
-/***/ function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_112__;
-
-/***/ },
 
 /***/ 113:
 /***/ function(module, exports) {
@@ -92,7 +85,14 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_113__;
 
 /***/ },
 
-/***/ 117:
+/***/ 114:
+/***/ function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_114__;
+
+/***/ },
+
+/***/ 118:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -127,7 +127,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var C = __webpack_require__(112);
+var C = __webpack_require__(113);
 
 function fromBaseClass(baseClass) {
   var ClauseComponent = function (_baseClass) {
@@ -191,7 +191,7 @@ var _fromBaseClass2 = _interopRequireDefault(_fromBaseClass);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var React = __webpack_require__(113);
+var React = __webpack_require__(114);
 
 
 var ClauseComponent = (0, _fromBaseClass2.default)(React.Component);
