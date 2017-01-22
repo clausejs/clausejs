@@ -503,7 +503,7 @@ function _genOrClause( globalReg, exprName, path, expr, meta ) {
               <h6>Examples: </h6>
                 <div class="code-examples">
                   ${examples.map( ( e ) => `
-                    <pre><code>${e}</code></pre>
+                    <pre><code>${e.trim()}</code></pre>
                   ` ).join( '\n' )}
                 </div>
             ` : ''}
@@ -577,7 +577,7 @@ function _genFclause( globalReg, exprName, clause, path, meta = {} ) {
         </button>`, `
       <div class="code-examples" data-name="${exprName}">
         ${examples.map( ( e ) => `
-            <pre><code>${e}</code></pre>
+            <pre><code>${e.trim()}</code></pre>
           ` ).join( '' )}
       </div>
     ` ] );

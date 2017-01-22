@@ -265,6 +265,50 @@ averageAge("john", 4, true, "mary", 23, "bob", 102);`
   ]
 } );
 
+M( 'clause.compose/delayed', {
+  comment: 'Given a funciton that returns a clause, returns a DelayedClause that does not evaluate until its get() function is called. Useful for constructing recursive clause definitions.',
+  examples: [
+    `
+var BinaryTreeClause = C.maybe( C.wall(
+  C.cat(
+    'nodeName', C.isStr, 
+    'leftNode', C.delayed( () => BinaryTreeClause ),
+    'rightNode', C.delayed( () => BinaryTreeClause )
+  )
+) );
+
+C.isValid(
+  BinaryTreeClause, 
+  ['john', ['bob', ['alice', null, null], null], ['sam', null, ['jane', null, null]]]
+); `,
+  ]
+} );
+
+M( 'clause.compose/nullable', {
+  comment: 'Given an expression, returns a new clause that matches either the original clause or a null value.',
+  examples: [
+    'C.isValid(C.isStr, null);',
+    'C.isValid(C.nullable(C.isStr), null);'
+  ]
+} );
+
+M( 'clause.compose/undefinable', {
+  comment: 'Given an expression, returns a new clause that matches either the original clause or undefined.',
+  examples: [
+    'C.isValid(C.isStr, undefined);',
+    'C.isValid(C.undefinable(C.isStr), undefined);'
+  ]
+} );
+
+M( 'clause.compose/maybe', {
+  comment: 'Given an expression, returns a new clause that matches either the original clause, a null value, or undefined.',
+  examples: [
+    'C.isValid(C.isObj, undefined);',
+    'C.isValid(C.maybe(C.isObj), null);',
+    'C.isValid(C.maybe(C.isObj), undefined);'
+  ]
+} );
+
 M( 'clause.namespace/get', {
   comment: 'Gets a clause reference from global clause registry.',
   examples: [

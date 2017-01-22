@@ -35,11 +35,11 @@ const SExpressionFnClause = fclause( {
   ret: SExpressionClause
 } );
 
-const MatchFnClause = fclause( { 
-  args: cat( 
-    'keyValMap', isObj, 
-    'handlers', mapOf(isStr, fclause( {
-      args: cat('val', any),
+const MatchFnClause = fclause( {
+  args: cat(
+    'keyValMap', isObj,
+    'handlers', mapOf( isStr, fclause( {
+      args: cat( 'val', any ),
       ret: any,
     } ) )
   )
@@ -141,10 +141,10 @@ C( 'clause.compose/shape', ShapeFnClause );
 C( 'clause.compose/any', AnyClause );
 C( 'clause.compose/wall', WallFnClause );
 C( 'clause.compose/fclause', FclauseFnClause );
+C( 'clause.compose/delayed', DelayedFnClause );
 C( 'clause.compose/nullable', clauseTransformFnClause() );
 C( 'clause.compose/undefinable', clauseTransformFnClause() );
 C( 'clause.compose/maybe', clauseTransformFnClause() );
-C( 'clause.compose/delayed', DelayedFnClause );
 
 C( 'clause.compose.string/scat', SCatFnClause );
 

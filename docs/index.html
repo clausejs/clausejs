@@ -92,6 +92,7 @@
         <ul>
           <li><a href="#conformation">Conformation?</a></li>
           <li><a href="#iterable">Regex Ops on Iterables</a></li>
+          <li><a href="#delayed-clause">Delayed &amp; Recursive Clause</a></li>
         </ul>
         <h6>API</h6>
         <div id="cot"><dl>
@@ -137,13 +138,13 @@
           </li><li>
             <a href="#clause.compose/fclause" data-path="clause.compose/fclause">fclause()</a>
           </li><li>
+            <a href="#clause.compose/delayed" data-path="clause.compose/delayed">delayed()</a>
+          </li><li>
             <a href="#clause.compose/nullable" data-path="clause.compose/nullable">nullable()</a>
           </li><li>
             <a href="#clause.compose/undefinable" data-path="clause.compose/undefinable">undefinable()</a>
           </li><li>
             <a href="#clause.compose/maybe" data-path="clause.compose/maybe">maybe()</a>
-          </li><li>
-            <a href="#clause.compose/delayed" data-path="clause.compose/delayed">delayed()</a>
           </li>
       </ul>
     </dd>
@@ -376,6 +377,7 @@ C.conform(StrClause, &apos;foofoofoobarbar&apos;);
  the string as a single entity, whereas in the second, we use
  <code>C.scat()</code> to indicate that each character in the string is 
  part of the collection that we run regex ops on.</p></section>
+        <section id="iterable" class="markdown-article" markdown-path="delayed.md"></section>
         <h3>API</h3>
         <p><em>Work in progress. </em></p>
   <p>Below is a set of auto-generated API reference by
@@ -3331,7 +3333,7 @@ C.conform( CollOfStrClause, [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;] )</cod
           
             <pre><code>C.conform( CollOfStrClause, [] )</code></pre>
           
-            <pre><code> // notice the difference in behavior from C.zeroOrOne
+            <pre><code>// notice the difference in behavior from C.zeroOrOne
 var CombinedCollOfClause = C.cat( 
   &quot;babbles&quot;, C.collOf(C.oneOf(&quot;foo&quot;, &quot;bar&quot;, &quot;baz&quot;)),
   &quot;truths&quot;, C.collOf(C.isBool),
@@ -4078,7 +4080,7 @@ C.isValid( FreeMixClause, [2, 3, 4] )</code></pre>
           
             <pre><code>C.isValid( FreeMixClause, [ [2, 3, 4] ] )</code></pre>
           
-            <pre><code> var WalledClause = C.cat( C.wall( C.oneOrMore( C.isNum ) ) );;
+            <pre><code>var WalledClause = C.cat( C.wall( C.oneOrMore( C.isNum ) ) );;
 C.isValid( WalledClause, [2, 3, 4] )</code></pre>
           
             <pre><code>C.isValid( WalledClause, [ [2, 3, 4] ] )</code></pre>
@@ -4232,8 +4234,7 @@ var MyFnSpec = C.fclause( {
 var nameCount = MyFnSpec.instrument( 
   function _nameCount() { return Array.from(arguments).filter((s) =&gt; C.isStr(s)).length; } 
 );
-nameCount(&quot;john&quot;, 23, true, &quot;mary&quot;, 25, &quot;bob&quot;, 34);
-</code></pre>
+nameCount(&quot;john&quot;, 23, true, &quot;mary&quot;, 25, &quot;bob&quot;, 34);</code></pre>
           
             <pre><code>// invalid: missing name
     nameCount(&quot;john&quot;, 23, true, 24, false);</code></pre>
@@ -4376,369 +4377,6 @@ averageAge(&quot;john&quot;, 4, true, &quot;mary&quot;, 23, &quot;bob&quot;, 102
         </div>
       
 
-    <a name="clause.compose/nullable"></a>
-    
-        <div class="card">
-          <div class="card-header inline-headers">
-            
-      <h6>nullable()</h6>&#xA0;
-        <span class="tag tag-primary">
-          function
-        </span>
-      
-          </div>
-        
-    <dl class="card-block">
-    <dt>Syntax</dt><dd><ul>
-        <li>( <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
-      </ul></dd>
-<dt>Clause Description</dt><dd>
-    <blockquote class="blockquote">
-      <small>
-        <em class="text-muted">
-          
-    <pre class="clause-description"><code class="clause">fclause( {
-  &lt;args&gt;: cat( <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ), 
-  &lt;ret&gt;: <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a>
-} )</code></pre>
-  
-        </em>
-      </small>
-    </blockquote>
-  </dd>
-<dt>Argument Clause Graph</dt><dd><p>
-     <button class="btn btn-sm btn-info" type="button" data-toggle="collapse" data-target="#nullable-args-graph" aria-expanded="false" aria-controls="collapseExample">
-      Show Graph &#xBB;
-    </button>
-  </p>
-  <div class="collapse" id="nullable-args-graph">
-    
-    
-    
-    <fieldset class="card card-outline-info">
-    <legend class="clause-type">
-      
-    <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; )&lt;/code&gt;&lt;/pre&gt;
-  " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      [cat] a sequence of
-    </span>
-  
-    </legend>
-    
-    <div class="card-block">
-      <p class="card-title">
-        Should be <em>an ordered list</em> of the following:
-      </p>
-    </div>
-    <div class="list-group list-group-flush list-for-cat">
-      
-        <fieldset class="list-group-item card card-outline-info">
-          <legend class="clause-type">
-          <span class="tag tag-default">Part 1</span>
-          </legend>
-          <div class="row">
-            <div class="col-md-12">
-              
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              
-    
-    
-    <fieldset class="card card-outline-info">
-    <legend class="clause-type">
-      <span class="tag tag-info">[clause]</span>
-    </legend>
-    
-    <div class="card-block">
-      A value of type
-      <a href="#clause.types/Expression" data-path="clause.types/Expression">clause.types/Expression</a>
-    </div>
-  
-    </fieldset>
-    
-            </div>
-          </div>
-        </fieldset>
-    
-    </div>
-  
-    </fieldset>
-    
-  </div>
-</dd>
-<dt>Return Value Clause Graph</dt><dd><p>
-     <button class="btn btn-sm btn-info" type="button" data-toggle="collapse" data-target="#nullable-ret-graph" aria-expanded="false" aria-controls="collapseExample">
-      Show Graph &#xBB;
-    </button>
-  </p>
-  <div class="collapse" id="nullable-ret-graph">
-    
-    
-    
-    <fieldset class="card card-outline-primary">
-    <legend class="clause-type">
-      <span class="tag tag-info">[clause]</span>
-    </legend>
-    
-    <div class="card-block">
-      A value of type
-      <a href="#clause.types/Clause" data-path="clause.types/Clause">clause.types/Clause</a>
-    </div>
-  
-    </fieldset>
-    
-  </div>
-</dd>
-    </dl>
-  
-        </div>
-      
-
-    <a name="clause.compose/undefinable"></a>
-    
-        <div class="card">
-          <div class="card-header inline-headers">
-            
-      <h6>undefinable()</h6>&#xA0;
-        <span class="tag tag-primary">
-          function
-        </span>
-      
-          </div>
-        
-    <dl class="card-block">
-    <dt>Syntax</dt><dd><ul>
-        <li>( <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
-      </ul></dd>
-<dt>Clause Description</dt><dd>
-    <blockquote class="blockquote">
-      <small>
-        <em class="text-muted">
-          
-    <pre class="clause-description"><code class="clause">fclause( {
-  &lt;args&gt;: cat( <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ), 
-  &lt;ret&gt;: <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a>
-} )</code></pre>
-  
-        </em>
-      </small>
-    </blockquote>
-  </dd>
-<dt>Argument Clause Graph</dt><dd><p>
-     <button class="btn btn-sm btn-info" type="button" data-toggle="collapse" data-target="#undefinable-args-graph" aria-expanded="false" aria-controls="collapseExample">
-      Show Graph &#xBB;
-    </button>
-  </p>
-  <div class="collapse" id="undefinable-args-graph">
-    
-    
-    
-    <fieldset class="card card-outline-info">
-    <legend class="clause-type">
-      
-    <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; )&lt;/code&gt;&lt;/pre&gt;
-  " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      [cat] a sequence of
-    </span>
-  
-    </legend>
-    
-    <div class="card-block">
-      <p class="card-title">
-        Should be <em>an ordered list</em> of the following:
-      </p>
-    </div>
-    <div class="list-group list-group-flush list-for-cat">
-      
-        <fieldset class="list-group-item card card-outline-info">
-          <legend class="clause-type">
-          <span class="tag tag-default">Part 1</span>
-          </legend>
-          <div class="row">
-            <div class="col-md-12">
-              
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              
-    
-    
-    <fieldset class="card card-outline-info">
-    <legend class="clause-type">
-      <span class="tag tag-info">[clause]</span>
-    </legend>
-    
-    <div class="card-block">
-      A value of type
-      <a href="#clause.types/Expression" data-path="clause.types/Expression">clause.types/Expression</a>
-    </div>
-  
-    </fieldset>
-    
-            </div>
-          </div>
-        </fieldset>
-    
-    </div>
-  
-    </fieldset>
-    
-  </div>
-</dd>
-<dt>Return Value Clause Graph</dt><dd><p>
-     <button class="btn btn-sm btn-info" type="button" data-toggle="collapse" data-target="#undefinable-ret-graph" aria-expanded="false" aria-controls="collapseExample">
-      Show Graph &#xBB;
-    </button>
-  </p>
-  <div class="collapse" id="undefinable-ret-graph">
-    
-    
-    
-    <fieldset class="card card-outline-primary">
-    <legend class="clause-type">
-      <span class="tag tag-info">[clause]</span>
-    </legend>
-    
-    <div class="card-block">
-      A value of type
-      <a href="#clause.types/Clause" data-path="clause.types/Clause">clause.types/Clause</a>
-    </div>
-  
-    </fieldset>
-    
-  </div>
-</dd>
-    </dl>
-  
-        </div>
-      
-
-    <a name="clause.compose/maybe"></a>
-    
-        <div class="card">
-          <div class="card-header inline-headers">
-            
-      <h6>maybe()</h6>&#xA0;
-        <span class="tag tag-primary">
-          function
-        </span>
-      
-          </div>
-        
-    <dl class="card-block">
-    <dt>Syntax</dt><dd><ul>
-        <li>( <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
-      </ul></dd>
-<dt>Clause Description</dt><dd>
-    <blockquote class="blockquote">
-      <small>
-        <em class="text-muted">
-          
-    <pre class="clause-description"><code class="clause">fclause( {
-  &lt;args&gt;: cat( <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ), 
-  &lt;ret&gt;: <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a>
-} )</code></pre>
-  
-        </em>
-      </small>
-    </blockquote>
-  </dd>
-<dt>Argument Clause Graph</dt><dd><p>
-     <button class="btn btn-sm btn-info" type="button" data-toggle="collapse" data-target="#maybe-args-graph" aria-expanded="false" aria-controls="collapseExample">
-      Show Graph &#xBB;
-    </button>
-  </p>
-  <div class="collapse" id="maybe-args-graph">
-    
-    
-    
-    <fieldset class="card card-outline-info">
-    <legend class="clause-type">
-      
-    <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; )&lt;/code&gt;&lt;/pre&gt;
-  " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
-      [cat] a sequence of
-    </span>
-  
-    </legend>
-    
-    <div class="card-block">
-      <p class="card-title">
-        Should be <em>an ordered list</em> of the following:
-      </p>
-    </div>
-    <div class="list-group list-group-flush list-for-cat">
-      
-        <fieldset class="list-group-item card card-outline-info">
-          <legend class="clause-type">
-          <span class="tag tag-default">Part 1</span>
-          </legend>
-          <div class="row">
-            <div class="col-md-12">
-              
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              
-    
-    
-    <fieldset class="card card-outline-info">
-    <legend class="clause-type">
-      <span class="tag tag-info">[clause]</span>
-    </legend>
-    
-    <div class="card-block">
-      A value of type
-      <a href="#clause.types/Expression" data-path="clause.types/Expression">clause.types/Expression</a>
-    </div>
-  
-    </fieldset>
-    
-            </div>
-          </div>
-        </fieldset>
-    
-    </div>
-  
-    </fieldset>
-    
-  </div>
-</dd>
-<dt>Return Value Clause Graph</dt><dd><p>
-     <button class="btn btn-sm btn-info" type="button" data-toggle="collapse" data-target="#maybe-ret-graph" aria-expanded="false" aria-controls="collapseExample">
-      Show Graph &#xBB;
-    </button>
-  </p>
-  <div class="collapse" id="maybe-ret-graph">
-    
-    
-    
-    <fieldset class="card card-outline-primary">
-    <legend class="clause-type">
-      <span class="tag tag-info">[clause]</span>
-    </legend>
-    
-    <div class="card-block">
-      A value of type
-      <a href="#clause.types/Clause" data-path="clause.types/Clause">clause.types/Clause</a>
-    </div>
-  
-    </fieldset>
-    
-  </div>
-</dd>
-    </dl>
-  
-        </div>
-      
-
     <a name="clause.compose/delayed"></a>
     
         <div class="card">
@@ -4752,9 +4390,30 @@ averageAge(&quot;john&quot;, 4, true, &quot;mary&quot;, 23, &quot;bob&quot;, 102
           </div>
         
     <dl class="card-block">
-    <dt>Syntax</dt><dd><ul>
+    <dd>Given a funciton that returns a clause, returns a DelayedClause that does not evaluate until its get() function is called. Useful for constructing recursive clause definitions.</dd>
+<dt>Syntax</dt><dd><ul>
         <li>( (  ) &#x2192; <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) &#x2192; <a href="#clause.types/DelayedClause" data-path="clause.types/DelayedClause">DelayedClause</a></li>
       </ul></dd>
+<dt>Examples  <button class="btn btn-info btn-sm launch-code-examples" data-name="delayed">
+          Live Eval
+        </button></dt><dd>
+      <div class="code-examples" data-name="delayed">
+        
+            <pre><code>var BinaryTreeClause = C.maybe( C.wall(
+  C.cat(
+    &apos;nodeName&apos;, C.isStr, 
+    &apos;leftNode&apos;, C.delayed( () =&gt; BinaryTreeClause ),
+    &apos;rightNode&apos;, C.delayed( () =&gt; BinaryTreeClause )
+  )
+) );
+
+C.isValid(
+  BinaryTreeClause, 
+  [&apos;john&apos;, [&apos;bob&apos;, [&apos;alice&apos;, null, null], null], [&apos;sam&apos;, null, [&apos;jane&apos;, null, null]]]
+);</code></pre>
+          
+      </div>
+    </dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
       <small>
@@ -4935,6 +4594,407 @@ averageAge(&quot;john&quot;, 4, true, &quot;mary&quot;, 23, &quot;bob&quot;, 102
   
         </div>
       
+
+    <a name="clause.compose/nullable"></a>
+    
+        <div class="card">
+          <div class="card-header inline-headers">
+            
+      <h6>nullable()</h6>&#xA0;
+        <span class="tag tag-primary">
+          function
+        </span>
+      
+          </div>
+        
+    <dl class="card-block">
+    <dd>Given an expression, returns a new clause that matches either the original clause or a null value.</dd>
+<dt>Syntax</dt><dd><ul>
+        <li>( <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
+      </ul></dd>
+<dt>Examples  <button class="btn btn-info btn-sm launch-code-examples" data-name="nullable">
+          Live Eval
+        </button></dt><dd>
+      <div class="code-examples" data-name="nullable">
+        
+            <pre><code>C.isValid(C.isStr, null);</code></pre>
+          
+            <pre><code>C.isValid(C.nullable(C.isStr), null);</code></pre>
+          
+      </div>
+    </dd>
+<dt>Clause Description</dt><dd>
+    <blockquote class="blockquote">
+      <small>
+        <em class="text-muted">
+          
+    <pre class="clause-description"><code class="clause">fclause( {
+  &lt;args&gt;: cat( <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ), 
+  &lt;ret&gt;: <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a>
+} )</code></pre>
+  
+        </em>
+      </small>
+    </blockquote>
+  </dd>
+<dt>Argument Clause Graph</dt><dd><p>
+     <button class="btn btn-sm btn-info" type="button" data-toggle="collapse" data-target="#nullable-args-graph" aria-expanded="false" aria-controls="collapseExample">
+      Show Graph &#xBB;
+    </button>
+  </p>
+  <div class="collapse" id="nullable-args-graph">
+    
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="clause-type">
+      
+    <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; )&lt;/code&gt;&lt;/pre&gt;
+  " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
+      [cat] a sequence of
+    </span>
+  
+    </legend>
+    
+    <div class="card-block">
+      <p class="card-title">
+        Should be <em>an ordered list</em> of the following:
+      </p>
+    </div>
+    <div class="list-group list-group-flush list-for-cat">
+      
+        <fieldset class="list-group-item card card-outline-info">
+          <legend class="clause-type">
+          <span class="tag tag-default">Part 1</span>
+          </legend>
+          <div class="row">
+            <div class="col-md-12">
+              
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="clause-type">
+      <span class="tag tag-info">[clause]</span>
+    </legend>
+    
+    <div class="card-block">
+      A value of type
+      <a href="#clause.types/Expression" data-path="clause.types/Expression">clause.types/Expression</a>
+    </div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </fieldset>
+    
+    </div>
+  
+    </fieldset>
+    
+  </div>
+</dd>
+<dt>Return Value Clause Graph</dt><dd><p>
+     <button class="btn btn-sm btn-info" type="button" data-toggle="collapse" data-target="#nullable-ret-graph" aria-expanded="false" aria-controls="collapseExample">
+      Show Graph &#xBB;
+    </button>
+  </p>
+  <div class="collapse" id="nullable-ret-graph">
+    
+    
+    
+    <fieldset class="card card-outline-primary">
+    <legend class="clause-type">
+      <span class="tag tag-info">[clause]</span>
+    </legend>
+    
+    <div class="card-block">
+      A value of type
+      <a href="#clause.types/Clause" data-path="clause.types/Clause">clause.types/Clause</a>
+    </div>
+  
+    </fieldset>
+    
+  </div>
+</dd>
+    </dl>
+  
+        </div>
+      
+
+    <a name="clause.compose/undefinable"></a>
+    
+        <div class="card">
+          <div class="card-header inline-headers">
+            
+      <h6>undefinable()</h6>&#xA0;
+        <span class="tag tag-primary">
+          function
+        </span>
+      
+          </div>
+        
+    <dl class="card-block">
+    <dd>Given an expression, returns a new clause that matches either the original clause or undefined.</dd>
+<dt>Syntax</dt><dd><ul>
+        <li>( <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
+      </ul></dd>
+<dt>Examples  <button class="btn btn-info btn-sm launch-code-examples" data-name="undefinable">
+          Live Eval
+        </button></dt><dd>
+      <div class="code-examples" data-name="undefinable">
+        
+            <pre><code>C.isValid(C.isStr, undefined);</code></pre>
+          
+            <pre><code>C.isValid(C.undefinable(C.isStr), undefined);</code></pre>
+          
+      </div>
+    </dd>
+<dt>Clause Description</dt><dd>
+    <blockquote class="blockquote">
+      <small>
+        <em class="text-muted">
+          
+    <pre class="clause-description"><code class="clause">fclause( {
+  &lt;args&gt;: cat( <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ), 
+  &lt;ret&gt;: <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a>
+} )</code></pre>
+  
+        </em>
+      </small>
+    </blockquote>
+  </dd>
+<dt>Argument Clause Graph</dt><dd><p>
+     <button class="btn btn-sm btn-info" type="button" data-toggle="collapse" data-target="#undefinable-args-graph" aria-expanded="false" aria-controls="collapseExample">
+      Show Graph &#xBB;
+    </button>
+  </p>
+  <div class="collapse" id="undefinable-args-graph">
+    
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="clause-type">
+      
+    <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; )&lt;/code&gt;&lt;/pre&gt;
+  " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
+      [cat] a sequence of
+    </span>
+  
+    </legend>
+    
+    <div class="card-block">
+      <p class="card-title">
+        Should be <em>an ordered list</em> of the following:
+      </p>
+    </div>
+    <div class="list-group list-group-flush list-for-cat">
+      
+        <fieldset class="list-group-item card card-outline-info">
+          <legend class="clause-type">
+          <span class="tag tag-default">Part 1</span>
+          </legend>
+          <div class="row">
+            <div class="col-md-12">
+              
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="clause-type">
+      <span class="tag tag-info">[clause]</span>
+    </legend>
+    
+    <div class="card-block">
+      A value of type
+      <a href="#clause.types/Expression" data-path="clause.types/Expression">clause.types/Expression</a>
+    </div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </fieldset>
+    
+    </div>
+  
+    </fieldset>
+    
+  </div>
+</dd>
+<dt>Return Value Clause Graph</dt><dd><p>
+     <button class="btn btn-sm btn-info" type="button" data-toggle="collapse" data-target="#undefinable-ret-graph" aria-expanded="false" aria-controls="collapseExample">
+      Show Graph &#xBB;
+    </button>
+  </p>
+  <div class="collapse" id="undefinable-ret-graph">
+    
+    
+    
+    <fieldset class="card card-outline-primary">
+    <legend class="clause-type">
+      <span class="tag tag-info">[clause]</span>
+    </legend>
+    
+    <div class="card-block">
+      A value of type
+      <a href="#clause.types/Clause" data-path="clause.types/Clause">clause.types/Clause</a>
+    </div>
+  
+    </fieldset>
+    
+  </div>
+</dd>
+    </dl>
+  
+        </div>
+      
+
+    <a name="clause.compose/maybe"></a>
+    
+        <div class="card">
+          <div class="card-header inline-headers">
+            
+      <h6>maybe()</h6>&#xA0;
+        <span class="tag tag-primary">
+          function
+        </span>
+      
+          </div>
+        
+    <dl class="card-block">
+    <dd>Given an expression, returns a new clause that matches either the original clause, a null value, or undefined.</dd>
+<dt>Syntax</dt><dd><ul>
+        <li>( <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
+      </ul></dd>
+<dt>Examples  <button class="btn btn-info btn-sm launch-code-examples" data-name="maybe">
+          Live Eval
+        </button></dt><dd>
+      <div class="code-examples" data-name="maybe">
+        
+            <pre><code>C.isValid(C.isObj, undefined);</code></pre>
+          
+            <pre><code>C.isValid(C.maybe(C.isObj), null);</code></pre>
+          
+            <pre><code>C.isValid(C.maybe(C.isObj), undefined);</code></pre>
+          
+      </div>
+    </dd>
+<dt>Clause Description</dt><dd>
+    <blockquote class="blockquote">
+      <small>
+        <em class="text-muted">
+          
+    <pre class="clause-description"><code class="clause">fclause( {
+  &lt;args&gt;: cat( <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ), 
+  &lt;ret&gt;: <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a>
+} )</code></pre>
+  
+        </em>
+      </small>
+    </blockquote>
+  </dd>
+<dt>Argument Clause Graph</dt><dd><p>
+     <button class="btn btn-sm btn-info" type="button" data-toggle="collapse" data-target="#maybe-args-graph" aria-expanded="false" aria-controls="collapseExample">
+      Show Graph &#xBB;
+    </button>
+  </p>
+  <div class="collapse" id="maybe-args-graph">
+    
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="clause-type">
+      
+    <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat( &lt;a href=&quot;#clause.types/Expression&quot; data-path=&quot;clause.types/Expression&quot;&gt;Expression&lt;/a&gt; )&lt;/code&gt;&lt;/pre&gt;
+  " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
+      [cat] a sequence of
+    </span>
+  
+    </legend>
+    
+    <div class="card-block">
+      <p class="card-title">
+        Should be <em>an ordered list</em> of the following:
+      </p>
+    </div>
+    <div class="list-group list-group-flush list-for-cat">
+      
+        <fieldset class="list-group-item card card-outline-info">
+          <legend class="clause-type">
+          <span class="tag tag-default">Part 1</span>
+          </legend>
+          <div class="row">
+            <div class="col-md-12">
+              
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              
+    
+    
+    <fieldset class="card card-outline-info">
+    <legend class="clause-type">
+      <span class="tag tag-info">[clause]</span>
+    </legend>
+    
+    <div class="card-block">
+      A value of type
+      <a href="#clause.types/Expression" data-path="clause.types/Expression">clause.types/Expression</a>
+    </div>
+  
+    </fieldset>
+    
+            </div>
+          </div>
+        </fieldset>
+    
+    </div>
+  
+    </fieldset>
+    
+  </div>
+</dd>
+<dt>Return Value Clause Graph</dt><dd><p>
+     <button class="btn btn-sm btn-info" type="button" data-toggle="collapse" data-target="#maybe-ret-graph" aria-expanded="false" aria-controls="collapseExample">
+      Show Graph &#xBB;
+    </button>
+  </p>
+  <div class="collapse" id="maybe-ret-graph">
+    
+    
+    
+    <fieldset class="card card-outline-primary">
+    <legend class="clause-type">
+      <span class="tag tag-info">[clause]</span>
+    </legend>
+    
+    <div class="card-block">
+      A value of type
+      <a href="#clause.types/Clause" data-path="clause.types/Clause">clause.types/Clause</a>
+    </div>
+  
+    </fieldset>
+    
+  </div>
+</dd>
+    </dl>
+  
+        </div>
+      
 <h3>clause.compose.string/</h3><hr>
     <a name="clause.compose.string/scat"></a>
     
@@ -4957,13 +5017,11 @@ averageAge(&quot;john&quot;, 4, true, &quot;mary&quot;, 23, &quot;bob&quot;, 102
         </button></dt><dd>
       <div class="code-examples" data-name="scat">
         
-            <pre><code>
-var StrClause = C.cat(&apos;greetings&apos;, C.zeroOrMore(C.scat(&apos;hello&apos;)),
+            <pre><code>var StrClause = C.cat(&apos;greetings&apos;, C.zeroOrMore(C.scat(&apos;hello&apos;)),
                       &apos;substence&apos;, C.zeroOrMore(C.scat(&apos;i am optional&apos;)),
                       &apos;farewell&apos;, C.zeroOrMore(C.scat(&apos;bye&apos;)));
 
-C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
-</code></pre>
+C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);</code></pre>
           
       </div>
     </dd>

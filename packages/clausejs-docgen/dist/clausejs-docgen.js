@@ -5785,7 +5785,7 @@ function _genOrClause(globalReg, exprName, path, expr, meta) {
     }
 
     return '\n        <fieldset class="list-group-item card-outline-' + _labelFor(expr) + '">\n          <legend class="clause-type">\n            <span class="tag tag-default">\n                Option ' + (idx + 1) + '\n            </span>\n            ' + (name ? '\n                <span class="lead font-italic text-primary">\n                  &ldquo;' + name + '&rdquo;\n                </span>\n            ' : '') + '\n          </legend>\n          <div class="row">\n            <div class="col-md-12">\n            ' + (comment ? '<div>' + comment + '</div>' : '') + '\n            \n            ' + (examples ? '\n              <h6>Examples: </h6>\n                <div class="code-examples">\n                  ' + examples.map(function (e) {
-      return '\n                    <pre><code>' + e + '</code></pre>\n                  ';
+      return '\n                    <pre><code>' + e.trim() + '</code></pre>\n                  ';
     }).join('\n') + '\n                </div>\n            ' : '') + '\n            </div>\n          </div>\n          <div class="row">\n            <div class="col-md-12">\n              ' + genForExpression(globalReg, null, altE, meta && meta[name]) + '\n            </div>\n          </div>\n        </fieldset>\n    ';
   });
 
@@ -5836,7 +5836,7 @@ function _genFclause(globalReg, exprName, clause, path) {
   }
   if (examples) {
     frags.push(['Examples  <button class="btn btn-info btn-sm launch-code-examples" data-name="' + exprName + '">\n          Live Eval\n        </button>', '\n      <div class="code-examples" data-name="' + exprName + '">\n        ' + examples.map(function (e) {
-      return '\n            <pre><code>' + e + '</code></pre>\n          ';
+      return '\n            <pre><code>' + e.trim() + '</code></pre>\n          ';
     }).join('') + '\n      </div>\n    ']);
   }
   if (exprName && path) {
