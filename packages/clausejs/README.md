@@ -47,7 +47,7 @@ Also worth looking at are videos on rationale for clojure.spec (and, by extensio
 Alpha.
 
 - Most core functions of Clause have gone through many iterations of bug fixing and are stablizing.
-- Some aspects of the implementation, such as object models are still subject to change based on [developer feedback](/../../issues/).
+- Some design aspects, especially API interfaces are still subject to change based on [developer feedback](/../../issues/).
 - Feedback and suggestions [are welcome](https://github.com/clausejs/clausejs/issues/new).
 
 ## Quick Examples
