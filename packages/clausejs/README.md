@@ -1,5 +1,9 @@
 # Clause
 
+> If a programming language is regarded as a tool to aid the programmer, it should give him the greatest assistance in the most difficult aspects of his art, namely program design, documentation, and debugging.
+>
+> — *C. A. R. Hoare, Hints on Programming Language Design*
+
 A powerful, expressive & practical JavaScript library for defining and verifying your JS app contract. Also facilitates with bug discovery, debugging & data parsing.
 
  [![Build Status](https://travis-ci.org/clausejs/clausejs.svg?branch=master)](https://travis-ci.org/clausejs/clausejs) [![npm version](https://badge.fury.io/js/clausejs.svg)](https://badge.fury.io/js/clausejs)  [![Dependencies](https://david-dm.org/clausejs/clausejs.svg)](https://david-dm.org/clausejs/clausejs)  [![Size Gzipped](http://img.badgesize.io/clausejs/clausejs/master/packages/clausejs/dist/clausejs.min.js?compression=gzip&label=min%2Bgzipped)](packages/clausejs/dist)  [![Open Source Love](https://badges.frapsoft.com/os/mit/mit.svg?v=102)](https://github.com/ellerbrock/open-source-badge/)  [![Discussion](https://img.shields.io/gitter/room/TechnologyAdvice/Stardust.svg)](https://gitter.im/clausejs/clausejs)
@@ -20,10 +24,6 @@ Clause enables you to:
 Clause is heavily inspired by [clojure.spec](http://clojure.org/about/spec), but will be evolving on its own to better suite the needs of JavaScript community.
 
 ## Why Clause
-
-> If a programming language is regarded as a tool to aid the programmer, it should give him the greatest assistance in the most difficult aspects of his art, namely program design, documentation, and debugging.
->
-> — *C. A. R. Hoare, Hints on Programming Language Design*
 
 Clause's primary goal is to allow you to create *the definitive contract* for your JavaScript project.
 
@@ -253,7 +253,7 @@ Clause API for the most part is kept similar to clojure.spec, except for some di
 
 ### Why don't you call it "spec"?
 
-"Spec" already carries a different meaning in the JavaScript community, which is strongly associated with unit tests. While introducing this library to developers with the term "spec", 
+"Spec" already carries a different meaning in the JavaScript community, which is strongly associated with unit tests. While introducing this library to developers with the term "spec",
 I was often met with a confused look along with a commment such as "I already know how to write a spec, so what's the point?" I then quickly realized that a new term needs to be coined to refect some of the vastly different concepts introduced in Clause.
 
 ## Community
