@@ -322,11 +322,11 @@ M( 'clause.namespace/set', {
   examples: [ 'C("awesomeapp/TodoItem", TodoItemClause)' ]
 } );
 
-M( 'clause.compose.string/scat', {
+M( 'clause.compose.string/cstr', {
   examples: `
-var StrClause = C.cat('greetings', C.zeroOrMore(C.scat('hello')),
-                      'substence', C.zeroOrMore(C.scat('i am optional')),
-                      'farewell', C.zeroOrMore(C.scat('bye')));
+var StrClause = C.cat('greetings', C.zeroOrMore(C.cstr('hello')),
+                      'substence', C.zeroOrMore(C.cstr('i am optional')),
+                      'farewell', C.zeroOrMore(C.cstr('bye')));
 
 C.conform(StrClause, 'hellohellobyebyebyebye');
 ` } );

@@ -21,12 +21,12 @@ var MyCatClause = C.cat(
 C.conform( MyCatClause, ["a", 2, true] )
 ```
 
-In addition to arrays, strings can also be conformed with `scat`.
+In addition to arrays, strings can also be conformed with `cstr`.
 
 ```js
-var StrClause = C.cat('greetings', C.zeroOrMore(C.scat('hello')),
-                      'substence', C.zeroOrMore(C.scat('i am optional')),
-                      'farewell', C.zeroOrMore(C.scat('bye')));
+var StrClause = C.cat('greetings', C.zeroOrMore(C.cstr('hello')),
+                      'substence', C.zeroOrMore(C.cstr('i am optional')),
+                      'farewell', C.zeroOrMore(C.cstr('bye')));
 
 C.conform(StrClause, 'hellohellobyebyebyebye');
 ```
