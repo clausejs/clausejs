@@ -98,19 +98,12 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_114__;
 "use strict";
 
 
-var _ClauseComponent = __webpack_require__(96);
-
-var _ClauseComponent2 = _interopRequireDefault(_ClauseComponent);
-
-var _fromBaseClass = __webpack_require__(88);
-
-var _fromBaseClass2 = _interopRequireDefault(_fromBaseClass);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var ClauseComponent_1 = __webpack_require__(96);
+var fromBaseClass_1 = __webpack_require__(88);
 module.exports = {
-  ClauseComponent: _ClauseComponent2.default,
-  fromBaseClass: _fromBaseClass2.default
+    ClauseComponent: ClauseComponent_1.default,
+    fromBaseClass: fromBaseClass_1.default
 };
 
 /***/ },
@@ -121,59 +114,54 @@ module.exports = {
 "use strict";
 
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
+var __extends = undefined && undefined.__extends || function () {
+    var extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+        d.__proto__ = b;
+    } || function (d, b) {
+        for (var p in b) {
+            if (b.hasOwnProperty(p)) d[p] = b[p];
+        }
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() {
+            this.constructor = d;
+        }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+}();
 var C = __webpack_require__(113);
-
 function fromBaseClass(baseClass) {
-  var ClauseComponent = function (_baseClass) {
-    _inherits(ClauseComponent, _baseClass);
-
-    function ClauseComponent() {
-      var _arguments = arguments;
-
-      _classCallCheck(this, ClauseComponent);
-
-      var _this = _possibleConstructorReturn(this, (ClauseComponent.__proto__ || Object.getPrototypeOf(ClauseComponent)).call(this));
-
-      var propClauses = _this.constructor.propClauses;
-
-      if (propClauses) {
-        (function () {
-          var nullablePropClauses = C.or(propClauses, C.isUndefined, C.isNull);
-
-          var currWillUpdateFn = _this.componentWillUpdate;
-          _this.componentWillUpdate = function (nextShape) {
-            C.enforce(nullablePropClauses, nextShape);
-            if (currWillUpdateFn) {
-              return currWillUpdateFn.apply(_this, _arguments);
+    var ClauseComponent = function (_super) {
+        __extends(ClauseComponent, _super);
+        function ClauseComponent() {
+            var _this = _super.call(this) || this;
+            var propClauses = _this.constructor.propClauses;
+            if (propClauses) {
+                var nullablePropClauses_1 = C.or(propClauses, C.isUndefined, C.isNull);
+                var currWillUpdateFn_1 = _this.componentWillUpdate;
+                _this.componentWillUpdate = function (nextShape) {
+                    C.enforce(nullablePropClauses_1, nextShape);
+                    if (currWillUpdateFn_1) {
+                        return currWillUpdateFn_1.apply(_this, arguments);
+                    }
+                    return undefined;
+                };
+                var currWillMountFn_1 = _this.componentWillMount;
+                _this.componentWillMount = function () {
+                    C.enforce(nullablePropClauses_1, _this.shape);
+                    if (currWillMountFn_1) {
+                        return currWillMountFn_1.apply(_this, arguments);
+                    }
+                    return undefined;
+                };
             }
-            return undefined;
-          };
-
-          var currWillMountFn = _this.componentWillMount;
-          _this.componentWillMount = function () {
-            C.enforce(nullablePropClauses, _this.shape);
-            if (currWillMountFn) {
-              return currWillMountFn.apply(_this, _arguments);
-            }
-            return undefined;
-          };
-        })();
-      }
-      return _this;
-    }
-
+            return _this;
+        }
+        return ClauseComponent;
+    }(baseClass);
     return ClauseComponent;
-  }(baseClass);
-
-  return ClauseComponent;
 }
-
 module.exports = fromBaseClass;
 module.exports.default = fromBaseClass;
 
@@ -185,17 +173,10 @@ module.exports.default = fromBaseClass;
 "use strict";
 
 
-var _fromBaseClass = __webpack_require__(88);
-
-var _fromBaseClass2 = _interopRequireDefault(_fromBaseClass);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(114);
-
-
-var ClauseComponent = (0, _fromBaseClass2.default)(React.Component);
-
+var fromBaseClass_1 = __webpack_require__(88);
+var ClauseComponent = fromBaseClass_1.default(React.Component);
 module.exports = ClauseComponent;
 module.exports.default = ClauseComponent;
 
