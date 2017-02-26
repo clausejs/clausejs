@@ -8,8 +8,7 @@ import describe from '../utils/describe';
 import deref from '../utils/deref';
 import { resolve, getDefList } from '../namespace/resolve';
 import syntax from './syntax';
-const clauseFromAlts = require( '../utils/clauseFromAlts' );
-
+import clauseFromAlts from '../utils/clauseFromAlts';
 
 function gen( registry ) {
   var conformedReg = NamespaceObjClause.conform( registry );
@@ -227,7 +226,7 @@ function escapeHtml( text ) {
 
 function _tagFor( expr, globalReg, path ) {
   return `
-    <span 
+    <span
       role="button"
       data-toggle="popover"
       data-trigger="focus hover"
@@ -348,7 +347,7 @@ function _genCatClause( globalReg, exprName, path, expr, meta ) {
           ${name ? `
             <span class="tag tag-default">Part ${idx + 1}</span>
             <span class="lead font-italic text-primary">
-              &ldquo;${name}&rdquo;</span>          
+              &ldquo;${name}&rdquo;</span>
           ` : `<span class="tag tag-default">Part ${idx + 1}</span>`}
           </legend>
           <div class="row">
@@ -498,7 +497,7 @@ function _genOrClause( globalReg, exprName, path, expr, meta ) {
           <div class="row">
             <div class="col-md-12">
             ${comment ? `<div>${ comment }</div>` : ''}
-            
+
             ${examples ? `
               <h6>Examples: </h6>
                 <div class="code-examples">
@@ -638,4 +637,3 @@ var fns = {
 };
 module.exports = fns;
 module.exports.default = fns;
-

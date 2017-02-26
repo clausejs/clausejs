@@ -1,6 +1,5 @@
 import C, { fclause, cat, or, shape, isStr, mapOf, isBool, isObj,
-  isFclause, isClauseName,
-  isArray, isFn, and, isNum, isNull, isUndefined, isProblem, isPlainObj } from '../';
+  isFclause, isClauseName, isFn, isNum, isNull, isUndefined, isProblem, isPlainObj } from '../';
 import { any, ExprClause, CatFnClause, OrFnClause, AndFnClause,
   CollOfClause, collOf, ClauseClause, DelayedClauseClause, ClauseRefClause,
   ZeroOrMoreFnClause, OneOrMoreFnClause, ZeroOrOneFnClause } from '../core';

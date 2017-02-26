@@ -9,11 +9,29 @@
   "scripts": {
     "dev": "npm run test:watch",
     "dev-docsite": "webpack-dev-server --content-base ./docs --inline --host 0.0.0.0",
-    "test": "mocha --compilers js:babel-register",
-    "test:watch": "mocha --compilers js:babel-register --watch",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch",
     "build": "cross-env CLAUSEJS_ENV=production webpack && cross-env CLAUSEJS_ENV=production MINIFY_ME=1 webpack && npm run build-docsite",
     "build-docsite": "babel-node scripts/build-docs.js",
     "lint": "eslint ./src"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "transform": {
+      ".(ts|tsx)": "<rootDir>/preprocessor.js"
+    },
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx"
+    ],
+    "testRegex": "<rootDir>(test/).*\\.(test|spec)\\.(ts)$",
+    "coverageDirectory": "coverage",
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx,js,jsx}",
+      "!src/**/*.d.ts"
+    ]
   },
   "repository": {
     "type": "git",
@@ -39,6 +57,10 @@
   "homepage": "https://github.com/clausejs/clausejs#readme",
   "dependencies": {},
   "devDependencies": {
+    "@types/chai": "^3.4.35",
+    "@types/jest": "^18.1.1",
+    "@types/mocha": "^2.2.39",
+    "@types/node": "^7.0.5",
     "awesome-typescript-loader": "^3.0.7",
     "babel-cli": "^6.18.0",
     "babel-core": "6.21.0",
@@ -58,6 +80,7 @@
     "exports-loader": "^0.6.3",
     "expose-loader": "^0.7.1",
     "highlight.js": "^9.9.0",
+    "jest": "^19.0.2",
     "lodash": "4.17.4",
     "markdown-include": "^0.4.3",
     "mocha": "^3.0.2",
@@ -66,7 +89,9 @@
     "showdown": "^1.5.5",
     "style-loader": "^0.13.1",
     "testcheck": "^0.1.4",
+    "ts-node": "^2.1.0",
     "typescript": "^2.2.1",
+    "typings": "^2.1.0",
     "webpack": "2.2.0-rc.2",
     "webpack-dev-server": "2.2.0-rc.0"
   }

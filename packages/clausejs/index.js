@@ -1,3 +1,3 @@
 'use strict';
 
-module.exports = require('./dist/clausejs');
+module.exports = require( './dist/clausejs' );
