@@ -1,7 +1,7 @@
 const resolvedMaps = [];
-import { NamespaceObjClause } from '../clauses/namespace.types';
+import { NamespaceObjClause } from "../clauses/namespace.types";
 
-export function resolve( clauseRef, registry ) {
+export default function resolve( clauseRef, registry ) {
   let map = _findFirst( resolvedMaps, ( [ registryRef, m ] ) => {
     if ( registryRef === registry ) {
       return m;
@@ -43,7 +43,7 @@ function _walk( prefix, currN, creg, r ) {
   for ( let key in creg ) {
     if ( creg.hasOwnProperty( key ) ) {
       switch ( key ) {
-      case 'subNamespaces':
+      case "subNamespaces":
         subnamespaces = creg[ key ];
         for ( let sns in subnamespaces ) {
           if ( subnamespaces.hasOwnProperty( sns ) ) {
@@ -51,7 +51,7 @@ function _walk( prefix, currN, creg, r ) {
           }
         }
         break;
-      case '.expr':
+      case ".expr":
         r.push( [ `${prefix ? prefix : ''}`, `${currN}`, creg[ '.expr' ] ] );
         break;
       default:

@@ -1,10 +1,10 @@
-export default function oneOf( ) {
+export default function oneOf( ...args ) {
   var items;
 
-  if ( arguments.length === 1 && Array.isArray( arguments[ 0 ] ) ) {
-    items = arguments[ 0 ];
-  } else if ( arguments.length > 0 ) {
-    items = Array.prototype.slice.call( arguments );
+  if ( args.length === 1 && Array.isArray( args[ 0 ] ) ) {
+    items = args[ 0 ];
+  } else if ( args.length > 0 ) {
+    items = Array.prototype.slice.call( args );
   } else {
     throw new Error( 'Items list is required.' );
   }

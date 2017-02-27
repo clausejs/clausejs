@@ -19,7 +19,7 @@ import notEmpty from "./notEmpty";
 var isArray = Array.isArray;
 
 export {
-  isNull,
+  isNull, isUndefined,
   notEmpty,
   isBool, isBool as isBoolean,
   isFn, isFn as isFunction,

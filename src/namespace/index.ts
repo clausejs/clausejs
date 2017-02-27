@@ -20,7 +20,7 @@ const _get = fclause( {
 } ).instrument( _getUnchecked );
 
 function _getUnchecked( ref ) {
-  function getFn( prefix ) {
+  function getFn( prefix? ) {
     let path = reg;
     if ( prefix ) {
       path = prefix + ref;

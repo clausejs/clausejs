@@ -3,8 +3,7 @@ import stringifyWithFnName from "./stringifyWithFnName";
 
 export default function clausePrettyPrint( clause ) {
   if ( !clause ) {
-    return '';
+    return "";
   }
   return stringifyWithFnName( clause, null, 2 );
 }
-

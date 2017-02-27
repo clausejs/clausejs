@@ -33,8 +33,7 @@ export const DelayedClauseClause = coerceIntoClause( isDelayedClause );
 export const PredClause = coerceIntoClause( isPred );
 
 // helper method for constructing labelled structure
-function _labelled( ) {
-  var arr = Array.prototype.slice.call( arguments );
+function _labelled( ...arr) {
   return {
     expressions: {
       withLabels: arr.map(
@@ -45,8 +44,7 @@ function _labelled( ) {
   };
 }
 
-function _unlabelled() {
-  var arr = Array.prototype.slice.call( arguments );
+function _unlabelled(...arr) {
   return {
     expressions: {
       withoutLabels: arr.map(
@@ -110,12 +108,12 @@ function andOp( exprs ) {
   var andS = new Clause( {
     type: 'AND',
     exprs: [],
-    fragments: exprs,
-    opts: { conformedExprs: exprs }
+    opts: { conformedExprs: exprs },
+    conformFn: function andConform( x ) {
+      return walk( andS, x, { conform: true } );
+    },
+    generateFn: null,
   } );
-  andS.conform = function andConform( x ) {
-    return walk( andS, x, { conform: true } );
-  }
   return andS;
 }
 
@@ -184,11 +182,12 @@ function genMultiArgOp( type ) {
         type,
         exprs: coercedExprs,
         opts,
+        conformFn: function conform( x ) {
+          return walk( s, x, { conform: true } );
+        },
+        generateFn: null,
       } );
 
-      s.conform = function conform( x ) {
-        return walk( s, x, { conform: true } );
-      };
       return s;
     } else if ( withoutLabels ) {
       exprs = withoutLabels;
@@ -220,20 +219,24 @@ function genMultiArgOp( type ) {
         type,
         exprs: coercedExprs,
         opts,
+        conformFn: function conform( x ) {
+          return walk( s, x, { conform: true } );
+        },
+        generateFn: null,
       } );
 
-      s.conform = function conform( x ) {
-        return walk( s, x, { conform: true } );
-      };
       return s;
     } else {
       // empty case
       s = new Clause( {
         type,
-        exprs: [], opts: {} } );
-      s.conform = function conform( x ) {
-        return walk( s, x, { conform: true } );
-      };
+        exprs: [], 
+        opts: {},
+        conformFn: function conform( x ) {
+          return walk( s, x, { conform: true } );
+        },
+        generateFn: null,
+      } );
       return s;
     }
   } );
@@ -396,12 +399,12 @@ function mapOfOp( cargs ) {
   var s = new Clause( {
     type: TYPE_MAP_OF,
     exprs: [],
-    opts: { keyExpression, valExpression }
+    opts: { keyExpression, valExpression },
+    conformFn: function mapOfConform( x ) {
+      return walk( s, x, { conform: true } );
+    },
+    generateFn: null,
   } );
-
-  s.conform = function mapOfConform( x ) {
-    return walk( s, x, { conform: true } );
-  }
 
   return s;
 }
@@ -414,13 +417,12 @@ function shapeOp( cargs ) {
   var s = new Clause( {
     type: TYPE_SHAPE,
     exprs: [ ],
-    // TODO: do fragments
-    fragments: [ ],
-    opts: { conformedArgs: cargs }
+    opts: { conformedArgs: cargs },
+    conformFn: function shapeConform( x ) {
+      return walk( s, x, { conform: true } );
+    },
+    generateFn: null,
   } );
-  s.conform = function shapeConform( x ) {
-    return walk( s, x, { conform: true } );
-}
   return s;
 }
 

@@ -1,7 +1,7 @@
 import isFn from "../preds/isFn";
 import fnName from "./fnName";
 
-export default function stringifyWithFnName( subject, currTransform, indent? ) {
+export default function stringifyWithFnName( subject, currTransform?, indent? ) {
 
   const newArgs = Array.prototype.slice.call( arguments );
 

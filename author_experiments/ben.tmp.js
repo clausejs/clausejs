@@ -19,7 +19,7 @@ C( 'superTwitter/User', C.shape( {
   }
 } ) );
 
-var user1 = {
+const user1 = {
   username: 'benjohnson',
   firstName: 'Ben',
   lastName: 'Johnson',

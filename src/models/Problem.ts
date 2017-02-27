@@ -20,7 +20,14 @@ export default class Problem {
     lazyDefine( this, 'message', () => _constructMessage( this, 0 ) );
 
     this.toString = () => this.message;
-  }
+  };
+  isProblem: boolean;
+  name: String;
+  val: any;
+  failsPredicate: any;
+  shortMessage: String;
+  subproblems: any;
+  message: any;
 }
 
 function _constructMessage( { subproblems, val, shortMessage }, lvl ) {

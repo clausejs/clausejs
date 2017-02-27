@@ -192,4 +192,4 @@ export function fragsToStr( frags, level, space ) {
 
 export default describe;
 
-export humanReadable;
+export {humanReadable};

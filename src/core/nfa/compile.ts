@@ -20,7 +20,7 @@ var indexedFragmentStates = function( fragment ) {
   return states;
 };
 
-var evalFunctions = {};
+var evalFunctions: any = {};
 
 function evalClause( clause ) {
   clause = deref( clause );
@@ -75,6 +75,9 @@ function wrapRoot( expr ) {
   return new Clause( {
     type: 'ROOT',
     exprs: [ expr ],
+    conformFn: null,
+    generateFn: null,
+    opts: {}
   } );
 }
 

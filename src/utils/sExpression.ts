@@ -8,7 +8,7 @@ import coerceIntoClause from './coerceIntoClause';
 import { isStr, isPlainObj, instanceOf } from  '../preds';
 
 export class Recursive {
-  cosntructor (expression) {
+  constructor (expression) {
     this.isRecursive = true;
     this.expression = expression;
   };
@@ -16,11 +16,11 @@ export class Recursive {
   expression: any;
 }
 
-export function QuotedParamsMap( map ) {
+export function QuotedParamsMap( map? ) {
   Object.assign( this, map );
 }
 
-export function UnquotedParamsMap( map ) {
+export function UnquotedParamsMap( map? ) {
   Object.assign( this, map );
 }
 
@@ -108,8 +108,17 @@ var sParamsConverters = {
   'COLL_OF': singleArgParamGenerator,
   'ANY': () => [],
   'MAP_OF': ( repo, { opts } ) => _handleKeyValExprPair( repo, opts ),
-  'SHAPE': ( repo, { opts: { conformedArgs: { shapeArgs: { optionalFields: { opt, optional } = {}, requiredFields: { req, required } = {} } } } } ) =>
-    oAssign( new UnquotedParamsMap(),
+  'SHAPE': ( repo, { 
+    opts: { 
+      conformedArgs: { 
+        shapeArgs: { 
+          optionalFields: { opt = null, optional = null } = {}, 
+          requiredFields: { req = null, required = null } = {} 
+        } 
+      } 
+    } 
+  } ) =>
+    Object.assign( new UnquotedParamsMap(),
       ( req || required ) ? {
         required: _fieldDefToFrags( repo, req || required ),
       } : {},
@@ -118,7 +127,7 @@ var sParamsConverters = {
       } : {}
     ),
   'FCLAUSE': ( repo, { opts: { args, ret, fn } } ) =>
-    oAssign( new UnquotedParamsMap(),
+    Object.assign( new UnquotedParamsMap(),
     args ? { args: _createSExpr( repo, args ) } : {},
     ret ? { ret: _createSExpr( repo, ret ) } : {},
     fn ? { fn: [ `${fnName( fn )}()` ] } : {} )
@@ -135,7 +144,7 @@ function _fieldDefToFrags( repo, { fieldDefs, keyList } ) {
         }, () => {
           throw '!g';
         } );
-        oAssign( r, {
+        Object.assign( r, {
           [ key ]: val
         } );
       }

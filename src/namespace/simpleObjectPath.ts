@@ -1,4 +1,4 @@
-export function get( obj, path, defaultValue ) {
+export function get( obj, path, defaultValue? ) {
   if ( typeof path === 'number' ) {
     path = [ path ];
   }
@@ -61,4 +61,3 @@ function getKey( key ) {
   }
   return key;
 }
-
