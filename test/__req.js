@@ -1,1 +1,0 @@
-require( 'mocha-testcheck' ).install();

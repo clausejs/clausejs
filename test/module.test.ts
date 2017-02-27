@@ -1,5 +1,5 @@
 var C = require( '../src/' );
-var expect = require( 'chai' ).expect;
+import { expect } from "chai";
 
 describe( 'module integrity', () => {
   var fnList = [ 'shape', 'isValid', 'conform', 'fclause', 'isObj', 'isFn', 'wall' ];

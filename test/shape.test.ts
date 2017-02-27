@@ -1,6 +1,6 @@
-var expect = require( 'chai' ).expect;
+import C from "../src";
+import { expect } from "chai";
 
-var C = require( '../src' );
 var Problem = C.Problem;
 var shape = C.shape;
 

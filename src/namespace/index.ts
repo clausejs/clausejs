@@ -7,7 +7,7 @@ import isBool from "../preds/isBool";
 import walk from "../walk";
 import resolveWithRegistry from "./resolve";
 import coerceIntoClause from "../utils/coerceIntoClause";
-import oPath from "./simpleObjectPath";
+import * as oPath from "./simpleObjectPath";
 
 import { isNamespacePath, isClauseRef } from "../utils";
 import { GetNSFnClause, SetNSFnClause, NamespaceFnClause,

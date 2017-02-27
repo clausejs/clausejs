@@ -1,5 +1,6 @@
-var C = require( '../src' );
-const { cat, or, zeroOrMore, oneOrMore, isStr, isNum, isObj, isBool, conform } = C;
+import C from "../src";
+import { expect } from "chai";
+import { cat, or, zeroOrMore, oneOrMore, isStr, isNum, isObj, isBool, conform } from "../src";
 
 describe.skip( 'synopsis', () => {
   it( 'simple case', () => {

@@ -1,7 +1,7 @@
-var expect = require( 'chai' ).expect;
+import { expect } from "chai";
 
 var C = require( '../src' );
-const repeat = require( '../src/utils/repeat' );
+import repeat from '../src/utils/repeat';
 
 describe( 'describe', () => {
   it( 'contains expected words', () => {

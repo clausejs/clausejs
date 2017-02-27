@@ -1,7 +1,7 @@
-var expect = require( 'chai' ).expect;
-
 var C = require( '../src/' );
-var clausePrettyPrint = require( '../src/utils/clausePrettyPrint' );
+import { expect } from "chai";
+
+import clausePrettyPrint from '../src/utils/clausePrettyPrint';
 
 describe( 'pretty print', function() {
   it( 'should correctly output a clause tree', function() {

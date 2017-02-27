@@ -4,7 +4,7 @@ import Clause from "./models/Clause";
 
 import namespaceFn, { resolve } from "./namespace";
 
-import * as ops from "./core";
+import ops from "./core";
 export * from "./core";
 import * as utils from "./utils";
 export * from "./utils";

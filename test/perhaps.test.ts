@@ -1,5 +1,5 @@
-var C = require( '../src' );
-var expect = require( 'chai' ).expect;
+var C = require( '../src/' );
+import { expect } from "chai";
 
 describe( 'perhaps, perhaps, perhaps', () => {
   it( 'nullable', () => {

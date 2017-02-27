@@ -1,11 +1,10 @@
-var C = require( '../src' );
+import C from "../src";
 var expect = require( 'chai' ).expect;
 
-var isClause = require( '../src/utils/isClause' );
-var isPred = require( '../src/utils/isPred' );
+import isClause from '../src/utils/isClause';
+import isPred from '../src/utils/isPred';
 
 describe( 'namespace', () => {
-
   beforeEach( C.clearRegistry );
   afterEach( C.clearRegistry );
 

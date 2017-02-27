@@ -1,9 +1,7 @@
-var expect = require( 'chai' ).expect;
-var C = require( '../src/' );
+import {expect} from "chai";
+import * as C from "../src";
 var s = C;
 var Problem = C.Problem;
-var Clause = require( '../src/models/Clause' );
-var isClause = require( '../src/utils/isClause' );
 var identity = C.identity;
 
 describe( 'fclause', () => {
@@ -11,12 +9,12 @@ describe( 'fclause', () => {
   it( 'empty clause', () => {
     var EmptyFclause = C.fclause( {} );
 
-    expect( isClause( EmptyFclause ) ).to.be.true;
+    expect( C.isClause( EmptyFclause ) ).to.be.true;
   } );
 
   it( 'instrument: no args provided', () => {
     var FclauseClause = C.fclause( {
-      args: C.cat( isClause ),
+      args: C.cat( C.isClause ),
       ret: C.isClause,
     } );
 
@@ -25,7 +23,7 @@ describe( 'fclause', () => {
 
   it( 'should return a function that checks the clause of a given function as its input', function() {
     var FclauseClause = C.fclause( {
-      args: C.cat( isClause ),
+      args: C.cat( C.isClause ),
       ret: C.isClause,
     } );
 
@@ -40,8 +38,8 @@ describe( 'fclause', () => {
     } ).to.throw();
 
     expect( () => {
-      clauseedFclause( new Clause( {
-        type: 'catt', exprs: [ C.isBool ], conformFn: identity,
+      clauseedFclause( new C.Clause( {
+        type: 'catt', exprs: [ C.isBool ], conformFn: identity, generateFn: null, opts: {}
       } ), { extra: 'param' } );
     } ).to.throw( Problem );
     expect( () => {

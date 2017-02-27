@@ -1,10 +1,10 @@
-var s = require( '../src/' );
-var expect = require( 'chai' ).expect;
-var Problem = s.Problem;
+import * as C from "../src";
+import {expect} from "chai";
+var Problem = C.Problem;
 
 describe( 'collOf', () => {
   it( 'simple case', () => {
-    var CollOfStrsClause = s.collOf( s.isStr );
+    var CollOfStrsClause = C.collOf( C.isStr );
 
     var conformed = [ '', 'a', 'b', 'c' ];
 
@@ -12,7 +12,7 @@ describe( 'collOf', () => {
   } );
 
   it( 'collOf cat', () => {
-    var CollOfStrsClause = s.collOf( s.cat( s.isStr, s.isNum, s.isBool ) );
+    var CollOfStrsClause = C.collOf( C.cat( C.isStr, C.isNum, C.isBool ) );
 
     var conformed = [ [ 'a', 2, true ], [ 'b', 3, false ] ];
     expect( CollOfStrsClause.conform( conformed ) ).to.deep.equal( conformed );
@@ -22,7 +22,7 @@ describe( 'collOf', () => {
   } );
 
   it( 'minCount and maxCount', () => {
-    var CollOfStrsClause = s.collOf( s.isNum, { minCount: 2, maxCount: 5 } );
+    var CollOfStrsClause = C.collOf( C.isNum, { minCount: 2, maxCount: 5 } );
 
     var conformed = [ 1, 2, 3 ];
     expect( CollOfStrsClause.conform( conformed ) ).to.deep.equal( conformed );

@@ -1,5 +1,5 @@
 var C = require( '../src/' );
-var expect = require( 'chai' ).expect;
+import { expect } from "chai";
 var Problem = C.Problem;
 var Clause = require( '../src/models/Clause' );
 var identity = C.identity;

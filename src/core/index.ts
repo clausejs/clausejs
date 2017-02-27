@@ -1,4 +1,4 @@
-import * as regex from "./regex";
+import regex from "./regex";
 import { shape, keys, mapOf, cat, fclause } from './regex';
 import nullable from "./nullable";
 import undefinable from "./undefinable";

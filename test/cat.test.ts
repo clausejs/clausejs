@@ -1,5 +1,6 @@
+import {expect} from "chai";
+
 var C = require( '../src/' );
-var expect = require( 'chai' ).expect;
 var Problem = C.Problem;
 
 describe( 'cat', () => {

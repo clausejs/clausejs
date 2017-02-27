@@ -1,15 +1,18 @@
-var expect = require( 'chai' ).expect;
-var gen = require( 'mocha-testcheck' ).gen;
-var check = require( 'mocha-testcheck' ).check;
+import C from "../src";
+import { expect } from "chai";
+import repeat from "../src/utils/repeat";
 
-var C = require( '../src/' );
+require('jasmine-check').install();
+
+// var gen = require( 'mocha-testcheck' ).gen;
+// var check = require( 'mocha-testcheck' ).check;
+
 var cat = C.cat;
 var oneOrMore = C.oneOrMore;
-var repeat = require( '../src/utils/repeat' );
 
 describe( 'nfa regex', function t() {
-  this.slow( 90000 ); //generative tests take more time
-  this.timeout( 10000 ); //generative tests take more time
+  // this.slow( 90000 ); //generative tests take more time
+  // this.timeout( 10000 ); //generative tests take more time
 
   describe( 'zeroOrMore', function t() {
     check.it( 'accepts zero or more int\'s',

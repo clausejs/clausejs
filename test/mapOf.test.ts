@@ -1,5 +1,5 @@
-const C = require( '../src' );
-var expect = require( 'chai' ).expect;
+import {expect} from "chai";
+import * as C from "../src";
 
 function beginsWith( prefix ) {
   return ( x ) => x.indexOf( prefix ) === 0;
