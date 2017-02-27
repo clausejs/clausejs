@@ -1,13 +1,13 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("clausejs"), require("react"));
+		module.exports = factory();
 	else if(typeof define === 'function' && define.amd)
-		define(["clausejs", "react"], factory);
+		define([], factory);
 	else if(typeof exports === 'object')
-		exports["C"] = factory(require("clausejs"), require("react"));
+		exports["C"] = factory();
 	else
-		root["C"] = factory(root["C"], root["React"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_113__, __WEBPACK_EXTERNAL_MODULE_114__) {
+		root["C"] = factory();
+})(this, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -73,112 +73,22 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 118);
+/******/ 	return __webpack_require__(__webpack_require__.s = 27);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 113:
-/***/ function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_113__;
-
-/***/ },
-
-/***/ 114:
-/***/ function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_114__;
-
-/***/ },
-
-/***/ 118:
+/***/ 27:
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var ClauseComponent_1 = __webpack_require__(96);
-var fromBaseClass_1 = __webpack_require__(88);
-module.exports = {
-    ClauseComponent: ClauseComponent_1.default,
-    fromBaseClass: fromBaseClass_1.default
-};
-
-/***/ },
-
-/***/ 88:
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var __extends = undefined && undefined.__extends || function () {
-    var extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
-        d.__proto__ = b;
-    } || function (d, b) {
-        for (var p in b) {
-            if (b.hasOwnProperty(p)) d[p] = b[p];
-        }
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() {
-            this.constructor = d;
-        }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-}();
-var C = __webpack_require__(113);
-function fromBaseClass(baseClass) {
-    var ClauseComponent = function (_super) {
-        __extends(ClauseComponent, _super);
-        function ClauseComponent() {
-            var _this = _super.call(this) || this;
-            var propClauses = _this.constructor.propClauses;
-            if (propClauses) {
-                var nullablePropClauses_1 = C.or(propClauses, C.isUndefined, C.isNull);
-                var currWillUpdateFn_1 = _this.componentWillUpdate;
-                _this.componentWillUpdate = function (nextShape) {
-                    C.enforce(nullablePropClauses_1, nextShape);
-                    if (currWillUpdateFn_1) {
-                        return currWillUpdateFn_1.apply(_this, arguments);
-                    }
-                    return undefined;
-                };
-                var currWillMountFn_1 = _this.componentWillMount;
-                _this.componentWillMount = function () {
-                    C.enforce(nullablePropClauses_1, _this.shape);
-                    if (currWillMountFn_1) {
-                        return currWillMountFn_1.apply(_this, arguments);
-                    }
-                    return undefined;
-                };
-            }
-            return _this;
-        }
-        return ClauseComponent;
-    }(baseClass);
-    return ClauseComponent;
-}
-module.exports = fromBaseClass;
-module.exports.default = fromBaseClass;
-
-/***/ },
-
-/***/ 96:
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var React = __webpack_require__(114);
-var fromBaseClass_1 = __webpack_require__(88);
-var ClauseComponent = fromBaseClass_1.default(React.Component);
-module.exports = ClauseComponent;
-module.exports.default = ClauseComponent;
+var ClauseComponent_1 = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./ClauseComponent\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+exports.ClauseComponent = ClauseComponent_1.default;
+var fromBaseClass_1 = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./fromBaseClass\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+exports.fromBaseClass = fromBaseClass_1.default;
 
 /***/ }
 

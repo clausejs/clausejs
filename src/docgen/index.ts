@@ -6,7 +6,7 @@ import isClause from '../utils/isClause';
 import { isStr } from '../preds';
 import describe from '../utils/describe';
 import deref from '../utils/deref';
-import { resolve, getDefList } from '../namespace/resolve';
+import resolve, { getDefList } from '../namespace/resolve';
 import syntax from './syntax';
 import clauseFromAlts from '../utils/clauseFromAlts';
 

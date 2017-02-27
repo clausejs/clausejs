@@ -9,8 +9,7 @@ const converter = new showdown.Converter();
 const finalDocStr = docgen.gen( getRegistry() );
 const finalCotStr = docgen.genCot( getRegistry() );
 
-
-function populateContent( $, requireFn ) {
+export default function populateContent( $, requireFn ) {
   $( '#cot' ).html( finalCotStr );
   $( '#api' ).html( finalDocStr );
   $( '.clausejs-version' ).html( VERSION );
@@ -24,5 +23,3 @@ function populateContent( $, requireFn ) {
     $elem.html( html );
   } );
 }
-
-module.exports = populateContent;

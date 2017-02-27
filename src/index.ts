@@ -3,6 +3,7 @@ import Problem from "./models/Problem";
 import Clause from "./models/Clause";
 
 import namespaceFn, { resolve } from "./namespace";
+export * from "./namespace";
 
 import ops from "./core";
 export * from "./core";

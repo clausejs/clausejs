@@ -1,6 +1,6 @@
-const C = require( 'clausejs' );
+import C from "clausejs";
 
-function fromBaseClass( baseClass ) {
+export default function fromBaseClass( baseClass ) {
   class ClauseComponent extends baseClass {
     constructor() {
       super();
@@ -31,6 +31,3 @@ function fromBaseClass( baseClass ) {
 
   return ClauseComponent;
 }
-
-module.exports = fromBaseClass;
-module.exports.default = fromBaseClass;

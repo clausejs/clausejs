@@ -1,7 +1,7 @@
 import ClauseComponent from './ClauseComponent';
 import fromBaseClass from './fromBaseClass';
 
-module.exports = {
+export {
   ClauseComponent,
   fromBaseClass,
 };

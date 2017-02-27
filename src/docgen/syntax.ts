@@ -1,16 +1,15 @@
-const { cat, or, shape, zeroOrOne, maybe, oneOrMore, fclause, any, and, wall, ExprClause, collOf } = require( '../core' );
-const { isStr, isFn, isNum, isInt, isObj, isBool, instanceOf } = require( '../preds' );
-const { conform, isClause, deref, delayed } = require( '../utils' );
-const C = require( '../' );
-const oAssign = require( '../utils/objectAssign' );
-const clauseFromAlts = require( '../utils/clauseFromAlts' );
-const fnName = require( '../utils/fnName' );
-const stringifyWithFnName = require( '../utils/stringifyWithFnName' );
+import { cat, or, shape, zeroOrOne, maybe, oneOrMore, fclause, any, and, wall, ExprClause, collOf } from '../core';
+import { isStr, isFn, isNum, isInt, isObj, isBool, instanceOf } from '../preds';
+import { conform, isClause, deref, delayed } from '../utils';
+import C from '../';
+import clauseFromAlts from '../utils/clauseFromAlts';
+import fnName from '../utils/fnName';
+import stringifyWithFnName from '../utils/stringifyWithFnName';
 import sExpression, { genClauses, ParamItemClause,
  UnquotedParamsMap, QuotedParamsMap } from '../utils/sExpression';
 import { fragsToStr, interpose, humanReadable,
   INDENT_IN, NEW_LINE, INDENT_OUT } from '../utils/describe';
-const match = require( '../utils/match' );
+import match from '../utils/match';
 
 //     ----'first'-----  --------'second'---------
 // fn( (isStr, isBool)+, (isObj | (isNum, isBool)) )
@@ -100,8 +99,8 @@ function _strFragments(
     let { unlabelled:
       [ { item: {
           unquotedParamsMap: {
-            args: { singleParam: args } = {},
-            ret: { singleParam: ret } = {} } } } ] } = params;
+            args: { singleParam: args = null } = {},
+            ret: { singleParam: ret = null } = {} } } } ] } = params;
     return [ ]
         .concat( args ? _fragmentParamAlts( null, args, replacer ) : [] )
         .concat( [ ' → ' ] )
@@ -179,8 +178,8 @@ function _strFragments(
 
     let { unlabelled: [ { item: {
       unquotedParamsMap: {
-        required: { singleParam: { quotedParamsMap: required } } = { singleParam: {} },
-        optional: { singleParam: { quotedParamsMap: optional } } = { singleParam: {} }
+        required: { singleParam: { quotedParamsMap: required = null } } = { singleParam: {} },
+        optional: { singleParam: { quotedParamsMap: optional = null } } = { singleParam: {} }
      } } } ] } = params;
     let items = [];
     if ( required ) {
@@ -261,8 +260,8 @@ function _fragmentParamAlts( label, pAlts, replacer ) {
   const r = match( pAlts, {
     'label': _processLabel,
     'sExpression': ( expr ) => _strFragments( label, expr, replacer ),
-    'quotedParamsMap': ( o ) => _fragmentParamsObj( o, replacer, false ),
-    'unquotedParamsMap': ( o ) => _fragmentParamsObj( o, replacer, false ),
+    'quotedParamsMap': ( o ) => _fragmentParamsObj( o, replacer ),
+    'unquotedParamsMap': ( o ) => _fragmentParamsObj( o, replacer ),
     'optionsObj': ( o ) => stringifyWithFnName( o ),
     'recursive': ( { expression } ) => [
       '<recursive>: ',
@@ -413,7 +412,7 @@ function _makeAltCaseMap( item, map, key ) {
     r = new UnquotedParamsMap();
   }
 
-  oAssign( r, map );
+  Object.assign( r, map );
   r[ key ] = item;
   return r;
 }
@@ -422,11 +421,11 @@ function _fold(
   reducer, { sExpression, quotedParamsMap, unquotedParamsMap },
   init,
   replacer,
-  inFclause ) {
+  inFclause? ) {
   let r = init;
 
   if ( sExpression ) {
-    let { head: headAlts, params: { labelled, unlabelled } = {} } = sExpression;
+    let { head: headAlts, params: { labelled = null, unlabelled = null } = {} } = sExpression;
     const head = clauseFromAlts( headAlts );
     var replaced;
     if ( replacer ) {

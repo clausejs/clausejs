@@ -1,6 +1,6 @@
 // import '../../author_experiments/ben.tmp';
 import $ from 'jquery';
-var populateContent = require( './populateContent' );
+import populateContent from  './populateContent';
 
 require( '../../src/clauses/index.annotation.js' );
 

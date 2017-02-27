@@ -33,12 +33,12 @@ if ( MINIFY_ME ) {
 
 module.exports = {
   entry: {
-    'packages/clausejs/dist/clausejs': './src/index.js',
-    'packages/clausejs-gen/dist/clausejs-gen': './src/gen/index.js',
-    'packages/clausejs-docgen/dist/clausejs-docgen': './src/docgen/index.js',
-    'packages/clausejs-react/dist/clausejs-react': './src/react/index.js',
-    'docs/bundle/functional': './docs/src/functional.js',
-    'docs/bundle/content': './docs/src/content.js',
+    'packages/clausejs/dist/clausejs': './src/index.ts',
+    // 'packages/clausejs-gen/dist/clausejs-gen': './src/gen/index.ts',
+    // 'packages/clausejs-docgen/dist/clausejs-docgen': './src/docgen/index.ts',
+    // 'packages/clausejs-react/dist/clausejs-react': './src/react/index.ts',
+    // 'docs/bundle/functional': './docs/src/functional.ts',
+    // 'docs/bundle/content': './docs/src/content.ts',
   },
   output: {
     library: [ CLAUSEJS_EXTERN ],
@@ -65,10 +65,9 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.js$/,
+        test: /\.ts$/,
         exclude: /node_modules/,
         loader: [
-          'babel-loader',
           'awesome-typescript-loader',
         ],
       },

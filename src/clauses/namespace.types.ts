@@ -1,5 +1,6 @@
 import { or, cat, fclause, shape, zeroOrOne, ExprClause, maybe } from '../core';
 import { delayed, isNamespacePath, isClauseRef } from '../utils';
+export {isNamespacePath} from "../utils";
 import { isObj, isBool, isUndefined } from '../preds';
 import isExpr from "../utils/isExpr";
 

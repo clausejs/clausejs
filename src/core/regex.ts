@@ -136,7 +136,7 @@ function noDupelicateLabels( { expressions: { withLabels } } ) {
   return true;
 }
 
-var AndFnClause = fclause( {
+export const AndFnClause = fclause( {
   args: oneOrMoreOp( { expr:
     { clause: ExprClause }
   } ),

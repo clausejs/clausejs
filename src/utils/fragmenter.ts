@@ -52,7 +52,7 @@ var Fragmenters = {
   // TODO
   'MAP_OF': () => [],
   // TODO
-  'SHAPE': ( { opts: { conformedArgs: { shapeArgs: { optionalFields: { opt, optional } = {}, requiredFields: { req, required } = {} } } } } ) => {
+  'SHAPE': ( { opts: { conformedArgs: { shapeArgs: { optionalFields: { opt = null, optional = null } = {}, requiredFields: { req = null, required = null } = {} } } } } ) => {
 
     return [ '{ ', SEPARATOR, new LevelIn( 1 ) ]
       .concat(
