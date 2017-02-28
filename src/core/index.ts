@@ -7,7 +7,7 @@ import wall from "./wall";
 import equals from "../preds/equals";
 import any from "./any";
 
-var cstr = function( str ) {
+export function cstr( str ) {
   return cat.apply( null, Array.prototype.slice.call( str ).map( equals ) );
 };
 
@@ -26,7 +26,7 @@ export {
   fclause,
   wall, wall as clause,
   nullable, undefinable, maybe,
-  cstr, shape, keys, mapOf,
+  shape, keys, mapOf,
   fclause as fspec,
 };
 
