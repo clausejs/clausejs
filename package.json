@@ -1,6 +1,6 @@
 {
   "name": "clausejs-src",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A powerful & flexible validation and conformation library for your JavaScript data and functions.",
   "main": "packages/clausejs/dist/clausejs.js",
   "engines": {
