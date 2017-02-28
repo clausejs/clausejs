@@ -124,7 +124,7 @@ const typeTable = {
   'CAT': 'cat sequence',
 }
 
-function _stylizeName( expr, name, meta ) {
+function _stylizeName( expr, name, meta? ) {
   if ( expr.type === 'FCLAUSE' && name[ 0 ] === name[ 0 ].toLowerCase() ||
     ( meta && meta.showAsFunction ) ) {
     return `${name}()`;
@@ -394,7 +394,7 @@ function _clauseRefLink( p ) {
 function _description( expr, globalReg, currPath ) {
   // return ``;
   return `
-    <pre class="clause-description"><code class="clause">${unescape( _encode( describe( expr, _refExprFn( globalReg, currPath ), 2 ) ) )}</code></pre>
+    <pre class="clause-description"><code class="clause">${decodeURIComponent( _encode( describe( expr, _refExprFn( globalReg, currPath ), 2 ) ) )}</code></pre>
   `;
 }
 
@@ -407,7 +407,7 @@ function _refExprFn( reg, currPath ) {
     let path = resolve( expr, reg );
     if ( path && path !== currPath ) {
       let r = _clauseRefLink( path )( _unanbiguousName );
-      r = escape( r );
+      r = encodeURIComponent( r );
       return [ r ];
     } else {
       return null;
@@ -548,9 +548,9 @@ function toOrdinal( i ) {
 }
 
 // NOTE: meta param is omitted at the end
-function _genFclause( globalReg, exprName, clause, path, meta = {} ) {
+function _genFclause( globalReg, exprName, clause, path, meta: any = {} ) {
   var frags = [ ];
-  var { comment, examples } = meta || {};
+  var { comment = null, examples = null } = meta || {};
   if ( isStr( examples ) ) {
     examples = [ examples ];
   }
@@ -564,7 +564,7 @@ function _genFclause( globalReg, exprName, clause, path, meta = {} ) {
       `<ul>
         ${
         syntax( clause, 20, _refExprFn( globalReg, path ) )
-          .map( ( s ) => `<li>${unescape( _encode( s ) )}</li>` )
+          .map( ( s ) => `<li>${decodeURIComponent( _encode( s ) )}</li>` )
           .join( '' )
         }
       </ul>`
@@ -629,11 +629,9 @@ function _wrapWithCollapsible( contentId, content ) {
 }
 
 
-var fns = {
+export {
   gen,
   genForExpression,
   genCot,
   syntax,
 };
-module.exports = fns;
-module.exports.default = fns;

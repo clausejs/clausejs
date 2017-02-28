@@ -1,13 +1,13 @@
 import '../../src/clauses';
 import '../../src/clauses/index.annotation';
-import docgen from '../../src/docgen';
+import {gen, genCot} from '../../src/docgen';
 import VERSION from '../../package_version';
 import { getRegistry } from '../../src/namespace';
-import showdown from 'showdown';
-const converter = new showdown.Converter();
+import showdown, {Converter} from 'showdown';
+const converter = new Converter();
 
-const finalDocStr = docgen.gen( getRegistry() );
-const finalCotStr = docgen.genCot( getRegistry() );
+const finalDocStr = gen( getRegistry() );
+const finalCotStr = genCot( getRegistry() );
 
 export default function populateContent( $, requireFn ) {
   $( '#cot' ).html( finalCotStr );

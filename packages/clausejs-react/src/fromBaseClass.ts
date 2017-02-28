@@ -1,15 +1,16 @@
+import React from "react";
 import C from "clausejs";
 
-export default function fromBaseClass( baseClass ) {
+export default function fromBaseClass( baseClass: React.Component ) {
   class ClauseComponent extends baseClass {
     constructor() {
       super();
-      const { propClauses } = this.constructor;
+      const { propClauses = null } = ClauseComponent;
       if ( propClauses ) {
         const nullablePropClauses = C.or( propClauses, C.isUndefined, C.isNull );
 
-        const currWillUpdateFn = this.componentWillUpdate;
-        this.componentWillUpdate = ( nextShape ) => {
+        const currWillUpdateFn = super.componentWillUpdate;
+        this.componentWillUpdate = function ( nextShape ) {
           C.enforce( nullablePropClauses, nextShape );
           if ( currWillUpdateFn ) {
             return currWillUpdateFn.apply( this, arguments );
@@ -17,8 +18,8 @@ export default function fromBaseClass( baseClass ) {
           return undefined;
         };
 
-        const currWillMountFn = this.componentWillMount;
-        this.componentWillMount = () => {
+        const currWillMountFn = super.componentWillMount;
+        this.componentWillMount = function () {
           C.enforce( nullablePropClauses, this.shape );
           if ( currWillMountFn ) {
             return currWillMountFn.apply( this, arguments );
@@ -26,7 +27,11 @@ export default function fromBaseClass( baseClass ) {
           return undefined;
         };
       }
-    }
+    };
+    componentWillUpdate: Function;
+    componentWillMount: Function;
+    shape: any;
+    static propClauses: any
   }
 
   return ClauseComponent;

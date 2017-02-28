@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-import cheerio from 'cheerio';
-var path = require( 'path' );
-var fs = require( 'fs' );
-var populateContent = require( '../docs/src/populateContent' );
+var cheerio = require('cheerio');
+var path = require("path");
+var fs = require("fs");
+import populateContent from '../docs/src/populateContent';
 
 const INDEX_TEMPLATE_FILE_NAME = path.join( __dirname, '..', 'docs', 'index.template.html' );
 const INDEX_FILE_NAME = path.join( __dirname, '..', 'docs', 'index.html' );

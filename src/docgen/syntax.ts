@@ -334,7 +334,7 @@ function _handler( alts ) {
 }
 
 function _expand( currCase, pivot ) {
-  if ( C.isValid( PartialableSExprClause, currCase ) ) {
+  if ( C.conform( PartialableSExprClause, currCase ).sExpression ) {
     let [ head, ...params ] = currCase;
     if ( head === pivot ) {
       let altCases = _makeAlts( head, params );

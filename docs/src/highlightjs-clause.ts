@@ -3,7 +3,7 @@ Language: Clause.js
 Category: common, scripting
 */
 
-module.exports = function( hljs ) {
+export default function hljsClause( hljs ) {
   var IDENT_RE = '[A-Za-z$_][0-9A-Za-z$_]*';
   var KEYWORDS = {
     keyword:

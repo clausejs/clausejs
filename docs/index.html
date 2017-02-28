@@ -82,7 +82,7 @@
       <div class="col-md-2 col-sm-3 cot">
         <div class="inline-headers">
           <h5><u>Clause</u></h5>
-          (<span class="clausejs-version">0.1.1</span>)
+          (<span class="clausejs-version"></span>)
         </div>
         <ul>
           <li><a href="https://github.com/clausejs/clausejs">Github Repository</a></li>
@@ -311,7 +311,7 @@
         <p>(
           API docs and the index table are auto-generated with <a href="https://github.com/clausejs/clausejs/tree/master/packages/clausejs-docgen">clausejs-docgen</a>.
         <br>
-          To contribute to API notes &amp; examples, make a pull request to <a href="https://github.com/clausejs/clausejs/blob/master/src/clauses/index.annotation.js">annotation source files here</a>.)
+          To contribute to API notes &amp; examples, make a pull request to <a href="https://github.com/clausejs/clausejs/blob/master/src/clauses/index.annotation.ts">annotation source files here</a>.)
         </p>
         <section id="introduction">
           <h3>Introduction</h3>
@@ -420,7 +420,7 @@ C.isValid(
         <p><em>Work in progress. </em></p>
   <p>Below is a set of auto-generated API reference by
         <a href="https://github.com/clausejs/clausejs/tree/master/packages/clausejs-docgen">
-        clausejs-docgen</a> based on <a href="https://github.com/clausejs/clausejs/blob/master/src/clauses/index.js">clause declarations</a> and their corrosponding <a href="https://github.com/clausejs/clausejs/blob/master/src/clauses/index.annotation.js">annotations</a>.
+        clausejs-docgen</a> based on <a href="https://github.com/clausejs/clausejs/blob/master/src/clauses/index.js">clause declarations</a> and their corrosponding <a href="https://github.com/clausejs/clausejs/blob/master/src/clauses/index.annotation.ts">annotations</a>.
         <section id="api">
     <a name="/clause"></a>
     
@@ -437,7 +437,7 @@ C.isValid(
     <dl class="card-block">
     <dd>Convenient method that combines C.get() and C.set() into one function to get or set clauses from the global registry.</dd>
 <dt>Syntax</dt><dd><ul>
-        <li>( nsPath: <a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">NamespacePath</a>, expression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) &#x2192; { <a href="#clause.types/Undefined" data-path="clause.types/Undefined">Undefined</a> | <a href="#clause.types/ClauseReference" data-path="clause.types/ClauseReference">ClauseReference</a> }</li><li>( nsPath: <a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">NamespacePath</a> ) &#x2192; { <a href="#clause.types/Undefined" data-path="clause.types/Undefined">Undefined</a> | <a href="#clause.types/ClauseReference" data-path="clause.types/ClauseReference">ClauseReference</a> }</li>
+        <li>{ ( nsPath: <a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">NamespacePath</a>, expression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) | ( nsPath: <a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">NamespacePath</a> ) } &#x2192; { <a href="#clause.types/Undefined" data-path="clause.types/Undefined">Undefined</a> | <a href="#clause.types/ClauseReference" data-path="clause.types/ClauseReference">ClauseReference</a> }</li>
       </ul></dd>
 <dt>Examples  <button class="btn btn-info btn-sm launch-code-examples" data-name="clause">
           Live Eval
@@ -523,7 +523,7 @@ ref.get()</code></pre>
           <div class="row">
             <div class="col-md-12">
             <div>Put the given expression onto the given path in the global clause registry.</div>
-            
+
             
               <h6>Examples: </h6>
                 <div class="code-examples">
@@ -565,7 +565,7 @@ ref.get()</code></pre>
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;nsPath&#x201D;</span>          
+              &#x201C;nsPath&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -599,7 +599,7 @@ ref.get()</code></pre>
           
             <span class="tag tag-default">Part 2</span>
             <span class="lead font-italic text-primary">
-              &#x201C;expression&#x201D;</span>          
+              &#x201C;expression&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -650,7 +650,7 @@ ref.get()</code></pre>
           <div class="row">
             <div class="col-md-12">
             <div>Retrieves an expression from the given namespace path, or returns null if not found.</div>
-            
+
             
               <h6>Examples: </h6>
                 <div class="code-examples">
@@ -689,7 +689,7 @@ ref.get()</code></pre>
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;nsPath&#x201D;</span>          
+              &#x201C;nsPath&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -774,7 +774,7 @@ ref.get()</code></pre>
           <div class="row">
             <div class="col-md-12">
             
-            
+
             
             </div>
           </div>
@@ -809,7 +809,7 @@ ref.get()</code></pre>
           <div class="row">
             <div class="col-md-12">
             
-            
+
             
             </div>
           </div>
@@ -859,7 +859,7 @@ ref.get()</code></pre>
     <dl class="card-block">
     <dd>Given a set of expressions or a set of label+expression pairs, returns a regex op that matches all values in an iterable. If labels are given, returns a map that groups values by these labels. Returns a Problem if no match is found.</dd>
 <dt>Syntax</dt><dd><ul>
-        <li>( expressions: { ( ( name: <a href="#clause.types/ClauseLabel" data-path="clause.types/ClauseLabel">ClauseLabel</a>, ( comment: <a href="#clause.types/String" data-path="clause.types/String">String</a> )?, expr: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) )* | [ ( name: <a href="#clause.types/ClauseLabel" data-path="clause.types/ClauseLabel">ClauseLabel</a>, ( comment: <a href="#clause.types/String" data-path="clause.types/String">String</a> )?, expr: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) ]* }, ( options: <a href="#clause.types/PlainObject" data-path="clause.types/PlainObject">PlainObject</a> )? ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li><li>( ( expressions: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> )*, ( options: <a href="#clause.types/PlainObject" data-path="clause.types/PlainObject">PlainObject</a> )? ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
+        <li>( expressions: { { ( ( name: <a href="#clause.types/ClauseLabel" data-path="clause.types/ClauseLabel">ClauseLabel</a>, ( comment: <a href="#clause.types/String" data-path="clause.types/String">String</a> )?, expr: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) )* | [ ( name: <a href="#clause.types/ClauseLabel" data-path="clause.types/ClauseLabel">ClauseLabel</a>, ( comment: <a href="#clause.types/String" data-path="clause.types/String">String</a> )?, expr: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) ]* } | ( <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> )* }, ( options: <a href="#clause.types/PlainObject" data-path="clause.types/PlainObject">PlainObject</a> )? ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
       </ul></dd>
 <dt>Examples  <button class="btn btn-info btn-sm launch-code-examples" data-name="cat">
           Live Eval
@@ -1018,7 +1018,7 @@ C.conform( LabelledCatClause, [&quot;a&quot;, 2, true] )</code></pre>
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;expressions&#x201D;</span>          
+              &#x201C;expressions&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -1079,7 +1079,7 @@ C.conform( LabelledCatClause, [&quot;a&quot;, 2, true] )</code></pre>
           <div class="row">
             <div class="col-md-12">
             
-            
+
             
             </div>
           </div>
@@ -1129,7 +1129,7 @@ C.conform( LabelledCatClause, [&quot;a&quot;, 2, true] )</code></pre>
           <div class="row">
             <div class="col-md-12">
             
-            
+
             
             </div>
           </div>
@@ -1184,7 +1184,7 @@ C.conform( LabelledCatClause, [&quot;a&quot;, 2, true] )</code></pre>
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;name&#x201D;</span>          
+              &#x201C;name&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -1218,7 +1218,7 @@ C.conform( LabelledCatClause, [&quot;a&quot;, 2, true] )</code></pre>
           
             <span class="tag tag-default">Part 2</span>
             <span class="lead font-italic text-primary">
-              &#x201C;comment&#x201D;</span>          
+              &#x201C;comment&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -1271,7 +1271,7 @@ C.conform( LabelledCatClause, [&quot;a&quot;, 2, true] )</code></pre>
           
             <span class="tag tag-default">Part 3</span>
             <span class="lead font-italic text-primary">
-              &#x201C;expr&#x201D;</span>          
+              &#x201C;expr&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -1322,7 +1322,7 @@ C.conform( LabelledCatClause, [&quot;a&quot;, 2, true] )</code></pre>
           <div class="row">
             <div class="col-md-12">
             
-            
+
             
             </div>
           </div>
@@ -1377,7 +1377,7 @@ C.conform( LabelledCatClause, [&quot;a&quot;, 2, true] )</code></pre>
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;name&#x201D;</span>          
+              &#x201C;name&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -1411,7 +1411,7 @@ C.conform( LabelledCatClause, [&quot;a&quot;, 2, true] )</code></pre>
           
             <span class="tag tag-default">Part 2</span>
             <span class="lead font-italic text-primary">
-              &#x201C;comment&#x201D;</span>          
+              &#x201C;comment&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -1464,7 +1464,7 @@ C.conform( LabelledCatClause, [&quot;a&quot;, 2, true] )</code></pre>
           
             <span class="tag tag-default">Part 3</span>
             <span class="lead font-italic text-primary">
-              &#x201C;expr&#x201D;</span>          
+              &#x201C;expr&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -1527,7 +1527,7 @@ C.conform( LabelledCatClause, [&quot;a&quot;, 2, true] )</code></pre>
           <div class="row">
             <div class="col-md-12">
             
-            
+
             
             </div>
           </div>
@@ -1584,7 +1584,7 @@ C.conform( LabelledCatClause, [&quot;a&quot;, 2, true] )</code></pre>
           
             <span class="tag tag-default">Part 2</span>
             <span class="lead font-italic text-primary">
-              &#x201C;options&#x201D;</span>          
+              &#x201C;options&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -1664,21 +1664,17 @@ C.conform( LabelledCatClause, [&quot;a&quot;, 2, true] )</code></pre>
       
     <em>
       A value that satisfies 
-      <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function noDupelicateLabels(_ref6) {
-  var withLabels = _ref6.expressions.withLabels;
-
-  if (withLabels) {
-    var byFar = [];
-    for (var i = 0; i &lt; withLabels.length; i += 1) {
-      var lbl = withLabels[i].name;
-      if (byFar.indexOf(lbl) &gt;= 0) {
-        throw new Error(&apos;Duplicate label detected: &apos; + lbl);
-      }
-      byFar.push(lbl);
-    }
-  }
-  return true;
-}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+      <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function noDupelicateLabels(_a) {
+    var withLabels = _a.expressions.withLabels;
+    if (withLabels) {
+        var byFar = [];
+        for (var i = 0; i &lt; withLabels.length; i += 1) {
+            var lbl = withLabels[i].name;
+            if (byFar.indexOf(lbl) &gt;= 0) {
+                throw new Error(" duplicate="" label="" detected:="" "="" +="" lbl);="" }="" byfar.push(lbl);="" return="" true;="" }<="" pre="">&quot;
+        data-container=&quot;body&quot;
+        data-animation=&quot;false&quot;
+        data-delay=&quot;500&quot;&gt;
         noDupelicateLabels()
       </span>
     </em>
@@ -1740,7 +1736,7 @@ C.conform( LabelledCatClause, [&quot;a&quot;, 2, true] )</code></pre>
     <dl class="card-block">
     <dd>Given a set of expressions or a set of label+expression pairs, returns a regex op that matches a value with either one of the expressions. If labels are given, returns a map with a single key that indicates the matching label.</dd>
 <dt>Syntax</dt><dd><ul>
-        <li>( expressions: { ( ( name: <a href="#clause.types/ClauseLabel" data-path="clause.types/ClauseLabel">ClauseLabel</a>, ( comment: <a href="#clause.types/String" data-path="clause.types/String">String</a> )?, expr: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) )* | [ ( name: <a href="#clause.types/ClauseLabel" data-path="clause.types/ClauseLabel">ClauseLabel</a>, ( comment: <a href="#clause.types/String" data-path="clause.types/String">String</a> )?, expr: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) ]* }, ( options: <a href="#clause.types/PlainObject" data-path="clause.types/PlainObject">PlainObject</a> )? ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li><li>( ( expressions: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> )*, ( options: <a href="#clause.types/PlainObject" data-path="clause.types/PlainObject">PlainObject</a> )? ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
+        <li>( expressions: { { ( ( name: <a href="#clause.types/ClauseLabel" data-path="clause.types/ClauseLabel">ClauseLabel</a>, ( comment: <a href="#clause.types/String" data-path="clause.types/String">String</a> )?, expr: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) )* | [ ( name: <a href="#clause.types/ClauseLabel" data-path="clause.types/ClauseLabel">ClauseLabel</a>, ( comment: <a href="#clause.types/String" data-path="clause.types/String">String</a> )?, expr: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) ]* } | ( <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> )* }, ( options: <a href="#clause.types/PlainObject" data-path="clause.types/PlainObject">PlainObject</a> )? ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
       </ul></dd>
 <dt>Examples  <button class="btn btn-info btn-sm launch-code-examples" data-name="or">
           Live Eval
@@ -1889,7 +1885,7 @@ C.conform( LabelledOrClause, 2 )</code></pre>
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;expressions&#x201D;</span>          
+              &#x201C;expressions&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -1950,7 +1946,7 @@ C.conform( LabelledOrClause, 2 )</code></pre>
           <div class="row">
             <div class="col-md-12">
             
-            
+
             
             </div>
           </div>
@@ -2000,7 +1996,7 @@ C.conform( LabelledOrClause, 2 )</code></pre>
           <div class="row">
             <div class="col-md-12">
             
-            
+
             
             </div>
           </div>
@@ -2055,7 +2051,7 @@ C.conform( LabelledOrClause, 2 )</code></pre>
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;name&#x201D;</span>          
+              &#x201C;name&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -2089,7 +2085,7 @@ C.conform( LabelledOrClause, 2 )</code></pre>
           
             <span class="tag tag-default">Part 2</span>
             <span class="lead font-italic text-primary">
-              &#x201C;comment&#x201D;</span>          
+              &#x201C;comment&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -2142,7 +2138,7 @@ C.conform( LabelledOrClause, 2 )</code></pre>
           
             <span class="tag tag-default">Part 3</span>
             <span class="lead font-italic text-primary">
-              &#x201C;expr&#x201D;</span>          
+              &#x201C;expr&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -2193,7 +2189,7 @@ C.conform( LabelledOrClause, 2 )</code></pre>
           <div class="row">
             <div class="col-md-12">
             
-            
+
             
             </div>
           </div>
@@ -2248,7 +2244,7 @@ C.conform( LabelledOrClause, 2 )</code></pre>
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;name&#x201D;</span>          
+              &#x201C;name&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -2282,7 +2278,7 @@ C.conform( LabelledOrClause, 2 )</code></pre>
           
             <span class="tag tag-default">Part 2</span>
             <span class="lead font-italic text-primary">
-              &#x201C;comment&#x201D;</span>          
+              &#x201C;comment&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -2335,7 +2331,7 @@ C.conform( LabelledOrClause, 2 )</code></pre>
           
             <span class="tag tag-default">Part 3</span>
             <span class="lead font-italic text-primary">
-              &#x201C;expr&#x201D;</span>          
+              &#x201C;expr&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -2398,7 +2394,7 @@ C.conform( LabelledOrClause, 2 )</code></pre>
           <div class="row">
             <div class="col-md-12">
             
-            
+
             
             </div>
           </div>
@@ -2455,7 +2451,7 @@ C.conform( LabelledOrClause, 2 )</code></pre>
           
             <span class="tag tag-default">Part 2</span>
             <span class="lead font-italic text-primary">
-              &#x201C;options&#x201D;</span>          
+              &#x201C;options&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -2535,21 +2531,17 @@ C.conform( LabelledOrClause, 2 )</code></pre>
       
     <em>
       A value that satisfies 
-      <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function noDupelicateLabels(_ref6) {
-  var withLabels = _ref6.expressions.withLabels;
-
-  if (withLabels) {
-    var byFar = [];
-    for (var i = 0; i &lt; withLabels.length; i += 1) {
-      var lbl = withLabels[i].name;
-      if (byFar.indexOf(lbl) &gt;= 0) {
-        throw new Error(&apos;Duplicate label detected: &apos; + lbl);
-      }
-      byFar.push(lbl);
-    }
-  }
-  return true;
-}&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
+      <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function noDupelicateLabels(_a) {
+    var withLabels = _a.expressions.withLabels;
+    if (withLabels) {
+        var byFar = [];
+        for (var i = 0; i &lt; withLabels.length; i += 1) {
+            var lbl = withLabels[i].name;
+            if (byFar.indexOf(lbl) &gt;= 0) {
+                throw new Error(" duplicate="" label="" detected:="" "="" +="" lbl);="" }="" byfar.push(lbl);="" return="" true;="" }<="" pre="">&quot;
+        data-container=&quot;body&quot;
+        data-animation=&quot;false&quot;
+        data-delay=&quot;500&quot;&gt;
         noDupelicateLabels()
       </span>
     </em>
@@ -2692,7 +2684,7 @@ C.conform( CombinedClause, [&quot;foo&quot;, &quot;foo&quot;, &quot;bar&quot;, t
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;expr&#x201D;</span>          
+              &#x201C;expr&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -2726,7 +2718,7 @@ C.conform( CombinedClause, [&quot;foo&quot;, &quot;foo&quot;, &quot;bar&quot;, t
           
             <span class="tag tag-default">Part 2</span>
             <span class="lead font-italic text-primary">
-              &#x201C;opts&#x201D;</span>          
+              &#x201C;opts&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -2898,7 +2890,7 @@ C.conform( CombinedClause, [&quot;foo&quot;, &quot;foo&quot;, &quot;baz&quot;, f
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;expr&#x201D;</span>          
+              &#x201C;expr&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -2932,7 +2924,7 @@ C.conform( CombinedClause, [&quot;foo&quot;, &quot;foo&quot;, &quot;baz&quot;, f
           
             <span class="tag tag-default">Part 2</span>
             <span class="lead font-italic text-primary">
-              &#x201C;opts&#x201D;</span>          
+              &#x201C;opts&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -3102,7 +3094,7 @@ C.conform( CombinedClause, [&quot;foo&quot;, 4] )</code></pre>
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;expr&#x201D;</span>          
+              &#x201C;expr&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -3136,7 +3128,7 @@ C.conform( CombinedClause, [&quot;foo&quot;, 4] )</code></pre>
           
             <span class="tag tag-default">Part 2</span>
             <span class="lead font-italic text-primary">
-              &#x201C;opts&#x201D;</span>          
+              &#x201C;opts&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -3293,7 +3285,7 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);</code></pre>
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;string&#x201D;</span>          
+              &#x201C;string&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -3575,7 +3567,7 @@ C.isValid( CombinedCollOfClause, [&quot;foo&quot;, &quot;foo&quot;, &quot;bar&qu
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;expr&#x201D;</span>          
+              &#x201C;expr&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -3609,7 +3601,7 @@ C.isValid( CombinedCollOfClause, [&quot;foo&quot;, &quot;foo&quot;, &quot;bar&qu
           
             <span class="tag tag-default">Part 2</span>
             <span class="lead font-italic text-primary">
-              &#x201C;opts&#x201D;</span>          
+              &#x201C;opts&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -3776,7 +3768,7 @@ C.isValid( AbilityMapClause, { canFly: true, canSwim: true, canDance: false } )<
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;keyExpression&#x201D;</span>          
+              &#x201C;keyExpression&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -3810,7 +3802,7 @@ C.isValid( AbilityMapClause, { canFly: true, canSwim: true, canDance: false } )<
           
             <span class="tag tag-default">Part 2</span>
             <span class="lead font-italic text-primary">
-              &#x201C;valExpression&#x201D;</span>          
+              &#x201C;valExpression&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -3888,7 +3880,7 @@ C.isValid( AbilityMapClause, { canFly: true, canSwim: true, canDance: false } )<
     <dl class="card-block">
     <dd>Given an object with two optional properties &quot;required&quot; and &quot;optional&quot;, returns a clause that matches an object all of whose keys matches the expressions defined in &quot;required&quot; object and some of whose values matches the expressions defined in &quot;optional&quot; objects.</dd>
 <dt>Syntax</dt><dd><ul>
-        <li>( shapeArgs: { requiredFields?: &lt; oneOf(&quot;req&quot;, &quot;required&quot;), ( isPropName )* &gt;, optionalFields?: &lt; oneOf(&quot;opt&quot;, &quot;optional&quot;), { ( isPropName )* | &lt; <a href="#clause.types/String" data-path="clause.types/String">String</a>, <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> &gt; } &gt; } ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li><li>( shapeArgs: { requiredFields?: &lt; oneOf(&quot;req&quot;, &quot;required&quot;), ( isPropName )* &gt;, optionalFields?: &lt; oneOf(&quot;opt&quot;, &quot;optional&quot;), { ( isPropName )* | &lt; <a href="#clause.types/String" data-path="clause.types/String">String</a>, ( keyExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, valExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) &gt; } &gt; } ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li><li>( shapeArgs: { requiredFields?: &lt; oneOf(&quot;req&quot;, &quot;required&quot;), &lt; <a href="#clause.types/String" data-path="clause.types/String">String</a>, <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> &gt; &gt;, optionalFields?: &lt; oneOf(&quot;opt&quot;, &quot;optional&quot;), { ( isPropName )* | &lt; <a href="#clause.types/String" data-path="clause.types/String">String</a>, { <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> | ( keyExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, valExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) } &gt; } &gt; } ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li><li>( shapeArgs: { requiredFields?: &lt; oneOf(&quot;req&quot;, &quot;required&quot;), &lt; <a href="#clause.types/String" data-path="clause.types/String">String</a>, ( keyExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, valExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) &gt; &gt;, optionalFields?: &lt; oneOf(&quot;opt&quot;, &quot;optional&quot;), { ( isPropName )* | &lt; <a href="#clause.types/String" data-path="clause.types/String">String</a>, { <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> | ( keyExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, valExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) } &gt; } &gt; } ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
+        <li>( shapeArgs: { requiredFields?: &lt; o,n,e,O,f,(,&quot;req&quot;, &quot;required&quot;,), { ( isPropName )* | &lt; <a href="#clause.types/String" data-path="clause.types/String">String</a>, { <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> | ( keyExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, valExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) } &gt; } &gt;, optionalFields?: &lt; o,n,e,O,f,(,&quot;opt&quot;, &quot;optional&quot;,), { ( isPropName )* | &lt; <a href="#clause.types/String" data-path="clause.types/String">String</a>, { <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> | ( keyExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, valExpression: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> ) } &gt; } &gt; } ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
       </ul></dd>
 <dt>Examples  <button class="btn btn-info btn-sm launch-code-examples" data-name="shape">
           Live Eval
@@ -3947,7 +3939,7 @@ C.conform( ShapeClause3, {
   &lt;args&gt;: cat( &quot;shapeArgs&quot;, shape( {
     &lt;optional&gt;: {
       &quot;requiredFields&quot;: {
-        &lt;key&gt;: oneOf(&quot;req&quot;, &quot;required&quot;), 
+        &lt;key&gt;: o,n,e,O,f,(,&quot;req&quot;, &quot;required&quot;,), 
         &lt;val&gt;: or(
           &quot;keyList&quot;, zeroOrMore( isPropName ), 
           &quot;fieldDefs&quot;, mapOf( {
@@ -3963,7 +3955,7 @@ C.conform( ShapeClause3, {
         )
       }, 
       &quot;optionalFields&quot;: {
-        &lt;key&gt;: oneOf(&quot;opt&quot;, &quot;optional&quot;), 
+        &lt;key&gt;: o,n,e,O,f,(,&quot;opt&quot;, &quot;optional&quot;,), 
         &lt;val&gt;: or(
           &quot;keyList&quot;, zeroOrMore( isPropName ), 
           &quot;fieldDefs&quot;, mapOf( {
@@ -4003,7 +3995,7 @@ C.conform( ShapeClause3, {
     &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat( &quot;shapeArgs&quot;, shape( {
   &amp;lt;optional&amp;gt;: {
     &quot;requiredFields&quot;: {
-      &amp;lt;key&amp;gt;: oneOf(&quot;req&quot;, &quot;required&quot;), 
+      &amp;lt;key&amp;gt;: o,n,e,O,f,(,&quot;req&quot;, &quot;required&quot;,), 
       &amp;lt;val&amp;gt;: or(
         &quot;keyList&quot;, zeroOrMore( isPropName ), 
         &quot;fieldDefs&quot;, mapOf( {
@@ -4019,7 +4011,7 @@ C.conform( ShapeClause3, {
       )
     }, 
     &quot;optionalFields&quot;: {
-      &amp;lt;key&amp;gt;: oneOf(&quot;opt&quot;, &quot;optional&quot;), 
+      &amp;lt;key&amp;gt;: o,n,e,O,f,(,&quot;opt&quot;, &quot;optional&quot;,), 
       &amp;lt;val&amp;gt;: or(
         &quot;keyList&quot;, zeroOrMore( isPropName ), 
         &quot;fieldDefs&quot;, mapOf( {
@@ -4054,7 +4046,7 @@ C.conform( ShapeClause3, {
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;shapeArgs&#x201D;</span>          
+              &#x201C;shapeArgs&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -4074,7 +4066,7 @@ C.conform( ShapeClause3, {
     &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;shape( {
   &amp;lt;optional&amp;gt;: {
     &quot;requiredFields&quot;: {
-      &amp;lt;key&amp;gt;: oneOf(&quot;req&quot;, &quot;required&quot;), 
+      &amp;lt;key&amp;gt;: o,n,e,O,f,(,&quot;req&quot;, &quot;required&quot;,), 
       &amp;lt;val&amp;gt;: or(
         &quot;keyList&quot;, zeroOrMore( isPropName ), 
         &quot;fieldDefs&quot;, mapOf( {
@@ -4090,7 +4082,7 @@ C.conform( ShapeClause3, {
       )
     }, 
     &quot;optionalFields&quot;: {
-      &amp;lt;key&amp;gt;: oneOf(&quot;opt&quot;, &quot;optional&quot;), 
+      &amp;lt;key&amp;gt;: o,n,e,O,f,(,&quot;opt&quot;, &quot;optional&quot;,), 
       &amp;lt;val&amp;gt;: or(
         &quot;keyList&quot;, zeroOrMore( isPropName ), 
         &quot;fieldDefs&quot;, mapOf( {
@@ -4642,7 +4634,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;getFn&#x201D;</span>          
+              &#x201C;getFn&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -5240,7 +5232,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;expression&#x201D;</span>          
+              &#x201C;expression&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -5274,7 +5266,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 2</span>
             <span class="lead font-italic text-primary">
-              &#x201C;valueToCheck&#x201D;</span>          
+              &#x201C;valueToCheck&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -5411,7 +5403,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;expression&#x201D;</span>          
+              &#x201C;expression&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -5445,7 +5437,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 2</span>
             <span class="lead font-italic text-primary">
-              &#x201C;valueToConform&#x201D;</span>          
+              &#x201C;valueToConform&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -5529,7 +5521,7 @@ C.isValid(
           <div class="row">
             <div class="col-md-12">
             
-            
+
             
             </div>
           </div>
@@ -5571,7 +5563,7 @@ C.isValid(
           <div class="row">
             <div class="col-md-12">
             
-            
+
             
             </div>
           </div>
@@ -5698,7 +5690,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;expression&#x201D;</span>          
+              &#x201C;expression&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -5738,7 +5730,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 2</span>
             <span class="lead font-italic text-primary">
-              &#x201C;replacer&#x201D;</span>          
+              &#x201C;replacer&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -5901,7 +5893,7 @@ C.isValid(
           <div class="row">
             <div class="col-md-12">
             
-            
+
             
             </div>
           </div>
@@ -5936,7 +5928,7 @@ C.isValid(
           <div class="row">
             <div class="col-md-12">
             
-            
+
             
             </div>
           </div>
@@ -5971,7 +5963,7 @@ C.isValid(
           <div class="row">
             <div class="col-md-12">
             
-            
+
             
             </div>
           </div>
@@ -6038,7 +6030,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 3</span>
             <span class="lead font-italic text-primary">
-              &#x201C;space&#x201D;</span>          
+              &#x201C;space&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -6082,7 +6074,7 @@ C.isValid(
     <em>
       A value that satisfies 
       <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isNatInt(x) {
-  return isInt(x) &amp;&amp; x &gt;= 0.0;
+    return isInt_1.default(x) &amp;&amp; x &gt;= 0.0;
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         isNatInt()
       </span>
@@ -6196,7 +6188,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;expression&#x201D;</span>          
+              &#x201C;expression&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -6344,7 +6336,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;keyValMap&#x201D;</span>          
+              &#x201C;keyValMap&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -6378,7 +6370,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 2</span>
             <span class="lead font-italic text-primary">
-              &#x201C;handlers&#x201D;</span>          
+              &#x201C;handlers&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -6491,7 +6483,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;x&#x201D;</span>          
+              &#x201C;x&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -6622,7 +6614,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;predicateToNegate&#x201D;</span>          
+              &#x201C;predicateToNegate&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -6722,7 +6714,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;x&#x201D;</span>          
+              &#x201C;x&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -6856,7 +6848,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;x&#x201D;</span>          
+              &#x201C;x&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -6984,7 +6976,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;x&#x201D;</span>          
+              &#x201C;x&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -7112,7 +7104,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;x&#x201D;</span>          
+              &#x201C;x&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -7240,7 +7232,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;x&#x201D;</span>          
+              &#x201C;x&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -7368,7 +7360,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;x&#x201D;</span>          
+              &#x201C;x&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -7496,7 +7488,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;x&#x201D;</span>          
+              &#x201C;x&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -7624,7 +7616,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;x&#x201D;</span>          
+              &#x201C;x&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -7752,7 +7744,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;x&#x201D;</span>          
+              &#x201C;x&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -7880,7 +7872,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;x&#x201D;</span>          
+              &#x201C;x&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -8008,7 +8000,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;x&#x201D;</span>          
+              &#x201C;x&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -8136,7 +8128,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;x&#x201D;</span>          
+              &#x201C;x&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -8264,7 +8256,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;x&#x201D;</span>          
+              &#x201C;x&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -8392,7 +8384,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;x&#x201D;</span>          
+              &#x201C;x&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -8520,7 +8512,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;x&#x201D;</span>          
+              &#x201C;x&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -8648,7 +8640,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;valueOptions&#x201D;</span>          
+              &#x201C;valueOptions&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -8767,7 +8759,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;x&#x201D;</span>          
+              &#x201C;x&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -8904,7 +8896,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;valueToCompareWith&#x201D;</span>          
+              &#x201C;valueToCompareWith&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -9001,7 +8993,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;x&#x201D;</span>          
+              &#x201C;x&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -9138,7 +9130,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;instanceType&#x201D;</span>          
+              &#x201C;instanceType&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -9167,9 +9159,10 @@ C.isValid(
     <em>
       A value that satisfies 
       <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isFunction(x) {
-  var getType = {};
-  // (x || false) guarantees returning of boolean type
-  return (x || false) &amp;&amp; [&apos;[object Function]&apos;, &apos;[object GeneratorFunction]&apos;].indexOf(getType.toString.call(x)) &gt;= 0;
+    var getType = {};
+    // (x || false) guarantees returning of boolean type
+    return (x || false) &amp;&amp;
+        [&apos;[object Function]&apos;, &apos;[object GeneratorFunction]&apos;].indexOf(getType.toString.call(x)) &gt;= 0;
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         isFunction()
       </span>
@@ -9248,7 +9241,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;x&#x201D;</span>          
+              &#x201C;x&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -9398,7 +9391,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;nsPath&#x201D;</span>          
+              &#x201C;nsPath&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -9432,7 +9425,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 2</span>
             <span class="lead font-italic text-primary">
-              &#x201C;expression&#x201D;</span>          
+              &#x201C;expression&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -9569,7 +9562,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;nsPath&#x201D;</span>          
+              &#x201C;nsPath&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -9700,7 +9693,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;expression&#x201D;</span>          
+              &#x201C;expression&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -9734,7 +9727,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 2</span>
             <span class="lead font-italic text-primary">
-              &#x201C;registry&#x201D;</span>          
+              &#x201C;registry&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -9830,7 +9823,7 @@ C.isValid(
         
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>( source: <a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">NamespacePath</a>, metaObj: <a href="#clause.types/Object" data-path="clause.types/Object">Object</a>, ( registry: <a href="#clause.types/Object" data-path="clause.types/Object">Object</a> )? ) &#x2192; <a href="#clause.types/Undefined" data-path="clause.types/Undefined">Undefined</a></li><li>( source: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, metaObj: <a href="#clause.types/Object" data-path="clause.types/Object">Object</a>, ( registry: <a href="#clause.types/Object" data-path="clause.types/Object">Object</a> )? ) &#x2192; <a href="#clause.types/Undefined" data-path="clause.types/Undefined">Undefined</a></li>
+        <li>( source: { <a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">NamespacePath</a> | <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> }, metaObj: <a href="#clause.types/Object" data-path="clause.types/Object">Object</a>, ( registry: <a href="#clause.types/Object" data-path="clause.types/Object">Object</a> )? ) &#x2192; <a href="#clause.types/Undefined" data-path="clause.types/Undefined">Undefined</a></li>
       </ul></dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
@@ -9892,7 +9885,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;source&#x201D;</span>          
+              &#x201C;source&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -9942,7 +9935,7 @@ C.isValid(
           <div class="row">
             <div class="col-md-12">
             
-            
+
             
             </div>
           </div>
@@ -9981,7 +9974,7 @@ C.isValid(
           <div class="row">
             <div class="col-md-12">
             
-            
+
             
             </div>
           </div>
@@ -10019,7 +10012,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 2</span>
             <span class="lead font-italic text-primary">
-              &#x201C;metaObj&#x201D;</span>          
+              &#x201C;metaObj&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -10053,7 +10046,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 3</span>
             <span class="lead font-italic text-primary">
-              &#x201C;registry&#x201D;</span>          
+              &#x201C;registry&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -10149,7 +10142,7 @@ C.isValid(
         
     <dl class="card-block">
     <dt>Syntax</dt><dd><ul>
-        <li>( source: <a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">NamespacePath</a>, ( registry: <a href="#clause.types/Object" data-path="clause.types/Object">Object</a> )? ) &#x2192; { <a href="#clause.types/Null" data-path="clause.types/Null">Null</a> | <a href="#clause.types/Undefined" data-path="clause.types/Undefined">Undefined</a> | <a href="#clause.types/Object" data-path="clause.types/Object">Object</a> }</li><li>( source: <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a>, ( registry: <a href="#clause.types/Object" data-path="clause.types/Object">Object</a> )? ) &#x2192; { <a href="#clause.types/Null" data-path="clause.types/Null">Null</a> | <a href="#clause.types/Undefined" data-path="clause.types/Undefined">Undefined</a> | <a href="#clause.types/Object" data-path="clause.types/Object">Object</a> }</li>
+        <li>( source: { <a href="#clause.types/NamespacePath" data-path="clause.types/NamespacePath">NamespacePath</a> | <a href="#clause.types/Expression" data-path="clause.types/Expression">Expression</a> }, ( registry: <a href="#clause.types/Object" data-path="clause.types/Object">Object</a> )? ) &#x2192; { <a href="#clause.types/Null" data-path="clause.types/Null">Null</a> | <a href="#clause.types/Undefined" data-path="clause.types/Undefined">Undefined</a> | <a href="#clause.types/Object" data-path="clause.types/Object">Object</a> }</li>
       </ul></dd>
 <dt>Clause Description</dt><dd>
     <blockquote class="blockquote">
@@ -10213,7 +10206,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;source&#x201D;</span>          
+              &#x201C;source&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -10263,7 +10256,7 @@ C.isValid(
           <div class="row">
             <div class="col-md-12">
             
-            
+
             
             </div>
           </div>
@@ -10302,7 +10295,7 @@ C.isValid(
           <div class="row">
             <div class="col-md-12">
             
-            
+
             
             </div>
           </div>
@@ -10340,7 +10333,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 2</span>
             <span class="lead font-italic text-primary">
-              &#x201C;registry&#x201D;</span>          
+              &#x201C;registry&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -10437,7 +10430,7 @@ C.isValid(
           <div class="row">
             <div class="col-md-12">
             
-            
+
             
             </div>
           </div>
@@ -10472,7 +10465,7 @@ C.isValid(
           <div class="row">
             <div class="col-md-12">
             
-            
+
             
             </div>
           </div>
@@ -10507,7 +10500,7 @@ C.isValid(
           <div class="row">
             <div class="col-md-12">
             
-            
+
             
             </div>
           </div>
@@ -10577,7 +10570,7 @@ C.isValid(
           <div class="row">
             <div class="col-md-12">
             
-            
+
             
             </div>
           </div>
@@ -10616,7 +10609,7 @@ C.isValid(
           <div class="row">
             <div class="col-md-12">
             
-            
+
             
             </div>
           </div>
@@ -10641,7 +10634,7 @@ C.isValid(
     <em>
       A value that satisfies 
       <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isPred(x) {
-  return isFn(x);
+    return isFn_1.default(x);
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         isPred()
       </span>
@@ -10677,7 +10670,7 @@ C.isValid(
     <em>
       A value that satisfies 
       <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function instanceOf_Clause(){ return action.apply(this, arguments); }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
-        instanceOf_Clause_()
+        instanceOf_Clause()
       </span>
     </em>
   
@@ -10703,7 +10696,7 @@ C.isValid(
     <em>
       A value that satisfies 
       <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isProblem(x) {
-  return x instanceof Problem;
+    return x instanceof Problem_1.default;
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         isProblem()
       </span>
@@ -10731,7 +10724,7 @@ C.isValid(
     <em>
       A value that satisfies 
       <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isFclause(x) {
-  return isClause(x) &amp;&amp; x.type === &apos;FCLAUSE&apos;;
+    return isClause_1.default(x) &amp;&amp; x.type === &apos;FCLAUSE&apos;;
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         isFclause()
       </span>
@@ -10804,7 +10797,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;x&#x201D;</span>          
+              &#x201C;x&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -10887,7 +10880,7 @@ C.isValid(
     <em>
       A value that satisfies 
       <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function instanceOf_DelayedClause(){ return action.apply(this, arguments); }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
-        instanceOf_DelayedClause_()
+        instanceOf_DelayedClause()
       </span>
     </em>
   
@@ -10913,7 +10906,7 @@ C.isValid(
     <em>
       A value that satisfies 
       <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isClauseRef(x) {
-  return x instanceof ClauseRef;
+    return x instanceof ClauseRef_1.default;
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         isClauseRef()
       </span>
@@ -10960,7 +10953,8 @@ C.isValid(
     <em>
       A value that satisfies 
       <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isNamespacePath(x) {
-  return isStr(x) &amp;&amp; /^\/?[a-zA-Z0-9\-_\.]*\/([a-zA-Z0-9\-_]+)$/.test(x);
+    return isStr_1.default(x) &amp;&amp;
+        /^\/?[a-zA-Z0-9\-_\.]*\/([a-zA-Z0-9\-_]+)$/.test(x);
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         isNamespacePath()
       </span>
@@ -10988,7 +10982,7 @@ C.isValid(
     <em>
       A value that satisfies 
       <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isClauseName(x) {
-  return isStr(x);
+    return isStr_1.default(x);
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         isClauseName()
       </span>
@@ -11025,12 +11019,12 @@ C.isValid(
     &quot;labelled&quot;, zeroOrMore( cat(
       &quot;label&quot;, or(
         &quot;str&quot;, &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt;, 
-        &quot;quoted&quot;, instanceOf_Quoted_
+        &quot;quoted&quot;, instanceOf_Quoted
       ), 
       &quot;item&quot;, or(
         &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, 
         &quot;quotedParamsMap&quot;, and(
-          instanceOf_QuotedParamsMap_, 
+          instanceOf_QuotedParamsMap, 
           mapOf( {
             &amp;lt;key&amp;gt;: any, 
             &amp;lt;val&amp;gt;: or(
@@ -11039,7 +11033,7 @@ C.isValid(
               or(
                 &quot;keyList&quot;, zeroOrMore( or(
                   &quot;str&quot;, &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt;, 
-                  &quot;quoted&quot;, instanceOf_Quoted_
+                  &quot;quoted&quot;, instanceOf_Quoted
                 ) ), 
                 &quot;singleParam&quot;, &amp;lt;recursive&amp;gt;: or
               )
@@ -11047,7 +11041,7 @@ C.isValid(
           } )
         ), 
         &quot;unquotedParamsMap&quot;, and(
-          instanceOf_UnquotedParamsMap_, 
+          instanceOf_UnquotedParamsMap, 
           mapOf( {
             &amp;lt;key&amp;gt;: any, 
             &amp;lt;val&amp;gt;: or(
@@ -11056,7 +11050,7 @@ C.isValid(
               or(
                 &quot;keyList&quot;, zeroOrMore( or(
                   &quot;str&quot;, &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt;, 
-                  &quot;quoted&quot;, instanceOf_Quoted_
+                  &quot;quoted&quot;, instanceOf_Quoted
                 ) ), 
                 &quot;singleParam&quot;, &amp;lt;recursive&amp;gt;: or
               )
@@ -11064,13 +11058,13 @@ C.isValid(
           } )
         ), 
         &quot;optionsObj&quot;, &lt;a href=&quot;#clause.types/PlainObject&quot; data-path=&quot;clause.types/PlainObject&quot;&gt;PlainObject&lt;/a&gt;, 
-        &quot;recursive&quot;, instanceOf_Recursive_
+        &quot;recursive&quot;, instanceOf_Recursive
       )
     ) ), 
     &quot;unlabelled&quot;, zeroOrMore( cat( &quot;item&quot;, or(
       &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, 
       &quot;quotedParamsMap&quot;, and(
-        instanceOf_QuotedParamsMap_, 
+        instanceOf_QuotedParamsMap, 
         mapOf( {
           &amp;lt;key&amp;gt;: any, 
           &amp;lt;val&amp;gt;: or(
@@ -11079,7 +11073,7 @@ C.isValid(
             or(
               &quot;keyList&quot;, zeroOrMore( or(
                 &quot;str&quot;, &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt;, 
-                &quot;quoted&quot;, instanceOf_Quoted_
+                &quot;quoted&quot;, instanceOf_Quoted
               ) ), 
               &quot;singleParam&quot;, &amp;lt;recursive&amp;gt;: or
             )
@@ -11087,7 +11081,7 @@ C.isValid(
         } )
       ), 
       &quot;unquotedParamsMap&quot;, and(
-        instanceOf_UnquotedParamsMap_, 
+        instanceOf_UnquotedParamsMap, 
         mapOf( {
           &amp;lt;key&amp;gt;: any, 
           &amp;lt;val&amp;gt;: or(
@@ -11096,7 +11090,7 @@ C.isValid(
             or(
               &quot;keyList&quot;, zeroOrMore( or(
                 &quot;str&quot;, &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt;, 
-                &quot;quoted&quot;, instanceOf_Quoted_
+                &quot;quoted&quot;, instanceOf_Quoted
               ) ), 
               &quot;singleParam&quot;, &amp;lt;recursive&amp;gt;: or
             )
@@ -11104,7 +11098,7 @@ C.isValid(
         } )
       ), 
       &quot;optionsObj&quot;, &lt;a href=&quot;#clause.types/PlainObject&quot; data-path=&quot;clause.types/PlainObject&quot;&gt;PlainObject&lt;/a&gt;, 
-      &quot;recursive&quot;, instanceOf_Recursive_
+      &quot;recursive&quot;, instanceOf_Recursive
     ) ) )
   )
 )&lt;/code&gt;&lt;/pre&gt;
@@ -11126,7 +11120,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;head&#x201D;</span>          
+              &#x201C;head&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -11160,7 +11154,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 2</span>
             <span class="lead font-italic text-primary">
-              &#x201C;params&#x201D;</span>          
+              &#x201C;params&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -11181,12 +11175,12 @@ C.isValid(
   &quot;labelled&quot;, zeroOrMore( cat(
     &quot;label&quot;, or(
       &quot;str&quot;, &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt;, 
-      &quot;quoted&quot;, instanceOf_Quoted_
+      &quot;quoted&quot;, instanceOf_Quoted
     ), 
     &quot;item&quot;, or(
       &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, 
       &quot;quotedParamsMap&quot;, and(
-        instanceOf_QuotedParamsMap_, 
+        instanceOf_QuotedParamsMap, 
         mapOf( {
           &amp;lt;key&amp;gt;: any, 
           &amp;lt;val&amp;gt;: or(
@@ -11195,7 +11189,7 @@ C.isValid(
             or(
               &quot;keyList&quot;, zeroOrMore( or(
                 &quot;str&quot;, &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt;, 
-                &quot;quoted&quot;, instanceOf_Quoted_
+                &quot;quoted&quot;, instanceOf_Quoted
               ) ), 
               &quot;singleParam&quot;, &amp;lt;recursive&amp;gt;: or
             )
@@ -11203,7 +11197,7 @@ C.isValid(
         } )
       ), 
       &quot;unquotedParamsMap&quot;, and(
-        instanceOf_UnquotedParamsMap_, 
+        instanceOf_UnquotedParamsMap, 
         mapOf( {
           &amp;lt;key&amp;gt;: any, 
           &amp;lt;val&amp;gt;: or(
@@ -11212,7 +11206,7 @@ C.isValid(
             or(
               &quot;keyList&quot;, zeroOrMore( or(
                 &quot;str&quot;, &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt;, 
-                &quot;quoted&quot;, instanceOf_Quoted_
+                &quot;quoted&quot;, instanceOf_Quoted
               ) ), 
               &quot;singleParam&quot;, &amp;lt;recursive&amp;gt;: or
             )
@@ -11220,13 +11214,13 @@ C.isValid(
         } )
       ), 
       &quot;optionsObj&quot;, &lt;a href=&quot;#clause.types/PlainObject&quot; data-path=&quot;clause.types/PlainObject&quot;&gt;PlainObject&lt;/a&gt;, 
-      &quot;recursive&quot;, instanceOf_Recursive_
+      &quot;recursive&quot;, instanceOf_Recursive
     )
   ) ), 
   &quot;unlabelled&quot;, zeroOrMore( cat( &quot;item&quot;, or(
     &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, 
     &quot;quotedParamsMap&quot;, and(
-      instanceOf_QuotedParamsMap_, 
+      instanceOf_QuotedParamsMap, 
       mapOf( {
         &amp;lt;key&amp;gt;: any, 
         &amp;lt;val&amp;gt;: or(
@@ -11235,7 +11229,7 @@ C.isValid(
           or(
             &quot;keyList&quot;, zeroOrMore( or(
               &quot;str&quot;, &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt;, 
-              &quot;quoted&quot;, instanceOf_Quoted_
+              &quot;quoted&quot;, instanceOf_Quoted
             ) ), 
             &quot;singleParam&quot;, &amp;lt;recursive&amp;gt;: or
           )
@@ -11243,7 +11237,7 @@ C.isValid(
       } )
     ), 
     &quot;unquotedParamsMap&quot;, and(
-      instanceOf_UnquotedParamsMap_, 
+      instanceOf_UnquotedParamsMap, 
       mapOf( {
         &amp;lt;key&amp;gt;: any, 
         &amp;lt;val&amp;gt;: or(
@@ -11252,7 +11246,7 @@ C.isValid(
           or(
             &quot;keyList&quot;, zeroOrMore( or(
               &quot;str&quot;, &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt;, 
-              &quot;quoted&quot;, instanceOf_Quoted_
+              &quot;quoted&quot;, instanceOf_Quoted
             ) ), 
             &quot;singleParam&quot;, &amp;lt;recursive&amp;gt;: or
           )
@@ -11260,7 +11254,7 @@ C.isValid(
       } )
     ), 
     &quot;optionsObj&quot;, &lt;a href=&quot;#clause.types/PlainObject&quot; data-path=&quot;clause.types/PlainObject&quot;&gt;PlainObject&lt;/a&gt;, 
-    &quot;recursive&quot;, instanceOf_Recursive_
+    &quot;recursive&quot;, instanceOf_Recursive
   ) ) )
 )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
@@ -11292,7 +11286,7 @@ C.isValid(
           <div class="row">
             <div class="col-md-12">
             
-            
+
             
             </div>
           </div>
@@ -11308,12 +11302,12 @@ C.isValid(
     &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;zeroOrMore( cat(
   &quot;label&quot;, or(
     &quot;str&quot;, &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt;, 
-    &quot;quoted&quot;, instanceOf_Quoted_
+    &quot;quoted&quot;, instanceOf_Quoted
   ), 
   &quot;item&quot;, or(
     &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, 
     &quot;quotedParamsMap&quot;, and(
-      instanceOf_QuotedParamsMap_, 
+      instanceOf_QuotedParamsMap, 
       mapOf( {
         &amp;lt;key&amp;gt;: any, 
         &amp;lt;val&amp;gt;: or(
@@ -11322,7 +11316,7 @@ C.isValid(
           or(
             &quot;keyList&quot;, zeroOrMore( or(
               &quot;str&quot;, &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt;, 
-              &quot;quoted&quot;, instanceOf_Quoted_
+              &quot;quoted&quot;, instanceOf_Quoted
             ) ), 
             &quot;singleParam&quot;, &amp;lt;recursive&amp;gt;: or
           )
@@ -11330,7 +11324,7 @@ C.isValid(
       } )
     ), 
     &quot;unquotedParamsMap&quot;, and(
-      instanceOf_UnquotedParamsMap_, 
+      instanceOf_UnquotedParamsMap, 
       mapOf( {
         &amp;lt;key&amp;gt;: any, 
         &amp;lt;val&amp;gt;: or(
@@ -11339,7 +11333,7 @@ C.isValid(
           or(
             &quot;keyList&quot;, zeroOrMore( or(
               &quot;str&quot;, &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt;, 
-              &quot;quoted&quot;, instanceOf_Quoted_
+              &quot;quoted&quot;, instanceOf_Quoted
             ) ), 
             &quot;singleParam&quot;, &amp;lt;recursive&amp;gt;: or
           )
@@ -11347,7 +11341,7 @@ C.isValid(
       } )
     ), 
     &quot;optionsObj&quot;, &lt;a href=&quot;#clause.types/PlainObject&quot; data-path=&quot;clause.types/PlainObject&quot;&gt;PlainObject&lt;/a&gt;, 
-    &quot;recursive&quot;, instanceOf_Recursive_
+    &quot;recursive&quot;, instanceOf_Recursive
   )
 ) )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
@@ -11367,12 +11361,12 @@ C.isValid(
     &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat(
   &quot;label&quot;, or(
     &quot;str&quot;, &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt;, 
-    &quot;quoted&quot;, instanceOf_Quoted_
+    &quot;quoted&quot;, instanceOf_Quoted
   ), 
   &quot;item&quot;, or(
     &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, 
     &quot;quotedParamsMap&quot;, and(
-      instanceOf_QuotedParamsMap_, 
+      instanceOf_QuotedParamsMap, 
       mapOf( {
         &amp;lt;key&amp;gt;: any, 
         &amp;lt;val&amp;gt;: or(
@@ -11381,7 +11375,7 @@ C.isValid(
           or(
             &quot;keyList&quot;, zeroOrMore( or(
               &quot;str&quot;, &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt;, 
-              &quot;quoted&quot;, instanceOf_Quoted_
+              &quot;quoted&quot;, instanceOf_Quoted
             ) ), 
             &quot;singleParam&quot;, &amp;lt;recursive&amp;gt;: or
           )
@@ -11389,7 +11383,7 @@ C.isValid(
       } )
     ), 
     &quot;unquotedParamsMap&quot;, and(
-      instanceOf_UnquotedParamsMap_, 
+      instanceOf_UnquotedParamsMap, 
       mapOf( {
         &amp;lt;key&amp;gt;: any, 
         &amp;lt;val&amp;gt;: or(
@@ -11398,7 +11392,7 @@ C.isValid(
           or(
             &quot;keyList&quot;, zeroOrMore( or(
               &quot;str&quot;, &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt;, 
-              &quot;quoted&quot;, instanceOf_Quoted_
+              &quot;quoted&quot;, instanceOf_Quoted
             ) ), 
             &quot;singleParam&quot;, &amp;lt;recursive&amp;gt;: or
           )
@@ -11406,7 +11400,7 @@ C.isValid(
       } )
     ), 
     &quot;optionsObj&quot;, &lt;a href=&quot;#clause.types/PlainObject&quot; data-path=&quot;clause.types/PlainObject&quot;&gt;PlainObject&lt;/a&gt;, 
-    &quot;recursive&quot;, instanceOf_Recursive_
+    &quot;recursive&quot;, instanceOf_Recursive
   )
 )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
@@ -11427,7 +11421,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;label&#x201D;</span>          
+              &#x201C;label&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -11446,7 +11440,7 @@ C.isValid(
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;or(
   &quot;str&quot;, &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt;, 
-  &quot;quoted&quot;, instanceOf_Quoted_
+  &quot;quoted&quot;, instanceOf_Quoted
 )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [or] either one of
@@ -11477,7 +11471,7 @@ C.isValid(
           <div class="row">
             <div class="col-md-12">
             
-            
+
             
             </div>
           </div>
@@ -11516,7 +11510,7 @@ C.isValid(
           <div class="row">
             <div class="col-md-12">
             
-            
+
             
             </div>
           </div>
@@ -11529,7 +11523,7 @@ C.isValid(
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;instanceOf_Quoted_&lt;/code&gt;&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;instanceOf_Quoted&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
       [pred] satisfies predicate
     </span>
@@ -11541,7 +11535,7 @@ C.isValid(
     <em>
       A value that satisfies 
       <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function instanceOf_Quoted(){ return action.apply(this, arguments); }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
-        instanceOf_Quoted_()
+        instanceOf_Quoted()
       </span>
     </em>
   
@@ -11566,7 +11560,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 2</span>
             <span class="lead font-italic text-primary">
-              &#x201C;item&#x201D;</span>          
+              &#x201C;item&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -11586,7 +11580,7 @@ C.isValid(
     &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;or(
   &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, 
   &quot;quotedParamsMap&quot;, and(
-    instanceOf_QuotedParamsMap_, 
+    instanceOf_QuotedParamsMap, 
     mapOf( {
       &amp;lt;key&amp;gt;: any, 
       &amp;lt;val&amp;gt;: or(
@@ -11595,7 +11589,7 @@ C.isValid(
         or(
           &quot;keyList&quot;, zeroOrMore( or(
             &quot;str&quot;, &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt;, 
-            &quot;quoted&quot;, instanceOf_Quoted_
+            &quot;quoted&quot;, instanceOf_Quoted
           ) ), 
           &quot;singleParam&quot;, &amp;lt;recursive&amp;gt;: or
         )
@@ -11603,7 +11597,7 @@ C.isValid(
     } )
   ), 
   &quot;unquotedParamsMap&quot;, and(
-    instanceOf_UnquotedParamsMap_, 
+    instanceOf_UnquotedParamsMap, 
     mapOf( {
       &amp;lt;key&amp;gt;: any, 
       &amp;lt;val&amp;gt;: or(
@@ -11612,7 +11606,7 @@ C.isValid(
         or(
           &quot;keyList&quot;, zeroOrMore( or(
             &quot;str&quot;, &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt;, 
-            &quot;quoted&quot;, instanceOf_Quoted_
+            &quot;quoted&quot;, instanceOf_Quoted
           ) ), 
           &quot;singleParam&quot;, &amp;lt;recursive&amp;gt;: or
         )
@@ -11620,7 +11614,7 @@ C.isValid(
     } )
   ), 
   &quot;optionsObj&quot;, &lt;a href=&quot;#clause.types/PlainObject&quot; data-path=&quot;clause.types/PlainObject&quot;&gt;PlainObject&lt;/a&gt;, 
-  &quot;recursive&quot;, instanceOf_Recursive_
+  &quot;recursive&quot;, instanceOf_Recursive
 )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [or] either one of
@@ -11651,7 +11645,7 @@ C.isValid(
           <div class="row">
             <div class="col-md-12">
             
-            
+
             
             </div>
           </div>
@@ -11690,7 +11684,7 @@ C.isValid(
           <div class="row">
             <div class="col-md-12">
             
-            
+
             
             </div>
           </div>
@@ -11704,7 +11698,7 @@ C.isValid(
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;and(
-  instanceOf_QuotedParamsMap_, 
+  instanceOf_QuotedParamsMap, 
   mapOf( {
     &amp;lt;key&amp;gt;: any, 
     &amp;lt;val&amp;gt;: or(
@@ -11713,17 +11707,17 @@ C.isValid(
       or(
         &quot;keyList&quot;, zeroOrMore( or(
           &quot;str&quot;, &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt;, 
-          &quot;quoted&quot;, instanceOf_Quoted_
+          &quot;quoted&quot;, instanceOf_Quoted
         ) ), 
         &quot;singleParam&quot;, or(
           &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, 
           &quot;quotedParamsMap&quot;, &amp;lt;recursive&amp;gt;: and, 
           &quot;unquotedParamsMap&quot;, and(
-            instanceOf_UnquotedParamsMap_, 
+            instanceOf_UnquotedParamsMap, 
             &amp;lt;recursive&amp;gt;: mapOf
           ), 
           &quot;optionsObj&quot;, &lt;a href=&quot;#clause.types/PlainObject&quot; data-path=&quot;clause.types/PlainObject&quot;&gt;PlainObject&lt;/a&gt;, 
-          &quot;recursive&quot;, instanceOf_Recursive_
+          &quot;recursive&quot;, instanceOf_Recursive
         )
       )
     )
@@ -11755,7 +11749,7 @@ C.isValid(
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;instanceOf_QuotedParamsMap_&lt;/code&gt;&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;instanceOf_QuotedParamsMap&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
       [pred] satisfies predicate
     </span>
@@ -11767,7 +11761,7 @@ C.isValid(
     <em>
       A value that satisfies 
       <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function instanceOf_QuotedParamsMap(){ return action.apply(this, arguments); }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
-        instanceOf_QuotedParamsMap_()
+        instanceOf_QuotedParamsMap()
       </span>
     </em>
   
@@ -11800,20 +11794,20 @@ C.isValid(
     or(
       &quot;keyList&quot;, zeroOrMore( or(
         &quot;str&quot;, &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt;, 
-        &quot;quoted&quot;, instanceOf_Quoted_
+        &quot;quoted&quot;, instanceOf_Quoted
       ) ), 
       &quot;singleParam&quot;, or(
         &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, 
         &quot;quotedParamsMap&quot;, and(
-          instanceOf_QuotedParamsMap_, 
+          instanceOf_QuotedParamsMap, 
           &amp;lt;recursive&amp;gt;: mapOf
         ), 
         &quot;unquotedParamsMap&quot;, and(
-          instanceOf_UnquotedParamsMap_, 
+          instanceOf_UnquotedParamsMap, 
           &amp;lt;recursive&amp;gt;: mapOf
         ), 
         &quot;optionsObj&quot;, &lt;a href=&quot;#clause.types/PlainObject&quot; data-path=&quot;clause.types/PlainObject&quot;&gt;PlainObject&lt;/a&gt;, 
-        &quot;recursive&quot;, instanceOf_Recursive_
+        &quot;recursive&quot;, instanceOf_Recursive
       )
     )
   )
@@ -11856,7 +11850,7 @@ C.isValid(
           <div class="row">
             <div class="col-md-12">
             
-            
+
             
             </div>
           </div>
@@ -11870,7 +11864,7 @@ C.isValid(
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;and(
-  instanceOf_UnquotedParamsMap_, 
+  instanceOf_UnquotedParamsMap, 
   mapOf( {
     &amp;lt;key&amp;gt;: any, 
     &amp;lt;val&amp;gt;: or(
@@ -11879,17 +11873,17 @@ C.isValid(
       or(
         &quot;keyList&quot;, zeroOrMore( or(
           &quot;str&quot;, &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt;, 
-          &quot;quoted&quot;, instanceOf_Quoted_
+          &quot;quoted&quot;, instanceOf_Quoted
         ) ), 
         &quot;singleParam&quot;, or(
           &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, 
           &quot;quotedParamsMap&quot;, and(
-            instanceOf_QuotedParamsMap_, 
+            instanceOf_QuotedParamsMap, 
             &amp;lt;recursive&amp;gt;: mapOf
           ), 
           &quot;unquotedParamsMap&quot;, &amp;lt;recursive&amp;gt;: and, 
           &quot;optionsObj&quot;, &lt;a href=&quot;#clause.types/PlainObject&quot; data-path=&quot;clause.types/PlainObject&quot;&gt;PlainObject&lt;/a&gt;, 
-          &quot;recursive&quot;, instanceOf_Recursive_
+          &quot;recursive&quot;, instanceOf_Recursive
         )
       )
     )
@@ -11921,7 +11915,7 @@ C.isValid(
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;instanceOf_UnquotedParamsMap_&lt;/code&gt;&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;instanceOf_UnquotedParamsMap&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
       [pred] satisfies predicate
     </span>
@@ -11933,7 +11927,7 @@ C.isValid(
     <em>
       A value that satisfies 
       <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function instanceOf_UnquotedParamsMap(){ return action.apply(this, arguments); }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
-        instanceOf_UnquotedParamsMap_()
+        instanceOf_UnquotedParamsMap()
       </span>
     </em>
   
@@ -11966,20 +11960,20 @@ C.isValid(
     or(
       &quot;keyList&quot;, zeroOrMore( or(
         &quot;str&quot;, &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt;, 
-        &quot;quoted&quot;, instanceOf_Quoted_
+        &quot;quoted&quot;, instanceOf_Quoted
       ) ), 
       &quot;singleParam&quot;, or(
         &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, 
         &quot;quotedParamsMap&quot;, and(
-          instanceOf_QuotedParamsMap_, 
+          instanceOf_QuotedParamsMap, 
           &amp;lt;recursive&amp;gt;: mapOf
         ), 
         &quot;unquotedParamsMap&quot;, and(
-          instanceOf_UnquotedParamsMap_, 
+          instanceOf_UnquotedParamsMap, 
           &amp;lt;recursive&amp;gt;: mapOf
         ), 
         &quot;optionsObj&quot;, &lt;a href=&quot;#clause.types/PlainObject&quot; data-path=&quot;clause.types/PlainObject&quot;&gt;PlainObject&lt;/a&gt;, 
-        &quot;recursive&quot;, instanceOf_Recursive_
+        &quot;recursive&quot;, instanceOf_Recursive
       )
     )
   )
@@ -12022,7 +12016,7 @@ C.isValid(
           <div class="row">
             <div class="col-md-12">
             
-            
+
             
             </div>
           </div>
@@ -12061,7 +12055,7 @@ C.isValid(
           <div class="row">
             <div class="col-md-12">
             
-            
+
             
             </div>
           </div>
@@ -12074,7 +12068,7 @@ C.isValid(
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;instanceOf_Recursive_&lt;/code&gt;&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;instanceOf_Recursive&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
       [pred] satisfies predicate
     </span>
@@ -12086,7 +12080,7 @@ C.isValid(
     <em>
       A value that satisfies 
       <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function instanceOf_Recursive(){ return action.apply(this, arguments); }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
-        instanceOf_Recursive_()
+        instanceOf_Recursive()
       </span>
     </em>
   
@@ -12132,7 +12126,7 @@ C.isValid(
           <div class="row">
             <div class="col-md-12">
             
-            
+
             
             </div>
           </div>
@@ -12148,7 +12142,7 @@ C.isValid(
     &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;zeroOrMore( cat( &quot;item&quot;, or(
   &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, 
   &quot;quotedParamsMap&quot;, and(
-    instanceOf_QuotedParamsMap_, 
+    instanceOf_QuotedParamsMap, 
     mapOf( {
       &amp;lt;key&amp;gt;: any, 
       &amp;lt;val&amp;gt;: or(
@@ -12157,7 +12151,7 @@ C.isValid(
         or(
           &quot;keyList&quot;, zeroOrMore( or(
             &quot;str&quot;, &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt;, 
-            &quot;quoted&quot;, instanceOf_Quoted_
+            &quot;quoted&quot;, instanceOf_Quoted
           ) ), 
           &quot;singleParam&quot;, &amp;lt;recursive&amp;gt;: or
         )
@@ -12165,7 +12159,7 @@ C.isValid(
     } )
   ), 
   &quot;unquotedParamsMap&quot;, and(
-    instanceOf_UnquotedParamsMap_, 
+    instanceOf_UnquotedParamsMap, 
     mapOf( {
       &amp;lt;key&amp;gt;: any, 
       &amp;lt;val&amp;gt;: or(
@@ -12174,7 +12168,7 @@ C.isValid(
         or(
           &quot;keyList&quot;, zeroOrMore( or(
             &quot;str&quot;, &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt;, 
-            &quot;quoted&quot;, instanceOf_Quoted_
+            &quot;quoted&quot;, instanceOf_Quoted
           ) ), 
           &quot;singleParam&quot;, &amp;lt;recursive&amp;gt;: or
         )
@@ -12182,7 +12176,7 @@ C.isValid(
     } )
   ), 
   &quot;optionsObj&quot;, &lt;a href=&quot;#clause.types/PlainObject&quot; data-path=&quot;clause.types/PlainObject&quot;&gt;PlainObject&lt;/a&gt;, 
-  &quot;recursive&quot;, instanceOf_Recursive_
+  &quot;recursive&quot;, instanceOf_Recursive
 ) ) )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [*] zero or more
@@ -12201,7 +12195,7 @@ C.isValid(
     &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;cat( &quot;item&quot;, or(
   &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, 
   &quot;quotedParamsMap&quot;, and(
-    instanceOf_QuotedParamsMap_, 
+    instanceOf_QuotedParamsMap, 
     mapOf( {
       &amp;lt;key&amp;gt;: any, 
       &amp;lt;val&amp;gt;: or(
@@ -12210,7 +12204,7 @@ C.isValid(
         or(
           &quot;keyList&quot;, zeroOrMore( or(
             &quot;str&quot;, &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt;, 
-            &quot;quoted&quot;, instanceOf_Quoted_
+            &quot;quoted&quot;, instanceOf_Quoted
           ) ), 
           &quot;singleParam&quot;, &amp;lt;recursive&amp;gt;: or
         )
@@ -12218,7 +12212,7 @@ C.isValid(
     } )
   ), 
   &quot;unquotedParamsMap&quot;, and(
-    instanceOf_UnquotedParamsMap_, 
+    instanceOf_UnquotedParamsMap, 
     mapOf( {
       &amp;lt;key&amp;gt;: any, 
       &amp;lt;val&amp;gt;: or(
@@ -12227,7 +12221,7 @@ C.isValid(
         or(
           &quot;keyList&quot;, zeroOrMore( or(
             &quot;str&quot;, &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt;, 
-            &quot;quoted&quot;, instanceOf_Quoted_
+            &quot;quoted&quot;, instanceOf_Quoted
           ) ), 
           &quot;singleParam&quot;, &amp;lt;recursive&amp;gt;: or
         )
@@ -12235,7 +12229,7 @@ C.isValid(
     } )
   ), 
   &quot;optionsObj&quot;, &lt;a href=&quot;#clause.types/PlainObject&quot; data-path=&quot;clause.types/PlainObject&quot;&gt;PlainObject&lt;/a&gt;, 
-  &quot;recursive&quot;, instanceOf_Recursive_
+  &quot;recursive&quot;, instanceOf_Recursive
 ) )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [cat] a sequence of
@@ -12255,7 +12249,7 @@ C.isValid(
           
             <span class="tag tag-default">Part 1</span>
             <span class="lead font-italic text-primary">
-              &#x201C;item&#x201D;</span>          
+              &#x201C;item&#x201D;</span>
           
           </legend>
           <div class="row">
@@ -12275,7 +12269,7 @@ C.isValid(
     &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;or(
   &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, 
   &quot;quotedParamsMap&quot;, and(
-    instanceOf_QuotedParamsMap_, 
+    instanceOf_QuotedParamsMap, 
     mapOf( {
       &amp;lt;key&amp;gt;: any, 
       &amp;lt;val&amp;gt;: or(
@@ -12284,7 +12278,7 @@ C.isValid(
         or(
           &quot;keyList&quot;, zeroOrMore( or(
             &quot;str&quot;, &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt;, 
-            &quot;quoted&quot;, instanceOf_Quoted_
+            &quot;quoted&quot;, instanceOf_Quoted
           ) ), 
           &quot;singleParam&quot;, &amp;lt;recursive&amp;gt;: or
         )
@@ -12292,7 +12286,7 @@ C.isValid(
     } )
   ), 
   &quot;unquotedParamsMap&quot;, and(
-    instanceOf_UnquotedParamsMap_, 
+    instanceOf_UnquotedParamsMap, 
     mapOf( {
       &amp;lt;key&amp;gt;: any, 
       &amp;lt;val&amp;gt;: or(
@@ -12301,7 +12295,7 @@ C.isValid(
         or(
           &quot;keyList&quot;, zeroOrMore( or(
             &quot;str&quot;, &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt;, 
-            &quot;quoted&quot;, instanceOf_Quoted_
+            &quot;quoted&quot;, instanceOf_Quoted
           ) ), 
           &quot;singleParam&quot;, &amp;lt;recursive&amp;gt;: or
         )
@@ -12309,7 +12303,7 @@ C.isValid(
     } )
   ), 
   &quot;optionsObj&quot;, &lt;a href=&quot;#clause.types/PlainObject&quot; data-path=&quot;clause.types/PlainObject&quot;&gt;PlainObject&lt;/a&gt;, 
-  &quot;recursive&quot;, instanceOf_Recursive_
+  &quot;recursive&quot;, instanceOf_Recursive
 )&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-info">
       [or] either one of
@@ -12340,7 +12334,7 @@ C.isValid(
           <div class="row">
             <div class="col-md-12">
             
-            
+
             
             </div>
           </div>
@@ -12379,7 +12373,7 @@ C.isValid(
           <div class="row">
             <div class="col-md-12">
             
-            
+
             
             </div>
           </div>
@@ -12393,7 +12387,7 @@ C.isValid(
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;and(
-  instanceOf_QuotedParamsMap_, 
+  instanceOf_QuotedParamsMap, 
   mapOf( {
     &amp;lt;key&amp;gt;: any, 
     &amp;lt;val&amp;gt;: or(
@@ -12402,17 +12396,17 @@ C.isValid(
       or(
         &quot;keyList&quot;, zeroOrMore( or(
           &quot;str&quot;, &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt;, 
-          &quot;quoted&quot;, instanceOf_Quoted_
+          &quot;quoted&quot;, instanceOf_Quoted
         ) ), 
         &quot;singleParam&quot;, or(
           &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, 
           &quot;quotedParamsMap&quot;, &amp;lt;recursive&amp;gt;: and, 
           &quot;unquotedParamsMap&quot;, and(
-            instanceOf_UnquotedParamsMap_, 
+            instanceOf_UnquotedParamsMap, 
             &amp;lt;recursive&amp;gt;: mapOf
           ), 
           &quot;optionsObj&quot;, &lt;a href=&quot;#clause.types/PlainObject&quot; data-path=&quot;clause.types/PlainObject&quot;&gt;PlainObject&lt;/a&gt;, 
-          &quot;recursive&quot;, instanceOf_Recursive_
+          &quot;recursive&quot;, instanceOf_Recursive
         )
       )
     )
@@ -12444,7 +12438,7 @@ C.isValid(
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;instanceOf_QuotedParamsMap_&lt;/code&gt;&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;instanceOf_QuotedParamsMap&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
       [pred] satisfies predicate
     </span>
@@ -12456,7 +12450,7 @@ C.isValid(
     <em>
       A value that satisfies 
       <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function instanceOf_QuotedParamsMap(){ return action.apply(this, arguments); }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
-        instanceOf_QuotedParamsMap_()
+        instanceOf_QuotedParamsMap()
       </span>
     </em>
   
@@ -12489,20 +12483,20 @@ C.isValid(
     or(
       &quot;keyList&quot;, zeroOrMore( or(
         &quot;str&quot;, &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt;, 
-        &quot;quoted&quot;, instanceOf_Quoted_
+        &quot;quoted&quot;, instanceOf_Quoted
       ) ), 
       &quot;singleParam&quot;, or(
         &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, 
         &quot;quotedParamsMap&quot;, and(
-          instanceOf_QuotedParamsMap_, 
+          instanceOf_QuotedParamsMap, 
           &amp;lt;recursive&amp;gt;: mapOf
         ), 
         &quot;unquotedParamsMap&quot;, and(
-          instanceOf_UnquotedParamsMap_, 
+          instanceOf_UnquotedParamsMap, 
           &amp;lt;recursive&amp;gt;: mapOf
         ), 
         &quot;optionsObj&quot;, &lt;a href=&quot;#clause.types/PlainObject&quot; data-path=&quot;clause.types/PlainObject&quot;&gt;PlainObject&lt;/a&gt;, 
-        &quot;recursive&quot;, instanceOf_Recursive_
+        &quot;recursive&quot;, instanceOf_Recursive
       )
     )
   )
@@ -12545,7 +12539,7 @@ C.isValid(
           <div class="row">
             <div class="col-md-12">
             
-            
+
             
             </div>
           </div>
@@ -12559,7 +12553,7 @@ C.isValid(
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
     &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;and(
-  instanceOf_UnquotedParamsMap_, 
+  instanceOf_UnquotedParamsMap, 
   mapOf( {
     &amp;lt;key&amp;gt;: any, 
     &amp;lt;val&amp;gt;: or(
@@ -12568,17 +12562,17 @@ C.isValid(
       or(
         &quot;keyList&quot;, zeroOrMore( or(
           &quot;str&quot;, &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt;, 
-          &quot;quoted&quot;, instanceOf_Quoted_
+          &quot;quoted&quot;, instanceOf_Quoted
         ) ), 
         &quot;singleParam&quot;, or(
           &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, 
           &quot;quotedParamsMap&quot;, and(
-            instanceOf_QuotedParamsMap_, 
+            instanceOf_QuotedParamsMap, 
             &amp;lt;recursive&amp;gt;: mapOf
           ), 
           &quot;unquotedParamsMap&quot;, &amp;lt;recursive&amp;gt;: and, 
           &quot;optionsObj&quot;, &lt;a href=&quot;#clause.types/PlainObject&quot; data-path=&quot;clause.types/PlainObject&quot;&gt;PlainObject&lt;/a&gt;, 
-          &quot;recursive&quot;, instanceOf_Recursive_
+          &quot;recursive&quot;, instanceOf_Recursive
         )
       )
     )
@@ -12610,7 +12604,7 @@ C.isValid(
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;instanceOf_UnquotedParamsMap_&lt;/code&gt;&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;instanceOf_UnquotedParamsMap&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
       [pred] satisfies predicate
     </span>
@@ -12622,7 +12616,7 @@ C.isValid(
     <em>
       A value that satisfies 
       <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function instanceOf_UnquotedParamsMap(){ return action.apply(this, arguments); }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
-        instanceOf_UnquotedParamsMap_()
+        instanceOf_UnquotedParamsMap()
       </span>
     </em>
   
@@ -12655,20 +12649,20 @@ C.isValid(
     or(
       &quot;keyList&quot;, zeroOrMore( or(
         &quot;str&quot;, &lt;a href=&quot;#clause.types/String&quot; data-path=&quot;clause.types/String&quot;&gt;String&lt;/a&gt;, 
-        &quot;quoted&quot;, instanceOf_Quoted_
+        &quot;quoted&quot;, instanceOf_Quoted
       ) ), 
       &quot;singleParam&quot;, or(
         &quot;sExpression&quot;, &lt;a href=&quot;#clause.types/SExpression&quot; data-path=&quot;clause.types/SExpression&quot;&gt;SExpression&lt;/a&gt;, 
         &quot;quotedParamsMap&quot;, and(
-          instanceOf_QuotedParamsMap_, 
+          instanceOf_QuotedParamsMap, 
           &amp;lt;recursive&amp;gt;: mapOf
         ), 
         &quot;unquotedParamsMap&quot;, and(
-          instanceOf_UnquotedParamsMap_, 
+          instanceOf_UnquotedParamsMap, 
           &amp;lt;recursive&amp;gt;: mapOf
         ), 
         &quot;optionsObj&quot;, &lt;a href=&quot;#clause.types/PlainObject&quot; data-path=&quot;clause.types/PlainObject&quot;&gt;PlainObject&lt;/a&gt;, 
-        &quot;recursive&quot;, instanceOf_Recursive_
+        &quot;recursive&quot;, instanceOf_Recursive
       )
     )
   )
@@ -12711,7 +12705,7 @@ C.isValid(
           <div class="row">
             <div class="col-md-12">
             
-            
+
             
             </div>
           </div>
@@ -12750,7 +12744,7 @@ C.isValid(
           <div class="row">
             <div class="col-md-12">
             
-            
+
             
             </div>
           </div>
@@ -12763,7 +12757,7 @@ C.isValid(
     <legend class="clause-type">
       
     <span role="button" data-toggle="popover" data-trigger="focus hover" data-html="true" data-content="
-    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;instanceOf_Recursive_&lt;/code&gt;&lt;/pre&gt;
+    &lt;pre class=&quot;clause-description&quot;&gt;&lt;code class=&quot;clause&quot;&gt;instanceOf_Recursive&lt;/code&gt;&lt;/pre&gt;
   " data-container="body" data-animation="false" data-delay="500" class="tag tag-primary">
       [pred] satisfies predicate
     </span>
@@ -12775,7 +12769,7 @@ C.isValid(
     <em>
       A value that satisfies 
       <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function instanceOf_Recursive(){ return action.apply(this, arguments); }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
-        instanceOf_Recursive_()
+        instanceOf_Recursive()
       </span>
     </em>
   
@@ -12854,7 +12848,7 @@ C.isValid(
           <div class="row">
             <div class="col-md-12">
             
-            
+
             
             </div>
           </div>
@@ -12889,7 +12883,7 @@ C.isValid(
           <div class="row">
             <div class="col-md-12">
             
-            
+
             
             </div>
           </div>
@@ -12924,7 +12918,7 @@ C.isValid(
           <div class="row">
             <div class="col-md-12">
             
-            
+
             
             </div>
           </div>
@@ -12959,7 +12953,7 @@ C.isValid(
           <div class="row">
             <div class="col-md-12">
             
-            
+
             
             </div>
           </div>
@@ -12994,7 +12988,7 @@ C.isValid(
           <div class="row">
             <div class="col-md-12">
             
-            
+
             
             </div>
           </div>
@@ -13041,7 +13035,7 @@ C.isValid(
     <em>
       A value that satisfies 
       <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isString(x) {
-  return x !== null &amp;&amp; x !== undefined &amp;&amp; x.constructor === String;
+    return x !== null &amp;&amp; x !== undefined &amp;&amp; x.constructor === String;
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         isString()
       </span>
@@ -13069,7 +13063,7 @@ C.isValid(
     <em>
       A value that satisfies 
       <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isBool(x) {
-  return typeof x === &apos;boolean&apos;;
+    return typeof (x) === &apos;boolean&apos;;
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         isBool()
       </span>
@@ -13097,7 +13091,7 @@ C.isValid(
     <em>
       A value that satisfies 
       <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isNum(x) {
-  return typeof x === &apos;number&apos;;
+    return typeof x === &apos;number&apos;;
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         isNum()
       </span>
@@ -13125,7 +13119,7 @@ C.isValid(
     <em>
       A value that satisfies 
       <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isObject(x) {
-  return (typeof x === &apos;undefined&apos; ? &apos;undefined&apos; : _typeof(x)) === &apos;object&apos; &amp;&amp; x !== null;
+    return typeof x === &apos;object&apos; &amp;&amp; x !== null;
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         isObject()
       </span>
@@ -13153,22 +13147,19 @@ C.isValid(
     <em>
       A value that satisfies 
       <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isPlainObject(x) {
-  // Basic check for Type object that&apos;s not null
-  if (isObj(x)) {
-
-    // If Object.getPrototypeOf supported, use it
-    if (typeof Object.getPrototypeOf == &apos;function&apos;) {
-      var proto = Object.getPrototypeOf(x);
-      return proto === Object.prototype || proto === null;
+    // Basic check for Type object that&apos;s not null
+    if (isObj_1.default(x)) {
+        // If Object.getPrototypeOf supported, use it
+        if (typeof Object.getPrototypeOf == &apos;function&apos;) {
+            var proto = Object.getPrototypeOf(x);
+            return proto === Object.prototype || proto === null;
+        }
+        // Otherwise, use internal class
+        // This should be reliable as if getPrototypeOf not supported, is pre-ES5
+        return Object.prototype.toString.call(x) == &apos;[object Object]&apos;;
     }
-
-    // Otherwise, use internal class
-    // This should be reliable as if getPrototypeOf not supported, is pre-ES5
-    return Object.prototype.toString.call(x) == &apos;[object Object]&apos;;
-  }
-
-  // Not an object
-  return false;
+    // Not an object
+    return false;
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         isPlainObject()
       </span>
@@ -13196,7 +13187,7 @@ C.isValid(
     <em>
       A value that satisfies 
       <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isUndefined(x) {
-  return x === undefined;
+    return x === undefined;
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         isUndefined()
       </span>
@@ -13224,7 +13215,7 @@ C.isValid(
     <em>
       A value that satisfies 
       <span data-toggle="popover" data-trigger="hover click" data-html="true" role="button" data-placement="top" data-content="&lt;pre&gt;function isNull(x) {
-  return x === null;
+    return x === null;
 }&lt;/pre&gt;" data-container="body" data-animation="false" data-delay="500">
         isNull()
       </span>

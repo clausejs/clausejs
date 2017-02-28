@@ -12,7 +12,7 @@
     "test": "jest --coverage",
     "test:watch": "jest --watch",
     "build": "cross-env CLAUSEJS_ENV=production webpack && cross-env CLAUSEJS_ENV=production MINIFY_ME=1 webpack && npm run build-docsite",
-    "build-docsite": "babel-node scripts/build-docs.js",
+    "build-docsite": "ts-node scripts/build-docs.ts",
     "lint": "eslint ./src"
   },
   "jest": {

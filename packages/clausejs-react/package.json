@@ -2,7 +2,7 @@
   "name": "clausejs-react",
   "version": "0.1.1",
   "description": "Anto documentation generator for Clause clauses",
-  "main": "index.js",
+  "main": "dist/clausejs-react.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/clausejs/clausejs.git"

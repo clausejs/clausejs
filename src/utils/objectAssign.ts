@@ -20,7 +20,7 @@ function shouldUseNative() {
 		// Detect buggy property enumeration order in older V8 versions.
 
 		// https://bugs.chromium.org/p/v8/issues/detail?id=4118
-    var test1: String = new String( 'abc' );  // eslint-disable-line no-new-wrappers
+    var test1: any = new String( 'abc' );  // eslint-disable-line no-new-wrappers
     test1[ 5 ] = 'de';
     if ( Object.getOwnPropertyNames( test1 )[ 0 ] === '5' ) {
       return false;

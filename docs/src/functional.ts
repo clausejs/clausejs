@@ -1,19 +1,23 @@
-
-import $ from 'jquery';
-import tether from 'tether';
+const $ = require('jquery');
+const tether = require( 'tether');
 import C from '../../src';
 // require( 'bootstrap/dist/css/bootstrap.css' );
 require( 'highlight.js/styles/default.css' );
-const HLJS = require( 'highlight.js/lib/highlight' );
-HLJS.registerLanguage( 'javascript', require( 'highlight.js/lib/languages/javascript' ) );
-HLJS.registerLanguage( 'clause', require( './highlightjs-clause' ) );
-window.$ = window.jQuery = $;
-window.Tether = tether;
-window.Util = require( 'exports-loader?Util!bootstrap/js/dist/util' );
-window.Tooltip = require( 'exports-loader?Tooltip!bootstrap/js/dist/tooltip' );
-window.Popover = require( 'exports-loader?Popover!bootstrap/js/dist/popover' );
-window.CodeMirror = require( 'codemirror' );
-require( 'bootstrap/js/dist/collapse' );
+var HLJS =require("highlight.js/lib/highlight");
+const hljsjs = require('highlight.js/lib/languages/javascript');
+import hljsclause from './highlightjs-clause';
+
+HLJS.registerLanguage( 'javascript', hljsjs );
+HLJS.registerLanguage( 'clause', hljsclause );
+
+
+(<any>window).$ = (<any>window).jQuery = $;
+(<any>window).Tether = tether;
+(<any>window).Util = require( 'exports-loader?Util!bootstrap/js/dist/util' );
+(<any>window).Tooltip = require( 'exports-loader?Tooltip!bootstrap/js/dist/tooltip' );
+(<any>window).Popover = require( 'exports-loader?Popover!bootstrap/js/dist/popover' );
+(<any>window).CodeMirror = require( 'codemirror' );
+require('bootstrap/js/dist/collapse');
 
 $( () => {
 
@@ -37,12 +41,12 @@ $( () => {
 
   $( '.launch-code-examples' ).click( ( e ) => {
     const name = $( e.target ).data( 'name' );
-    window.klipse_settings.selector_es2017 = `.code-examples[data-name=${name}] pre code`;
-    window.klipse.plugin.init( window.klipse.run.plugin_prod.plugin.settings() );
+    (<any>window).klipse_settings.selector_es2017 = `.code-examples[data-name=${name}] pre code`;
+    (<any>window).klipse.plugin.init( (<any>window).klipse.run.plugin_prod.plugin.settings() );
   } );
 } );
 
-window.klipse_settings = {
+(<any>window).klipse_settings = {
   selector_es2017: '.noop-doesnt-exist pre code', // css selector for the html elements you want to klipsify
   codemirror_options_in: {
     indentUnit: 2,
@@ -60,12 +64,12 @@ window.klipse_settings = {
 
 $( () => {
 
-  window.TodoItemClause = C.shape( {
+  (<any>window).TodoItemClause = C.shape( {
     required: [ 'title' ]
   } );
 
-  window.klipse_settings.selector_es2017 = '.markdown-article pre code';
-  window.klipse.plugin.init( window.klipse.run.plugin_prod.plugin.settings() );
+  (<any>window).klipse_settings.selector_es2017 = '.markdown-article pre code';
+  (<any>window).klipse.plugin.init( (<any>window).klipse.run.plugin_prod.plugin.settings() );
 
 } );
 
