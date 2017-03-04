@@ -11,7 +11,7 @@ export function cstr( str ) {
   return cat.apply( null, Array.prototype.slice.call( str ).map( equals ) );
 };
 
-var other = {
+const other = {
   any,
   fclause,
   wall, clause: wall,
@@ -31,12 +31,10 @@ export {
 };
 
 
-var r = Object.assign( {},
+export default Object.assign( {},
   regex,
   {
     shape, keys, mapOf,
     fspec: fclause
   },
   other );
-
-export default r;

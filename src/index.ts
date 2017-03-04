@@ -1,4 +1,4 @@
-import VERSION from "../package_version";
+const VERSION = require("../package_version");
 import Problem from "./models/Problem";
 import Clause from "./models/Clause";
 

@@ -729,10 +729,11 @@ exports.clause = wall_1.default;
 var equals_1 = __webpack_require__(33);
 var any_1 = __webpack_require__(46);
 exports.any = any_1.default;
-var cstr = function cstr(str) {
+function cstr(str) {
     return regex_2.cat.apply(null, Array.prototype.slice.call(str).map(equals_1.default));
-};
+}
 exports.cstr = cstr;
+;
 var other = {
     any: any_1.default,
     fclause: regex_2.fclause,
@@ -741,11 +742,10 @@ var other = {
     cstr: cstr
 };
 __export(__webpack_require__(5));
-var r = Object.assign({}, regex_1.default, {
+exports.default = Object.assign({}, regex_1.default, {
     shape: regex_2.shape, keys: regex_2.keys, mapOf: regex_2.mapOf,
     fspec: regex_2.fclause
 }, other);
-exports.default = r;
 
 /***/ },
 /* 9 */
@@ -2281,8 +2281,8 @@ function __export(m) {
     }
 }
 Object.defineProperty(exports, "__esModule", { value: true });
-var package_version_1 = __webpack_require__(44);
-exports.VERSION = package_version_1.default;
+var VERSION = __webpack_require__(44);
+exports.VERSION = VERSION;
 var Problem_1 = __webpack_require__(2);
 exports.Problem = Problem_1.default;
 var Clause_1 = __webpack_require__(1);
@@ -2300,7 +2300,7 @@ var models = {
     Problem: Problem_1.default, Clause: Clause_1.default
 };
 var r = Object.assign(namespace_1.default, { resolve: namespace_1.resolve }, core_1.default, utils, models, predicates);
-r.VERSION = package_version_1.default;
+r.VERSION = VERSION;
 exports.default = r;
 
 /***/ },
@@ -2310,7 +2310,7 @@ exports.default = r;
 "use strict";
 
 
-module.exports = '0.1.1';
+module.exports = '0.1.2';
 
 /***/ },
 /* 45 */

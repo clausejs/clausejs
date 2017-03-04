@@ -1,7 +1,7 @@
 import '../../src/clauses';
 import '../../src/clauses/index.annotation';
 import {gen, genCot} from '../../src/docgen';
-import VERSION from '../../package_version';
+const VERSION = require('../../package_version');
 import { getRegistry } from '../../src/namespace';
 import showdown, {Converter} from 'showdown';
 const converter = new Converter();
