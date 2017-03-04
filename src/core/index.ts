@@ -7,7 +7,7 @@ import wall from "./wall";
 import equals from "../preds/equals";
 import any from "./any";
 
-export function cstr( str ) {
+export function scat( str ) {
   return cat.apply( null, Array.prototype.slice.call( str ).map( equals ) );
 };
 
@@ -16,7 +16,7 @@ const other = {
   fclause,
   wall, clause: wall,
   nullable, undefinable, maybe,
-  cstr,
+  scat,
 };
 
 export * from "./regex";

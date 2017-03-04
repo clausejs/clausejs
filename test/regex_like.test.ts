@@ -88,7 +88,7 @@ describe( 'nfa regex', function t() {
 
     it( 'string vocab', () => {
 
-      var VocabClause = C.or.apply( null, [ 'foo', 'bar', 'baz', ' ' ].map( C.cstr ) );
+      var VocabClause = C.or.apply( null, [ 'foo', 'bar', 'baz', ' ' ].map( C.scat ) );
       var ContentClause = C.zeroOrMore( VocabClause );
 
       var treatise = ' baz foo bar bar';
@@ -114,9 +114,9 @@ describe( 'nfa regex', function t() {
       `;
       var TreatiseClause = C.cat(
         'spacing', C.zeroOrMore( C.isStr ),
-        'intro', C.cat( C.cstr( 'Abstract' ), C.oneOrMore( C.isStr ) ),
-        'body', C.cat( C.cstr( 'My Points' ), C.oneOrMore( C.isStr ) ),
-        'ending', C.cat( C.cstr( 'Conclusion' ), C.oneOrMore( C.isStr ) )
+        'intro', C.cat( C.scat( 'Abstract' ), C.oneOrMore( C.isStr ) ),
+        'body', C.cat( C.scat( 'My Points' ), C.oneOrMore( C.isStr ) ),
+        'ending', C.cat( C.scat( 'Conclusion' ), C.oneOrMore( C.isStr ) )
       );
 
       expect( TreatiseClause.conform( treatise ).body ).to.contain( 'eat pie' );
@@ -163,11 +163,11 @@ describe( 'nfa regex', function t() {
       expect( KleeneStringClause.conform( data ) ).to.equal( data );
     } );
 
-    it( 'cstr zeroOrMore in the middle', () => {
+    it( 'scat zeroOrMore in the middle', () => {
       var StrClause = C.cat(
-        'foos', C.oneOrMore( C.cstr( 'foo' ) ),
-        'wee', C.zeroOrMore( C.cstr( 'weeeeeeee' ) ),
-        'bars', C.oneOrMore( C.cstr( 'bar' ) ) );
+        'foos', C.oneOrMore( C.scat( 'foo' ) ),
+        'wee', C.zeroOrMore( C.scat( 'weeeeeeee' ) ),
+        'bars', C.oneOrMore( C.scat( 'bar' ) ) );
 
       var r = C.conform( StrClause, 'foofoofoobarbar' );
       expect( r ).to.deep.equal( {
@@ -176,11 +176,11 @@ describe( 'nfa regex', function t() {
       } );
     } );
 
-    it( 'cstr zeroOrOne mix', () => {
-      var StrClause = C.cat( 'foos', C.oneOrMore( C.cstr( 'foo' ) ),
-                      'bar1', C.zeroOrOne( C.cstr( 'bar' ) ),
-                      'bar2', C.zeroOrOne( C.cstr( 'bar' ) ),
-                      'bar3', C.zeroOrOne( C.cstr( 'bar' ) ) );
+    it( 'scat zeroOrOne mix', () => {
+      var StrClause = C.cat( 'foos', C.oneOrMore( C.scat( 'foo' ) ),
+                      'bar1', C.zeroOrOne( C.scat( 'bar' ) ),
+                      'bar2', C.zeroOrOne( C.scat( 'bar' ) ),
+                      'bar3', C.zeroOrOne( C.scat( 'bar' ) ) );
 
       var r = C.conform( StrClause, 'foofoofoobarbar' );
 

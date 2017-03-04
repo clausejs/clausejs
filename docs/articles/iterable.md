@@ -16,12 +16,12 @@ C.conform(ArrayClause, ['foo', 'foo', 'foo', 'bar', 'bar']);
 #### String
 
 ```js
-var StrClause = C.cat('foos', C.oneOrMore(C.cstr('foo')),
-                      'bars', C.oneOrMore(C.cstr('bar')));
+var StrClause = C.cat('foos', C.oneOrMore(C.scat('foo')),
+                      'bars', C.oneOrMore(C.scat('bar')));
 
 C.conform(StrClause, 'foofoofoobarbar');
 ```
 Notice that in the first clause, we use `C.equals()` to treat
  the string as a single entity, whereas in the second, we use
- `C.cstr()` to indicate that each character in the string is 
+ `C.scat()` to indicate that each character in the string is 
  part of the collection that we run regex ops on.

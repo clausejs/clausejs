@@ -134,7 +134,7 @@
     <dd>
       <ul>
       <li>
-            <a href="#clause.compose.string/cstr" data-path="clause.compose.string/cstr">cstr()</a>
+            <a href="#clause.compose.string/scat" data-path="clause.compose.string/scat">scat()</a>
           </li>
       </ul>
     </dd>
@@ -331,10 +331,10 @@
 );
 C.conform( MyCatClause, [&quot;a&quot;, 2, true] )
 </code></pre>
-<p>In addition to arrays, strings can also be conformed with <code>cstr</code>.</p>
-<pre><code class="js language-js">var StrClause = C.cat(&apos;greetings&apos;, C.zeroOrMore(C.cstr(&apos;hello&apos;)),
-                      &apos;substence&apos;, C.zeroOrMore(C.cstr(&apos;i am optional&apos;)),
-                      &apos;farewell&apos;, C.zeroOrMore(C.cstr(&apos;bye&apos;)));
+<p>In addition to arrays, strings can also be conformed with <code>scat</code>.</p>
+<pre><code class="js language-js">var StrClause = C.cat(&apos;greetings&apos;, C.zeroOrMore(C.scat(&apos;hello&apos;)),
+                      &apos;substence&apos;, C.zeroOrMore(C.scat(&apos;i am optional&apos;)),
+                      &apos;farewell&apos;, C.zeroOrMore(C.scat(&apos;bye&apos;)));
 
 C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);
 </code></pre>
@@ -374,14 +374,14 @@ C.conform( ShapeClause3, {
 C.conform(ArrayClause, [&apos;foo&apos;, &apos;foo&apos;, &apos;foo&apos;, &apos;bar&apos;, &apos;bar&apos;]);
 </code></pre>
 <h4 id="string">String</h4>
-<pre><code class="js language-js">var StrClause = C.cat(&apos;foos&apos;, C.oneOrMore(C.cstr(&apos;foo&apos;)),
-                      &apos;bars&apos;, C.oneOrMore(C.cstr(&apos;bar&apos;)));
+<pre><code class="js language-js">var StrClause = C.cat(&apos;foos&apos;, C.oneOrMore(C.scat(&apos;foo&apos;)),
+                      &apos;bars&apos;, C.oneOrMore(C.scat(&apos;bar&apos;)));
 
 C.conform(StrClause, &apos;foofoofoobarbar&apos;);
 </code></pre>
 <p>Notice that in the first clause, we use <code>C.equals()</code> to treat
  the string as a single entity, whereas in the second, we use
- <code>C.cstr()</code> to indicate that each character in the string is 
+ <code>C.scat()</code> to indicate that each character in the string is 
  part of the collection that we run regex ops on.</p></section>
         <section id="delayed-clause" class="markdown-article" markdown-path="delayed.md"><h3 id="delayednamespacedclauses">Delayed &amp; Namespaced Clauses</h3>
 <p>Delayed &amp; namespaced clauses are useful when composing recursively defined clauses. </p>
@@ -3210,12 +3210,12 @@ C.conform( CombinedClause, [&quot;foo&quot;, 4] )</code></pre>
         </div>
       
 <h3>clause.compose.string/</h3><hr>
-    <a name="clause.compose.string/cstr"></a>
+    <a name="clause.compose.string/scat"></a>
     
         <div class="card">
           <div class="card-header inline-headers">
             
-      <h6>cstr()</h6>&#xA0;
+      <h6>scat()</h6>&#xA0;
         <span class="tag tag-primary">
           function
         </span>
@@ -3226,14 +3226,14 @@ C.conform( CombinedClause, [&quot;foo&quot;, 4] )</code></pre>
     <dt>Syntax</dt><dd><ul>
         <li>( string: <a href="#clause.types/String" data-path="clause.types/String">String</a> ) &#x2192; <a href="#clause.types/Clause" data-path="clause.types/Clause">Clause</a></li>
       </ul></dd>
-<dt>Examples  <button class="btn btn-info btn-sm launch-code-examples" data-name="cstr">
+<dt>Examples  <button class="btn btn-info btn-sm launch-code-examples" data-name="scat">
           Live Eval
         </button></dt><dd>
-      <div class="code-examples" data-name="cstr">
+      <div class="code-examples" data-name="scat">
         
-            <pre><code>var StrClause = C.cat(&apos;greetings&apos;, C.zeroOrMore(C.cstr(&apos;hello&apos;)),
-                      &apos;substence&apos;, C.zeroOrMore(C.cstr(&apos;i am optional&apos;)),
-                      &apos;farewell&apos;, C.zeroOrMore(C.cstr(&apos;bye&apos;)));
+            <pre><code>var StrClause = C.cat(&apos;greetings&apos;, C.zeroOrMore(C.scat(&apos;hello&apos;)),
+                      &apos;substence&apos;, C.zeroOrMore(C.scat(&apos;i am optional&apos;)),
+                      &apos;farewell&apos;, C.zeroOrMore(C.scat(&apos;bye&apos;)));
 
 C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);</code></pre>
           
@@ -3254,11 +3254,11 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);</code></pre>
     </blockquote>
   </dd>
 <dt>Argument Clause Graph</dt><dd><p>
-     <button class="btn btn-sm btn-info" type="button" data-toggle="collapse" data-target="#cstr-args-graph" aria-expanded="false" aria-controls="collapseExample">
+     <button class="btn btn-sm btn-info" type="button" data-toggle="collapse" data-target="#scat-args-graph" aria-expanded="false" aria-controls="collapseExample">
       Show Graph &#xBB;
     </button>
   </p>
-  <div class="collapse" id="cstr-args-graph">
+  <div class="collapse" id="scat-args-graph">
     
     
     
@@ -3321,11 +3321,11 @@ C.conform(StrClause, &apos;hellohellobyebyebyebye&apos;);</code></pre>
   </div>
 </dd>
 <dt>Return Value Clause Graph</dt><dd><p>
-     <button class="btn btn-sm btn-info" type="button" data-toggle="collapse" data-target="#cstr-ret-graph" aria-expanded="false" aria-controls="collapseExample">
+     <button class="btn btn-sm btn-info" type="button" data-toggle="collapse" data-target="#scat-ret-graph" aria-expanded="false" aria-controls="collapseExample">
       Show Graph &#xBB;
     </button>
   </p>
-  <div class="collapse" id="cstr-ret-graph">
+  <div class="collapse" id="scat-ret-graph">
     
     
     

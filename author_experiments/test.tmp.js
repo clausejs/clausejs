@@ -5,9 +5,9 @@ var C = require( '../src' );
 window.C = C;
 
 var StrClause = C.cat(
-  'foos', C.oneOrMore( C.cstr( 'foo' ) ),
-  'wee', C.zeroOrMore( C.cstr( 'weeeeeeee' ) ),
-  'bars', C.oneOrMore( C.cstr( 'bar' ) ) );
+  'foos', C.oneOrMore( C.scat( 'foo' ) ),
+  'wee', C.zeroOrMore( C.scat( 'weeeeeeee' ) ),
+  'bars', C.oneOrMore( C.scat( 'bar' ) ) );
 
 var r = C.conform( StrClause, 'foofoofoobarbar' );
 

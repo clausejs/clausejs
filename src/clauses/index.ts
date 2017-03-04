@@ -133,7 +133,7 @@ C( 'clause.compose.regex/or', OrFnClause );
 C( 'clause.compose.regex/zeroOrMore', ZeroOrMoreFnClause );
 C( 'clause.compose.regex/oneOrMore', OneOrMoreFnClause );
 C( 'clause.compose.regex/zeroOrOne', ZeroOrOneFnClause );
-C( 'clause.compose.string/cstr', SCatFnClause );
+C( 'clause.compose.string/scat', SCatFnClause );
 C( 'clause.compose/and', AndFnClause );
 C( 'clause.compose/collOf', CollOfClause );
 C( 'clause.compose/mapOf', MapOfFnClause );

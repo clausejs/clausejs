@@ -7,7 +7,7 @@ export default function hljsClause( hljs ) {
   var IDENT_RE = '[A-Za-z$_][0-9A-Za-z$_]*';
   var KEYWORDS = {
     keyword:
-        'wall delayed maybe nullable undefinable cstr fclause any mapOf collOf shape cat or zeroOrMore oneOrMore zeroOrOne',
+        'wall delayed maybe nullable undefinable scat fclause any mapOf collOf shape cat or zeroOrMore oneOrMore zeroOrOne',
     literal:
       'true false null undefined NaN Infinity',
     built_in:

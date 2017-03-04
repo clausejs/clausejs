@@ -729,17 +729,17 @@ exports.clause = wall_1.default;
 var equals_1 = __webpack_require__(33);
 var any_1 = __webpack_require__(46);
 exports.any = any_1.default;
-function cstr(str) {
+function scat(str) {
     return regex_2.cat.apply(null, Array.prototype.slice.call(str).map(equals_1.default));
 }
-exports.cstr = cstr;
+exports.scat = scat;
 ;
 var other = {
     any: any_1.default,
     fclause: regex_2.fclause,
     wall: wall_1.default, clause: wall_1.default,
     nullable: nullable_1.default, undefinable: undefinable_1.default, maybe: maybe_1.default,
-    cstr: cstr
+    scat: scat
 };
 __export(__webpack_require__(5));
 exports.default = Object.assign({}, regex_1.default, {
