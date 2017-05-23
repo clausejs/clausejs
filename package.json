@@ -1,6 +1,6 @@
 {
   "name": "clausejs-src",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A powerful & flexible validation and conformation library for your JavaScript data and functions.",
   "main": "packages/clausejs/dist/clausejs.js",
   "engines": {
@@ -11,7 +11,9 @@
     "dev-docsite": "webpack-dev-server --content-base ./docs --inline --host 0.0.0.0",
     "test": "jest --coverage",
     "test:watch": "jest --watch",
-    "build": "cross-env CLAUSEJS_ENV=production webpack && cross-env CLAUSEJS_ENV=production MINIFY_ME=1 webpack && npm run build-docsite",
+    "compile-all": "tsc --rootDir src --outDir ./",
+    "build-browser": "cross-env CLAUSEJS_ENV=production webpack && cross-env CLAUSEJS_ENV=production MINIFY_ME=1 webpack && npm run build-docsite",
+    "build": "npm run compile-all && npm run build-browser",
     "build-docsite": "ts-node scripts/build-docs.ts",
     "lint": "eslint ./src"
   },
@@ -91,7 +93,7 @@
     "style-loader": "^0.13.1",
     "testcheck": "^0.1.4",
     "ts-node": "^2.1.0",
-    "typescript": "^2.2.1",
+    "typescript": "^2.3.2",
     "typings": "^2.1.0",
     "webpack": "2.2.0-rc.2",
     "webpack-dev-server": "2.2.0-rc.0"

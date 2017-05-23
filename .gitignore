@@ -36,3 +36,8 @@ node_modules
 
 /.awcache
 /.vscode
+
+index.js
+index.js.map
+/*/**/*.js
+/*/**/*.js.map
