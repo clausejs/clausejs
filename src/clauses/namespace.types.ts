@@ -3,6 +3,7 @@ import { delayed, isNamespacePath, isClauseRef } from '../utils';
 export {isNamespacePath} from "../utils";
 import { isObj, isBool, isUndefined } from '../preds';
 import isExpr from "../utils/isExpr";
+import { FClause } from "../core/fclause";
 
 const ExprOrPartialRefMapClause =
  // or(
@@ -15,7 +16,7 @@ const ExprOrPartialRefMapClause =
 
 export const GetArgClause = cat( 'nsPath', isNamespacePath );
 
-export const GetNSFnClause = fclause( {
+export const GetNSFnClause: FClause = fclause( {
   args: GetArgClause,
   ret: isClauseRef,
 } );

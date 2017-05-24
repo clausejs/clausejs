@@ -31,7 +31,7 @@
     "testRegex": "<rootDir>(test/).*\\.(test|spec)\\.(ts)$",
     "coverageDirectory": "coverage",
     "collectCoverageFrom": [
-      "src/**/*.{ts,tsx,js,jsx}",
+      "src/**/*.{ts}",
       "!src/**/*.d.ts"
     ]
   },

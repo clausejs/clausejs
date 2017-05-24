@@ -7,7 +7,7 @@ import wall from "./wall";
 import equals from "../preds/equals";
 import any from "./any";
 
-export function scat( str ) {
+export function scat( str: string ) {
   return cat.apply( null, Array.prototype.slice.call( str ).map( equals ) );
 };
 

@@ -1910,6 +1910,7 @@ var FClause = function (_super) {
     ;
     return FClause;
 }(Clause_1.default);
+exports.FClause = FClause;
 function fclause(fnClause) {
     return new FClause(fnClause);
 }

@@ -2,7 +2,7 @@ import Clause from "../models/Clause";
 import walk from "../walk";
 import fnName from "../utils/fnName";
 
-class FClause extends Clause{
+export class FClause extends Clause{
   constructor(fnClause) {
     const { args, ret, fn } = fnClause;
     super( {
@@ -23,6 +23,6 @@ class FClause extends Clause{
   instrument: Function;
 }
 
-export default function fclause( fnClause ) {
+export default function fclause( fnClause ) : FClause {
   return new FClause(fnClause);
 }
