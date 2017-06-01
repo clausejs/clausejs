@@ -1,6 +1,6 @@
 {
   "name": "clausejs-src",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A powerful & flexible validation and conformation library for your JavaScript data and functions.",
   "main": "packages/clausejs/dist/clausejs.js",
   "engines": {
@@ -93,7 +93,7 @@
     "style-loader": "^0.13.1",
     "testcheck": "^0.1.4",
     "ts-node": "^2.1.0",
-    "typescript": "^2.3.2",
+    "typescript": "^2.3.4",
     "typings": "^2.1.0",
     "webpack": "2.2.0-rc.2",
     "webpack-dev-server": "2.2.0-rc.0"
