@@ -1,6 +1,6 @@
 {
   "name": "clausejs",
-  "version": "0.1.5",
+  "version": "0.1.7",
   "description": "A powerful & flexible validation and conformation library for your JavaScript data and functions.",
   "main": "index.js",
   "repository": {
@@ -15,6 +15,14 @@
     "clausejs",
     "validation",
     "schema"
+  ],
+  "files": [
+    "*.js",
+    "*.js.map",
+    "*.d.ts",
+    "**/*.js",
+    "**/*.js.map",
+    "**/*.d.ts"
   ],
   "author": {
     "name": "Xiyang Chen",

@@ -1,6 +1,6 @@
 {
   "name": "clausejs-docgen",
-  "version": "0.1.5",
+  "version": "0.1.7",
   "description": "Auto documentation generator for Clause clauses",
   "main": "index.js",
   "repository": {
@@ -21,7 +21,7 @@
     "email": "settinghead@gmail.com"
   },
   "peerDependencies": {
-    "clausejs": "0.1.5"
+    "clausejs": "0.1.7"
   },
   "license": "MIT",
   "bugs": {
